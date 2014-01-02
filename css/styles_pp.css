@@ -1,0 +1,144 @@
+/*
+    Document   : styles_pp
+    Created on : 11-Jan-2013, 14:47:55
+    Author     : John McGettrick
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.grademark_open img {
+    padding-right: 8px;
+}
+
+.launch_form, .useragreement_form, .turnitin_eula_link, #useragreement_form form, .cmid {
+    display:none;
+}
+
+.origreport_open, .grade_icon, .row_rubric_view, .row_peermark_reviews {
+    float: left;
+}
+
+.row_rubric_view {
+    position: relative;
+    top:4px;
+}
+
+.rubric_view_pp_launch {
+    background:url(../pix/rubric.png) no-repeat 0px 0px;
+    cursor:pointer;
+    height: 34px;
+    width:32px;
+    display: block;
+}
+
+a.rubric_view_pp_launch, a.peermark_reviews_pp_launch {
+    color:#000000;
+}
+
+.peermark_reviews_pp_launch {
+    background:url(../pix/peermark-reviews.png) no-repeat 0px 0px;
+    cursor:pointer;
+    padding: 4px 0 18px 36px;
+    line-height: 28px;
+    display: block;
+}
+
+.attachments .tii_links_container {
+    float:right;
+}
+
+.tii_links_container {
+    white-space: nowrap;
+}
+
+.tii_links_container .grademark_open, .tii_links_container .origreport_open {
+    cursor:pointer;
+    margin-bottom:6px;
+}
+
+.tii_links_container .grademark_open {
+    padding-top:6px;
+}
+
+.tii_links_container .origreport_open {
+    position:relative;
+    top:4px;
+    display:inline;
+}
+
+.tii_links_container .score_colour {
+    background-image:url(../pix/gradback.jpg);
+    width:32px;
+    font-size:12px;
+    display:inline-block;
+    text-align: right;
+    margin-right:8px;
+    padding: 3px 2px 0 2px;
+    height: 18px;
+}
+
+.score_colour_ { background: #999999; color:#000000; }
+.score_colour_0 { background-position: 0% 0%; color:#FFFFFF; }
+.score_colour_10 { background-position: 0% 10%; color:#FFFFFF; }
+.score_colour_20 { background-position: 0% 20%; color:#FFFFFF; }
+.score_colour_30 { background-position: 0% 30%; }
+.score_colour_40 { background-position: 0% 40%; }
+.score_colour_50 { background-position: 0% 50%; }
+.score_colour_60 { background-position: 0% 60%; }
+.score_colour_70 { background-position: 0% 70%; }
+.score_colour_80 { background-position: 0% 80%; color:#FFFFFF; }
+.score_colour_90 { background-position: 0% 90%; color:#FFFFFF; }
+.score_colour_100 { background-position: 0% 100%; color:#FFFFFF; }
+
+.origreport_score {
+    white-space:nowrap;
+}
+
+.warning {
+    border: 1px solid #CC0000;
+    padding: 8px;
+    background: #FFE9E8;
+    width: 99%;
+    text-align:center;
+    display:block;
+    margin-bottom:6px;
+}
+
+#ppErrors {
+    width:100%;
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.row_peermark_manager {
+    float:left;
+    display:inline;
+}
+
+.peermark_manager_pp_launch {
+    background:url(../pix/peermark-settings.png) no-repeat 0px 0px;
+    cursor:pointer;
+    padding: 4px 16px 4px 40px;
+    line-height: 28px;
+}
+
+.quickmark_manager_launch {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    line-height: 28px;
+}
+
+.forum_eula_launch_noscript, .forum_eula_launch span, .pp_turnitin_ula {
+    cursor:pointer;
+    text-decoration: underline;
+}
+
+.forum_eula_launch_noscript, .forum_eula_launch span {
+    color: #FF0000;
+}

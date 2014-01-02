@@ -1,0 +1,36 @@
+.submissionsDataTable {
+	margin-top:16px;
+}
+
+.submissionsDataTable th {
+    border:1px solid #999999;
+}
+
+.submissionsDataTable td {
+    border:1px solid #999999;
+}
+
+#tabs ul#part_tabs_menu, a.toggle_summary, a.toggle_peermarks, a.toggle_peermark_instructions, .turnitin_ula, a.messages_inbox, .noscript_hide, 
+.download_original_open, th.raw_data, td.raw_data {
+	display:none;
+}
+
+.peermark_instructions {
+	display: block;
+}
+
+.turnitin_ula_noscript {
+	margin-top:16px;
+	line-height: 28px;
+}
+
+.submissionsDataTable th.cpart, .submissionsDataTable th.ccheckbox,
+.submissionsDataTable td.c0, .submissionsDataTable td.c1 {
+	display:none;
+}
+
+.part_table {
+	border:1px solid #DEDEDE;
+	background:#EFEFEF;
+	padding:10px;
+}

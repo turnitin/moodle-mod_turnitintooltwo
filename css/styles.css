@@ -1,0 +1,612 @@
+/*
+    Document   : styles
+    Created on : 19-Nov-2012, 14:58:41
+    Author     : John McGettrick
+*/
+
+.row_score, .row_peermark_manager, .row_peermark_reviews {
+    float:right;
+}
+
+.row_export_xls, .row_export_pdf, .row_export_orig, .zip_open, .row_rubric_manager, .row_quickmark_manager {
+    display:inline;
+}
+
+#zip_downloads {
+    float:left;
+    position:relative;
+    top:4px;
+    height:22px;
+}
+
+#zip_downloads img {
+    position:relative;
+    top:4px;
+    left:-2px;
+}
+
+#zip_downloads a.gmpdfzip_box {
+    padding-left:16px;
+}
+
+#zip_downloads div.origchecked_zip_open {
+    padding-left:16px;
+}
+
+.toggle_peermark_instructions img {
+    display: block;
+}
+
+.hidden_class, #user_role, .launch_form, #useragreement_form form, #assignment_id, #course_id, #submission_id,
+#tii_course_id, #tii_course_name, .enrolling_container, #zip_downloads, #view_context, #inbox_form,
+.unanonymise_form, .edit_course_end_date_form, #course_category, #class_ids, #create_assignments,
+.row_peermark_reviews, .peermark_instructions, .toggle_peermark_instructions img.hide_peermark_instructions {
+    display:none;
+}
+
+.unanonymise_form, .edit_course_end_date_form {
+    background:#FFFFFF;
+    padding:12px 12px 0;
+    height:100%;
+    overflow: hidden
+}
+
+.edit_course_end_date_form {
+    padding-top:24px;
+}
+
+.unanonymise_form textarea {
+    height: 90px;
+    width:80%;
+}
+
+.grademark_open, .origreport_open, .download_original_open, .zip_open, .enrol_link, .refresh_link, .messages_inbox, span.link {
+    cursor:pointer;
+}
+
+.introduction, #tabs {
+    clear:both;
+}
+
+.introduction, .peermark_instructions {
+    padding: 6px 10px;
+    border-bottom: 1px solid #999999;
+    display:none;
+}
+
+.introduction h2 {
+    margin:8px 0;
+}
+
+.introduction p {
+    margin:6px 0;
+}
+
+.toggle_summary, .toggle_peermarks, .toggle_peermark_instructions {
+    cursor: pointer;
+    float:left;
+    position: relative;
+    top:-3px;
+    margin-right:8px;
+    line-height:
+}
+
+.peermark_instructions_spacer {
+    float: left;
+    width:28px;
+    height:16px;
+}
+
+#page-header .navbar {
+    border: 1px solid #DDDDDD;
+}
+
+.navbar {
+    border: 1px solid #999999;
+}
+
+.partDetails {
+    font-size: 13px;
+    margin-bottom:0px;
+    width:100%;
+    border: 1px solid #999999;
+}
+
+.partDetails th {
+    padding: 6px 12px 6px;
+    border-bottom: 1px solid #999999;
+}
+
+.partDetails td {
+    border: 1px solid #999999;
+    border-top: 0;
+    padding: 12px 12px 4px;
+}
+
+.partDetails td.data, .partDetails td.export_data, .partDetails td.rubric_qm {
+    text-align: center;
+}
+
+.partDetails td.export_data {
+    padding-top:12px;
+}
+
+.partDetails td.introduction_cell, .partDetails td.peermark_assignments_cell .peermarkDetails td.peermark_instructions_cell {
+    border:0;
+    padding:0;
+}
+
+.partDetails td.peermarks {
+    border:0;
+}
+
+.peermarkDetails {
+    width:100%;
+    margin-bottom:0px;
+}
+
+.partDetails td.peermark_assignments_cell {
+    padding:0;
+    border:0;
+}
+
+.partDetails td.peermark_assignments_cell .peermarkDetails td {
+    padding:8px 12px;
+}
+
+.peermark_assignments_container {
+    border-top: 1px solid #999999;
+}
+
+.peermark_assignments_cell .peermarkDetails td.lastcol {
+    border-right: 0;
+}
+
+.peermark_assignments_cell .peermarkDetails tr.lastrow td {
+    border-bottom: 0;
+}
+
+td a.editable-click {
+    border:none;
+    background:url(../pix/edit.png) right -4px no-repeat;
+    padding-right: 24px;
+}
+
+.submissionsDataTable {
+    width:100%;
+}
+
+.score_colour {
+    background-image:url(../pix/gradback.jpg);
+    width:36px;
+    display:inline-block;
+    float:right;
+}
+
+.score_colour_ { background: #999999; }
+.score_colour_0 { background-position: 0% 0%; }
+.score_colour_10 { background-position: 0% 10%; }
+.score_colour_20 { background-position: 0% 20%; }
+.score_colour_30 { background-position: 0% 30%; }
+.score_colour_40 { background-position: 0% 40%; }
+.score_colour_50 { background-position: 0% 50%; }
+.score_colour_60 { background-position: 0% 60%; }
+.score_colour_70 { background-position: 0% 70%; }
+.score_colour_80 { background-position: 0% 80%; }
+.score_colour_90 { background-position: 0% 90%; }
+.score_colour_100 { background-position: 0% 100%; }
+
+.grademark_open, .grademark_grade, .origreport_score {
+    float:right;
+}
+
+.grademark_grade, .origreport_score {
+    padding-right:8px;
+}
+
+.student_read, .center {
+    text-align:center !important;
+}
+
+.left {
+    text-align:left;
+}
+
+.right {
+    text-align:right;
+}
+
+.student_read img {
+    position:relative;
+    top:3px;
+}
+
+.scrollbox {
+    overflow: scroll;
+}
+
+.enrol_link, .enrolling_container, .refresh_link, .messages_inbox {
+    float:right;
+}
+
+.messages_inbox {
+    text-decoration: none;
+    padding: 2px 4px 6px 0px;
+}
+
+.enrol_link {
+    padding: 6px 18px 0 0;
+}
+
+.refresh_link {
+    padding: 2px 16px 0 12px;
+}
+
+.enrolling_container {
+    padding: 4px 18px 0 0;
+}
+
+.refresh_link img, .enrol_link img, .enrolling_container img, .messages_inbox img {
+    position: relative;
+    top:4px;
+}
+
+#id_submissiontext {
+    width:80%;
+    height:320px;
+}
+
+#submitpaper .fcheckbox label {
+    padding-left:12px;
+}
+
+.turnitin_ula {
+    padding-left:15%;
+    padding-top:24px;
+    cursor:pointer;
+    text-decoration: underline;
+}
+
+.fitem_fbutton {
+    padding-top:12px;
+}
+
+span.dimmed {
+    color:#999999;
+}
+
+#courseBrowserTable_filter {
+    display: none;
+}
+
+#assignmentBrowserTable_wrapper {
+    padding: 10px;
+}
+
+.nowrap {
+    white-space:nowrap;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold, #or_container {
+    font-weight:bold;
+}
+
+span.link {
+    color: #0000FF;
+}
+
+#submitting_loader {
+    display:none;
+    padding: 16px 0 8px;
+    text-align: center;
+}
+
+p.progress_text {
+    color:#333333;
+    margin-bottom: 12px;
+}
+
+noscript.warning {
+    border: 1px solid #CC0000;
+    padding: 8px;
+    background: #FFE9E8;
+    width: 99%;
+    text-align:center;
+    display:block;
+    margin-bottom:6px;
+}
+
+.js_required {
+    display: none;
+}
+
+.delete_link {
+    margin-left: 16%;
+    position: relative;
+    top:-4px;
+}
+
+.delete_link img {
+    position: relative;
+    top:2px;
+    left:4px;
+}
+
+/* Datatables styles */
+
+th.narrow, td.narrow {
+    width: 60px;
+}
+
+.dataTables_wrapper table.dataTable {
+    font-size: 13px;
+    border:1px solid #999999;
+    width:100% !important;
+}
+
+.dataTables_wrapper table.dataTable th {
+    padding-top: 12px;
+    padding-bottom: 8px;
+}
+
+table.dataTable thead th.sorting_disabled {
+    cursor: default;
+}
+
+.dataTables_wrapper table.dataTable td {
+    padding: 8px 10px 2px;
+    font-size: 13px;
+    vertical-align: top;
+}
+
+.dataTables_wrapper table.dataTable th.left {
+    text-align: left;
+}
+
+.dataTables_info, .dataTables_paginate {
+    padding-top: 6px;
+}
+
+.upload_box {
+    white-space:nowrap;
+}
+
+.student_dot_icon, .student_read_icon, .download_original_open img, .upload_box img, .upload_box span {
+    position: relative;
+}
+
+.upload_box span {
+    top: -7px;
+    padding-right: 6px;
+}
+
+.student_dot_icon {
+    top:-3px;
+}
+
+.student_read_icon {
+    top:-1px;
+}
+
+.download_original_open img, .upload_box img {
+    top:-3px;
+}
+
+.dataTables_length, .dataTables_filter {
+    padding:6px 0;
+}
+
+.dataTables_wrapper .navbar {
+    margin:2px 0;
+    padding:0 10px;
+}
+
+#courseBrowserTable_wrapper .dataTables_processing {
+    top: 70px !important;
+}
+
+.dt_pagination {
+    font-size:12px;
+}
+
+.dt_pagination .dataTables_paginate a.paginate_disabled_previous, .dt_pagination .dataTables_paginate a.paginate_enabled_previous {
+    background-position: left -2px;
+}
+
+.dt_pagination .dataTables_paginate a.paginate_disabled_next, .dt_pagination .dataTables_paginate a.paginate_enabled_next {
+    background-position: right -2px;
+}
+
+.dt_pagination .dataTables_info {
+    float:left;
+    clear:none;
+}
+
+.dt_pagination .dataTables_paginate {
+    float:right;
+    margin-bottom: 4px;
+}
+
+/* Submission Upload Form Iframe */
+
+.iframe_submission_form {
+    width:100%;
+    border:0;
+    height:580px;
+}
+
+#upload_success {
+    color: #CC0000;
+}
+
+.hide_peermarks, .show_peermarks {
+    padding-left: 20px;
+}
+
+.class_recreation {
+    margin-top:16px;
+    padding-bottom: 20px;
+}
+
+#box_receipt {
+    position:relative;
+    top:16px;
+}
+
+.edit_course_end_link {
+    position: relative;
+    top: -2px;
+}
+
+.edit_course_end_link span {
+    position: relative;
+    top: -4px;
+}
+
+.create_checkboxes {
+    padding: 6px 6px 6px;
+    margin:0;
+    display:none;
+}
+
+.create_checkboxes div {
+    display:inline;
+}
+
+.create_checkboxes .create_assign_checkbox_container {
+    padding: 0 24px;
+}
+
+.create_checkboxes input {
+    margin-right:4px;
+    position: relative;
+    top:2px;
+}
+
+#course_category, #create_assignments {
+    display:none;
+}
+
+.course_creation_bulk_msg {
+    margin-bottom: 16px;
+}
+
+#test_link {
+    display: none;
+    cursor: pointer;
+}
+
+#test_link, #testing_container {
+    float:left;
+    margin-bottom:8px;
+}
+
+#test_link img {
+    position: relative;
+    top:4px;
+}
+
+#test_result {
+    display: none;
+    float:left;
+    margin: 4px 0 0;
+    padding:2px 6px;
+}
+
+.test_link_success {
+    border: 1px solid #00CC00;
+    background: #C3FDB8;
+}
+
+.test_link_fail {
+    border:1px solid #CC0000;
+    background: #E77471;
+}
+
+#testing_container {
+    margin-top:4px;
+    display:none;
+}
+
+#testing_container img {
+    position: relative;
+    top:2px;
+}
+
+.test_connection {
+    /*position: absolute;
+    top:10px;*/
+}
+
+.tabtree {
+    margin-bottom:16px;
+}
+
+.rubric_manager_launch, .rubric_view_launch, .quickmark_manager_launch, .peermark_manager_launch, .peermark_reviews_launch {
+    cursor:pointer;
+}
+
+.rubric_manager_launch, .rubric_view_launch {
+    background:url(../pix/rubric.png) no-repeat 0px 0px;
+    padding:4px 0 4px 32px;
+    line-height: 22px;
+    margin-left: 6px;
+}
+
+.quickmark_manager_launch {
+    background:url(../pix/quickmark.png) no-repeat 0px 0px;
+    padding: 2px 0 2px 40px;
+    height: 20px;
+}
+
+.peermark_header {
+    margin-bottom:8px;
+    float:left;
+}
+
+.peermark_manager_launch, .peermark_reviews_launch {
+    padding: 4px 0 4px 46px;
+    height: 22px;
+}
+
+.peermark_manager_launch {
+    background:url(../pix/peermark-settings.png) no-repeat 0px 0px;
+}
+
+.peermark_reviews_launch {
+    background:url(../pix/peermark-reviews.png) no-repeat 0px 0px;
+}
+
+.peermark_loading, .messages_loading {
+    display:none;
+}
+
+.editable_hide_span, .peermark_loading_span {
+    position: relative;
+    top:4px;
+}
+
+.peermark_loading_row {
+    text-align: center;
+    margin:0 auto 8px;
+}
+
+#tii_table_functions {
+    display: none;
+}
+
+#course_search_options {
+    margin-bottom: 6px;
+}
+
+#course_search_options label {
+    padding-right:8px;
+}
+
+#course_search_options input, #course_search_options select {
+    margin-right: 32px;
+}

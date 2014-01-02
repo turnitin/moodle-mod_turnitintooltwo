@@ -1,0 +1,181 @@
+<?php
+
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package moodlecore
+ * @subpackage backup-moodle2
+ * @copyright 2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/**
+ * Structure step to restore one turnitintooltwo activity
+ */
+
+require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
+
+class restore_turnitintooltwo_activity_structure_step extends restore_activity_structure_step {
+
+    protected function define_structure() {
+
+        if (!isset($_SESSION['tii_course_reset'])) {
+            unset($_SESSION['assignments_to_create']);
+            $_SESSION['tii_course_reset'] = 1;
+        }
+        $paths = array();
+
+        $userinfo = $this->get_setting_value('userinfo');
+
+        $paths[] = new restore_path_element('turnitintooltwo_courses', '/activity/turnitintooltwo/course');
+        $paths[] = new restore_path_element('turnitintooltwo', '/activity/turnitintooltwo');
+        $paths[] = new restore_path_element('turnitintooltwo_parts', '/activity/turnitintooltwo/parts/part');
+
+        if ($userinfo) {
+            $paths[] = new restore_path_element('turnitintooltwo_submissions', '/activity/turnitintooltwo/submissions/submission');
+        }
+
+        // Return the paths wrapped into standard activity structure
+        return $this->prepare_activity_structure($paths);
+    }
+
+    protected function process_turnitintooltwo($data) {
+        global $DB;
+
+        $config = turnitintooltwo_admin_config();
+
+        $_SESSION['tii_assignment_reset'] = 1;
+        if ($this->get_setting_value('userinfo') == 1) {
+            $_SESSION['tii_course_reset'] = 0;
+            $_SESSION['tii_assignment_reset'] = 0;
+        }
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->course = $this->get_courseid();
+
+        // Work out whether we are duplicating a module activity or course.
+        // If activity then we do not want to reset the course.
+        $type = $this->get_task()->get_info()->type;
+        if ($type == 'activity') {
+            $_SESSION['tii_course_reset'] = 0;
+        }
+
+        if ($data->grade < 0) {
+            // scale found, get mapping
+            $data->grade = -($this->get_mappingid('scale', abs($data->grade)));
+        }
+
+        if ($config->accountid != $data->tiiaccount) {
+            $a = new stdClass();
+            $a->backupid = $data->tiiaccount;
+            $a->current = $config->accountid;
+            turnitintooltwo_print_error('wrongaccountid', 'turnitintooltwo', NULL, $a);
+            return false;
+        } else {
+            // insert the activity record
+            $newitemid = $DB->insert_record('turnitintooltwo', $data);
+            $_SESSION['assignment_id'] = $newitemid;
+            // immediately after inserting "activity" record, call this
+            $this->apply_activity_instance($newitemid);
+        }
+    }
+
+    protected function process_turnitintooltwo_courses($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->courseid = $this->get_courseid();
+        $_SESSION['course_id'] = $data->courseid;
+        $_SESSION['course_owner_id'] = $data->ownerid;
+
+        $owneremail = (empty($data->owneremail)) ? join(array_splice(explode(".",$data->ownerun),0,-1)) : $data->owneremail;
+        $owner = $DB->get_record('user', array('email' => $owneremail));
+        if ($owner) {
+            $data->ownerid = $owner->id;
+        } else { // Turnitin class owner not found from email address etc create user account
+            $i=0;
+            $newuser = false;
+            while (!is_object($newuser)) { // Keep trying to create a new username
+                $username = ($i==0) ? $data->ownerun : $data->ownerun.'_'.$i; // Append number if username exists
+                $i++;
+                $newuser = create_user_record($username, substr($i."-".md5($username), 0, 8));
+                if (is_object($newuser)) {
+                    $newuser->email = $owneremail;
+                    $newuser->firstname = $data->ownerfn;
+                    $newuser->lastname = $data->ownerln;
+                    if (!$DB->update_record("user", $newuser)) {
+                        turnitintooltwo_print_error('userupdateerror','turnitintooltwo');
+                    }
+                }
+            }
+            $data->ownerid = $newuser->id;
+        }
+        $tiiowner = new object();
+        $tiiowner->userid = $data->ownerid;
+        $tiiowner->turnitin_uid = $data->ownertiiuid;
+        if (!$tiiuser = $DB->get_record('turnitintooltwo_users', array('userid' => $data->ownerid))) {
+            $DB->insert_record('turnitintooltwo_users',$tiiowner);
+        }
+        if (!$DB->get_records('turnitintooltwo_courses', array('courseid' => $data->courseid))) {
+            $data->course_type = 'TT';
+            $newitemid = $DB->insert_record('turnitintooltwo_courses', $data);
+            $this->set_mapping('turnitintooltwo_courses', $oldid, $newitemid);
+        }
+    }
+
+    protected function process_turnitintooltwo_parts($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->turnitintooltwoid = $this->get_new_parentid('turnitintooltwo');
+
+        $newitemid = $DB->insert_record('turnitintooltwo_parts', $data);
+        $this->set_mapping('turnitintooltwo_parts', $oldid, $newitemid);
+    }
+
+    protected function process_turnitintooltwo_submissions($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->turnitintooltwoid = $this->get_new_parentid('turnitintooltwo');
+        $data->submission_part = $this->get_mappingid('turnitintooltwo_parts', $data->submission_part);
+        $data->userid = $this->get_mappingid('user', $data->userid);
+
+        // Create TII User Account Details
+        if (!$tiiuser = $DB->get_record('turnitintooltwo_users', array('turnitin_uid' => $data->tiiuserid))) {
+            $tiiuser->userid = $data->userid;
+            $tiiuser->turnitin_uid = $data->tiiuserid;
+            $DB->insert_record('turnitintooltwo_users', $tiiuser);
+        }
+
+        $newitemid = $DB->insert_record('turnitintooltwo_submissions', $data);
+        $this->set_mapping('turnitintooltwo_submissions', $oldid, $newitemid);
+    }
+
+    protected function after_execute() {
+
+        if (!empty($_SESSION['tii_assignment_reset'])) {
+            $_SESSION["assignments_to_create"][] = $_SESSION['assignment_id'];
+            unset($_SESSION['assignment_id']);
+        }
+    }
+}
+
+//?>

@@ -1,0 +1,567 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package   turnitintooltwo
+ * @copyright 2012 iParadigms LLC
+ */
+
+require_once("../../config.php");
+require_once("lib.php");
+require_once("turnitintooltwo_view.class.php");
+
+require_login();
+$action = required_param('action', PARAM_ALPHAEXT);
+
+switch ($action) {
+    case "edit_field":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $partid = required_param('pk', PARAM_INT);
+        $return = array();
+
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            $fieldname = required_param('name', PARAM_ALPHA);
+            switch ($fieldname) {
+                case 'partname':
+                    $fieldvalue = required_param('value', PARAM_TEXT);
+                    break;
+
+                case "maxmarks":
+                    $fieldvalue = required_param('value', PARAM_INT);
+                    break;
+
+                case "dtstart":
+                case "dtdue":
+                case "dtpost":
+                    $fieldvalue = required_param('value', PARAM_RAW);
+                    $fieldvalue = strtotime($fieldvalue);
+                    break;
+            }
+
+            $return = $turnitintooltwoassignment->edit_part_field($partid, $fieldname, $fieldvalue);
+        } else {
+            $return["aaData"] = '';
+        }
+
+        echo json_encode($return);
+        break;
+
+    case "useragreement":
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
+            $user = new turnitintooltwo_user($USER->id, "Learner");
+            echo turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner", "Submit", true);
+        }
+        break;
+
+    case "downloadoriginal":
+    case "origreport":
+    case "grademark":
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
+            $submissionid = required_param('submission', PARAM_INT);
+            $userrole = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? 'Instructor' : 'Learner';
+
+            $user = new turnitintooltwo_user($USER->id, $userrole);
+
+            echo turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole);
+        }
+        break;
+
+    case "orig_zip":
+    case "xls_inbox":
+    case "origchecked_zip":
+    case "gmpdf_zip":
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+
+            $partid = optional_param('part', 0, PARAM_INT);
+            $user = new turnitintooltwo_user($USER->id, 'Instructor');
+            $user->edit_tii_user();
+
+            if ($action == "orig_zip") {
+                $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+                $partdetails = $turnitintooltwoassignment->get_part_details($partid, "turnitin");
+                $submissions = $turnitintooltwoassignment->get_submissions($cm, $partdetails->id);
+
+                $submissionids = array();
+                foreach ($submissions[$partdetails->id] as $k => $v) {
+                    if (!empty($v->submission_objectid)) {
+                        $submissionids[] = $v->submission_objectid;
+                    }
+                }
+            } else {
+                $submissionids = optional_param_array('submission_ids', array(), PARAM_INT);
+            }
+
+            echo turnitintooltwo_view::output_download_launch_form($action, $user->tii_user_id, $partid, $submissionids);
+        }
+        break;
+
+    case "get_users":
+        if (is_siteadmin()) {
+            echo json_encode(turnitintooltwo_getusers());
+        }
+        break;
+
+    case "initialise_redraw":
+        $return["aaData"] = '';
+
+        echo json_encode($return);
+        break;
+
+    case "get_submissions":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $return = array();
+
+        if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
+            $partid = required_param('part', PARAM_INT);
+            $refreshrequested = required_param('refresh_requested', PARAM_INT);
+            $start = required_param('start', PARAM_INT);
+            $parts = $turnitintooltwoassignment->get_parts();
+
+            if (empty($_SESSION["TiiSubmissions"][$partid]) || $refreshrequested) {
+                $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
+                $turnitintooltwoassignment->refresh_submissions($parts[$partid], $start);
+                $_SESSION["TiiSubmissionsRefreshed"][$partid] = time();
+            }
+
+            $PAGE->set_context(context_module::instance($cm->id));
+            $turnitintooltwoview = new turnitintooltwo_view();
+
+            $return["aaData"] = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
+            $return["end"] = $start + TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
+            $return["total"] = count($_SESSION["submissions"][$partid]);
+        } else {
+            $return["aaData"] = '';
+        }
+
+        echo json_encode($return);
+        break;
+
+    case "refresh_user_messages":
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            $turnitintooltwouser = new turnitintooltwo_user($USER->id, 'Instructor');
+            $turnitintooltwouser->set_user_values_from_tii();
+
+            echo $turnitintooltwouser->get_user_messages();
+        } else {
+            echo 0;
+        }
+        break;
+
+    case "refresh_peermark_assignments":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
+            $partid = required_param('part', PARAM_INT);
+            $refreshrequested = optional_param('refresh_requested', 0, PARAM_INT);
+            $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+
+            if ($refreshrequested) {
+                $turnitintooltwoassignment->update_assignment_from_tii(array($partdetails->tiiassignid));
+                $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+            }
+
+            $PAGE->set_context(context_module::instance($cm->id));
+
+            $turnitintooltwoview = new turnitintooltwo_view();
+            $peermarkdata['peermark_table'] = $turnitintooltwoview->show_peermark_assignment($partdetails->peermark_assignments);
+            $peermarkdata['no_of_peermarks'] = count($partdetails->peermark_assignments);
+            $peermarkdata['peermarks_active'] = false;
+            foreach ($partdetails->peermark_assignments as $peermarkassignment) {
+                if (time() > $peermarkassignment->dtstart) {
+                    $peermarkdata['peermarks_active'] = true;
+                    break;
+                }
+            }
+            echo json_encode($peermarkdata);
+        }
+        break;
+
+    case "refresh_submission_row":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
+            $partid = required_param('part', PARAM_INT);
+            $userid = required_param('user', PARAM_INT);
+            $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
+
+            $parts = $turnitintooltwoassignment->get_parts();
+
+            // Get the id of the submission in the row and update it from Turnitin then get the new details.
+            $submission = $turnitintooltwoassignment->get_user_submissions($userid, $assignmentid, $partid);
+            $submissionid = current(array_keys($submission));
+
+            $submission = new turnitintooltwo_submission($submissionid);
+            if (empty($submissionid)) {
+                $user = new turnitintooltwo_user($userid, 'Learner', false);
+
+                $submission->firstname = $user->firstname;
+                $submission->lastname = $user->lastname;
+                $submission->userid = $user->id;
+            } else {
+                $submission->update_submission_from_tii();
+            }
+            $useroverallgrades = array();
+
+            $PAGE->set_context(context_module::instance($cm->id));
+
+            $turnitintooltwoview = new turnitintooltwo_view();
+            $submissionrow["row"] = $turnitintooltwoview->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts,
+                                                                                $partid, $submission, $useroverallgrades,
+                                                                                $istutor, 'refresh_row');
+            $submissionrow["submission_id"] = $submission->submission_objectid;
+
+            echo json_encode($submissionrow);
+        }
+        break;
+
+    case "enrol_all_students":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            echo $turnitintooltwoassignment->enrol_all_students($cm);
+        }
+        break;
+
+    case "refresh_rubric_select":
+        $courseid = required_param('course', PARAM_INT);
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $modulename = required_param('modulename', PARAM_ALPHA);
+
+        if (has_capability('moodle/course:update', context_course::instance($courseid))) {
+            // Set Rubric options to instructor rubrics.
+            $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
+            $instructor->set_user_values_from_tii();
+            $instructorrubrics = $instructor->get_instructor_rubrics();
+
+            $options = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
+
+            // Add in rubric if the selected rubric belongs to another instructor.
+            if (!empty($assignmentid)) {
+                if ($modulename == "turnitintooltwo") {
+                    $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+                } else {
+                    require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
+                    $pluginturnitin = new plagiarism_plugin_turnitin();
+                    $plagiarismsettings = $pluginturnitin->get_settings($assignmentid);
+                }
+
+                if ($modulename == "turnitintooltwo") {
+                    if (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
+                        $options[$turnitintooltwoassignment->turnitintooltwo->rubric] =
+                                                    (isset($options[$turnitintooltwoassignment->turnitintooltwo->rubric])) ?
+                                                                $options[$turnitintooltwoassignment->turnitintooltwo->rubric] :
+                                                                get_string('otherrubric', 'turnitintooltwo');
+                    }
+                } else {
+                    if (!empty($plagiarismsettings["plagiarism_rubric"])) {
+                        $options[$plagiarismsettings["plagiarism_rubric"]] =
+                                                    (isset($options[$plagiarismsettings["plagiarism_rubric"]])) ?
+                                                                    $options[$plagiarismsettings["plagiarism_rubric"]] :
+                                                                    get_string('otherrubric', 'turnitintooltwo');
+                    }
+                }
+            }
+        } else {
+            $options = array();
+        }
+        echo json_encode($options);
+        break;
+
+    case "get_files":
+        if (is_siteadmin()) {
+            $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
+            $PAGE->set_context($modules);
+            echo json_encode(turnitintooltwo_getfiles($modules->id));
+        }
+        break;
+
+    case "get_members":
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            $role = required_param('role', PARAM_ALPHA);
+            $members = $turnitintooltwoassignment->get_tii_users_by_role($role);
+
+            $PAGE->set_context(context_module::instance($cm->id));
+            $turnitintooltwoview = new turnitintooltwo_view();
+            $return["aaData"] = $turnitintooltwoview->get_tii_members_by_role($cm, $turnitintooltwoassignment, $members, $role);
+        } else {
+            $return["aaData"] = '';
+        }
+
+        echo json_encode($return);
+        break;
+
+    case "reveal_submission_name":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $return = array("status" => "fail", "msg" => get_string('unanonymiseerror', 'turnitintooltwo'));
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            $submissionid = required_param('submission_id', PARAM_INT);
+            $reason = optional_param('reason', get_string('noreason', 'turnitintooltwo'), PARAM_TEXT);
+
+            $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "turnitin");
+            if ($turnitintooltwosubmission->unanonymise_submission($reason)) {
+                if ($turnitintooltwosubmission->userid == 0) {
+                    $return["name"] = $turnitintooltwosubmission->nmlastname.", ".$turnitintooltwosubmission->nmfirstname;
+                } else {
+                    $user = new turnitintooltwo_user($turnitintooltwosubmission->userid);
+                    $return["name"] = $user->lastname.", ".$user->firstname;
+                }
+                $return["status"] = "success";
+            }
+
+            // Refresh submission and save.
+            $turnitintooltwosubmission->update_submission_from_tii();
+        }
+
+        echo json_encode($return);
+        break;
+
+    case "search_classes":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $coursetitle = optional_param('course_title', '', PARAM_TEXT);
+        $courseintegration = optional_param('course_integration', '', PARAM_ALPHANUM);
+        $courseenddate = optional_param('course_end_date', null, PARAM_TEXT);
+        $requestsource = optional_param('request_source', 'mod', PARAM_TEXT);
+
+        $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
+        $PAGE->set_context($modules);
+
+        $return = turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $courseintegration, $courseenddate, $requestsource);
+        echo json_encode($return);
+        break;
+
+    case "create_courses":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+        set_time_limit(0);
+        $coursecategory = optional_param('course_category', 0, PARAM_INT);
+        $createassignments = optional_param('create_assignments', 0, PARAM_INT);
+        $classids = required_param('class_ids', PARAM_SEQUENCE);
+        $classids = explode(",", $classids);
+
+        $i = 0;
+        foreach ($classids as $tiiclassid) {
+            $tiicoursename = $_SESSION['tii_classes'][$tiiclassid];
+            $coursename = $tiicoursename;
+
+            $course = turnitintooltwo_assignment::create_moodle_course($tiiclassid, $tiicoursename, $coursename, $coursecategory);
+            if ($createassignments == 1 && !empty($course)) {
+                $return = turnitintooltwo_get_assignments_from_tii($tiiclassid, "raw");
+
+                foreach ($return as $assignment) {
+                    turnitintooltwo_assignment::create_migration_assignment(array($assignment["tii_id"]),
+                                                                            $course->id, $assignment["tii_title"]);
+                }
+            }
+            $i++;
+        }
+
+        $result = new object();
+        $result->completed = $i;
+        $result->total = count($classids);
+        $msg = get_string('recreatemulticlassescomplete', 'turnitintooltwo', $result);
+
+        echo $msg;
+        break;
+
+    case "create_course":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $tiicoursename = optional_param('tii_course_name', get_string('defaultcoursetiititle', 'turnitintooltwo'), PARAM_TEXT);
+        $coursecategory = optional_param('course_category', 0, PARAM_INT);
+        $tiicourseid = optional_param('tii_course_id', 0, PARAM_INT);
+        $coursename = urldecode(optional_param('course_name', '', PARAM_TEXT));
+        if (empty($coursename)) {
+            $coursename = get_string('defaultcoursetiititle', 'turnitintooltwo')." (".$tiicourseid.")";
+        }
+
+        $course = turnitintooltwo_assignment::create_moodle_course($tiicourseid, urldecode($tiicoursename),
+                                                                    $coursename, $coursecategory);
+
+        $newcourse = array('courseid' => $course->id, 'coursename' => $course->fullname);
+        echo json_encode($newcourse);
+        break;
+
+    case "link_course":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $tiicoursename = optional_param('tii_course_name', get_string('defaultcoursetiititle', 'turnitintooltwo'), PARAM_TEXT);
+        $tiicourseid = optional_param('tii_course_id', 0, PARAM_INT);
+        $coursetolink = optional_param('course_to_link', 0, PARAM_INT);
+
+        $turnitincourse = new object();
+        $turnitincourse->courseid = $coursetolink;
+        $turnitincourse->ownerid = $USER->id;
+        $turnitincourse->turnitin_cid = $tiicourseid;
+        $turnitincourse->turnitin_ctl = urldecode($tiicoursename);
+        $turnitincourse->course_type = 'TT';
+
+        if (!$insertid = $DB->insert_record('turnitintooltwo_courses', $turnitincourse)) {
+            echo "0";
+        } else {
+            $course = $DB->get_record("course", array("id" => $coursetolink), 'fullname');
+            $newcourse = array('courseid' => $coursetolink, 'coursename' => $course->fullname);
+
+            echo json_encode($newcourse);
+        }
+        break;
+
+    case "get_assignments":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $tiicourseid = required_param('tii_course_id', PARAM_INT);
+        $return = turnitintooltwo_get_assignments_from_tii($tiicourseid, "json");
+        $return["number_of_assignments"] = count($return["aaData"]);
+        echo json_encode($return);
+        break;
+
+    case "create_assignment":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        set_time_limit(0);
+        $partids = required_param('parts', PARAM_SEQUENCE);
+        $courseid = optional_param('course_id', 0, PARAM_INT);
+        $assignmentname = optional_param('assignment_name', '', PARAM_TEXT);
+        $assignmentname = (empty($assignmentname)) ? get_string('defaultassignmenttiititle', 'turnitintooltwo') :
+                                                            urldecode($assignmentname);
+
+        $partids = explode(',', $partids);
+        if (is_array($partids)) {
+            turnitintooltwo_assignment::create_migration_assignment($partids, $courseid, $assignmentname);
+        }
+        break;
+
+    case "edit_course_end_date":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $tiicourseid = required_param('tii_course_id', PARAM_INT);
+        $tiicoursetitle = required_param('tii_course_title', PARAM_TEXT);
+        $enddated = required_param('end_date_d', PARAM_INT);
+        $enddatem = required_param('end_date_m', PARAM_INT);
+        $enddatey = required_param('end_date_y', PARAM_INT);
+
+        $enddate = mktime(00, 00, 00, $enddatem, $enddated, $enddatey);
+
+        if (turnitintooltwo_assignment::edit_tii_course_end_date($tiicourseid, $tiicoursetitle, $enddate)) {
+            $return["status"] = "success";
+            $return["end_date"] = userdate($enddate, get_string('strftimedate', 'langconfig'));
+        } else {
+            $return["status"] = "fail";
+            $return["msg"] = get_string('unanonymiseerror', 'turnitintooltwo');
+        }
+        echo json_encode($return);
+        break;
+
+    case "test_connection":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+        $data = array("connection_status" => "fail", "msg" => get_string('connecttestcommerror', 'turnitintooltwo'));
+
+        if (is_siteadmin()) {
+            // Initialise API connection.
+            $turnitincomms = new turnitintooltwo_comms();
+            $tiiapi = $turnitincomms->initialise_api();
+
+            $class = new TiiClass();
+            $class->setTitle('Test finding a class to see if connection works');
+
+            try {
+                $response = $tiiapi->findClasses($class);
+                $data["connection_status"] = "success";
+                $data["msg"] = get_string('connecttestsuccess', 'turnitintooltwo');
+            } catch (Exception $e) {
+                $turnitincomms->handle_exceptions($e, 'connecttesterror', false);
+            }
+            echo json_encode($data);
+        }
+        break;
+}

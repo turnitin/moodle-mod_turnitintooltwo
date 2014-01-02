@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>INSTALLING THE TURNITIN MOODLE ACTIVITY MODULE</title>
+<style>
+body {
+	font-family: arial,verdana,sans;
+}
+
+</style>
+</head>
+<body><h2>INSTALLING THE TURNITIN MOODLE ACTIVITY MODULE</h2>
+<hr />
+<p>This module is installed in the standard way, instructions on how to install an activity module in Moodle can be found here:</p>
+<blockquote><a href="http://docs.moodle.org/en/Installing_contributed_modules_or_plugins">http://docs.moodle.org/en/Installing_contributed_modules_or_plugins</a></blockquote>
+<p>In order for the module to work correctly you must enable support for cURL in your php.ini file. To do this locate the following line in your php.ini file:</p>
+<blockquote>;extension=php_curl.dll<br />
+<b><i>OR</i></b><br />
+;extension=php_curl.so</blockquote>
+<p>Remove the semi-colon at the start of the line to activate the php cURL extension. Once you have done this you will need to restart your web server service.</p>
+<p>More information on cURL and more detailed instructions for installing it can be found here:</p>
+<blockquote><a href="http://uk3.php.net/curl">http://uk3.php.net/curl</a></blockquote>
+<p>You may need to ensure that the turnitintooltwo directory within your designated data directory and it's logs subdirectory have the correct permissions to be able to create directories and files</p>
+</body>
+</html>
