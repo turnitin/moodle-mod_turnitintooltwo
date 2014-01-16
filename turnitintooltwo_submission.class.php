@@ -322,9 +322,7 @@ class turnitintooltwo_submission {
         // Check if user is a member of class, if not then join them to it.
         $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
         $user = new turnitintooltwo_user($this->userid, 'Learner');
-        if (!$user->check_user_class_membership($course->turnitin_cid)) {
-            $user->join_user_to_class($course->turnitin_cid);
-        }
+        $user->join_user_to_class($course->turnitin_cid);
 
         // Get the stored file and read it into a temp file for submitting to Turnitin.
         $fs = get_file_storage();

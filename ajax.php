@@ -408,10 +408,10 @@ switch ($action) {
         break;
 
     case "create_courses":
+        set_time_limit(0);
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
-        set_time_limit(0);
         $coursecategory = optional_param('course_category', 0, PARAM_INT);
         $createassignments = optional_param('create_assignments', 0, PARAM_INT);
         $classids = required_param('class_ids', PARAM_SEQUENCE);
@@ -489,6 +489,7 @@ switch ($action) {
         break;
 
     case "get_assignments":
+        set_time_limit(0);
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
@@ -500,11 +501,10 @@ switch ($action) {
         break;
 
     case "create_assignment":
+        set_time_limit(0);
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
-
-        set_time_limit(0);
         $partids = required_param('parts', PARAM_SEQUENCE);
         $courseid = optional_param('course_id', 0, PARAM_INT);
         $assignmentname = optional_param('assignment_name', '', PARAM_TEXT);

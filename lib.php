@@ -247,7 +247,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
     $currentcourse = turnitintooltwo_assignment::get_course_data($courseid);
     if ($action == "NEWCLASS") {
         // Delete Turnitin class link.
-        if (!$delete = $DB->delete_records('turnitintooltwo_courses', array('courseid', $courseid))) {
+        if (!$delete = $DB->delete_records('turnitintooltwo_courses', array('courseid' => $courseid))) {
             turnitintooltwo_print_error('coursedeleteerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }
@@ -342,8 +342,8 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $part = new stdClass();
             $part->id = $partid;
             $part->tiiassignid = $partassignid;
-            $part->turnitintooltwoid = $this->id;
-            $part->partname = $this->turnitintooltwo->$attribute;
+            $part->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
+            $part->partname = $turnitintooltwoassignment->turnitintooltwo->$attribute;
             $part->deleted = 0;
             $part->maxmarks = $assignment->getMaxGrade();
             $part->dtstart = strtotime($assignment->getStartDate());
@@ -357,14 +357,16 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
                 turnitintooltwo_activitylog("Moodle Assignment part updated (".$part->id.")", "REQUEST");
             }
 
-            if (!$delete = turnitintooltwo_delete_records('turnitintooltwo_submissions', 'submission_part', $partid)) {
+            if (!$delete = $DB->delete_records('turnitintooltwo_submissions', array('submission_part' => $partid))) {
                 turnitintooltwo_print_error('submissiondeleteerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
                 exit();
             }
         }
     }
 
-    $status = array('error' => $error);
+    $item = ($action == "NEWCLASS") ? get_string('copyassigndata', 'turnitintooltwo') : get_string('replaceassigndata', 'turnitintooltwo');
+    $status[] = array('component' => get_string('modulenameplural', 'turnitintooltwo'), 'item' => $item, 'error' => $error);
+
     return $status;
 }
 
@@ -520,7 +522,7 @@ function turnitintooltwo_updateavailable($module) {
         $ch = curl_init();
 
         // Set the url, number of POST vars, POST data.
-        curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodledirect_latest.xml");
+        curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodledirect2_latest.xml");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -557,6 +559,7 @@ function turnitintooltwo_updateavailable($module) {
  */
 function turnitintooltwo_get_assignments_from_tii($courseid, $returnformat = "json") {
     global $DB;
+
     $return = array();
     if ($returnformat == "json") {
         $return["aaData"] = array();
@@ -640,6 +643,8 @@ function turnitintooltwo_get_assignments_from_tii($courseid, $returnformat = "js
 function turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $courseintegration,
                                                 $courseenddate = null, $requestsource = "mod") {
     global $CFG, $DB, $OUTPUT, $USER;
+    set_time_limit(0);
+
     $_SESSION["stored_tii_courses"] = array();
     $return = array();
     $return["aaData"] = array();
