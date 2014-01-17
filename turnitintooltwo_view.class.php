@@ -1039,8 +1039,8 @@ class turnitintooltwo_view {
         }
 
         // Show Originality score with link to open document viewer.
-        if (!empty($submission->id) && !empty($submission->submission_objectid) && (($istutor) ||
-                                (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports))) {
+        if (!empty($submission->id) && !empty($submission->submission_objectid) && 
+                ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $score = $OUTPUT->box_start('row_score origreport_open', 'origreport_'.$submission->submission_objectid.
                                                                                     '_'.$partid.'_'.$submission->userid);
             // Show score.
