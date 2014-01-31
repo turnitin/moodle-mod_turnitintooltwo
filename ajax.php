@@ -564,4 +564,32 @@ switch ($action) {
             echo json_encode($data);
         }
         break;
+    case "submit_nothing":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            $partid = required_param('part', PARAM_INT);
+            $userid = required_param('user', PARAM_INT);
+            $turnitintooltwosubmission = new turnitintooltwo_submission();
+            $data = $turnitintooltwosubmission->do_tii_nothing_submission($cm, $turnitintooltwoassignment, $partid, $userid);
+        } else {
+            header("HTTP/1.0 403 Forbidden");
+            exit();
+        }
+        if ( !is_array( $data ) ) {
+            header("HTTP/1.0 400 Bad Request");
+            echo $data;
+            exit();
+        } else {
+            echo json_encode($data);
+        }
+    break;
 }
+

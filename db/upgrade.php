@@ -523,5 +523,23 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    // Do we really need anything above here?
+    if ($result && $oldversion < 2014012401) {
+        if (is_callable(array($DB,'get_manager'))) {
+            $dbman = $DB->get_manager();
+
+            $table = new xmldb_table('turnitintooltwo');
+            $field = new xmldb_field('allownonor', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, 0, 'rubric');
+            if (!$dbman->field_exists($table, $field)) {
+                $dbman->add_field($table, $field);
+            }
+        } else {
+            $table = new XMLDBTable('turnitintooltwo');
+            $field = new XMLDBField('allownonor');
+            $field->setAttributes(XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, null, 0, 'rubric');
+            $result = $result && add_field($table, $field);
+        }
+    }
+
     return $result;
 }

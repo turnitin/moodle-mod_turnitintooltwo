@@ -10,10 +10,10 @@ require_once( 'response.class.php' );
 require_once( 'sdkexception.class.php' );
 
 /**
- * @ignore 
+ * @ignore
  */
 class SubmissionSoap extends Soap {
-    
+
     public static $extensionname_vocab = 'http://www.turnitin.com/static/source/media/turnitinvocabularyv1p0.xml';
     public static $extensionvalue_vocab = 'http://www.imsglobal.org/vdex/lis/omsv1p0/extensionvocabularyv1p0.xml';
     public $ns;
@@ -52,7 +52,7 @@ class SubmissionSoap extends Soap {
             throw new TurnitinSDKException( $e->faultcode, $e->faultstring, parent::getLogPath() );
         }
     }
-    
+
     public function readSubmissions( $submission ) {
         try {
             $soap = $this->readResults( array( 'sourcedIdSet' => array( 'sourcedId' => $submission->getSubmissionIds() ) ) );
@@ -105,7 +105,7 @@ class SubmissionSoap extends Soap {
             throw new TurnitinSDKException( $e->faultcode, $e->faultstring, parent::getLogPath() );
         }
     }
-    
+
     public function findSubmissions( $submission ) {
         try {
             $soap = $this->readResultIdsForLineItem( array( 'lineItemSourcedid' => $submission->getAssignmentId() ) );
@@ -129,7 +129,7 @@ class SubmissionSoap extends Soap {
             throw new TurnitinSDKException( $e->faultcode, $e->faultstring, parent::getLogPath() );
         }
     }
-    
+
     public function findRecentSubmissions( $submission ) {
         try {
             $query = json_encode( array( 'lineitem_sourcedid' => $submission->getAssignmentId(), 'date_from' => $submission->getDateFrom() ) );
@@ -154,7 +154,7 @@ class SubmissionSoap extends Soap {
             throw new TurnitinSDKException( $e->faultcode, $e->faultstring, parent::getLogPath() );
         }
     }
-    
+
     public function updateSubmission( $submission ) {
         try {
             $request = $this->buildSubmissionRequest( $submission, true );
@@ -171,7 +171,33 @@ class SubmissionSoap extends Soap {
             throw new TurnitinSDKException( $e->faultcode, $e->faultstring, parent::getLogPath() );
         }
     }
-    
+
+    public function createSubmission( $submission ) {
+        try {
+            $request = array();
+            $request['resultRecord']['sourcedGUID']['sourcedId'] = '';
+            $request['resultRecord']['result']['personSourcedId'] = $submission->getAuthorUserId();
+            $request['resultRecord']['result']['lineItemSourcedId'] = $submission->getAssignmentId();
+            $request['resultRecord']['result']['extension']['extensionNameVocabulary'] = self::$extensionname_vocab;
+            $request['resultRecord']['result']['extension']['extensionValueVocabulary'] = self::$extensionvalue_vocab;
+            $request['resultRecord']['result']['extension']['extensionField'][0]['fieldName'] = 'Submitter';
+            $request['resultRecord']['result']['extension']['extensionField'][0]['fieldType'] = 'Integer';
+            $request['resultRecord']['result']['extension']['extensionField'][0]['fieldValue'] = $submission->getSubmitterUserId();
+            $soap = $this->createByProxyResult( $request );
+            $response = new Response( $this );
+            if ( $response->getStatus() == 'error' ) {
+                throw new TurnitinSDKException( $response->getStatusCode(), $response->getDescription() );
+            } else {
+                $tiiSubmission = new TiiSubmission();
+                $tiiSubmission->setSubmissionId( $soap->sourcedId );
+                $response->setSubmission( $tiiSubmission );
+            }
+            return $response;
+        } catch ( SoapFault $e ) {
+            throw new TurnitinSDKException( $e->faultcode, $e->faultstring, parent::getLogPath() );
+        }
+    }
+
     private function buildSubmissionRequest( $submission, $update = false ) {
         $request = array();
         if ( $update ) {
@@ -201,10 +227,10 @@ class SubmissionSoap extends Soap {
             $request['resultRecord']['result']['extension']['extensionNameVocabulary'] = self::$extensionname_vocab;
             $request['resultRecord']['result']['extension']['extensionValueVocabulary'] = self::$extensionvalue_vocab;
         }
-        
+
         return $request;
     }
-    
+
 }
 
 //?>

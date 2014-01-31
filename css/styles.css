@@ -4,6 +4,15 @@
     Author     : John McGettrick
 */
 
+.submit_nothing img {
+    padding-right: 8px;
+    cursor: pointer;
+}
+
+.nothingsubmit_warning {
+    display: none;
+}
+
 .row_score, .row_peermark_manager, .row_peermark_reviews {
     float:right;
 }

@@ -218,22 +218,7 @@ class turnitintooltwo_submission {
             $return['result'] = false;
             $return['message'] = get_string('submissionfileerror', 'turnitintooltwo');
         } else {
-            foreach ($files as $f) {
-                // Doublecheck here that file is an allowed extension - Moodle seems to allow
-                // some filetypes regardless of whether they are specified as an accepted type.
-                $ext = '.'.pathinfo($f->get_filename(), PATHINFO_EXTENSION);
-                if (!in_array($ext, $uploadoptions['accepted_types'])) {
-                    $DB->delete_records_select('files', " component = 'mod_turnitintooltwo' AND filearea = 'submissions' ".
-                                                        " AND contextid = ? AND itemid = ? ",
-                                                            array($context->id , $this->id));
-                    $return['result'] = false;
-                    $return['message'] = get_string('submissionfiletypeerror', 'turnitintooltwo',
-                                            implode(', ', $uploadoptions['accepted_types']));
-                } else {
-                    $this->submission_filename = $f->get_filename();
-                    $return['result'] = true;
-                }
-            }
+            $return['result'] = true;
         }
 
         return $return;
@@ -305,6 +290,68 @@ class turnitintooltwo_submission {
                 $turnitincomms->handle_exceptions($e, 'turnitindeletionerror');
             }
         }
+    }
+
+    /**
+     * Make a nothing submission to Turnitin (marking template)
+     *
+     * @global type $DB
+     * @param object $cm the course module object
+     * @param object $$turnitintooltwoassignment the turnitintooltwossignment object
+     *
+     * @return integer $submissionid the submissions id for the submission
+     */
+    public function do_tii_nothing_submission($cm, $turnitintooltwoassignment, $partid, $userid) {
+        global $DB, $USER;
+
+        $context = context_module::instance($cm->id);
+
+        // Check if user is a member of class, if not then join them to it.
+        $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+        $user = new turnitintooltwo_user($userid, 'Learner');
+        $user->join_user_to_class($course->turnitin_cid);
+
+        $part = $turnitintooltwoassignment->get_part_details($partid);
+
+        // Create Submission object to send to Turnitin.
+        $newsubmission = new TiiSubmission();
+        $newsubmission->setAssignmentId($part->tiiassignid);
+        $newsubmission->setAuthorUserId($user->tii_user_id);
+        $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
+        $instructor->edit_tii_user();
+
+        $newsubmission->setSubmitterUserId($instructor->tii_user_id);
+        $newsubmission->setRole('Instructor');
+
+        // Initialise Comms Object.
+        $turnitincomms = new turnitintooltwo_comms();
+        $turnitincall = $turnitincomms->initialise_api();
+
+        try {
+            $response = $turnitincall->createNothingSubmission($newsubmission);
+            $newsubmission = $response->getSubmission();
+
+            $submission = new object();
+            $submission->userid = $userid;
+            $submission->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
+            $submission->submission_part = $partid;
+            $submission->submission_title = get_string('gradingtemplate', 'turnitintooltwo');
+            $submission->submission_type = 1; // Always a file type
+            $submission->submission_objectid = $newsubmission->getSubmissionId();
+            $submission->submission_unanon = 0;
+            $submission->submission_grade = null;
+            $submission->submission_gmimaged = 0;
+
+            if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
+                return get_string('submissionupdateerror', 'turnitintooltwo');
+            } else {
+                return array( "submission_id" => $newsubmission->getSubmissionId() );
+            }
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+        return $data;
     }
 
     /**

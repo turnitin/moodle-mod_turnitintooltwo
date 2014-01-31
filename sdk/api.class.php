@@ -1550,6 +1550,49 @@ class TurnitinAPI {
     }
 
     /**
+     * Create a Nothing Submission on Turnitin (Submit).
+     *
+     * Takes a {@link TiiSubmission.html TiiSubmission} object containing the required parameters
+     * and returns a {@link Response.html Response} object containing the data from the response.
+     *
+     * A nothing submission will create a blank marking template into an assignment for a student. A nothing submission must be submitted by an instructor on behalf of a student.
+     *
+     * createSubmission accepts:
+     * <ul>
+     * <li><b>Submitter User Id</b><br />{@link TiiSubmission.html#setSubmitterUserId TiiSubmission->setSubmitterUserId( <i>integer</i> SubmitterUserId )}</li>
+     * <li><b>Assignment Id</b><br />{@link TiiSubmission.html#setAssignmentId TiiSubmission->setAssignmentId( <i>integer</i> AssignmentId )}</li>
+     * <li><b>Author User Id</b>* (Optional)<br />{@link TiiSubmission.html#setAuthorUserId TiiSubmission->setAuthorUserId( <i>integer</i> AuthorUserId )}</li>
+     * </ul>
+     * createNothingSubmission returns a {@link Response.html Response} object which contains a {@link TiiSubmission.html TiiSubmission} object:
+     * <ul>
+     * <li>{@link Response.html#getSubmission Response->getSubmission()} returns a {@link TiiSubmission.html TiiSubmission} object</li>
+     * <ul>
+     * <li><b>Submission ID</b><br />{@link TiiSubmission.html#getSubmissionId TiiSubmission->getSubmissionId()}</li>
+     * </ul>
+     * </ul>
+     *
+     * <h3>Example Code:</h3>
+     * <pre class="prettyprint lang-perl" style="padding: 12px;">
+     * $api = new APITurnitin( 1234, 'https://sandbox.turnitin.com', 'mysecret', 16 );
+     * $submission = new TiiSubmission();
+     * $submission->setAssignmentId( 1234 );
+     * $submission->setSubmitterUserId( 1234 );
+     * $submission->setAuthorUserId( 1234 );
+     *
+     * $response = $api->createSubmission( $submission );
+     * $newsubmission = $response->getSubmission();
+     * $newsubmissionid = $newsubmission->getSubmissionId();
+     * </pre>
+     *
+     * @param TiiSubmission $submission
+     * @return Response
+     */
+    public function createNothingSubmission( $submission ) {
+        $submissionSoap = $this->setOptions( new SubmissionSoap( $this->resultwsdl, $this->getServiceOptions( 'result' ) ) );
+        return $submissionSoap->createSubmission( $submission );
+    }
+
+    /**
      * Replace a Submission on Turnitin (Resubmit).
      *
      * Takes a {@link TiiSubmission.html TiiSubmission} object containing the required parameters
@@ -1648,7 +1691,6 @@ class TurnitinAPI {
     public function outputSubmissionForm( $submission, $uploadfile = false, $uploadtext = false, $return = false ) {
         $submissionLti = $this->setOptions( new LTI( $this->apibaseurl ) );
         $params = $submissionLti->getSubmissionFormHash($submission);
-        if ( !$uploadfile AND !$uploadtext ) $uploadfile = true;
         $output = $submissionLti->getFormHtml( $submission, $params, $uploadfile, $uploadtext );
         if ( $return ) {
             return $output;
@@ -1703,7 +1745,6 @@ class TurnitinAPI {
     public function outputResubmissionForm( $submission, $uploadfile = false, $uploadtext = false, $return = false ) {
         $submissionLti = $this->setOptions( new LTI( $this->apibaseurl ) );
         $params = $submissionLti->getResubmissionFormHash($submission);
-        if ( !$uploadfile AND !$uploadtext ) $uploadfile = true;
         $output = $submissionLti->getFormHtml( $submission, $params, $uploadfile, $uploadtext );
         if ( $return ) {
             return $output;
@@ -2515,6 +2556,142 @@ class TurnitinAPI {
     public function outputDownloadGradeMarkPDFForm( $lti, $return = false ) {
         $submissionLti = $this->setOptions( new LTI( $this->apibaseurl ) );
         $params = $submissionLti->getDownloadGradeMarkPDFFormHash($lti);
+        $output = $submissionLti->getFormHtml( $lti, $params, false, false );
+        if ( $lti->getAsJson() ) $output = json_encode( $params );
+        if ( $return ) {
+            return $output;
+        } else {
+            echo $output;
+        }
+    }
+
+    /**
+     * Output an Assignment Create Launch HTML Form
+     *
+     * Creates an html form with the required LTI parameters to launch a request to present a Turnitin Assignment Creation form.
+     *
+     * outputCreateAssignmentForm accepts:
+     * <ul>
+     * <li><b>User Id</b><br />{@link TiiLTI.html#setUserId TiiLTI->setUserId( <i>integer</i> UserId )}</li>
+     * <li><b>Class Id</b><br />{@link TiiLTI.html#setClassId TiiLTI->setClassId( <i>integer</i> ClassId )}</li>
+     * <li><b>Role</b><br />{@link TiiLTI.html#setRole TiiLTI->setRole( <i>string</i> Role )}</li>
+     * <li><b>Button Text</b> (Optional)<br />{@link TiiLTI.html#setButtonText TiiLTI->setButtonText( <i>string</i> ButtonText )}</li>
+     * <li><b>Button Image</b> (Optional)<br />{@link TiiLTI.html#setButtonImage TiiLTI->setButtonImage( <i>string</i> ButtonImage )}</li>
+     * <li><b>Form Target</b> (Optional)<br />{@link TiiLTI.html#setFormTarget TiiLTI->setFormTarget( <i>string</i> FormTarget )}</li>
+     * </ul>
+     * outputCreateAssignmentForm outputs an html form or returns the html as a string
+     *
+     * <h3>Example Code:</h3>
+     * <pre class="prettyprint lang-perl" style="padding: 12px;">
+     * $api = new APITurnitin( 1234, 'https://sandbox.turnitin.com', 'mysecret', 16 );
+     * $lti = new TiiLTI();
+     * $lti->setClassId( 1234 );
+     * $lti->setUserId( 1234 );
+     * $lti->setRole( 'Instructor' );
+     *
+     * $api->outputCreateAssignmentForm( $lti );
+     * </pre>
+     *
+     * @param TiiLTI $lti
+     * <br />
+     * @param boolean $return
+     * (Optional) Determines if the form html should be output or returned by the method<br />
+     * @return mixed
+     */
+    public function outputCreateAssignmentForm( $lti, $return = false ) {
+        $submissionLti = $this->setOptions( new LTI( $this->apibaseurl ) );
+        $params = $submissionLti->getCreateAssignmentFormHash($lti);
+        $output = $submissionLti->getFormHtml( $lti, $params, false, false );
+        if ( $lti->getAsJson() ) $output = json_encode( $params );
+        if ( $return ) {
+            return $output;
+        } else {
+            echo $output;
+        }
+    }
+
+    /**
+     * Output an Assignment Edit Launch HTML Form
+     *
+     * Creates an html form with the required LTI parameters to launch a request to present a Turnitin Assignment Edit form.
+     *
+     * outputEditAssignmentForm accepts:
+     * <ul>
+     * <li><b>User Id</b><br />{@link TiiLTI.html#setUserId TiiLTI->setUserId( <i>integer</i> UserId )}</li>
+     * <li><b>Assignment Id</b><br />{@link TiiLTI.html#setAssignmentId TiiLTI->setAssignmentId( <i>integer</i> AssignmentId )}</li>
+     * <li><b>Role</b><br />{@link TiiLTI.html#setRole TiiLTI->setRole( <i>string</i> Role )}</li>
+     * <li><b>Button Text</b> (Optional)<br />{@link TiiLTI.html#setButtonText TiiLTI->setButtonText( <i>string</i> ButtonText )}</li>
+     * <li><b>Button Image</b> (Optional)<br />{@link TiiLTI.html#setButtonImage TiiLTI->setButtonImage( <i>string</i> ButtonImage )}</li>
+     * <li><b>Form Target</b> (Optional)<br />{@link TiiLTI.html#setFormTarget TiiLTI->setFormTarget( <i>string</i> FormTarget )}</li>
+     * </ul>
+     * outputEditAssignmentForm outputs an html form or returns the html as a string
+     *
+     * <h3>Example Code:</h3>
+     * <pre class="prettyprint lang-perl" style="padding: 12px;">
+     * $api = new APITurnitin( 1234, 'https://sandbox.turnitin.com', 'mysecret', 16 );
+     * $lti = new TiiLTI();
+     * $lti->setAssignmentId( 1234 );
+     * $lti->setUserId( 1234 );
+     * $lti->setRole( 'Instructor' );
+     *
+     * $api->outputEditAssignmentForm( $lti );
+     * </pre>
+     *
+     * @param TiiLTI $lti
+     * <br />
+     * @param boolean $return
+     * (Optional) Determines if the form html should be output or returned by the method<br />
+     * @return mixed
+     */
+    public function outputEditAssignmentForm( $lti, $return = false ) {
+        $submissionLti = $this->setOptions( new LTI( $this->apibaseurl ) );
+        $params = $submissionLti->getEditAssignmentFormHash($lti);
+        $output = $submissionLti->getFormHtml( $lti, $params, false, false );
+        if ( $lti->getAsJson() ) $output = json_encode( $params );
+        if ( $return ) {
+            return $output;
+        } else {
+            echo $output;
+        }
+    }
+
+    /**
+     * Output an Assignment Inbox Launch HTML Form
+     *
+     * Creates an html form with the required LTI parameters to launch a request to present a Turnitin Assignment Inbox or Dashboard.
+     * When executed usder the role 'Instructor' a full inbox will be launched, if the role 'Learner' is used a Student Dashboard will be launched
+     *
+     * outputAssignmentInboxForm accepts:
+     * <ul>
+     * <li><b>User Id</b><br />{@link TiiLTI.html#setUserId TiiLTI->setUserId( <i>integer</i> UserId )}</li>
+     * <li><b>Assignment Id</b><br />{@link TiiLTI.html#setAssignmentId TiiLTI->setAssignmentId( <i>integer</i> AssignmentId )}</li>
+     * <li><b>Role</b><br />{@link TiiLTI.html#setRole TiiLTI->setRole( <i>string</i> Role )}</li>
+     * <li><b>Button Text</b> (Optional)<br />{@link TiiLTI.html#setButtonText TiiLTI->setButtonText( <i>string</i> ButtonText )}</li>
+     * <li><b>Button Image</b> (Optional)<br />{@link TiiLTI.html#setButtonImage TiiLTI->setButtonImage( <i>string</i> ButtonImage )}</li>
+     * <li><b>Form Target</b> (Optional)<br />{@link TiiLTI.html#setFormTarget TiiLTI->setFormTarget( <i>string</i> FormTarget )}</li>
+     * </ul>
+     * outputAssignmentInboxForm outputs an html form or returns the html as a string
+     *
+     * <h3>Example Code:</h3>
+     * <pre class="prettyprint lang-perl" style="padding: 12px;">
+     * $api = new APITurnitin( 1234, 'https://sandbox.turnitin.com', 'mysecret', 16 );
+     * $lti = new TiiLTI();
+     * $lti->setAssignmentId( 1234 );
+     * $lti->setUserId( 1234 );
+     * $lti->setRole( 'Instructor' );
+     *
+     * $api->outputAssignmentInboxForm( $lti );
+     * </pre>
+     *
+     * @param TiiLTI $lti
+     * <br />
+     * @param boolean $return
+     * (Optional) Determines if the form html should be output or returned by the method<br />
+     * @return mixed
+     */
+    public function outputAssignmentInboxForm( $lti, $return = false ) {
+        $submissionLti = $this->setOptions( new LTI( $this->apibaseurl ) );
+        $params = $submissionLti->getAssignmentInboxFormHash($lti);
         $output = $submissionLti->getFormHtml( $lti, $params, false, false );
         if ( $lti->getAsJson() ) $output = json_encode( $params );
         if ( $return ) {

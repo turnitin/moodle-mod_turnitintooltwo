@@ -36,6 +36,8 @@ class TiiSubmission extends TiiForm {
     private $role;
     private $submissiondatatext;
     private $submissiondatapath;
+    private $submissiondataurl;
+    private $submissiondatafilename;
     private $textextract;
     private $customcss;
     private $xmlresponse;
@@ -541,6 +543,67 @@ class TiiSubmission extends TiiForm {
      */
     public function setSubmissionDataPath($submissiondatapath) {
         $this->submissiondatapath = $submissiondatapath;
+    }
+
+    /**
+     * @ignore
+     * Get the URL for the Submission file
+     *
+     * Gets the URL for the file to be submitted to Turnitin
+     *
+     * @return string
+     */
+    public function getSubmissionDataUrl() {
+        return $this->submissiondataurl;
+    }
+
+    /**
+     * Set the URL for the Submission file
+     *
+     * Sets the URL for the file to be submitted to Turnitin
+     *
+     * @param string $submissiondataurl
+     */
+    private function setSubmissionDataUrl($submissiondataurl) {
+        $this->submissiondataurl = $submissiondataurl;
+    }
+
+    /**
+     * @ignore
+     * Get the Filename for the Submission file
+     *
+     * Gets the Filename for the file to be submitted to Turnitin
+     *
+     * @return string
+     */
+    public function getSubmissionDataFilename() {
+        return $this->submissiondatafilename;
+    }
+
+    /**
+     * Set the Filename for the Submission file
+     *
+     * Sets the Filename for the file to be submitted to Turnitin
+     *
+     * @param string $submissiondatafilename
+     */
+    private function setSubmissionDataFilename($submissiondatafilename) {
+        $this->submissiondatafilename = $submissiondatafilename;
+    }
+
+    /**
+     * Set the Web URL and Filename for the Submission file
+     *
+     * Sets the Web URL and Filename for the file to be submitted to Turnitin
+     * The URL must be accessible from the Turnitin servers, generally it is
+     * best to add a time limited access token to the URL
+     *
+     * @param string $url
+     * @param string $filename
+     */
+    public function setSubmissionDataWeb( $url, $filename ) {
+        $this->setSubmissionDataUrl( $url );
+        $this->setSubmissionDataFilename( $filename );
     }
 
     /**

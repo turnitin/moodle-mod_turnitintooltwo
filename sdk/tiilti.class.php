@@ -2,7 +2,7 @@
 
 /*
  * @package TurnitinAPI
- * @subpackage TiiLTI 
+ * @subpackage TiiLTI
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -11,14 +11,15 @@ require_once( 'tiiform.class.php' );
 
 /**
  * Defines the TiiLTI data object which contains getters and setters for a Turnitin LTI Launch object.
- * 
+ *
  * @package TurnitinSDK
  * @subpackage Data
  */
 class TiiLTI extends TiiForm {
-    
+
     private $submissionid;
     private $submissionids;
+    private $classid;
     private $assignmentid;
     private $userid;
     private $role;
@@ -27,6 +28,7 @@ class TiiLTI extends TiiForm {
     private $asjson;
     private $peermarkid;
     private $skipsetup;
+    private $studentlist;
 
     /**
      * @ignore
@@ -116,11 +118,23 @@ class TiiLTI extends TiiForm {
      * @ignore
      */
     const QUICKMARKENDPOINT            = '/api/lti/1p0/user/quickmark';
-    
+    /**
+     * @ignore
+     */
+    const CREATEASSIGNMENTENDPOINT       = '/api/lti/1p0/assignment/create';
+    /**
+     * @ignore
+     */
+    const EDITASSIGNMENTENDPOINT       = '/api/lti/1p0/assignment/edit';
+    /**
+     * @ignore
+     */
+    const ASSIGNMENTINBOXENDPOINT       = '/api/lti/1p0/assignment/inbox';
+
     /**
      * @ignore
      * Get the Submission ID for this LTI Launch
-     * 
+     *
      * @return integer
      */
     public function getSubmissionId() {
@@ -129,7 +143,7 @@ class TiiLTI extends TiiForm {
 
     /**
      * Set the Submission ID for this LTI Launch
-     * 
+     *
      * @param integer $submissionid
      */
     public function setSubmissionId($submissionid) {
@@ -139,7 +153,7 @@ class TiiLTI extends TiiForm {
     /**
      * @ignore
      * Get an array of Submissions IDs for this LTI Launch data object
-     * 
+     *
      * @return array
      */
     public function getSubmissionIds() {
@@ -158,7 +172,7 @@ class TiiLTI extends TiiForm {
     /**
      * @ignore
      * Get the Assignment ID for this LTI Launch
-     * 
+     *
      * @return integer
      */
     public function getAssignmentId() {
@@ -167,7 +181,7 @@ class TiiLTI extends TiiForm {
 
     /**
      * Set the Assignment ID for this LTI Launch
-     * 
+     *
      * @param integer $assignmentid
      */
     public function setAssignmentId($assignmentid) {
@@ -176,8 +190,27 @@ class TiiLTI extends TiiForm {
 
     /**
      * @ignore
+     * Get the Class ID for this LTI Launch
+     *
+     * @return integer
+     */
+    public function getClassId() {
+        return $this->classid;
+    }
+
+    /**
+     * Set the Class ID for this LTI Launch
+     *
+     * @param integer $classid
+     */
+    public function setClassId($classid) {
+        $this->classid = $classid;
+    }
+
+    /**
+     * @ignore
      * Get the User ID for this LTI Launch
-     * 
+     *
      * @return integer
      */
     public function getUserId() {
@@ -186,19 +219,19 @@ class TiiLTI extends TiiForm {
 
     /**
      * Set the User ID for this LTI Launch
-     * 
+     *
      * @param integer $userid
      */
     public function setUserId($userid) {
         $this->userid = $userid;
     }
-    
+
     /**
      * @ignore
      * Get the User Role for this LTI Launch
-     * 
+     *
      * A string that determines the role in which to launch the LTI request, Learner or Instructor
-     * 
+     *
      * @return string
      */
     public function getRole() {
@@ -207,9 +240,9 @@ class TiiLTI extends TiiForm {
 
     /**
      * Set the User Role for this LTI Launch
-     * 
+     *
      * A string that determines the role in which to launch the LTI request, Learner or Instructor
-     * 
+     *
      * @param string $role
      */
     public function setRole($role) {
@@ -219,7 +252,7 @@ class TiiLTI extends TiiForm {
     /**
      * @ignore
      * Get the XML Response option for this LTI Launch
-     * 
+     *
      * @return boolean
      */
     public function getXmlResponse() {
@@ -228,9 +261,9 @@ class TiiLTI extends TiiForm {
 
     /**
      * Set the XML Response option for this LTI Launch
-     * 
+     *
      * A boolean to determine if error messages should be returned as XML rather than HTML
-     * 
+     *
      * @param boolean $xmlresponse
      */
     public function setXmlResponse(  $xmlresponse ) {
@@ -239,10 +272,10 @@ class TiiLTI extends TiiForm {
 
     /**
      * @ignore
-     * Get the CSS URL for the LTI launch screen presentation 
-     * 
+     * Get the CSS URL for the LTI launch screen presentation
+     *
      * The URL of the CSS to be used to style the Turnitin screen presented by the LTI launch
-     * 
+     *
      * @return string
      */
     public function getCustomCSS() {
@@ -250,19 +283,19 @@ class TiiLTI extends TiiForm {
     }
 
     /**
-     * Set the CSS URL for the LTI launch screen presentation 
-     * 
+     * Set the CSS URL for the LTI launch screen presentation
+     *
      * The URL of the CSS to be used to style the Turnitin screen presented by the LTI launch
-     * 
+     *
      * @param string $customcss
      */
     public function setCustomCSS($customcss) {
         $this->customcss = $customcss;
     }
-    
+
     /**
      * Gets a boolean flag to indicate that the outputForm call from TurnitinAPI should return json rather than a form string
-     * 
+     *
      * @return boolean
      */
     public function getAsJson() {
@@ -271,7 +304,7 @@ class TiiLTI extends TiiForm {
 
     /**
      * Sets the boolean flag which indicate that the outputForm call from TurnitinAPI should return json rather than a form string
-     * 
+     *
      * @param boolean $asjson
      */
     public function setAsJson( $asjson ) {
@@ -280,7 +313,7 @@ class TiiLTI extends TiiForm {
 
     /**
      * Gets a the PeerMark Assignment ID, if set on a PeerMark LTI Launch the launch UI will be ring-fenced to this PeerMark assignment
-     * 
+     *
      * @return integer
      */
     public function getPeermarkId() {
@@ -289,7 +322,7 @@ class TiiLTI extends TiiForm {
 
     /**
      * Sets a the PeerMark Assignment ID, if set on a PeerMark LTI Launch the launch UI will be ring-fenced to this PeerMark assignment
-     * 
+     *
      * @param integer $peermarkid
      */
     public function setPeermarkId( $peermarkid ) {
@@ -298,7 +331,7 @@ class TiiLTI extends TiiForm {
 
     /**
      * Gets a the Boolean SkipSetup, this boolean is only usable on PeerMark setup launched and if set to true the initial set up screens in the UI are skipped
-     * 
+     *
      * @return boolean
      */
     public function getSkipSetup() {
@@ -307,11 +340,30 @@ class TiiLTI extends TiiForm {
 
     /**
      * Sets a the Boolean SkipSetup, this boolean is only usable on PeerMark setup launched and if set to true the initial set up screens in the UI are skipped
-     * 
+     *
      * @param boolean $skipsetup
      */
     public function setSkipSetup( $skipsetup ) {
         $this->skipsetup = $skipsetup;
+    }
+
+
+    /**
+     * Gets a list of students to limit the view of the inbox to just that subset
+     *
+     * @return string
+     */
+    public function getStudentList() {
+        return $this->studentlist;
+    }
+
+    /**
+     * Sets a list of students to limit the view of the inbox to just that subset
+     *
+     * @param string $studentlist
+     */
+    public function setStudentList($studentlist) {
+        $this->studentlist = $studentlist;
     }
 
 }

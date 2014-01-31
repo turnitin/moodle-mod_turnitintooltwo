@@ -217,6 +217,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         }
         $mform->setType('anon', PARAM_INT);
 
+        $mform->addElement('select', 'allownonor', get_string('allownonor', 'turnitintooltwo'), $ynoptions);
+        $mform->addHelpButton('allownonor', 'allownonor', 'turnitintooltwo');
+        $mform->setDefault('allownonor', $config->default_allownonor);
+
         $mform->addElement('select', 'studentreports', get_string('studentreports', 'turnitintooltwo'), $ynoptions);
         $mform->addHelpButton('studentreports', 'studentreports', 'turnitintooltwo');
         $mform->setDefault('studentreports', $config->default_studentreports);

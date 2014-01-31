@@ -218,7 +218,9 @@ class Soap extends SoapClient {
                         'AnonymousRevealDateTime' => 'DateTime',
                         'InstructorDefaults' => 'String',
                         'InstructorDefaultsSave' => 'String',
-                        'PeermarkAssignments' => 'String'
+                        'PeermarkAssignments' => 'String',
+                        'AllowNonOrSubmissions' => 'Boolean',
+                        'Submitter' => 'Integer'
                         );
         parent::__construct( $wsdl, $options );
     }

@@ -213,6 +213,10 @@ if ($ADMIN->fulltree) {
                                                     get_string('studentreports', 'turnitintooltwo'),
                                                     '', 0, $ynoptions ));
 
+    $settings->add(new admin_setting_configselect('turnitintooltwo/default_allownonor',
+                                                    get_string('allownonor', 'turnitintooltwo'),
+                                                    '', 0, $ynoptions ));
+
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_allowlate',
                                                     get_string('allowlate', 'turnitintooltwo'),
                                                     '', 0, $ynoptions ));

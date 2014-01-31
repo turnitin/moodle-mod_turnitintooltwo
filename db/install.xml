@@ -51,7 +51,8 @@
                 <FIELD NAME="erater_mechanics" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="erater_usage" NEXT="erater_style"/>
                 <FIELD NAME="erater_style" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="erater_mechanics" NEXT="transmatch"/>
                 <FIELD NAME="transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="erater_style" NEXT="rubric"/>
-                <FIELD NAME="rubric" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="transmatch"/>
+                <FIELD NAME="rubric" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="transmatch" NEXT="allownonor"/>
+                <FIELD NAME="allownonor" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="rubric"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />

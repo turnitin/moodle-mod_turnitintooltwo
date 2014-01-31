@@ -431,3 +431,8 @@ $string['turnitintooltwonotexist'] = 'Turnitintooltwo is not installed, this plu
 $string['pp_configuredesc'] = 'You must configure this module within the turnitintooltwo module. Please click <a href=../../admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> to configure this plugin&#34;';
 $string['coursestomigrate'] = 'You have {$a} classes available to migrate from Turnitin';
 $string['migrationheader'] = 'Turnitin Class Migration';
+$string['gradingtemplate'] = 'Grading Template';
+$string['allownonor'] = 'Allow submission of any file type?';
+$string['allownonor_help'] = "This setting will allow any file type to be submitted. With this option set to 'Yes', submissions will be checked for originality where possible, submissions will be available for download and GradeMark feedback tools will be available where possible.";
+$string['submitnothing'] = 'Enable grading for this student without submission';
+$string['submitnothingwarning'] = "Clicking on the gray pen for a student who hasn't submitted a file creates a grading template, which will allow you to give the student GradeMark feedback for the assignment. A grading template takes the place of a submission and will prevent the student from submitting to assignments where resubmission is not allowed.<br><br>Are you sure you want to grade without a submission?";

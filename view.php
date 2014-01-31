@@ -91,10 +91,7 @@ $turnitintooltwoview->load_page_components();
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 // For use when submitting.
 $turnitintooltwofileuploadoptions = array('maxbytes' => $turnitintooltwoassignment->turnitintooltwo->maxfilesize,
-                                            'subdirs' => false, 'maxfiles' => 1,
-                                            'accepted_types' => array('.doc', '.docx', '.rtf', '.txt', '.pdf', '.htm',
-                                                                        '.html', '.odt', '.eps', '.ps', '.wpd', '.hwp',
-                                                                        '.ppt', '.pptx', '.ppsx', '.pps'));
+                                            'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => '*');
 
 if (!$parts = $turnitintooltwoassignment->get_parts()) {
     turnitintooltwo_print_error('partgeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);

@@ -18,6 +18,19 @@ jQuery(document).ready(function($) {
         $("#id_submissionfile").parent().parent().hide();
     }
 
+    $('.submit_nothing').live('click', function() {
+        if ( $(this).hasClass("disabled") ) return;
+        $(this).addClass('disabled');
+        var part_id = $(this).prop('id').split('_')[2];
+        var student_id = $(this).prop('id').split('_')[3];
+        var message = $('.nothingsubmit_warning').first().html().replace(/<br>/g, "\n");
+        var cookieseen = $.cookie('submitnothingaccept');
+        if ( cookieseen || confirm( message ) ) {
+            submitNothing(student_id, part_id);
+        }
+        return;
+    });
+
     // Configure submit paper form elements depending on what submission type is selected
     $("#id_submissiontype").live('change', function() {
         if ($("#id_submissiontype").val() == 1) {
@@ -850,6 +863,30 @@ jQuery(document).ready(function($) {
         }
     }
 
+    // Initiate a nothing submission
+    function submitNothing( user_id, part_id ) {
+        $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/loader.gif');
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            dataType: "json",
+            data: {action: "submit_nothing", assignment: $('#assignment_id').html(),
+                    part: part_id, user: user_id, sesskey: M.cfg.sesskey},
+            success: function(data) {
+                eval(data);
+                $.cookie( 'submitnothingaccept', true, { expires: 365 } );
+            },
+            error: function(data) {
+                $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/icon-edit-grey.png');
+                $("#submitnothing_0_"+part_id+"_"+user_id).removeClass('disabled');
+                alert( data.responseText );
+            },
+            complete: function() {
+                refreshInboxRow( 'submitnothing', 0, part_id, user_id );
+            }
+        });
+    }
+
     // Refresh a row in the inbox after a submission has been made or DV closed
     function refreshInboxRow(link, submission_id, part_id, user_id) {
         $.ajax({
@@ -867,7 +904,6 @@ jQuery(document).ready(function($) {
                 } else {
                     link = link+"_"+data.submission_id;
                 }
-
                 $("#"+link+"_"+part_id+'_'+user_id).parent().parent().children().each(function() {
                     i++;
                     $(this).html(data.row[i]);

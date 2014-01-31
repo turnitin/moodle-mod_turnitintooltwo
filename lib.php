@@ -305,6 +305,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setInternetCheck($turnitintooltwoassignment->turnitintooltwo->internetcheck);
             $assignment->setPublicationsCheck($turnitintooltwoassignment->turnitintooltwo->journalcheck);
             $assignment->setTranslatedMatching($turnitintooltwoassignment->turnitintooltwo->transmatch);
+            $assignment->setAllowNonOrSubmissions($turnitintooltwoassignment->turnitintooltwo->allownonor);
 
             // Erater settings.
             $assignment->setErater((isset($turnitintooltwoassignment->turnitintooltwo->erater)) ?

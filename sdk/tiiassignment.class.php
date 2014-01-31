@@ -50,6 +50,7 @@ class TiiAssignment {
     private $instructordefaults;
     private $instructordefaultssave;
     private $peermarkassignments;
+    private $allownonorsubmissions;
 
     /**
      * Set the Class ID
@@ -949,6 +950,28 @@ class TiiAssignment {
      */
     public function setPeermarkAssignments( $peermarkassignments ) {
         $this->peermarkassignments = $peermarkassignments;
+    }
+
+    /**
+     * Get the AllowNonOrSubmissions boolean
+     *
+     * Returns the boolean that determines if this assignment should accept files that will not generate an Originality Report
+     *
+     * @return array
+     */
+    public function getAllowNonOrSubmissions() {
+        return $this->allownonorsubmissions;
+    }
+
+    /**
+     * Get the AllowNonOrSubmissions boolean
+     *
+     * Sets the boolean that determines if this assignment should accept files that will not generate an Originality Report
+     *
+     * @param array $allownonorsubmissions
+     */
+    public function setAllowNonOrSubmissions( $allownonorsubmissions ) {
+        $this->allownonorsubmissions = $allownonorsubmissions;
     }
 
 }

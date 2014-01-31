@@ -1039,7 +1039,11 @@ class turnitintooltwo_view {
         }
 
         // Show Originality score with link to open document viewer.
-        if (!empty($submission->id) && !empty($submission->submission_objectid) && 
+        if ( !empty($submission->id) && is_null($submission->submission_score) && $turnitintooltwoassignment->turnitintooltwo->allownonor ) {
+            // Don't show if there is no OR score and allownonor is enabled
+            $rawscore = -1;
+            $score = '--';
+        } else if (!empty($submission->id) && !empty($submission->submission_objectid) && 
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $score = $OUTPUT->box_start('row_score origreport_open', 'origreport_'.$submission->submission_objectid.
                                                                                     '_'.$partid.'_'.$submission->userid);
@@ -1068,7 +1072,8 @@ class turnitintooltwo_view {
         if ($config->usegrademark && $turnitintooltwoassignment->turnitintooltwo->usegrademark) {
             if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                 $submissiongrade = (!empty($submission->submission_grade)) ? $submission->submission_grade : '';
-                if (empty($submissiongrade) || ($submission->submission_gmimaged == 0 && !$istutor)) {
+
+                if ($submission->submission_gmimaged == 0 && !$istutor) {
                     $submissiongrade = "--";
                 }
 
@@ -1085,6 +1090,14 @@ class turnitintooltwo_view {
                 // Put in div placeholder for DV launch form.
                 $grade .= $OUTPUT->box('', 'launch_form', 'grademark_form_'.$submission->submission_objectid);
                 $rawgrade = ($submissiongrade == "--") ? -1 : $submissiongrade;
+
+            } else if ( !isset($submission->submission_objectid) && $istutor ) {
+                // Allow nothing submission if no submission has been made and this is a tutor
+                $grade = $OUTPUT->box(get_string('submitnothingwarning', 'turnitintooltwo'),'nothingsubmit_warning', '');
+                $grade .= $OUTPUT->box($OUTPUT->pix_icon('icon-edit-grey',
+                                        get_string('submitnothing', 'turnitintooltwo'), 'mod_turnitintooltwo'),
+                                        'submit_nothing', 'submitnothing_0_'.$partid.'_'.$submission->userid);
+                $rawgrade = -1;
             } else {
                 $rawgrade = -1;
                 $grade = $OUTPUT->box('--', '');
