@@ -75,7 +75,8 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
             'submission_status', 'submission_queued', 'submission_attempts',
             'submission_modified', 'submission_parent', 'submission_nmuserid',
             'submission_nmfirstname', 'submission_nmlastname', 'submission_unanon',
-            'submission_anonreason', 'submission_transmatch', 'tiiuserid'));
+            'submission_anonreason', 'submission_transmatch', 'submission_orcapable',
+            'submission_acceptnothing', 'tiiuserid'));
 
         // Build the tree
         $submissions->add_child($submission);
