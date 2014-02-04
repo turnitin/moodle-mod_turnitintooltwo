@@ -220,7 +220,9 @@ class Soap extends SoapClient {
                         'InstructorDefaultsSave' => 'String',
                         'PeermarkAssignments' => 'String',
                         'AllowNonOrSubmissions' => 'Boolean',
-                        'Submitter' => 'Integer'
+                        'Submitter' => 'Integer',
+                        'OriginalityReportCapable' => 'Boolean',
+                        'AcceptNothingSubmission' => 'Boolean'
                         );
         parent::__construct( $wsdl, $options );
     }

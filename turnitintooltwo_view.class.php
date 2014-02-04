@@ -1039,11 +1039,11 @@ class turnitintooltwo_view {
         }
 
         // Show Originality score with link to open document viewer.
-        if ( !empty($submission->id) && is_null($submission->submission_score) && $turnitintooltwoassignment->turnitintooltwo->allownonor ) {
-            // Don't show if there is no OR score and allownonor is enabled
+        if ( !empty($submission->id) && is_null($submission->submission_score) && $submission->submission_orcapable == 0 ) {
+            // Don't show if there is no OR score and submission is not OR capable
             $rawscore = -1;
             $score = '--';
-        } else if (!empty($submission->id) && !empty($submission->submission_objectid) && 
+        } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $score = $OUTPUT->box_start('row_score origreport_open', 'origreport_'.$submission->submission_objectid.
                                                                                     '_'.$partid.'_'.$submission->userid);
@@ -1175,7 +1175,7 @@ class turnitintooltwo_view {
         }
 
         // Download submission in original format.
-        if (!empty($submission->submission_objectid) && !empty($submission->id)) {
+        if (!empty($submission->submission_objectid) && !empty($submission->id) && !$submission->submission_acceptnothing) {
             $download = $OUTPUT->box($OUTPUT->pix_icon('file-download', get_string('downloadsubmission', 'turnitintooltwo'),
                                         'mod_turnitintooltwo'), 'download_original_open',
                                         'downloadoriginal_'.$submission->submission_objectid."_".$partid."_".$submission->userid);

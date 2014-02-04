@@ -523,7 +523,6 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    // Do we really need anything above here?
     if ($result && $oldversion < 2014012401) {
         if (is_callable(array($DB,'get_manager'))) {
             $dbman = $DB->get_manager();
@@ -533,13 +532,30 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
             if (!$dbman->field_exists($table, $field)) {
                 $dbman->add_field($table, $field);
             }
+            $table = new xmldb_table('turnitintooltwo_submissions');
+            $field1 = new xmldb_field('submission_acceptnothing', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, 0, 'submission_transmatch');
+            $field2 = new xmldb_field('submission_orcapable', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, 0, 'submission_acceptnothing');
+            if (!$dbman->field_exists($table, $field1)) {
+                $dbman->add_field($table, $field1);
+            }
+            if (!$dbman->field_exists($table, $field2)) {
+                $dbman->add_field($table, $field2);
+            }
         } else {
             $table = new XMLDBTable('turnitintooltwo');
             $field = new XMLDBField('allownonor');
             $field->setAttributes(XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, null, 0, 'rubric');
             $result = $result && add_field($table, $field);
+            $table = new XMLDBTable('turnitintooltwo_submissions');
+            $field1 = new XMLDBField('submission_acceptnothing');
+            $field1->setAttributes(XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, null, 0, 'submission_transmatch');
+            $result = $result && add_field($table, $field1);
+            $field2 = new XMLDBField('submission_orcapable');
+            $field2->setAttributes(XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, null, 0, 'submission_acceptnothing');
+            $result = $result && add_field($table, $field2);
         }
     }
 
     return $result;
 }
+

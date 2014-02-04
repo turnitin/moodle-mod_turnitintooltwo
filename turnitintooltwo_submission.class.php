@@ -41,6 +41,8 @@ class turnitintooltwo_submission {
     public $submission_unanon;
     private $submission_unanonreason;
     public $submission_transmatch;
+    public $submission_orcapable;
+    public $submission_acceptnothing;
     public $overall_grade;
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
@@ -341,6 +343,8 @@ class turnitintooltwo_submission {
             $submission->submission_unanon = 0;
             $submission->submission_grade = null;
             $submission->submission_gmimaged = 0;
+            $submission->submission_acceptnothing = 1;
+            $submission->submission_orcapable = 0;
 
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
@@ -440,6 +444,7 @@ class turnitintooltwo_submission {
                 $submission->submission_unanon = $this->submission_unanon;
                 $submission->submission_unanonreason = $this->submission_unanonreason;
                 $submission->submission_transmatch = $this->submission_transmatch;
+                $submission->submission_acceptnothing = 0;
 
                 $DB->update_record('turnitintooltwo_submissions', $submission);
 
@@ -525,6 +530,8 @@ class turnitintooltwo_submission {
         $sub->submission_grade = ($tiisubmissiondata->getGrade()) ? $tiisubmissiondata->getGrade() : null;
         $sub->submission_gmimaged = $tiisubmissiondata->getFeedbackExists();
         $sub->submission_unanon = ($tiisubmissiondata->getAnonymous() == 1) ? 0 : 1;
+        $sub->submission_orcapable = ($tiisubmissiondata->getOriginalityReportCapable() == 1) ? 1 : 0;
+        $sub->submission_acceptnothing = ($tiisubmissiondata->getAcceptNothingSubmission() == 1) ? 1 : 0;
         $sub->submission_unanonreason = ($sub->submission_unanon == 1) ?
                                             urldecode($tiisubmissiondata->getAnonymousRevealReason()) : null;
 

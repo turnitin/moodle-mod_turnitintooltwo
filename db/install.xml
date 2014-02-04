@@ -130,7 +130,9 @@
                 <FIELD NAME="submission_nmlastname" TYPE="text" LENGTH="medium" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submission_nmfirstname" NEXT="submission_unanon"/>
                 <FIELD NAME="submission_unanon" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_nmlastname" NEXT="submission_unanonreason"/>
                 <FIELD NAME="submission_unanonreason" TYPE="text" LENGTH="medium" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submission_unanon" NEXT="submission_transmatch"/>
-                <FIELD NAME="submission_transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submission_unanonreason"/>
+                <FIELD NAME="submission_transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submission_unanonreason" NEXT="submission_acceptnothing"/>
+                <FIELD NAME="submission_acceptnothing" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submission_transmatch" NEXT="submission_orcapable"/>
+                <FIELD NAME="submission_orcapable" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="submission_acceptnothing"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />

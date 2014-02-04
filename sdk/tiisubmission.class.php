@@ -45,6 +45,8 @@ class TiiSubmission extends TiiForm {
     private $anonymousrevealreason;
     private $anonymousrevealdatetime;
     private $anonymousrevealuser;
+    private $originalityreportcapable;
+    private $acceptnothingsubmission;
 
     /**
      * @ignore
@@ -746,6 +748,50 @@ class TiiSubmission extends TiiForm {
      */
     public function setAnonymousRevealDateTime($anonymousrevealdatetime) {
         $this->anonymousrevealdatetime = $anonymousrevealdatetime;
+    }
+
+    /**
+     * Get the Boolean value for OriginalityReportCapable
+     *
+     * Determines if a submission is capable of generating originality reports
+     *
+     * @return string
+     */
+    public function getOriginalityReportCapable() {
+        return $this->originalityreportcapable;
+    }
+
+    /**
+     * @ignore
+     *
+     * Determines if a submission is capable of generating originality reports
+     *
+     * @param string $originalityreportcapable
+     */
+    public function setOriginalityReportCapable($originalityreportcapable) {
+        $this->originalityreportcapable = $originalityreportcapable;
+    }
+
+    /**
+     * Get the Boolean value for AcceptNothingSubmission
+     *
+     * Determines if a submission is an accept nothing submission (Grading Template)
+     *
+     * @return string
+     */
+    public function getAcceptNothingSubmission() {
+        return $this->acceptnothingsubmission;
+    }
+
+    /**
+     * @ignore
+     *
+     * Determines if a submission is an accept nothing submission (Grading Template)
+     *
+     * @param string $acceptnothingsubmission
+     */
+    public function setAcceptNothingSubmission($acceptnothingsubmission) {
+        $this->acceptnothingsubmission = $acceptnothingsubmission;
     }
 
 }
