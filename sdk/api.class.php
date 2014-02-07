@@ -64,11 +64,11 @@ class TurnitinAPI {
         $this->integrationid = $integrationid;
         $this->language   = $language;
 
-        $this->personwsdl = 'http://www.turnitin.com/static/resources/files/lis-person.wsdl';
-        $this->coursesectionwsdl = 'http://www.turnitin.com/static/resources/files/lis-coursesection.wsdl';
-        $this->lineitemwsdl = 'http://www.turnitin.com/static/resources/files/lis-lineitem.wsdl';
-        $this->membershipwsdl = 'http://www.turnitin.com/static/resources/files/lis-membership.wsdl';
-        $this->resultwsdl = 'http://www.turnitin.com/static/resources/files/lis-result.wsdl';
+        $this->personwsdl = 'https://www.turnitin.com/static/resources/files/lis-person.wsdl';
+        $this->coursesectionwsdl = 'https://www.turnitin.com/static/resources/files/lis-coursesection.wsdl';
+        $this->lineitemwsdl = 'https://www.turnitin.com/static/resources/files/lis-lineitem.wsdl';
+        $this->membershipwsdl = 'https://www.turnitin.com/static/resources/files/lis-membership.wsdl';
+        $this->resultwsdl = 'https://www.turnitin.com/static/resources/files/lis-result.wsdl';
     }
 
     /**
