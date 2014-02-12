@@ -1073,7 +1073,7 @@ class turnitintooltwo_view {
             if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                 $submissiongrade = (!empty($submission->submission_grade)) ? $submission->submission_grade : '';
 
-                if ($submission->submission_gmimaged == 0 && !$istutor) {
+                if (empty($submission->submission_grade) || ($submission->submission_gmimaged == 0 && !$istutor)) {
                     $submissiongrade = "--";
                 }
 
