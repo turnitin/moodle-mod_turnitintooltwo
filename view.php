@@ -379,6 +379,10 @@ switch ($do) {
 
     case "rubricview":
         if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+            $user = new turnitintooltwo_user($USER->id, "Learner");
+            $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $user->join_user_to_class($course->turnitin_cid);
+            
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_view', 'Learner',
                                                     $parts[$part]->tiiassignid), array("class" => "launch_form"));
         }
