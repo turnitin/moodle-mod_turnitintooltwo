@@ -213,7 +213,7 @@ td a.editable-click {
     padding-right:8px;
 }
 
-.student_read, .center {
+.student_read, .centered_cell, .centered_div {
     text-align:center !important;
 }
 

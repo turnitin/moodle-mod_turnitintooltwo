@@ -405,7 +405,7 @@ $string['nonenrolledstudent'] = 'Estudiante no inscrito';
 $string['startdatenotyearago'] = 'La fecha inicial no puede ser anterior a 1 año';
 $string['searchcourses'] = 'Buscar cursos';
 $string['errorsdesc'] = 'Ha ocurrido un problema al intentar subir los siguientes archivos a Turnitin.';
-$string['tiiexplain'] = 'Turnitin es un producto comercial y debes estar suscrito para utilizar el servicio. Para más información visita <a href=http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a>&#34;';
+$string['tiiexplain'] = 'Turnitin es un producto comercial y debes estar suscrito para utilizar el servicio. Para más información visita <a href=&#34;http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a>';
 $string['userprofileteachercache'] = 'Memoria cache del curso de profesor deTurnitin';
 $string['userprofileteachercache_desc'] = 'Este campo lo utiliza el plugin de Turnitin para mantener un registro de todos los cursos que se le han asignado a un profesor. Como profesor, puedes eliminar la información de este campo, pero puede afectar al desempeño.';
 $string['useturnitin'] = 'Habilitar Turnitin';
@@ -427,7 +427,6 @@ $string['defaultupdated'] = 'Las opciones por defecto de Turnitin se han actuali
 $string['pp_createsubmissionerror'] = 'Ha ocurrido un error en el plugin de plagio al crear una entrega';
 $string['pp_updatesubmissionerror'] = 'Ha ocurrido un error en el plugin de plagio al actualizar una entrega';
 $string['pp_submission_error'] = 'Ha ocurrido un error con tu entrega:';
-$string['turnitintooltwonotexist'] = 'Turnitintooltwo no está instalado. Este plugin requiere que se instale el módulo de actividad del ejercicio 2 de Turnitin para poder ser utilizado.';
-$string['pp_configuredesc'] = 'Debes configurar este módulo dentro del módulo de turnitintooltwo. Por favor, haz clic en <a href=../../admin/settings.php?section=modsettingturnitintooltwo&#34;>aquí </a> para configurar este plugin&#34;';
+$string['pp_configuredesc'] = 'Debes configurar este módulo dentro del módulo de turnitintooltwo. Por favor, haz clic en <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>aquí </a> para configurar este plugin';
 $string['coursestomigrate'] = 'Tienes {$a} clases disponibles para migrar desde Turnitin';
 $string['migrationheader'] = 'Migración de la clase de Turnitin';

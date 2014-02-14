@@ -229,7 +229,7 @@ switch ($cmd) {
         // Do the table headers.
         $cells = array();
         $cells[0] = new html_table_cell(html_writer::checkbox('selectallcb', 1, false));
-        $cells[0]->attributes['class'] = 'center';
+        $cells[0]->attributes['class'] = 'centered_cell';
         $cells['turnitinid'] = new html_table_cell(get_string('turnitinid', 'turnitintooltwo'));
         $cells['lastname'] = new html_table_cell(get_string('lastname'));
         $cells['firstname'] = new html_table_cell(get_string('firstname'));
@@ -350,7 +350,7 @@ switch ($cmd) {
         // Do the table headers.
         $cells = array();
         $cells[0] = new html_table_cell(html_writer::checkbox('selectallcb', 1, false));
-        $cells[0]->attributes['class'] = 'center';
+        $cells[0]->attributes['class'] = 'centered_cell';
         $cells[1] = new html_table_cell(get_string('coursetitle', 'turnitintooltwo'));
         $cells[2] = new html_table_cell(get_string('integration', 'turnitintooltwo'));
         $cells[3] = new html_table_cell(get_string('ced', 'turnitintooltwo'));
@@ -381,14 +381,14 @@ switch ($cmd) {
         $classids = substr($classids, 0, -2);
 
         $output = html_writer::tag('div', get_string('recreatemulticlasses', 'turnitintooltwo'),
-                                            array('class' => 'course_creation_bulk_msg center'));
+                                            array('class' => 'course_creation_bulk_msg centered_div'));
         $output .= $OUTPUT->box($category, '', 'course_category');
         $output .= $OUTPUT->box($assignments, '', 'create_assignments');
         $output .= $OUTPUT->box($classids, '', 'class_ids');
 
         $output .= html_writer::tag('div', $OUTPUT->pix_icon('loader',
                                         get_string('recreatemulticlasses', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        array('id' => 'course_creation_status', 'class' => 'center'));
+                                        array('id' => 'course_creation_status', 'class' => 'centered_div'));
         break;
 
     case "class_recreation":

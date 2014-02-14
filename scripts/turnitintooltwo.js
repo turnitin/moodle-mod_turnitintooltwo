@@ -194,7 +194,7 @@ jQuery(document).ready(function($) {
             "bProcessing": true,
             "sAjaxSource": "ajax.php",
             "aoColumnDefs": [
-                {"bSortable": false, "sClass": "center", "aTargets": [0]},
+                {"bSortable": false, "sClass": "centered_cell", "aTargets": [0]},
                 {"sClass": "left", "aTargets": [1]}
             ],
             "oLanguage": dataTablesLang,

@@ -132,14 +132,14 @@ switch ($cmd) {
         }
 
         $output = html_writer::tag('div', get_string('recreatemulticlasses', 'turnitintooltwo'),
-                                                array('class' => 'course_creation_bulk_msg center'));
+                                                array('class' => 'course_creation_bulk_msg centered_div'));
         $output .= $OUTPUT->box($category, '', 'course_category');
         $output .= $OUTPUT->box($assignments, '', 'create_assignments');
         $output .= $OUTPUT->box(implode(",", $classids), '', 'class_ids');
 
         $output .= html_writer::tag('div', $OUTPUT->pix_icon('loader', get_string('recreatemulticlasses', 'turnitintooltwo'),
                                                                 'mod_turnitintooltwo'),
-                                    array('id' => 'course_creation_status', 'class' => 'center'));
+                                    array('id' => 'course_creation_status', 'class' => 'centered_div'));
         break;
 
     case "class_recreation":

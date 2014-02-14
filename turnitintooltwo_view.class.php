@@ -229,7 +229,7 @@ class turnitintooltwo_view {
         $receipt .= html_writer::tag('span', html_writer::tag('p', $digitalreceipt["extract"]), array('class' => 'extract_text'));
 
         $icon = $OUTPUT->box($OUTPUT->pix_icon('icon', get_string('turnitin', 'turnitintooltwo'),
-                                                    'mod_turnitintooltwo'), 'center');
+                                                    'mod_turnitintooltwo'), 'centered_div');
         $output = $OUTPUT->box($icon.$receipt, 'generalbox', 'digital_receipt');
 
         return $output;
@@ -554,7 +554,7 @@ class turnitintooltwo_view {
                                     ($j == 8 && $origreportenabled && $grademarkenabled)) {
                             $cells[$j]->attributes['class'] = "raw_data";
                         } else {
-                            $cells[$j]->attributes['class'] = "center";
+                            $cells[$j]->attributes['class'] = "centered_cell";
                         }
 
                         if ((count($submission) == 14 && $j == 9) || (count($submission) == 13 && $j == 8)) {
@@ -1538,7 +1538,7 @@ class turnitintooltwo_view {
 
             if ($course->format == "weeks" || $course->format == "topics") {
                 $cells[$course->format] = new html_table_cell($turnitintooltwoassignment->turnitintooltwo->section);
-                $cells[$course->format]->attributes["class"] = "center";
+                $cells[$course->format]->attributes["class"] = "centered_cell";
             }
 
             // Show links dimmed if the mod is hidden.
@@ -1549,10 +1549,10 @@ class turnitintooltwo_view {
             $cells["name"] = new html_table_cell(html_writer::link($linkurl, $turnitintooltwo->name, $attributes));
             $cells["start_date"] = new html_table_cell(userdate($turnitintooltwoassignment->get_start_date(),
                                                             get_string('strftimedatetimeshort', 'langconfig')));
-            $cells["start_date"]->attributes["class"] = "center";
+            $cells["start_date"]->attributes["class"] = "centered_cell";
 
             $cells["number_of_parts"] = new html_table_cell(count($turnitintooltwoassignment->get_parts()));
-            $cells["number_of_parts"]->attributes["class"] = "center";
+            $cells["number_of_parts"]->attributes["class"] = "centered_cell";
 
             if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
                 $noofsubmissions = $turnitintooltwoassignment->count_submissions($cm, 0);
@@ -1561,7 +1561,7 @@ class turnitintooltwo_view {
                                                         $turnitintooltwoassignment->turnitintooltwo->id));
             }
             $cells["submissions"] = new html_table_cell(html_writer::link($linkurl, $noofsubmissions, $attributes));
-            $cells["submissions"]->attributes["class"] = "center";
+            $cells["submissions"]->attributes["class"] = "centered_cell";
 
             $rows[$i] = new html_table_row($cells);
             $i++;
