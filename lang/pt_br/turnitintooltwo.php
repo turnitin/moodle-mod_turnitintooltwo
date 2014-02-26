@@ -1,6 +1,6 @@
 <?php
-// Version: 2013111402
-// Date: 2013-11-14
+// Version: 2014012401
+// Date: 2014-01-24
 // Language: pt_br
 
 $string['addsubmission'] = 'Adicionar Envio';
@@ -90,7 +90,7 @@ $string['proxyurl_desc'] = '<b>[Opcional]</b><br /> Se o seu servidor utiliza um
 $string['proxyuser'] = 'Nome de usuário do Proxy';
 $string['proxyuser_desc'] = '<b>[Opcional]</b><br /> Se o seu proxy exige Autenticação, digite o nome do usuário aqui.';
 $string['reportgenspeed'] = 'Velocidade de Geração do Relatório';
-$string['reportgenspeed_help'] = 'Há três opções para essa configuração de trabalho: &#34;'.$string['genimmediately1'].'&#34;, &#34;'.$string['genimmediately2'].'&#34;, e &#34;'.$string['genduedate'].'&#34;.<br /><br />A opção &#34;'.$string['genimmediately1'].'&#34; gera imediatamente o Relatório de Originalidade quando um aluno faz um envio. Com essa opção selecionada, seus alunos não poderão fazer outro envio ao trabalho.<br /><br />Para permitir reenvios, selecione a opção &#34;'.$string['genimmediately2'].'&#34;. Essa opção permite que os alunos continuem a reenviar seus documentos aos trabalhos até a data de entrega. Pode levar até 24 horas para processar os Relatórios de Originalidade a partir dos reenvios.A opção &#34;'.$string['genduedate'].'&#34; irá gerar um Relatório de Originalidade somente na data de entrega do trabalho. Essa configuração fará com que todos os documentos enviados ao trabalho sejam comparados uns com os outros quando os Relatórios Originalidade forem criados.';
+$string['reportgenspeed_help'] = 'Há três opções para essa configuração de trabalho: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;, e &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />A opção &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; gera imediatamente o Relatório de Originalidade quando um aluno faz um envio. Com essa opção selecionada, seus alunos não poderão fazer outro envio ao trabalho.<br /><br />Para permitir reenvios, selecione a opção &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;. Essa opção permite que os alunos continuem a reenviar seus documentos aos trabalhos até a data de entrega. Pode levar até 24 horas para processar os Relatórios de Originalidade a partir dos reenvios.A opção &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; irá gerar um Relatório de Originalidade somente na data de entrega do trabalho. Essa configuração fará com que todos os documentos enviados ao trabalho sejam comparados uns com os outros quando os Relatórios Originalidade forem criados.';
 $string['resubmission'] = 'Reenvio';
 $string['resubmissiongradewarn'] = 'Os relatórios são permitidos para esse trabalho até passar data de entrega. Toda e qualquer correção será apagada quando ou se o documento for reenviado. Gostaria de continuar?';
 $string['resubmissiongradewarnaware'] = 'Esteja ciente de que se esse reenvio for feito, toda e qualquer correção será apagada.';
@@ -158,9 +158,6 @@ $string['turnitintooltwo:view'] = 'Visualizar Trabalhos da Ferramenta Turnintin'
 $string['turnitintooltwoadministration'] = 'Administração do trabalho Turnitin 2';
 $string['turnitintooltwoagreement'] = 'Aviso Legal / Acordo';
 $string['turnitintooltwoagreement_default'] = 'Ao selecionar essa caixa, eu confirmo que este envio é o meu próprio trabalho e eu aceito toda a responsabilidade por qualquer infração que possam ocorrer como resultado deste envio.';
-$string['turnitintooltwoagreement_desc'] = '<b>[Opcional]</b><br />Digite uma declaração de confirmação de acordo para os envios.<br />(<b>Observação:</b> Se o acordo for deixado completamente em branco, nenhuma confirmação de acordo será exigida dos alunos durante o envio)';
-$string['turnitintooltwodeleteerror'] = 'Não foi possível excluir os dados do turnitintooltwo';
-$string['turnitintooltwogeterror'] = 'Não foi possível obter os dados do turnitintooltwo';
 $string['turnitintooltwointro'] = 'Resumo';
 $string['turnitintooltwoname'] = 'Nome do Trabalho do Turnitin';
 $string['turnitintooltworesetdata0'] = 'Copiar os Trabalhos Turnitin <i>(Criar Duplicatas, Nova Aula Turnitin)</i>';
@@ -168,6 +165,9 @@ $string['turnitintooltworesetdata1'] = 'Substituir os Trabalhos Turnitin <i>(Sub
 $string['turnitintooltworesetdata2'] = 'Deixar os Trabalhos Turnitin Intactos';
 $string['turnitintooltworesetinfo'] = 'Escolher uma opção abaixo para os trabalhos Turnitin nesse curso:';
 $string['turnitintooltwoupdateerror'] = 'Não foi possível atualizar os dados do turnitintooltwo';
+$string['turnitintooltwoagreement_desc'] = '<b>[Opcional]</b><br />Digite uma declaração de confirmação de acordo para os envios.<br />(<b>Observação:</b> Se o acordo for deixado completamente em branco, nenhuma confirmação de acordo será exigida dos alunos durante o envio)';
+$string['turnitintooltwodeleteerror'] = 'Não foi possível excluir os dados do turnitintooltwo';
+$string['turnitintooltwogeterror'] = 'Não foi possível obter os dados do turnitintooltwo';
 $string['turnitinuseanon'] = 'Utilizar Correção Anônima';
 $string['turnitinuseanon_desc'] = 'Escolher se permite ou não Correção Anônima ao avaliar os envios.<br /><i>(Isso só está disponível para aqueles que têm configurada a Correção Anônima para suas contas)</i>';
 $string['turnitinusegrademark'] = 'Utilizar o GradeMark';
@@ -198,11 +198,11 @@ $string['downloadgradexls'] = 'Exportar Notas (XLS)';
 $string['turnitintutors'] = 'Tutores Turnitin';
 $string['turnitintutorsadd'] = 'Adicionar Professor Particular Turnitin';
 $string['turnitintutorsallenrolled'] = 'Todos os Professores Particulares estão matriculados no Turnitin';
-$string['turnitintutors_desc'] = 'Os Professores Particulares selecionados abaixo estão matriculados como professores particulares nessa Aula Turnitin. Os Professores Particulares matriculados podem acessar essa aula fazendo o login na página da internet do Turnitin.';
+$string['turnitintutors_desc'] = 'Os Professores Particulares selecionados abaixo estão matriculados como professores particulares nessa Aula Turnitin. Os Professores Particulares matriculados podem acessar essa aula fazendo o login na página da internet do Turnitin. ';
 $string['duplicatesfound'] = 'Foram encontradas cópias duplicadas dos mesmos trabalhos Turnitin. As duplicações ocorrem quando um ou mais trabalhos Moodle Direct estão conectados ao mesmo trabalho Turnitin via API Turnitin. Isso causa problemas, principalmente com os trabalhos enviados para um dos duplicados que irá aparecer na caixa de entrada do envio dos outros. Para corrigir isso, você deve excluir os trabalhos duplicados ou reiniciar o curso onde os trabalhos duplicados se encontram.<br/><br/> As seguintes duplicações foram encontradas:';
 $string['erater'] = 'Habilitar a verificação gramatical e-rater';
 $string['eraternoun'] = 'E-rater';
-$string['erater_handbook'] = 'Manual ETS&copy;';
+$string['erater_handbook'] = 'Manual ETS&copy';
 $string['erater_dictionary'] = 'Dicionário e-rater';
 $string['erater_categories'] = 'Catrgorias e-rater';
 $string['erater_spelling'] = 'Ortografia';
@@ -269,7 +269,6 @@ $string['newenddatedesc'] = 'Selecione uma nova data final para o curso abaixo o
 $string['close'] = 'Fechar';
 $string['errors'] = 'Erros';
 $string['setinstructordefaults'] = 'Definir esses valores como padrões do trabalho';
-$string['setinstructordefaults_help'] = 'Essas configurações serão as configurações padrões usadas para quaisquer novas ocorrências do trabalho Turnitin Moodle Direct';
 $string['messagesinbox'] = 'Caixa de entrada de mensagens';
 $string['downloadgrademarkzip'] = 'Baixar os arquivos Grademark selecionados';
 $string['downloadorigfileszip'] = 'Baixar os arquivos originais';
@@ -395,7 +394,7 @@ $string['peermark'] = 'PeerMark';
 $string['peermarkassignments'] = 'trabalhos PeerMark';
 $string['showpeermark'] = 'Mostrar trabalhos PeerMark';
 $string['hidepeermark'] = 'Ocultar os trabalho PeerMark';
-$string['noofreviewsrequired'] = 'Nr. de revisões obrigatório';
+$string['noofreviewsrequired'] = 'Nr. de revisões obrigatório ';
 $string['showpeermarkinstructions'] = 'Mostrar instruções PeerMark';
 $string['hidepeermarkinstructions'] = 'Ocultar as instruções PeerMark';
 $string['turnitinenablepeermark'] = 'Habilitar os trabalhos PeerMark';
@@ -405,8 +404,6 @@ $string['startdatenotyearago'] = 'Alunos não matriculados';
 $string['searchcourses'] = 'Pesquisar cursos';
 $string['errorsdesc'] = 'Ocorreu um problema ao tentar fazer o upload dos seguintes arquivos ao Turnitin.';
 $string['tiiexplain'] = 'O Turnitin é um produto comercial e você deve pagar uma assinatura para usar esse serviço. Para obter mais informações, consulte <a href=&#34;http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a>';
-$string['userprofileteachercache'] = 'Cache do curso do professor Turnitin';
-$string['userprofileteachercache_desc'] = 'Esse campo é usado pelo plugin Turnitin para manter um registro de todos os cursos que o professor foi designado como um professor - você pode apagar esse campo, mas poderá afetar o desempenho.';
 $string['useturnitin'] = 'Habilitar o Turnitin';
 $string['turnitinconfig'] = 'Configuração do plugin de plágio Turnitin';
 $string['studentdisclosuredefault'] = 'Todos os arquivos enviados serão submetidos ao serviço de detecção de plágio Turnitin.com';
@@ -416,8 +413,8 @@ $string['settingsinserterror'] = 'Ocorreu um erro ao tentar inserir uma configur
 $string['settingsupdateerror'] = 'Ocorreu um erro ao tentar atualizar uma configuração no banco de dados';
 $string['config'] = 'Configurações';
 $string['configupdated'] = 'Configurações atualizadas';
-$string['turnitindefaults'] = 'Configurações da atividade padrão do plugin de plágio Turnitin';
-$string['turnitinpluginsettings'] = 'Configurações de atividades do plugin de plágio Turnitin';
+$string['turnitindefaults'] = 'Configurações padrão do plugin de plágio Turnitin';
+$string['turnitinpluginsettings'] = 'Configurações do plugin de plágio Turnitin';
 $string['defaultsdesc'] = 'As seguintes configurações são as padrões definidas ao ativar o Turnitin em um módulo de atividades';
 $string['compareinstitution'] = 'Comparar os arquivos enviados com os documentos enviados por essa instituição';
 $string['defaultinserterror'] = 'Ocorreu um erro ao tentar inserir um valor de configuração padrão no banco de dados';
@@ -429,3 +426,13 @@ $string['pp_submission_error'] = 'Ocorreu um erro com o seu envio:';
 $string['pp_configuredesc'] = 'Você deve configurar esse módulo dentro do módulo turnitintooltwo. Clique <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>aqui</a> para configurar esse plugin';
 $string['coursestomigrate'] = 'Você tem {$a} aulas disponíveis para migrar do Turnitin';
 $string['migrationheader'] = 'Migração de aula Turnitin';
+$string['gradingtemplate'] = 'Modelo de avaliação';
+$string['allownonor'] = 'Permitir envios de qualquer tipo de arquivo?';
+$string['allownonor_help'] = 'Essa configuração permitirá o envio de qualquer tipo de arquivo. Com essa opção definida como &#34;Sim&#34;, a originalidade dos documentos será verificada sempre que possível, os documentos estarão disponíveis para download e as ferramentas de comentários GradeMark estarão disponíveis sempre que possível.';
+$string['submitnothing'] = 'Habilitar avaliação desse aluno sem envio';
+$string['submitnothingwarning'] = 'Ao clicar na caneta cinza de um aluno que não enviou um arquivo criará um modelo de avaliação que lhe permitirá fazer comentários GradeMark no trabalho. Um modelo de avaliação substituirá um envio e impedirá que o aluno envie para os trabalhos onde o reenvio não é permitido.';
+$string['draftsubmit'] = 'Quando é que o arquivo deve ser enviado ao Turnitin?';
+$string['submitondraft'] = 'Enviar arquivo quando for feito o primeiro upload';
+$string['submitonfinal'] = 'Enviar o arquivo quando o aluno enviá-lo para avaliação';
+$string['turnitindiagnostic'] = 'Habilitar Modo Diagnóstico';
+$string['turnitindiagnostic_desc'] = '<b>[Cuidado]</b><br />Habilitar modo de Diagnóstico somente para rastrear os problemas com o API do Turnitin.';

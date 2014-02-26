@@ -1,6 +1,6 @@
 <?php
-// Version: 2013111402
-// Date: 2013-11-14
+// Version: 2014012401
+// Date: 2014-01-24
 // Language: en
 
 $string['addsubmission'] = 'Add Submission';
@@ -90,7 +90,7 @@ $string['proxyurl_desc'] = '<b>[Optional]</b><br />If your server uses a Proxy t
 $string['proxyuser'] = 'Proxy Username';
 $string['proxyuser_desc'] = '<b>[Optional]</b><br />If your proxy requires Authentication enter the username here.';
 $string['reportgenspeed'] = 'Report Generation Speed';
-$string['reportgenspeed_help'] = 'There are three options for this assignment setting: &#34;'.$string['genimmediately1'].'&#34;, &#34;'.$string['genimmediately2'].'&#34;, and &#34;'.$string['genduedate'].'&#34;.<br /><br />The option &#34;'.$string['genimmediately1'].'&#34; generates the Originality Report immediately when a student makes a submission. With this option selected your students will not be able to resubmit to the assignment.<br /><br />To allow resubmissions, select &#34;'.$string['genimmediately2'].'&#34; option. This allows students to continuously resubmit papers to the assignment until the due date. It may take up to 24 hours to process Originality Reports for resubmissions.<br /><br />The option &#34;'.$string['genduedate'].'&#34; will only generate an Originality Report on the assignment&#39;s due date. This setting will make it so all papers submitted to the assignment will be compared against each other when the Originality Reports are created.';
+$string['reportgenspeed_help'] = 'There are three options for this assignment setting: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;, and &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />The option &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; generates the Originality Report immediately when a student makes a submission. With this option selected your students will not be able to resubmit to the assignment.<br /><br />To allow resubmissions, select &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; option. This allows students to continuously resubmit papers to the assignment until the due date. It may take up to 24 hours to process Originality Reports for resubmissions.<br /><br />The option &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; will only generate an Originality Report on the assignment\&#39;s due date. This setting will make it so all papers submitted to the assignment will be compared against each other when the Originality Reports are created.';
 $string['resubmission'] = 'Resubmission';
 $string['resubmissiongradewarn'] = 'Resubmissions are allowed for this assignment until the due date passes. Any and all marks will be deleted when or if the paper is resubmitted. Would you like to continue?';
 $string['resubmissiongradewarnaware'] = 'Please be aware that if this resubmission is made, any and all marks will be deleted.';
@@ -128,7 +128,7 @@ $string['submissionupdateerror'] = 'Could not update submission data';
 $string['submissionuploadsuccess'] = 'Your submission has successfully been uploaded to Turnitin.';
 $string['submitpaper'] = 'Submit Paper';
 $string['submitpapersto'] = 'Store Student Papers';
-$string['submitpapersto_help'] = 'This setting provides instructors with the ability to select whether papers are stored in a Turnitin student paper repository. The benefit of submitting papers to the student paper repository is that student papers submitted to the assignment are checked against other students&#39; submissions within your current and previous classes. If you select &#34;no repository&#34;, your students&#39; papers will not be stored in the Turnitin student paper repository.';
+$string['submitpapersto_help'] = 'This setting provides instructors with the ability to select whether papers are stored in a Turnitin student paper repository. The benefit of submitting papers to the student paper repository is that student papers submitted to the assignment are checked against other students\&#39; submissions within your current and previous classes. If you select &#34;no repository&#34;, your students\&#39; papers will not be stored in the Turnitin student paper repository.';
 $string['submitted'] = 'Submitted';
 $string['submittoturnitin'] = 'Submit to Turnitin';
 $string['textsubmission'] = 'Text Submission';
@@ -158,9 +158,6 @@ $string['turnitintooltwo:view'] = 'View Turnitin Tool Assignments';
 $string['turnitintooltwoadministration'] = 'Turnitin Assignment 2 Administration';
 $string['turnitintooltwoagreement'] = 'Disclaimer / Agreement';
 $string['turnitintooltwoagreement_default'] = 'I confirm that this submission is my own work and I accept all responsibility for any copyright infringement that may occur as a result of this submission.';
-$string['turnitintooltwoagreement_desc'] = '<b>[Optional]</b><br />Enter an agreement confirmation statement for submissions.<br />(<b>Note:</b> If the agreement is left completely blank then no agreement confirmation will be required by students during submission)';
-$string['turnitintooltwodeleteerror'] = 'Could not delete turnitintooltwo data';
-$string['turnitintooltwogeterror'] = 'Could not get turnitintooltwo data';
 $string['turnitintooltwointro'] = 'Summary';
 $string['turnitintooltwoname'] = 'Turnitin Assignment Name';
 $string['turnitintooltworesetdata0'] = 'Copy Turnitin Assignments <i>(Create Duplicates, New Turnitin Class)</i>';
@@ -168,6 +165,9 @@ $string['turnitintooltworesetdata1'] = 'Replace Turnitin Assignments <i>(Replace
 $string['turnitintooltworesetdata2'] = 'Leave Turnitin Assignments Untouched';
 $string['turnitintooltworesetinfo'] = 'Choose an option below for the Turnitin Assignments in this course:';
 $string['turnitintooltwoupdateerror'] = 'Could not update turnitintooltwo data';
+$string['turnitintooltwoagreement_desc'] = '<b>[Optional]</b><br />Enter an agreement confirmation statement for submissions.<br />(<b>Note:</b> If the agreement is left completely blank then no agreement confirmation will be required by students during submission)';
+$string['turnitintooltwodeleteerror'] = 'Could not delete turnitintooltwo data';
+$string['turnitintooltwogeterror'] = 'Could not get turnitintooltwo data';
 $string['turnitinuseanon'] = 'Use Anonymous Marking';
 $string['turnitinuseanon_desc'] = 'Choose whether to allow Anonymous Marking when grading submissions.<br /><i>(This is only available to those that have Anonymous Marking configured for their account)</i>';
 $string['turnitinusegrademark'] = 'Use GradeMark';
@@ -218,8 +218,8 @@ $string['erater_handbook_learners'] = 'English Learners';
 $string['erater_dictionary_enus'] = 'US English Dictionary';
 $string['erater_dictionary_engb'] = 'UK English Dictionary';
 $string['erater_dictionary_en'] = 'Both US and UK English Dictionaries';
-$string['turnitinuseerater'] = 'Enable ETS&copy;';
-$string['turnitinuseerater_desc'] = 'Choose whether to enable ETS&copy; grammar checking.<br /><i>(Enable this option only if ETS&copy; e-rater is enabled on your Turnitin account)</i>';
+$string['turnitinuseerater'] = 'Enable ETS&copy';
+$string['turnitinuseerater_desc'] = 'Choose whether to enable ETS&copy grammar checking.<br /><i>(Enable this option only if ETS&copy e-rater is enabled on your Turnitin account)</i>';
 $string['student_read'] = 'The student viewed the paper on:';
 $string['student_notread'] = 'The student has not viewed this paper.';
 $string['relinkusers'] = 'Relink Users';
@@ -276,7 +276,7 @@ $string['downloadorigfileszip'] = 'Download Original Files';
 $string['uploadingsubtoturnitin'] = 'Uploading your submission to Turnitin';
 $string['emptycreatedfile'] = 'The file you have attempted to submit is either empty or corrupt';
 $string['studentdataprivacy'] = 'Student Data Privacy Settings';
-$string['studentdataprivacy_desc'] = 'The following settings can be configured to ensure that student&#39;s personal data is not transmitted to Turnitin via the API.';
+$string['studentdataprivacy_desc'] = 'The following settings can be configured to ensure that student&#39s personal data is not transmitted to Turnitin via the API.';
 $string['enablepseudo'] = 'Enable Student Privacy';
 $string['enablepseudo_desc'] = 'If this option is selected student email addresses will be transformed into a pseudo equivalent for Turnitin API calls.<br /><i>(<b>Note:</b> This option can not be changed if any Moodle user data has already been synched with Turnitin)</i>';
 $string['pseudofirstname'] = 'Student Pseudo First Name';
@@ -308,7 +308,7 @@ $string['sprocessing'] = 'Loading data from Turnitin...';
 $string['szerorecords'] = 'No records to display.';
 $string['sinfo'] = 'Showing _START_ to _END_ of _TOTAL_ entries.';
 $string['unlinkedusers'] = 'Unlinked Users';
-$string['modulename_help'] = 'Creates a Turnitin Moodle Direct assignment which links an activity in Moodle to an assignment / assignments on Turnitin. Once linked, the activity allows instructors to assess and provide feedback for student&#39;s written work using the assessment tools available within Turnitin&#39;s Document Viewer.';
+$string['modulename_help'] = 'Creates a Turnitin Moodle Direct assignment which links an activity in Moodle to an assignment / assignments on Turnitin. Once linked, the activity allows instructors to assess and provide feedback for student&#39s written work using the assessment tools available within Turnitin&#39s Document Viewer.';
 $string['transmatch'] = 'Translated Matching';
 $string['transmatch_desc'] = 'Determines whether Translated Matching will be available as a setting on the assignment set up screen.<br /><i>(Enable this option only if Translated Matching is enabled on your Turnitin account)</i>';
 $string['turnitintooltwo:addinstance'] = 'Add Turnitin Tool Activity';
@@ -406,8 +406,6 @@ $string['startdatenotyearago'] = 'Start date can not be more than 1 year ago';
 $string['searchcourses'] = 'Search Courses';
 $string['errorsdesc'] = 'There has been a problem in trying to upload the following files to Turnitin.';
 $string['tiiexplain'] = 'Turnitin is a commercial product and you must have a paid subscription to use this service for more information see <a href=&#34;http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a>';
-$string['userprofileteachercache'] = 'Turnitin teacher course cache';
-$string['userprofileteachercache_desc'] = 'This field is used by the Turnitin plugin to keep a record of all the courses that a teacher has been assigned as a teacher in. - you can clear this field but it may affect performance.';
 $string['useturnitin'] = 'Enable Turnitin';
 $string['turnitinconfig'] = 'Turnitin Plagiarism Plugin Configuration';
 $string['studentdisclosuredefault'] = 'All files uploaded will be submitted to the plagiarism detection service Turnitin.com';

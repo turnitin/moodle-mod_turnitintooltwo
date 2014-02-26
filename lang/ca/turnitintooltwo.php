@@ -1,6 +1,6 @@
 <?php
-// Version: 2013111402
-// Date: 2013-11-14
+// Version: 2014012401
+// Date: 2014-01-24
 // Language: ca
 
 $string['modulename'] = $string['pluginname'];
@@ -28,7 +28,7 @@ $string['pending'] = 'Pendent';
 $string['permissiondeniederror'] = 'No te permís correcte per completar l´acció demanada';
 $string['portfolio'] = 'Dossier';
 $string['proxypassword'] = 'Contrasenya del Proxy';
-$string['proxypassword_desc'] = '<b>[Opcional]</b><br />Si el seu Proxy requereix Autentificació introduir la contrasenya aquí.';
+$string['proxypassword_desc'] = '<b>[Opcional]</b><br />Si el seu Proxy requereix Autentificació introduir la contrasenya aquí. ';
 $string['proxyport'] = 'Port del Proxy';
 $string['proxyport_desc'] = '<b>[Opcional]</b><br />Si el el seu servidor utilitza un Proxy per connectar amb internet introduir el port del proxy aquí.';
 $string['proxyurl'] = 'URL del Proxy';
@@ -95,9 +95,6 @@ $string['turnitintooltwo:submit'] = 'Lliurar a les assignacions de la eina Turni
 $string['turnitintooltwo:view'] = 'Visualitzar les assignacions de la eina Turnitin';
 $string['turnitintooltwoagreement'] = 'Renúncia/Acord';
 $string['turnitintooltwoagreement_default'] = 'Marcant aquesta casella confirmo que aquest treball és meu propi i accepto tota la responsabilitat per qualsevol infracció del drets d´autor que puquin esdevenir com a resultat d´aquest lliurament.';
-$string['turnitintooltwoagreement_desc'] = '<b>[Requirit]</b><br />Introduir una declaració de confirmacio d´acord per lliuraments.';
-$string['turnitintooltwodeleteerror'] = 'No ha estat possible eliminar les dades de la eina Turnitin';
-$string['turnitintooltwogeterror'] = 'No ha estat possible obtenir dades de la eina Turnitin';
 $string['turnitintooltwointro'] = 'Resum';
 $string['turnitintooltwoname'] = 'Nom de l´assignació Turnitin';
 $string['turnitintooltworesetdata0'] = 'Copiar Assignacions de Turnitin <i>(Crear Duplicats, Nova Classe Turnitin)</i>';
@@ -105,6 +102,9 @@ $string['turnitintooltworesetdata1'] = 'Reemplaçar les assignacions Turnitin <i
 $string['turnitintooltworesetdata2'] = 'Deixar Intactes les Assignacions Turnitin';
 $string['turnitintooltworesetinfo'] = 'Triar una opció sota per les assignacions Turnitin en aquest curs:';
 $string['turnitintooltwoupdateerror'] = 'No ha estat possible actualitzar les dades de la eina Turnitin';
+$string['turnitintooltwoagreement_desc'] = '<b>[Requirit]</b><br />Introduir una declaració de confirmacio d´acord per lliuraments.';
+$string['turnitintooltwodeleteerror'] = 'No ha estat possible eliminar les dades de la eina Turnitin';
+$string['turnitintooltwogeterror'] = 'No ha estat possible obtenir dades de la eina Turnitin';
 $string['turnitinuseanon'] = 'Utilitzar marques anònimes';
 $string['turnitinuseanon_desc'] = 'Triar si vosté permet marques anònimes a l´hora de puntuar els lliuraments.<br /><i>(Això està només disponible per aquells que tenen configurat Marcar Anònim pel seu compte)</i>';
 $string['turnitinusegrademark'] = 'Utilitzar GradeMark';
@@ -136,7 +136,7 @@ $string['turnitintutorsallenrolled'] = 'Tots els tutors estan inscrits en Turnit
 $string['turnitintutors_desc'] = 'El tutors seleccionats a sota estan inscrits com a tutors en aquesta classe Turnitin. Els tutors inscrits poden aconseguir accés a aquesta classe iniciant sessió en la pàgina web de Turnitin.';
 $string['duplicatesfound'] = 'S´han trobat còpies duplicades de les mateixes assignacions Turnitin, els duplicats es produeixen quan una o més assignacions de Moodle Direct està connectada a la mateixa assignació Turnitin a través de l´API de Turnitin. Es conegut que això pot causar problemes, la major part dels lliuraments fets a un dels duplicats apareixeran en la safata d´entrada dels lliuraments dels altres. Per arreglar això vosté hauria d´eliminar les assignacions duplicades o reajustar el curs on s´hi troben les assignacions duplicades.<br /><br /> S´han trobat els següents duplicats:';
 $string['erater'] = 'Activar la revisió ortogràfica de e-rater';
-$string['erater_handbook'] = 'Manual de ETS&copy;';
+$string['erater_handbook'] = 'Manual de ETS&copy';
 $string['erater_dictionary'] = 'Diccionari de e-rater';
 $string['erater_categories'] = 'Categories de e-rater';
 $string['erater_spelling'] = 'Ortografia';
@@ -155,3 +155,5 @@ $string['erater_dictionary_en'] = 'Diccionari d´anglès (EUA i Regne Unit)';
 $string['turnitinuseerater'] = 'Activat ETS&copy;';
 $string['turnitinuseerater_desc'] = 'Triar entre activar ETS&copy; revisió de gramàtica.<br /><i>(Activar aquesta opció si ETS&copy; e-rater està activat en la teva compte Turnitin)</i>';
 $string['enablepseudo'] = 'Habilitar a Privacidade do Aluno';
+$string['turnitindiagnostic'] = 'Activar el mode de diagnòstic';
+$string['turnitindiagnostic_desc'] = '<b>[Precaució]</b><br />Activar node de diagnòstic només per detectar problemes amb el API de Turnitin.';
