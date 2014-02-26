@@ -75,6 +75,9 @@ if ($ADMIN->fulltree) {
 
     $ynoptions = array(0 => get_string('no'), 1 => get_string('yes'));
 
+    $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintool'),
+                       get_string('turnitindiagnostic_desc', 'turnitintool'), 0, $ynoptions));
+
     $settings->add(new admin_setting_configselect('turnitintooltwo/usegrademark',
                                                     get_string('turnitinusegrademark', 'turnitintooltwo'),
                                                     get_string('turnitinusegrademark_desc', 'turnitintooltwo'),

@@ -438,3 +438,5 @@ $string['submitnothingwarning'] = 'Clicking on the gray pen for a student who ha
 $string['draftsubmit'] = 'When should the file be submitted to Turnitin?';
 $string['submitondraft'] = 'Submit file when first uploaded';
 $string['submitonfinal'] = 'Submit file when student sends for marking';
+$string['turnitindiagnostic'] = 'Enable Diagnostic Mode';
+$string['turnitindiagnostic_desc'] = '<b>[Caution]</b><br />Enable Diagnostic mode only to track down problems with the Turnitin API.';

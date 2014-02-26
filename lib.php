@@ -79,31 +79,38 @@ function turnitintooltwo_admin_config() {
 function turnitintooltwo_activitylog($string, $activity) {
     global $CFG;
 
-    // We only keep 10 log files, delete any additional files.
-    $prefix = "activitylog_";
-
-    $dirpath = $CFG->tempdir."/turnitintooltwo/logs";
-    if (!file_exists($dirpath)) {
-        mkdir($dirpath, 0777, true);
+    static $config;
+    if (empty($config)) {
+        $config = turnitintooltwo_admin_config();
     }
-    $dir = opendir($dirpath);
-    $files = array();
-    while ($entry = readdir($dir)) {
-        if (substr(basename($entry), 0, 1) != "." AND substr_count(basename($entry), $prefix) > 0) {
-            $files[] = basename($entry);
+
+    if ($config->enablediagnostic) {
+        // We only keep 10 log files, delete any additional files.
+        $prefix = "activitylog_";
+
+        $dirpath = $CFG->tempdir."/turnitintooltwo/logs";
+        if (!file_exists($dirpath)) {
+            mkdir($dirpath, 0777, true);
         }
-    }
-    sort($files);
-    for ($i = 0; $i < count($files) - 10; $i++) {
-        unlink($dirpath."/".$files[$i]);
-    }
+        $dir = opendir($dirpath);
+        $files = array();
+        while ($entry = readdir($dir)) {
+            if (substr(basename($entry), 0, 1) != "." AND substr_count(basename($entry), $prefix) > 0) {
+                $files[] = basename($entry);
+            }
+        }
+        sort($files);
+        for ($i = 0; $i < count($files) - 10; $i++) {
+            unlink($dirpath."/".$files[$i]);
+        }
 
-    // Write to log file.
-    $filepath = $dirpath."/".$prefix.gmdate('Y-m-d', time()).".txt";
-    $file = fopen($filepath, 'a');
-    $output = date('Y-m-d H:i:s O')." (".$activity.")"." - ".$string."\r\n";
-    fwrite($file, $output);
-    fclose($file);
+        // Write to log file.
+        $filepath = $dirpath."/".$prefix.gmdate('Y-m-d', time()).".txt";
+        $file = fopen($filepath, 'a');
+        $output = date('Y-m-d H:i:s O')." (".$activity.")"." - ".$string."\r\n";
+        fwrite($file, $output);
+        fclose($file);
+    }
 }
 
 /**

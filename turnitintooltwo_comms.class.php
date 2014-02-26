@@ -27,6 +27,7 @@ class turnitintooltwo_comms {
     private $tiiapiurl;
     private $tiisecretkey;
     private $tiiintegrationid;
+    private $diagnostic;
     private $langcode;
 
     public function __construct() {
@@ -41,6 +42,7 @@ class turnitintooltwo_comms {
             turnitintooltwo_print_error( 'configureerror', 'turnitintooltwo' );
         }
 
+        $this->diagnostic = $config->enablediagnostic;
         $this->langcode = $this->get_lang();
     }
 
@@ -54,7 +56,10 @@ class turnitintooltwo_comms {
 
         $api = new TurnitinAPI($this->tiiaccountid, $this->tiiapiurl, $this->tiisecretkey,
                                 $this->tiiintegrationid, $this->langcode);
-        $api->setLogPath($CFG->tempdir.'/turnitintooltwo/logs/');
+        // Enable logging if diagnostic mode is turned on.
+        if ($this->diagnostic) {
+            $api->setLogPath($CFG->tempdir.'/turnitintooltwo/logs/');
+        }
 
         // Use Moodle's proxy settings if specified
         if (!empty($CFG->proxyhost)) {
