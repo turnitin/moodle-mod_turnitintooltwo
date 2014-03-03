@@ -217,11 +217,11 @@ td a.editable-click {
     text-align:center !important;
 }
 
-.left {
+.enrolledMembers .left, .submissionsDataTable .left, .partDetails .left {
     text-align:left;
 }
 
-.right {
+.submissionsDataTable .right, #courseBrowserTable .right {
     text-align:right;
 }
 
