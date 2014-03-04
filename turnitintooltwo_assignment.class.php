@@ -1046,7 +1046,7 @@ class turnitintooltwo_assignment {
                         $setmethod = "setFeedbackReleaseDate";
                         break;
                 }
-
+                $fieldvalue = userdate($fieldvalue, '%s');
                 $assignment->$setmethod(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
                 break;
         }
