@@ -8,4 +8,5 @@ $module->version   = 2014012402;  // The current module version (Date: YYYYMMDDX
 $module->requires  = 2012062500;
 $module->component = 'mod_turnitintooltwo';
 $module->maturity  = MATURITY_STABLE;
+$module->release  = '2.3+';
 $module->cron      = 1800;        // Period for cron to check this module in seconds
