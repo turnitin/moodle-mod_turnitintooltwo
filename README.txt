@@ -11,10 +11,3 @@ The main plugin code is required by both of the other plugins to work. To instal
 To configure the plugin go to "Site Administration" > "Plugins" > "Activity Modules" > "Turnitin Assignment 2" and enter your Turnitin account Id, shared key and API URL.
 
 Note that the URL is different for this package to previous Turnitin plugins. It should be https://api.turnitin.com, https://submit.ac.uk. or https://sandbox.turnitin.com.
-
-Troubleshooting
----------------
-
-You may need to ensure that within your designated moodledata directory; the turnitintooltwo subdirectory and the subsequent logs subdirectory have the correct permissions to be able to create directories and files.
-
-Pop-ups will need to be enabled on the browser being used if access to the Turnitin Document Viewer is required.
