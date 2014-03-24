@@ -774,7 +774,7 @@ class turnitintooltwo_assignment {
     /**
      * Edit Assignment on Turnitin
      *
-     * @param object $assignment add assignment instance
+     * @param object $assignment edit assignment instance
      */
     public function edit_tii_assignment($assignment) {
         // Initialise Comms Object.

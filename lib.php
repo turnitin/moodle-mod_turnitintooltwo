@@ -114,14 +114,15 @@ function turnitintooltwo_activitylog($string, $activity) {
 }
 
 /**
- * Not used but needed for instance name update via quick update on the course home page
+ * Needed for instance name update via quick update on the course home page
  *
  * @param  stdClass  $turnitintooltwo
  * @param  integer $userid
  * @param  boolean $nullifnone
  */
 function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnone = true) {
-
+    $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
+    $turnitintooltwoassignment->edit_moodle_assignment();
 }
 
 /**
