@@ -1091,7 +1091,7 @@ class turnitintooltwo_view {
                 $grade .= $OUTPUT->box('', 'launch_form', 'grademark_form_'.$submission->submission_objectid);
                 $rawgrade = ($submissiongrade == "--") ? -1 : $submissiongrade;
 
-            } else if ( !isset($submission->submission_objectid) && $istutor ) {
+            } else if (!isset($submission->submission_objectid) && empty($submission->id) && $istutor ) {
                 // Allow nothing submission if no submission has been made and this is a tutor
                 $grade = $OUTPUT->box(get_string('submitnothingwarning', 'turnitintooltwo'),'nothingsubmit_warning', '');
                 $grade .= $OUTPUT->box($OUTPUT->pix_icon('icon-edit-grey',
