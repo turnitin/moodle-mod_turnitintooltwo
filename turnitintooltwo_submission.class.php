@@ -587,12 +587,11 @@ class turnitintooltwo_submission {
                                                         $turnitintooltwoassignment->turnitintooltwo->id,
                                                             'userid' => $user->id, 'submission_unanon' => 1))) {
                     $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
-
                     if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
                         // Using a scale.
                         $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
                     } else {
-                        $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 1);
+                        $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
                     }
 
                 }

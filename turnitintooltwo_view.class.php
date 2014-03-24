@@ -1119,10 +1119,7 @@ class turnitintooltwo_view {
                     } else if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) { // Scale.
                         $scale = $DB->get_record('scale', array('id' => $turnitintooltwoassignment->turnitintooltwo->grade * -1));
                         $scalearray = explode(",", $scale->scale);
-
-                        $overallgrade = round($useroverallgrades[$submission->userid] /
-                                                    -$turnitintooltwoassignment->turnitintooltwo->grade);
-                        $overallgrade = $scalearray[$overallgrade - 1];
+                        $overallgrade = $scalearray[$useroverallgrades[$submission->userid] - 1];
                     } else {
                         $overallgrade = round($useroverallgrades[$submission->userid] /
                                                     $turnitintooltwoassignment->turnitintooltwo->grade * 100, 1).'%';
