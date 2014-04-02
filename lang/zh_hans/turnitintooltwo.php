@@ -415,7 +415,7 @@ $string['pp_createsubmissionerror'] = '剽窃 plugin 在建立提交物件时有
 $string['pp_updatesubmissionerror'] = '剽窃 plugin 在更新提交物件时有误';
 $string['pp_submission_error'] = '您的提交物件有误';
 $string['pp_configuredesc'] = '您必须在turnitintooltwo单元内安装此单元。请
-点选 <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> 以安装此 plugin';
+点选 <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">here</a> 以安装此 plugin';
 $string['coursestomigrate'] = '您在 Turnitiin 内有 {$a} 课程可以迁移';
 $string['migrationheader'] = 'Turnitin 课程迁移';
 $string['gradingtemplate'] = '评分模板';

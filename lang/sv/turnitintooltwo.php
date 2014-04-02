@@ -425,7 +425,7 @@ $string['defaultupdated'] = 'Turnitin standardinställningar uppdaterade';
 $string['pp_createsubmissionerror'] = 'Det uppstod ett fel i plagiering plugin vid skapandet av en inlämnan';
 $string['pp_updatesubmissionerror'] = 'Det uppstod ett fel i plagiering plugin vid uppdatering av en inlämnan';
 $string['pp_submission_error'] = 'Ett fel uppstod med ditt inlämnande:';
-$string['pp_configuredesc'] = 'Du måste konfigurera denna modul inom turnitintooltwo modulen. Var god klicka <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>här</a> för att konfigurera denna plugin';
+$string['pp_configuredesc'] = 'Du måste konfigurera denna modul inom turnitintooltwo modulen. Var god klicka <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">här</a> för att konfigurera denna plugin';
 $string['coursestomigrate'] = 'Du har {$a} klasser tillgängliga för migration från Turnitin';
 $string['migrationheader'] = 'Turnitin Klass Migration';
 $string['gradingtemplate'] = 'Betygsmall';

@@ -425,7 +425,7 @@ $string['defaultupdated'] = 'Las opciones por defecto de Turnitin se han actuali
 $string['pp_createsubmissionerror'] = 'Ha ocurrido un error en el plugin de plagio al crear una entrega';
 $string['pp_updatesubmissionerror'] = 'Ha ocurrido un error en el plugin de plagio al actualizar una entrega';
 $string['pp_submission_error'] = 'Ha ocurrido un error con tu entrega:';
-$string['pp_configuredesc'] = 'Debes configurar este módulo dentro del módulo de turnitintooltwo. Por favor, haz clic en <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>aquí </a> para configurar este plugin';
+$string['pp_configuredesc'] = 'Debes configurar este módulo dentro del módulo de turnitintooltwo. Por favor, haz clic en <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">aquí </a> para configurar este plugin';
 $string['coursestomigrate'] = 'Tienes {$a} clases disponibles para migrar desde Turnitin';
 $string['migrationheader'] = 'Migración de la clase de Turnitin';
 $string['gradingtemplate'] = 'Plantilla de calificación';
