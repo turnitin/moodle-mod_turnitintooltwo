@@ -481,11 +481,17 @@ echo html_writer::end_tag("div");
 echo $OUTPUT->footer();
 
 // This comment is here as it is useful for product support.
-$module = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
+if ($CFG->branch >= 26) {
+    $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintooltwo', 'name' => 'version'));
+    $version = $module->value;
+} else {
+    $module = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
+    $version = $module->version;
+}
 $partsstring = "(";
 foreach ($parts as $part) {
     $partsstring .= ($partsstring != "(") ? " | " : "";
     $partsstring .= $part->partname.': '.$part->tiiassignid;
 }
 $partsstring .= ")";
-echo '<!-- Turnitin Moodle Direct Version: '.$module->version.' - '.$partsstring.' -->';
+echo '<!-- Turnitin Moodle Direct Version: '.$version.' - '.$partsstring.' -->';
