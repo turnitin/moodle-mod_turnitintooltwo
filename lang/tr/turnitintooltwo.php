@@ -424,7 +424,7 @@ $string['defaultupdated'] = 'Turnitin varsayılan ayarları güncellendi';
 $string['pp_createsubmissionerror'] = 'Ödev oluşturulurken intihal eklentisi ile ilgili bir hata oluştu';
 $string['pp_updatesubmissionerror'] = 'Ödev yüklenirken intihal eklentisi ile ilgili bir hata oluştu';
 $string['pp_submission_error'] = 'Gönderiminizle ilgili bir hata oluştu:';
-$string['pp_configuredesc'] = 'Bu modülü, turnitintooltwo modülünde yapılandırmalısınız. Bu eklentiyi yüklemek için lütfen <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">buraya</a> tıklayın';
+$string['pp_configuredesc'] = 'Bu modülü, turnitintooltwo modülünde yapılandırmalısınız. Bu eklentiyi yüklemek için lütfen <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>buraya</a> tıklayın';
 $string['coursestomigrate'] = 'Turnitin&#39;den geçişi gerçekleştirilecek {$a} sınıfınız bulunmaktadır';
 $string['migrationheader'] = 'Turnitin Sınıf Geçişi';
 $string['gradingtemplate'] = 'Puanlama Şablonu';

@@ -425,7 +425,7 @@ $string['defaultupdated'] = 'Turnitin-Standards aktualisiert';
 $string['pp_createsubmissionerror'] = 'Beim Vorbereiten einer Übermittlung ist im Plagiarismus-Plugin ein Fehler aufgetreten.';
 $string['pp_updatesubmissionerror'] = 'Beim Aktualisieren einer Übermittlung ist im Plagiarismus-Plugin ein Fehler aufgetreten.';
 $string['pp_submission_error'] = 'Bei Ihrer Übermittlung ist ein Fehler aufgetreten: ';
-$string['pp_configuredesc'] = 'Sie müssen das Modul innerhalb des turnitintooltwo-Moduls konfigurieren. Bitte gehen Sie auf <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">here</a> zum Konfigurieren des Plugins';
+$string['pp_configuredesc'] = 'Sie müssen das Modul innerhalb des turnitintooltwo-Moduls konfigurieren. Bitte gehen Sie auf <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> zum Konfigurieren des Plugins';
 $string['coursestomigrate'] = 'Sie haben {$a} Kurse zum Übertragen von Turnitin zur Verfügung';
 $string['migrationheader'] = 'Übertragen von Turnitin-Kurs';
 $string['gradingtemplate'] = 'Benotungsvorlage';

@@ -425,7 +425,7 @@ $string['defaultupdated'] = 'Setările prestabilite ale Turnitin actualizate';
 $string['pp_createsubmissionerror'] = 'A avut loc o eroare în plugin-ul plagiatului la crearea unei depuneri';
 $string['pp_updatesubmissionerror'] = 'A avut loc o eroare în plugin-ul plagiatului la actualizarea unei depuneri';
 $string['pp_submission_error'] = 'A avut loc o eroare cu depunerea dumneavoastră:';
-$string['pp_configuredesc'] = 'Trebuie să configurați acest modul în cadrul modulului turnitintooltwo. Vă rugăm să dați clic <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">aici</a> pentru a configura acest plugin';
+$string['pp_configuredesc'] = 'Trebuie să configurați acest modul în cadrul modulului turnitintooltwo. Vă rugăm să dați clic <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>aici</a> pentru a configura acest plugin';
 $string['coursestomigrate'] = 'Aveți {$a} cursuri disponibile pentru a migra de la Turnitin';
 $string['migrationheader'] = 'Migrarea cursului Turnitin';
 $string['gradingtemplate'] = 'Șablon notare';

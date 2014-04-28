@@ -421,7 +421,7 @@ $string['defaultupdated'] = 'Ustawienia domyślne Turnitin zaktualizowane';
 $string['pp_createsubmissionerror'] = 'Podczas tworzenia wysyłki wystąpił błąd we wtyczce plagiatu ';
 $string['pp_updatesubmissionerror'] = 'Podczas aktualizacji wysyłki wystąpił błąd we wtyczce plagiatu ';
 $string['pp_submission_error'] = 'Wystąpił błąd wysyłki:';
-$string['pp_configuredesc'] = 'Musisz skonfigurować ten moduł wewnątrz modułu turnitintooltwo. Proszę kliknąć <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">tutaj</a> aby skonfigurować tę wtyczkę';
+$string['pp_configuredesc'] = 'Musisz skonfigurować ten moduł wewnątrz modułu turnitintooltwo. Proszę kliknąć <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>tutaj</a> aby skonfigurować tę wtyczkę';
 $string['coursestomigrate'] = 'Masz {$a} klasy/klas dostępne/dostępnychdo przemieszczenia z Turnitin';
 $string['migrationheader'] = 'Przemieszczenie klasy Turnitin';
 $string['gradingtemplate'] = 'Szablon oceniający';
