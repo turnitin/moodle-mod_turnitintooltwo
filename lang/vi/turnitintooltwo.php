@@ -422,7 +422,7 @@ $string['defaultupdated'] = 'Đã cập nhật các cài đặt mặc định Tu
 $string['pp_createsubmissionerror'] = 'Xảy ra lỗi trong phần bổ trợ về Đạo văn khi tạo một bài nộp';
 $string['pp_updatesubmissionerror'] = 'Xảy ra lỗi trong phần bổ trợ về Đạo văn khi cập nhật một bài nộp';
 $string['pp_submission_error'] = 'Xảy ra lỗi với bài nộp của bạn:';
-$string['pp_configuredesc'] = 'Bạn phải định hình mô-đun này bên trong mô-đun turnitintooltwo. Vui lòng nhấp vào <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>đây</a> để cài đặt phần bổ trợ này';
+$string['pp_configuredesc'] = 'Bạn phải định hình mô-đun này bên trong mô-đun turnitintooltwo. Vui lòng nhấp vào <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">đây</a> để cài đặt phần bổ trợ này';
 $string['coursestomigrate'] = 'Bạn có {$a} lớp khả dụng để di dời từ Turnitin';
 $string['migrationheader'] = 'Di dời Lớp Turnitin';
 $string['gradingtemplate'] = 'Mẫu Chấm Điểm';

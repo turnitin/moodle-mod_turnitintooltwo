@@ -424,7 +424,7 @@ $string['defaultupdated'] = 'Turnitin-standaardwaarden bijgewerkt';
 $string['pp_createsubmissionerror'] = 'Er was een fout in de plagiaat-plugin bij het creëren van een inzending';
 $string['pp_updatesubmissionerror'] = 'Er was een fout in de plagiaat-plugin bij het updaten van een inzending';
 $string['pp_submission_error'] = 'Er is een fout opgetreden met uw inzending:';
-$string['pp_configuredesc'] = 'U moet deze module binnen de turnitintooltwo-module configureren. Klik <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>hier</a> om deze plugin te configureren';
+$string['pp_configuredesc'] = 'U moet deze module binnen de turnitintooltwo-module configureren. Klik <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">hier</a> om deze plugin te configureren';
 $string['coursestomigrate'] = 'Er zijn {$a} cursussen beschikbaar die u kunt verplaatsen vanuit Turnitin';
 $string['migrationheader'] = 'Verplaatsen van Turnitin-cursus';
 $string['gradingtemplate'] = 'Beoordelingssjabloon';

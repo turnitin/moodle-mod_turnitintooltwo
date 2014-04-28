@@ -422,7 +422,7 @@ $string['defaultupdated'] = 'Turnitin oletusarvot päivitetty';
 $string['pp_createsubmissionerror'] = 'Palautusta luodessa esiintyi plagiarismi plugin-lisäosassa virhe ';
 $string['pp_updatesubmissionerror'] = 'Palautusta päivitettäessä esiintyi plagiarismi plugin-lisäosassa virhe ';
 $string['pp_submission_error'] = 'Palautuksessasi: kohdattiin virhe';
-$string['pp_configuredesc'] = 'Sinun pitää konfiguroida tämä moduuli turnitintyökalukaksi-moduulin sisällä. Näpäytä <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>tässä</a> kun haluat konfiguroida tämän plugin-laajennuksen';
+$string['pp_configuredesc'] = 'Sinun pitää konfiguroida tämä moduuli turnitintyökalukaksi-moduulin sisällä. Näpäytä <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">tässä</a> kun haluat konfiguroida tämän plugin-laajennuksen';
 $string['coursestomigrate'] = 'Sinulla on {$a} luokkaa saatavilla Turnitinistä siirettäväksi';
 $string['migrationheader'] = 'Turnitin Luokan Siirto';
 $string['gradingtemplate'] = 'Arvostelumalline';

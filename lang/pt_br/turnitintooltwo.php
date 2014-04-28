@@ -423,7 +423,7 @@ $string['defaultupdated'] = 'Configurações padrão Turnitin atualizadas';
 $string['pp_createsubmissionerror'] = 'Ocorreu um erro no plugin de plágio ao criar o envio';
 $string['pp_updatesubmissionerror'] = 'Ocorreu um erro no plugin de plágio ao atualizar o envio';
 $string['pp_submission_error'] = 'Ocorreu um erro com o seu envio:';
-$string['pp_configuredesc'] = 'Você deve configurar esse módulo dentro do módulo turnitintooltwo. Clique <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>aqui</a> para configurar esse plugin';
+$string['pp_configuredesc'] = 'Você deve configurar esse módulo dentro do módulo turnitintooltwo. Clique <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">aqui</a> para configurar esse plugin';
 $string['coursestomigrate'] = 'Você tem {$a} aulas disponíveis para migrar do Turnitin';
 $string['migrationheader'] = 'Migração de aula Turnitin';
 $string['gradingtemplate'] = 'Modelo de avaliação';

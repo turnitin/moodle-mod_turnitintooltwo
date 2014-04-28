@@ -446,7 +446,7 @@ $string['defaultupdated'] = 'Turnitin デフォルトが更新されました';
 $string['pp_createsubmissionerror'] = '提出物を作成する際に剽窃プラグインにエラーが発生しました';
 $string['pp_updatesubmissionerror'] = '提出物を更新する際に、剽窃プラグインにエラーが発生しました';
 $string['pp_submission_error'] = '提出物に問題があります：';
-$string['pp_configuredesc'] = 'このモジュールを turnitintooltwo モジュール内で設定する必要があります。このプラグインを設定するには<a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>こち
+$string['pp_configuredesc'] = 'このモジュールを turnitintooltwo モジュール内で設定する必要があります。このプラグインを設定するには<a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">こち
 ら</a> をクリックしてください。';
 $string['coursestomigrate'] = 'Turnitinから移動できるクラスがあります';
 $string['migrationheader'] = 'Turnitinクラス移動';

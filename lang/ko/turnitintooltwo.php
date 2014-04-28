@@ -432,7 +432,7 @@ $string['defaultupdated'] = 'Turnitin 기본 업데이트';
 $string['pp_createsubmissionerror'] = '제출물 생성시 표절 plugin에 오류가 발생하였습니다 ';
 $string['pp_updatesubmissionerror'] = '제출물 업데이트시 표절 plugin에 오류가 발생하였습니다 ';
 $string['pp_submission_error'] = '귀하의 제출물에 오류가 발생하였습니다:';
-$string['pp_configuredesc'] = 'turnitintooltwo 모듈 내에서 본 모듈을 구성하여야 합니다. 본 plugin을 구성하려면 <a href=&#34;../../admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> 을 클릭하십시오';
+$string['pp_configuredesc'] = 'turnitintooltwo 모듈 내에서 본 모듈을 구성하여야 합니다. 본 plugin을 구성하려면 <a href="{$a}/admin/settings.php?section=modsettingturnitintooltwo">here</a> 을 클릭하십시오';
 $string['coursestomigrate'] = '귀하는 {$a} 개의 클래스를 Turnitin으로부터 이동할 수 있습니다 ';
 $string['migrationheader'] = 'Turnitin 클래스 이동';
 $string['gradingtemplate'] = '채점 템플렛';
