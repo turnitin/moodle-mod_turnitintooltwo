@@ -4,7 +4,7 @@
  */
 
 jQuery(document).ready(function($) {
-    $('.tooltip').live('mouseover', function(e) {
+    $('.tii_links_container .tii_tooltip').live('mouseover', function(e) {
         $(this).tooltipster();
         return false;
     });
