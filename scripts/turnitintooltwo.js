@@ -855,6 +855,7 @@ jQuery(document).ready(function($) {
                         $("#"+dvtype+"_form_"+submission_id).children("form").on("submit", function(event) {
                             dvWindow = window.open('', 'dv_'+submission_id);
                             dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
+                            dvWindow.document.close();
                             $(dvWindow).bind('beforeunload', function() {
                                 refreshInboxRow(dvtype, submission_id, part_id, user_id);
                             });
