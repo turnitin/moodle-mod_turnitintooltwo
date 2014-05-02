@@ -292,6 +292,8 @@ class turnitintooltwo_view {
         $eulaaccepted = false;
         if ($userid == $USER->id) {
             $user = new turnitintooltwo_user($userid, "Learner");
+            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $user->join_user_to_class($coursedata->turnitin_cid);
             $eulaaccepted = $user->get_accepted_user_agreement();
         }
 
