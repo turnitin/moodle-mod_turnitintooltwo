@@ -155,12 +155,21 @@ switch ($action) {
             $partid = required_param('part', PARAM_INT);
             $refreshrequested = required_param('refresh_requested', PARAM_INT);
             $start = required_param('start', PARAM_INT);
+            $total = required_param('total', PARAM_INT);
             $parts = $turnitintooltwoassignment->get_parts();
+
+            if ($refreshrequested) {
+                unset($_SESSION["TiiSubmissionsRefreshed"][$partid]);
+            }
 
             if (empty($_SESSION["TiiSubmissions"][$partid]) || $refreshrequested) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
+                $total = $_SESSION["TiiSubmissions"][$partid];
+            }
+
+            turnitintooltwo_activitylog(print_r($_SESSION["TiiSubmissions"][$partid], true), 'TESTING');
+            if ($start < $total) {
                 $turnitintooltwoassignment->refresh_submissions($parts[$partid], $start);
-                $_SESSION["TiiSubmissionsRefreshed"][$partid] = time();
             }
 
             $PAGE->set_context(context_module::instance($cm->id));
@@ -169,6 +178,9 @@ switch ($action) {
             $return["aaData"] = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
             $return["end"] = $start + TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
             $return["total"] = count($_SESSION["submissions"][$partid]);
+            if ($return["end"] >= $return["total"]) {
+                $_SESSION["TiiSubmissionsRefreshed"][$partid] = time();
+            }
         } else {
             $return["aaData"] = '';
         }
