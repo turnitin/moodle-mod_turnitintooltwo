@@ -110,8 +110,6 @@ jQuery(document).ready(function($) {
                             // Forum
                             userid += ($(".userid").html());
                         }
-                        console.log(userid);
-                        console.log(typeof userid);
                         userAgreementAccepted( userid );
                     }
                 });
