@@ -99,7 +99,20 @@ jQuery(document).ready(function($) {
 
                 $(window).on("message", function(ev) {
                     if (ev.originalEvent.data == 'turnitin_eula_accepted') {
-                        window.location = window.location;
+                        var userid = 0;
+                        if($('.turnitin_ula').length){
+                            // Turnitin activity module
+                            userid = ($(".turnitin_ula").attr('data-userid'));
+                        } else if($('.pp_turnitin_ula').length) {
+                            // Plagiarism plugin
+                            userid = ($(".pp_turnitin_ula").attr('data-userid'));
+                        } else {
+                            // Forum
+                            userid += ($(".userid").html());
+                        }
+                        console.log(userid);
+                        console.log(typeof userid);
+                        userAgreementAccepted( userid );
                     }
                 });
             }
@@ -160,6 +173,19 @@ jQuery(document).ready(function($) {
             data: {action: "update_grade", submission: submission_id, cmid: coursemoduleid, sesskey: M.cfg.sesskey},
             success: function(data) {
                 eval(data);
+                window.location = window.location;
+            }
+        });
+    }
+
+    // Update the DB value for EULA accepted
+    function userAgreementAccepted( user_id ){
+        $.ajax({
+            type: "POST",
+            url: "../../plagiarism/turnitin/ajax.php",
+            dataType: "json",
+            data: {action: 'acceptuseragreement', user_id: user_id},
+            success: function(data) {
                 window.location = window.location;
             }
         });

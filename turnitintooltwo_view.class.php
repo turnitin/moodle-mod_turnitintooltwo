@@ -282,7 +282,7 @@ class turnitintooltwo_view {
      */
     public function show_submission_form($cm, $turnitintooltwoassignment, $partid, $turnitintooltwofileuploadoptions,
                                 $viewcontext = "box", $userid = 0) {
-        global $CFG, $OUTPUT, $USER;
+        global $CFG, $OUTPUT, $USER, $DB;
 
         $output = "";
         $config = turnitintooltwo_admin_config();
@@ -291,10 +291,11 @@ class turnitintooltwo_view {
         // Check if the submitting user has accepted the EULA
         $eulaaccepted = false;
         if ($userid == $USER->id) {
-            $user = new turnitintooltwo_user($userid, "Learner");
+            $user = $DB->get_record('turnitintooltwo_users', array('userid' => $userid));
+            $soap_user = new turnitintooltwo_user($userid, "Learner");
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
-            $user->join_user_to_class($coursedata->turnitin_cid);
-            $eulaaccepted = $user->get_accepted_user_agreement();
+            $soap_user->join_user_to_class($coursedata->turnitin_cid);
+            $eulaaccepted = $user->user_agreement_accepted;
         }
 
         $parts = $turnitintooltwoassignment->get_parts_available_to_submit();
@@ -371,9 +372,9 @@ class turnitintooltwo_view {
             if ($userid == $USER->id) {
                 if (!$eulaaccepted) {
 
-                    $ula = html_writer::tag('div', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula'));
+                    $ula = html_writer::tag('div', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula', 'data-userid' => $userid));
                     $noscriptula = html_writer::tag('noscript',
-                                            $this->output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner",
+                                            $this->output_dv_launch_form("useragreement", 0, $soap_user->tii_user_id, "Learner",
                                             get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                                 get_string('noscriptula', 'turnitintooltwo'),
                                             array('class' => 'warning turnitin_ula_noscript'));

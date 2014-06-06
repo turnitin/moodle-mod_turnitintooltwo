@@ -4,7 +4,7 @@
  * @copyright 2012 iParadigms LLC
  */
 
-$module->version   = 2014012403;  // The current module version (Date: YYYYMMDDXX)
+$module->version   = 2014012404;  // The current module version (Date: YYYYMMDDXX)
 $module->requires  = 2012062500;
 $module->component = 'mod_turnitintooltwo';
 $module->maturity  = MATURITY_STABLE;

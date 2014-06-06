@@ -347,7 +347,8 @@ jQuery(document).ready(function($) {
 
                 $(window).on("message", function(ev) {
                     if (ev.originalEvent.data == 'turnitin_eula_accepted') {
-                        window.location = window.location;
+                        var userid = ($(".turnitin_ula").attr('data-userid'));
+                        userAgreementAccepted( userid );
                     }
                 });
             }
@@ -517,6 +518,19 @@ jQuery(document).ready(function($) {
     }
 
     $('#inbox_form form, .launch_form form').submit();
+
+    // Update the DB value for EULA accepted
+    function userAgreementAccepted( user_id ){
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            dataType: "json",
+            data: {action: 'acceptuseragreement', user_id: user_id},
+            success: function(data) {
+                window.location = window.location;
+            }
+        });
+    }
 
     // Enable the editing fields in the inbox parts table
     function enableEditingText(part_id) {
