@@ -527,7 +527,7 @@ jQuery(document).ready(function($) {
             dataType: "json",
             data: {action: 'acceptuseragreement', user_id: user_id},
             success: function(data) {
-                window.location = window.location;
+                window.location.href = window.location.href;
             }
         });
     }
