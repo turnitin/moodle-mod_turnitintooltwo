@@ -437,3 +437,7 @@ $string['submitondraft'] = 'Dosyayı yükleme işlemi yapıldığında gönder';
 $string['submitonfinal'] = 'Dosyayı öğrenci işaretleme için gönderdikten sonra yolla';
 $string['turnitindiagnostic'] = 'Teşhis Modunu Etkinleştir';
 $string['turnitindiagnostic_desc'] = '<b>[Caution]</b><br />Teşhis modunu sadece Turnitin API ile ilgili problemleri ortaya çıkarmak için etkinleştiriniz.';
+$string['autorefreshgrades'] = 'Notları/Puanları otomatik olarak Yenile';
+$string['autorefreshgrades_help'] = 'Her Turnitin bağlantısından sonra Moodle bütünleştirme eklentisi Turnitin&#39; de yapılan değişiklikleri otomatik olarak alacaktır. Bu özelliği kapatmak bu için seçeneği kullanabilirsiniz, bununla birlikte bu iki sistem arasındaki senkronizasyonu sağlamak için Moodle da orijinallik puanı ile notları manuel olarak sıklıkla yenilemeniz gerekir.';
+$string['yesgrades'] = 'Evet, orijinallik puanı ve notları otomatik olarak yenile';
+$string['nogrades'] = 'Hayır, Orijinallik puanını ve notları manuel olarak yenileyeceğim';

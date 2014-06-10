@@ -438,3 +438,7 @@ $string['submitondraft'] = 'Lliurar l&#39;arxiu quan es carregui per primera veg
 $string['submitonfinal'] = 'Lliurar l&#39;arxiu quan l&#39;estudiant l&#39;enviï per qualificar';
 $string['turnitindiagnostic'] = 'Activar el mode de diagnòstic';
 $string['turnitindiagnostic_desc'] = '<b>[Precaució]</b><br />Activar node de diagnòstic només per detectar problemes amb el API de Turnitin.';
+$string['autorefreshgrades'] = 'Actualització automàtica de graus/puntuacions';
+$string['autorefreshgrades_help'] = 'Per defecte, després de cada trucada, el plugin de integració de Moodle intentarà sincronitzar automàticament els canvis efectuats. Vosté pot utilizar aquesta opció per apagar aquesta funció, no obstant això per mantenir la sincronització entre ambdós sistemes, vosté hauria d´actualitzar manualment i amb freqüència les notes i puntuacions originals dins de Moodle.';
+$string['yesgrades'] = 'Si, automàticament s´actualitzen les puntuacions i evaluacions originals';
+$string['nogrades'] = 'No, actualitzaré manualment les notes i puntuacions originals';

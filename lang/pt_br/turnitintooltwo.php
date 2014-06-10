@@ -436,3 +436,7 @@ $string['submitondraft'] = 'Enviar arquivo quando for feito o primeiro upload';
 $string['submitonfinal'] = 'Enviar o arquivo quando o aluno enviá-lo para avaliação';
 $string['turnitindiagnostic'] = 'Habilitar Modo Diagnóstico';
 $string['turnitindiagnostic_desc'] = '<b>[Cuidado]</b><br />Habilitar modo de Diagnóstico somente para rastrear os problemas com o API do Turnitin.';
+$string['autorefreshgrades'] = 'Atualização Automática de Notas / Pontos';
+$string['autorefreshgrades_help'] = 'Por padrão, após cada chamada para o Turnitin, o plugin de integração Moodle tentará automaticamente anular as mudanças feitas enquanto dentro do Turnitin. Você pode usar essa opção para desligar esse recurso, no entanto, para manter a sincronização entre os dois sistemas você terá que frequentemente atualizar as notas e os pontos do originalidade manualmente de dentro do Moodle.';
+$string['yesgrades'] = 'Sim, atualize automaticamente os pontos e notas do originalidade';
+$string['nogrades'] = 'Não, Eu vou atualizar manualmente a pontuação do originalidade e notas';

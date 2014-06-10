@@ -437,3 +437,7 @@ $string['submitondraft'] = 'Verzend bestand wanneer het voor het eerst wordt ge√
 $string['submitonfinal'] = 'Verzend bestand wanneer student het ter beoordeling instuurt';
 $string['turnitindiagnostic'] = 'Diagnostische Modus Inschakelen';
 $string['turnitindiagnostic_desc'] = '<b>[Let op]</b><br />Schakel Diagnostische modus alleen in om problemen op te sporen met de Turnitin API.';
+$string['autorefreshgrades'] = 'Automatisch cijfers/scores verversen';
+$string['autorefreshgrades_help'] = 'Standaard zal na elke oproep tot Turnitin de Moodle integratie-plugin proberen automatisch wijzigingen die gemaakt zijn in Turnitin door te voeren. U kunt deze optie gebruiken om deze functie uit te schakelen, maar om de synchronisatie tussen beide systemen te behouden, moet u vaak handmatig cijfers en oorspronkelijkheidsscores vernieuwen vanuit Moodle.';
+$string['yesgrades'] = 'Ja, ververs oorspronkelijkheidsscores en cijfers automatisch';
+$string['nogrades'] = 'Nee, ik zal originaliteitsscores en cijfers handmatig verversen';

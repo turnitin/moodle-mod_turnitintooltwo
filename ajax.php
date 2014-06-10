@@ -173,14 +173,15 @@ switch ($action) {
             $start = required_param('start', PARAM_INT);
             $total = required_param('total', PARAM_INT);
             $parts = $turnitintooltwoassignment->get_parts();
+            $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintool->autoupdates == 1) ? 1 : 0;
 
-            if (empty($_SESSION["TiiSubmissions"][$partid]) || ($refreshrequested && $start == 0)) {
+            if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = $_SESSION["TiiSubmissions"][$partid];
                 $_SESSION["TiiSubmissionsRefreshed"][$partid] = time();
             }
 
-            if ($start < $total) {
+            if ($start < $total && $updatefromtii) {
                 $turnitintooltwoassignment->refresh_submissions($parts[$partid], $start);
             }
 

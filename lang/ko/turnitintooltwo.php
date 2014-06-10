@@ -445,3 +445,7 @@ $string['submitondraft'] = '처음 업로드시 파일 제출';
 $string['submitonfinal'] = ' 학생이 제출하여 채점을 요구할 때 파일 제출';
 $string['turnitindiagnostic'] = '진단 모드를 활성화 시키기';
 $string['turnitindiagnostic_desc'] = '<b>[주의]</b><br />Turnitin API의 문제들을 찾아내기 위해서만 진단 모드를 활성화 시킴.';
+$string['autorefreshgrades'] = '성적/점수 자동 새로고침';
+$string['autorefreshgrades_help'] = '기본적으로 Turnitin으로의 콜 때마다 Moodle integration plug in이 Turnitin에 있을 때 만들어진 변경사항을 자동으로 끌어내리려고 할 것입니다. 이 옵션을 사용하여 이러한 기능을 비활성화 시킬 수 있습니다. 그러나 양 시스템 간의 동일화를 유지하려면 Moodle내에서 자주 수동적으로 성적과 독창성 점수를 새로 고침해야 합니다.';
+$string['yesgrades'] = '예, 독창성 점수와 성적을 자동으로 새로고침합니다';
+$string['nogrades'] = '아니오, 독창성 점수와 성적을 수동으로 새로고침하겠습니다.';

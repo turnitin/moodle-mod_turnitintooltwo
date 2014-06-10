@@ -606,7 +606,6 @@ class turnitintooltwo_assignment {
         // Insert the default options for the assignment.
         $this->turnitintooltwo->timecreated = time();
         $this->turnitintooltwo->dateformat = "d/m/Y";
-        $this->turnitintooltwo->autoupdates = 1;
         $this->turnitintooltwo->gradedisplay = 1;
         $this->turnitintooltwo->commentedittime = 1800;
         $this->turnitintooltwo->commentmaxsize = 800;

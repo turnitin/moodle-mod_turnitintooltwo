@@ -438,3 +438,7 @@ $string['submitondraft'] = 'Submit file when first uploaded';
 $string['submitonfinal'] = 'Submit file when student sends for marking';
 $string['turnitindiagnostic'] = 'Enable Diagnostic Mode';
 $string['turnitindiagnostic_desc'] = '<b>[Caution]</b><br />Enable Diagnostic mode only to track down problems with the Turnitin API.';
+$string['autorefreshgrades'] = 'Auto Refresh Grades / Scores';
+$string['autorefreshgrades_help'] = 'By default after each call to Turnitin the Moodle integration plug in will attempt to automatically pull down changes made while in within Turnitin. You can use this option to turn off this feature, however in order to maintain synchronisation between both systems you will need to frequently manually refresh grades and originality scores from within Moodle.';
+$string['yesgrades'] = 'Yes, automatically refresh originality scores and grades';
+$string['nogrades'] = 'No, I will refresh originality scores and grades manually';

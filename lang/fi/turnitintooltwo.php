@@ -435,3 +435,7 @@ $string['submitondraft'] = 'Palauta tiedosto ensimmäisen siirron yhteydessä';
 $string['submitonfinal'] = 'Palauta tiedosto, kun opiskelija lähettää sen merkintää varten';
 $string['turnitindiagnostic'] = 'Aktivoi Diagnoosi-tila';
 $string['turnitindiagnostic_desc'] = '<b>[Varoitus]</b><br />Aktivoi Diagnoosi-tila ainoastaan löytääksesi ongelmia Turnitin API:ssä.';
+$string['autorefreshgrades'] = 'Päivitä Automaattisesti Arvosanat/Pisteet';
+$string['autorefreshgrades_help'] = 'Jokaisen Turnitiniin tehdyn kutsun jälkeen tulee Moodle-plugin oletusarvoisesti yrittämään automaattisesti Turnitin-istunnon aikana tehtyjen muutosten lataamista. Voit käyttää tätä vaihtoehtoa toiminnon pois päältä kääntämiseen, mutta ylläpitääksesi molempien systeemien välisen synkronoinnin, sinun pitää jatkuvasti päivittää arvosanat ja alkuperäisyyspisteytykset manuaalisesti, Moodlesta käsin.';
+$string['yesgrades'] = 'Kyllä, päivitä automaattisesti alkuperäisyyspisteet ja arvosanat';
+$string['nogrades'] = 'Ei, päivitän alkuperäisyyspisteytyksen ja arvosanat manuaalisesti';

@@ -435,3 +435,7 @@ $string['submitondraft'] = 'Nộp tập tin khi vừa tải lên';
 $string['submitonfinal'] = 'Nộp tập tin khi học sinh gởi để chấm điểm';
 $string['turnitindiagnostic'] = 'Bật Cho phép Chế độ Chẩn đoán';
 $string['turnitindiagnostic_desc'] = '<b>[Cẩn thận]</b><br />Bật Chế độ Chẩn đoán chỉ để tìm các sự cố với Turnitin API.';
+$string['autorefreshgrades'] = 'Tự động Làm mới Điểm/ Điểm Số';
+$string['autorefreshgrades_help'] = 'Theo mặc định sau mỗi cuộc gọi vào Turnitin, phần bổ trợ liên kết hệ thống Moodle sẽ tự động kéo xuống những thay đổi đã thực hiện khi đang còn ở bên trong Turnitin. Bạn có thể sử dụng tuỳ chọn này để tắt tính năng đó, tuy nhiên để duy trì trạng thái đồng bộ giữa cả hai hệ thống, bạn cần thường xuyên làm mới điểm và các điểm số về tính độc sáng một cách thủ công từ bên trong Moodle.';
+$string['yesgrades'] = 'Chấp thuận, tự động làm mới điểm và điểm số về tính độc sáng.';
+$string['nogrades'] = 'Không, tôi sẽ làm mới điểm số và điểm về tính độc sáng một cách thủ công.';

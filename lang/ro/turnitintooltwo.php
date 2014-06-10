@@ -438,3 +438,7 @@ $string['submitondraft'] = 'Depunere fișier la prima încărcare';
 $string['submitonfinal'] = 'Depunere fișier atunci când studentul trimite pentru notare';
 $string['turnitindiagnostic'] = 'Activați Modul diagnostic';
 $string['turnitindiagnostic_desc'] = '<b>[Atenție]</b><br />Activați Modul diagnostic numai pentru a detecta problemele cu API Turnitin.';
+$string['autorefreshgrades'] = 'Reîncărcarea automată a notelor/punctajelor';
+$string['autorefreshgrades_help'] = 'În mod prestabilit, după fiecare apel către Turnitin plugin-ul integrării Moodle va încerca să sincronizeze automat modificările realizate în timpul aflării în cadrul Turnitin. Puteți folosi această opțiune pentru a dezactiva această funcție; totuși pentru a menține sincronizarea dintre ambele sisteme va trebui să reîncărcați frecvent în mod manual notele și punctajele de originalitate din cadrul Moodle.';
+$string['yesgrades'] = 'Da, reîncărcați automat procentajele de originalitate și notele';
+$string['nogrades'] = 'Nu, voi reîncărca manual procentajele de originalitate și notele';

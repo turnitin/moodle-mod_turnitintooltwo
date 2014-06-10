@@ -225,6 +225,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('studentreports', 'studentreports', 'turnitintooltwo');
         $mform->setDefault('studentreports', $config->default_studentreports);
 
+        $refreshoptions = array(1 => get_string('yesgrades', 'turnitintooltwo'), 0 => get_string('nogrades', 'turnitintooltwo'));
+
+        $mform->addElement('select', 'autoupdates', get_string('autorefreshgrades', 'turnitintooltwo'), $refreshoptions);
+        $mform->addHelpButton('autoupdates', 'autorefreshgrades', 'turnitintooltwo');
+        $mform->setDefault('autoupdates', 1);
+
         $mform->addElement('checkbox', 'set_instructor_defaults', '', " ".get_string('setinstructordefaults', 'turnitintooltwo'));
         $mform->setDefault('set_instructor_defaults', false);
         $mform->addHelpButton('set_instructor_defaults', 'setinstructordefaults', 'turnitintooltwo');

@@ -434,3 +434,7 @@ $string['submitondraft'] = 'Przekaż plik w momencie wysłania';
 $string['submitonfinal'] = 'Przekaż plik kiedy student wyśle do oceny';
 $string['turnitindiagnostic'] = 'Włączenie trybu diagnostycznego';
 $string['turnitindiagnostic_desc'] = '<b>[Uwaga]</b><br />Uruchom tryb diagnostyczny tylko do wykrywania problemów z API Turnitin.';
+$string['autorefreshgrades'] = 'Automatyczne odświeżanie ocen/wyników';
+$string['autorefreshgrades_help'] = 'Domyślnie, po każdym połączeniu z Turnitin, wtyczka integracji Moodle będzie próbowała automatycznie ściągać zmiany poczynione wewnątrz Turnitin. Możesz wyłączyć domyślną integrację. Jednak aby zachować synchronizację między obydwoma systemami powinno się często odświeżać oceny i wyniki oryginalności z poziomu Moodle.';
+$string['yesgrades'] = 'Tak, automatycznie aktualizuj wyniki oryginalności i oceny';
+$string['nogrades'] = 'Nie, ręcznie odświeżę wyniki oryginalności i oceny';

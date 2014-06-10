@@ -438,3 +438,7 @@ $string['submitondraft'] = 'Lämna in filen när den har laddats upp';
 $string['submitonfinal'] = 'Lämna in filen när den har laddats upp';
 $string['turnitindiagnostic'] = 'Aktivera Diagnostikläge';
 $string['turnitindiagnostic_desc'] = '<b>[Varning]</b><br />Aktivera Diagnostikläge endast för att spåra problem med Turnitin API.';
+$string['autorefreshgrades'] = 'Automatisk Uppdatering Av Betyg / Poäng';
+$string['autorefreshgrades_help'] = 'Som standard efter varje samtal till Turnitin så kommer integrationen för Moodle plugin att automatiskt försöka ta ner ändringar som görs medan du är i i Turnitin. Du kan använda detta alternativ för att avaktivera denna funktion, men för att upprätthålla synkronisering mellan de båda systemen måste du frekvent uppdatera betyg och originalitetspoäng manuellt inifrån Moodle.';
+$string['yesgrades'] = 'Ja, uppdatera originalitetspoäng och betyg automatiskt';
+$string['nogrades'] = 'Nej, jag vill uppdatera originalitetspoäng och betyg manuellt';

@@ -438,3 +438,7 @@ $string['submitondraft'] = 'Soumettre le document une fois qu&#39;il est chargé
 $string['submitonfinal'] = 'Soumettre le document lorsque l&#39;étudiant l&#39;envoie pour l&#39;évaluation ';
 $string['turnitindiagnostic'] = 'Activer le mode diagnostique';
 $string['turnitindiagnostic_desc'] = '<b>[Attention]</b><br />Activez le mode diagnostique seulement pour détecter des problèmes liés à l’API de Turnitin.';
+$string['autorefreshgrades'] = 'Actualiser les résultats /notes automatiquement';
+$string['autorefreshgrades_help'] = 'Après chaque appel à Turnitin l’intégration de Moodle va essayer de synchroniser automatiquement les changements crées dans Turnitin par défaut. Vous pouvez utiliser cette option pour arrêter ce processus. En revanche, pour garder la synchronisation entre les deux systèmes, il faut rafraîchir régulièrement et manuellement les résultats ainsi que les rapports de similitude à partir de Moodle.';
+$string['yesgrades'] = 'Oui, actualiser automatiquement les résultats des correspondances et les notes';
+$string['nogrades'] = 'Non, j&#39;actualiserai moi-même les résultats de similitude et les notes manuellement';

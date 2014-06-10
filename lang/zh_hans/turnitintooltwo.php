@@ -429,3 +429,7 @@ $string['submitondraft'] = '在上传时提交文档';
 $string['submitonfinal'] = '当学生傳寄至标示时提交档案';
 $string['turnitindiagnostic'] = '开启诊断模式';
 $string['turnitindiagnostic_desc'] = '<b>[警告]</b><br />开启诊断模式来追踪 Turnitin API 的问题。';
+$string['autorefreshgrades'] = '自动更新成绩/分数';
+$string['autorefreshgrades_help'] = '按预设设定，在每次启用 Turnitin 后，Moodle 整合 plug in 将尝试自动拉下在 Turnitin 内所做的变更。 您可以使用此选项以关闭该功能，但若要维持这两个系统间的一致性，您将需要时常地从 Moodle 内手动更新成绩和原创性分数。';
+$string['yesgrades'] = '确定，自动更新新原创性分数与成绩';
+$string['nogrades'] = '否，我将以手动方式更新原创性分数及成绩';

@@ -462,3 +462,7 @@ $string['submitondraft'] = '最初にアップロードされた際にファイ�
 $string['submitonfinal'] = '受講生がマーキングに送信した際にファイルを提出する';
 $string['turnitindiagnostic'] = '診断モードをオンにする';
 $string['turnitindiagnostic_desc'] = '<b>[注意]</b><br />Turnitin APIを使用して診断モードをオンにし、問題を追跡する。';
+$string['autorefreshgrades'] = '成績／得点を自動的にリフレッシュする';
+$string['autorefreshgrades_help'] = '既定では、Turnitinに通信後、毎回Moodle統合プラグインはTurnitin内でなされた変更を自動的にほぞんします。このオプションを使用してこの機能をオフにすることができますが、両方のシステムの同調性を保持するには、リフレッシュをマニュアル操作で頻繁に行ってください。';
+$string['yesgrades'] = 'はい、自動的にオリジナリティースコアと評価をリフレッシュする';
+$string['nogrades'] = 'いいえ、オリジナリティースコアと評価をマニュアル操作でリフレッシュする';

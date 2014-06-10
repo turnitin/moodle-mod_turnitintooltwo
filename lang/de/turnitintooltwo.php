@@ -438,3 +438,8 @@ $string['submitondraft'] = 'Datei beim ersten Hochladen übermitteln';
 $string['submitonfinal'] = 'Datei übermitteln, wenn der Student sie zum Markieren sendet.';
 $string['turnitindiagnostic'] = 'Diagnosemodus aktivieren';
 $string['turnitindiagnostic_desc'] = '<b>[Vorsicht]</b><br />Aktivieren Sie den Diagnosemodus nur zum Auffinden von Probleme mit Turnitin API.';
+$string['autorefreshgrades'] = 'Automatisches Aktualisieren der Noten / Punktwerte.';
+$string['autorefreshgrades_help'] = 'Per Standardeinstellung synchronisiert das Plug-in der Moodle-Integration bei jeder Einwahl in Turnitin automatisch Änderungen, die während der Arbeit mit Turnitin vorgenommen wurden. Sie können diese Funktion mit dieser Option deaktivieren, um jedoch die Synchronisation beider Systeme aufrechtzuerhalten, müssen Sie Noten und Echtheitswerte in regelmäßigen Abständen manuell aus Moodle heraus aktualisieren.';
+$string['yesgrades'] = 'Ja, Werte für Echtheit und Noten automatisch aktualisieren.';
+$string['nogrades'] = 'Nein, ich aktualisiere Punktwerte für Echtheit und Noten manuell.';
+
