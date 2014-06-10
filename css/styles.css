@@ -69,7 +69,7 @@
     width:80%;
 }
 
-.grademark_open, .origreport_open, .download_original_open, .zip_open, .enrol_link, .refresh_link, .messages_inbox, span.link {
+.grademark_open, .origreport_open, .download_original_open, .zip_open, .enrol_link, .refresh_link, .refresh_row, .messages_inbox, span.link {
     cursor:pointer;
 }
 
@@ -384,7 +384,7 @@ table.dataTable thead th.sorting_disabled {
     white-space:nowrap;
 }
 
-.student_dot_icon, .student_read_icon, .download_original_open img, .upload_box img, .upload_box span {
+.student_dot_icon, .student_read_icon, .download_original_open img, .upload_box img, .upload_box span, .refresh_row img {
     position: relative;
 }
 
@@ -401,7 +401,7 @@ table.dataTable thead th.sorting_disabled {
     top:-1px;
 }
 
-.download_original_open img, .upload_box img {
+.download_original_open img, .upload_box img, .refresh_row img {
     top:-3px;
 }
 

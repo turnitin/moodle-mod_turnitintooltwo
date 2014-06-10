@@ -280,6 +280,7 @@ jQuery(document).ready(function($) {
             },
             "fnDrawCallback":  function( oSettings ) {
                 initialiseDVLaunchers("all", 0, part_id, 0);
+                initialiseRefreshRow("all", 0, part_id, 0);
                 initialiseUploadBox("all", 0, 0, 0);
                 initialiseZipDownloads(part_id);
                 initialiseCheckboxes(0, part_id);
@@ -804,6 +805,22 @@ jQuery(document).ready(function($) {
         });
     }
 
+
+    function initialiseRefreshRow(scope, submission_id, part_id, user_id) {
+        var identifier = ".refresh_row";
+        if (scope == "row") {
+            identifier = "#refreshrow_"+submission_id+'_'+part_id+"_"+user_id;
+        }
+
+        // Unbind the event first to stop it being binded multiple times
+        $(identifier).unbind("click");
+
+        $(identifier).click(function() {
+            var idStr = $(this).attr("id").split("_");
+            refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+        });
+    }
+
     // Initialise the events to open the document viewer as the links are loaded after the page
     function initialiseDVLaunchers(scope, submission_id, part_id, user_id) {
         var identifier = '#'+part_id+' .origreport_open, #'+part_id+' .grademark_open, #'+part_id+' .download_original_open';
@@ -930,6 +947,7 @@ jQuery(document).ready(function($) {
 
                 initialiseUploadBox("row", data.submission_id, part_id, user_id);
                 initialiseDVLaunchers("row", data.submission_id, part_id, user_id);
+                initialiseRefreshRow("row", data.submission_id, part_id, user_id);
                 initialiseCheckboxes(data.submission_id, part_id);
                 initialiseUnanoymiseForm("row", $('#assignment_id').html(), data.submission_id);
             }

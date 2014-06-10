@@ -490,6 +490,10 @@ class turnitintooltwo_view {
         $cells["upload"] = new html_table_cell('&nbsp;');
         $cells["upload"]->attributes['class'] = "noscript_hide";
 
+        if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
+            $cells["refresh"] = new html_table_cell('&nbsp;');
+        }
+
         $cells["download"] = new html_table_cell('&nbsp;');
         $cells["delete"] = new html_table_cell('&nbsp;');
         $tableheaders = $cells;
@@ -1191,6 +1195,16 @@ class turnitintooltwo_view {
             $download = "--";
         }
 
+        $refresh = '--';
+        if (!empty($submission->id) && $istutor) {
+            $refresh = html_writer::tag('div', $OUTPUT->pix_icon('refresh',
+                                                get_string('turnitinrefreshsubmissions', 'turnitintooltwo'),
+                                                        'mod_turnitintooltwo'),
+                                                        array('class' => 'refresh_row', 
+                                                                'id' => 'refreshrow_'.$submission->submission_objectid.
+                                                                    '_'.$partid.'_'.$submission->userid));
+        }
+
         // Delete Link.
         $delete = "--";
         if ($istutor) {
@@ -1241,6 +1255,7 @@ class turnitintooltwo_view {
         }
         $data[] = $upload;
         $data[] = $download;
+        $data[] = $refresh;
         $data[] = $delete;
 
         return $data;
