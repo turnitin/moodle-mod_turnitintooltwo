@@ -87,6 +87,8 @@ class turnitintooltwo_view {
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/colorbox.css');
         $PAGE->requires->css($cssurl);
+        $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
+        $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/jqueryui-editable.css');
         $PAGE->requires->css($cssurl);
         $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery-1.8.2.min.js');
