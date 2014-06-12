@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
         $.ajax({
             "dataType": 'json',
             "type": "POST",
-            "url": site_root+"/mod/turnitintooltwo/ajax.php",
+            "url": M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
             "data": {action: "search_classes", request_source: "block", sesskey: M.cfg.sesskey},
             "success": function(result) {
                 eval(result);
