@@ -814,16 +814,18 @@ jQuery(document).ready(function($) {
 
 
     function initialiseRefreshRow(scope, submission_id, part_id, user_id) {
-        var identifier = ".refresh_row";
+        var identifier = ".refresh_row .fa-refresh";
         if (scope == "row") {
-            identifier = "#refreshrow_"+submission_id+'_'+part_id+"_"+user_id;
+            identifier = "#refreshrow_"+submission_id+'_'+part_id+"_"+user_id+" .fa-refresh";
         }
 
         // Unbind the event first to stop it being binded multiple times
         $(identifier).unbind("click");
 
         $(identifier).click(function() {
-            var idStr = $(this).attr("id").split("_");
+            $(this).hide();
+            $(this).siblings('.fa-spinner').css("display","inline-block");
+            var idStr = $(this).parent().attr("id").split("_");
             refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
         });
     }

@@ -1198,9 +1198,9 @@ class turnitintooltwo_view {
 
         $refresh = '--';
         if (!empty($submission->id) && $istutor) {
-            $refresh = html_writer::tag('div', $OUTPUT->pix_icon('refresh',
-                                                get_string('turnitinrefreshsubmissions', 'turnitintooltwo'),
-                                                        'mod_turnitintooltwo'),
+            $refresh = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh', 
+                                                    'title' => get_string('turnitinrefreshsubmissions', 'turnitintooltwo'))).
+                                                html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin')),
                                                         array('class' => 'refresh_row', 
                                                                 'id' => 'refreshrow_'.$submission->submission_objectid.
                                                                     '_'.$partid.'_'.$submission->userid));
