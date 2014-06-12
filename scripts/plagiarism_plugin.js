@@ -95,24 +95,19 @@ jQuery(document).ready(function($) {
                     $(identifier).append('<input name="'+key+'" value="'+val+'" type="hidden" />');
                 });
                 $(identifier).append('<input type="submit" value="Submit" />');
-                $(identifier).submit();
 
-                $(window).on("message", function(ev) {
-                    if (ev.originalEvent.data == 'turnitin_eula_accepted') {
-                        var userid = 0;
-                        if($('.turnitin_ula').length){
-                            // Turnitin activity module
-                            userid = ($(".turnitin_ula").attr('data-userid'));
-                        } else if($('.pp_turnitin_ula').length) {
-                            // Plagiarism plugin
-                            userid = ($(".pp_turnitin_ula").attr('data-userid'));
-                        } else {
-                            // Forum
-                            userid += ($(".userid").html());
-                        }
-                        userAgreementAccepted( userid );
-                    }
+                $(identifier).on("submit", function(event) {
+                    eulaWindow = window.open('', 'eula');
+                    eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
+                    $(eulaWindow).on("message", function(ev) {
+                        eulaWindow.close();
+                    });
+                    $(eulaWindow).bind('beforeunload', function() {
+                        window.location.href = window.location.href;
+                    });
                 });
+
+                $(identifier).submit();
             }
         });
     }

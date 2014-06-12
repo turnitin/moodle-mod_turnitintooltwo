@@ -22,6 +22,7 @@ class turnitintooltwo_user {
     public $lastname;
     public $email;
     public $username;
+    public $user_agreement_accepted;
     private $enrol;
     private $usermessages;
     private $instructor_defaults;
@@ -149,10 +150,12 @@ class turnitintooltwo_user {
      */
     private function get_tii_user_id() {
         global $DB;
-        if (!$tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid")) {
+        if (!$tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid, user_agreement_accepted")) {
             $this->tii_user_id = 0;
+            $this->user_agreement_accepted = 0;
         } else {
             $this->tii_user_id = (isset($tiiuser->turnitin_uid) && $tiiuser->turnitin_uid > 0 ) ? $tiiuser->turnitin_uid : 0;
+            $this->user_agreement_accepted = $tiiuser->user_agreement_accepted;
         }
 
         if (empty($this->tii_user_id)) {
@@ -600,6 +603,8 @@ class turnitintooltwo_user {
      * @return boolean
      */
     public function get_accepted_user_agreement() {
+        global $DB;
+
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
@@ -614,6 +619,13 @@ class turnitintooltwo_user {
             $readuser = $response->getUser();
 
             if ($readuser->getAcceptedUserAgreement()) {
+                $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
+
+                $tii_userinfo = new stdClass();
+                $tii_userinfo->id = $turnitintooltwouser->id;
+                $tii_userinfo->user_agreement_accepted = 1;
+
+                $DB->update_record('turnitintooltwo_users', $tii_userinfo);
                 return true;
             } else {
                 return false;

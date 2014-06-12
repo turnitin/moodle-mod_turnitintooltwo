@@ -308,7 +308,7 @@ span.link {
     color: #0000FF;
 }
 
-#submitting_loader {
+#submitting_loader, #refresh_loading {
     display:none;
     padding: 16px 0 8px;
     text-align: center;

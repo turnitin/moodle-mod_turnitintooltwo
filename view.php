@@ -347,12 +347,20 @@ switch ($do) {
                                                             $turnitintooltwofileuploadoptions, "box_solid", $user);
             unset($_SESSION['form_data']);
 
+            // Add loader icon for when iframe refreshes.
+            $loadericon = $OUTPUT->pix_icon('loader-lrg', get_string('uploadingsubtoturnitin', 'turnitintooltwo'),
+                                                    'mod_turnitintooltwo');
+            $output = html_writer::tag('div', $loadericon, array('id' => 'refresh_loading'));
+
             // Create div for submitting text.
             $icon = $OUTPUT->pix_icon('icon', get_string('uploadingsubtoturnitin', 'turnitintooltwo'), 'mod_turnitintooltwo');
             $text = html_writer::tag('p', get_string('uploadingsubtoturnitin', 'turnitintooltwo'));
             $loadericon = $OUTPUT->pix_icon('loader-lrg', get_string('uploadingsubtoturnitin', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo');
-            $output = html_writer::tag('div', $icon.$text.$loadericon, array('id' => 'submitting_loader'));
+
+            // Add loader icon and text for submission.
+            $output .= html_writer::tag('div', $icon.$text.$loadericon, array('id' => 'submitting_loader'));
+
         } else {
             $output = html_writer::tag("div", get_string('permissiondeniederror', 'turnitintooltwo'), array("id" => "box_receipt"));
         }

@@ -343,15 +343,22 @@ jQuery(document).ready(function($) {
                     $('#useragreement_form form').append('<input name="'+key+'" value="'+val+'" type="hidden" />');
                 });
                 $('#useragreement_form form').append('<input type="submit" value="Submit" />');
+
+                $("#useragreement_form form").on("submit", function(event) {
+                    eulaWindow = window.open('', 'eula');
+                    eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
+                    $(eulaWindow).on("message", function(ev) {
+                        eulaWindow.close();
+                    });
+                    $(eulaWindow).bind('beforeunload', function() {
+                        window.$('.submission_form_container').html('');
+                        window.$("#refresh_loading").show();
+                        window.location.reload();
+                    });
+                });
+
                 $('#useragreement_form form').submit();
                 $('#useragreement_inputs').html('');
-
-                $(window).on("message", function(ev) {
-                    if (ev.originalEvent.data == 'turnitin_eula_accepted') {
-                        var userid = ($(".turnitin_ula").attr('data-userid'));
-                        userAgreementAccepted( userid );
-                    }
-                });
             }
         });
     });
