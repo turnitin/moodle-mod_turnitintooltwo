@@ -737,9 +737,9 @@ jQuery(document).ready(function($) {
 
         $(identifier).colorbox({
             onLoad: function() {
-                        $('.upload #cboxClose').hide();
-                        getLoadingGif();
-                    },
+                $('.upload #cboxClose').hide();
+                getLoadingGif();
+            },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {
                 hideLoadingGif();

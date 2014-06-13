@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
 
         // Remove the a tag and replace with form and message
         var spanClick = '<span>'+$('.forum_eula_launch_noscript').html()+'</span>';
-        $(".forum_eula_launch").html(spanClick+'<form class="useragreement_form" action="'+$('span.turnitin_eula_link').html()+'" method="POST" accept-charset="utf-8" target="_blank"></form>')
+        $(".forum_eula_launch").html(spanClick+'<form class="useragreement_form" action="'+$('span.turnitin_eula_link').html()+'" method="POST" accept-charset="utf-8" target="eulaWindow"></form>')
         $('.forum_eula_launch_noscript').remove();
 
         $(".forum_eula_launch span").on('click', function(e) {
@@ -101,8 +101,9 @@ jQuery(document).ready(function($) {
                     eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
                     $(eulaWindow).on("message", function(ev) {
                         eulaWindow.close();
+                        window.location.href = window.location.href;
                     });
-                    $(eulaWindow).bind('beforeunload', function() {
+                    eulaWindow.addEventListener("beforeunload", function (e) {
                         window.location.href = window.location.href;
                     });
                 });
