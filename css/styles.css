@@ -384,7 +384,7 @@ table.dataTable thead th.sorting_disabled {
     white-space:nowrap;
 }
 
-.student_dot_icon, .student_read_icon, .download_original_open img, .upload_box img, .upload_box span, .refresh_row img {
+.student_dot_icon, .student_read_icon, .download_original_open img, .upload_box img, .upload_box span {
     position: relative;
 }
 
@@ -401,7 +401,7 @@ table.dataTable thead th.sorting_disabled {
     top:-1px;
 }
 
-.download_original_open img, .upload_box img, .refresh_row img {
+.download_original_open img, .upload_box img {
     top:-3px;
 }
 
@@ -618,4 +618,8 @@ table.dataTable thead th.sorting_disabled {
 
 #course_search_options input, #course_search_options select {
     margin-right: 32px;
+}
+
+.refresh_row .fa-spinner {
+    display: none;
 }
