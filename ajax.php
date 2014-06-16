@@ -151,7 +151,7 @@ switch ($action) {
         break;
 
     case "initialise_redraw":
-        $return["aaData"] = '';
+        $return["aaData"] = array();
 
         echo json_encode($return);
         break;
@@ -173,7 +173,7 @@ switch ($action) {
             $start = required_param('start', PARAM_INT);
             $total = required_param('total', PARAM_INT);
             $parts = $turnitintooltwoassignment->get_parts();
-            $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintool->autoupdates == 1) ? 1 : 0;
+            $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
@@ -586,6 +586,7 @@ switch ($action) {
             echo json_encode($data);
         }
         break;
+
     case "submit_nothing":
 
         if (!confirm_sesskey()) {
@@ -614,4 +615,3 @@ switch ($action) {
         }
     break;
 }
-
