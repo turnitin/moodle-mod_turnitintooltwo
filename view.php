@@ -348,8 +348,7 @@ switch ($do) {
             unset($_SESSION['form_data']);
 
             // Add loader icon for when iframe refreshes.
-            $loadericon = $OUTPUT->pix_icon('loader-lrg', get_string('uploadingsubtoturnitin', 'turnitintooltwo'),
-                                                    'mod_turnitintooltwo');
+            $loadericon = html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-5x'));
             $output = html_writer::tag('div', $loadericon, array('id' => 'refresh_loading'));
 
             // Create div for submitting text.

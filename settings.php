@@ -28,13 +28,19 @@ if ($ADMIN->fulltree) {
     $config = turnitintooltwo_admin_config();
 
     $tabmenu = $turnitintooltwoview->draw_settings_menu($module, 'settings').
-                    html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).
+                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).
+                html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
+                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
+
+    if ($CFG->branch <= 25) {
+        $tabmenu .= html_writer::tag('script', '', array("type" => "text/javascript",
+                                                "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js")).
                     html_writer::tag('script', '', array("type" => "text/javascript",
-                                                "src" => $CFG->wwwroot."/mod/turnitintooltwo/scripts/jquery-1.8.2.min.js")).
-                    html_writer::tag('script', '', array("type" => "text/javascript",
-                                                "src" => $CFG->wwwroot."/mod/turnitintooltwo/scripts/turnitintooltwo_settings.js")).
-                    html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
+                                                "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo_settings.js"));
+    } else {
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+    }
 
     $upgrade = turnitintooltwo_updateavailable($module);
     $upgradeavailable = (is_null($upgrade)) ?
