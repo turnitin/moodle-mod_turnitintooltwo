@@ -319,7 +319,7 @@ p.progress_text {
     margin-bottom: 12px;
 }
 
-noscript.warning {
+noscript.warning, .library_not_present_warning {
     border: 1px solid #CC0000;
     padding: 8px;
     background: #FFE9E8;

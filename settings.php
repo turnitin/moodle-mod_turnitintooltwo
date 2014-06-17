@@ -27,8 +27,14 @@ if ($ADMIN->fulltree) {
 
     $config = turnitintooltwo_admin_config();
 
+    $library_warning = '';
+    if (!extension_loaded('XMLWriter')) {
+        $library_warning = html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'), 
+                                                array('class' => 'library_not_present_warning'));
+    }
+
     $tabmenu = $turnitintooltwoview->draw_settings_menu($module, 'settings').
-                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).
+                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$library_warning.
                 html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
 
