@@ -1177,6 +1177,7 @@ class turnitintooltwo_assignment {
             $assignment->setInternetCheck($this->turnitintooltwo->internetcheck);
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
             $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch);
+            $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
 
             // Erater settings.
             $assignment->setErater((isset($this->turnitintooltwo->erater)) ? $this->turnitintooltwo->erater : 0);
