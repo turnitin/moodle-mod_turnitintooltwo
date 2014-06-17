@@ -535,8 +535,10 @@ function turnitintooltwo_tempfile($suffix) {
  * @param type $module
  * @return null
  */
-function turnitintooltwo_updateavailable($module) {
-    $returnvalue = null;
+function turnitintooltwo_updateavailable($current_version) {
+    global $CFG;
+
+    $returnvalue = get_string('usinglatest', 'mod_turnitintooltwo');
 
     try {
         // Open connection.
@@ -547,6 +549,13 @@ function turnitintooltwo_updateavailable($module) {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {
+            curl_setopt($ch, CURLOPT_PROXY, $CFG->proxyhost.':'.$CFG->proxyport);
+        }
+        if (isset($CFG->proxyuser) AND !empty($CFG->proxyuser)) {
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, sprintf('%s:%s', $CFG->proxyuser, $CFG->proxypassword));
+        }
 
         // Execute post.
         $result = curl_exec($ch);
@@ -555,12 +564,9 @@ function turnitintooltwo_updateavailable($module) {
         curl_close($ch);
 
         $xml = simplexml_load_string($result);
-
-        $version = (empty($module->version)) ? $module->versiondisk : $module->version;
-
         if ((isset($xml)) AND (isset($xml->version))) {
-            if ($xml->version > $version) {
-                $returnvalue = $xml->filename;
+            if ($xml->version > $current_version) {
+                $returnvalue = html_writer::link($xml->filename, get_string("upgradeavailable", "turnitintooltwo"));
             }
         }
 

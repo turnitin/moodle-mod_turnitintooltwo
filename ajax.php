@@ -562,6 +562,20 @@ switch ($action) {
         echo json_encode($return);
         break;
 
+    case "check_upgrade":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+        $data = '';
+        $current_version = required_param('current_version', PARAM_INT);
+
+        if (is_siteadmin()) {
+            $data = turnitintooltwo_updateavailable($current_version);
+        }
+
+        echo $data;
+        break;
+
     case "test_connection":
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');

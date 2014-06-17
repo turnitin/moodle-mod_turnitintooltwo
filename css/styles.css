@@ -504,8 +504,14 @@ table.dataTable thead th.sorting_disabled {
     margin-bottom: 16px;
 }
 
+.tii_upgrade_check {
+    font-size:12px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 #test_link {
-    display: none;
+    display:none;
     cursor: pointer;
 }
 
@@ -536,6 +542,10 @@ table.dataTable thead th.sorting_disabled {
     background: #E77471;
 }
 
+.test_connection {
+    display:none;
+}
+
 #testing_container {
     margin-top:4px;
     display:none;
@@ -544,11 +554,6 @@ table.dataTable thead th.sorting_disabled {
 #testing_container img {
     position: relative;
     top:2px;
-}
-
-.test_connection {
-    /*position: absolute;
-    top:10px;*/
 }
 
 .tabtree {

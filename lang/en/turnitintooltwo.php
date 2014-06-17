@@ -443,3 +443,5 @@ $string['autorefreshgrades_help'] = 'By default after each call to Turniti
 $string['yesgrades'] = 'Yes, automatically refresh originality scores and grades';
 $string['nogrades'] = 'No, I will refresh originality scores and grades manually';
 $string['noxmlwriterlibrary'] = 'To use this plugin you will need to have the PHP XMLWriter extension installed on your server.';
+$string['checkupgrade'] = 'Check for available upgrade';
+$string['usinglatest'] = 'You are using the latest version!';

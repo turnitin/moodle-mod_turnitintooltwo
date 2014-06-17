@@ -48,11 +48,9 @@ if ($ADMIN->fulltree) {
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
     }
 
-    $upgrade = turnitintooltwo_updateavailable($module);
-    $upgradeavailable = (is_null($upgrade)) ?
-                            '' : " - ".html_writer::link($upgrade, get_string("upgradeavailable", "turnitintooltwo"));
-
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
+    $upgrade = html_writer::tag('span', 'Check for available upgrade', 
+                    array('class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
 
     // Test connection to turnitin link
     $testconnection = html_writer::start_tag('div', array('class' => 'test_connection'));
@@ -69,7 +67,7 @@ if ($ADMIN->fulltree) {
     $testconnection .= $OUTPUT->box('', '', 'test_result');
     $testconnection .= html_writer::end_tag('div');
 
-    $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.$upgradeavailable.')';
+    $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.') - '.$upgrade;
 
     $settings->add(new admin_setting_heading('turnitintooltwo_header', $desc, $tabmenu));
 

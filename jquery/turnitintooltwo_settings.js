@@ -26,40 +26,76 @@ jQuery(document).ready(function($) {
     	}
     });
 
-    if ($('.test_connection').length > 0 && ($('#id_s_turnitintooltwo_accountid').val() != ''
-    	 || $('#id_s_turnitintooltwo_secretkey').val() != '' || $('#id_s_turnitintooltwo_accountid').val() != '')) {
-
-	    $('#test_link').hide();
-		$("#test_result").css('opacity', '');
-		$('#test_result').removeClass('test_link_success test_link_fail');
-		$('#testing_container').show();
-
-	    // Change Url depending on Settings page
+    $('.tii_upgrade_check').click(function() {
+    	// Change Url depending on Settings page
 	    var url = "ajax.php";
 	    if ($('.settingsform fieldset div.formsettingheading').length > 0) {
 	        url = "../mod/turnitintooltwo/ajax.php";
 	    }
 
-	    $.ajax({
+	    var current_version = $(this).attr('id').split('_')[1];
+
+    	$.ajax({
 	        type: "POST",
 	        url: url,
-	        dataType: "json",
-	        data: {action: "test_connection", sesskey: M.cfg.sesskey},
+	        dataType: "html",
+	        data: {action: "check_upgrade", current_version: current_version, sesskey: M.cfg.sesskey},
 	        success: function(data) {
-	            eval(data);
-
-	            $('#testing_container').hide();
-
-
-	            if (data.connection_status == "success") {
-	                $('#test_result').addClass('test_link_success');
-	            } else {
-	                $('#test_result').addClass('test_link_fail');
-	            }
-
-	            $('#test_result').html(data.msg);
-	            $('#test_result').show();
+	            $('.tii_upgrade_check').html(data);
 	        }
 	    });
+    });
+
+    if ($('.test_connection').length > 0) {
+    	if ($('#id_s_turnitintooltwo_accountid').val() != '' || $('#id_s_turnitintooltwo_secretkey').val() != '' 
+    		|| $('#id_s_turnitintooltwo_apiurl').val() != '') {
+			$('.test_connection').show();
+			$('#test_link').show();
+		}
+
+    	$('#id_s_turnitintooltwo_accountid, #id_s_turnitintooltwo_secretkey, #id_s_turnitintooltwo_apiurl').change(function() {
+    		if ($('#id_s_turnitintooltwo_accountid').val() != '' || $('#id_s_turnitintooltwo_secretkey').val() != '' 
+	    		|| $('#id_s_turnitintooltwo_apiurl').val() != '') {
+				$('.test_connection').show();
+				$('#test_link').show();
+			}
+    	});
+
+    	$('#test_link').click(function() {
+		    $('#test_link').hide();
+			$("#test_result").css('opacity', '');
+			$('#test_result').removeClass('test_link_success test_link_fail');
+			$('#testing_container').show();
+
+		    // Change Url depending on Settings page
+		    var url = "ajax.php";
+		    if ($('.settingsform fieldset div.formsettingheading').length > 0) {
+		        url = "../mod/turnitintooltwo/ajax.php";
+		    }
+
+		    $.ajax({
+		        type: "POST",
+		        url: url,
+		        dataType: "json",
+		        data: {action: "test_connection", sesskey: M.cfg.sesskey},
+		        success: function(data) {
+		            eval(data);
+
+		            $('#testing_container').hide();
+
+		            if (data.connection_status == "success") {
+		                $('#test_result').addClass('test_link_success');
+		            } else {
+		                $('#test_result').addClass('test_link_fail');
+		            }
+
+		            $('#test_result').html(data.msg);
+		            $('#test_result').show();
+		            $('#test_result').fadeOut( 4000, function() {
+		            	$('#test_link').show();
+		            });
+		        }
+		    });
+		});
     }
 });
