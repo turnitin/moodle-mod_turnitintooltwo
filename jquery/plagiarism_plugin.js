@@ -4,12 +4,12 @@
  */
 
 jQuery(document).ready(function($) {
-    $('.tii_links_container .tii_tooltip').live('mouseover', function(e) {
+    $(document).on('mouseover', '.tii_links_container .tii_tooltip', function() {
         $(this).tooltipster();
         return false;
     });
 
-    $('.origreport_open').live('click', function() {
+    $(document).on('click', '.origreport_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
 
         for (var i = 0; i < classList.length; i++) {
@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
         }
     });
 
-    $('.grademark_open').live('click', function() {
+    $(document).on('click', '.grademark_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
 
         for (var i = 0; i < classList.length; i++) {
@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the Peermark reviews
-    $('.peermark_reviews_pp_launch').live('click', function(e) {
+    $(document).on('click', '.peermark_reviews_pp_launch', function() {
         $('.peermark_reviews_pp_launch').colorbox({
             open:true,iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_reviews",
             onLoad: function() { getLoadingGif(); },
@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
     });
 
     // Open an iframe light box containing the Rubric View
-    $('.rubric_view_pp_launch').live('click', function(e) {
+    $(document).on('click', '.rubric_view_pp_launch', function() {
         $(this).colorbox({
             open:true,iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view",
             onLoad: function() { getLoadingGif(); },
@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 
     // Launch the Turnitin EULA
     if ($(".pp_turnitin_ula").length > 0) {
-        $(".pp_turnitin_ula").live('click', function(e) {
+        $(document).on('click', '.pp_turnitin_ula', function() {
             launchEULA('#useragreement_form form');
         });
     }

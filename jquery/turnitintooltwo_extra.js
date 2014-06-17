@@ -1,10 +1,7 @@
 jQuery(document).ready(function($) {
     // Hide the nav in the class recreation box
     if ($("#view_context").html() == "box" || $("#view_context").html() == "box_solid") {
-        var pagecontent = $('#page-content').html();
-        $('#page').html(pagecontent);
-        $(".navbar").hide();
-        $("#region-pre").hide();
+        $(".navbar, #page-navbar, .block-region, #region-pre").hide();
     }
 
     // Add style to header row

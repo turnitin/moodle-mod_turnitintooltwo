@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
         $("#id_submissionfile").parent().parent().hide();
     }
 
-    $('.submit_nothing').live('click', function() {
+    $(document).on('click', '.submit_nothing', function() {
         if ( $(this).hasClass("disabled") ) return;
         $(this).addClass('disabled');
         var part_id = $(this).prop('id').split('_')[2];
@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
     });
 
     // Configure submit paper form elements depending on what submission type is selected
-    $("#id_submissiontype").live('change', function() {
+    $(document).on('change', '#id_submissiontype', function() {
         if ($("#id_submissiontype").val() == 1) {
             $("#id_submissiontext").parent().parent().hide();
             $("#id_submissionfile").parent().parent().show();
@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
     }
 
     // Show loading if submission passes validation
-    $(".submission_form_container form").live('submit', function() {
+    $(document).on('submit', '.submission_form_container form', function() {
         try {
             var myValidator = validate_turnitintooltwo_form;
         } catch(e) {
@@ -135,7 +135,7 @@ jQuery(document).ready(function($) {
         });
     }
 
-    $('.show_peermark_instructions, .hide_peermark_instructions').live('click', function() {
+    $(document).on('click', '.show_peermark_instructions, .hide_peermark_instructions', function() {
         var idStr = $(this).attr('id').split("_");
 
         if (idStr[0] == "show") {
@@ -151,7 +151,7 @@ jQuery(document).ready(function($) {
 
     // Show options for parts in mod_form.php
     showPartDatesBoxes();
-    $("#id_numparts").live('change', function () {
+    $(document).on('change', '#id_numparts', function () {
         showPartDatesBoxes();
     });
 
@@ -331,7 +331,7 @@ jQuery(document).ready(function($) {
         $('#id_submitbutton').attr('disabled', 'disabled');
     }
 
-    $(".turnitin_ula").live('click', function () {
+    $(document).on('click', '.turnitin_ula', function () {
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -777,7 +777,7 @@ jQuery(document).ready(function($) {
         });
 
         // Open an iframe light box which requests selected submissions as pdfs from Turnitin
-        $('#tabs-'+part_id+' .gmpdfzip_box').live('click', function(e) {
+        $(document).on('click', '#tabs-'+part_id+' .gmpdfzip_box', function(e) {
             $(this).colorbox({
                 open:true,iframe:true, width:"786px", height:"300px", opacity: "0.7", className: "gmpdfzip_window", transition: "none",
                 href: function() {
@@ -969,7 +969,7 @@ jQuery(document).ready(function($) {
         if (submission_id != 0) {
             identifier = 'check_'+submission_id;
         }
-        $(identifier).live('click', function() {
+        $(document).on('click', identifier, function() {
             if ($('.inbox_checkbox:checked').length > 0) {
                 $('#zip_downloads').slideDown();
                 initialiseHiddenZipDownloads(part_id)
