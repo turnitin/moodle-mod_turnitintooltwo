@@ -216,6 +216,12 @@ if (!empty($action)) {
                             $turnitintooltwosubmission->delete_submission();
                             $_SESSION["notice"]["message"] = $doupload["message"];
                             $do = "submitpaper";
+                        } else {
+                            // Lock the assignment setting for anon marking.
+                            $locked_assignment = new object();
+                            $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
+                            $locked_assignment->submitted = 1;
+                            $DB->update_record('turnitintooltwo', $locked_assignment);
                         }
                     } else if ($post['submissiontype'] == 2) {
                         $turnitintooltwosubmission->prepare_text_submission($cm, $post);
@@ -389,7 +395,7 @@ switch ($do) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
             $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
             $user->join_user_to_class($course->turnitin_cid);
-            
+
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_view', 'Learner',
                                                     $parts[$part]->tiiassignid), array("class" => "launch_form"));
         }

@@ -15,8 +15,9 @@
                 <FIELD NAME="defaultdtstart" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="numparts" NEXT="defaultdtdue"/>
                 <FIELD NAME="defaultdtdue" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="defaultdtstart" NEXT="defaultdtpost"/>
                 <FIELD NAME="defaultdtpost" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="defaultdtdue" NEXT="anon"/>
-                <FIELD NAME="anon" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="defaultdtpost" NEXT="portfolio"/>
-                <FIELD NAME="portfolio" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="anon" NEXT="allowlate"/>
+                <FIELD NAME="anon" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="defaultdtpost" NEXT="submitted"/>
+                <FIELD NAME="submitted" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="anon" NEXT="portfolio"/>
+                <FIELD NAME="portfolio" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="submitted" NEXT="allowlate"/>
                 <FIELD NAME="allowlate" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="portfolio" NEXT="reportgenspeed"/>
                 <FIELD NAME="reportgenspeed" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="allowlate" NEXT="submitpapersto"/>
                 <FIELD NAME="submitpapersto" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="reportgenspeed" NEXT="spapercheck"/>

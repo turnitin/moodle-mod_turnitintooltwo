@@ -207,7 +207,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $ynoptions = array( 0 => get_string('no'), 1 => get_string('yes'));
 
-        if ($this->updating AND $config->useanon AND isset($this->turnitintooltwo->anon) AND $this->numsubs > 0) {
+        if ($this->updating AND $config->useanon AND isset($this->turnitintooltwo->anon) AND $this->turnitintooltwo->submitted == 1) {
             $staticout = (isset($this->turnitintooltwo->anon) AND $this->turnitintooltwo->anon) ?
                             get_string('yes') : get_string('no');
             $mform->addElement('static', 'static', get_string('turnitinanon', 'turnitintooltwo'), $staticout);
