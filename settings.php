@@ -49,8 +49,11 @@ if ($ADMIN->fulltree) {
     }
 
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
-    $upgrade = html_writer::tag('span', 'Check for available upgrade', 
+    $upgrade = html_writer::tag('span', get_string('checkupgrade', 'turnitintooltwo'), 
                     array('class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
+    $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader', get_string('checkingupgrade', 'turnitintooltwo'),
+                                                    'mod_turnitintooltwo')." ".get_string('checkingupgrade', 'turnitintooltwo'), 
+                                                    array('class' => 'tii_upgrading_check'));
 
     // Test connection to turnitin link
     $testconnection = html_writer::start_tag('div', array('class' => 'test_connection'));

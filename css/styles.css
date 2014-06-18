@@ -504,10 +504,22 @@ table.dataTable thead th.sorting_disabled {
     margin-bottom: 16px;
 }
 
+.tii_upgrade_check, .tii_upgrading_check {
+    font-size: 12px;
+}
+
 .tii_upgrade_check {
-    font-size:12px;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.tii_upgrading_check {
+    display:none;
+}
+
+.tii_upgrading_check img {
+    position: relative;
+    top: 3px;
 }
 
 #test_link {

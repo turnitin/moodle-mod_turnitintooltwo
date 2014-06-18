@@ -33,6 +33,8 @@ jQuery(document).ready(function($) {
 	        url = "../mod/turnitintooltwo/ajax.php";
 	    }
 
+	    $('.tii_upgrade_check').hide();
+	    $('.tii_upgrading_check').show();
 	    var current_version = $(this).attr('id').split('_')[1];
 
     	$.ajax({
@@ -41,6 +43,8 @@ jQuery(document).ready(function($) {
 	        dataType: "html",
 	        data: {action: "check_upgrade", current_version: current_version, sesskey: M.cfg.sesskey},
 	        success: function(data) {
+	        	$('.tii_upgrade_check').show();
+	        	$('.tii_upgrading_check').hide();
 	            $('.tii_upgrade_check').html(data);
 	        }
 	    });
