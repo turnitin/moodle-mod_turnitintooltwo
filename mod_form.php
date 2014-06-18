@@ -134,6 +134,16 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
         $mform->addElement('html', $script);
 
+        $config_warning = '';
+        if (empty($config->accountid) || empty($config->secretkey) || empty($config->apiurl)) {
+            $config_warning = html_writer::tag('div', get_string('configureerror', 'turnitintooltwo'), 
+                                                array('class' => 'library_not_present_warning'));
+        }
+
+        if ($config_warning != '') {
+            $mform->addElement('html', $config_warning);
+        }
+
         $noscript = html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo'), array("class" => "warning"));
         $mform->addElement('html', $noscript);
 
