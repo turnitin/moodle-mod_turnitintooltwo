@@ -44,8 +44,12 @@ if ($ADMIN->fulltree) {
                     html_writer::tag('script', '', array("type" => "text/javascript",
                                                 "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo_settings.js"));
     } else {
-        $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+        $current_section = optional_param('section', '', PARAM_ALPHAEXT);
+        // Only include jquery if actually on settings page.
+        if ($current_section == 'modsettingturnitintooltwo') {
+            $PAGE->requires->jquery();
+            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+        }
     }
 
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
