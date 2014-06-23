@@ -101,7 +101,7 @@ jQuery(document).ready(function($) {
                     eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
                     $(eulaWindow).on("message", function(ev) {
                         eulaWindow.close();
-                        window.location.href = window.location.href;
+                        window.location.reload();
                     });
                     eulaWindow.addEventListener("beforeunload", function (e) {
                         window.location.href = window.location.href;
