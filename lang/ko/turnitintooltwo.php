@@ -142,7 +142,7 @@ $string['turnitinanon'] = '익명 채점';
 $string['turnitinanon_help'] = '이 항목을 &#34;예&#34; 로 지정함으로써 Turnitin 과제에 익명 채점을 사용히도록 지정할 수 있습니다. 일단 특정 과제에서 익명 채점이 활성화된 후에는 비활성화 될 수 없습니다.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
 $string['turnitinapiurl_desc'] = '<b>
-[필수]</b><br />Turnitin API URL을 입력하십시오<br /><i>(예: https://www.turnitin.com)<br />(예: https://submit.ac.uk)</i>';
+[필수]</b><br />Turnitin API URL을 입력하십시오<br /><i>(예: https://api.turnitin.com)<br />(예: https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = '보고서를 삭제하는 것은 이를 제출 리스트와 수신함에서 제거하지만 이를 완전히 \nTurnitin 데이타베이스에서 제거하지는 않습니다.\n\n이 제출물을 삭제 하시겠습니까? 이는 되돌릴 수 없습니다. ';
 $string['turnitindeletionerror'] = 'Turnitin 제출물 삭제에 실패하였습니다.로컬 Moodle 복사본은 제거되었지만 Turnitin 상의 제출물을 삭제할 수 없었습니다.';
 $string['turnitinenrolstudents'] = '모든 학생 등록시키기';

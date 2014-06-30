@@ -134,7 +134,7 @@ $string['turnitinanon'] = '匿名标示';
 $string['turnitinanon_help'] = '只要把此项目设定为“确定”，您就可以在您的 Turnitin 作业上使用匿名标示。 一旦在作业上开启匿名标示， 就无法关闭该功能。 ';
 $string['turnitinapiurl'] = 'Turnitin API URL';
 $string['turnitinapiurl_desc'] = '<b>
-[要求]</b><br />输入 Turnitin API URL<br /><i>(例如： https://www.turnitin.com)<br />(例如： https://submit.ac.uk)';
+[要求]</b><br />输入 Turnitin API URL<br /><i>(例如： https://api.turnitin.com)<br />(例如： https://submit.ac.uk)';
 $string['turnitindeleteconfirm'] = '删除文稿将会使它们从提交清单和收件匣中移除，但不会完全地从\n Turnitin 数据库移除。\n\n您确定您要刪除此提交物件吗？一旦做此动作将无法还原。 ';
 $string['turnitindeletionerror'] = 'Turnitin 提交刪除失败。电脑上的 Moodle 副本已被移除，但在 Turnitin 內的提交物件无法被刪除。 ';
 $string['turnitinenrolstudents'] = '为所有学生注册';

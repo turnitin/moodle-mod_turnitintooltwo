@@ -149,7 +149,7 @@ $string['turnitinanon'] = '匿名コメント記入（マーキング）';
 $string['turnitinanon_help'] = 'Turnitin課題設定におき、この値を”はい”に設定し、匿名コメント記入（マーキング）を使用することができます。匿名コメント記入（マーキング）が課題内で一度オンになるこ、オフにすることはできません。';
 $string['turnitinapiurl'] = 'Turnitin API URL';
 $string['turnitinapiurl_desc'] = '<b>
-[必須]</b><br />Turnitin API URLを入力してください<br /><i>（例： https://www.turnitin.com）<br />（例：https://submit.ac.uk）</i>';
+[必須]</b><br />Turnitin API URLを入力してください<br /><i>（例： https://api.turnitin.com）<br />（例：https://submit.ac.uk）</i>';
 $string['turnitindeleteconfirm'] = '提出物リストおよび受信箱よりレポートを削除することは可能ですが、Turnitinデータベースより完全に削除することはできません。\n\n提出物を削除しますか? このアクションは元に戻すことはできません。';
 $string['turnitindeletionerror'] = 'Turnitinの提出物削除に失敗しました。ローカル Moodle コピーは削除されましたが、Turnitin内の提出物を削除することはできませんでした。';
 $string['turnitinenrolstudents'] = '全受講生を参加登録';
