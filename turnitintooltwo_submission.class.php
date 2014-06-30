@@ -527,7 +527,7 @@ class turnitintooltwo_submission {
             }
         }
 
-        $sub->submission_grade = ($tiisubmissiondata->getGrade()) ? $tiisubmissiondata->getGrade() : null;
+        $sub->submission_grade = (is_null($tiisubmissiondata->getGrade())) ? null : $tiisubmissiondata->getGrade();
         $sub->submission_gmimaged = $tiisubmissiondata->getFeedbackExists();
         $sub->submission_unanon = ($tiisubmissiondata->getAnonymous() == 1) ? 0 : 1;
         $sub->submission_orcapable = ($tiisubmissiondata->getOriginalityReportCapable() == 1) ? 1 : 0;

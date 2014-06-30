@@ -91,30 +91,45 @@ class turnitintooltwo_view {
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/jqueryui-editable.css');
         $PAGE->requires->css($cssurl);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery-1.8.2.min.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery.dataTables.min.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery-ui-1.10.2.custom.min.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery.dataTables.plugins.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/turnitintooltwo.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/turnitintooltwo_extra.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/turnitintooltwo_settings.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery.dataTables.columnFilter.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery.colorbox-min.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jquery.cookie.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/jqueryui-editable.min.js');
-        $PAGE->requires->js($jsurl, true);
-        $jsurl = new moodle_url('/mod/turnitintooltwo/scripts/moment.min.js');
-        $PAGE->requires->js($jsurl, true);
+        if ($CFG->branch <= 25) {
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-ui-1.10.2.custom.min.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.plugins.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_extra.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_settings.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.columnFilter.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.colorbox.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.cookie.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jqueryui-editable.js');
+            $PAGE->requires->js($jsurl, true);
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/moment.js');
+            $PAGE->requires->js($jsurl, true);
+        } else {
+            $PAGE->requires->jquery();
+            $PAGE->requires->jquery_plugin('ui');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-dataTables', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-dataTables_plugins', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_extra', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-datatables_columnfilter', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-cookie', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-uieditable', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
+        }
 
         // Javascript i18n strings.
         $PAGE->requires->string_for_js('close', 'turnitintooltwo');
@@ -1079,9 +1094,9 @@ class turnitintooltwo_view {
         // Show grade and link to DV.
         if ($config->usegrademark && $turnitintooltwoassignment->turnitintooltwo->usegrademark) {
             if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
-                $submissiongrade = (!empty($submission->submission_grade)) ? $submission->submission_grade : '';
+                $submissiongrade = (!is_null($submission->submission_grade)) ? $submission->submission_grade : '';
 
-                if (empty($submission->submission_grade) || ($submission->submission_gmimaged == 0 && !$istutor)) {
+                if (is_null($submission->submission_grade) || ($submission->submission_gmimaged == 0 && !$istutor)) {
                     $submissiongrade = "--";
                 }
 
