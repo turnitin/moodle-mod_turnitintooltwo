@@ -166,6 +166,7 @@ if (!empty($action)) {
             $post['studentsname'] = optional_param('studentsname', $USER->id, PARAM_INT);
             $post['studentsname'] = ($istutor) ? $post['studentsname'] : $USER->id;
             $post['submissionpart'] = required_param('submissionpart', PARAM_INT);
+            $post['submissionagreement'] = required_param('submissionagreement', PARAM_INT);
 
             // Default params for redirecting if there is a problem.
             $extraparams = "&part=".$post['submissionpart']."&user=".$post['studentsname'];
@@ -181,6 +182,13 @@ if (!empty($action)) {
             // Check that title for submission has been entered.
             if (empty($post['submissiontitle'])) {
                 $_SESSION["notice"]["message"] = get_string('submissiontitleerror', 'turnitintooltwo');
+                $error = true;
+                $do = "submitpaper";
+            }
+
+            // Check that student has accepted disclaimer if applicable.
+            if (empty($post['submissionagreement'])) {
+                $_SESSION["notice"]["message"] = get_string('copyrightagreementerror', 'turnitintooltwo');
                 $error = true;
                 $do = "submitpaper";
             }

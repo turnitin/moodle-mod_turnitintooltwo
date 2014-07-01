@@ -359,7 +359,7 @@ class turnitintooltwo_view {
                 }
 
                 // File input for uploads.
-                if ($turnitintooltwoassignment->turnitintooltwo->type == 0 OR $turnitintooltwoassignment->turnitintooltwo->type == 1) {
+                if ($turnitintooltwoassignment->turnitintooltwo->type == 0 || $turnitintooltwoassignment->turnitintooltwo->type == 1) {
                     $elements[] = array('filemanager', 'submissionfile', get_string('filetosubmit', 'turnitintooltwo'),
                                                                         'filetosubmit', $turnitintooltwofileuploadoptions);
                 }
@@ -373,11 +373,11 @@ class turnitintooltwo_view {
                 }
 
                 // Show agreement if applicable.
-                if ($istutor OR empty($config->agreement) ) {
-                    $elements[] = array('hidden', 'agreement', 1);
+                if ($istutor || empty($config->agreement)) {
+                    $elements[] = array('hidden', 'submissionagreement', 1);
                     $customdata["checkbox_label_after"] = false;
                 } else {
-                    $elements[] = array('advcheckbox', 'agreement', $config->agreement, null, array(0, 1),
+                    $elements[] = array('advcheckbox', 'submissionagreement', $config->agreement, '', array(0, 1),
                                     'required', get_string('copyrightagreementerror', 'turnitintooltwo'), PARAM_INT);
                     $customdata["checkbox_label_after"] = true;
                 }
@@ -1271,7 +1271,9 @@ class turnitintooltwo_view {
         }
         $data[] = $upload;
         $data[] = $download;
-        $data[] = $refresh;
+        if ($istutor) {
+            $data[] = $refresh;
+        }
         $data[] = $delete;
 
         return $data;
