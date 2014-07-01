@@ -272,7 +272,6 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
 
         // Join Instructor to class.
         $turnitintooltwouser->join_user_to_class($newcourse->turnitin_cid);
-        
         $currentcourse->turnitin_cid = $newcourse->turnitin_cid;
         $currentcourse->turnitin_ctl = $newcourse->turnitin_ctl;
     }
@@ -1008,11 +1007,18 @@ function turnitintooltwo_getusers() {
     $querywhere = ' WHERE ( ';
     for ($i = 0; $i < count($displaycolumns); $i++) {
         $bsearchable[$i] = optional_param('bSearchable_'.$i, null, PARAM_TEXT);
-        $ssearchn[$i] = optional_param('sSearch_'.$i, null, PARAM_TEXT);
-        if (!is_null($bsearchable[$i]) && $bsearchable[$i] == "true" && ( $ssearch != '' OR $ssearchn[$i] != '')) {
-            $namedparam = 'search_term_'.$i;
-            $querywhere .= $DB->sql_like($displaycolumns[$i], ':'.$namedparam, false)." OR ";
-            $queryparams['search_term_'.$i] = '%'.$ssearch.'%';
+        if (!is_null($bsearchable[$i]) && $bsearchable[$i] == "true" && $ssearch != '') {
+            $include = true;
+            if ($i <= 1) {
+                if (!is_int($ssearch) || is_null($ssearch)) {
+                    $include = false;
+                }
+            }
+
+            if ($include) {
+                $querywhere .= $DB->sql_like($displaycolumns[$i], ':search_term_'.$i, false)." OR ";
+                $queryparams['search_term_'.$i] = '%'.$ssearch.'%';
+            }
         }
     }
     if ( $querywhere == ' WHERE ( ' ) {
