@@ -44,8 +44,34 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+
+        // Add new indexes to tables
+        $table = new xmldb_table('turnitintooltwo_parts');
+        $index = new xmldb_index('turnitintooltwoid', XMLDB_INDEX_NOTUNIQUE, array('turnitintooltwoid'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+        $index = new xmldb_index('tiiassignid', XMLDB_INDEX_NOTUNIQUE, array('tiiassignid'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+
+        $table = new xmldb_table('turnitintooltwo_courses');
+        $index = new xmldb_index('courseid-course_type', XMLDB_INDEX_NOTUNIQUE, array('courseid', 'course_type'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+
+        $table = new xmldb_table('turnitintooltwo_peermarks');
+        $index = new xmldb_index('parent_tii_assign_id', XMLDB_INDEX_NOTUNIQUE, array('parent_tii_assign_id'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+        $index = new xmldb_index('tiiassignid', XMLDB_INDEX_NOTUNIQUE, array('tiiassignid'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
     }
 
     return $result;
 }
-
