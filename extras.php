@@ -44,6 +44,8 @@ $turnitintooltwoview->load_page_components($hidebg);
 
 switch ($cmd) {
     case "courses":
+        require_capability('moodle/course:create', context_system::instance());
+
         $jsrequired = true;
 
         $output .= html_writer::tag('h2', get_string('coursebrowser', 'turnitintooltwo'));
@@ -122,6 +124,8 @@ switch ($cmd) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
 
+        require_capability('moodle/course:create', context_system::instance());
+
         $assignments = optional_param('assignments', 0, PARAM_INT);
         $category = optional_param('category', 0, PARAM_INT);
         $classids = array();
@@ -146,6 +150,9 @@ switch ($cmd) {
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
+
+        require_capability('moodle/course:create', context_system::instance());
+
         $tiicourseid = optional_param('id', 0, PARAM_INT);
 
         $output = "";
@@ -191,6 +198,7 @@ echo $turnitintooltwoview->output_header(null,
             '',
             '');
 
+echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 if ($cmd == 'courses') {
     echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
@@ -206,5 +214,6 @@ if ($cmd == 'class_recreation') {
 } else {
     echo $OUTPUT->box($output, 'generalbox'.$class);
 }
+echo html_writer::end_tag("div");
 
 echo $OUTPUT->footer();

@@ -280,13 +280,6 @@ if (!empty($action)) {
     }
 }
 
-// Include the css for if javascript isn't enabled when a student is logged in.
-if (!$istutor) {
-    $noscriptcss = html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                        "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/student_noscript.css"));
-    echo html_writer::tag('noscript', $noscriptcss);
-}
-
 // Show header and navigation
 if ($viewcontext == "box" || $viewcontext == "box_solid") {
     $turnitintooltwoview->output_header($cm,
@@ -328,6 +321,15 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
     }
 
     $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+}
+
+echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
+
+// Include the css for if javascript isn't enabled when a student is logged in.
+if (!$istutor) {
+    $noscriptcss = html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
+                                                        "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/student_noscript.css"));
+    echo html_writer::tag('noscript', $noscriptcss);
 }
 
 if (!is_null($notice)) {
@@ -498,6 +500,7 @@ switch ($do) {
         }
         break;
 }
+echo html_writer::end_tag("div");
 echo html_writer::end_tag("div");
 echo $OUTPUT->footer();
 
