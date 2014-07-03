@@ -81,17 +81,19 @@ class turnitintooltwo_view {
         }
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/styles.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery.dataTables.css');
-        $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery-ui-1.8.4.custom.css');
-        $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/colorbox.css');
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/jqueryui-editable.css');
-        $PAGE->requires->css($cssurl);
         if ($CFG->branch <= 25) {
+            // Include CSS
+            $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery.dataTables.css');
+            $PAGE->requires->css($cssurl);
+            $cssurl = new moodle_url('/mod/turnitintooltwo/css/colorbox.css');
+            $PAGE->requires->css($cssurl);
+            $cssurl = new moodle_url('/mod/turnitintooltwo/css/jqueryui-editable.css');
+            $PAGE->requires->css($cssurl);
+            // include JS
             $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js');
             $PAGE->requires->js($jsurl, true);
             $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-ui-1.10.2.custom.min.js');
@@ -1014,12 +1016,12 @@ class turnitintooltwo_view {
                 $studentname = html_writer::link(
                                 $CFG->wwwroot."/user/view.php?id=".$submission->userid."&course="
                                     .$turnitintooltwoassignment->turnitintooltwo->course,
-                                $submission->lastname.", ".$submission->firstname);
+                                format_string($submission->lastname).", ".format_string($submission->firstname));
             } else if (($parts[$partid]->dtpost <= time() OR
                             !empty($submission->submission_unanon)) AND !empty($submission->nmoodle)) {
                 // Post date has passed or anonymous marking disabled for user and user is a NON moodle user.
                 $studentname = html_writer::tag("span",
-                                    $submission->lastname.", ".$submission->firstname." (".
+                                    format_string($submission->lastname).", ".format_string($submission->firstname)." (".
                                             get_string('nonmoodleuser', 'turnitintooltwo').")",
                                     array("class" => "italic"));
             } else {
@@ -1029,22 +1031,23 @@ class turnitintooltwo_view {
         } else {
             if (empty($submission->nmoodle)) {
                 $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
-                                                        $turnitintooltwoassignment->turnitintooltwo->course,
-                                                        $submission->lastname.", ".$submission->firstname);
+                                                $turnitintooltwoassignment->turnitintooltwo->course,
+                                                format_string($submission->lastname).", ".format_string($submission->firstname));
             } else if (!empty($submission->nmoodle) && substr($submission->userid, 0, 3) != 'nm-') {
                 // Moodle User not enrolled on this course as a student.
                 $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
                                         $turnitintooltwoassignment->turnitintooltwo->course,
-                                        $submission->lastname.", ".$submission->firstname." (".
+                                        format_string($submission->lastname).", ".format_string($submission->firstname)." (".
                                             get_string('nonenrolledstudent', 'turnitintooltwo').")", array("class" => "italic"));
             } else {
                 // Non Moodle user.
-                $studentname = html_writer::tag("span", $submission->lastname.", ".$submission->firstname." (".
+                $studentname = html_writer::tag("span", 
+                                            format_string($submission->lastname).", ".format_string($submission->firstname)." (".
                                                 get_string('nonmoodleuser', 'turnitintooltwo').")", array("class" => "italic"));
             }
         }
 
-        $title = (!empty($submission->submission_title)) ? $submission->submission_title : "--";
+        $title = (!empty($submission->submission_title)) ? format_string($submission->submission_title) : "--";
         $objectid = (!empty($submission->submission_objectid)) ? $submission->submission_objectid : "--";
 
         // Show date of submission or link to submit if it didn't work.
@@ -1700,7 +1703,7 @@ class turnitintooltwo_view {
                                                                                                         $attributes);
                 $userdetails = html_writer::link($CFG->wwwroot.'/user/view.php?id='.$membermoodleid.
                                                     '&course='.$turnitintooltwoassignment->turnitintooltwo->course,
-                                                    $v['lastname'].', '.$v['firstname']).' ('.$user->username.')';
+                                                    format_string($v['lastname']).', '.format_string($v['firstname'])).' ('.$user->username.')';
                 $memberdata[] = array($link, $userdetails);
             }
         }
@@ -1736,8 +1739,8 @@ class turnitintooltwo_view {
             if (array_key_exists($availabletutor->tii_user_id, $tutors)) {
                 unset($moodletutors[$k]);
             } else {
-                $options[$availabletutor->id] = $availabletutor->lastname.', '.$availabletutor->firstname.
-                                                                    ' ('.$availabletutor->username.')';
+                $options[$availabletutor->id] = format_string($availabletutor->lastname).', '.
+                                                    format_string($availabletutor->firstname).' ('.$availabletutor->username.')';
             }
         }
 
