@@ -95,7 +95,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
     }
 
     protected function process_turnitintooltwo_courses($data) {
-        global $DB;
+        global $DB, $USER;
 
         $data = (object)$data;
         $oldid = $data->id;
@@ -103,27 +103,18 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         $_SESSION['course_id'] = $data->courseid;
         $_SESSION['course_owner_id'] = $data->ownerid;
 
-        $owneremail = (empty($data->owneremail)) ? join(array_splice(explode(".",$data->ownerun),0,-1)) : $data->owneremail;
-        $owner = $DB->get_record('user', array('email' => $owneremail));
+        // Deleted user's emails are hashed so we need to grab username which isin the format email.timestamp
+        if (empty($data->owneremail)) {
+            $ownerusername = $data->ownerun;
+            $ownerusername = explode(".", $ownerusername);
+            $data->owneremail = implode('.', array_splice($ownerusername, 0, -1));
+        }
+        $owner = $DB->get_record('user', array('email' => $data->owneremail));
         if ($owner) {
             $data->ownerid = $owner->id;
-        } else { // Turnitin class owner not found from email address etc create user account
-            $i=0;
-            $newuser = false;
-            while (!is_object($newuser)) { // Keep trying to create a new username
-                $username = ($i==0) ? $data->ownerun : $data->ownerun.'_'.$i; // Append number if username exists
-                $i++;
-                $newuser = create_user_record($username, substr($i."-".md5($username), 0, 8));
-                if (is_object($newuser)) {
-                    $newuser->email = $owneremail;
-                    $newuser->firstname = $data->ownerfn;
-                    $newuser->lastname = $data->ownerln;
-                    if (!$DB->update_record("user", $newuser)) {
-                        turnitintooltwo_print_error('userupdateerror','turnitintooltwo');
-                    }
-                }
-            }
-            $data->ownerid = $newuser->id;
+        } else { 
+            // Turnitin class owner not found so use restoring user as owner
+            $data->ownerid = $USER->id;
         }
         $tiiowner = new object();
         $tiiowner->userid = $data->ownerid;
