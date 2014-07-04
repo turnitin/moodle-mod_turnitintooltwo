@@ -6,7 +6,14 @@
 jQuery(document).ready(function($) {
     $('.plagiarism_submission').each( function() {
 
-        var idStr = $(this).attr("id").split("-");
+        if (typeof $(this).attr("id") !== "undefined") {
+            var idStr = $(this).attr("id").split("-");
+        } else {
+            var idStr = $(this).children('.plagiarism_submission_id').html().split("-");
+            var textcontent = $(this).children('.plagiarism_submission_content').html();
+            var cmid = $(this).children('.plagiarism_submission_cmid').html();
+            var itemid = $(this).children('.plagiarism_submission_itemid').html();
+        }
         var pathnamehash = idStr[0];
         var submission_type = idStr[1];
 
@@ -15,7 +22,8 @@ jQuery(document).ready(function($) {
             url: "../../plagiarism/turnitin/ajax.php",
             async: false,
             dataType: "json",
-            data: {action: "process_submission", cmid: cmid, itemid: itemid, pathnamehash: pathnamehash, submission_type: submission_type, sesskey: M.cfg.sesskey},
+            data: {action: "process_submission", cmid: cmid, itemid: itemid, pathnamehash: pathnamehash, 
+                    textcontent: textcontent, submission_type: submission_type, sesskey: M.cfg.sesskey},
             success: function(data) {
                 eval(data);
                 if (data.success == false) {
