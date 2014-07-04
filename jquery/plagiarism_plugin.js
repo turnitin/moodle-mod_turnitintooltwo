@@ -32,8 +32,8 @@ jQuery(document).ready(function($) {
     });
 
     // Open an iframe light box containing the Peermark Manager
-    if ($('.peermark_manager_pp_launch').length > 0) {
-        $('.peermark_manager_pp_launch').colorbox({
+    if ($('.plagiarism_turnitin_peermark_manager_pp_launch').length > 0) {
+        $('.plagiarism_turnitin_peermark_manager_pp_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_manager",
             onLoad: function() { getLoadingGif(); },
             onCleanup: function() { hideLoadingGif(); },

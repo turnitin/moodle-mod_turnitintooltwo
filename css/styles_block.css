@@ -2,6 +2,6 @@
 	text-align:center;
 }
 
-#block_loading {
+.block_turnitin #block_loading {
 	display:none;
 }

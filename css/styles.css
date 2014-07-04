@@ -4,94 +4,111 @@
     Author     : John McGettrick
 */
 
-.submit_nothing img {
+.mod_turnitintooltwo .submit_nothing img {
     padding-right: 8px;
     cursor: pointer;
 }
 
-.nothingsubmit_warning {
+.mod_turnitintooltwo .nothingsubmit_warning {
     display: none;
 }
 
-.row_score, .row_peermark_manager, .row_peermark_reviews {
+.mod_turnitintooltwo .row_score, .mod_turnitintooltwo .row_peermark_manager, .mod_turnitintooltwo .row_peermark_reviews {
     float:right;
 }
 
-.row_export_xls, .row_export_pdf, .row_export_orig, .zip_open, .row_rubric_manager, .row_quickmark_manager {
+.mod_turnitintooltwo .row_export_xls, .mod_turnitintooltwo .row_export_pdf, .mod_turnitintooltwo .row_export_orig, 
+.mod_turnitintooltwo .zip_open, .mod_turnitintooltwo .row_rubric_manager, .mod_turnitintooltwo .row_quickmark_manager {
     display:inline;
 }
 
-#zip_downloads {
+.mod_turnitintooltwo #zip_downloads {
     float:left;
     position:relative;
     top:4px;
     height:22px;
 }
 
-#zip_downloads img {
+.mod_turnitintooltwo #zip_downloads img {
     position:relative;
     top:4px;
     left:-2px;
 }
 
-#zip_downloads a.gmpdfzip_box {
+.mod_turnitintooltwo #zip_downloads a.gmpdfzip_box {
     padding-left:16px;
 }
 
-#zip_downloads div.origchecked_zip_open {
+.mod_turnitintooltwo #zip_downloads div.origchecked_zip_open {
     padding-left:16px;
 }
 
-.toggle_peermark_instructions img {
+.mod_turnitintooltwo .toggle_peermark_instructions img {
     display: block;
 }
 
-.hidden_class, #user_role, .launch_form, #useragreement_form form, #assignment_id, #course_id, #submission_id,
-#tii_course_id, #tii_course_name, .enrolling_container, #zip_downloads, #view_context, #inbox_form,
-.unanonymise_form, .edit_course_end_date_form, #course_category, #class_ids, #create_assignments,
-.row_peermark_reviews, .peermark_instructions, .toggle_peermark_instructions img.hide_peermark_instructions {
+.mod_turnitintooltwo .hidden_class, .mod_turnitintooltwo #user_role, .mod_turnitintooltwo .launch_form, 
+.mod_turnitintooltwo #useragreement_form form, .mod_turnitintooltwo #assignment_id, .mod_turnitintooltwo #course_id, 
+.mod_turnitintooltwo #submission_id, .mod_turnitintooltwo #tii_course_id, .mod_turnitintooltwo #tii_course_name, 
+.mod_turnitintooltwo .enrolling_container, .mod_turnitintooltwo #zip_downloads, .mod_turnitintooltwo #view_context, 
+.mod_turnitintooltwo #inbox_form, .mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form, 
+.mod_turnitintooltwo #course_category, .mod_turnitintooltwo #class_ids, .mod_turnitintooltwo #create_assignments,
+.mod_turnitintooltwo .row_peermark_reviews, .mod_turnitintooltwo .peermark_instructions, 
+.mod_turnitintooltwo .toggle_peermark_instructions img.hide_peermark_instructions,
+.mod_turnitintooltwo #courseBrowserTable_filter, .mod_turnitintooltwo .js_required,
+.mod_turnitintooltwo #course_category, .mod_turnitintooltwo #create_assignments,
+#page-admin-setting-modsettingturnitintooltwo .tii_upgrading_check, #page-admin-setting-modsettingturnitintooltwo #test_link, 
+#page-admin-setting-modsettingturnitintooltwo #test_result, #page-admin-setting-modsettingturnitintooltwo .test_connection, 
+#page-admin-setting-modsettingturnitintooltwo #testing_container, .mod_turnitintooltwo .peermark_loading, 
+.mod_turnitintooltwo .messages_loading, .mod_turnitintooltwo #tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner {
     display:none;
 }
 
-.unanonymise_form, .edit_course_end_date_form {
+.mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form {
     background:#FFFFFF;
     padding:12px 12px 0;
     height:100%;
     overflow: hidden
 }
 
-.edit_course_end_date_form {
+.mod_turnitintooltwo .edit_course_end_date_form {
     padding-top:24px;
 }
 
-.unanonymise_form textarea {
+.mod_turnitintooltwo .unanonymise_form textarea {
     height: 90px;
     width:80%;
 }
 
-.grademark_open, .origreport_open, .download_original_open, .zip_open, .enrol_link, .refresh_link, .refresh_row, .messages_inbox, span.link {
+.mod_turnitintooltwo .grademark_open, .mod_turnitintooltwo .origreport_open, .mod_turnitintooltwo .download_original_open, 
+.mod_turnitintooltwo .zip_open, .mod_turnitintooltwo .enrol_link, .mod_turnitintooltwo .refresh_link, 
+.mod_turnitintooltwo .refresh_row, .mod_turnitintooltwo .messages_inbox, .mod_turnitintooltwo span.link,
+.mod_turnitintooltwo .rubric_manager_launch, .mod_turnitintooltwo .rubric_view_launch, 
+.mod_turnitintooltwo .quickmark_manager_launch, .mod_turnitintooltwo .peermark_manager_launch, 
+.mod_turnitintooltwo .peermark_reviews_launch, #page-admin-setting-modsettingturnitintooltwo #test_link {
     cursor:pointer;
 }
 
-.introduction, #tabs {
+.mod_turnitintooltwo .introduction, .mod_turnitintooltwo #tabs {
     clear:both;
 }
 
-.introduction, .peermark_instructions {
+.mod_turnitintooltwo .introduction, .mod_turnitintooltwo .peermark_instructions {
     padding: 6px 10px;
     border-bottom: 1px solid #999999;
     display:none;
 }
 
-.introduction h2 {
+.mod_turnitintooltwo .introduction h2 {
     margin:8px 0;
 }
 
-.introduction p {
+.mod_turnitintooltwo .introduction p {
     margin:6px 0;
 }
 
-.toggle_summary, .toggle_peermarks, .toggle_peermark_instructions {
+.mod_turnitintooltwo .toggle_summary, .mod_turnitintooltwo .toggle_peermarks, 
+.mod_turnitintooltwo .toggle_peermark_instructions {
     cursor: pointer;
     float:left;
     position: relative;
@@ -100,226 +117,228 @@
     line-height:
 }
 
-.peermark_instructions_spacer {
+.mod_turnitintooltwo .peermark_instructions_spacer {
     float: left;
     width:28px;
     height:16px;
 }
 
-#page-header .navbar {
+.mod_turnitintooltwo #page-header .navbar {
     border: 1px solid #DDDDDD;
 }
 
-.navbar {
+.mod_turnitintooltwo .navbar {
     border: 1px solid #999999;
 }
 
-.partDetails {
+.mod_turnitintooltwo .partDetails {
     font-size: 13px;
     margin-bottom:0px;
     width:100%;
     border: 1px solid #999999;
 }
 
-.partDetails th {
+.mod_turnitintooltwo .partDetails th {
     padding: 6px 12px 6px;
     border-bottom: 1px solid #999999;
 }
 
-.partDetails td {
+.mod_turnitintooltwo .partDetails td {
     border: 1px solid #999999;
     border-top: 0;
     padding: 12px 12px 4px;
 }
 
-.partDetails td.data, .partDetails td.export_data, .partDetails td.rubric_qm {
+.mod_turnitintooltwo .partDetails td.data, .mod_turnitintooltwo .partDetails td.export_data, 
+.mod_turnitintooltwo .partDetails td.rubric_qm {
     text-align: center;
 }
 
-.partDetails td.export_data {
+.mod_turnitintooltwo .partDetails td.export_data {
     padding-top:12px;
 }
 
-.partDetails td.introduction_cell, .partDetails td.peermark_assignments_cell .peermarkDetails td.peermark_instructions_cell {
+.mod_turnitintooltwo .partDetails td.introduction_cell, 
+.mod_turnitintooltwo .partDetails td.peermark_assignments_cell .peermarkDetails td.peermark_instructions_cell {
     border:0;
     padding:0;
 }
 
-.partDetails td.peermarks {
+.mod_turnitintooltwo .partDetails td.peermarks {
     border:0;
 }
 
-.peermarkDetails {
+.mod_turnitintooltwo .peermarkDetails {
     width:100%;
     margin-bottom:0px;
 }
 
-.partDetails td.peermark_assignments_cell {
+.mod_turnitintooltwo .partDetails td.peermark_assignments_cell {
     padding:0;
     border:0;
 }
 
-.partDetails td.peermark_assignments_cell .peermarkDetails td {
+.mod_turnitintooltwo .partDetails td.peermark_assignments_cell .peermarkDetails td {
     padding:8px 12px;
 }
 
-.peermark_assignments_container {
+.mod_turnitintooltwo .peermark_assignments_container {
     border-top: 1px solid #999999;
 }
 
-.peermark_assignments_cell .peermarkDetails td.lastcol {
+.mod_turnitintooltwo .peermark_assignments_cell .peermarkDetails td.lastcol {
     border-right: 0;
 }
 
-.peermark_assignments_cell .peermarkDetails tr.lastrow td {
+.mod_turnitintooltwo .peermark_assignments_cell .peermarkDetails tr.lastrow td {
     border-bottom: 0;
 }
 
-td a.editable-click {
+.mod_turnitintooltwo td a.editable-click {
     border:none;
     background:url(../pix/edit.png) right -4px no-repeat;
     padding-right: 24px;
 }
 
-.submissionsDataTable {
+.mod_turnitintooltwo .submissionsDataTable {
     width:100%;
 }
 
-.score_colour {
+.mod_turnitintooltwo .score_colour {
     background-image:url(../pix/gradback.jpg);
     width:36px;
     display:inline-block;
     float:right;
 }
 
-.score_colour_ { background: #999999; }
-.score_colour_0 { background-position: 0% 0%; }
-.score_colour_10 { background-position: 0% 10%; }
-.score_colour_20 { background-position: 0% 20%; }
-.score_colour_30 { background-position: 0% 30%; }
-.score_colour_40 { background-position: 0% 40%; }
-.score_colour_50 { background-position: 0% 50%; }
-.score_colour_60 { background-position: 0% 60%; }
-.score_colour_70 { background-position: 0% 70%; }
-.score_colour_80 { background-position: 0% 80%; }
-.score_colour_90 { background-position: 0% 90%; }
-.score_colour_100 { background-position: 0% 100%; }
+.mod_turnitintooltwo .score_colour_ { background: #999999; }
+.mod_turnitintooltwo .score_colour_0 { background-position: 0% 0%; }
+.mod_turnitintooltwo .score_colour_10 { background-position: 0% 10%; }
+.mod_turnitintooltwo .score_colour_20 { background-position: 0% 20%; }
+.mod_turnitintooltwo .score_colour_30 { background-position: 0% 30%; }
+.mod_turnitintooltwo .score_colour_40 { background-position: 0% 40%; }
+.mod_turnitintooltwo .score_colour_50 { background-position: 0% 50%; }
+.mod_turnitintooltwo .score_colour_60 { background-position: 0% 60%; }
+.mod_turnitintooltwo .score_colour_70 { background-position: 0% 70%; }
+.mod_turnitintooltwo .score_colour_80 { background-position: 0% 80%; }
+.mod_turnitintooltwo .score_colour_90 { background-position: 0% 90%; }
+.mod_turnitintooltwo .score_colour_100 { background-position: 0% 100%; }
 
-.grademark_open, .grademark_grade, .origreport_score {
+.mod_turnitintooltwo .grademark_open, .mod_turnitintooltwo .grademark_grade, 
+.mod_turnitintooltwo .origreport_score {
     float:right;
 }
 
-.grademark_grade, .origreport_score {
+.mod_turnitintooltwo .grademark_grade, .mod_turnitintooltwo .origreport_score {
     padding-right:8px;
 }
 
-.student_read, .centered_cell, .centered_div {
+.mod_turnitintooltwo .student_read, .mod_turnitintooltwo .centered_cell, .mod_turnitintooltwo .centered_div {
     text-align:center !important;
 }
 
-.enrolledMembers .left, .submissionsDataTable .left, .partDetails .left {
+.mod_turnitintooltwo .enrolledMembers .left, .mod_turnitintooltwo .submissionsDataTable .left, 
+.mod_turnitintooltwo .partDetails .left {
     text-align:left;
 }
 
-.submissionsDataTable .right, #courseBrowserTable .right {
+.mod_turnitintooltwo .submissionsDataTable .right, .mod_turnitintooltwo #courseBrowserTable .right {
     text-align:right;
 }
 
-.student_read img {
+.mod_turnitintooltwo .student_read img {
     position:relative;
     top:3px;
 }
 
-.scrollbox {
+.mod_turnitintooltwo .scrollbox {
     overflow: scroll;
 }
 
-.enrol_link, .enrolling_container, .refresh_link, .messages_inbox {
+.mod_turnitintooltwo .enrol_link, .mod_turnitintooltwo .enrolling_container, 
+.mod_turnitintooltwo .refresh_link, .mod_turnitintooltwo .messages_inbox {
     float:right;
 }
 
-.messages_inbox {
+.mod_turnitintooltwo .messages_inbox {
     text-decoration: none;
     padding: 2px 4px 6px 0px;
 }
 
-.enrol_link {
+.mod_turnitintooltwo .enrol_link {
     padding: 6px 18px 0 0;
 }
 
-.refresh_link {
+.mod_turnitintooltwo .refresh_link {
     padding: 2px 16px 0 12px;
 }
 
-.enrolling_container {
+.mod_turnitintooltwo .enrolling_container {
     padding: 4px 18px 0 0;
 }
 
-.refresh_link img, .enrol_link img, .enrolling_container img, .messages_inbox img {
+.mod_turnitintooltwo .refresh_link img, .mod_turnitintooltwo .enrol_link img, 
+.mod_turnitintooltwo .enrolling_container img, .mod_turnitintooltwo .messages_inbox img {
     position: relative;
     top:4px;
 }
 
-#id_submissiontext {
+.mod_turnitintooltwo #id_submissiontext {
     width:80%;
     height:320px;
 }
 
-#submitpaper .fcheckbox label {
+.mod_turnitintooltwo #submitpaper .fcheckbox label {
     padding-left:12px;
 }
 
-.turnitin_ula {
+.mod_turnitintooltwo .turnitin_ula {
     padding-left:15%;
     padding-top:24px;
     cursor:pointer;
     text-decoration: underline;
 }
 
-.fitem_fbutton {
+.mod_turnitintooltwo .fitem_fbutton {
     padding-top:12px;
 }
 
-span.dimmed {
+.mod_turnitintooltwo span.dimmed {
     color:#999999;
 }
 
-#courseBrowserTable_filter {
-    display: none;
-}
-
-#assignmentBrowserTable_wrapper {
+.mod_turnitintooltwo #assignmentBrowserTable_wrapper {
     padding: 10px;
 }
 
-.nowrap {
+.mod_turnitintooltwo .nowrap {
     white-space:nowrap;
 }
 
-.italic {
+.mod_turnitintooltwo .italic {
     font-style: italic;
 }
 
-.bold, #or_container {
+.mod_turnitintooltwo .bold, .mod_turnitintooltwo #or_container {
     font-weight:bold;
 }
 
-span.link {
+.mod_turnitintooltwo span.link {
     color: #0000FF;
 }
 
-#submitting_loader, #refresh_loading {
+.mod_turnitintooltwo #submitting_loader, .mod_turnitintooltwo #refresh_loading {
     display:none;
     padding: 16px 0 8px;
     text-align: center;
 }
 
-p.progress_text {
+.mod_turnitintooltwo p.progress_text {
     color:#333333;
     margin-bottom: 12px;
 }
 
-noscript.warning, .library_not_present_warning {
+.mod_turnitintooltwo noscript.warning, .mod_turnitintooltwo .library_not_present_warning {
     border: 1px solid #CC0000;
     padding: 8px;
     background: #FFE9E8;
@@ -329,17 +348,13 @@ noscript.warning, .library_not_present_warning {
     margin-bottom:6px;
 }
 
-.js_required {
-    display: none;
-}
-
-.delete_link {
+.mod_turnitintooltwo .delete_link {
     margin-left: 16%;
     position: relative;
     top:-4px;
 }
 
-.delete_link img {
+.mod_turnitintooltwo .delete_link img {
     position: relative;
     top:2px;
     left:4px;
@@ -347,296 +362,261 @@ noscript.warning, .library_not_present_warning {
 
 /* Datatables styles */
 
-th.narrow, td.narrow {
+.mod_turnitintooltwo th.narrow, .mod_turnitintooltwo td.narrow {
     width: 60px;
 }
 
-.dataTables_wrapper table.dataTable {
+.mod_turnitintooltwo .dataTables_wrapper table.dataTable {
     font-size: 13px;
     border:1px solid #999999;
     width:100% !important;
 }
 
-.dataTables_wrapper table.dataTable th {
+.mod_turnitintooltwo .dataTables_wrapper table.dataTable th {
     padding-top: 12px;
     padding-bottom: 8px;
 }
 
-table.dataTable thead th.sorting_disabled {
+.mod_turnitintooltwo table.dataTable thead th.sorting_disabled {
     cursor: default;
 }
 
-.dataTables_wrapper table.dataTable td {
+.mod_turnitintooltwo .dataTables_wrapper table.dataTable td {
     padding: 8px 10px 2px;
     font-size: 13px;
     vertical-align: top;
 }
 
-.dataTables_wrapper table.dataTable th.left {
+.mod_turnitintooltwo .dataTables_wrapper table.dataTable th.left {
     text-align: left;
 }
 
-.dataTables_info, .dataTables_paginate {
+.mod_turnitintooltwo .dataTables_info, .mod_turnitintooltwo .dataTables_paginate {
     padding-top: 6px;
 }
 
-.upload_box {
+.mod_turnitintooltwo .upload_box {
     white-space:nowrap;
 }
 
-.student_dot_icon, .student_read_icon, .download_original_open img, .upload_box img, .upload_box span {
+.mod_turnitintooltwo .student_dot_icon, .mod_turnitintooltwo .student_read_icon, 
+.mod_turnitintooltwo .download_original_open img, .mod_turnitintooltwo .upload_box img, 
+.mod_turnitintooltwo .upload_box span {
     position: relative;
 }
 
-.upload_box span {
+.mod_turnitintooltwo .upload_box span {
     top: -7px;
     padding-right: 6px;
 }
 
-.student_dot_icon {
+.mod_turnitintooltwo .student_dot_icon, .mod_turnitintooltwo .download_original_open img, .mod_turnitintooltwo .upload_box img {
     top:-3px;
 }
 
-.student_read_icon {
+.mod_turnitintooltwo .student_read_icon {
     top:-1px;
 }
 
-.download_original_open img, .upload_box img {
-    top:-3px;
-}
-
-.dataTables_length, .dataTables_filter {
+.mod_turnitintooltwo .dataTables_length, .mod_turnitintooltwo .dataTables_filter {
     padding:6px 0;
 }
 
-.dataTables_wrapper .navbar {
+.mod_turnitintooltwo .dataTables_wrapper .navbar {
     margin:2px 0;
     padding:0 10px;
 }
 
-#courseBrowserTable_wrapper .dataTables_processing {
+.mod_turnitintooltwo #courseBrowserTable_wrapper .dataTables_processing {
     top: 70px !important;
 }
 
-.dt_pagination {
+.mod_turnitintooltwo .dt_pagination {
     font-size:12px;
 }
 
-.dt_pagination .dataTables_paginate a.paginate_disabled_previous, .dt_pagination .dataTables_paginate a.paginate_enabled_previous {
+.mod_turnitintooltwo .dt_pagination .dataTables_paginate a.paginate_disabled_previous, 
+.mod_turnitintooltwo .dt_pagination .dataTables_paginate a.paginate_enabled_previous {
     background-position: left -2px;
 }
 
-.dt_pagination .dataTables_paginate a.paginate_disabled_next, .dt_pagination .dataTables_paginate a.paginate_enabled_next {
+.mod_turnitintooltwo .dt_pagination .dataTables_paginate a.paginate_disabled_next, 
+.mod_turnitintooltwo .dt_pagination .dataTables_paginate a.paginate_enabled_next {
     background-position: right -2px;
 }
 
-.dt_pagination .dataTables_info {
+.mod_turnitintooltwo .dt_pagination .dataTables_info {
     float:left;
     clear:none;
 }
 
-.dt_pagination .dataTables_paginate {
+.mod_turnitintooltwo .dt_pagination .dataTables_paginate {
     float:right;
     margin-bottom: 4px;
 }
 
 /* Submission Upload Form Iframe */
 
-.iframe_submission_form {
+.mod_turnitintooltwo .iframe_submission_form {
     width:100%;
     border:0;
     height:580px;
 }
 
-#upload_success {
+.mod_turnitintooltwo #upload_success {
     color: #CC0000;
 }
 
-.hide_peermarks, .show_peermarks {
+.mod_turnitintooltwo .hide_peermarks, .mod_turnitintooltwo .show_peermarks {
     padding-left: 20px;
 }
 
-.class_recreation {
+.mod_turnitintooltwo .class_recreation {
     margin-top:16px;
     padding-bottom: 20px;
 }
 
-#box_receipt {
+.mod_turnitintooltwo #box_receipt {
     position:relative;
     top:16px;
 }
 
-.edit_course_end_link {
+.mod_turnitintooltwo .edit_course_end_link {
     position: relative;
     top: -2px;
 }
 
-.edit_course_end_link span {
+.mod_turnitintooltwo .edit_course_end_link span {
     position: relative;
     top: -4px;
 }
 
-.create_checkboxes {
+.mod_turnitintooltwo .create_checkboxes {
     padding: 6px 6px 6px;
     margin:0;
     display:none;
 }
 
-.create_checkboxes div {
+.mod_turnitintooltwo .create_checkboxes div {
     display:inline;
 }
 
-.create_checkboxes .create_assign_checkbox_container {
+.mod_turnitintooltwo .create_checkboxes .create_assign_checkbox_container {
     padding: 0 24px;
 }
 
-.create_checkboxes input {
+.mod_turnitintooltwo .create_checkboxes input {
     margin-right:4px;
     position: relative;
     top:2px;
 }
 
-#course_category, #create_assignments {
-    display:none;
-}
-
-.course_creation_bulk_msg {
+.mod_turnitintooltwo .course_creation_bulk_msg {
     margin-bottom: 16px;
 }
 
-.tii_upgrade_check, .tii_upgrading_check {
+.mod_turnitintooltwo .tii_upgrade_check, .mod_turnitintooltwo .tii_upgrading_check {
     font-size: 12px;
 }
 
-.tii_upgrade_check {
+.mod_turnitintooltwo .tii_upgrade_check {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.tii_upgrading_check {
-    display:none;
-}
-
-.tii_upgrading_check img {
+.mod_turnitintooltwo .tii_upgrading_check img {
     position: relative;
     top: 3px;
 }
 
-#test_link {
-    display:none;
-    cursor: pointer;
-}
-
-#test_link, #testing_container {
+#page-admin-setting-modsettingturnitintooltwo #test_link, #page-admin-setting-modsettingturnitintooltwo #testing_container {
     float:left;
     margin-bottom:8px;
 }
 
-#test_link img {
+#page-admin-setting-modsettingturnitintooltwo #test_link img {
     position: relative;
     top:4px;
 }
 
-#test_result {
-    display: none;
+#page-admin-setting-modsettingturnitintooltwo #test_result {
     float:left;
     margin: 4px 0 0;
     padding:2px 6px;
 }
 
-.test_link_success {
+#page-admin-setting-modsettingturnitintooltwo .test_link_success {
     border: 1px solid #00CC00;
     background: #C3FDB8;
 }
 
-.test_link_fail {
+#page-admin-setting-modsettingturnitintooltwo .test_link_fail {
     border:1px solid #CC0000;
     background: #E77471;
 }
 
-.test_connection {
-    display:none;
-}
-
-#testing_container {
+#page-admin-setting-modsettingturnitintooltwo #testing_container {
     margin-top:4px;
-    display:none;
 }
 
-#testing_container img {
+#page-admin-setting-modsettingturnitintooltwo #testing_container img {
     position: relative;
     top:2px;
 }
 
-.tabtree {
+.mod_turnitintooltwo .tabtree {
     margin-bottom:16px;
 }
 
-.rubric_manager_launch, .rubric_view_launch, .quickmark_manager_launch, .peermark_manager_launch, .peermark_reviews_launch {
-    cursor:pointer;
-}
-
-.rubric_manager_launch, .rubric_view_launch {
+.mod_turnitintooltwo .rubric_manager_launch, .mod_turnitintooltwo .rubric_view_launch {
     background:url(../pix/rubric.png) no-repeat 0px 0px;
     padding:4px 0 4px 32px;
     line-height: 22px;
     margin-left: 6px;
 }
 
-.quickmark_manager_launch {
+.mod_turnitintooltwo .quickmark_manager_launch {
     background:url(../pix/quickmark.png) no-repeat 0px 0px;
     padding: 2px 0 2px 40px;
     height: 20px;
 }
 
-.peermark_header {
+.mod_turnitintooltwo .peermark_header {
     margin-bottom:8px;
     float:left;
 }
 
-.peermark_manager_launch, .peermark_reviews_launch {
+.mod_turnitintooltwo .peermark_manager_launch, .mod_turnitintooltwo .peermark_reviews_launch {
     padding: 4px 0 4px 46px;
     height: 22px;
 }
 
-.peermark_manager_launch {
+.mod_turnitintooltwo .peermark_manager_launch {
     background:url(../pix/peermark-settings.png) no-repeat 0px 0px;
 }
 
-.peermark_reviews_launch {
+.mod_turnitintooltwo .peermark_reviews_launch {
     background:url(../pix/peermark-reviews.png) no-repeat 0px 0px;
 }
 
-.peermark_loading, .messages_loading {
-    display:none;
-}
-
-.editable_hide_span, .peermark_loading_span {
+.mod_turnitintooltwo .editable_hide_span, .mod_turnitintooltwo .peermark_loading_span {
     position: relative;
     top:4px;
 }
 
-.peermark_loading_row {
+.mod_turnitintooltwo .peermark_loading_row {
     text-align: center;
     margin:0 auto 8px;
 }
 
-#tii_table_functions {
-    display: none;
-}
-
-#course_search_options {
+.mod_turnitintooltwo #course_search_options {
     margin-bottom: 6px;
 }
 
-#course_search_options label {
+.mod_turnitintooltwo #course_search_options label {
     padding-right:8px;
 }
 
-#course_search_options input, #course_search_options select {
+.mod_turnitintooltwo #course_search_options input, .mod_turnitintooltwo #course_search_options select {
     margin-right: 32px;
-}
-
-.refresh_row .fa-spinner {
-    display: none;
 }

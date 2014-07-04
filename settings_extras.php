@@ -110,7 +110,7 @@ switch ($cmd) {
                     }
                     if ($table == 'turnitintooltwo_users' &&
                             $moodleuser = $DB->get_record('user', array('id' => $datarow['userid']))) {
-                        $output .= ' '.str_pad(substr($moodleuser->firstname.' '.$moodleuser->lastname, 0, $columnwidth),
+                        $output .= ' '.str_pad(substr(format_string($moodleuser->firstname).' '.format_string($moodleuser->lastname), 0, $columnwidth),
                                                 $columnwidth, " ", 1).'|';
                     }
                     $output .= "\r\n";
@@ -417,6 +417,7 @@ switch ($cmd) {
 // Build page.
 echo $OUTPUT->header();
 
+echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 if ($cmd != 'class_recreation' && $cmd != 'multiple_class_recreation') {
     echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
@@ -440,4 +441,5 @@ if ($cmd == 'viewreport') {
     echo $OUTPUT->box($output, 'generalbox'.$class);
 }
 
+echo html_writer::end_tag("div");
 echo $OUTPUT->footer();

@@ -412,8 +412,8 @@ jQuery(document).ready(function($) {
     });
 
     // Open an iframe light box containing the Quickmark Manager
-    if ($('.quickmark_manager_launch').length > 0) {
-        $('.quickmark_manager_launch').colorbox({
+    if ($('.quickmark_manager_launch').length > 0 || $('.plagiarism_turnitin_quickmark_manager_launch').length > 0) {
+        $('.quickmark_manager_launch, .plagiarism_turnitin_quickmark_manager_launch').colorbox({
             iframe:true, width:"700px", height:"432px", opacity: "0.7", className: "quickmark_manager", transition: "none",
             onLoad: function() { getLoadingGif(); },
             onCleanup: function() { hideLoadingGif(); }
