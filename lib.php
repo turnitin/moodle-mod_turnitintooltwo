@@ -304,7 +304,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
                             $turnitintooltwoassignment->turnitintooltwo->rubric : '';
             $rubric_id = (!empty($rubric_id) && array_key_exists($rubric_id, $instructorrubrics)) ? $rubric_id : '';
 
-            $assignment->setRubricId();
+            $assignment->setRubricId($rubric_id);
             $assignment->setSubmitPapersTo($turnitintooltwoassignment->turnitintooltwo->submitpapersto);
             $assignment->setResubmissionRule($turnitintooltwoassignment->turnitintooltwo->reportgenspeed);
             $assignment->setBibliographyExcluded($turnitintooltwoassignment->turnitintooltwo->excludebiblio);
@@ -570,7 +570,7 @@ function turnitintooltwo_updateavailable($current_version) {
         }
 
     } catch (Exception $e) {
-        turnitin_comms::handle_exceptions($e, 'checkupdateavailableerror', false);
+        turnitintooltwo_comms::handle_exceptions($e, 'checkupdateavailableerror', false);
     }
 
     return $returnvalue;
@@ -804,13 +804,14 @@ function turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $co
 }
 
 function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
-    $code = '$retval = strnatcmp($a["'.$sortcol.'"], $b["'.$sortcol.'"]);';
-    $code .= 'return $retval;';
-
     if ($sortdir == "desc") {
-        usort($data, create_function('$b, $a', $code));
+        return usort($data, function($b, $a) use ($sortcol) {
+            return strnatcmp($a[$sortcol], $b[$sortcol]);
+        });
     } else {
-        usort($data, create_function('$a, $b', $code));
+        return usort($data, function($a, $b) use ($sortcol) {
+            return strnatcmp($a[$sortcol], $b[$sortcol]);
+        });
     }
 }
 
@@ -1048,7 +1049,8 @@ function turnitintooltwo_getusers() {
         }
 
         $return["aaData"][] = array($checkbox, ($user->turnitin_uid == 0) ?
-                                '' : $user->turnitin_uid, $user->lastname, $user->firstname, $pseudoemail);
+                                '' : $user->turnitin_uid, format_string($user->lastname), 
+                                        format_string($user->firstname), $pseudoemail);
     }
     $return["sEcho"] = $secho;
     $return["iTotalRecords"] = count($users);

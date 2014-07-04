@@ -419,7 +419,7 @@ class LTI extends OAuthSimple {
         }
         $output = '<form action="' . $this->getEndPoint() . '" method="POST" target="' . $object->getFormTarget() . '" enctype="' . $enctype . '">'.PHP_EOL;
         foreach ( $params as $name => $value ) {
-            $output .= '<input name="' . $name . '" value="' . $value . '" type="hidden" />'.PHP_EOL;
+            $output .= '<input name="' . htmlentities($name, ENT_QUOTES) . '" value="' . htmlentities($value, ENT_QUOTES) . '" type="hidden" />'.PHP_EOL;
         }
         if ( $uploadtext ) {
             $output .= '<textarea name="custom_submission_data"></textarea>'.PHP_EOL;

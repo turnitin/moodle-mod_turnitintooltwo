@@ -96,7 +96,7 @@ class turnitintooltwo_comms {
      * @param string $tterrorstr
      * @param boolean $toscreen
      */
-    public function handle_exceptions($e, $tterrorstr = "", $toscreen = true) {
+    public static function handle_exceptions($e, $tterrorstr = "", $toscreen = true) {
         $errorstr = "";
         if (!empty($tterrorstr)) {
             $errorstr = get_string($tterrorstr, 'turnitintooltwo')."<br/><br/>";

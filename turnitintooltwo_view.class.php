@@ -1486,7 +1486,7 @@ class turnitintooltwo_view {
      * @param int $userid
      * @return output form
      */
-    public function output_lti_form_launch($type, $userrole, $partid = 0) {
+    public static function output_lti_form_launch($type, $userrole, $partid = 0) {
         global $USER, $CFG;
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();

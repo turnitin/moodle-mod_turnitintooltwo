@@ -175,7 +175,7 @@ class Soap extends SoapClient {
             $header_string = $oauth->getHeaderString();
             $oauth->reset();
         } catch ( Exception $e ) {
-            throw TurnitinSDKException( 'oautherror', $e->getMessage(), $this->getLogPath() );
+            throw new TurnitinSDKException( 'oautherror', $e->getMessage(), $this->getLogPath() );
         }
         return $header_string;
     }
