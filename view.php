@@ -412,7 +412,7 @@ switch ($do) {
         break;
 
     case "loadmessages":
-        if ($istutor && has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($istutor || has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('messages_inbox', $userrole),
                                                     array("id" => "inbox_form"));
         }
