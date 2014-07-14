@@ -9,10 +9,6 @@
     cursor: pointer;
 }
 
-.mod_turnitintooltwo .nothingsubmit_warning {
-    display: none;
-}
-
 .mod_turnitintooltwo .row_score, .mod_turnitintooltwo .row_peermark_manager, .mod_turnitintooltwo .row_peermark_reviews {
     float:right;
 }
@@ -60,7 +56,8 @@
 #page-admin-setting-modsettingturnitintooltwo .tii_upgrading_check, #page-admin-setting-modsettingturnitintooltwo #test_link, 
 #page-admin-setting-modsettingturnitintooltwo #test_result, #page-admin-setting-modsettingturnitintooltwo .test_connection, 
 #page-admin-setting-modsettingturnitintooltwo #testing_container, .mod_turnitintooltwo .peermark_loading, 
-.mod_turnitintooltwo .messages_loading, .mod_turnitintooltwo #tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner {
+.mod_turnitintooltwo .messages_loading, .mod_turnitintooltwo #tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner,
+.mod_turnitintooltwo .nothingsubmit_warning {
     display:none;
 }
 
@@ -362,6 +359,10 @@
 
 /* Datatables styles */
 
+.mod_turnitintooltwo .partDetails .navbar .dataTables_filter {
+    float: none;
+}
+
 .mod_turnitintooltwo th.narrow, .mod_turnitintooltwo td.narrow {
     width: 60px;
 }
@@ -433,6 +434,7 @@
 
 .mod_turnitintooltwo .dt_pagination {
     font-size:12px;
+    clear: both;
 }
 
 .mod_turnitintooltwo .dt_pagination .dataTables_paginate a.paginate_disabled_previous, 

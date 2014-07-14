@@ -949,10 +949,6 @@ jQuery(document).ready(function($) {
                 } else {
                     link = link+"_"+data.submission_id;
                 }
-                // Show export links.
-                if (submission_id != 0) {
-                    $('#export_links').removeClass('hidden_class');
-                }
                 $("#"+link+"_"+part_id+'_'+user_id).parent().parent().children().each(function() {
                     i++;
                     $(this).html(data.row[i]);
