@@ -144,6 +144,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('ssearch', 'turnitintooltwo');
         $PAGE->requires->string_for_js('slengthmenu', 'turnitintooltwo');
         $PAGE->requires->string_for_js('semptytable', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('tiisubmissionsgeterror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('resubmissiongradewarn', 'turnitintooltwo');
     }
 
@@ -751,10 +752,9 @@ class turnitintooltwo_view {
 
         if ($istutor) {
             $links = "--";
-            // Only show export links if there has been submissions and anonymous marking is still enforced.
-            if ($turnitintooltwoassignment->count_submissions($cm, $partid) > 0
-                    && (($turnitintooltwoassignment->turnitintooltwo->anon == 0)
-                        || ($turnitintooltwoassignment->turnitintooltwo->anon > 0 && $partdetails[$partid]->dtpost > time()))) {
+            // Only show export links if anonymous marking is still enforced.
+            if (($turnitintooltwoassignment->turnitintooltwo->anon == 0)
+                        || ($turnitintooltwoassignment->turnitintooltwo->anon > 0 && $partdetails[$partid]->dtpost > time())) {
 
                 // Output icon to download zip file of submissions in original format.
                 $exportoriginalzip = $OUTPUT->box_start('row_export_orig', '');
@@ -783,6 +783,9 @@ class turnitintooltwo_view {
                 $exportxlszip .= $OUTPUT->box_end(true);
 
                 $links = $exportxlszip.$exportpdfzip.$exportoriginalzip;
+                if ($turnitintooltwoassignment->count_submissions($cm, $partid) == 0) {
+                    $links = html_writer::tag('div', $links, array('id' => 'export_links', 'class' => 'hidden_class'));
+                }
             }
 
             $cells[5] = new html_table_cell($links);

@@ -582,6 +582,10 @@ jQuery(document).ready(function($) {
                     $('#refresh_'+part_id).show();
                     enableEditingText(part_id);
                 }
+            },
+            "error": function(data, response) {
+                $('#'+part_id+"_processing").attr('style', 'visibility: hidden');
+                $('.dataTables_empty').html(M.str.turnitintooltwo.tiisubmissionsgeterror);
             }
         });
     }
