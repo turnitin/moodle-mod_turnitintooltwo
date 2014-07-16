@@ -11,11 +11,11 @@ jQuery(document).ready(function($) {
         } else {
             var idStr = $(this).children('.plagiarism_submission_id').html().split("-");
             var textcontent = $(this).children('.plagiarism_submission_content').html();
-            var cmid = $(this).children('.plagiarism_submission_cmid').html();
-            var itemid = $(this).children('.plagiarism_submission_itemid').html();
         }
         var pathnamehash = idStr[0];
         var submission_type = idStr[1];
+        var cmid = $(this).children('.plagiarism_submission_cmid').html();
+        var itemid = $(this).children('.plagiarism_submission_itemid').html();
 
         $.ajax({
             type: "POST",
