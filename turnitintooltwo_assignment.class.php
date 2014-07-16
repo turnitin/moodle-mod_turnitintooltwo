@@ -1526,6 +1526,7 @@ class turnitintooltwo_assignment {
                     $assignmentdetails->erater_mechanics = (int)$readassignment->getEraterMechanics();
                     $assignmentdetails->erater_style = (int)$readassignment->getEraterStyle();
                     $assignmentdetails->transmatch = (int)$readassignment->getTranslatedMatching();
+                    $assignmentdetails->allownonor = (int)$readassignment->getAllowNonOrSubmissions();
                 }
 
                 // Get Peermark Assignments.
