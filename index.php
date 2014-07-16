@@ -36,7 +36,6 @@ if (!$course = $DB->get_record("course", array("id" => $id))) {
 }
 
 require_login($course->id);
-add_to_log($course->id, "turnitintooltwo", "view all", "index.php?id=$course->id", "");
 
 // Print the header.
 $extranavigation = array(array('title' => get_string("modulenameplural", "turnitintooltwo"), 'url' => null));
