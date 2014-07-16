@@ -258,7 +258,14 @@ jQuery(document).ready(function($) {
     if ($('#class_ids').length > 0) {
 
         // Move box within frame
-        $(".side-pre-only #page-content #region-main").css({'margin-left' : '0px'});
+        $(".side-pre-only #page-content #region-main").css({
+            'margin-left' : '0px'
+        });
+
+        $(".has-region-side-pre #page-content #region-main").css({
+            'width': '100%',
+            'margin-top': '-30px'
+        });
 
         var class_ids = $('#class_ids').html();
 
