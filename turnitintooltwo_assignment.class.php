@@ -1089,6 +1089,9 @@ class turnitintooltwo_assignment {
             $DB->update_record('event', $event);
         }
 
+        // Update grade settings.
+        turnitintooltwo_grade_item_update($this->turnitintooltwo);
+
         return $return;
     }
 
