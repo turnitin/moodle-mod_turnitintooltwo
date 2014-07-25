@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: ja
 
 $string['addsubmission'] = '提出物を追加';
@@ -49,9 +49,7 @@ $string['internetcheck_help'] = 'レポートのオリジナリティーレポ�
 $string['journalcheck'] = 'ジャーナル、<br />定期刊行物、出版物をチェックする';
 $string['journalcheck_help'] = 'レポートのオリジナリティーレポートを処理する際にTurnitinの学術誌、定期刊行物、および出版物レポジトリに対してチェックする。選択されないと、類似性指標は減少する場合がある。';
 $string['maxfilesize'] = '最大ファイルサイズ';
-$string['maxfilesize_help'] = 'こ
-の設定は各課題部分へのユーザーの提出物の最大ファイルサイズを決定するものです。この値に設定できる最大値はコース設定で決定された値に影響されます。
-また、この値は最高20Mbまで設定が可能です。（　これは Turnitin でアップロードが許可されているファイルサイズです）';
+$string['maxfilesize_help'] = 'この設定は各課題部分へのユーザーの提出物の最大ファイルサイズを決定するものです。この値に設定できる最大値はコース設定で決定された値に影響されます。また、この値は最高20Mbまで設定が可能です。（　これは Turnitin でアップロードが許可されているファイルサイズです）';
 $string['maxlength'] = ' {$a->field} の最長は {$a->length} 文字です';
 $string['maxmarks'] = '最高得点';
 $string['pluginname'] = 'Turnitin 課題 2';
@@ -92,11 +90,7 @@ $string['proxyurl_desc'] = '<b>[オプション]</b><br />あなたのサーバ�
 $string['proxyuser'] = 'プロキシユーザー名';
 $string['proxyuser_desc'] = '<b>[オプション]</b><br />あなたのプロキシは認証を必要とします。ユーザー名をこちらに入力してください。';
 $string['reportgenspeed'] = '作成速度を報告する';
-$string['reportgenspeed_help'] = 'こ
-の課題に対して３つのオプションがあります： &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;、&#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;、および &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;です。<br /><br />&#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; のオプションは、受講生が提出をすませると即座にオリジナリティーレポートが生成されます。このオプションが選択されると、受講生は課題に対して再提出す
-ることができません。<br /><br />再提出を許可するに
-は、&#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; オプションを選択してください。これで、受講生は提出期限日まで、再提出を行うことができます。再提出物に対するオリジナリティーレポートの生成には24
-時間ほどかかる場合があります。<br /><br />&#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; オプションでは、課題の提出期限日のみにオリジナリティーレポートが生成されます。この設定では、オリジナリティーレポートが作成される際、課題に提出された全てのレポートは互いに照らし合わせられ比較されます。';
+$string['reportgenspeed_help'] = 'この課題に対して３つのオプションがあります： &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;、&#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;、および &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;です。<br /><br />&#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; のオプションは、受講生が提出をすませると即座にオリジナリティーレポートが生成されます。このオプションが選択されると、受講生は課題に対して再提出することができません。<br /><br />再提出を許可するには、&#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; オプションを選択してください。これで、受講生は提出期限日まで、再提出を行うことができます。再提出物に対するオリジナリティーレポートの生成には24時間ほどかかる場合があります。<br /><br />&#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; オプションでは、課題の提出期限日のみにオリジナリティーレポートが生成されます。この設定では、オリジナリティーレポートが作成される際、課題に提出された全てのレポートは互いに照らし合わせられ比較されます。';
 $string['resubmission'] = '再提出';
 $string['resubmissiongradewarn'] = '提出期限日を過ぎるまで、この課題に対して再提出が可能です。レポートが再提出された場合、マーク全てが削除されます。続けますか？';
 $string['resubmissiongradewarnaware'] = 'これが再提出されると、全てのマークが削除されることにご注意ください。';
@@ -134,9 +128,7 @@ $string['submissionupdateerror'] = '提出物データを更新できません�
 $string['submissionuploadsuccess'] = 'Turnitinへの提出物のアップロードに成功しました。';
 $string['submitpaper'] = 'レポートを提出';
 $string['submitpapersto'] = '受講生レポートを保存';
-$string['submitpapersto_help'] = 'こ
-の設定では、講師は提出されたレポートをTurnitin受講生レポートリポジトリに保存するかどうかを決定することができます。 レポートをリポジトリに保存する利点は、課題に提出されたレポートを現在のクラス、または過去に提出された提出物に照らし合わせてチェックすることができ
-ることです。&#34;リポジトリ無し&#34;を設定すると、受講生のレポートは Turnitin 受講生レポートリポジトリに保存されません。';
+$string['submitpapersto_help'] = 'この設定では、講師は提出されたレポートをTurnitin受講生レポートリポジトリに保存するかどうかを決定することができます。 レポートをリポジトリに保存する利点は、課題に提出されたレポートを現在のクラス、または過去に提出された提出物に照らし合わせてチェックすることができることです。&#34;リポジトリ無し&#34;を設定すると、受講生のレポートは Turnitin 受講生レポートリポジトリに保存されません。';
 $string['submitted'] = '変更されました';
 $string['submittoturnitin'] = 'Turnitinに提出';
 $string['textsubmission'] = 'テキスト提出';
@@ -148,8 +140,7 @@ $string['turnitinaccountid_desc'] = '<b>[必須]</b><br />Turnitin一次アカ�
 $string['turnitinanon'] = '匿名コメント記入（マーキング）';
 $string['turnitinanon_help'] = 'Turnitin課題設定におき、この値を”はい”に設定し、匿名コメント記入（マーキング）を使用することができます。匿名コメント記入（マーキング）が課題内で一度オンになるこ、オフにすることはできません。';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>
-[必須]</b><br />Turnitin API URLを入力してください<br /><i>（例： https://api.turnitin.com）<br />（例：https://submit.ac.uk）</i>';
+$string['turnitinapiurl_desc'] = '<b>[必須]</b><br />Turnitin API URLを入力してください<br /><i>（例： https://api.turnitin.com）<br />（例：https://submit.ac.uk）</i>';
 $string['turnitindeleteconfirm'] = '提出物リストおよび受信箱よりレポートを削除することは可能ですが、Turnitinデータベースより完全に削除することはできません。\n\n提出物を削除しますか? このアクションは元に戻すことはできません。';
 $string['turnitindeletionerror'] = 'Turnitinの提出物削除に失敗しました。ローカル Moodle コピーは削除されましたが、Turnitin内の提出物を削除することはできませんでした。';
 $string['turnitinenrolstudents'] = '全受講生を参加登録';
@@ -174,17 +165,14 @@ $string['turnitintooltworesetdata1'] = 'Turnitin課題を置き換える <i>（�
 $string['turnitintooltworesetdata2'] = 'Turnitin課題をそのまま残す';
 $string['turnitintooltworesetinfo'] = 'このコースのTurnitin課題において下のオプションを選択してください： ';
 $string['turnitintooltwoupdateerror'] = 'turnitintooltwoデータを更新できませんでした';
-$string['turnitintooltwoagreement_desc'] = '<b>
-[オプション]</b><br />提出物への同意確認を入力してください。<br />(<b>注意：</b> 同意欄が空白のまま残されると、提出中の受講生による同意確認は必要ありません。）';
+$string['turnitintooltwoagreement_desc'] = '<b>[オプション]</b><br />提出物への同意確認を入力してください。<br />(<b>注意：</b> 同意欄が空白のまま残されると、提出中の受講生による同意確認は必要ありません。）';
 $string['turnitintooltwodeleteerror'] = 'turnitintooltwoデータを削除することができませんでした';
 $string['turnitintooltwogeterror'] = ' turnitintooltwoデータを得ることができませんでした';
 $string['turnitinuseanon'] = '匿名コメント記入（マーキング）を使用';
 $string['turnitinuseanon_desc'] = '提出物評価時に匿名コメント記入（マーキング）を許可するかを設定してください。<br /><i>（このオプションは、匿名コメント記入をアカウントで設定している方のみに利用可能です。）</i>';
 $string['turnitinusegrademark'] = 'GradeMarkを使用する';
 $string['turnitinusegrademark_help'] = 'GradeMarkまたはMoodleのどちらかを使用して提出物を評価することを選択してください。';
-$string['turnitinusegrademark_desc'] = 'GradeMark
-またはMoodleのどちらかを使用して提出物を評価することを選択してください。<br /><i>（このオプションは、アカウントでGradeMarkの使用を設定しているユーザーの方のみに利用可能です。）<
-/i>';
+$string['turnitinusegrademark_desc'] = 'GradeMarkまたはMoodleのどちらかを使用して提出物を評価することを選択してください。<br /><i>（このオプションは、アカウントでGradeMarkの使用を設定しているユーザーの方のみに利用可能です。）</i>';
 $string['turnitinuserepository'] = '所属機関レポジトリをオンにする';
 $string['turnitinuserepository_desc'] = 'Turnitin課題において所属機関レポジトリの使用の可／不可を決定する。<br /><i>（このオプションは、所属機関レポジトリがアカウントで使用できる方のみに利用可能です。）</i>';
 $string['turnitintutorsremove'] = 'Turnitin内のコースからチューターを削除しますか？';
@@ -200,9 +188,7 @@ $string['usergeterror'] = 'ユーザーデータを得られませんでした';
 $string['userstounlink'] = 'ユーザーを解除';
 $string['userupdateerror'] = 'ユーザーデータを講師できませんでした';
 $string['viewreport'] = 'レポートを閲覧する';
-$string['wrongaccountid'] = 'Turnitinクラスにリンクする際にエラーが発生しました。あなたが設
-定したアカウントは{$a->current}のアカウントです。このクラスは、{$a->backupid}のアカウントからです。あなた
-は同じTurnitinアカウントにあるクラスのみ復元することができます。 ';
+$string['wrongaccountid'] = 'Turnitinクラスにリンクする際にエラーが発生しました。あなたが設定したアカウントは{$a->current}のアカウントです。このクラスは、{$a->backupid}のアカウントからです。あなたは同じTurnitinアカウントにあるクラスのみ復元することができます。 ';
 $string['copyassigndata'] = 'Turnitin課題データをコピー';
 $string['replaceassigndata'] = 'Turnitin課題データを差し替える';
 $string['downloadexport'] = 'エクスポート';
@@ -213,9 +199,7 @@ $string['turnitintutors'] = 'Turnitinチューター';
 $string['turnitintutorsadd'] = 'Turnitinチューターを追加';
 $string['turnitintutorsallenrolled'] = '全てのチューターはTurnitinに登録済み';
 $string['turnitintutors_desc'] = '下に選択したチューターはこのTurnitinクラスに登録しています。登録済みのチューターはTurnitinウェブサイトにログインすることによりこのクラスにアクセスすることができます。';
-$string['duplicatesfound'] = '同
-じTurnitin 課題の写しが見つかりました。写しは一つ以上の Moodle ダイレクト課題が同じTurnitin 課題に Turnitin APIにより連結された場合に起きます。これは、写しに提出された提出物が他の提出物受信箱に現れるという問題を起こします。この問題を防ぐには、写しの
-課題を削除するか、または写し課題のコースをリセットしてください。<br /><br />次の写しが発見されました：';
+$string['duplicatesfound'] = '同じTurnitin 課題の写しが見つかりました。写しは一つ以上の Moodle ダイレクト課題が同じTurnitin 課題に Turnitin APIにより連結された場合に起きます。これは、写しに提出された提出物が他の提出物受信箱に現れるという問題を起こします。この問題を防ぐには、写しの課題を削除するか、または写し課題のコースをリセットしてください。<br /><br />次の写しが発見されました：';
 $string['erater'] = 'e-rater 文法チェックを作動する';
 $string['eraternoun'] = 'E-rater';
 $string['erater_handbook'] = 'ETS&copy ハンドブック';
@@ -235,8 +219,7 @@ $string['erater_dictionary_enus'] = 'アメリカ英語辞書';
 $string['erater_dictionary_engb'] = 'イギリス英語辞書';
 $string['erater_dictionary_en'] = 'アメリカ及びイギリス英語辞書';
 $string['turnitinuseerater'] = 'ETS&copy; を作動する。';
-$string['turnitinuseerater_desc'] = 'ETS&copy;
-文法チェックを作動するか選択してください。<br /><i>（このオプションはETS&copy; e-rater があなたのTurnitin アカウントが作動されている場合のみに作動してください)</i>';
+$string['turnitinuseerater_desc'] = 'ETS&copy;文法チェックを作動するか選択してください。<br /><i>（このオプションはETS&copy; e-rater があなたのTurnitin アカウントが作動されている場合のみに作動してください)</i>';
 $string['student_read'] = 'レポートの閲覧日：';
 $string['student_notread'] = '受講生はこのレポートをまだ閲覧していません。';
 $string['relinkusers'] = 'ユーザーを再リンクする';
@@ -295,8 +278,7 @@ $string['emptycreatedfile'] = '提出しようとしているファイルは空�
 $string['studentdataprivacy'] = '受講生データプライバシー設定';
 $string['studentdataprivacy_desc'] = '次の設定は受講生&#39sの個人情報がAPIによってTurnitinへと送信されることを防ぐように設定することができます。';
 $string['enablepseudo'] = '受講生プライバシーを作動する';
-$string['enablepseudo_desc'] = 'このオプションが選択されると、受講生
-メールアドレスは Turnitin API コールに変更されます。<br /><i>(<b>注意：</b> このオプションは Moodle ユーザーデータがTurnitinと既にシンクされている場合、変更することができません)</i>';
+$string['enablepseudo_desc'] = 'このオプションが選択されると、受講生メールアドレスは Turnitin API コールに変更されます。<br /><i>(<b>注意：</b> このオプションは Moodle ユーザーデータがTurnitinと既にシンクされている場合、変更することができません)</i>';
 $string['pseudofirstname'] = '受講生の偽の名前';
 $string['pseudofirstname_desc'] = '<b>[オプション]</b><br />Turnitin の文書閲覧に受講生の名前のみが表示されます。';
 $string['pseudolastname'] = '受講生の偽の名字';
@@ -304,9 +286,7 @@ $string['pseudolastname_desc'] = '文書閲覧に受講生の名字が表示さ�
 $string['psuedolastnamegen'] = '名字を自動作成する';
 $string['psuedolastnamegen_desc'] = 'はいに設定され、偽名字がユーザープロファイルに設定されると、そのフィールドは自動的に独特の識別名が事前設定されます。';
 $string['pseudoemailsalt'] = '偽暗号化されたサルト';
-$string['pseudoemailsalt_desc'] = '<b>
-[オプション]</b><br/>偽受講生メールアドレス作成の複雑さを増すために、オプショナルサルトを使用することができま
-す。<br />(<b>注意：</b> サルトは一貫した偽メールアドレスを保つため、変更しないでください。）';
+$string['pseudoemailsalt_desc'] = '<b>[オプション]</b><br/>偽受講生メールアドレス作成の複雑さを増すために、オプショナルサルトを使用することができます。<br />(<b>注意：</b> サルトは一貫した偽メールアドレスを保つため、変更しないでください。）';
 $string['pseudoemaildomain'] = '偽メールドメイン';
 $string['pseudoemaildomain_desc'] = '<b>[オプション]</b><br />偽メールアドレスのオプションドメイン。（空白に残すと、既定で @tiimoodle.com に設定されます）';
 $string['pseudoemailaddress'] = '偽メールアドレス';
@@ -328,8 +308,7 @@ $string['sprocessing'] = 'Turnitinからデータをロード中...';
 $string['szerorecords'] = '表示できる記録がありません。';
 $string['sinfo'] = '合計_項目の_ 開始と_終了を_表示する。';
 $string['unlinkedusers'] = 'リンクされていないユーザー';
-$string['modulename_help'] = 'Moodle 内のアクティビティーとTurnitinの課題をリンクする、Turnitin Moodle Direct 課題を作成します。一度リンクされると、アクティビティーは講師がTurnitin文書閲覧内の評価ツールを使って、受講生の作文を評価、およびフィード
-バックを提供することを可能にしてくれます。';
+$string['modulename_help'] = 'Moodle 内のアクティビティーとTurnitinの課題をリンクする、Turnitin Moodle Direct 課題を作成します。一度リンクされると、アクティビティーは講師がTurnitin文書閲覧内の評価ツールを使って、受講生の作文を評価、およびフィードバックを提供することを可能にしてくれます。';
 $string['transmatch'] = '翻訳一致機能';
 $string['transmatch_desc'] = '翻訳一致機能が課題設定画面で利用できる機能かどうかを決定します。<br /><i>（Turnitin アカウントで翻訳一致機能が作動されている場合のみにこのプションを作動してください）</i>';
 $string['turnitintooltwo:addinstance'] = 'Turnitin ツールアクティビティーを追加する';
@@ -446,23 +425,26 @@ $string['defaultupdated'] = 'Turnitin デフォルトが更新されました';
 $string['pp_createsubmissionerror'] = '提出物を作成する際に剽窃プラグインにエラーが発生しました';
 $string['pp_updatesubmissionerror'] = '提出物を更新する際に、剽窃プラグインにエラーが発生しました';
 $string['pp_submission_error'] = '提出物に問題があります：';
-$string['pp_configuredesc'] = 'このモジュールを turnitintooltwo モジュール内で設定する必要があります。このプラグインを設定するには<a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>こち
-ら</a> をクリックしてください。';
+$string['pp_configuredesc'] = 'このモジュールを turnitintooltwo モジュール内で設定する必要があります。このプラグインを設定するには<a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>こちら</a> をクリックしてください。';
 $string['coursestomigrate'] = 'Turnitinから移動できるクラスがあります';
 $string['migrationheader'] = 'Turnitinクラス移動';
 $string['gradingtemplate'] = '評価テンプレート';
 $string['allownonor'] = 'どのファイルタイプの提出物の提出を許可しますか？';
 $string['allownonor_help'] = 'この設定でどのファイルタイプでの提出を許可することができます。この設定を &#39;はい&#39; に設定すると、提出物のオリジナリティーがチェックされ、そのダウンロードが可能になり、またGradeMark フィードバックツールが利用できるようになります。';
 $string['submitnothing'] = '提出物が無いこの受講生に対する評価を作動する';
-$string['submitnothingwarning'] = '灰
-色のペンをクリックすることによって、ファイルを提出していない受講生に対し、課題のGradeMark フィードバックを与えることができる評価テンプレートをを作成することができます。評価テンプレートは提出先の役割を果たすため、再提出が許可されていな
-い課題に受講生が提出することを防ぐことができます。<br><br>提出物無しでも評価をしますか？';
+$string['submitnothingwarning'] = '灰色のペンをクリックすることによって、ファイルを提出していない受講生に対し、課題のGradeMark フィードバックを与えることができる評価テンプレートをを作成することができます。評価テンプレートは提出先の役割を果たすため、再提出が許可されていない課題に受講生が提出することを防ぐことができます。<br><br>提出物無しでも評価をしますか？';
 $string['draftsubmit'] = 'いつTurnitinにファイルを提出しますか？';
 $string['submitondraft'] = '最初にアップロードされた際にファイルを提出する';
 $string['submitonfinal'] = '受講生がマーキングに送信した際にファイルを提出する';
 $string['turnitindiagnostic'] = '診断モードをオンにする';
 $string['turnitindiagnostic_desc'] = '<b>[注意]</b><br />Turnitin APIを使用して診断モードをオンにし、問題を追跡する。';
 $string['autorefreshgrades'] = '成績／得点を自動的にリフレッシュする';
-$string['autorefreshgrades_help'] = '既定では、Turnitinに通信後、毎回Moodle統合プラグインはTurnitin内でなされた変更を自動的にほぞんします。このオプションを使用してこの機能をオフにすることができますが、両方のシステムの同調性を保持するには、リフレッシュをマニュアル操作で頻繁に行ってください。';
+$string['autorefreshgrades_help'] = '既定では、Turnitinに通信後、毎回Moodle統合プラグインはTurnitin内でなされた変更を自動的にほぞんします。このオプションを使用してこの機能をオフにすることができますが、両方のシステムの同調性を保持するには、リフレッシュをマニュアル操作で頻繁に行ってください。 ';
 $string['yesgrades'] = 'はい、自動的にオリジナリティースコアと評価をリフレッシュする';
 $string['nogrades'] = 'いいえ、オリジナリティースコアと評価をマニュアル操作でリフレッシュする';
+$string['submissionagreementerror'] = 'この提出物に対しての契約に合意してください。';
+$string['noxmlwriterlibrary'] = 'このプラグインを使用するには、PHP XMLWriter エクステンションがあなたのサーバーにインストールされていなければなりません。';
+$string['checkupgrade'] = '使用できるアップグレードを確認する';
+$string['checkingupgrade'] = '使用できるアップグレードを確認中';
+$string['usinglatest'] = 'あなたは最新のバージョンを使用しています！';
+$string['useturnitin_mod'] = '{a}に対してのTurnitinを作動する';

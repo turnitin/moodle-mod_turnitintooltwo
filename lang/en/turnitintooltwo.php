@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: en
 
 $string['addsubmission'] = 'Add Submission';
@@ -440,10 +440,11 @@ $string['turnitindiagnostic'] = 'Enable Diagnostic Mode';
 $string['turnitindiagnostic_desc'] = '<b>[Caution]</b><br />Enable Diagnostic mode only to track down problems with the Turnitin API.';
 $string['autorefreshgrades'] = 'Auto Refresh Grades / Scores';
 $string['autorefreshgrades_help'] = 'By default after each call to Turnitin the Moodle integration plug in will attempt to automatically pull down changes made while in within Turnitin. You can use this option to turn off this feature, however in order to maintain synchronisation between both systems you will need to frequently manually refresh grades and originality scores from within Moodle.';
-$string['yesgrades'] = 'Yes, automatically refresh originality scores and grades';
+$string['yesgrades'] = 'Yes, automatically refresh originality scores and grades';
 $string['nogrades'] = 'No, I will refresh originality scores and grades manually';
+$string['submissionagreementerror'] = 'You must accept the agreement for this submission';
 $string['noxmlwriterlibrary'] = 'To use this plugin you will need to have the PHP XMLWriter extension installed on your server.';
 $string['checkupgrade'] = 'Check for available upgrade';
 $string['checkingupgrade'] = 'Checking for available upgrade';
 $string['usinglatest'] = 'You are using the latest version!';
-$string['useturnitin_mod'] = 'Enable Turnitin for {$a}';
+$string['useturnitin_mod'] = 'Enable Turnitin for {a}';

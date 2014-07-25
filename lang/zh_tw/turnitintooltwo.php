@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: zh_tw
 
 $string['addsubmission'] = '添加提交物件 ';
@@ -119,9 +119,7 @@ $string['submissionupdateerror'] = '無法更新提交數據';
 $string['submissionuploadsuccess'] = '您的提交物件已成功上傳至 Turnitin。 ';
 $string['submitpaper'] = '提交文稿';
 $string['submitpapersto'] = '儲存學生文稿';
-$string['submitpapersto_help'] = '此設定提供指導教師旋轉是
-否將文稿儲存在 Turnitin 學生文稿儲存庫的能力。提交文稿至學生文稿儲存庫的好處是提交至作業的學生文稿將會更您目前和之前的課程內的提交物件做比較。若您選擇，“無儲存庫”，您
-的學生文稿將不會被儲存在 Turnitin 學生文稿儲存庫內。';
+$string['submitpapersto_help'] = '此設定提供指導教師旋轉是否將文稿儲存在 Turnitin 學生文稿儲存庫的能力。提交文稿至學生文稿儲存庫的好處是提交至作業的學生文稿將會更您目前和之前的課程內的提交物件做比較。若您選擇，“無儲存庫”，您的學生文稿將不會被儲存在 Turnitin 學生文稿儲存庫內。';
 $string['submitted'] = '更改';
 $string['submittoturnitin'] = '提交至 Turnitin';
 $string['textsubmission'] = '文字提交';
@@ -133,8 +131,7 @@ $string['turnitinaccountid_desc'] = '<b>[要求]</b><br />輸入您的 Turnitin 
 $string['turnitinanon'] = '匿名標示';
 $string['turnitinanon_help'] = '只要把此項目設定為“確定”，您就可以在您的 Turnitin 作業上使用匿名標示。 一旦在作業上開啟匿名標示， 就無法關閉該功能。 ';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>
-[要求]</b><br />輸入 Turnitin API URL<br /><i>(例如： https://api.turnitin.com)<br />(例如： https://submit.ac.uk)';
+$string['turnitinapiurl_desc'] = '<b>[要求]</b><br />輸入 Turnitin API URL<br /><i>(例如： https://api.turnitin.com)<br />(例如： https://submit.ac.uk)';
 $string['turnitindeleteconfirm'] = '刪除文稿將會使它們從提交清單和收件匣中移除，但不會完全地從\n Turnitin 數據庫移除。\n\n您確定您要刪除此提交物件嗎？一旦做此動作將無法還原。';
 $string['turnitindeletionerror'] = 'Turnitin 提交刪除失敗。電腦上的 Moodle 副本已被移除，但在 Turnitin 內的提交物件無法被刪除。';
 $string['turnitinenrolstudents'] = '為所有學生註冊';
@@ -191,9 +188,7 @@ $string['turnitintutors'] = 'Turnitin 輔導教師';
 $string['turnitintutorsadd'] = '添加 Turnitin 輔導教師 ';
 $string['turnitintutorsallenrolled'] = '所有的輔導教師已註冊在 Turnitin';
 $string['turnitintutors_desc'] = '以下選擇的輔導教師已註冊至此 Turnitin 課程為輔導教師。已註冊的輔導教師可以登錄至 Turnitin 網站以進入此課程。';
-$string['duplicatesfound'] = '找
-到同樣 Turnitin 作業的重複檔案。當一個或多個 Moodle Direct 作業藉由 Turnitin API 連至同一個 Turnitin 作業時就會發生重複。這往往會造成問題，其中最常見的是，提交至其中一個收件匣的物件會出現在另一個收件匣。欲處理這類問題，您應該刪除重複作業或重新設
-定有重複作業出現的課程。<br /><br />我們找到以下的重複:';
+$string['duplicatesfound'] = '找到同樣 Turnitin 作業的重複檔案。當一個或多個 Moodle Direct 作業藉由 Turnitin API 連至同一個 Turnitin 作業時就會發生重複。這往往會造成問題，其中最常見的是，提交至其中一個收件匣的物件會出現在另一個收件匣。欲處理這類問題，您應該刪除重複作業或重新設定有重複作業出現的課程。<br /><br />我們找到以下的重複:';
 $string['erater'] = '開啟 e-rater 文法檢查';
 $string['erater_handbook'] = 'ETS&copy 手冊';
 $string['erater_dictionary'] = 'e-rater 字典';
@@ -270,8 +265,7 @@ $string['emptycreatedfile'] = '您所嘗試提交的文檔為空白或訛誤';
 $string['studentdataprivacy'] = '學生數據隱私設定';
 $string['studentdataprivacy_desc'] = '以下設定可以調整以確保學生&#39 的個人數據不會藉由 API 傳送至 Turnitin。 ';
 $string['enablepseudo'] = '開啟學生隱私';
-$string['enablepseudo_desc'] = '若選擇此選項，學
-生電子郵件地址將被轉變為擬似 Turnitin IP 的判定。.<br /><i>(<b>注意:</b> 若任何 Moodle 用戶資料已經與 Turnitin 同步，此選項不能更改)</i>';
+$string['enablepseudo_desc'] = '若選擇此選項，學生電子郵件地址將被轉變為擬似 Turnitin IP 的判定。.<br /><i>(<b>注意:</b> 若任何 Moodle 用戶資料已經與 Turnitin 同步，此選項不能更改)</i>';
 $string['pseudofirstname'] = '學生的假名';
 $string['pseudofirstname_desc'] = '<b>[選擇性的]</b><br />學生名字在 Turnitin 文件檢視器內顯示';
 $string['pseudolastname'] = '學生的假姓';
@@ -416,8 +410,7 @@ $string['defaultupdated'] = 'Turnitin 預設值更新';
 $string['pp_createsubmissionerror'] = '剽竊 plugin 在建立提交物件時有誤';
 $string['pp_updatesubmissionerror'] = '剽竊 plugin 在更新提交物件時有誤';
 $string['pp_submission_error'] = '您的提交物件有誤';
-$string['pp_configuredesc'] = '您
-必須在turnitintooltwo單元內安裝此單元。請點選 <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> 以安裝此 plugin';
+$string['pp_configuredesc'] = '您必須在turnitintooltwo單元內安裝此單元。請點選 <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> 以安裝此 plugin';
 $string['coursestomigrate'] = '您在 Turnitiin 內有 {$a} 課程可以遷移';
 $string['migrationheader'] = 'Turnitin 課程遷移';
 $string['gradingtemplate'] = '評分模板';
@@ -431,6 +424,12 @@ $string['submitonfinal'] = '當學生傳寄至標示時提交檔案';
 $string['turnitindiagnostic'] = '開啟診斷模式';
 $string['turnitindiagnostic_desc'] = '<b>[警告]</b><br />開啟診斷模式來追踪 Turnitin API 的問題。 ';
 $string['autorefreshgrades'] = '自動更新成績/分數';
-$string['autorefreshgrades_help'] = '按預設設定，在每次啟用 Turnitin 後，Moodle 整合 plug in 將嘗試自動拉下在 Turnitin 内所做的變更。 您可以使用此選項以關閉該功能，但若要維持這兩個系統間的一致性，您將需要時常地從 Moodle 内手動更新成績和原創性分數。';
+$string['autorefreshgrades_help'] = '按預設設定，在每次啟用 Turnitin 後，Moodle 整合 plug in 將嘗試自動拉下在 Turnitin 内所做的變更。 您可以使用此選項以關閉該功能，但若要維持這兩個系統間的一致性，您將需要時常地從 Moodle 内手動更新成績和原創性分數。 ';
 $string['yesgrades'] = '確定，自動更新原創性分數與成績';
 $string['nogrades'] = '否，我將以手動方式更新原創性分數及成績';
+$string['submissionagreementerror'] = '您必須同意做此提交';
+$string['noxmlwriterlibrary'] = '欲使用此插入程式，您將需要在您的伺服器上安裝 PHP XMLWriter 延伸軟體。';
+$string['checkupgrade'] = '檢查可用的升級';
+$string['checkingupgrade'] = '檢查可用的升級中';
+$string['usinglatest'] = '您在使用最新的版本！';
+$string['useturnitin_mod'] = '爲 {a} 開啓 Turnitin';

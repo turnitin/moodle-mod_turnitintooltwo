@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: ko
 
 $string['addsubmission'] = '제출물 추가';
@@ -90,8 +90,7 @@ $string['proxyurl_desc'] = '<b>[옵션]</b><br />귀하의 서버가 인터넷�
 $string['proxyuser'] = 'proxy 사용자 이름';
 $string['proxyuser_desc'] = '<b>[옵션]</b><br />귀하의 proxy 입증이 요구될 시, 사용자명을 여기에 입력하십시오.';
 $string['reportgenspeed'] = '보고서 생성 속도';
-$string['reportgenspeed_help'] = '본 과제 환경에는 세가지 옵션이 있습니다: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;, 그리고 &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />&#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; 옵션은 학생이 제출한 후 즉시 독창성 보고서를 생성합니다. 본 옵션의 경우, 학생들은 과제에 대해 재제출할 수 없습니다.<br /><br />재
-제출을 허용하려면 &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; 옵션을 선택하십시오. 이는 학생들이 마감일까지 과제에 대해 계속적으로 보고서를 재제출 하도록 허용합니다. 재제출물에 대한 독창성 보고서 생성은 24시간까지. 걸릴 수 있습니다<br /><br />&#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; 옵션은 과제 마감일에만 독창성 보고서를 생성합니다. 본 환경은 독창성 보고서 생성 시, 과제에 대해 제출된 모든 보고서가 서로 비교검색되도록 합니다.';
+$string['reportgenspeed_help'] = '본 과제 환경에는 세가지 옵션이 있습니다: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;, 그리고 &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />&#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; 옵션은 학생이 제출한 후 즉시 독창성 보고서를 생성합니다. 본 옵션의 경우, 학생들은 과제에 대해 재제출할 수 없습니다.<br /><br />재제출을 허용하려면 &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; 옵션을 선택하십시오. 이는 학생들이 마감일까지 과제에 대해 계속적으로 보고서를 재제출 하도록 허용합니다. 재제출물에 대한 독창성 보고서 생성은 24시간까지. 걸릴 수 있습니다<br /><br />&#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; 옵션은 과제 마감일에만 독창성 보고서를 생성합니다. 본 환경은 독창성 보고서 생성 시, 과제에 대해 제출된 모든 보고서가 서로 비교검색되도록 합니다.';
 $string['resubmission'] = '재제출';
 $string['resubmissiongradewarn'] = '마감일이 지날 때까지 재제출이 허용됩니다. 보고서가 재제출 되는 경우 모든 채점사항이 삭제될 것입니다. 계속하시겠습니까?';
 $string['resubmissiongradewarnaware'] = '재제출을 할 경우, 모든 채점 사항이 삭제됨을 유의하십시오.';
@@ -141,8 +140,7 @@ $string['turnitinaccountid_desc'] = '<b>[필수]</b><br />Turnitin 주 계정 �
 $string['turnitinanon'] = '익명 채점';
 $string['turnitinanon_help'] = '이 항목을 &#34;예&#34; 로 지정함으로써 Turnitin 과제에 익명 채점을 사용히도록 지정할 수 있습니다. 일단 특정 과제에서 익명 채점이 활성화된 후에는 비활성화 될 수 없습니다.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>
-[필수]</b><br />Turnitin API URL을 입력하십시오<br /><i>(예: https://api.turnitin.com)<br />(예: https://submit.ac.uk)</i>';
+$string['turnitinapiurl_desc'] = '<b>[필수]</b><br />Turnitin API URL을 입력하십시오<br /><i>(예: https://api.turnitin.com)<br />(예: https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = '보고서를 삭제하는 것은 이를 제출 리스트와 수신함에서 제거하지만 이를 완전히 \nTurnitin 데이타베이스에서 제거하지는 않습니다.\n\n이 제출물을 삭제 하시겠습니까? 이는 되돌릴 수 없습니다. ';
 $string['turnitindeletionerror'] = 'Turnitin 제출물 삭제에 실패하였습니다.로컬 Moodle 복사본은 제거되었지만 Turnitin 상의 제출물을 삭제할 수 없었습니다.';
 $string['turnitinenrolstudents'] = '모든 학생 등록시키기';
@@ -167,8 +165,7 @@ $string['turnitintooltworesetdata1'] = 'Turnitin 과제 교체하기 <i>(과제 
 $string['turnitintooltworesetdata2'] = 'Turnitin 과제 그냥 놔두기';
 $string['turnitintooltworesetinfo'] = '이 코스의 Turnitin 과제를 위한 옵션을 아래에서 선택하십시오:';
 $string['turnitintooltwoupdateerror'] = 'turnitintooltwo 데이타를 업데이트할 수 없었음';
-$string['turnitintooltwoagreement_desc'] = '<b>
-[선택]</b><br />제출물에 대한 동의 확인 문장을 입력하십시오.<br /> (<b>주의:</b> 본 동의서가 공백일 경우, 제출 도중 학생에 의한 동의 확인이 요구되지 않을 것입니다)';
+$string['turnitintooltwoagreement_desc'] = '<b>[선택]</b><br />제출물에 대한 동의 확인 문장을 입력하십시오.<br /> (<b>주의:</b> 본 동의서가 공백일 경우, 제출 도중 학생에 의한 동의 확인이 요구되지 않을 것입니다)';
 $string['turnitintooltwodeleteerror'] = 'turnitintooltwo 데이타를 삭제할 수 없었음';
 $string['turnitintooltwogeterror'] = 'turnitintooltwo 데이타를 취득할 수 없었음';
 $string['turnitinuseanon'] = '익명 채점 사용하기';
@@ -191,8 +188,7 @@ $string['usergeterror'] = '사용자 데이타를 취득할 수 없었음';
 $string['userstounlink'] = '링크를 취소할 사용자';
 $string['userupdateerror'] = '사용자 데이타를 업데이트할 수 없었음';
 $string['viewreport'] = '보고서 보기';
-$string['wrongaccountid'] = '귀
-하의 Turnitin 클래스를 링크하는 데 오류가 생겼습니다. 귀하가 구성한 계정은 계정 {$a->current} 입니다. 이 계정은 {$a->backupid} 클래스에서 온 것입니다. 동일한 Turnitin 계정에서 온 클래스만 재활시킬 수 있습니다. ';
+$string['wrongaccountid'] = '귀하의 Turnitin 클래스를 링크하는 데 오류가 생겼습니다. 귀하가 구성한 계정은 계정 {$a->current} 입니다. 이 계정은 {$a->backupid} 클래스에서 온 것입니다. 동일한 Turnitin 계정에서 온 클래스만 재활시킬 수 있습니다. ';
 $string['copyassigndata'] = 'Turnitin 과제 데이타 복사하기';
 $string['replaceassigndata'] = 'Turnitin 과제 데이타 교체하기';
 $string['downloadexport'] = '추출';
@@ -203,8 +199,7 @@ $string['turnitintutors'] = 'Turnitin 개인교사';
 $string['turnitintutorsadd'] = 'Turnitin 개인교사 추가';
 $string['turnitintutorsallenrolled'] = '모든 개인교사가 Turnitin에 등록되었습니다';
 $string['turnitintutors_desc'] = '아래의 선택된 개인교사들은 본 Turnitin 클래스에 개인교사로 등록되어 있습니다. 등록된 개인교사들은 Turnitin 웹사이트에 로그인함으로써 클래스를 액세스할 수 있습니다. ';
-$string['duplicatesfound'] = '동
-일한 Turnitin 과제가 반복적으로 나타났습니다, Moodle Direct 과제가 Turnitin API를 통해 동일한Turnitin 과제에 연결되어 있을 때 반복적인 과제가 발생합니다. 이의 원인은 분명치 않으며 반복된 과제 중 한 가지 과제에 제출된 보고서가 다른 하나의 수신함에 나타날 것입니다. 이를 정정하려면 반복되는 과제를 삭제하거나 반복적인 과제가 있는 코스를 재설정하십시오.<br /><br />다음이 반복되었습니다:';
+$string['duplicatesfound'] = '동일한 Turnitin 과제가 반복적으로 나타났습니다, Moodle Direct 과제가 Turnitin API를 통해 동일한Turnitin 과제에 연결되어 있을 때 반복적인 과제가 발생합니다. 이의 원인은 분명치 않으며 반복된 과제 중 한 가지 과제에 제출된 보고서가 다른 하나의 수신함에 나타날 것입니다. 이를 정정하려면 반복되는 과제를 삭제하거나 반복적인 과제가 있는 코스를 재설정하십시오.<br /><br />다음이 반복되었습니다:';
 $string['erater'] = 'e-rater 문법 검토 기능 활성화';
 $string['eraternoun'] = 'E-rater';
 $string['erater_handbook'] = 'ETS&copy 핸드북';
@@ -290,8 +285,7 @@ $string['pseudolastname_desc'] = 'Turnitin의 문서보기 창에 나타날 학�
 $string['psuedolastnamegen'] = '(가족) 성 자동 작성하기';
 $string['psuedolastnamegen_desc'] = '가명 (가족) 성에 대해 동의하고, 이를 사용자 프로파일 필드에 설정한 경우, 본 필드는 자동적으로 고유한 식별력을 갖게 됩니다.';
 $string['pseudoemailsalt'] = '가 암호화 Salt';
-$string['pseudoemailsalt_desc'] = '<b>
-[옵션]</b><br />학생의 가이메일의 복합성을 높이기 위한 salt 옵션.<br />(<b>참고:</b>지속적인 가이메일을 유지하기 위해서는 이 salt를 변경할 수 없습니다)';
+$string['pseudoemailsalt_desc'] = '<b>[옵션]</b><br />학생의 가이메일의 복합성을 높이기 위한 salt 옵션.<br />(<b>참고:</b>지속적인 가이메일을 유지하기 위해서는 이 salt를 변경할 수 없습니다)';
 $string['pseudoemaildomain'] = '가 이메일 도메인';
 $string['pseudoemaildomain_desc'] = '<b>[옵션]</b><br />가 이메일 주소에 대한 옵션 도메인. (공백으로 남겨져 있는 경우 @tiimoodle.com 로 설정됨)';
 $string['pseudoemailaddress'] = '가 이메일 주소';
@@ -313,8 +307,7 @@ $string['sprocessing'] = '처리중...';
 $string['szerorecords'] = '기록이 없음';
 $string['sinfo'] = '_시작_ to _끝_ 의 _총계_ 사항 표시';
 $string['unlinkedusers'] = '링크되지 않은 사용자들';
-$string['modulename_help'] = 'Moodle
-에 있는 활동과 Turnitin에 있는 과제(들)을 링크하는 Turnitin Moodle 직접 과제를 생성함. 일단 링크되면, 본 활동은 강사들이 Turnitin의 문서보기창에 있는 평가 도구들을 사용하여 학생의 작문에 대한 피드백을 제공할 수 있도록 해줍니다.';
+$string['modulename_help'] = 'Moodle에 있는 활동과 Turnitin에 있는 과제(들)을 링크하는 Turnitin Moodle 직접 과제를 생성함. 일단 링크되면, 본 활동은 강사들이 Turnitin의 문서보기창에 있는 평가 도구들을 사용하여 학생의 작문에 대한 피드백을 제공할 수 있도록 해줍니다.';
 $string['transmatch'] = '번역된 일치';
 $string['transmatch_desc'] = '번역된 일치가 과제 설정 스크린상에서 설정환경으로 나타날 지를 결정함.<br /><i>(번역된 일치가 귀하의 Turnitin 계정에서 활성화된 경우에만 본 옵션을 활성화하십시오)</i>';
 $string['turnitintooltwo:addinstance'] = 'Turnitin 도구 활동 추가하기';
@@ -411,8 +404,7 @@ $string['nonenrolledstudent'] = '미등록 학생';
 $string['startdatenotyearago'] = '시작일은 1년 전 이전 일 수 없습니다';
 $string['searchcourses'] = '코스 검색';
 $string['errorsdesc'] = 'Turnitin에 다음의 파일들을 업로드하는 데 문제가 발생하였습니다.';
-$string['tiiexplain'] = 'Turnitin
-은 상업 제품이며 이 서비스를 사용하려면 사용료를 지불하여야 합니다. 자세한 사항은 <a href=&#34;http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a> 를 참조하십시오.';
+$string['tiiexplain'] = 'Turnitin은 상업 제품이며 이 서비스를 사용하려면 사용료를 지불하여야 합니다. 자세한 사항은 <a href=&#34;http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a> 를 참조하십시오.';
 $string['useturnitin'] = 'Turnitin 활성화 하기';
 $string['turnitinconfig'] = 'Turnitin 표절 Plugin 구성';
 $string['studentdisclosuredefault'] = '업로드된 모든 파일들은 Turnitin.com 표절 탐지 서비스에 제출될 것입니다';
@@ -448,4 +440,10 @@ $string['turnitindiagnostic_desc'] = '<b>[주의]</b><br />Turnitin API의 문�
 $string['autorefreshgrades'] = '성적/점수 자동 새로고침';
 $string['autorefreshgrades_help'] = '기본적으로 Turnitin으로의 콜 때마다 Moodle integration plug in이 Turnitin에 있을 때 만들어진 변경사항을 자동으로 끌어내리려고 할 것입니다. 이 옵션을 사용하여 이러한 기능을 비활성화 시킬 수 있습니다. 그러나 양 시스템 간의 동일화를 유지하려면 Moodle내에서 자주 수동적으로 성적과 독창성 점수를 새로 고침해야 합니다.';
 $string['yesgrades'] = '예, 독창성 점수와 성적을 자동으로 새로고침합니다';
-$string['nogrades'] = '아니오, 독창성 점수와 성적을 수동으로 새로고침하겠습니다.';
+$string['nogrades'] = '아니오, 독창성 점수와 성적을 수동으로 새로고침하겠습니다. ';
+$string['submissionagreementerror'] = '귀하는 이 제출물에 대한 합의에 동의하여야 합니다';
+$string['noxmlwriterlibrary'] = '이 플러그인을 사용하려면 PHP XMLWriter가 서버에 설치되어 있어야합니다.';
+$string['checkupgrade'] = '사용 가능한 업그레이드 확인하기';
+$string['checkingupgrade'] = '사용 가능한 업그레이드 확인 중';
+$string['usinglatest'] = '최신 버전을 사용하고 있습니다!';
+$string['useturnitin_mod'] = '{a}를 위해 Turnitin을 활성화하기';

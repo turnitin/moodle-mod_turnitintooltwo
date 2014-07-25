@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: es
 
 $string['addsubmission'] = 'Agregar Entrega';
@@ -355,7 +355,7 @@ $string['coursetitleerror'] = 'Tienes que proporcionar el título de una clase p
 $string['createmoodlecourses'] = 'Recrear cursos';
 $string['createmoodleassignments'] = '¿Recrear todos los ejercicios de las clases seleccionadas en Moodle?';
 $string['recreatemulticlasses'] = 'Las clases que has seleccionado se están recreando. Dependiendo de cuántas hayas seleccionado, el proceso puede tardar unos minutos';
-$string['recreatemulticlassescomplete'] = 'La recreación de la clase se ha completado. {$a->completed} de {$a->total} se han creado con éxito. ';
+$string['recreatemulticlassescomplete'] = 'La recreación de la clase se ha completado. {$a->completas} de {$a->total} se han creado con éxito. ';
 $string['createcourse'] = 'Crear nuevo curso de Moodle';
 $string['linkcourse'] = 'Enlazar el curso con un curso existente de Moodle';
 $string['selectcourse'] = 'Seleccionar curso de Moodle';
@@ -442,3 +442,9 @@ $string['autorefreshgrades'] = 'Actualizar las notas/puntuación automáticament
 $string['autorefreshgrades_help'] = 'Por defecto, el plugin de integración de Moodle buscará automáticamente sincronizar los cambios efectuados después de cada llamada a Turnitin. Usted puede usar esta opción para apagar esta función; sin embargo, para mantener la sincronización entre estos dos sistemas, usted debe refrescar manualmente y con frecuencia las notas y puntuación de originalidad dentro de Moodle.';
 $string['yesgrades'] = 'Sí, refrescar automáticamente la puntuación de Originalidad y las notas';
 $string['nogrades'] = 'No, prefiero refrescar la puntuación de originalidad y las notas manualmente.';
+$string['submissionagreementerror'] = 'Necesita aceptar el acuerdo para esta entrega';
+$string['noxmlwriterlibrary'] = 'Para utilizar este plugin necesitarás instalar la extensión PHP XMLWriter en tu servidor.';
+$string['checkupgrade'] = 'Comprobar si hay una actualización disponible';
+$string['checkingupgrade'] = 'Comprobando si hay una actualización disponible';
+$string['usinglatest'] = '¡Estás utilizando la última versión!';
+$string['useturnitin_mod'] = 'Habilitar Turnitin para {a}';

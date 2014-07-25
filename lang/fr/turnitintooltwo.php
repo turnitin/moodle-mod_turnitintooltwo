@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: fr
 
 $string['addsubmission'] = 'Ajouter un envoi';
@@ -440,5 +440,11 @@ $string['turnitindiagnostic'] = 'Activer le mode diagnostique';
 $string['turnitindiagnostic_desc'] = '<b>[Attention]</b><br />Activez le mode diagnostique seulement pour détecter des problèmes liés à l’API de Turnitin.';
 $string['autorefreshgrades'] = 'Actualiser les résultats /notes automatiquement';
 $string['autorefreshgrades_help'] = 'Après chaque appel à Turnitin l’intégration de Moodle va essayer de synchroniser automatiquement les changements crées dans Turnitin par défaut. Vous pouvez utiliser cette option pour arrêter ce processus. En revanche, pour garder la synchronisation entre les deux systèmes, il faut rafraîchir régulièrement et manuellement les résultats ainsi que les rapports de similitude à partir de Moodle.';
-$string['yesgrades'] = 'Oui, actualiser automatiquement les résultats des correspondances et les notes';
-$string['nogrades'] = 'Non, j&#39;actualiserai moi-même les résultats de similitude et les notes manuellement';
+$string['yesgrades'] = 'Oui, actualiser automatiquement les résultats des correspondances et les notes.';
+$string['nogrades'] = 'Non, j&#39;actualiserai moi-même les résultats de similitude et les notes manuellement ';
+$string['submissionagreementerror'] = 'Vous devez accepter cet accord pour soumettre ce document';
+$string['noxmlwriterlibrary'] = 'Pour utiliser le plugin vous devez avoir l&#39;extension PHP XMLWriter installée sur votre';
+$string['checkupgrade'] = 'Vérifier les actualisations disponibles';
+$string['checkingupgrade'] = 'Vérification des actualisations disponibles en cours';
+$string['usinglatest'] = 'Vous utilisez la dernière version!';
+$string['useturnitin_mod'] = 'Activer Turnitin pour {a}';

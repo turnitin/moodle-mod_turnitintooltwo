@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: nl
 
 $string['addsubmission'] = 'Inzending toevoegen';
@@ -441,3 +441,9 @@ $string['autorefreshgrades'] = 'Automatisch cijfers/scores verversen';
 $string['autorefreshgrades_help'] = 'Standaard zal na elke oproep tot Turnitin de Moodle integratie-plugin proberen automatisch wijzigingen die gemaakt zijn in Turnitin door te voeren. U kunt deze optie gebruiken om deze functie uit te schakelen, maar om de synchronisatie tussen beide systemen te behouden, moet u vaak handmatig cijfers en oorspronkelijkheidsscores vernieuwen vanuit Moodle.';
 $string['yesgrades'] = 'Ja, ververs oorspronkelijkheidsscores en cijfers automatisch';
 $string['nogrades'] = 'Nee, ik zal originaliteitsscores en cijfers handmatig verversen';
+$string['submissionagreementerror'] = 'U moet de overeenkomst accepteren voor deze inzending';
+$string['noxmlwriterlibrary'] = 'Om deze plugin te gebruiken moet u de PHP XMLWriter-extensie gebruiken die op uw server is geïnstalleerd.';
+$string['checkupgrade'] = 'Controleren op beschikbare upgrades';
+$string['checkingupgrade'] = 'Controleren op beschikbare upgrades';
+$string['usinglatest'] = 'U gebruikt de nieuwste versie!';
+$string['useturnitin_mod'] = 'Turnitin inschakelen voor {a}';

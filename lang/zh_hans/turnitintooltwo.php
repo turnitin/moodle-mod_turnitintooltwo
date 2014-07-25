@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: zh_hans
 
 $string['addsubmission'] = '添加提交物件';
@@ -119,9 +119,7 @@ $string['submissionupdateerror'] = '无法更新提交数据';
 $string['submissionuploadsuccess'] = '您的提交物件已成功上传至 Turnitin。';
 $string['submitpaper'] = '提交文稿';
 $string['submitpapersto'] = '储存学生文稿';
-$string['submitpapersto_help'] = '此设定提供指导教师旋
-转是否将文稿储存在 Turnitin 学生文稿储存库的能力。提交文稿至学生文稿储存库的好处是提交至作业的学生文稿将会更您目前和之前的课程内的提交物件做比较。若您选择，“无储存库”，您
-的学生文稿将不会被储存在 Turnitin 学生文稿储存库内。';
+$string['submitpapersto_help'] = '此设定提供指导教师旋转是否将文稿储存在 Turnitin 学生文稿储存库的能力。提交文稿至学生文稿储存库的好处是提交至作业的学生文稿将会更您目前和之前的课程内的提交物件做比较。若您选择，“无储存库”，您的学生文稿将不会被储存在 Turnitin 学生文稿储存库内。';
 $string['submitted'] = '更改';
 $string['submittoturnitin'] = '提交至 Turnitin';
 $string['textsubmission'] = '文字提交';
@@ -133,8 +131,7 @@ $string['turnitinaccountid_desc'] = '<b>[要求]</b><br />输入您的 Turnitin 
 $string['turnitinanon'] = '匿名标示';
 $string['turnitinanon_help'] = '只要把此项目设定为“确定”，您就可以在您的 Turnitin 作业上使用匿名标示。 一旦在作业上开启匿名标示， 就无法关闭该功能。 ';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>
-[要求]</b><br />输入 Turnitin API URL<br /><i>(例如： https://api.turnitin.com)<br />(例如： https://submit.ac.uk)';
+$string['turnitinapiurl_desc'] = '<b>[要求]</b><br />输入 Turnitin API URL<br /><i>(例如： https://api.turnitin.com)<br />(例如： https://submit.ac.uk)';
 $string['turnitindeleteconfirm'] = '删除文稿将会使它们从提交清单和收件匣中移除，但不会完全地从\n Turnitin 数据库移除。\n\n您确定您要刪除此提交物件吗？一旦做此动作将无法还原。 ';
 $string['turnitindeletionerror'] = 'Turnitin 提交刪除失败。电脑上的 Moodle 副本已被移除，但在 Turnitin 內的提交物件无法被刪除。 ';
 $string['turnitinenrolstudents'] = '为所有学生注册';
@@ -190,8 +187,7 @@ $string['turnitintutors'] = 'Turnitin 辅导教师';
 $string['turnitintutorsadd'] = '添加 Turnitin 辅导教师';
 $string['turnitintutorsallenrolled'] = '所有的辅导教师已注册在 Turnitin ';
 $string['turnitintutors_desc'] = '一下选择的辅导教师已注册至此 Turnitin 课程为辅导教师。已注册的辅导教师可以登录至 Turnitin 网站以进入此课程。';
-$string['duplicatesfound'] = 'Moodle Direct 作业藉由 Turnitin API 连至同一个 Turnitin 作业时就会发生重复。这往往会造成问题，其中最常见的是，提交至其中一个收件匣的物件会出现在另一个收件匣。欲处理这类问题，您应该删除重复作业或重新设
-定有重复作业出现的课程。<br /><br />我们找到以下的重复:';
+$string['duplicatesfound'] = 'Moodle Direct 作业藉由 Turnitin API 连至同一个 Turnitin 作业时就会发生重复。这往往会造成问题，其中最常见的是，提交至其中一个收件匣的物件会出现在另一个收件匣。欲处理这类问题，您应该删除重复作业或重新设定有重复作业出现的课程。<br /><br />我们找到以下的重复:';
 $string['erater'] = '开启 e-rater 文法检查';
 $string['erater_handbook'] = 'ETS&copy 手册';
 $string['erater_dictionary'] = 'e-rater 字典';
@@ -268,8 +264,7 @@ $string['emptycreatedfile'] = '您所尝试提交的文档为空白或讹误';
 $string['studentdataprivacy'] = '学生数据隐私设定';
 $string['studentdataprivacy_desc'] = '以下设定可以调整以确保学生&#39; 的个人数据不会藉由 API 传送至 Turnitin。 ';
 $string['enablepseudo'] = '开启学生隐私';
-$string['enablepseudo_desc'] = '若选择此选项，学生电子邮件地址将被转变为
-拟似 Turnitin IP 的判定。.<br /><i>(<b>注意:</b> 若任何 Moodle 用户资料已经与 Turnitin 同步，此选项不能更改)</i>';
+$string['enablepseudo_desc'] = '若选择此选项，学生电子邮件地址将被转变为拟似 Turnitin IP 的判定。.<br /><i>(<b>注意:</b> 若任何 Moodle 用户资料已经与 Turnitin 同步，此选项不能更改)</i>';
 $string['pseudofirstname'] = '学生的假名';
 $string['pseudofirstname_desc'] = '<b>[选择性的]</b><br />学生名字在 Turnitin 文件检视器内显示';
 $string['pseudolastname'] = '学生的假姓';
@@ -414,16 +409,14 @@ $string['defaultupdated'] = 'Turnitin 预设值更新';
 $string['pp_createsubmissionerror'] = '剽窃 plugin 在建立提交物件时有误';
 $string['pp_updatesubmissionerror'] = '剽窃 plugin 在更新提交物件时有误';
 $string['pp_submission_error'] = '您的提交物件有误';
-$string['pp_configuredesc'] = '您必须在turnitintooltwo单元内安装此单元。请
-点选 <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> 以安装此 plugin';
+$string['pp_configuredesc'] = '您必须在turnitintooltwo单元内安装此单元。请点选 <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>here</a> 以安装此 plugin';
 $string['coursestomigrate'] = '您在 Turnitiin 内有 {$a} 课程可以迁移';
 $string['migrationheader'] = 'Turnitin 课程迁移';
 $string['gradingtemplate'] = '评分模板';
 $string['allownonor'] = '允许任何档案类型的提交物件？';
 $string['allownonor_help'] = '此设定将允许提交任何档案类型。若此选项设为“是”，在可行的前提下，提交物件将会被检查其原创性，提交物件将可被下载而 GradeMark 反馈工具将可被使用。';
 $string['submitnothing'] = '在无提交物件的前提下为此学生开启评分功能';
-$string['submitnothingwarning'] = '为
-尚未提交档案的学生点选在灰笔将建立一个评分模板，允许您给学生 GradeMark 的作业反馈。评分模板取代提交物件并将阻止学生提交至不允许提交物件的作业。.<br><br> 您确定您要在无提交物件的前提下评分吗？ ';
+$string['submitnothingwarning'] = '为尚未提交档案的学生点选在灰笔将建立一个评分模板，允许您给学生 GradeMark 的作业反馈。评分模板取代提交物件并将阻止学生提交至不允许提交物件的作业。.<br><br> 您确定您要在无提交物件的前提下评分吗？ ';
 $string['draftsubmit'] = '档案将提交至 Turnitin 内的何处？';
 $string['submitondraft'] = '在上传时提交文档';
 $string['submitonfinal'] = '当学生傳寄至标示时提交档案';
@@ -431,5 +424,11 @@ $string['turnitindiagnostic'] = '开启诊断模式';
 $string['turnitindiagnostic_desc'] = '<b>[警告]</b><br />开启诊断模式来追踪 Turnitin API 的问题。';
 $string['autorefreshgrades'] = '自动更新成绩/分数';
 $string['autorefreshgrades_help'] = '按预设设定，在每次启用 Turnitin 后，Moodle 整合 plug in 将尝试自动拉下在 Turnitin 内所做的变更。 您可以使用此选项以关闭该功能，但若要维持这两个系统间的一致性，您将需要时常地从 Moodle 内手动更新成绩和原创性分数。';
-$string['yesgrades'] = '确定，自动更新新原创性分数与成绩';
+$string['yesgrades'] = '确定，自动更新原创性分数与成绩';
 $string['nogrades'] = '否，我将以手动方式更新原创性分数及成绩';
+$string['submissionagreementerror'] = '您必须同意做此提交';
+$string['noxmlwriterlibrary'] = '欲使用此插入程式，您将需要在您的伺服器上安装 PHP XMLWriter 延伸软件。';
+$string['checkupgrade'] = '检查可用的升级';
+$string['checkingupgrade'] = '检查可用的升级中';
+$string['usinglatest'] = '您在使用最新的版本！';
+$string['useturnitin_mod'] = '爲 {a} 开啓 Turnitin';

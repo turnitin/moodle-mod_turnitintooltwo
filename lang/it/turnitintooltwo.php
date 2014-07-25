@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: it
 
 $string['addsubmission'] = 'Aggiungi consegna';
@@ -89,7 +89,6 @@ $string['proxyurl_desc'] = '<b> [Facoltativo] </ b> <br /> Se il server utilizza
 $string['proxyuser'] = 'Nome utente proxy';
 $string['proxyuser_desc'] = '<b> [Facoltativo] </ b> <br /> Se il proxy richiede autenticazione inserisci il nome utente qui.';
 $string['reportgenspeed'] = 'Velocità della generazione del report';
-$string['reportgenspeed_help'] = 'Esistono tre opzioni per l&#39;impostazione di questo compito: ʺ&#39;.$string[&#39;genimmediately1&#39;].&#39;ʺ, ʺ&#39;.$string[&#39;genimmediately2&#39;].&#39;ʺ, e ʺ&#39;.$string[&#39;genduedate&#39;].&#39;ʺ.<br /><br/> L&#39;opzione ʺ&#39;.$string[&#39;genimmediately1&#39;].&#39;ʺ genera l&#39; Originality Report immediatamente quando uno studente consegna l&#39;elaborato. Con questa opzione selezionata gli studenti non saranno in grado di consegnare gli elaborati una seconda volta.<br /><br/>';
 $string['resubmission'] = 'Riconsegna dell&#39;elaborato';
 $string['resubmissiongradewarn'] = 'Le riconsegne per questo compito sono consentite fino alla data di scadenza. Eventuali annotazioni verranno cancellate se l&#39;elaborato verrà riconsegnato. Vuoi continuare?';
 $string['resubmit'] = 'Riconsegna';
@@ -426,3 +425,9 @@ $string['autorefreshgrades'] = 'Aggiornamento automatico dei voti / risultati';
 $string['autorefreshgrades_help'] = 'Per impostazione predefinita, dopo ogni chiamata a Turnitin, l&#39; integrazione di Moodle cercherà di eliminare automaticamente le modifiche apportate in Turnitin. Puoi utilizzare questa opzione per disattivare questa funzione, tuttavia, al fine di mantenere la sincronizzazione tra i due sistemi dovrai aggiornare manualmente i voti e i risultati di originalità da Moodle.';
 $string['yesgrades'] = 'Sì, aggiorna automaticamente I risultati e i voti dell&#39;Originality Report';
 $string['nogrades'] = 'No, aggiornerò I risultati sull&#39;originalità e valuterò manualmente';
+$string['submissionagreementerror'] = 'Devi accettare il contratto per la consegna di questo elaborato.';
+$string['noxmlwriterlibrary'] = 'Per usare questo plugin devi avere l&#39;estensione PHP XMLWriter installato sul tuo server.';
+$string['checkupgrade'] = 'Verifica aggiornamento disponibile';
+$string['checkingupgrade'] = 'Verifica aggiornamento disponibile in corso';
+$string['usinglatest'] = 'Stai utilizzando la versione più recente!';
+$string['useturnitin_mod'] = 'Abilita Turnitin per {a}';

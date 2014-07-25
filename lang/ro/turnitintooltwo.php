@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: ro
 
 $string['addsubmission'] = 'Adăugați depunerea';
@@ -442,3 +442,9 @@ $string['autorefreshgrades'] = 'Reîncărcarea automată a notelor/punctajelor';
 $string['autorefreshgrades_help'] = 'În mod prestabilit, după fiecare apel către Turnitin plugin-ul integrării Moodle va încerca să sincronizeze automat modificările realizate în timpul aflării în cadrul Turnitin. Puteți folosi această opțiune pentru a dezactiva această funcție; totuși pentru a menține sincronizarea dintre ambele sisteme va trebui să reîncărcați frecvent în mod manual notele și punctajele de originalitate din cadrul Moodle.';
 $string['yesgrades'] = 'Da, reîncărcați automat procentajele de originalitate și notele';
 $string['nogrades'] = 'Nu, voi reîncărca manual procentajele de originalitate și notele';
+$string['submissionagreementerror'] = 'Trebuie să acceptați acordul pentru această depunere';
+$string['noxmlwriterlibrary'] = 'Pentru a utiliza acest insert, va trebui să aveţi extensia PHP XMLWriter instalată pe serverul dvs.';
+$string['checkupgrade'] = 'Verificare disponibilitate upgrade';
+$string['checkingupgrade'] = 'Se verifică dacă există upgrade disponibil';
+$string['usinglatest'] = 'Utilizaţi cea mai recentă versiune!';
+$string['useturnitin_mod'] = 'Activare Turnitin pentru {a}';

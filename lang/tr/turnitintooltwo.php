@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: tr
 
 $string['addsubmission'] = 'Gönderi Ekle';
@@ -441,3 +441,9 @@ $string['autorefreshgrades'] = 'Notları/Puanları otomatik olarak Yenile';
 $string['autorefreshgrades_help'] = 'Her Turnitin bağlantısından sonra Moodle bütünleştirme eklentisi Turnitin&#39; de yapılan değişiklikleri otomatik olarak alacaktır. Bu özelliği kapatmak bu için seçeneği kullanabilirsiniz, bununla birlikte bu iki sistem arasındaki senkronizasyonu sağlamak için Moodle da orijinallik puanı ile notları manuel olarak sıklıkla yenilemeniz gerekir.';
 $string['yesgrades'] = 'Evet, orijinallik puanı ve notları otomatik olarak yenile';
 $string['nogrades'] = 'Hayır, Orijinallik puanını ve notları manuel olarak yenileyeceğim';
+$string['submissionagreementerror'] = 'Bu gönderim için sözleşmeyi kabul etmelisiniz';
+$string['noxmlwriterlibrary'] = 'Bu eklentiyi kullanabilmek için sunucunuzda PHP XMLWriter eklentisi kurulu olmalıdır.';
+$string['checkupgrade'] = 'Kullanılabilir yükseltmeleri denetle';
+$string['checkingupgrade'] = 'Kullanılabilir yükseltmeler denetleniyor';
+$string['usinglatest'] = 'Güncel sürümü kullanıyorsunuz!';
+$string['useturnitin_mod'] = 'Turnitin&#39;i {a} için etkinleştir';

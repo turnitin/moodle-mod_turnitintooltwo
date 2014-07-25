@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: sv
 
 $string['addsubmission'] = 'Lägg Till Inlämning';
@@ -442,3 +442,9 @@ $string['autorefreshgrades'] = 'Automatisk Uppdatering Av Betyg / Poäng';
 $string['autorefreshgrades_help'] = 'Som standard efter varje samtal till Turnitin så kommer integrationen för Moodle plugin att automatiskt försöka ta ner ändringar som görs medan du är i i Turnitin. Du kan använda detta alternativ för att avaktivera denna funktion, men för att upprätthålla synkronisering mellan de båda systemen måste du frekvent uppdatera betyg och originalitetspoäng manuellt inifrån Moodle.';
 $string['yesgrades'] = 'Ja, uppdatera originalitetspoäng och betyg automatiskt';
 $string['nogrades'] = 'Nej, jag vill uppdatera originalitetspoäng och betyg manuellt';
+$string['submissionagreementerror'] = 'Du måste acceptera avtalet för denna inlämning';
+$string['noxmlwriterlibrary'] = 'Du måste ha PHP XMLWriter-tillägget installerat på din server för att kunna använda detta insticksprogram.';
+$string['checkupgrade'] = 'Sök efter tillgängliga uppgraderingar';
+$string['checkingupgrade'] = 'Söker efter tillgängliga uppgraderingar';
+$string['usinglatest'] = 'Du har den senaste versionen!';
+$string['useturnitin_mod'] = 'Aktivera Turnitin för {a}';

@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: pt_br
 
 $string['addsubmission'] = 'Adicionar Envio';
@@ -177,7 +177,7 @@ $string['turnitinuserepository'] = 'Habilitar o Depósito Institucional';
 $string['turnitinuserepository_desc'] = 'Escolher se permite utilizar os Depósitos Institucionais nos Trabalhos Turnitin<br /><i>(Isso só está disponível para aqueles que têm o Depósito Institucional habilitado em suas contas)</i>';
 $string['turnitintutorsremove'] = 'Tem certeza de que deseja remover esse tutor do curso Turnitin?';
 $string['turnitinuserepository_help'] = 'Utilize essa configuração para habilitar a opção do Depósito Institucional na tela de configuração do trabalho.';
-$string['tutorstatus'] = '{$a->subimtted}/{$a->total} Envios dos Alunos, {$a->graded} Envios{$a->gplural} Avaliado';
+$string['tutorstatus'] = '{$a->submitted}/{$a->total} Envios dos Alunos, {$a->graded} Envios{$a->gplural} Avaliado';
 $string['type'] = 'Tipo de Envio';
 $string['types'] = 'Tipos de Envios';
 $string['types_help'] = '<p>Os envios podem ser feitos em dois formatos diferentes. Copiar e colar e Upload de arquivo.</p>';
@@ -440,3 +440,9 @@ $string['autorefreshgrades'] = 'Atualização Automática de Notas / Pontos';
 $string['autorefreshgrades_help'] = 'Por padrão, após cada chamada para o Turnitin, o plugin de integração Moodle tentará automaticamente anular as mudanças feitas enquanto dentro do Turnitin. Você pode usar essa opção para desligar esse recurso, no entanto, para manter a sincronização entre os dois sistemas você terá que frequentemente atualizar as notas e os pontos do originalidade manualmente de dentro do Moodle.';
 $string['yesgrades'] = 'Sim, atualize automaticamente os pontos e notas do originalidade';
 $string['nogrades'] = 'Não, Eu vou atualizar manualmente a pontuação do originalidade e notas';
+$string['submissionagreementerror'] = 'Você deve aceitar o acordo para esse envio.';
+$string['noxmlwriterlibrary'] = 'Para usar esse plugin, a extensão PHP XMLWriter precisa estar instalada no seu servidor.';
+$string['checkupgrade'] = 'Verificar atualizações disponíveis';
+$string['checkingupgrade'] = 'Verificando atualizações disponíveis';
+$string['usinglatest'] = 'Você está usando a versão mais recente!';
+$string['useturnitin_mod'] = 'Habilitar Turnitin para {a}';

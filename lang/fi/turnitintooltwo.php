@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: fi
 
 $string['addsubmission'] = 'Lisää Palautus';
@@ -439,3 +439,9 @@ $string['autorefreshgrades'] = 'Päivitä Automaattisesti Arvosanat/Pisteet';
 $string['autorefreshgrades_help'] = 'Jokaisen Turnitiniin tehdyn kutsun jälkeen tulee Moodle-plugin oletusarvoisesti yrittämään automaattisesti Turnitin-istunnon aikana tehtyjen muutosten lataamista. Voit käyttää tätä vaihtoehtoa toiminnon pois päältä kääntämiseen, mutta ylläpitääksesi molempien systeemien välisen synkronoinnin, sinun pitää jatkuvasti päivittää arvosanat ja alkuperäisyyspisteytykset manuaalisesti, Moodlesta käsin.';
 $string['yesgrades'] = 'Kyllä, päivitä automaattisesti alkuperäisyyspisteet ja arvosanat';
 $string['nogrades'] = 'Ei, päivitän alkuperäisyyspisteytyksen ja arvosanat manuaalisesti';
+$string['submissionagreementerror'] = 'Sinun täytyy hyväksyä sopimus, jotta voit palauttaa';
+$string['noxmlwriterlibrary'] = 'Käyttääksesi tätä plugin-laajennusta pitää PHP XMLWriter -modulin olla asennettuna palvelimellasi.';
+$string['checkupgrade'] = 'Tarkista päivityksen saatavuus';
+$string['checkingupgrade'] = 'Tarkistamassa päivityksen saatavuutta';
+$string['usinglatest'] = 'Käytät uusinta versiota!';
+$string['useturnitin_mod'] = 'Aktivoi Turnitin {a}a varten';

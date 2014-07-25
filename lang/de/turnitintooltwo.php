@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012401
-// Date: 2014-01-24
+// Version: 2014012405
+// Date: 2014-07-25
 // Language: de
 
 $string['addsubmission'] = 'Übermittlung hinzufügen';
@@ -442,4 +442,9 @@ $string['autorefreshgrades'] = 'Automatisches Aktualisieren der Noten / Punktwer
 $string['autorefreshgrades_help'] = 'Per Standardeinstellung synchronisiert das Plug-in der Moodle-Integration bei jeder Einwahl in Turnitin automatisch Änderungen, die während der Arbeit mit Turnitin vorgenommen wurden. Sie können diese Funktion mit dieser Option deaktivieren, um jedoch die Synchronisation beider Systeme aufrechtzuerhalten, müssen Sie Noten und Echtheitswerte in regelmäßigen Abständen manuell aus Moodle heraus aktualisieren.';
 $string['yesgrades'] = 'Ja, Werte für Echtheit und Noten automatisch aktualisieren.';
 $string['nogrades'] = 'Nein, ich aktualisiere Punktwerte für Echtheit und Noten manuell.';
-
+$string['submissionagreementerror'] = 'Sie müssen für diese Übermittlung der Vereinbarung zustimmen.';
+$string['noxmlwriterlibrary'] = 'Um dieses Plugin zu verwenden, müssen Sie auf Ihrem Server die PHP XMLWriter-Erweiterung installieren.';
+$string['checkupgrade'] = 'Auf verfügbare Upgrades prüfen';
+$string['checkingupgrade'] = 'Es wird auf verfügbare Upgrades geprüft';
+$string['usinglatest'] = 'Sie verwenden die neueste Version!';
+$string['useturnitin_mod'] = 'Turnitin für {a} aktivieren';
