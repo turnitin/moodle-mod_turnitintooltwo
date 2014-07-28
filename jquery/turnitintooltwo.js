@@ -573,7 +573,9 @@ jQuery(document).ready(function($) {
                 eval(result);
                 start = result.end;
 
-                table.fnAddData(result.aaData);
+                if (result.aaData.length > 0) {
+                    table.fnAddData(result.aaData);
+                }
 
                 if (result.end < result.total) {
                     getSubmissions(table, assignment_id, part_id, start, refresh_requested, result.total);
