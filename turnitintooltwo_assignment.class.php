@@ -286,7 +286,7 @@ class turnitintooltwo_assignment {
             $turnitincourse->ownerid = $USER->id;
             $turnitincourse->course_type = 'TT';
 
-            // Enrol user as instructor on course if they are not a site admin.
+            // Enrol user as instructor on course in moodle if they are not a site admin.
             if (!is_siteadmin()) {
                 // Get the role id for a teacher.
                 $roles1 = get_roles_with_capability('mod/turnitintooltwo:grade');
@@ -305,6 +305,10 @@ class turnitintooltwo_assignment {
                     }
                 }
                 $enrol->enrol_user($instance, $USER->id, $role->id);
+            } else {
+                // Enrol admin as an instructor incase they are not on the account.
+                $turnitintooltwouser = new turnitintooltwo_user($USER->id, "Instructor");
+                $turnitintooltwouser->join_user_to_class($tiicourseid);
             }
 
             if (!$insertid = $DB->insert_record('turnitintooltwo_courses', $turnitincourse)) {
