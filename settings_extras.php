@@ -59,7 +59,7 @@ switch ($cmd) {
 
         } else if ($cmd == 'savereport') {
 
-            $filename = 'tii_datadump_'.$onfig->accountid.'_'.gmdate('dmYhm', time()).'.txt';
+            $filename = 'tii_datadump_'.$config->accountid.'_'.gmdate('dmYhm', time()).'.txt';
             header('Content-type: text/plain');
             header('Content-Disposition: attachment; filename="'.$filename.'"');
 
