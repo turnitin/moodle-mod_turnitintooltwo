@@ -405,7 +405,7 @@ $string['nonenrolledstudent'] = 'Aquest estudiant no està inscrit';
 $string['startdatenotyearago'] = 'La data d\&#39;inici no pot ser superior a un any enrera';
 $string['searchcourses'] = 'Cerca cursos';
 $string['errorsdesc'] = 'S\&#39;ha produït un problema a l\&#39;hora de carregar els arxius següents a Turnitin.';
-$string['tiiexplain'] = 'Turnitin és un producte comercial y per poder utilitzar-lo has d&#39;haver pagat la subscripció al servei. Si vols obtenir més informació, consulta <a href=&#34;http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a>';
+$string['tiiexplain'] = 'Turnitin és un producte comercial y per poder utilitzar-lo has d&#39;haver pagat la subscripció al servei. Si vols obtenir més informació, consulta <a href=http://docs.moodle.org/en/Turnitin_administration>http://docs.moodle.org/en/Turnitin_administration</a>';
 $string['useturnitin'] = 'Habilita Turnitin';
 $string['turnitinconfig'] = 'Configuració del complement de plagi de Turnitin';
 $string['studentdisclosuredefault'] = 'Tots els arxius que es carreguin se sotmetran al servei de detecció de plagi de Turnitin.com';
@@ -425,7 +425,7 @@ $string['defaultupdated'] = 'S\&#39;han actualitzat els paràmetres predetermina
 $string['pp_createsubmissionerror'] = 'S\&#39;ha produït un error al complement de plagi quan s\&#39;estava creant un lliurament';
 $string['pp_updatesubmissionerror'] = 'S\&#39;ha produït un error al complement de plagi quan s\&#39;estava actualitzant un lliurament';
 $string['pp_submission_error'] = 'S\&#39;ha produït un error amb el teu lliurament:';
-$string['pp_configuredesc'] = 'Has de configurar aquest mòdul dins del mòdul turnitintooltwo. Fes clic <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>aquí</a> per configurar aquest complement';
+$string['pp_configuredesc'] = 'Has de configurar aquest mòdul dins del mòdul turnitintooltwo. Fes clic <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>aquí</a> per configurar aquest complement';
 $string['coursestomigrate'] = 'Classes disponibles per migrar de Turnitin: {$a}';
 $string['migrationheader'] = 'Migració de la classe de Turnitin';
 $string['gradingtemplate'] = 'Plantilla de qualificacions';

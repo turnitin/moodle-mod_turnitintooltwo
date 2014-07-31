@@ -405,7 +405,7 @@ $string['nonenrolledstudent'] = 'Học sinh không đăng ký';
 $string['startdatenotyearago'] = 'Ngày bắt đầu không thể cách đây hơn 1 năm';
 $string['searchcourses'] = 'Tìm Khoá học';
 $string['errorsdesc'] = 'Xảy ra sự cố khi cố gắng tải lên các tập tin sau đây vào Turnitin.';
-$string['tiiexplain'] = 'Turnitin là một sản phẩm thương mại và bạn phải trả phí thuê bao đăng ký để sử dụng dịch vụ này. Để biết thêm thông tin, vui lòng xem <a href=http://docs.moodle.org/en/Turnitin_administration&#34;>http://docs.moodle.org/en/Turnitin_administration</a>&#34;';
+$string['tiiexplain'] = 'Turnitin là một sản phẩm thương mại và bạn phải trả phí thuê bao đăng ký để sử dụng dịch vụ này. Để biết thêm thông tin, vui lòng xem <a href=http://docs.moodle.org/en/Turnitin_administration>http://docs.moodle.org/en/Turnitin_administration</a>&#34;';
 $string['useturnitin'] = 'Cho phép Turnitin';
 $string['turnitinconfig'] = 'Cấu hình phần Bổ trợ về Đạo văn của Turnitin';
 $string['studentdisclosuredefault'] = 'Tất cả các tập tin đã tải lên sẽ được nộp vào dịch vụ dò tìm đạo văn trên Turnitin.com';
@@ -425,7 +425,7 @@ $string['defaultupdated'] = 'Đã cập nhật các cài đặt mặc định Tu
 $string['pp_createsubmissionerror'] = 'Xảy ra lỗi trong phần bổ trợ về Đạo văn khi tạo một bài nộp';
 $string['pp_updatesubmissionerror'] = 'Xảy ra lỗi trong phần bổ trợ về Đạo văn khi cập nhật một bài nộp';
 $string['pp_submission_error'] = 'Xảy ra lỗi với bài nộp của bạn:';
-$string['pp_configuredesc'] = 'Bạn phải định hình mô-đun này bên trong mô-đun turnitintooltwo. Vui lòng nhấp vào <a href=&#34;{$a}/admin/settings.php?section=modsettingturnitintooltwo&#34;>đây</a> để cài đặt phần bổ trợ này';
+$string['pp_configuredesc'] = 'Bạn phải định hình mô-đun này bên trong mô-đun turnitintooltwo. Vui lòng nhấp vào <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>đây</a> để cài đặt phần bổ trợ này';
 $string['coursestomigrate'] = 'Bạn có {$a} lớp khả dụng để di dời từ Turnitin';
 $string['migrationheader'] = 'Di dời Lớp Turnitin';
 $string['gradingtemplate'] = 'Mẫu Chấm Điểm';
