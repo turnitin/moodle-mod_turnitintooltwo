@@ -88,13 +88,9 @@ class turnitintooltwo_comms {
             $api->setProxyBypass($CFG->proxybypass);
         }
 
-        if ($this->usemoodlecert) {
-            if (!is_readable("$CFG->dataroot/moodleorgca.crt")) {
-                turnitintooltwo_print_error( 'sslcertificateerror', 'turnitintooltwo' );
-            } else {
-                $certificate = realpath("$CFG->dataroot/moodleorgca.crt");
-                $api->setSSLCertificate($certificate);
-            }
+        if (is_readable("$CFG->dataroot/moodleorgca.crt")) {
+            $certificate = realpath("$CFG->dataroot/moodleorgca.crt");
+            $api->setSSLCertificate($certificate);
         }
 
         return $api;

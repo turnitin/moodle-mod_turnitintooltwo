@@ -448,6 +448,3 @@ $string['checkupgrade'] = 'Check for available upgrade';
 $string['checkingupgrade'] = 'Checking for available upgrade';
 $string['usinglatest'] = 'You are using the latest version!';
 $string['useturnitin_mod'] = 'Enable Turnitin for {$a}';
-$string['usemoodlecert'] = 'Use Moodle SSL certificate';
-$string['usemoodlecert_desc'] = 'This plugin requires your server operating system to have a valid SSL certificate to communicate with Turnitin.<br/>If your operating system does not possess a valid certificate then you will have to use Moodle&#39;s and follow the instructions in the solution at <a href=http://docs.moodle.org/27/en/SSL_certificate_for_moodle.org>http://docs.moodle.org/27/en/SSL_certificate_for_moodle.org</a>';
-$string['sslcertificateerror'] = 'You have selected to use Moodle&#39;s SSL certificate but the file is not readable, please follow the instructions in the solution at <a href=http://docs.moodle.org/27/en/SSL_certificate_for_moodle.org>http://docs.moodle.org/27/en/SSL_certificate_for_moodle.org</a>';
