@@ -26,6 +26,7 @@ class Soap extends SoapClient {
     private $proxyuser;
     private $proxypassword;
     private $proxybypass;
+    private $sslcertificate;
 
     protected $extensions;
 
@@ -128,6 +129,14 @@ class Soap extends SoapClient {
 
     public function setProxyBypass($proxybypass) {
         $this->proxybypass = $proxybypass;
+    }
+
+    public function getSSLCertificate() {
+        return $this->sslcertificate;
+    }
+
+    public function setSSLCertificate($sslcertificate) {
+        $this->sslcertificate = $sslcertificate;
     }
 
     public function genUuid() {
@@ -255,6 +264,9 @@ class Soap extends SoapClient {
         curl_setopt($ch, CURLOPT_HTTPHEADER,     $curl_headers );
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2 );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1 );
+        if (isset($this->sslcertificate) AND !empty($this->sslcertificate)) {
+            curl_setopt($ch, CURLOPT_CAINFO, $this->sslcertificate);
+        }
         if (isset($this->proxyhost) AND !empty($this->proxyhost)) {
             curl_setopt($ch, CURLOPT_PROXY, $this->proxyhost.':'.$this->proxyport);
         }

@@ -28,6 +28,7 @@ class TurnitinAPI {
     private $proxyuser;
     private $proxypassword;
     private $proxybypass;
+    private $sslcertificate;
 
     private $personwsdl;
     private $coursesectionwsdl;
@@ -170,8 +171,31 @@ class TurnitinAPI {
         return $this->proxybypass;
     }
 
+    /**
+     * Get the proxy bypass
+     *
+     * @return string $proxybypass
+     */
     public function setProxyBypass($proxybypass) {
         $this->proxybypass = $proxybypass;
+    }
+
+    /**
+     * Get the SSL certificate
+     *
+     * @return string
+     */
+    public function getSSLCertificate() {
+        return $this->sslcertificate;
+    }
+
+    /**
+     * Set the SSL certificate
+     *
+     * @param string $sslcertificate
+     */
+    public function setSSLCertificate($sslcertificate) {
+        $this->sslcertificate = $sslcertificate;
     }
 
     /**
@@ -261,6 +285,10 @@ class TurnitinAPI {
 
         if ((isset($this->proxybypass)) AND ($this->proxybypass != '')) {
             $service->setProxyBypass( $this->proxybypass );
+        }
+
+        if ((isset($this->sslcertificate)) AND ($this->sslcertificate != '')) {
+            $service->setSSLCertificate( $this->sslcertificate );
         }
         return $service;
     }

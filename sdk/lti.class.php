@@ -34,6 +34,7 @@ class LTI extends OAuthSimple {
     private $proxyuser;
     private $proxypassword;
     private $proxybypass;
+    private $sslcertificate;
 
     public function __construct( $apibaseurl ) {
         $this->setApiBaseUrl( $apibaseurl );
@@ -798,6 +799,18 @@ class LTI extends OAuthSimple {
 
     /**
      *
+     * @return string
+     */
+    public function getSSLCertificate() {
+        return $this->sslcertificate;
+    }
+
+    public function setSSLCertificate($sslcertificate) {
+        $this->sslcertificate = $sslcertificate;
+    }
+
+    /**
+     *
      * @param array $params
      */
     private function transportData( $params ) {
@@ -810,6 +823,9 @@ class LTI extends OAuthSimple {
         curl_setopt($ch, CURLOPT_POSTFIELDS,     $params);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2 );
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1 );
+        if (isset($this->sslcertificate) AND !empty($this->sslcertificate)) {
+            curl_setopt($ch, CURLOPT_CAINFO, $this->sslcertificate);
+        }
         if (isset($this->proxyhost) AND !empty($this->proxyhost)) {
             curl_setopt($ch, CURLOPT_PROXY, $this->proxyhost.':'.$this->proxyport);
         }
