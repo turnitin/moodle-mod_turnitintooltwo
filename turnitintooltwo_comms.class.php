@@ -29,8 +29,7 @@ class turnitintooltwo_comms {
     private $tiiintegrationid;
     private $diagnostic;
     private $langcode;
-    private $usemoodlecert;
-
+    
     public function __construct() {
         $config = turnitintooltwo_admin_config();
 
@@ -38,8 +37,7 @@ class turnitintooltwo_comms {
         $this->tiiaccountid = $config->accountid;
         $this->tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
         $this->tiisecretkey = $config->secretkey;
-        $this->usemoodlecert = $config->usemoodlecert;
-
+        
         if (empty($this->tiiaccountid) || empty($this->tiiapiurl) || empty($this->tiisecretkey)) {
             turnitintooltwo_print_error( 'configureerror', 'turnitintooltwo' );
         }
