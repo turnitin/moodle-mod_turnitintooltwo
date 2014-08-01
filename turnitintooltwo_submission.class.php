@@ -474,8 +474,10 @@ class turnitintooltwo_submission {
 
     /**
      * Update and save an individual submission from Turnitin
+     *
+     * @param type $save - save in db regradlesss of changes
      */
-    public function update_submission_from_tii() {
+    public function update_submission_from_tii($save = false) {
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -487,7 +489,7 @@ class turnitintooltwo_submission {
             $response = $turnitincall->readSubmission($submission);
             $readsubmission = $response->getSubmission();
 
-            $this->save_updated_submission_data($readsubmission);
+            $this->save_updated_submission_data($readsubmission, '', false, $save);
             $this->get_submission_details();
         } catch (Exception $e) {
             $turnitincomms->handle_exceptions($e, 'tiisubmissiongeterror', false);
@@ -500,9 +502,11 @@ class turnitintooltwo_submission {
      * @global type $DB
      * @param type $tiisubmissiondata
      * @param type $bulk
+     * @param type $save - save in db regradlesss of changes
      * @return type
      */
-    public function save_updated_submission_data($tiisubmissiondata, $turnitintooltwoassignment = "", $bulk = false) {
+    public function save_updated_submission_data($tiisubmissiondata, $turnitintooltwoassignment = "", 
+                                                    $bulk = false, $save = false) {
         global $DB, $CFG;
 
         if (empty($turnitintooltwoassignment)) {
@@ -540,8 +544,7 @@ class turnitintooltwo_submission {
         $sub->submission_attempts = ($tiisubmissiondata->getAuthorLastViewedFeedback() > 0) ?
                                     strtotime($tiisubmissiondata->getAuthorLastViewedFeedback()) : 0;
 
-        // Only update if certain items have changed to save on database load.
-        $save = false;
+        // If save not passed in then only update if certain items have changed to save on database load.
         if ($this->submission_grade != $sub->submission_grade || $this->submission_score != $sub->submission_score ||
             $this->submission_modified != $sub->submission_modified || $this->submission_attempts != $sub->submission_attempts ||
             $this->submission_unanon != $sub->submission_unanon) {

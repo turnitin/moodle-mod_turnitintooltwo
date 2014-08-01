@@ -279,7 +279,7 @@ switch ($action) {
                 $submission->lastname = $user->lastname;
                 $submission->userid = $user->id;
             } else {
-                $submission->update_submission_from_tii();
+                $submission->update_submission_from_tii(true);
             }
             $useroverallgrades = array();
 
