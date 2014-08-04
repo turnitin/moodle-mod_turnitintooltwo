@@ -929,7 +929,7 @@ function turnitintooltwo_getfiles($moduleid) {
                                     $file->coursetitle . ' (' . $file->courseshort . ') - ' . $file->activity);
         }
 
-        $filenametodisplay = (is_null($file->filename) ? $file->rawfilename : $file->filename);
+        $filenametodisplay = (empty($file->filename) ? $file->rawfilename : $file->filename);
         $submission = html_writer::link($CFG->wwwroot.'/pluginfile.php/'.$file->contextid.'/mod_turnitintooltwo/submissions/'.
                                     $file->itemid.'/'.$file->rawfilename,
                                         $OUTPUT->pix_icon('fileicon', 'open '.$filenametodisplay, 'mod_turnitintooltwo')." ".

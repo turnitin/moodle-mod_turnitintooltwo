@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
                             for ( var i=0 ; i<nTrs.length ; i++ )
                             {
                                 var iDisplayIndex = oSettings._iDisplayStart + i;
-                                var sGroup = oSettings.aoData[ oSettings.aiDisplay[iDisplayIndex] ]._aData[0];
+                                var sGroup = oSettings.aoData[ oSettings.aiDisplay[i] ]._aData[0];
                                 if ( sGroup != sLastGroup )
                                 {
                                     var nGroup = document.createElement( 'tr' );
