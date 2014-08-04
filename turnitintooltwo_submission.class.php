@@ -265,7 +265,7 @@ class turnitintooltwo_submission {
      * @return type
      */
     public function delete_submission() {
-        global $DB;
+        global $CFG, $DB;
         $notice = array();
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -277,6 +277,34 @@ class turnitintooltwo_submission {
             $notice["message"] = get_string('submissiondeleteerror', 'turnitintooltwo');
             return $notice;
         }
+
+        // Update grade in Gradecenter.
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+                                                        $turnitintooltwoassignment->turnitintooltwo->course);
+        $grades = new stdClass();
+
+        // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
+        if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
+                                                $turnitintooltwoassignment->turnitintooltwo->id,
+                                                    'userid' => $this->userid, 'submission_unanon' => 1))) {
+            $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
+            if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                // Using a scale.
+                $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+            } else {
+                $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+            }
+
+        } else {
+            $grades->rawgrade = null;
+        }
+        $grades->userid = $this->userid;
+        $params['idnumber'] = $cm->idnumber;
+
+        @include_once($CFG->dirroot."/lib/gradelib.php");
+        grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
+                        'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
 
         // If we have a Turnitin Id then delete submission.
         if (!empty($this->submission_objectid)) {
