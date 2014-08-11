@@ -54,7 +54,11 @@ switch ($action) {
                 case "dtdue":
                 case "dtpost":
                     $fieldvalue = required_param('value', PARAM_RAW);
-                    $fieldvalue = strtotime($fieldvalue);
+                    //$fieldvalue = strtotime($fieldvalue);
+                    $fdtarray = explode(" ", $fieldvalue);
+                    $fdarray = explode("-", $fdtarray[0]);
+                    $ftarray = explode(":", $fdtarray[1]);
+                    $fieldvalue = gmmktime($ftarray[0], $ftarray[1], 00, $fdarray[1], $fdarray[2], $fdarray[0]);
                     break;
             }
 
