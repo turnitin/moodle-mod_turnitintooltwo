@@ -821,8 +821,11 @@ class turnitintooltwo_view {
         // Show summary box.
         if (!empty($turnitintooltwoassignment->turnitintooltwo->intro)) {
             $cells = array();
+
+            $intro_text = format_module_intro('turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo, $cm->id);
+
             $intro = html_writer::tag('div', get_string("turnitintooltwointro", "turnitintooltwo").": ".
-                        $turnitintooltwoassignment->turnitintooltwo->intro, array("class" => "introduction"));
+                        $intro_text, array("class" => "introduction"));
 
             $cells[0] = new html_table_cell($intro);
             $cells[0]->attributes['class'] = 'introduction_cell';
