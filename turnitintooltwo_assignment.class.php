@@ -983,7 +983,7 @@ class turnitintooltwo_assignment {
      * @return array containing a status and an error message if applicable
      */
     public function edit_part_field($partid, $fieldname, $fieldvalue) {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
         $return = array();
         $return["success"] = true;
         $partdetails = $this->get_part_details($partid);
@@ -1049,7 +1049,9 @@ class turnitintooltwo_assignment {
                         $setmethod = "setFeedbackReleaseDate";
                         break;
                 }
-                $fieldvalue = userdate($fieldvalue, '%s');
+                if ($CFG->ostype != 'WINDOWS') {
+                    $fieldvalue = userdate($fieldvalue, '%s');
+                }
                 $assignment->$setmethod(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
                 break;
         }

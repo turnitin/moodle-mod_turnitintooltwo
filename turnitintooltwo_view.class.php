@@ -687,7 +687,9 @@ class turnitintooltwo_view {
         $cells[0] = new html_table_cell($links.$turnitintooltwoassignment->turnitintooltwo->name." (".$textfield.") ");
 
         // Allow start date field to be editable if a tutor is logged in.
-        $datefield = userdate($partdetails[$partid]->dtstart, '%d %h %Y - %H:%M');
+        $datefield = ($CFG->ostype == 'WINDOWS') ? 
+                        userdate($partdetails[$partid]->dtstart, '%d %b %Y - %H:%M') : 
+                        userdate($partdetails[$partid]->dtstart, '%d %h %Y - %H:%M');
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
                                             array('class' => 'editable_date editable_date_'.$partid,
@@ -700,7 +702,9 @@ class turnitintooltwo_view {
         $cells[1]->attributes['class'] = 'data';
 
         // Allow due date field to be editable if a tutor is logged in.
-        $datefield = userdate($partdetails[$partid]->dtdue, '%d %h %Y - %H:%M');
+        $datefield = ($CFG->ostype == 'WINDOWS') ? 
+                        userdate($partdetails[$partid]->dtdue, '%d %b %Y - %H:%M') : 
+                        userdate($partdetails[$partid]->dtdue, '%d %h %Y - %H:%M');
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
                                             array('class' => 'editable_date editable_date_'.$partid,
@@ -713,7 +717,9 @@ class turnitintooltwo_view {
         $cells[2]->attributes['class'] = 'data';
 
         // Allow post date field to be editable if a tutor is logged in.
-        $datefield = userdate($partdetails[$partid]->dtpost, '%d %h %Y - %H:%M');
+        $datefield = ($CFG->ostype == 'WINDOWS') ? 
+                        userdate($partdetails[$partid]->dtpost, '%d %b %Y - %H:%M') : 
+                        userdate($partdetails[$partid]->dtpost, '%d %h %Y - %H:%M');
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
                                             array('class' => 'editable_date editable_date_'.$partid,
