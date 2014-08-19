@@ -29,6 +29,11 @@ jQuery(document).ready(function($) {
                 if (data.success == false) {
                     $('div#turnitin_submit_error').css('display', 'block');
                     $('div#turnitin_submit_error').html(data.message);
+                } else {
+                    if (typeof data.message !== "undefined") {
+                        $('div#turnitin_submit_success').css('display', 'block');
+                        $('div#turnitin_submit_success').html(data.message);
+                    }
                 }
             }
         });
