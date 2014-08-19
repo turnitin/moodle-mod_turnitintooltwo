@@ -5,7 +5,7 @@
 
 jQuery(document).ready(function($) {
     $(document).on('mouseover', '.tii_links_container .tii_tooltip', function() {
-        $(this).tooltipster();
+        $(this).tooltipster({ multiple: true });
         return false;
     });
 
