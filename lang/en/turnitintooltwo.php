@@ -455,3 +455,4 @@ $string['pastfiveattempts'] = 'This file will not be submitted to Turnitin as it
 $string['notacceptedeula'] = 'This file has not been submitted to Turnitin because the user has not accepted the Turnitin End User Licence Agreement.';
 $string['ppsubmissionerrorseelogs'] = 'This file has not been submitted to Turnitin, please consult your API logs for further details';
 $string['ppsubmissionerrorstudent'] = 'This file has not been submitted to Turnitin, please consult your tutor for further details';
+$string['turnitinppula'] = 'IMPORTANT: You must accept the Turnitin End User Licence Agreement. Please click this link to accept.';

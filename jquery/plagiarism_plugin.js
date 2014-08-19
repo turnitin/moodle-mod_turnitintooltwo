@@ -9,6 +9,10 @@ jQuery(document).ready(function($) {
         return false;
     });
 
+    if ($('.editsubmissionform').length > 0) {
+        $('.editsubmissionform').hide();
+    }
+
     $(document).on('click', '.origreport_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
 
