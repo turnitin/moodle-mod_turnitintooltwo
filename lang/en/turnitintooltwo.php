@@ -453,3 +453,5 @@ $string['errorcode2'] = 'This file will not be submitted to Turnitin as it excee
 $string['notorcapable'] = 'It is not possible to return an Originality Report for this file.';
 $string['pastfiveattempts'] = 'This file will not be submitted to Turnitin as it has exceeded the maximum 5 permitted attempts.';
 $string['notacceptedeula'] = 'This file has not been submitted to Turnitin because the user has not accepted the Turnitin End User Licence Agreement.';
+$string['ppsubmissionerrorseelogs'] = 'This file has not been submitted to Turnitin, please consult your API logs for further details';
+$string['ppsubmissionerrorstudent'] = 'This file has not been submitted to Turnitin, please consult your tutor for further details';
