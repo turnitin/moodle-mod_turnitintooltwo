@@ -10,13 +10,13 @@
     padding-right: 8px;
 }
 
-.tii_links_container .launch_form, .tii_links_container .useragreement_form, 
+.tii_links_container .launch_form, .tii_links_container .useragreement_form, .tii_links_container #turnitin_submit_error,
 .tii_links_container .turnitin_eula_link, .tii_links_container #useragreement_form form, 
 .tii_links_container .cmid, .plagiarism_submission, .plagiarism_submission, .pp_turnitin_cmid, .tii_useragreement_form {
     display:none;
 }
 
-.tii_links_container .origreport_open, .tii_links_container .grade_icon, 
+.tii_links_container .origreport_open, .tii_links_container .grade_icon, .tii_links_container .tii_error_icon,
 .tii_links_container .row_rubric_view, .tii_links_container .row_peermark_reviews {
     float: left;
 }
@@ -155,4 +155,13 @@
 
 .tii_links_container .forum_eula_launch_noscript, .tii_links_container .forum_eula_launch span {
     color: #FF0000;
+}
+
+.tii_links_container #turnitin_submit_error {
+    width: auto;
+    margin-top: 12px;
+}
+
+.tii_links_container .tii_error_icon {
+    cursor: pointer;
 }
