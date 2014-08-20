@@ -9,10 +9,6 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    if ($('.editsubmissionform').length > 0) {
-        $('.editsubmissionform').hide();
-    }
-
     $(document).on('click', '.origreport_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
 
@@ -69,6 +65,12 @@ jQuery(document).ready(function($) {
 
     // Launch the Turnitin EULA
     if ($(".pp_turnitin_ula").length > 0) {
+        if ($('.editsubmissionform').length > 0) {
+            $('.editsubmissionform').hide();
+        }
+        if ($('.pp_turnitin_ula').siblings('.mform').length > 0) {
+            $('.pp_turnitin_ula').siblings('.mform').hide();
+        }
         $(window).on("message", function(ev) {
             var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
             window.location.reload();
