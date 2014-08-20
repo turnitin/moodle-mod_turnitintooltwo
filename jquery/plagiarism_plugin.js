@@ -69,8 +69,9 @@ jQuery(document).ready(function($) {
 
     // Launch the Turnitin EULA
     if ($(".pp_turnitin_ula").length > 0) {
-        $(document).on('click', '.pp_turnitin_ula', function() {
-            launchEULA('#useragreement_form form');
+        $(window).on("message", function(ev) {
+            var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
+            window.location.reload();
         });
     }
 
@@ -83,55 +84,38 @@ jQuery(document).ready(function($) {
         $('.forum_eula_launch_noscript').remove();
 
         $(".forum_eula_launch span").on('click', function(e) {
-            launchEULA('.useragreement_form');
-        });
-    }
-
-    // Submit EULA from extras page.
-    if ($(".eula_launch_form").length > 0) {
-        //openEULA('#useragreement_form form');
-        $('.eula_launch_form form').submit();
-    }
-
-    function launchEULA(identifier) {
-        eulaWindow = window.open(M.cfg.wwwroot+'/plagiarism/turnitin/extras.php?cmd=useragreement&viewcontext=box&cmid='+$('span.cmid').html(), 'eula');
-        $(eulaWindow).on("message", function(ev) {
-            eulaWindow.close();
-            window.location.reload();
-        });
-        eulaWindow.addEventListener("beforeunload", function (e) {
-            window.location.href = window.location.href;
+            openEULA('.useragreement_form');
         });
     }
 
     function openEULA(identifier) {
-        // $.ajax({
-        //     type: "POST",
-        //     url: M.cfg.wwwroot+"/plagiarism/turnitin/ajax.php",
-        //     dataType: "json",
-        //     data: {action: 'useragreement', cmid: $('span.cmid').html()},
-        //     success: function(data) {
-        //         $(identifier).html('');
-        //         $.each(data, function(key, val) {
-        //             $(identifier).append('<input name="'+key+'" value="'+val+'" type="hidden" />');
-        //         });
-        //         $(identifier).append('<input type="submit" value="Submit" />');
+        $.ajax({
+            type: "POST",
+            url: M.cfg.wwwroot+"/plagiarism/turnitin/ajax.php",
+            dataType: "json",
+            data: {action: 'useragreement', cmid: $('span.cmid').html()},
+            success: function(data) {
+                $(identifier).html('');
+                $.each(data, function(key, val) {
+                    $(identifier).append('<input name="'+key+'" value="'+val+'" type="hidden" />');
+                });
+                $(identifier).append('<input type="submit" value="Submit" />');
 
-        //         // $(identifier).on("submit", function(event) {
-        //         //     eulaWindow = window.open('', 'eula');
-        //         //     eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
-        //         //     $(eulaWindow).on("message", function(ev) {
-        //         //         eulaWindow.close();
-        //         //         window.location.reload();
-        //         //     });
-        //         //     eulaWindow.addEventListener("beforeunload", function (e) {
-        //         //         window.location.href = window.location.href;
-        //         //     });
-        //         // });
+                $(identifier).on("submit", function(event) {
+                    eulaWindow = window.open('', 'eula');
+                    eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
+                    $(eulaWindow).on("message", function(ev) {
+                        eulaWindow.close();
+                        window.location.reload();
+                    });
+                    eulaWindow.addEventListener("beforeunload", function (e) {
+                        window.location.href = window.location.href;
+                    });
+                });
 
-        //         $(identifier).submit();
-        //     }
-        // });
+                $(identifier).submit();
+            }
+        });
     }
 
     function getLoadingGif() {

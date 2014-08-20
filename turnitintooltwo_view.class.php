@@ -1376,7 +1376,7 @@ class turnitintooltwo_view {
      * @return output form
      */
     public static function output_dv_launch_form($type, $submissionid, $userid, $userrole,
-                                                $buttonstring = "Submit", $ltireturn = false, $context = 'TT') {
+                                                $buttonstring = "Submit", $ltireturn = false) {
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -1393,9 +1393,6 @@ class turnitintooltwo_view {
         switch ($type) {
             case "useragreement":
                 $ltifunction = "outputUserAgreementForm";
-                if ( $context == 'PP' ) {
-                    $lti->setFormTarget("");
-                }
                 break;
 
             case "downloadoriginal":
