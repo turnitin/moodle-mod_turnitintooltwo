@@ -159,7 +159,7 @@ switch ($cmd) {
 
         $turnitincourse = $DB->get_records_sql("SELECT tc.turnitin_cid ".
                                                 "FROM {turnitintooltwo_courses} tc ".
-                                                "RIGHT JOIN {course} c ON c.course.id = tc.courseid  ".
+                                                "RIGHT JOIN {course} c ON c.id = tc.courseid ".
                                                 "WHERE tc.turnitin_cid = ? ", array($tiicourseid));
 
         if (empty($turnitincourse)) {
