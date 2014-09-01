@@ -1206,30 +1206,31 @@ function turnitintooltwo_show_browser_new_course_form() {
 function turnitintooltwo_show_browser_link_course_form() {
     global $DB, $OUTPUT;
 
+    $output = "";
     $courseids = $DB->get_records("turnitintooltwo_courses", array('course_type' => 'TT'), '', 'courseid');
-    list($notinsql, $notinparams) = $DB->get_in_or_equal(array_keys($courseids), SQL_PARAMS_QM, 'param', false);
-    $unlinkedcoursesquery = $DB->get_records_select('course', "category != 0 AND id ".$notinsql,
+    if (!empty($courseids)) {
+        list($notinsql, $notinparams) = $DB->get_in_or_equal(array_keys($courseids), SQL_PARAMS_QM, 'param', false);
+        $unlinkedcoursesquery = $DB->get_records_select('course', "category != 0 AND id ".$notinsql,
                                         $notinparams, 'shortname', 'id, shortname AS name');
 
-    if (!empty($unlinkedcoursesquery)) {
-        $unlinkedcourses = array();
-        foreach ($unlinkedcoursesquery as $course) {
-            $unlinkedcourses[$course->id] = $course->name;
+        if (!empty($unlinkedcoursesquery)) {
+            $unlinkedcourses = array();
+            foreach ($unlinkedcoursesquery as $course) {
+                $unlinkedcourses[$course->id] = $course->name;
+            }
+
+            $elements = array();
+            $elements[] = array('header', 'update_course_fieldset', get_string('linkcourse', 'turnitintooltwo'));
+            $elements[] = array('select', 'coursetolink', get_string('selectcourse', 'turnitintooltwo'), '', $unlinkedcourses);
+            $elements[] = array('button', 'update_course', get_string('linkcourse', 'turnitintooltwo'));
+            $customdata["elements"] = $elements;
+            $customdata["hide_submit"] = true;
+            $customdata["disable_form_change_checker"] = true;
+
+            $updatecourseform = new turnitintooltwo_form('', $customdata);
+            $output = $OUTPUT->box(get_string('or', 'turnitintooltwo'), '', 'or_container');
+            $output .= $updatecourseform->display();
         }
-
-        $elements = array();
-        $elements[] = array('header', 'update_course_fieldset', get_string('linkcourse', 'turnitintooltwo'));
-        $elements[] = array('select', 'coursetolink', get_string('selectcourse', 'turnitintooltwo'), '', $unlinkedcourses);
-        $elements[] = array('button', 'update_course', get_string('linkcourse', 'turnitintooltwo'));
-        $customdata["elements"] = $elements;
-        $customdata["hide_submit"] = true;
-        $customdata["disable_form_change_checker"] = true;
-
-        $updatecourseform = new turnitintooltwo_form('', $customdata);
-        $output = $OUTPUT->box(get_string('or', 'turnitintooltwo'), '', 'or_container');
-        $output .= $updatecourseform->display();
-    } else {
-        $output = "";
     }
 
     return $output;
