@@ -615,8 +615,14 @@ function turnitintooltwo_get_assignments_from_tii($courseid, $returnformat = "js
 
         $currentassignments['TT'] = $DB->get_records_select("turnitintooltwo_parts",
                                                                 " tiiassignid ".$insql, $inparams, '', 'tiiassignid');
-        $currentassignments['PP'] = $DB->get_records_select("plagiarism_turnitin_config", " name = 'turnitin_assignid' ".
+
+        $dbman = $DB->get_manager();
+        if ($dbman->table_exists('plagiarism_turnitin_config')) {
+            $currentassignments['PP'] = $DB->get_records_select("plagiarism_turnitin_config", " name = 'turnitin_assignid' ".
                                                                 " AND value ".$insql, $inparams, '', 'value');
+        } else {
+            $currentassignments['PP'] = array();
+        }
     }
 
     try {
