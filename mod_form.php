@@ -395,34 +395,39 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->setDefault('transmatch', $config->default_transmatch);
         }
 
-        $mform->addElement('header', 'advanced', get_string('turnitingmoptions', 'turnitintooltwo'));
-
         // Populate Rubric options.
-        $rubricoptions = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
-        if (!empty($this->turnitintooltwo->rubric)) {
-            $rubricoptions[$this->turnitintooltwo->rubric] = (isset($rubricoptions[$this->turnitintooltwo->rubric])) ?
-                                                                $rubricoptions[$this->turnitintooltwo->rubric] :
-                                                                get_string('otherrubric', 'turnitintooltwo');
+        if (!empty($config->usegrademark)) {
+            $mform->addElement('header', 'advanced', get_string('turnitingmoptions', 'turnitintooltwo'));
+
+            $rubricoptions = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
+            if (!empty($this->turnitintooltwo->rubric)) {
+                $rubricoptions[$this->turnitintooltwo->rubric] = (isset($rubricoptions[$this->turnitintooltwo->rubric])) ?
+                                                                    $rubricoptions[$this->turnitintooltwo->rubric] :
+                                                                    get_string('otherrubric', 'turnitintooltwo');
+            }
+
+            $rubricline = array();
+            $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);
+            $rubricline[] = $mform->createElement('static', 'rubric_link', '',
+                                                    html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
+                                                                    'cmd=rubricmanager&view_context=box',
+                                                                        get_string('launchrubricmanager', 'turnitintooltwo'),
+                                                                array('class' => 'rubric_manager_launch',
+                                                                    'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
+                                                    html_writer::tag('span', '',
+                                                                    array('class' => 'launch_form', 'id' => 'rubric_manager_form')));
+            $mform->setDefault('rubric', '');
+            $mform->addGroup($rubricline, 'rubricline', get_string('attachrubric', 'turnitintooltwo'), array(' '), false);
+            $mform->addElement('hidden', 'rubric_warning_seen', '');
+            $mform->setType('rubric_warning_seen', PARAM_RAW);
+
+            $mform->addElement('static', 'rubric_note', '', get_string('attachrubricnote', 'turnitintooltwo'));
+        } else {
+            $mform->addElement('hidden', 'rubric', '');
+            $mform->setType('rubric', PARAM_RAW);
         }
 
-        $rubricline = array();
-        $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);
-        $rubricline[] = $mform->createElement('static', 'rubric_link', '',
-                                                html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
-                                                                'cmd=rubricmanager&view_context=box',
-                                                                    get_string('launchrubricmanager', 'turnitintooltwo'),
-                                                            array('class' => 'rubric_manager_launch',
-                                                                'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
-                                                html_writer::tag('span', '',
-                                                                array('class' => 'launch_form', 'id' => 'rubric_manager_form')));
-        $mform->setDefault('rubric', '');
-        $mform->addGroup($rubricline, 'rubricline', get_string('attachrubric', 'turnitintooltwo'), array(' '), false);
-        $mform->addElement('hidden', 'rubric_warning_seen', '');
-        $mform->setType('rubric_warning_seen', PARAM_RAW);
-
-        $mform->addElement('static', 'rubric_note', '', get_string('attachrubricnote', 'turnitintooltwo'));
-
-        if (!empty($config->useerater)) {
+        if (!empty($config->usegrademark) && !empty($config->useerater)) {
             $handbookoptions = array(
                                         1 => get_string('erater_handbook_advanced', 'turnitintooltwo'),
                                         2 => get_string('erater_handbook_highschool', 'turnitintooltwo'),
