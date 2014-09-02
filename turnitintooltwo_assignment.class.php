@@ -1759,7 +1759,7 @@ class turnitintooltwo_assignment {
 
             foreach ($submissionsdata as $submission) {
                 $submission->nmoodle = 1;
-                $submission->userid = "nm-".$submission->submission_nmuserid;
+                $submission->userid = $submission->submission_nmuserid;
                 $submission->firstname = $submission->submission_nmfirstname;
                 $submission->lastname = $submission->submission_nmlastname;
 
