@@ -311,7 +311,9 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setQuotedExcluded($turnitintooltwoassignment->turnitintooltwo->excludequoted);
             $assignment->setSmallMatchExclusionType($turnitintooltwoassignment->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int)$turnitintooltwoassignment->turnitintooltwo->excludevalue);
-            $assignment->setAnonymousMarking($turnitintooltwoassignment->turnitintooltwo->anon);
+            if ($config->useanon) {
+                $assignment->setAnonymousMarking($turnitintooltwoassignment->turnitintooltwo->anon);
+            }
             $assignment->setLateSubmissionsAllowed($turnitintooltwoassignment->turnitintooltwo->allowlate);
             if ($config->userepository) {
                 $assignment->setInstitutionCheck((isset($turnitintooltwoassignment->turnitintooltwo->institution_check)) ?

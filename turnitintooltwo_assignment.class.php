@@ -646,7 +646,9 @@ class turnitintooltwo_assignment {
             $assignment->setQuotedExcluded($this->turnitintooltwo->excludequoted);
             $assignment->setSmallMatchExclusionType($this->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int)$this->turnitintooltwo->excludevalue);
-            $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+            if ($config->useanon) {
+                $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+            }
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
             if ($config->userepository) {
@@ -1173,7 +1175,9 @@ class turnitintooltwo_assignment {
             $assignment->setQuotedExcluded($this->turnitintooltwo->excludequoted);
             $assignment->setSmallMatchExclusionType($this->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
-            $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+            if ($config->useanon) {
+                $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+            }
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
             if ($config->userepository) {
                 $assignment->setInstitutionCheck((isset($this->turnitintooltwo->institution_check)) ?
