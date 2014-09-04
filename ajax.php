@@ -279,7 +279,6 @@ switch ($action) {
                 $submission->lastname = $user->lastname;
                 $submission->userid = $user->id;
             } else {
-                $submission->userid = (empty($submission->userid)) ? $submission->nmuserid : $submission->userid;
                 $submission->update_submission_from_tii(true);
             }
             $useroverallgrades = array();

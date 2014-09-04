@@ -1003,6 +1003,7 @@ class turnitintooltwo_view {
                                             &$useroverallgrades, $istutor, $context = 'all') {
         global $CFG, $OUTPUT, $USER, $DB;
         $config = turnitintooltwo_admin_config();
+        $moodleuserid = (substr($submission->userid, 0, 3) != 'nm-' && $submission->userid != 0) ? $submission->userid : 0;
 
         if (!$istutor) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
@@ -1084,7 +1085,7 @@ class turnitintooltwo_view {
         } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $score = $OUTPUT->box_start('row_score origreport_open', 'origreport_'.$submission->submission_objectid.
-                                                                                    '_'.$partid.'_'.$submission->userid);
+                                                                                    '_'.$partid.'_'.$moodleuserid);
             // Show score.
             if (is_null($submission->submission_score)) {
                 $score .= $OUTPUT->box('&nbsp;', 'score_colour score_colour_');
@@ -1117,11 +1118,12 @@ class turnitintooltwo_view {
 
                 $class = ($istutor && $turnitintooltwoassignment->turnitintooltwo->usegrademark && $submissiongrade != "--"
                             && $turnitintooltwoassignment->turnitintooltwo->reportgenspeed == 1) ? " graded_warning" : "";
+
                 // Output grademark icon.
                 $grade = $OUTPUT->box($OUTPUT->pix_icon('icon-edit',
                                         get_string('launchgrademark', 'turnitintooltwo'), 'mod_turnitintooltwo'),
                                         'grademark_open'.$class, 'grademark_'.$submission->submission_objectid.'_'.$partid.
-                                                                                    '_'.$submission->userid);
+                                                                                    '_'.$moodleuserid);
                 // Show grade.
                 $grade .= $OUTPUT->box(html_writer::tag('span', $submissiongrade, array("class" => "grade"))
                                 ."/".$parts[$partid]->maxmarks, 'grademark_grade');
@@ -1213,7 +1215,7 @@ class turnitintooltwo_view {
         if (!empty($submission->submission_objectid) && !empty($submission->id) && !$submission->submission_acceptnothing) {
             $download = $OUTPUT->box($OUTPUT->pix_icon('file-download', get_string('downloadsubmission', 'turnitintooltwo'),
                                         'mod_turnitintooltwo'), 'download_original_open',
-                                        'downloadoriginal_'.$submission->submission_objectid."_".$partid."_".$submission->userid);
+                                        'downloadoriginal_'.$submission->submission_objectid."_".$partid."_".$moodleuserid);
             $download .= $OUTPUT->box('', 'launch_form', 'downloadoriginal_form_'.$submission->submission_objectid);
 
             // Add in LTI launch form incase Javascript is disabled.
@@ -1228,12 +1230,13 @@ class turnitintooltwo_view {
 
         $refresh = '--';
         if (!empty($submission->id) && $istutor) {
+            $moodleuserid = ($submission->userid == 0) ? $submission->userid : 0;
             $refresh = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh', 
                                                     'title' => get_string('turnitinrefreshsubmissions', 'turnitintooltwo'))).
                                                 html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin')),
                                                         array('class' => 'refresh_row', 
                                                                 'id' => 'refreshrow_'.$submission->submission_objectid.
-                                                                    '_'.$partid.'_'.$submission->userid));
+                                                                    '_'.$partid.'_'.$moodleuserid));
         }
 
         // Delete Link.
