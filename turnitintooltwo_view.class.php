@@ -1230,7 +1230,6 @@ class turnitintooltwo_view {
 
         $refresh = '--';
         if (!empty($submission->id) && $istutor) {
-            $moodleuserid = ($submission->userid == 0) ? $submission->userid : 0;
             $refresh = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh', 
                                                     'title' => get_string('turnitinrefreshsubmissions', 'turnitintooltwo'))).
                                                 html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin')),
