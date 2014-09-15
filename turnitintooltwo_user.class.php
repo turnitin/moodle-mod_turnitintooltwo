@@ -82,8 +82,11 @@ class turnitintooltwo_user {
         $this->lastname = $user->lastname;
         $this->email = $user->email;
         $this->username = $user->username;
-        $this->instructor_rubrics = (!empty($user->instructor_rubrics)) ? json_decode($user->instructor_rubrics) : array();
 
+        $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
+
+        $this->instructor_rubrics = (!empty($turnitintooltwouser->instructor_rubrics)) ?
+                                    (array)json_decode($turnitintooltwouser->instructor_rubrics) : array();
         return $user;
     }
 
@@ -513,10 +516,11 @@ class turnitintooltwo_user {
             $rubricarray[$rubric->getRubricId()] = $rubric->getRubricName();
         }
 
-        $turnitintooltwouser = new object;
-        $turnitintooltwouser->id = $this->id;
-        $turnitintooltwouser->instructor_rubrics = json_encode($rubricarray);
-        $DB->update_record('turnitintooltwo_users', $turnitintooltwouser);
+        if ($turnitintooltwouser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id))) {
+            $turnitintooltwouser->id = $turnitintooltwouser->id;
+            $turnitintooltwouser->instructor_rubrics = json_encode($rubricarray);
+            $DB->update_record('turnitintooltwo_users', $turnitintooltwouser);
+        }
 
         $this->instructor_rubrics = $rubricarray;
     }
