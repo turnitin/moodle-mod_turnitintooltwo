@@ -388,16 +388,18 @@ class turnitintooltwo_view {
 
             // Output a link for the student to accept the turnitin licence agreement.
             $noscriptula = "";
+            $ula = "";
             if ($userid == $USER->id) {
                 if (!$eulaaccepted) {
+                    $ula = html_writer::tag('div', turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
+                                "Learner", get_string('turnitinula', 'turnitintooltwo'), false),
+                                    array('class' => 'turnitin_ula', 'data-userid' => $userid));
 
-                    $ula = html_writer::tag('div', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula', 'data-userid' => $userid));
                     $noscriptula = html_writer::tag('noscript',
                                             $this->output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner",
                                             get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                                 get_string('noscriptula', 'turnitintooltwo'),
                                             array('class' => 'warning turnitin_ula_noscript'));
-                    $elements[] = array('html', $ula);
                 }
             }
 
@@ -414,7 +416,7 @@ class turnitintooltwo_view {
 
             $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                     '&do=submitpaper&view_context='.$viewcontext, $customdata);
-            $output .= $noscriptula;
+            $output .= $ula.$noscriptula;
             $output .= $OUTPUT->box($optionsform->display(), "submission_form_container");
 
             $turnitincomms = new turnitintooltwo_comms();

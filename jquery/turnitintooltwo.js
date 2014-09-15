@@ -329,39 +329,12 @@ jQuery(document).ready(function($) {
     // Show the Turnitin user agreement if necessary
     if ($(".turnitin_ula").length > 0) {
         $('#id_submitbutton').attr('disabled', 'disabled');
-    }
 
-    $(document).on('click', '.turnitin_ula', function () {
-        $.ajax({
-            type: "POST",
-            url: "ajax.php",
-            dataType: "json",
-            data: {action: 'useragreement', assignment: $('input[name="submissionassignment"]').val()},
-            success: function(data) {
-                $('#useragreement_form form').html('');
-                $.each(data, function(key, val) {
-                    $('#useragreement_form form').append('<input name="'+key+'" value="'+val+'" type="hidden" />');
-                });
-                $('#useragreement_form form').append('<input type="submit" value="Submit" />');
-
-                $("#useragreement_form form").on("submit", function(event) {
-                    eulaWindow = window.open('', 'eula');
-                    eulaWindow.document.write('<frameset><frame id="eulaWindow" name="eulaWindow"></frame></frameset>');
-                    $(eulaWindow).on("message", function(ev) {
-                        eulaWindow.close();
-                    });
-                    $(eulaWindow).bind('beforeunload', function() {
-                        window.$('.submission_form_container').html('');
-                        window.$("#refresh_loading").show();
-                        window.location.reload();
-                    });
-                });
-
-                $('#useragreement_form form').submit();
-                $('#useragreement_inputs').html('');
-            }
+        $(window).on("message", function(ev) {
+            var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
+            window.location.reload();
         });
-    });
+    }
 
     // Enrol all students link on the enrolled students page
     $(".enrol_link").click(function () {
