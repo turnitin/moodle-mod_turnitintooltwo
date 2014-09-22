@@ -4,7 +4,7 @@
  * @copyright 2012 iParadigms LLC
  */
 
-$module->version   = 2014012407;  // The current module version (Date: YYYYMMDDXX)
+$module->version   = 2014012408;  // The current module version (Date: YYYYMMDDXX)
 $module->requires  = 2012062500;
 $module->component = 'mod_turnitintooltwo';
 $module->maturity  = MATURITY_STABLE;
@@ -15,7 +15,7 @@ if (empty($plugin)) {
 	$plugin = new StdClass();
 }
 
-$plugin->version   = 2014012407;  // The current module version (Date: YYYYMMDDXX)
+$plugin->version   = 2014012408;  // The current module version (Date: YYYYMMDDXX)
 $plugin->requires  = 2012062500;
 $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
