@@ -460,9 +460,7 @@ switch ($do) {
         }
 
         // Show duplicate assignment warning if applicable.
-        // Update the GradeBook to make sure the grade stays 'hidden' and wasn't revealed by modedit.
         if ($istutor) {
-            turnitintooltwo_grade_item_update($turnitintooltwo);
             echo $turnitintooltwoview->show_duplicate_assignment_warning($turnitintooltwoassignment, $parts);
         }
 
