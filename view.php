@@ -29,6 +29,11 @@ require_once("../../lib/form/button.php");
 require_once("../../lib/form/submit.php");
 require_once($CFG->dirroot."/lib/uploadlib.php");
 
+// Offline mode provided by Androgogic. Set tiioffline in config.php.
+if (!empty($CFG->tiioffline)) {
+    turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
+}
+
 require_once("turnitintooltwo_view.class.php");
 $turnitintooltwoview = new turnitintooltwo_view();
 

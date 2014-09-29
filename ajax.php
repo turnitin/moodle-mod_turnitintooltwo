@@ -612,7 +612,8 @@ switch ($action) {
         if (is_siteadmin()) {
             // Initialise API connection.
             $turnitincomms = new turnitintooltwo_comms();
-            $tiiapi = $turnitincomms->initialise_api();
+            $istestingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
+            $tiiapi = $turnitincomms->initialise_api($istestingconnection);
 
             $class = new TiiClass();
             $class->setTitle('Test finding a class to see if connection works');

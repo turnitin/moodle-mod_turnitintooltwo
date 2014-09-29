@@ -531,6 +531,13 @@
     top: 3px;
 }
 
+#page-admin-setting-modsettingturnitintooltwo .offline_status .offline {
+    display: inline;;
+    border: 1px solid #CC0000;
+    background: #E77471;
+    padding: 4px;
+}
+
 #page-admin-setting-modsettingturnitintooltwo #test_link, #page-admin-setting-modsettingturnitintooltwo #testing_container {
     float:left;
     margin-bottom:8px;

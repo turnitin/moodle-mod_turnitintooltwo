@@ -59,6 +59,14 @@ if ($ADMIN->fulltree) {
                                                     'mod_turnitintooltwo')." ".get_string('checkingupgrade', 'turnitintooltwo'), 
                                                     array('class' => 'tii_upgrading_check'));
 
+    if (!empty($CFG->tiioffline)) {
+        $offlinecomment = html_writer::start_tag('div', array('class' => 'offline_status'));
+        $offlinecomment .= $OUTPUT->box(get_string('offlinestatus', 'turnitintooltwo'), 'offline');
+        $offlinecomment .= html_writer::end_tag('div');
+    } else {
+        $offlinecomment = '';
+    }
+
     // Test connection to turnitin link
     $testconnection = html_writer::start_tag('div', array('class' => 'test_connection'));
     $testconnection .= $OUTPUT->box($OUTPUT->pix_icon('globe', get_string('connecttest', 'turnitintooltwo'),
@@ -80,7 +88,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configtext('turnitintooltwo/accountid',
                                                     get_string("turnitinaccountid", "turnitintooltwo"),
-                                                    get_string("turnitinaccountid_desc", "turnitintooltwo").$testconnection, ''));
+                                                    get_string("turnitinaccountid_desc", "turnitintooltwo").$offlinecomment.$testconnection, ''));
 
     $settings->add(new admin_setting_configpasswordunmask('turnitintooltwo/secretkey',
                                                         get_string("turnitinsecretkey", "turnitintooltwo"),
