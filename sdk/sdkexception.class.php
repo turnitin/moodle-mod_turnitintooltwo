@@ -22,7 +22,7 @@ class TurnitinSDKException extends Exception {
         $this->setFaultCode( $faultcode ); //$this->faultcode = $faultcode;
         $this->setMessage( $message );
         $this->setOutputTitle( 'Turnitin SDK Exception' );
-        $logger = new Logger( $logpath );
+        $logger = new TurnitinLogger( $logpath );
         if ( $logger ) $logger->logError( $this->getOutputTitle() . ': ' . $this->getFaultCode() . ' - ' . $this->getMessage()  );
     }
 

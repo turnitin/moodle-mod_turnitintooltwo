@@ -280,7 +280,7 @@ class Soap extends SoapClient {
         $result = curl_exec($ch);
 
         if( $result === false) {
-            $logger = new Logger( $this->logpath );
+            $logger = new TurnitinLogger( $this->logpath );
             if ( $logger ) $logger->logError( 'Curl Error: ' . curl_error($ch)  );
             throw new TurnitinSDKException( 'Curl Error', curl_error($ch), $this->logpath );
         } else {

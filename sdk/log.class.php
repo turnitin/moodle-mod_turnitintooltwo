@@ -9,7 +9,7 @@ require_once( 'logger.php' );
 /**
  * @ignore
  */
-class Logger extends Klogger {
+class TurnitinLogger extends Klogger {
     
     const LOGLEVEL = 6;
     const KEEPLOGS = 10;
