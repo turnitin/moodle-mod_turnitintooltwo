@@ -208,53 +208,6 @@ class turnitintooltwo_user {
     }
 
     /**
-     * Get the details of a user registered on Turnitin
-     *
-     * @param type $tiiuserid
-     * @param type $tiiclassid
-     * @return array of user details stored with Turnitin
-     */
-    public function get_tii_user($tiiuserid, $tiiclassid = null) {
-
-        $turnitincomms = new turnitintooltwo_comms();
-        $turnitincall = $turnitincomms->initialise_api();
-
-        // Edge case fix to support legacy API expired users that do not have an entry in account table in Tii.
-        if ( !is_null( $tiiclassid ) ) {
-            try {
-                $membership = new TiiMembership();
-                $membership->setUserId($tiiuserid);
-                $membership->setClassId($tiiclassid);
-                $membership->setRole($this->role);
-                $turnitincall->createMembership($membership);
-            } catch ( Exception $e ) {
-                // We don't care about the exception too much, it is likely the user already belongs to the class
-                // The API function joins them to the account in any case which if what we want.
-            }
-        }
-
-        $user = new TiiUser();
-        $user->setUserId($tiiuserid);
-
-        try {
-            $response = $turnitincall->readUser($user);
-            $readuser = $response->getUser();
-
-            $tiiuser = array(
-                "id" => $readuser->getUserId(),
-                "firstname" => $readuser->getFirstName(),
-                "lastname" => $readuser->getLastName(),
-                "email" => $readuser->getEmail()
-            );
-
-            return $tiiuser;
-
-        } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'tiiusergeterror');
-        }
-    }
-
-    /**
      * Create the user on Turnitin
      *
      * @param object $user_details A data object for the user
@@ -472,6 +425,15 @@ class turnitintooltwo_user {
 
             $this->usermessages = $readuser->getUserMessages();
             $this->save_instructor_rubrics($readuser->getInstructorRubrics());
+
+            $tiiuser = array(
+                "id" => $readuser->getUserId(),
+                "firstname" => $readuser->getFirstName(),
+                "lastname" => $readuser->getLastName(),
+                "email" => $readuser->getEmail()
+            );
+
+            return $tiiuser;
 
         } catch (Exception $e) {
             try {

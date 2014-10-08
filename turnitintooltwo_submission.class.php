@@ -586,7 +586,8 @@ class turnitintooltwo_submission {
                 if ($tiisubmissiondata->getAuthorUserId() > 0) {
                     $sub->submission_nmuserid = $tiisubmissiondata->getAuthorUserId();
                     $tmpuser = new turnitintooltwo_user(0);
-                    $tiiuser = $tmpuser->get_tii_user($tiisubmissiondata->getAuthorUserId());
+                    $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
+                    $tiiuser = $tmpuser->set_user_values_from_tii();
 
                     $sub->submission_nmfirstname = $tiiuser["firstname"];
                     $sub->submission_nmlastname = $tiiuser["lastname"];
