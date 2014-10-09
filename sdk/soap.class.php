@@ -301,5 +301,3 @@ class Soap extends SoapClient {
     }
 
 }
-
-?>

@@ -85,5 +85,3 @@ class TurnitinSDKException extends Exception {
     }
 
 }
-
-?>

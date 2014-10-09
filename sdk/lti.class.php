@@ -875,5 +875,3 @@ class LTI extends OAuthSimple {
     }
 
 }
-
-//?>

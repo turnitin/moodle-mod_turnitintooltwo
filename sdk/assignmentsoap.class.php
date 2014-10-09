@@ -232,5 +232,3 @@ class AssignmentSoap extends Soap {
     }
     
 }
-
-//?>

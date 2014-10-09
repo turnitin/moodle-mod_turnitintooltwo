@@ -795,5 +795,3 @@ class TiiSubmission extends TiiForm {
     }
 
 }
-
-//?>

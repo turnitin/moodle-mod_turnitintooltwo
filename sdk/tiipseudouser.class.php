@@ -98,5 +98,3 @@ class TiiPseudoUser extends TiiUser {
     }
     
 }
-
-//?>

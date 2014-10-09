@@ -484,5 +484,3 @@ class OAuthSimpleException extends Exception {
     }
 
 }
-
-/*?>*/

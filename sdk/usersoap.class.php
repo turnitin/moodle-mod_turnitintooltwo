@@ -220,5 +220,3 @@ class UserSoap extends Soap {
     }
 
 }
-
-//?>

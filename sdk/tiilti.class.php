@@ -367,5 +367,3 @@ class TiiLTI extends TiiForm {
     }
 
 }
-
-//?>

@@ -39,5 +39,3 @@ class TurnitinLogger extends Klogger {
     }
     
 }
-
-//?>

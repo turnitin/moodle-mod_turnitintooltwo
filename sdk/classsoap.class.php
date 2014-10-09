@@ -169,5 +169,3 @@ class ClassSoap extends Soap {
     }
 
 }
-
-//?>
