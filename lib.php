@@ -30,7 +30,7 @@ define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 
 // For use in course migration.
-$integrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
+$tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
                                     2 => 'WebCT', 5 => 'Angel', 6 => 'Moodle Basic', 7 => 'eCollege', 8 => 'Desire2Learn',
                                     9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct');
 
@@ -671,10 +671,10 @@ function turnitintooltwo_get_assignments_from_tii($courseid, $returnformat = "js
 /**
  * Gets the courses for this account from Turnitin.
  *
- * @param array $integrationids the integration ids we want courses from
+ * @param array $tiiintegrationids the integration ids we want courses from
  * @return array of data in a datatables readable format
  */
-function turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $courseintegration,
+function turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, $courseintegration,
                                                 $courseenddate = null, $requestsource = "mod") {
     global $CFG, $DB, $OUTPUT, $USER;
     set_time_limit(0);
@@ -695,7 +695,7 @@ function turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $co
     if ($courseenddate != null) {
         $class->setDateFrom(gmdate("Y-m-d", strtotime($courseenddate)).'T00:00:00Z' );
     }
-    if (array_key_exists($courseintegration, $integrationids)) {
+    if (array_key_exists($courseintegration, $tiiintegrationids)) {
         $class->setIntegrationId($courseintegration);
     }
 
@@ -741,7 +741,7 @@ function turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $co
             $readclasses = $response->getClasses();
 
             foreach ($readclasses as $readclass) {
-                if (array_key_exists($readclass->getIntegrationId(), $integrationids)) {
+                if (array_key_exists($readclass->getIntegrationId(), $tiiintegrationids)) {
                     $_SESSION["stored_tii_courses"][$readclass->getClassId()] = $readclass->getTitle();
 
                     // If we're coming from block we don't need any information, just the number of records
@@ -776,7 +776,7 @@ function turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $co
                         $moodlecell = $OUTPUT->pix_icon('tick', get_string('moodlelinked', 'turnitintooltwo'), 'mod_turnitintooltwo',
                                                 array('class' => $class, 'id' => 'tick_'.$readclass->getClassId()));
 
-                        $tiicourses[$i] = array($checkbox, $titlecell, $integrationids[$readclass->getIntegrationId()], $datecell,
+                        $tiicourses[$i] = array($checkbox, $titlecell, $tiiintegrationids[$readclass->getIntegrationId()], $datecell,
                                                     $readclass->getClassId(), $moodlecell, $readclass->getTitle(),
                                                     userdate(strtotime($readclass->getEndDate()),
                                                                     get_string('strftimedate', 'langconfig')));

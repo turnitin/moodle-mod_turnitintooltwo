@@ -427,7 +427,7 @@ switch ($action) {
         $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
         $PAGE->set_context($modules);
 
-        $return = turnitintooltwo_get_courses_from_tii($integrationids, $coursetitle, $courseintegration, $courseenddate, $requestsource);
+        $return = turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, $courseintegration, $courseenddate, $requestsource);
         echo json_encode($return);
         break;
 

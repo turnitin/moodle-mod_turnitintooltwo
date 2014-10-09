@@ -56,7 +56,7 @@ switch ($cmd) {
                                                                     'name' => 'search_course_title'));
 
         $coursesearchform .= html_writer::label(get_string('integration', 'turnitintooltwo').': ', 'search_course_integration');
-        $coursesearchform .= html_writer::select($integrationids, 'search_course_integration', '', array('' => 'choosedots'),
+        $coursesearchform .= html_writer::select($tiiintegrationids, 'search_course_integration', '', array('' => 'choosedots'),
                                                 array('id' => 'search_course_integration'));
 
         $coursesearchform .= html_writer::label(get_string('ced', 'turnitintooltwo').': ', 'search_course_end_date');
@@ -97,7 +97,7 @@ switch ($cmd) {
 
         // Make up json array for drop down in table.
         $integrationidsjson = array();
-        foreach ($integrationids as $k => $v) {
+        foreach ($tiiintegrationids as $k => $v) {
             $integrationidsjson[] = array('value' => $k, 'label' => $v);
         }
         $output .= html_writer::script('var integration_ids = '.json_encode($integrationidsjson));
@@ -159,7 +159,7 @@ switch ($cmd) {
 
         $turnitincourse = $DB->get_records_sql("SELECT tc.turnitin_cid ".
                                                 "FROM {turnitintooltwo_courses} tc ".
-                                                "RIGHT JOIN {course} c ON c.id = tc.courseid ".
+                                                "RIGHT JOIN {course} c ON c.id = tc.courseid  ".
                                                 "WHERE tc.turnitin_cid = ? ", array($tiicourseid));
 
         if (empty($turnitincourse)) {
