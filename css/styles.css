@@ -61,6 +61,10 @@
     display:none;
 }
 
+.mod_turnitintooltwo .late_submission {
+    color: #d31900;
+}
+
 .mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form {
     background:#FFFFFF;
     padding:12px 12px 0;
@@ -111,7 +115,6 @@
     position: relative;
     top:-3px;
     margin-right:8px;
-    line-height:
 }
 
 .mod_turnitintooltwo .peermark_instructions_spacer {

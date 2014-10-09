@@ -1077,6 +1077,9 @@ class turnitintooltwo_view {
             $modified = "--";
         } else {
             $modified = userdate($submission->submission_modified, get_string('strftimedatetimeshort', 'langconfig'));
+            if ($submission->submission_modified > $parts[$partid]->dtdue) {
+                $modified = html_writer::tag('span', $modified, array("class" => "late_submission"));
+            }
         }
 
         // Show Originality score with link to open document viewer.
