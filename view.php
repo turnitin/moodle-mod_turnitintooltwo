@@ -77,8 +77,7 @@ if ($id) {
 }
 
 require_login($course->id);
-$viewpage = 'view.php?id='.$id.'&do='.$do;
-turnitintooltwo_activitylog($viewpage, "REQUEST");
+turnitintooltwo_activitylog('view.php?id='.$id.'&do='.$do, "REQUEST");
 
 // Settings for page navigation
 if ($viewcontext == "window") {
@@ -120,9 +119,8 @@ if (!empty($action)) {
             if ($turnitintooltwoassignment->delete_moodle_assignment_part($turnitintooltwoassignment->turnitintooltwo->id, $part)) {
                 $_SESSION["notice"]['message'] = get_string('partdeleted', 'turnitintooltwo');
             }
-            $url = new moodle_url($CFG->wwwroot."/course/mod.php", array('update' => $cm->id,
-                                            'return' => true, 'sesskey' => sesskey()));
-            header("Location: ".$url);
+            redirect(new moodle_url('/course/mod.php', array('update' => $cm->id,
+                                            'return' => true, 'sesskey' => sesskey())));
             exit;
             break;
 
@@ -133,7 +131,8 @@ if (!empty($action)) {
 
             $tutorid = required_param('turnitintutors', PARAM_INT);
             $_SESSION["notice"]['message'] = $turnitintooltwoassignment->add_tii_tutor($tutorid);
-            header("Location: ".$viewpage);
+
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => $do)));
             exit;
             break;
 
@@ -149,7 +148,7 @@ if (!empty($action)) {
                 $membershipid = required_param('membership_id', PARAM_INT);
                 $_SESSION["notice"]['message'] = $turnitintooltwoassignment->remove_tii_user_by_role($membershipid, $memberrole);
             }
-            header("Location: ".$viewpage);
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => $do)));
             exit;
             break;
 
@@ -174,7 +173,7 @@ if (!empty($action)) {
             $post['submissionagreement'] = required_param('submissionagreement', PARAM_INT);
 
             // Default params for redirecting if there is a problem.
-            $extraparams = "&part=".$post['submissionpart']."&user=".$post['studentsname'];
+            $extraparams = array("part" => $post['submissionpart'], "user" => $post['studentsname']);
 
             // Check that text content has been provided for submission if applicable.
 
@@ -243,13 +242,14 @@ if (!empty($action)) {
                         if ($digitalreceipt = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment)) {
                             $_SESSION["digital_receipt"] = $digitalreceipt;
                         }
-                        $extraparams = '';
+                        $extraparams = array();
                         unset($_SESSION['form_data']);
                     }
                 }
             }
 
-            header("Location: view.php?id=".$id.$extraparams."&do=".$do."&view_context=".$viewcontext);
+            $params = array_merge(array('id' => $id, 'do' => $do, 'view_context' => $viewcontext), $extraparams);
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', $params));
             exit;
             break;
 
@@ -264,7 +264,7 @@ if (!empty($action)) {
             if ($digitalreceipt = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment)) {
                 $_SESSION["digital_receipt"] = $digitalreceipt;
             }
-            header("Location: view.php?id=".$id."&do=submissions");
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
             exit;
             break;
 
@@ -279,7 +279,7 @@ if (!empty($action)) {
                 $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
                 $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
             }
-            header("Location: view.php?id=".$id."&do=submissions");
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
             exit;
             break;
     }
@@ -322,7 +322,7 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
     $groupmode = groups_get_activity_groupmode($cm);
     if ($groupmode) {
         groups_get_activity_group($cm, true);
-        groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/turnitintooltwo/'.$viewpage);
+        groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$id.'&do='.$do);
     }
 
     $turnitintooltwoview->draw_tool_tab_menu($cm, $do);

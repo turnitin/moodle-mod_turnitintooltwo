@@ -147,10 +147,10 @@ switch ($cmd) {
 
             $label = 'apilog';
             $tabs[] = new tabobject( $label, $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd='.$label,
-                ucfirst( $label ), ucfirst( $label ), false );
+                                        ucfirst( $label ), ucfirst( $label ), false );
             $label = 'activitylog';
             $tabs[] = new tabobject( $label, $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd='.$label,
-                ucfirst( $label ), ucfirst( $label ), false );
+                                        ucfirst( $label ), ucfirst( $label ), false );
             $inactive = array($cmd);
             $selected = $cmd;
             $output .= "";
@@ -216,7 +216,7 @@ switch ($cmd) {
                     $DB->delete_records('turnitintooltwo_users', array('id' => $tiiid));
                 }
             }
-            header("Location: ".$CFG->wwwroot."/mod/turnitintooltwo/settings_extras.php?cmd=unlinkusers");
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', array('cmd' => 'unlinkusers')));
             exit;
         }
 
