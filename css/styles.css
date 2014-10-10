@@ -57,7 +57,7 @@
 #page-admin-setting-modsettingturnitintooltwo #test_result, #page-admin-setting-modsettingturnitintooltwo .test_connection, 
 #page-admin-setting-modsettingturnitintooltwo #testing_container, .mod_turnitintooltwo .peermark_loading, 
 .mod_turnitintooltwo .messages_loading, .mod_turnitintooltwo #tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner,
-.mod_turnitintooltwo .nothingsubmit_warning {
+.mod_turnitintooltwo .nothingsubmit_warning, .mod_turnitintooltwo #enrolling_error {
     display:none;
 }
 
@@ -338,7 +338,8 @@
     margin-bottom: 12px;
 }
 
-.mod_turnitintooltwo noscript.warning, .mod_turnitintooltwo .library_not_present_warning {
+.mod_turnitintooltwo noscript.warning, .mod_turnitintooltwo .library_not_present_warning,
+.mod_turnitintooltwo .general_warning {
     border: 1px solid #CC0000;
     padding: 8px;
     background: #FFE9E8;
@@ -346,6 +347,10 @@
     text-align:center;
     display:block;
     margin-bottom:6px;
+}
+
+.mod_turnitintooltwo #enrolling_error {
+    margin-top: 8px;
 }
 
 .mod_turnitintooltwo .delete_link {

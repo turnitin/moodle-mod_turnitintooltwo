@@ -1649,6 +1649,9 @@ class turnitintooltwo_view {
 
             // Link to enrol all students on course.
             if ($role == "Learner") {
+                $output .= $OUTPUT->box(get_string('errorenrollingall', 'turnitintooltwo'), 
+                                            'general_warning', 'enrolling_error');
+
                 $enrollink = $OUTPUT->box($OUTPUT->pix_icon('enrolicon',
                                                     get_string('turnitinenrolstudents', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo')." ".
@@ -1659,7 +1662,7 @@ class turnitintooltwo_view {
                                                     'mod_turnitintooltwo')." ".
                                                         get_string('enrolling', 'turnitintooltwo'), 'enrolling_container');
             }
-            $output = $OUTPUT->box($enrollingcontainer.$enrollink, '');
+            $output .= $OUTPUT->box($enrollingcontainer.$enrollink, '');
 
             // Output user role to hidden var for use in jQuery calls.
             $output .= $OUTPUT->box($role, '', 'user_role');

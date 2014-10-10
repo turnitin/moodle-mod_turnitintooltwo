@@ -342,6 +342,7 @@ jQuery(document).ready(function($) {
 
     // Enrol all students link on the enrolled students page
     $(".enrol_link").click(function () {
+        $("#enrolling_error").hide();
         $(".enrol_link").hide();
         $(".enrolling_container").show();
         $.ajax({
@@ -351,6 +352,11 @@ jQuery(document).ready(function($) {
             data: {action: "enrol_all_students", assignment: $('#assignment_id').html(), sesskey: M.cfg.sesskey},
             success: function(data) {
                 window.location.href = window.location.href;
+            },
+            error: function(data, response) {
+                $(".enrol_link").show();
+                $(".enrolling_container").hide();
+                $("#enrolling_error").show();
             }
         });
     });
