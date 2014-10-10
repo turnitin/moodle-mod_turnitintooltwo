@@ -206,6 +206,10 @@ jQuery(document).ready(function($) {
                     "data": {action: "get_members", assignment: $('#assignment_id').html(), role: $('#user_role').html()},
                     "success": function(result) {
                         fnCallback(result);
+                    },
+                    "error": function(data, response) {
+                        $('.dataTables_processing').attr('style', 'visibility: hidden');
+                        $('.dataTables_empty').html(M.str.turnitintooltwo.membercheckerror);
                     }
                 });
             }

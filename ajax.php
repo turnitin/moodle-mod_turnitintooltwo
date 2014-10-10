@@ -368,6 +368,7 @@ switch ($action) {
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
 
+        $return["aaData"] = array();
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
             $role = required_param('role', PARAM_ALPHA);
             $members = $turnitintooltwoassignment->get_tii_users_by_role($role);
@@ -375,10 +376,7 @@ switch ($action) {
             $PAGE->set_context(context_module::instance($cm->id));
             $turnitintooltwoview = new turnitintooltwo_view();
             $return["aaData"] = $turnitintooltwoview->get_tii_members_by_role($cm, $turnitintooltwoassignment, $members, $role);
-        } else {
-            $return["aaData"] = '';
         }
-
         echo json_encode($return);
         break;
 

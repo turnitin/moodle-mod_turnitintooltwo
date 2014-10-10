@@ -145,6 +145,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('slengthmenu', 'turnitintooltwo');
         $PAGE->requires->string_for_js('semptytable', 'turnitintooltwo');
         $PAGE->requires->string_for_js('tiisubmissionsgeterror', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('membercheckerror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('resubmissiongradewarn', 'turnitintooltwo');
     }
 
