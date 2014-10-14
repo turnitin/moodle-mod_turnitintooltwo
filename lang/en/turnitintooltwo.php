@@ -461,3 +461,4 @@ $string['turnitintoolofflineerror'] = 'We are experiencing a temporary problem. 
 $string['offlinestatus'] = 'Turnitin has been set to offline. (The variable $CFG->tiioffline has been set to true.)';
 $string['filedoesnotexist'] = 'File has been deleted';
 $string['errorenrollingall'] = 'There has been an error enrolling all students on Turnitin - Please consult the API logs for further information';
+$string['eventremoved'] = 'This event has been removed the cron queue and will not be processed again.';
