@@ -1043,7 +1043,7 @@ class turnitintooltwo_assignment {
                         break;
 
                     case "dtpost":
-                        if ($fieldvalue <= $partdetails->dtstart) {
+                        if ($fieldvalue < $partdetails->dtstart) {
                             $return['success'] = false;
                             $return['msg'] = get_string('partposterror', 'turnitintooltwo');
                         }
