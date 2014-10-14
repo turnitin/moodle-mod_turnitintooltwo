@@ -44,11 +44,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // If we are in submission window then show close window text
-    if ($('.submission_form_container').length > 0) {
-        $('.upload #cboxClose', top.document).css("display", "block");
-    }
-
     // Show loading if submission passes validation
     $(document).on('submit', '.submission_form_container form', function() {
         try {
