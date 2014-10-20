@@ -333,7 +333,6 @@ jQuery(document).ready(function($) {
         $(window).on("message", function(ev) {
             var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
             $('iframe.cboxIframe').attr('src', $('iframe.cboxIframe').attr('src'));
-            console.log(message);
         });
     }
 
@@ -721,9 +720,6 @@ jQuery(document).ready(function($) {
             onLoad: function() {
                 $('.upload #cboxClose').hide();
                 getLoadingGif();
-            },
-            onComplete: function() {
-                $('iframe.cboxIframe').attr('name', 'eulaWindow');
             },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {
