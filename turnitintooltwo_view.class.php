@@ -1400,6 +1400,7 @@ class turnitintooltwo_view {
 
         switch ($type) {
             case "useragreement":
+                $lti->setFormTarget('');
                 $ltifunction = "outputUserAgreementForm";
                 break;
 

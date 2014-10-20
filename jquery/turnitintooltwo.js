@@ -332,7 +332,8 @@ jQuery(document).ready(function($) {
 
         $(window).on("message", function(ev) {
             var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
-            window.location.reload();
+            $('iframe.cboxIframe').attr('src', $('iframe.cboxIframe').attr('src'));
+            console.log(message);
         });
     }
 
@@ -713,17 +714,16 @@ jQuery(document).ready(function($) {
             identifier = "#upload_"+submission_id+"_"+part_id+"_"+user_id;
         }
 
-        var windowWidth = $(window).width();
-
-        var colorBoxWidth = "80%";
-        if (windowWidth < 1000) {
-            colorBoxWidth = "860px";
-        }
+        var colorBoxWidth = ($(window).width() < 1000) ? "860px" : "80%";
+        var colorBoxHeight = ($(window).height() < 700) ? "556px" : "80%";
 
         $(identifier).colorbox({
             onLoad: function() {
                 $('.upload #cboxClose').hide();
                 getLoadingGif();
+            },
+            onComplete: function() {
+                $('iframe.cboxIframe').attr('name', 'eulaWindow');
             },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {
@@ -731,8 +731,7 @@ jQuery(document).ready(function($) {
                 var idStr = $(this).attr("id").split("_");
                 refreshInboxRow("upload", idStr[1], idStr[2], idStr[3]);
             },
-            iframe:true, width:colorBoxWidth, height:"556px", opacity: "0.7", className: "upload", transition: "none",
-            close: '<div class="closeText">'+M.str.turnitintooltwo.close+'</div>'
+            iframe:true, width:colorBoxWidth, height:colorBoxHeight, opacity: "0.7", className: "upload", transition: "none"
         });
     }
 
