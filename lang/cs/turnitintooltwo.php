@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012409
+// Date: 2014-10-24
 // Language: cs
 
 $string['addsubmission'] = 'Přidat odevzdání';
@@ -53,7 +53,7 @@ $string['maxfilesize_help'] = 'Toto nastavení určuje maximální velikost soub
 $string['maxlength'] = 'Maximální délka pro {$a-&gt;length} znaků';
 $string['maxmarks'] = 'Max. známky';
 $string['pluginname'] = 'Úkol Turnitin 2';
-$string['modulename'] = 'Úkol Turnitin 2';
+$string['modulename'] = $string['pluginname'];
 $string['modulenameplural'] = 'Úkoly Turnitin ';
 $string['moduleversion'] = 'Verze';
 $string['mysubmissions'] = 'Mé odevzdané práce ';
@@ -438,6 +438,11 @@ $string['submitondraft'] = 'Odevzdat soubor při prvním nahrání';
 $string['submitonfinal'] = 'Odevzdat soubor, když jej student odešle ke známkování';
 $string['turnitindiagnostic'] = 'Povolit diagnostický režim';
 $string['turnitindiagnostic_desc'] = '<b>[Caution]</b><br />Povolit diagnostický režim pouze za účelem vystopování problémů s Turnitin API.';
+$string['autorefreshgrades'] = 'Automatické obnovování hodnocení / bodování';
+$string['autorefreshgrades_help'] = 'Standardně po každém zavolání do Turnitin plugin se integrace Moodle automaticky pokusí stáhnout změny udělané v rámci Turnitin. Můžete použít možnost deaktivování této funkce, avšak v zájmu udržování synchronizace mezi oběma systémy budete muset často ručně obnovovat hodnocení a bodování původnosti v rámci aplikace Moodle.';
+$string['yesgrades'] = 'Ano, automaticky obnovovat bodování původnosti a hodnocení';
+$string['nogrades'] = 'Ne, budu obnovovat bodování původnosti a hodnocení ručně';
+$string['submissionagreementerror'] = 'Musíte souhlasit s podmínkami pro toto odevzdání';
 $string['noxmlwriterlibrary'] = 'Chcete-li použít tento plugin, budete muset mít na svém serveru nainstalované rozšíření PHP XMLWriter.';
 $string['checkupgrade'] = 'Zkontrolujte, zda je k dispozici aktualizace';
 $string['checkingupgrade'] = 'Kontrola dostupných aktualizací';
