@@ -59,6 +59,7 @@ if ($ADMIN->fulltree) {
                                                     'mod_turnitintooltwo')." ".get_string('checkingupgrade', 'turnitintooltwo'), 
                                                     array('class' => 'tii_upgrading_check'));
 
+    // Offline mode provided by Androgogic. Set tiioffline in config.php.
     if (!empty($CFG->tiioffline)) {
         $offlinecomment = html_writer::start_tag('div', array('class' => 'offline_status'));
         $offlinecomment .= $OUTPUT->box(get_string('offlinestatus', 'turnitintooltwo'), 'offline');
@@ -68,7 +69,7 @@ if ($ADMIN->fulltree) {
     }
 
     // Test connection to turnitin link
-    $testconnection = html_writer::start_tag('div', array('class' => 'test_connection'));
+    $testconnection = html_writer::start_tag('div', array('class' => 'test_connection', 'style' => 'display: none;'));
     $testconnection .= $OUTPUT->box($OUTPUT->pix_icon('globe', get_string('connecttest', 'turnitintooltwo'),
                                                 'mod_turnitintooltwo')." ".
                                                     html_writer::tag('span',
