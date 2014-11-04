@@ -607,24 +607,27 @@ switch ($action) {
         }
         $data = array("connection_status" => "fail", "msg" => get_string('connecttestcommerror', 'turnitintooltwo'));
 
-        if (is_siteadmin()) {
-            // Initialise API connection.
-            $turnitincomms = new turnitintooltwo_comms();
-            $istestingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
-            $tiiapi = $turnitincomms->initialise_api($istestingconnection);
+        $config = turnitintooltwo_admin_config();
+        if ((int)$config->accountid != 0 && !empty($config->apiurl) && !empty($config->secretkey)) {
+            if (is_siteadmin()) {
+                // Initialise API connection.
+                $turnitincomms = new turnitintooltwo_comms();
+                $istestingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
+                $tiiapi = $turnitincomms->initialise_api($istestingconnection);
 
-            $class = new TiiClass();
-            $class->setTitle('Test finding a class to see if connection works');
+                $class = new TiiClass();
+                $class->setTitle('Test finding a class to see if connection works');
 
-            try {
-                $response = $tiiapi->findClasses($class);
-                $data["connection_status"] = "success";
-                $data["msg"] = get_string('connecttestsuccess', 'turnitintooltwo');
-            } catch (Exception $e) {
-                $turnitincomms->handle_exceptions($e, 'connecttesterror', false);
+                try {
+                    $response = $tiiapi->findClasses($class);
+                    $data["connection_status"] = "success";
+                    $data["msg"] = get_string('connecttestsuccess', 'turnitintooltwo');
+                } catch (Exception $e) {
+                    $turnitincomms->handle_exceptions($e, 'connecttesterror', false);
+                }
             }
-            echo json_encode($data);
         }
+        echo json_encode($data);
         break;
 
     case "submit_nothing":
