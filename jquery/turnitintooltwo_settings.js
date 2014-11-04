@@ -13,15 +13,15 @@ jQuery(document).ready(function($) {
     }
 
     $('input[name="selectallcb"]').click(function() {
-    	if ($(this).attr('checked')) {
-    		$('.browser_checkbox').attr('checked', true);
+    	if ($(this).prop('checked')) {
+    		$('.browser_checkbox').prop('checked', true);
     		if ($('.browser_checkbox:checked').length > 0) {
 	            $('.create_checkboxes').slideDown();
 	        } else {
 	            $('.create_checkboxes').slideUp();
 	        }
     	} else {
-    		$('.browser_checkbox').attr('checked', false);
+    		$('.browser_checkbox').prop('checked', false);
     		$('.create_checkboxes').slideUp();
     	}
     });
