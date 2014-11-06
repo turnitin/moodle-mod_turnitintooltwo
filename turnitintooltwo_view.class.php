@@ -1090,8 +1090,9 @@ class turnitintooltwo_view {
             $score = '--';
         } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
-            $score = $OUTPUT->box_start('row_score origreport_open', 'origreport_'.$submission->submission_objectid.
-                                                                                    '_'.$partid.'_'.$moodleuserid);
+            $score = $OUTPUT->box_start('row_score origreport_open', 
+                                        'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                                        array('title' => $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id));
             // Show score.
             if (is_null($submission->submission_score)) {
                 $score .= $OUTPUT->box('&nbsp;', 'score_colour score_colour_');
@@ -1127,9 +1128,9 @@ class turnitintooltwo_view {
 
                 // Output grademark icon.
                 $grade = $OUTPUT->box($OUTPUT->pix_icon('icon-edit',
-                                        get_string('launchgrademark', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        'grademark_open'.$class, 'grademark_'.$submission->submission_objectid.'_'.$partid.
-                                                                                    '_'.$moodleuserid);
+                                    get_string('launchgrademark', 'turnitintooltwo'), 'mod_turnitintooltwo'),
+                                    'grademark_open'.$class, 'grademark_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                                    array('title' => $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id));
                 // Show grade.
                 $grade .= $OUTPUT->box(html_writer::tag('span', $submissiongrade, array("class" => "grade"))
                                 ."/".$parts[$partid]->maxmarks, 'grademark_grade');

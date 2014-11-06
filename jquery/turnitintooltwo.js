@@ -439,6 +439,26 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // Open the DV in a new window in such a way as to not be blocked by popups.
+    $(document).on('click', '.origreport_open, .grademark_open', function() {
+        var idStr = $(this).attr("id").split("_");
+        var url = $(this).attr("title")+'&viewcontext=box&do='+idStr[0]+'&submissionid='+idStr[1]+'&sesskey='+M.cfg.sesskey;
+        var dvWindow = window.open(url, 'dv_'+idStr[1]);
+        var width = $(window).width();
+        var height = $(window).height();
+        dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
+        dvWindow.document.write('<script>document.body.style = \'margin: 0 0;\';</script'+'>'); 
+        dvWindow.document.getElementById('dvWindow').src = url;
+        dvWindow.document.close();
+        $(dvWindow).bind('beforeunload', function() {
+            refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+        });
+        // Previous event does not work in Safari.
+        $(dvWindow).bind('unload', function() {
+            refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+        });
+    });
+
     if ($("#id_rubric, #id_plagiarism_rubric").length > 0) {
         refreshRubricSelect();
     }
@@ -818,9 +838,10 @@ jQuery(document).ready(function($) {
 
     // Initialise the events to open the document viewer as the links are loaded after the page
     function initialiseDVLaunchers(scope, submission_id, part_id, user_id) {
-        var identifier = '#'+part_id+' .origreport_open, #'+part_id+' .grademark_open, #'+part_id+' .download_original_open';
+        var identifier = '#'+part_id+' .download_original_open';//#'+part_id+' .origreport_open, #'+part_id+' .grademark_open, 
         if (scope == "row") {
-            identifier = '#origreport_'+submission_id+'_'+part_id+'_'+user_id+', #grademark_'+submission_id+'_'+part_id+'_'+user_id+', #downloadoriginal_'+submission_id+'_'+part_id+'_'+user_id;
+            identifier = '#downloadoriginal_'+submission_id+'_'+part_id+'_'+user_id;
+            //#origreport_'+submission_id+'_'+part_id+'_'+user_id+', #grademark_'+submission_id+'_'+part_id+'_'+user_id+', 
         }
 
         // Unbind the event first to stop it being binded multiple times

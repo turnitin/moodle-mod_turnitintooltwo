@@ -76,6 +76,11 @@ if ($id) {
     }
 }
 
+// If opening DV then $viewcontext needs to be set to box
+if ($do == "origreport" || $do == "grademark") {
+    $viewcontext = "box";
+}
+
 require_login($course->id);
 turnitintooltwo_activitylog('view.php?id='.$id.'&do='.$do, "REQUEST");
 
@@ -435,6 +440,15 @@ switch ($do) {
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('peermark_reviews', $userrole,
                                                     $parts[$part]->tiiassignid), array("class" => "launch_form"));
         }
+        break;
+
+    case "origreport":
+    case "grademark":
+    case "downloadoriginal":
+        $submissionid = required_param('submissionid', PARAM_INT);
+        $user = new turnitintooltwo_user($USER->id, $userrole);
+        echo html_writer::tag("div", $turnitintooltwoview->output_dv_launch_form($do, $submissionid, $user->tii_user_id, $userrole),
+                                                                                array("class" => "launch_form"));
         break;
 
     case "submissions":
