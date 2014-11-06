@@ -9,25 +9,27 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    $(document).on('click', '.origreport_open', function() {
+    $(document).on('click', '.pp_origreport_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
+        var url = $(this).attr("id");
 
         for (var i = 0; i < classList.length; i++) {
-           if (classList[i].indexOf('origreport_') !== -1 && classList[i] != 'origreport_open') {
+            if (classList[i].indexOf('origreport_') !== -1 && classList[i] != 'pp_origreport_open') {
                 var classStr = classList[i].split("_");
-                openDV("origreport", classStr[1], classStr[2]);
-           }
+                openDV("origreport", classStr[1], classStr[2], url);
+            }
         }
     });
 
-    $(document).on('click', '.grademark_open', function() {
+    $(document).on('click', '.pp_grademark_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
+        var url = $(this).attr("id");
 
         for (var i = 0; i < classList.length; i++) {
-           if (classList[i].indexOf('grademark_') !== -1 && classList[i] != 'grademark_open') {
+            if (classList[i].indexOf('grademark_') !== -1 && classList[i] != 'pp_grademark_open') {
                 var classStr = classList[i].split("_");
-                openDV("grademark", classStr[1], classStr[2]);
-           }
+                openDV("grademark", classStr[1], classStr[2], url);
+            }
         }
     });
 
@@ -110,27 +112,23 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Open the document viewer within a frame in a new tab
-    function openDV(dvtype, submission_id, coursemoduleid) {
-        $.ajax({
-            type: "POST",
-            url: "../../plagiarism/turnitin/ajax.php",
-            dataType: "html",
-            data: {action: dvtype, submission: submission_id, cmid: coursemoduleid},
-            success: function(data) {
+    // Open the DV in a new window in such a way as to not be blocked by popups.
+    function openDV(dvtype, submission_id, coursemoduleid, url) {
+        var url = url+'&viewcontext=box&cmd='+dvtype+'&submissionid='+submission_id+'&sesskey='+M.cfg.sesskey;
 
-                $("."+dvtype+"_form_"+submission_id).html(data);
-                $("."+dvtype+"_form_"+submission_id).children("form").on("submit", function(event) {
-                    dvWindow = window.open('/', 'dv_'+submission_id);
-                    dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
-                    dvWindow.document.close();
-                    $(dvWindow).bind('beforeunload', function() {
-                        refreshScores(submission_id, coursemoduleid);
-                    });
-                });
-                $("."+dvtype+"_form_"+submission_id).children("form").submit();
-                $("."+dvtype+"_form_"+submission_id).html("");
-            }
+        var dvWindow = window.open(url, 'dv_'+submission_id);
+        var width = $(window).width();
+        var height = $(window).height();
+        dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
+        dvWindow.document.write('<script>document.body.style = \'margin: 0 0;\';</script'+'>'); 
+        dvWindow.document.getElementById('dvWindow').src = url;
+        dvWindow.document.close();
+        $(dvWindow).bind('beforeunload', function() {
+            refreshScores(submission_id, coursemoduleid);
+        });
+        // Previous event does not work in Safari.
+        $(dvWindow).bind('unload', function() {
+            refreshScores(submission_id, coursemoduleid);
         });
     }
 
