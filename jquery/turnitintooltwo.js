@@ -334,6 +334,7 @@ jQuery(document).ready(function($) {
     // Show the Turnitin user agreement if necessary
     if ($(".turnitin_ula").length > 0) {
         $('#id_submitbutton').attr('disabled', 'disabled');
+        $('.submission_form_container').attr('style', 'display:none;');
 
         $(window).on("message", function(ev) {
             var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
