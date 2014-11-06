@@ -91,9 +91,10 @@ class turnitintooltwo_comms {
             $api->setSSLCertificate($certificate);
         }
 
-        if (!empty($CFG->tiioffline) && !$istestingconnection) {
-            turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
-        }
+        // Moving to 2014012410
+        // if (!empty($CFG->tiioffline) && !$istestingconnection) {
+        //     turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
+        // }
 
         return $api;
     }
