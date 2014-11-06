@@ -279,9 +279,10 @@ if (!empty($action)) {
             }
 
             $submissionid = required_param('sub', PARAM_INT);
+            $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
 
-            if ($istutor && $submissionid != 0) {
-                $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
+            // Allow instructors to delete submission and students to delete if the submission hasn't gone to Turnitin.
+            if (($istutor && $submissionid != 0) || (!$istutor && empty($turnitintooltwosubmission->submission_objectid))) {
                 $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
             }
             redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
