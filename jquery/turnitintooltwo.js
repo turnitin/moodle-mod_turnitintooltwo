@@ -44,6 +44,11 @@ jQuery(document).ready(function($) {
         }
     });
 
+        // If we are in submission window then show close window text
+    if ($('.submission_form_container').length > 0) {
+        $('.upload #cboxClose', top.document).attr("title", M.str.turnitintooltwo.close).attr("name", M.str.turnitintooltwo.close).css("display", "block");
+    }
+
     // Show loading if submission passes validation
     $(document).on('submit', '.submission_form_container form', function() {
         try {
@@ -497,7 +502,7 @@ jQuery(document).ready(function($) {
 
         // Enable other editable fields when an editable form is closed
         $('.editable_date, .editable_text').on('hidden', function(e, reason) {
-            if (reason == 'nochange') {
+            if (reason == 'nochange' || reason == 'manual') {
                 var current = ($(this).prop('id'));
                 $('.editable_date, .editable_text').not('#'+current).editable('enable');
             }
@@ -727,7 +732,7 @@ jQuery(document).ready(function($) {
                 var idStr = $(this).attr("id").split("_");
                 refreshInboxRow("upload", idStr[1], idStr[2], idStr[3]);
             },
-            iframe:true, width:colorBoxWidth, height:colorBoxHeight, opacity: "0.7", className: "upload", transition: "none"
+            iframe:true, width:colorBoxWidth, height:colorBoxHeight, opacity: "0.7", className: "upload", transition: "none", close: ''
         });
     }
 
