@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 
     $(document).on('click', '.pp_turnitin_eula_link', function() {
         $(this).colorbox({
-            open:true,iframe:true, width:"762px", height:"582px", opacity: "0.7", className: "eula_view",
+            open:true,iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
             onLoad: function() { getLoadingGif(); },
             onComplete: function() {
                 $(window).on("message", function(ev) {
