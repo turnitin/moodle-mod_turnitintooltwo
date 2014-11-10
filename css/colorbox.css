@@ -47,9 +47,9 @@ iframe html{background:none;}
 
 #cboxClose { text-indent:-36px; display:none; }
 
-.messages #cboxClose, .unanonymise_reveal_form #cboxClose, .downloadpdf_window #cboxClose, .gmpdfzip_window #cboxClose, .rubric_manager #cboxClose,
+.messages #cboxClose, .tii_unanonymise_reveal_form #cboxClose, .downloadpdf_window #cboxClose, .gmpdfzip_window #cboxClose, .rubric_manager #cboxClose,
 .rubric_view #cboxClose, .quickmark_manager #cboxClose, .peermark_manager #cboxClose, .peermark_reviews #cboxClose, .course_creation #cboxClose,
-.unanonymise_reveal_form #cboxClose, .unanonymise_reveal_form #cboxClose, .migration #cboxClose {
+.tii_unanonymise_reveal_form #cboxClose, .tii_unanonymise_reveal_form #cboxClose, .migration #cboxClose {
     display:none !important;
 }
 
@@ -62,7 +62,7 @@ iframe html{background:none;}
     top: 2px;
 }
 
-.unanonymise_reveal_form #cboxLoadedContent, .edit_end_date_form #cboxLoadedContent {
+.tii_unanonymise_reveal_form #cboxLoadedContent, .edit_end_date_form #cboxLoadedContent {
     height:100%;
     overflow: hidden !important;
 }
@@ -87,7 +87,7 @@ iframe html{background:none;}
     z-index:9998;
 }
 
-.unanonymise_reveal_form #cboxClose, .edit_end_date_form #cboxClose {
+.tii_unanonymise_reveal_form #cboxClose, .edit_end_date_form #cboxClose {
     top: 4px;
     right:4px;
 }

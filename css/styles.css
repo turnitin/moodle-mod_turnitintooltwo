@@ -65,7 +65,7 @@
     color: #d31900;
 }
 
-.mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form {
+.tii_unanonymise_reveal_form .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form {
     background:#FFFFFF;
     padding:12px 12px 0;
     height:100%;
@@ -76,7 +76,7 @@
     padding-top:24px;
 }
 
-.mod_turnitintooltwo .unanonymise_form textarea {
+.tii_unanonymise_reveal_form .unanonymise_form textarea {
     height: 90px;
     width:80%;
 }

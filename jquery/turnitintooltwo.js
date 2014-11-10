@@ -694,19 +694,23 @@ jQuery(document).ready(function($) {
 
     // Show light box with form to reveal the student's name on an anonymised submission
     function initialiseUnanoymiseForm(scope, assignment_id, submission_id) {
-        var identifier = 'a.unanonymise'
+        var identifier = 'a.unanonymise';
         if (scope == "row") {
             identifier = '#submission_'+submission_id;
         }
         $(identifier).colorbox({
-            inline:true, width:"50%", top: "100px", height:"260px", opacity: "0.7", className: "unanonymise_reveal_form",
+            inline:true, width:"50%", top: "100px", height:"260px", opacity: "0.7", className: "tii_unanonymise_reveal_form",
             onComplete : function() {
                 var idStr = $(this).attr("id").split("_");
                 if (submission_id == 0 || submission_id == undefined) {
                     var submission_id = idStr[1];
                 }
+                if (assignment_id == 0) {
+                    assignment_id = $('#assignment_id').html();
+                }
                 $("#submission_id").html(submission_id);
                 $('#cboxLoadedContent .unanonymise_form').show();
+                $('#id_reveal').unbind("click");
                 $('#id_reveal').click(function() {
                     $.ajax({
                         "dataType": 'json',
