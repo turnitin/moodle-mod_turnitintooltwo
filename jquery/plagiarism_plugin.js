@@ -11,11 +11,17 @@ jQuery(document).ready(function($) {
 
     $(document).on('click', '.pp_origreport_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
-        var url = $(this).attr("id");
 
         for (var i = 0; i < classList.length; i++) {
             if (classList[i].indexOf('origreport_') !== -1 && classList[i] != 'pp_origreport_open') {
                 var classStr = classList[i].split("_");
+                var url = "";
+                // URL must be stored in separate div on forums
+                if ($('.origreport_forum_launch_'+classStr[1]).length > 0) {
+                    url = $('.origreport_forum_launch_'+classStr[1]).html();
+                } else {
+                    url = $(this).attr("id");
+                }
                 openDV("origreport", classStr[1], classStr[2], url);
             }
         }
@@ -23,11 +29,17 @@ jQuery(document).ready(function($) {
 
     $(document).on('click', '.pp_grademark_open', function() {
         var classList = $(this).attr('class').replace(/\s+/,' ').split(' ');
-        var url = $(this).attr("id");
 
         for (var i = 0; i < classList.length; i++) {
             if (classList[i].indexOf('grademark_') !== -1 && classList[i] != 'pp_grademark_open') {
                 var classStr = classList[i].split("_");
+                var url = "";
+                // URL must be stored in separate div on forums
+                if ($('.grademark_forum_launch_'+classStr[1]).length > 0) {
+                    url = $('.grademark_forum_launch_'+classStr[1]).html();
+                } else {
+                    url = $(this).attr("id");
+                }
                 openDV("grademark", classStr[1], classStr[2], url);
             }
         }
