@@ -1123,8 +1123,10 @@ class turnitintooltwo_view {
                     $submissiongrade = "--";
                 }
 
-                $class = ($istutor && $turnitintooltwoassignment->turnitintooltwo->usegrademark && $submissiongrade != "--"
-                            && $turnitintooltwoassignment->turnitintooltwo->reportgenspeed == 1) ? " graded_warning" : "";
+                // Show warning to instructor if student can still resubmit.
+                $class = ($istutor && $turnitintooltwoassignment->turnitintooltwo->reportgenspeed > 0 && 
+                            time() < $parts[$partid]->dtdue || $turnitintooltwoassignment->turnitintooltwo->allowlate == 1 &&
+                                empty($submission->nmoodle)) ? " graded_warning" : "";
 
                 // Output grademark icon.
                 $grade = $OUTPUT->box($OUTPUT->pix_icon('icon-edit',
