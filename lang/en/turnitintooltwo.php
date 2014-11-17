@@ -462,3 +462,4 @@ $string['offlinestatus'] = 'Turnitin has been set to offline. (The variable $CFG
 $string['filedoesnotexist'] = 'File has been deleted';
 $string['errorenrollingall'] = 'There has been an error enrolling all students on Turnitin - Please consult the API logs for further information';
 $string['eventremoved'] = 'This event has been removed the cron queue and will not be processed again.';
+$string['partnametoolarge'] = 'The combined assignment and part name are too large. Please limit to 88 characters.';

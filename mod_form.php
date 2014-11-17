@@ -284,6 +284,11 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->setType('partname'.$i, PARAM_RAW);
             $mform->setDefault('partname'.$i, get_string('turnitinpart', 'turnitintooltwo', $i));
             $mform->addRule('partname'.$i, null, 'required', null, 'client');
+            $input = new stdClass();
+            $input->length = 40;
+            $input->field =  get_string('partname', 'turnitintooltwo')." ".get_string('name');
+            $mform->addRule('partname'.$i, get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'client');
+            $mform->addRule('partname'.$i, get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'server');
 
             $mform->addElement('date_time_selector', 'dtstart'.$i, get_string('dtstart', 'turnitintooltwo'), $dateoptions);
             $mform->setDefault('dtstart'.$i, time());
