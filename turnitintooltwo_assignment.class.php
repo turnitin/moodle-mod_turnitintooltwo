@@ -1000,7 +1000,7 @@ class turnitintooltwo_assignment {
                 if (empty($fieldvalue)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnameerror', 'turnitintooltwo');
-                } else if (strlen($this->turnitintooltwo->name.' - '.$fieldvalue) > 88) {
+                } else if (strlen($fieldvalue) > 40) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnametoolarge', 'turnitintooltwo');
                 } else {
