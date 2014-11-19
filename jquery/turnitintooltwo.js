@@ -731,7 +731,9 @@ jQuery(document).ready(function($) {
                             eval(data);
                             if (data.status == "success") {
                                 parent.$.fn.colorbox.close();
+                                $('#submission_'+submission_id).attr('href', M.cfg.wwwroot+"/user/view.php?id="+data.userid+"&course="+data.courseid);
                                 $('#submission_'+submission_id).html(data.name);
+                                $('#submission_'+submission_id).removeClass('unanonymise cboxElement');
                             } else {
                                 var current_msg = $('#unanonymise_desc').html;
                                 $('#unanonymise_desc').html(current_msg+" "+data.msg);

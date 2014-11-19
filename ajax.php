@@ -404,6 +404,10 @@ switch ($action) {
                     $return["name"] = format_string($user->lastname).", ".format_string($user->firstname);
                 }
                 $return["status"] = "success";
+                $return["userid"] = $turnitintooltwosubmission->userid;
+                $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+                $return["courseid"] = $turnitintooltwoassignment->turnitintooltwo->course;
+                $return["msg"] = "";
             }
 
             // Refresh submission and save.
