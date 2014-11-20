@@ -1091,8 +1091,7 @@ class turnitintooltwo_view {
         } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $score = $OUTPUT->box_start('row_score origreport_open', 
-                                        'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                                        array('title' => $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id));
+                                        'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
             // Show score.
             if (is_null($submission->submission_score)) {
                 $score .= $OUTPUT->box('&nbsp;', 'score_colour score_colour_');
@@ -1108,6 +1107,8 @@ class turnitintooltwo_view {
 
             // Put in div placeholder for DV launch form.
             $score .= $OUTPUT->box('', 'launch_form', 'origreport_form_'.$submission->submission_objectid);
+            // URL for DV launcher
+            $score .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'origreport_url_'.$submission->submission_objectid);
             $score .= $OUTPUT->box_end(true);
         } else {
             $rawscore = -1;
@@ -1138,6 +1139,8 @@ class turnitintooltwo_view {
                                 ."/".$parts[$partid]->maxmarks, 'grademark_grade');
                 // Put in div placeholder for DV launch form.
                 $grade .= $OUTPUT->box('', 'launch_form', 'grademark_form_'.$submission->submission_objectid);
+                // URL for DV launcher
+                $grade .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'grademark_url_'.$submission->submission_objectid);
                 $rawgrade = ($submissiongrade == "--") ? -1 : $submissiongrade;
 
             } else if (!isset($submission->submission_objectid) && empty($submission->id) && $istutor ) {

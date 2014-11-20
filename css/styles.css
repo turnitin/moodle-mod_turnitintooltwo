@@ -57,7 +57,7 @@
 #page-admin-setting-modsettingturnitintooltwo #test_result, #page-admin-setting-modsettingturnitintooltwo .test_connection, 
 #page-admin-setting-modsettingturnitintooltwo #testing_container, .mod_turnitintooltwo .peermark_loading, 
 .mod_turnitintooltwo .messages_loading, .mod_turnitintooltwo #tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner,
-.mod_turnitintooltwo .nothingsubmit_warning, .mod_turnitintooltwo #enrolling_error {
+.mod_turnitintooltwo .nothingsubmit_warning, .mod_turnitintooltwo #enrolling_error, .mod_turnitintooltwo .dv_url {
     display:none;
 }
 

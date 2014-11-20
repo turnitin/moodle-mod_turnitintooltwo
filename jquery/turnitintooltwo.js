@@ -450,7 +450,7 @@ jQuery(document).ready(function($) {
 
         if (proceed) {
             var idStr = $(this).attr("id").split("_");
-            var url = $(this).attr("title")+'&viewcontext=box&do='+idStr[0]+'&submissionid='+idStr[1]+'&sesskey='+M.cfg.sesskey;
+            var url = $('#'+idStr[0]+'_url_'+idStr[1]).html()+'&viewcontext=box&do='+idStr[0]+'&submissionid='+idStr[1]+'&sesskey='+M.cfg.sesskey;
             var dvWindow = window.open(url, 'dv_'+idStr[1]);
             var width = $(window).width();
             var height = $(window).height();
