@@ -1086,7 +1086,7 @@ class turnitintooltwo_view {
         // Show Originality score with link to open document viewer.
         if ( !empty($submission->id) && is_null($submission->submission_score) && $submission->submission_orcapable == 0 ) {
             // Don't show if there is no OR score and submission is not OR capable
-            $rawscore = -1;
+            $rawscore = null;
             $score = '--';
         } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
@@ -1096,7 +1096,7 @@ class turnitintooltwo_view {
             if (is_null($submission->submission_score)) {
                 $score .= $OUTPUT->box('&nbsp;', 'score_colour score_colour_');
                 $score .= $OUTPUT->box(get_string('pending', 'turnitintooltwo'), 'origreport_score');
-                $rawscore = -1;
+                $rawscore = null;
             } else {
                 // Put EN flag if translated matching is on and that is the score used.
                 $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
@@ -1111,7 +1111,7 @@ class turnitintooltwo_view {
             $score .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'origreport_url_'.$submission->submission_objectid);
             $score .= $OUTPUT->box_end(true);
         } else {
-            $rawscore = -1;
+            $rawscore = null;
             $score = '--';
         }
 
@@ -1141,7 +1141,7 @@ class turnitintooltwo_view {
                 $grade .= $OUTPUT->box('', 'launch_form', 'grademark_form_'.$submission->submission_objectid);
                 // URL for DV launcher
                 $grade .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'grademark_url_'.$submission->submission_objectid);
-                $rawgrade = ($submissiongrade == "--") ? -1 : $submissiongrade;
+                $rawgrade = ($submissiongrade == "--") ? null : $submissiongrade;
 
             } else if (!isset($submission->submission_objectid) && empty($submission->id) && $istutor ) {
                 // Allow nothing submission if no submission has been made and this is a tutor
@@ -1149,9 +1149,9 @@ class turnitintooltwo_view {
                 $grade .= $OUTPUT->box($OUTPUT->pix_icon('icon-edit-grey',
                                         get_string('submitnothing', 'turnitintooltwo'), 'mod_turnitintooltwo'),
                                         'submit_nothing', 'submitnothing_0_'.$partid.'_'.$submission->userid);
-                $rawgrade = -1;
+                $rawgrade = null;
             } else {
-                $rawgrade = -1;
+                $rawgrade = null;
                 $grade = $OUTPUT->box('--', '');
             }
 
@@ -1282,13 +1282,13 @@ class turnitintooltwo_view {
         $data = array($partid, $checkbox, $studentname, $title, $objectid, $modified);
         if (($istutor) || (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             if ($context == 'all') {
-                $data[] = (int)$rawscore;
+                $data[] = $rawscore;
             }
             $data[] = $score;
         }
         if ($config->usegrademark AND $turnitintooltwoassignment->turnitintooltwo->usegrademark == 1) {
             if ($context == 'all') {
-                $data[] = (int)$rawgrade;
+                $data[] = $rawgrade;
             }
             $data[] = $grade;
             if (count($parts) > 1 || $turnitintooltwoassignment->turnitintooltwo->grade < 0) {
