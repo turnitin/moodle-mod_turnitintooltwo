@@ -53,7 +53,7 @@ class turnitintooltwo_comms {
      * @return object \APITurnitin
      */
     public function initialise_api( $istestingconnection = false ) {
-        global $CFG;
+        global $CFG, $tiipp;
 
         $api = new TurnitinAPI($this->tiiaccountid, $this->tiiapiurl, $this->tiisecretkey,
                                 $this->tiiintegrationid, $this->langcode);
@@ -93,7 +93,7 @@ class turnitintooltwo_comms {
         }
 
         // Offline mode provided by Androgogic
-        if (!empty($CFG->tiioffline) && !$istestingconnection && $_SESSION['tii_plugin_module_context'] == 'TT') {
+        if (!empty($CFG->tiioffline) && !$istestingconnection && empty($tiipp->in_use)) {
             turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
         }
         $api->setIsTestingConnection($istestingconnection);
