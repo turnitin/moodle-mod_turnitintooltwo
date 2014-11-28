@@ -60,12 +60,11 @@ if ($ADMIN->fulltree) {
                                                     array('class' => 'tii_upgrading_check'));
 
     // Offline mode provided by Androgogic. Set tiioffline in config.php.
+    $offlinecomment = '';
     if (!empty($CFG->tiioffline)) {
         $offlinecomment = html_writer::start_tag('div', array('class' => 'offline_status'));
         $offlinecomment .= $OUTPUT->box(get_string('offlinestatus', 'turnitintooltwo'), 'offline');
         $offlinecomment .= html_writer::end_tag('div');
-    } else {
-        $offlinecomment = '';
     }
 
     // Test connection to turnitin link
@@ -102,7 +101,10 @@ if ($ADMIN->fulltree) {
     $ynoptions = array(0 => get_string('no'), 1 => get_string('yes'));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintooltwo'),
-                       get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $ynoptions));
+                        get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $ynoptions));
+
+    $settings->add(new admin_setting_configselect('turnitintooltwo/enableperformancelogs', get_string('enableperformancelogs', 'turnitintooltwo'),
+                        get_string('enableperformancelogs_desc', 'turnitintooltwo'), 0, $ynoptions));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/usegrademark',
                                                     get_string('turnitinusegrademark', 'turnitintooltwo'),

@@ -463,3 +463,5 @@ $string['filedoesnotexist'] = 'File has been deleted';
 $string['errorenrollingall'] = 'There has been an error enrolling all students on Turnitin - Please consult the API logs for further information';
 $string['eventremoved'] = 'This event has been removed the cron queue and will not be processed again.';
 $string['partnametoolarge'] = 'The part name is too large. Please limit to 40 characters.';
+$string['enableperformancelogs'] = 'Enable Network Performance Logging';
+$string['enableperformancelogs_desc'] = 'If enabled, each request to the Turnitin server will be logged in {dataroot}/temp/turnitintooltwo/logs';

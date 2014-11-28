@@ -20,6 +20,7 @@
  */
 
 require_once($CFG->dirroot.'/mod/turnitintooltwo/sdk/api.class.php');
+require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_perflog.class.php');
 
 class turnitintooltwo_comms {
 
@@ -91,10 +92,12 @@ class turnitintooltwo_comms {
             $api->setSSLCertificate($certificate);
         }
 
-        // Moving to 2014012410
-        // if (!empty($CFG->tiioffline) && !$istestingconnection) {
-        //     turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
-        // }
+        // Offline mode provided by Androgogic
+        if (!empty($CFG->tiioffline) && !$istestingconnection && $_SESSION['tii_plugin_module_context'] == 'TT') {
+            turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
+        }
+        $api->setIsTestingConnection($istestingconnection);
+        $api->setPerflog(new turnitintooltwo_perflog());
 
         return $api;
     }

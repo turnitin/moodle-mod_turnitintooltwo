@@ -138,5 +138,3 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
         return $rules;
     }
 }
-
-//?>

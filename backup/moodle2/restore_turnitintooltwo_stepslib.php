@@ -168,5 +168,3 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         }
     }
 }
-
-//?>

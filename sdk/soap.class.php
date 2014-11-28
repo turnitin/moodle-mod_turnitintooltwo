@@ -28,6 +28,9 @@ class Soap extends SoapClient {
     private $proxybypass;
     private $sslcertificate;
 
+    private $istestingconnection;
+    private $perflog;
+
     protected $extensions;
 
     public static $lislanguage = 'en-US';
@@ -139,6 +142,22 @@ class Soap extends SoapClient {
         $this->sslcertificate = $sslcertificate;
     }
 
+    public function getIsTestingConnection() {
+        return $this->$istestingconnection;
+    }
+
+    public function setIsTestingConnection($istestingconnection) {
+        $this->istestingconnection = $istestingconnection;
+    }
+
+    public function getPerflog() {
+        return $this->perflog;
+    }
+
+    public function setPerflog($perflog) {
+        $this->perflog = $perflog;
+    }
+
     public function genUuid() {
         return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand( 0, 0xffff ),
@@ -233,6 +252,8 @@ class Soap extends SoapClient {
                         'OriginalityReportCapable' => 'Boolean',
                         'AcceptNothingSubmission' => 'Boolean'
                         );
+        $this->istestingconnection = false;
+        $this->perflog = null;
         parent::__construct( $wsdl, $options );
     }
 
@@ -277,7 +298,15 @@ class Soap extends SoapClient {
 
         $this->setHttpHeaders( join( PHP_EOL, $curl_headers ) );
 
+        if ($this->perflog !== null) {
+            $this->perflog->start_timer();
+        }
+
         $result = curl_exec($ch);
+
+        if ($this->perflog !== null) {
+            $this->perflog->stop_timer($ch);
+        }
 
         if( $result === false) {
             $logger = new TurnitinLogger( $this->logpath );

@@ -136,6 +136,7 @@ switch ($cmd) {
 
     case "apilog":
     case "activitylog":
+    case "perflog":
 
         $logsdir = $CFG->dataroot . "/temp/turnitintooltwo/logs/";
         $savefile = $cmd.'_'.$filedate.'.txt';
@@ -149,6 +150,9 @@ switch ($cmd) {
             $tabs[] = new tabobject( $label, $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd='.$label,
                                         ucfirst( $label ), ucfirst( $label ), false );
             $label = 'activitylog';
+            $tabs[] = new tabobject( $label, $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd='.$label,
+                                        ucfirst( $label ), ucfirst( $label ), false );
+            $label = 'perflog';
             $tabs[] = new tabobject( $label, $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd='.$label,
                                         ucfirst( $label ), ucfirst( $label ), false );
             $inactive = array($cmd);
