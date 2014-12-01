@@ -140,14 +140,17 @@ class turnitintooltwo_assignment {
      *
      * @param int $courseid The ID of the course to get the data for
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
+     * @param string $workflowcontext whether we are in a cron context (from PP) or using the site as normal.
      * @return object The course object with the Turnitin Class data if it's been created
      */
-    public static function get_course_data($courseid, $coursetype = "TT") {
+    public static function get_course_data($courseid, $coursetype = "TT", $workflowcontext = "site") {
         global $DB;
 
         if (!$course = $DB->get_record("course", array("id" => $courseid))) {
-            turnitintooltwo_print_error('coursegeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
-            exit();
+            if ($workflowcontext != "cron") {
+                turnitintooltwo_print_error('coursegeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
+                exit;
+            }
         }
 
         $course->turnitin_cid = 0;
@@ -335,7 +338,7 @@ class turnitintooltwo_assignment {
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      * @return object the turnitin course if created
      */
-    public function create_tii_course($course, $ownerid, $coursetype = "TT") {
+    public function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -377,7 +380,12 @@ class turnitintooltwo_assignment {
 
             return $turnitincourse;
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'classcreationerror');
+            $toscreen = true;
+            if ($workflowcontext == "cron") {
+                mtrace(get_string('pp_classcreationerror', 'turnitintooltwo'));
+                $toscreen = false;
+            }
+            $turnitincomms->handle_exceptions($e, 'classcreationerror', $toscreen);
         }
     }
 
@@ -413,7 +421,7 @@ class turnitintooltwo_assignment {
             $turnitincourse->turnitin_ctl = $course->fullname . " (Moodle ".$coursetype.")";
             $turnitincourse->course_type = $coursetype;
 
-            if (!$insertid = $DB->update_record('turnitintooltwo_courses', $turnitincourse)) {
+            if (!$insertid = $DB->update_record('turnitintooltwo_courses', $turnitincourse) && $coursetype != "PP") {
                 turnitintooltwo_print_error('classupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
                 exit();
             } else {
@@ -421,7 +429,8 @@ class turnitintooltwo_assignment {
                                                 " (".$turnitincourse->id.")", "REQUEST");
             }
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'classupdateerror');
+            $toscreen = ($coursetype == "PP") ? false : true;
+            $turnitincomms->handle_exceptions($e, 'classupdateerror', $toscreen);
         }
     }
 
@@ -750,7 +759,8 @@ class turnitintooltwo_assignment {
      * @param object $assignment add assignment instance
      * @param var $toolid turnitintooltwo id
      */
-    public static function create_tii_assignment($assignment, $toolid, $partnumber, $usecontext = "turnitintooltwo") {
+    public static function create_tii_assignment($assignment, $toolid, $partnumber, 
+                                                $usecontext = "turnitintooltwo", $workflowcontext = "site") {
         global $DB;
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
@@ -772,7 +782,12 @@ class turnitintooltwo_assignment {
             if ($partnumber == 1 && $usecontext == "turnitintooltwo") {
                 $DB->delete_records('turnitintooltwo', array('id' => $toolid));
             }
-            $turnitincomms->handle_exceptions($e, 'createassignmenterror');
+            $toscreen = true;
+            if ($workflowcontext == "cron") {
+                mtrace(get_string('pp_assignmentcreateerror', 'turnitintooltwo'));
+                $toscreen = false;
+            }
+            $turnitincomms->handle_exceptions($e, 'createassignmenterror', $toscreen);
         }
     }
 
@@ -781,7 +796,7 @@ class turnitintooltwo_assignment {
      *
      * @param object $assignment edit assignment instance
      */
-    public function edit_tii_assignment($assignment) {
+    public function edit_tii_assignment($assignment, $workflowcontext = "site") {
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -793,7 +808,12 @@ class turnitintooltwo_assignment {
 
             turnitintooltwo_activitylog("Turnitin Assignment part updated - id: ".$assignment->getAssignmentId(), "REQUEST");
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'editassignmenterror');
+            $toscreen = true;
+            if ($workflowcontext == "cron") {
+                mtrace(get_string('pp_assignmentediterror', 'turnitintooltwo'));
+                $toscreen = false;
+            }
+            $turnitincomms->handle_exceptions($e, 'editassignmenterror', $toscreen);
         }
     }
 

@@ -465,3 +465,6 @@ $string['eventremoved'] = 'This event has been removed the cron queue and will n
 $string['partnametoolarge'] = 'The part name is too large. Please limit to 40 characters.';
 $string['enableperformancelogs'] = 'Enable Network Performance Logging';
 $string['enableperformancelogs_desc'] = 'If enabled, each request to the Turnitin server will be logged in {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'This module could not be created on Turnitin, please consult your API logs for further information';
+$string['pp_assignmentediterror'] = 'This module could not be edited on Turnitin, please consult your API logs for further information';
+$string['pp_classcreationerror'] = 'This class could not be created on Turnitin, please consult your API logs for further information';

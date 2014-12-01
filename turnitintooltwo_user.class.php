@@ -24,14 +24,16 @@ class turnitintooltwo_user {
     public $username;
     public $user_agreement_accepted;
     private $enrol;
+    private $workflowcontext;
     private $usermessages;
     private $instructor_defaults;
     private $instructor_rubrics;
 
-    public function __construct($id, $role = "Learner", $enrol = true) {
+    public function __construct($id, $role = "Learner", $enrol = true, $workflowcontext = "site") {
         $this->id = $id;
         $this->set_user_role($role);
         $this->enrol = $enrol;
+        $this->workflowcontext = $workflowcontext;
 
         $this->firstname = "";
         $this->lastname = "";
@@ -203,7 +205,8 @@ class turnitintooltwo_user {
             return $tiiuserid;
 
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'userfinderror');
+            $toscreen = ($this->workflowcontext == "cron") ? false : true;
+            $turnitincomms->handle_exceptions($e, 'userfinderror', $toscreen);
         }
     }
 
@@ -247,7 +250,8 @@ class turnitintooltwo_user {
             return $tiiuserid;
 
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'usercreationerror');
+            $toscreen = ($this->workflowcontext == "cron") ? false : true;
+            $turnitincomms->handle_exceptions($e, 'usercreationerror', $toscreen);
         }
     }
 
@@ -276,7 +280,8 @@ class turnitintooltwo_user {
                 $turnitincall->updateUser($user);
                 turnitintooltwo_activitylog("Turnitin User updated: ".$this->id." (".$this->tii_user_id.")", "REQUEST");
             } catch (Exception $e) {
-                $turnitincomms->handle_exceptions($e, 'userupdateerror');
+                $toscreen = ($this->workflowcontext == "cron") ? false : true;
+                $turnitincomms->handle_exceptions($e, 'userupdateerror', $toscreen);
             }
         }
     }
@@ -317,12 +322,16 @@ class turnitintooltwo_user {
             $user->id = $turnitintooltwouser->id;
             $user->turnitin_utp = $turnitintooltwouser->turnitin_utp;
             if ((!$DB->update_record('turnitintooltwo_users', $user))) {
+                if ($this->workflowcontext != "cron") {
+                    turnitintooltwo_print_error('userupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
+                    exit();
+                }
+            }
+        } else if (!$insertid = $DB->insert_record('turnitintooltwo_users', $user)) {
+            if ($this->workflowcontext != "cron") {
                 turnitintooltwo_print_error('userupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
                 exit();
             }
-        } else if (!$insertid = $DB->insert_record('turnitintooltwo_users', $user)) {
-            turnitintooltwo_print_error('userupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
-            exit();
         }
     }
 
