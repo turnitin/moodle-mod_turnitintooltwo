@@ -330,7 +330,8 @@ switch ($action) {
                 } else {
                     require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
                     $pluginturnitin = new plagiarism_plugin_turnitin();
-                    $plagiarismsettings = $pluginturnitin->get_settings($assignmentid);
+                    $cm = get_coursemodule_from_instance($modulename, $assignmentid);
+                    $plagiarismsettings = $pluginturnitin->get_settings($cm->id);
                 }
 
                 if ($modulename == "turnitintooltwo") {
