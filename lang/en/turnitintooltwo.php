@@ -468,3 +468,4 @@ $string['enableperformancelogs_desc'] = 'If enabled, each request to the Turniti
 $string['pp_assignmentcreateerror'] = 'This module could not be created on Turnitin, please consult your API logs for further information';
 $string['pp_assignmentediterror'] = 'This module could not be edited on Turnitin, please consult your API logs for further information';
 $string['pp_classcreationerror'] = 'This class could not be created on Turnitin, please consult your API logs for further information';
+$string['pp_assignmentsubmiterror'] = 'There is a problem with replicating your module in Turnitin which is preventing submissions, please consult your API logs for further information';
