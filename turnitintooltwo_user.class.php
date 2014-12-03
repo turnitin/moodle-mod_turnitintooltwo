@@ -336,37 +336,6 @@ class turnitintooltwo_user {
     }
 
     /**
-     * Check whether user is enrolled in a class
-     *
-     * @param int $tiicourseid the course id in Turnitin
-     * @return boolean
-     */
-    public function check_user_class_membership($tiicourseid) {
-
-        $turnitincomms = new turnitintooltwo_comms();
-        $turnitincall = $turnitincomms->initialise_api();
-
-        $class = new TiiClass();
-        $class->setTitle('');
-        $class->setUserId($this->tii_user_id);
-        $class->setUserRole($this->role);
-
-        try {
-            $response = $turnitincall->findClasses($class);
-            $findclass = $response->getClass();
-            $classids = $findclass->getClassIds();
-
-            return (in_array($tiicourseid, $classids)) ? true : false;
-
-        } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'membercheckerror');
-            $classids = array();
-
-            return false;
-        }
-    }
-
-    /**
      * Enrol the user on this course/class in Turnitin
      *
      * @param type $tiicourseid id for the course/class in Turnitin
