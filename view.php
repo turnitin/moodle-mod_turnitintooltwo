@@ -446,6 +446,7 @@ switch ($do) {
     case "origreport":
     case "grademark":
     case "downloadoriginal":
+    case "default":
         $submissionid = required_param('submissionid', PARAM_INT);
         $user = new turnitintooltwo_user($USER->id, $userrole);
         echo html_writer::tag("div", $turnitintooltwoview->output_dv_launch_form($do, $submissionid, $user->tii_user_id, $userrole),
