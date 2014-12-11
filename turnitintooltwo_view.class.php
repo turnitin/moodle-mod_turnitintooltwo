@@ -1281,15 +1281,11 @@ class turnitintooltwo_view {
 
         $data = array($partid, $checkbox, $studentname, $title, $objectid, $modified);
         if (($istutor) || (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
-            if ($context == 'all') {
-                $data[] = $rawscore;
-            }
+            $data[] = $rawscore;
             $data[] = $score;
         }
         if ($config->usegrademark AND $turnitintooltwoassignment->turnitintooltwo->usegrademark == 1) {
-            if ($context == 'all') {
-                $data[] = $rawgrade;
-            }
+            $data[] = $rawgrade;
             $data[] = $grade;
             if (count($parts) > 1 || $turnitintooltwoassignment->turnitintooltwo->grade < 0) {
                 $data[] = $overallgrade;
