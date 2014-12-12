@@ -454,8 +454,12 @@ jQuery(document).ready(function($) {
             var dvWindow = window.open(url, 'dv_'+idStr[1]);
             var width = $(window).width();
             var height = $(window).height();
-            dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
-            dvWindow.document.write('<script>document.body.style = \'margin: 0 0;\';</script'+'>'); 
+            if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
+            } else {
+                dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
+            }
+            dvWindow.document.write('<script>document.body.style = \'margin: 0 0;\';</script'+'>');
             dvWindow.document.getElementById('dvWindow').src = url;
             dvWindow.document.close();
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
