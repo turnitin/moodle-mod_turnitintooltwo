@@ -28,6 +28,7 @@ require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_assignment.clas
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 20971520);
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
+define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
 
 // For use in course migration.
 $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
@@ -522,8 +523,18 @@ function turnitintooltwo_tempfile($suffix) {
     if (!file_exists($tempdir)) {
         mkdir( $tempdir, $CFG->directorypermissions, true );
     }
+    // Get file extension and shorten filename if too long.
+    $pathparts = explode('.', $suffix);
+    $ext = array_pop($pathparts);
+    $filename = implode('.', $pathparts);
+    $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - strlen($tempdir.DIRECTORY_SEPARATOR);
+    if (strlen($filename) > $permittedstrlength) {
+        $filename = substr($filename, 0, $permittedstrlength);
+    }
+    $filename = mt_rand().$filename.'.'.$ext;
+
     while (!$fp) {
-        $file = $tempdir.DIRECTORY_SEPARATOR.mt_rand().'.'.$suffix;
+        $file = $tempdir.DIRECTORY_SEPARATOR.$filename;
         $fp = @fopen($file, 'w');
     }
     fclose($fp);
