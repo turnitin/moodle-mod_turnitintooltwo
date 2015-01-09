@@ -23,10 +23,12 @@ jQuery(document).ready(function($) {
         $(this).addClass('disabled');
         var part_id = $(this).prop('id').split('_')[2];
         var student_id = $(this).prop('id').split('_')[3];
-        var message = $('.nothingsubmit_warning').first().html().replace(/<br>/g, "\n");
+        var message = M.str.turnitintooltwo.submitnothingwarning.replace(/<br>/g, "\n").replace(/&#39;/g, "\'");// /(?:\\[rn])+/g
         var cookieseen = $.cookie('submitnothingaccept');
         if ( cookieseen || confirm( message ) ) {
             submitNothing(student_id, part_id);
+        } else {
+            $(this).removeClass("disabled");
         }
         return;
     });

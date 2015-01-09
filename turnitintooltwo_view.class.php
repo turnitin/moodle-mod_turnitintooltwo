@@ -147,6 +147,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('tiisubmissionsgeterror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('membercheckerror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('resubmissiongradewarn', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('submitnothingwarning', 'turnitintooltwo');
     }
 
     /**
@@ -1145,8 +1146,7 @@ class turnitintooltwo_view {
 
             } else if (!isset($submission->submission_objectid) && empty($submission->id) && $istutor ) {
                 // Allow nothing submission if no submission has been made and this is a tutor
-                $grade = $OUTPUT->box(get_string('submitnothingwarning', 'turnitintooltwo'),'nothingsubmit_warning', '');
-                $grade .= $OUTPUT->box($OUTPUT->pix_icon('icon-edit-grey',
+                $grade = $OUTPUT->box($OUTPUT->pix_icon('icon-edit-grey',
                                         get_string('submitnothing', 'turnitintooltwo'), 'mod_turnitintooltwo'),
                                         'submit_nothing', 'submitnothing_0_'.$partid.'_'.$submission->userid);
                 $rawgrade = null;
