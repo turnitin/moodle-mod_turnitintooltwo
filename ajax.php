@@ -148,6 +148,8 @@ switch ($action) {
         $PAGE->set_context(context_system::instance());
         if (is_siteadmin()) {
             echo json_encode(turnitintooltwo_getusers());
+        } else {
+            throw new moodle_exception('accessdenied', 'admin');
         }
         break;
 
