@@ -455,7 +455,7 @@ jQuery(document).ready(function($) {
             var width = $(window).width();
             var height = $(window).height();
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-                dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
+                dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-popups allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
             } else {
                 dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
             }
