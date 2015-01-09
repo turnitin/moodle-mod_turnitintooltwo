@@ -28,11 +28,42 @@ require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_assignment.clas
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 20971520);
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
+define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
 
 // For use in course migration.
 $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
                                     2 => 'WebCT', 5 => 'Angel', 6 => 'Moodle Basic', 7 => 'eCollege', 8 => 'Desire2Learn',
                                     9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct');
+
+/**
+ * Function for either adding to log or triggering an event
+ * depending on Moodle version
+ * @param int $courseid Moodle course ID
+ * @param string $event_name The event we are logging
+ * @param string $link A link to the Turnitin activity
+ * @param string $desc Description of the logged event
+ * @param int $cmid Course module id
+ */
+function turnitintooltwo_add_to_log($courseid, $event_name, $link, $desc, $cmid, $userid = 0) {
+    global $CFG, $USER;
+    if ( ( property_exists( $CFG, 'branch' ) AND ( $CFG->branch < 27 ) ) || ( !property_exists( $CFG, 'branch' ) ) ) {
+        add_to_log($courseid, "turnitintooltwo", $event_name, $link, $desc, $cmid);
+    } else {
+        $event_name = str_replace(' ', '_', $event_name);
+        $event_path = '\mod_turnitintooltwo\event\\'.$event_name;
+
+        $data = array(
+            'objectid' => $cmid,
+            'context' => ( $cmid == 0 ) ? context_course::instance($courseid) : context_module::instance($cmid),
+            'other' => array('desc' => $desc)
+        );
+        if (!empty($userid) && ($userid != $USER->id)) {
+            $data['relateduserid'] = $userid;
+        }
+        $event = $event_path::create($data);
+        $event->trigger();
+    }
+}
 
 /**
  * @param string $feature FEATURE_xx constant for requested feature
@@ -522,8 +553,18 @@ function turnitintooltwo_tempfile($suffix) {
     if (!file_exists($tempdir)) {
         mkdir( $tempdir, $CFG->directorypermissions, true );
     }
+    // Get file extension and shorten filename if too long.
+    $pathparts = explode('.', $suffix);
+    $ext = array_pop($pathparts);
+    $filename = implode('.', $pathparts);
+    $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - strlen($tempdir.DIRECTORY_SEPARATOR);
+    if (strlen($filename) > $permittedstrlength) {
+        $filename = substr($filename, 0, $permittedstrlength);
+    }
+    $filename = mt_rand().$filename.'.'.$ext;
+
     while (!$fp) {
-        $file = $tempdir.DIRECTORY_SEPARATOR.mt_rand().'.'.$suffix;
+        $file = $tempdir.DIRECTORY_SEPARATOR.$filename;
         $fp = @fopen($file, 'w');
     }
     fclose($fp);

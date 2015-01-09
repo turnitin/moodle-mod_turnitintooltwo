@@ -3,6 +3,8 @@
 // Date: 2014-07-25
 // Language: en
 
+$string['listsubmissions'] = 'List Submissions';
+$string['viewsubmission'] = 'View Submission';
 $string['addsubmission'] = 'Add Submission';
 $string['allowlate'] = 'Allow Submissions after the Due Date';
 $string['allsubmissions'] = 'Submission Inbox';
