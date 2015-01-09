@@ -188,7 +188,7 @@ $nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "cla
 // Build page.
 echo $turnitintooltwoview->output_header(null,
             null,
-            $_SERVER["REQUEST_URI"],
+            '/mod/turnitintooltwo/extras.php',
             $title,
             $title,
             $nav,

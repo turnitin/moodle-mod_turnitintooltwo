@@ -39,7 +39,7 @@ require_login($course->id);
 
 // Print the header.
 $extranavigation = array(array('title' => get_string("modulenameplural", "turnitintooltwo"), 'url' => null));
-$turnitintooltwoview->output_header(null, $course, $_SERVER["REQUEST_URI"], get_string("modulenameplural", "turnitintooltwo"),
+$turnitintooltwoview->output_header(null, $course, '/mod/turnitintooltwo/index.php', get_string("modulenameplural", "turnitintooltwo"),
                                         $SITE->fullname, $extranavigation, '', '', true);
 
 echo $turnitintooltwoview->show_assignments($course);

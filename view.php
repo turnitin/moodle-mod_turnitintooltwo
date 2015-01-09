@@ -295,7 +295,7 @@ if (!empty($action)) {
 if ($viewcontext == "box" || $viewcontext == "box_solid") {
     $turnitintooltwoview->output_header($cm,
             $course,
-            $_SERVER["REQUEST_URI"],
+            '/mod/turnitintooltwo/view.php',
             '',
             '',
             array(),
@@ -314,7 +314,7 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     $turnitintooltwoview->output_header($cm,
             $course,
-            $_SERVER["REQUEST_URI"],
+            '/mod/turnitintooltwo/view.php',
             $turnitintooltwoassignment->turnitintooltwo->name,
             $SITE->fullname,
             $extranavigation,
