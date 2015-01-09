@@ -82,7 +82,11 @@ if ($ADMIN->fulltree) {
     $testconnection .= $OUTPUT->box('', '', 'test_result');
     $testconnection .= html_writer::end_tag('div');
 
-    $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.') - '.$upgrade;
+    $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.')';
+
+    if ($current_section == 'modsettingturnitintooltwo') {
+        $desc .= ' - '.$upgrade;
+    }
 
     $settings->add(new admin_setting_heading('turnitintooltwo_header', $desc, $tabmenu));
 
