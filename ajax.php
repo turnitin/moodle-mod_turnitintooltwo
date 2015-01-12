@@ -63,6 +63,14 @@ switch ($action) {
             $return["aaData"] = '';
         }
 
+        $partdetails = $turnitintooltwoassignment->get_parts();
+
+        if ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) {
+            $return['export_option'] = true;
+        } else {
+            $return['export_option'] = false;
+        }
+
         echo json_encode($return);
         break;
 

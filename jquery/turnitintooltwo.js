@@ -507,6 +507,11 @@ jQuery(document).ready(function($) {
             }
         });
 
+        if ( $('#export_options').hasClass('false') ) {
+            $('#export_options').hide();
+            $('.export_data').append('<span class="empty-dash">--</span>');
+        }
+
         var theDate = new Date();
         $('.editable_date').editable({
             'type': 'combodate',
@@ -523,6 +528,14 @@ jQuery(document).ready(function($) {
                     return response.msg;
                 } else {
                     $('#refresh_'+response.partid).click();
+
+                    if (response.export_option === false) {
+                        $('#export_options').hide();
+                        $('.export_data').append('<span class="empty-dash">--</span>');
+                    } else {
+                        $('.empty-dash').remove();
+                        $('#export_options').show();
+                    }
                 }
             }
         });
