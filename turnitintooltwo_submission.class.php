@@ -91,6 +91,11 @@ class turnitintooltwo_submission {
         if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
             return false;
         }
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+            $turnitintooltwoassignment->turnitintooltwo->course);
+
+        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, "User submitted '" . $data['submissiontitle'] . "'", $cm->id, $data['studentsname']);
 
         $this->reset_submission($data);
 
@@ -271,6 +276,12 @@ class turnitintooltwo_submission {
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+            $turnitintooltwoassignment->turnitintooltwo->course);
+
+        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "delete submission", 'view.php?id='.$cm->id, "User deleted the assignment '$this->submission_title'", $cm->id, $this->userid);
+
         // Delete Moodle submission first.
         if (!$DB->delete_records('turnitintooltwo_submissions', array('id' => $this->id))) {
             $notice["type"] = "error";
@@ -279,9 +290,6 @@ class turnitintooltwo_submission {
         }
 
         // Update grade in Gradecenter.
-        $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
-        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
-                                                        $turnitintooltwoassignment->turnitintooltwo->course);
         $grades = new stdClass();
 
         // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
