@@ -1064,7 +1064,16 @@ class turnitintooltwo_view {
             }
         }
 
-        $title = (!empty($submission->submission_title)) ? format_string($submission->submission_title) : "--";
+        //submission title
+        if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
+            $title = $OUTPUT->box_start('default_open', 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
+                $title .= $OUTPUT->box(format_string($submission->submission_title));
+                $title .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'default_url_'.$submission->submission_objectid);    
+            $title .= $OUTPUT->box_end(true);
+        } else {
+            $title = "--";
+        }
+
         $objectid = (!empty($submission->submission_objectid)) ? $submission->submission_objectid : "--";
 
         // Show date of submission or link to submit if it didn't work.
