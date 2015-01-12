@@ -507,7 +507,7 @@ jQuery(document).ready(function($) {
             }
         });
 
-        if ( $('#export_options').hasClass('false') ) {
+        if ( $('#export_options').hasClass('tii_export_options_hide') ) {
             $('#export_options').hide();
             $('.export_data').append('<span class="empty-dash">--</span>');
         }
@@ -529,7 +529,7 @@ jQuery(document).ready(function($) {
                 } else {
                     $('#refresh_'+response.partid).click();
 
-                    if (response.export_option === false) {
+                    if (response.export_option == "tii_export_options_hide") {
                         $('#export_options').hide();
                         $('.export_data').append('<span class="empty-dash">--</span>');
                     } else {

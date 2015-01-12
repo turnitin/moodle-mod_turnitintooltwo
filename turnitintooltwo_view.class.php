@@ -786,17 +786,13 @@ class turnitintooltwo_view {
             // Put in div placeholder for launch form.
             $exportxlszip .= $OUTPUT->box('', 'launch_form', 'xls_inbox_form_'.$partdetails[$partid]->tiiassignid);
             $exportxlszip .= $OUTPUT->box_end(true);
+            $export_options = ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) ?
+                                     'tii_export_options_show' : 'tii_export_options_hide';
 
-            if ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) {
-                $anon = 'true';
-            } else {
-                $anon = 'false';
-            }
-
-            $links = $OUTPUT->box_start($anon, 'export_options');
+            $links = $OUTPUT->box_start($export_options, 'export_options');
             $links .= $exportxlszip.$exportpdfzip.$exportoriginalzip;
             $links .= $OUTPUT->box_end(true);
-                
+
             if ($turnitintooltwoassignment->count_submissions($cm, $partid) == 0) {
                 $links = html_writer::tag('div', $links, array('id' => 'export_links', 'class' => 'hidden_class'));
             }

@@ -65,11 +65,8 @@ switch ($action) {
 
         $partdetails = $turnitintooltwoassignment->get_parts();
 
-        if ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) {
-            $return['export_option'] = true;
-        } else {
-            $return['export_option'] = false;
-        }
+        $return['export_option'] = ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) ?
+                                    "tii_export_options_show" : "tii_export_options_hide";
 
         echo json_encode($return);
         break;
