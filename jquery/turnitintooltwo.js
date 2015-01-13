@@ -442,7 +442,7 @@ jQuery(document).ready(function($) {
     }
 
     // Open the DV in a new window in such a way as to not be blocked by popups.
-    $(document).on('click', '.origreport_open, .grademark_open', function() {
+    $(document).on('click', '.default_open, .origreport_open, .grademark_open', function() {
         var proceed = true;
         if ($(this).hasClass('graded_warning')) {
             if (!confirm(M.str.turnitintooltwo.resubmissiongradewarn)) {
@@ -507,6 +507,11 @@ jQuery(document).ready(function($) {
             }
         });
 
+        if ( $('#export_options').hasClass('tii_export_options_hide') ) {
+            $('#export_options').hide();
+            $('.export_data').append('<span class="empty-dash">--</span>');
+        }
+
         var theDate = new Date();
         $('.editable_date').editable({
             'type': 'combodate',
@@ -523,6 +528,14 @@ jQuery(document).ready(function($) {
                     return response.msg;
                 } else {
                     $('#refresh_'+response.partid).click();
+
+                    if (response.export_option == "tii_export_options_hide") {
+                        $('#export_options').hide();
+                        $('.export_data').append('<span class="empty-dash">--</span>');
+                    } else {
+                        $('.empty-dash').remove();
+                        $('#export_options').show();
+                    }
                 }
             }
         });

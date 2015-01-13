@@ -761,41 +761,40 @@ class turnitintooltwo_view {
         $cells[4]->attributes['class'] = 'data';
 
         if ($istutor) {
-            $links = "--";
-            // Only show export links if anonymous marking is still enforced.
-            if (($turnitintooltwoassignment->turnitintooltwo->anon == 0)
-                        || ($turnitintooltwoassignment->turnitintooltwo->anon > 0 && $partdetails[$partid]->dtpost > time())) {
+            // Output icon to download zip file of submissions in original format.
+            $exportoriginalzip = $OUTPUT->box_start('row_export_orig', '');
+            $exportoriginalzip .= $OUTPUT->box($OUTPUT->pix_icon('file',
+                                    get_string('downloadorigzip', 'turnitintooltwo'), 'mod_turnitintooltwo'),
+                                    'zip_open orig_zip_open', 'orig_zip_'.$partdetails[$partid]->tiiassignid);
+            // Put in div placeholder for launch form.
+            $exportoriginalzip .= $OUTPUT->box('', 'launch_form', 'orig_zip_form_'.$partdetails[$partid]->tiiassignid);
+            $exportoriginalzip .= $OUTPUT->box_end(true);
 
-                // Output icon to download zip file of submissions in original format.
-                $exportoriginalzip = $OUTPUT->box_start('row_export_orig', '');
-                $exportoriginalzip .= $OUTPUT->box($OUTPUT->pix_icon('file',
-                                        get_string('downloadorigzip', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        'zip_open orig_zip_open', 'orig_zip_'.$partdetails[$partid]->tiiassignid);
-                // Put in div placeholder for launch form.
-                $exportoriginalzip .= $OUTPUT->box('', 'launch_form', 'orig_zip_form_'.$partdetails[$partid]->tiiassignid);
-                $exportoriginalzip .= $OUTPUT->box_end(true);
+            // Output icon to download zip file of submissions in pdf format.
+            $exportpdfzip = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.
+                                    $cm->id.'&part='.$partid.'&do=export_pdfs&view_context=box_solid',
+                                    $OUTPUT->pix_icon('file-pdf', get_string('downloadpdfzip', 'turnitintooltwo'),
+                                                                    'mod_turnitintooltwo'),
+                                    array("class" => "downloadpdf_box",
+                                            "id" => "download_".$partdetails[$partid]->tiiassignid));
 
-                // Output icon to download zip file of submissions in pdf format.
-                $exportpdfzip = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.
-                                        $cm->id.'&part='.$partid.'&do=export_pdfs&view_context=box_solid',
-                                        $OUTPUT->pix_icon('file-pdf', get_string('downloadpdfzip', 'turnitintooltwo'),
-                                                                        'mod_turnitintooltwo'),
-                                        array("class" => "downloadpdf_box",
-                                                "id" => "download_".$partdetails[$partid]->tiiassignid));
+            // Output icon to download excel spreadsheet of grades.
+            $exportxlszip = $OUTPUT->box_start('row_export_xls', '');
+            $exportxlszip .= $OUTPUT->box($OUTPUT->pix_icon('file-xls',
+                                        get_string('downloadgradexls', 'turnitintooltwo'), 'mod_turnitintooltwo'),
+                                        'zip_open xls_inbox_open', 'xls_inbox_'.$partdetails[$partid]->tiiassignid);
+            // Put in div placeholder for launch form.
+            $exportxlszip .= $OUTPUT->box('', 'launch_form', 'xls_inbox_form_'.$partdetails[$partid]->tiiassignid);
+            $exportxlszip .= $OUTPUT->box_end(true);
+            $export_options = ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) ?
+                                     'tii_export_options_show' : 'tii_export_options_hide';
 
-                // Output icon to download excel spreadsheet of grades.
-                $exportxlszip = $OUTPUT->box_start('row_export_xls', '');
-                $exportxlszip .= $OUTPUT->box($OUTPUT->pix_icon('file-xls',
-                                            get_string('downloadgradexls', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                            'zip_open xls_inbox_open', 'xls_inbox_'.$partdetails[$partid]->tiiassignid);
-                // Put in div placeholder for launch form.
-                $exportxlszip .= $OUTPUT->box('', 'launch_form', 'xls_inbox_form_'.$partdetails[$partid]->tiiassignid);
-                $exportxlszip .= $OUTPUT->box_end(true);
+            $links = $OUTPUT->box_start($export_options, 'export_options');
+            $links .= $exportxlszip.$exportpdfzip.$exportoriginalzip;
+            $links .= $OUTPUT->box_end(true);
 
-                $links = $exportxlszip.$exportpdfzip.$exportoriginalzip;
-                if ($turnitintooltwoassignment->count_submissions($cm, $partid) == 0) {
-                    $links = html_writer::tag('div', $links, array('id' => 'export_links', 'class' => 'hidden_class'));
-                }
+            if ($turnitintooltwoassignment->count_submissions($cm, $partid) == 0) {
+                $links = html_writer::tag('div', $links, array('id' => 'export_links', 'class' => 'hidden_class'));
             }
 
             $cells[5] = new html_table_cell($links);
@@ -1064,7 +1063,16 @@ class turnitintooltwo_view {
             }
         }
 
-        $title = (!empty($submission->submission_title)) ? format_string($submission->submission_title) : "--";
+        //submission title
+        if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
+            $title = $OUTPUT->box_start('default_open', 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
+                $title .= $OUTPUT->box(format_string($submission->submission_title));
+                $title .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'default_url_'.$submission->submission_objectid);    
+            $title .= $OUTPUT->box_end(true);
+        } else {
+            $title = "--";
+        }
+
         $objectid = (!empty($submission->submission_objectid)) ? $submission->submission_objectid : "--";
 
         // Show date of submission or link to submit if it didn't work.

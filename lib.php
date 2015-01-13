@@ -36,6 +36,36 @@ $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 
                                     9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct');
 
 /**
+ * Function for either adding to log or triggering an event
+ * depending on Moodle version
+ * @param int $courseid Moodle course ID
+ * @param string $event_name The event we are logging
+ * @param string $link A link to the Turnitin activity
+ * @param string $desc Description of the logged event
+ * @param int $cmid Course module id
+ */
+function turnitintooltwo_add_to_log($courseid, $event_name, $link, $desc, $cmid, $userid = 0) {
+    global $CFG, $USER;
+    if ( ( property_exists( $CFG, 'branch' ) AND ( $CFG->branch < 27 ) ) || ( !property_exists( $CFG, 'branch' ) ) ) {
+        add_to_log($courseid, "turnitintooltwo", $event_name, $link, $desc, $cmid);
+    } else {
+        $event_name = str_replace(' ', '_', $event_name);
+        $event_path = '\mod_turnitintooltwo\event\\'.$event_name;
+
+        $data = array(
+            'objectid' => $cmid,
+            'context' => ( $cmid == 0 ) ? context_course::instance($courseid) : context_module::instance($cmid),
+            'other' => array('desc' => $desc)
+        );
+        if (!empty($userid) && ($userid != $USER->id)) {
+            $data['relateduserid'] = $userid;
+        }
+        $event = $event_path::create($data);
+        $event->trigger();
+    }
+}
+
+/**
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed True if module supports feature, null if doesn't know
  */
