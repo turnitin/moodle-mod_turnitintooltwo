@@ -453,15 +453,16 @@ jQuery(document).ready(function($) {
         if (proceed) {
             var idStr = $(this).attr("id").split("_");
             var url = $('#'+idStr[0]+'_url_'+idStr[1]).html()+'&viewcontext=box&do='+idStr[0]+'&submissionid='+idStr[1]+'&sesskey='+M.cfg.sesskey;
-            var dvWindow = window.open(url, 'dv_'+idStr[1]);
+            var dvWindow = window.open('about:blank', 'dv_'+idStr[1]);
             var width = $(window).width();
             var height = $(window).height();
+            dvWindow.document.write('<title>Document Viewer</title>');
+            dvWindow.document.write('<style>html, body { margin: 0; padding: 0; border: 0; }</style>');
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
                 dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-popups allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
             } else {
                 dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
             }
-            dvWindow.document.write('<script>document.body.style = \'margin: 0 0;\';</script'+'>');
             dvWindow.document.getElementById('dvWindow').src = url;
             dvWindow.document.close();
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
