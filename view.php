@@ -454,12 +454,12 @@ switch ($do) {
                                                                                 array("class" => "launch_form"));
         if ($do === "origreport") {
             $submission = new turnitintooltwo_submission($submissionid, 'turnitin');
-            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "view submission", 'view.php?id='.$cm->id, "User viewed the assignment '$submission->submission_title'", $cm->id, $submission->userid);
+            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "view submission", 'view.php?id='.$cm->id, get_string('viewsubmissiondesc', 'turnitintooltwo') . " '$submission->submission_title'", $cm->id, $submission->userid);
         }
         break;
 
     case "submissions":
-        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions", 'view.php?id='.$cm->id, "User viewed the list of assignments at course: $course->id", $cm->id);
+        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions", 'view.php?id='.$cm->id, get_string('listsubmissionsdesc', 'turnitintooltwo') . ": $course->id", $cm->id);
 
         if (!$istutor && !has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');

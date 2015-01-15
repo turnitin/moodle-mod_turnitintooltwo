@@ -3,6 +3,10 @@
 // Date: 2014-07-25
 // Language: en
 
+$string['listsubmissionsdesc'] = 'User viewed the list of submissions at course';
+$string['viewsubmissiondesc'] = 'User viewed submission';
+$string['addsubmissiondesc'] = 'User added submission';
+$string['deletesubmissiondesc'] = 'User deleted the submission';
 $string['listsubmissions'] = 'List Submissions';
 $string['viewsubmission'] = 'View Submission';
 $string['addsubmission'] = 'Add Submission';
