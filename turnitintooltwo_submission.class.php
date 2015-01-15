@@ -95,7 +95,7 @@ class turnitintooltwo_submission {
         $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
             $turnitintooltwoassignment->turnitintooltwo->course);
 
-        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, "User submitted '" . $data['submissiontitle'] . "'", $cm->id, $data['studentsname']);
+        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('addsubmissiondesc', 'turnitintooltwo') . " '" . $data['submissiontitle'] . "'", $cm->id, $data['studentsname']);
 
         $this->reset_submission($data);
 
@@ -280,7 +280,7 @@ class turnitintooltwo_submission {
         $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
             $turnitintooltwoassignment->turnitintooltwo->course);
 
-        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "delete submission", 'view.php?id='.$cm->id, "User deleted the assignment '$this->submission_title'", $cm->id, $this->userid);
+        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "delete submission", 'view.php?id='.$cm->id, get_string('deletesubmissiondesc', 'turnitintooltwo') . " '$this->submission_title'", $cm->id, $this->userid);
 
         // Delete Moodle submission first.
         if (!$DB->delete_records('turnitintooltwo_submissions', array('id' => $this->id))) {
