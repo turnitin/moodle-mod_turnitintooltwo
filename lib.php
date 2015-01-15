@@ -470,6 +470,44 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
 function turnitintooltwo_cron() {
     global $DB;
 
+    // get assignment that needs updating and check whether it exists
+    if ($assignment = $DB->get_record('turnitintooltwo', array("needs_updating" => 1), '*', IGNORE_MULTIPLE)) {
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignment->id);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+            $turnitintooltwoassignment->turnitintooltwo->course);
+
+        $users = $turnitintooltwoassignment->get_moodle_course_users($cm);
+
+        foreach ($users as $user) {
+            // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
+            $grades = new stdClass();
+
+            if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
+                $turnitintooltwoassignment->turnitintooltwo->id,
+                'userid' => $user->id, 'submission_unanon' => 1))
+            ) {
+                $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions, $cm);
+                if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                    // Using a scale.
+                    $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+                } else {
+                    $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+                }
+            }
+            $grades->userid = $user->id;
+            $params['idnumber'] = $cm->idnumber;
+
+            grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
+                'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
+        }
+
+        // remove the "needs updating" flag
+        $update_assignment = new stdClass();
+        $update_assignment->id = $assignment->id;
+        $update_assignment->needs_updating = 0;
+        $DB->update_record("turnitintooltwo", $update_assignment);
+    }
+
     // Refresh the submissions for migrated assignment parts if there are none stored locally
     // as the 1st time this is done can be quite a long job if there are a lot of submissions.
 

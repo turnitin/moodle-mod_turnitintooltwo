@@ -907,6 +907,11 @@ class turnitintooltwo_assignment {
         $turnitintooltwo->id = $toolid;
         $turnitintooltwo->numparts = $turnitintooltwonow->numparts - 1;
         $DB->update_record("turnitintooltwo", $turnitintooltwo);
+
+        $assignment = new stdClass();
+        $assignment->id = $toolid;
+        $assignment->needs_updating = 1;
+        $DB->update_record("turnitintooltwo", $assignment);
         return true;
     }
 
@@ -1321,7 +1326,7 @@ class turnitintooltwo_assignment {
      * @param object $cm the course module
      * @return array of course users or empty array if none
      */
-    private function get_moodle_course_users($cm) {
+    public function get_moodle_course_users($cm) {
         $courseusers = get_users_by_capability(context_module::instance($cm->id),
                                 'mod/turnitintooltwo:submit', '', 'u.lastname, u.firstname');
 
@@ -1639,15 +1644,18 @@ class turnitintooltwo_assignment {
      *
      * @param array $submissions array of user's submissions
      * @param $submissions
+     * @param $cm
      * @return array
      */
-    public function get_overall_grade($submissions) {
+    public function get_overall_grade($submissions, $cm = '') {
         global $USER, $DB;
 
         $overallgrade = null;
         $parts = $this->get_parts();
 
-        $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
+        if( empty($cm) ) {
+            $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
+        }
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
 
         foreach ($parts as $part) {

@@ -54,6 +54,7 @@
                 <FIELD NAME="transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="erater_style" NEXT="rubric"/>
                 <FIELD NAME="rubric" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="transmatch" NEXT="allownonor"/>
                 <FIELD NAME="allownonor" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="rubric"/>
+                <FIELD NAME="needs_updating" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="allownonor"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
