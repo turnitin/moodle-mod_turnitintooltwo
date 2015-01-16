@@ -47,7 +47,7 @@ switch ($action) {
                     break;
 
                 case "maxmarks":
-                    $fieldvalue = required_param('value', PARAM_INT);
+                    $fieldvalue = required_param('value', PARAM_RAW);
                     break;
 
                 case "dtstart":
