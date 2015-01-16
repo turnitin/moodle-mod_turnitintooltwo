@@ -253,7 +253,7 @@ jQuery(document).ready(function($) {
         partTables[part_id] = $('table#'+part_id).dataTable({
             "bProcessing": true,
             "aoColumnDefs": submissionsDataTableColumnDefs,
-            "aaSorting": [[ 3, "desc" ],[1, "asc"]],
+            "aaSorting": [[ 2, "asc" ],[ 4, "asc" ]],
             "sAjaxSource": "ajax.php",
             "oLanguage": dataTablesLang,
             "sDom": "r<\"top navbar\"lf><\"dt_pagination\"pi>t<\"bottom\"><\"dt_pagination\"pi>",
