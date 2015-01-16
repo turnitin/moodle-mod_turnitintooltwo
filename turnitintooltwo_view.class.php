@@ -487,6 +487,8 @@ class turnitintooltwo_view {
         $cells["title"]->attributes['class'] = 'left';
         $cells["paper_id"] = new html_table_cell(get_string('objectid', 'turnitintooltwo'));
         $cells["paper_id"]->attributes['class'] = 'right';
+        $cells["submitted_date_raw"] = new html_table_cell('&nbsp;');
+        $cells["submitted_date_raw"]->attributes['class'] = 'raw_data';
         $cells["submitted_date"] = new html_table_cell(get_string('submitted', 'turnitintooltwo'));
         $cells["submitted_date"]->attributes['class'] = 'right';
         if (($turnitintooltwouser->get_user_role() == 'Instructor') ||
@@ -578,16 +580,16 @@ class turnitintooltwo_view {
                         $cells[$j] = new html_table_cell($cell);
                         if ($j == 2 || $j == 3) {
                             $cells[$j]->attributes['class'] = "left";
-                        } else if ($j == 4 || $j == 5) {
+                        } else if ($j == 4 || $j == 6) {
                             $cells[$j]->attributes['class'] = "right";
-                        } else if (($j == 6 && $origreportenabled) || ($j == 6 && !$origreportenabled && $grademarkenabled) ||
-                                    ($j == 8 && $origreportenabled && $grademarkenabled)) {
+                        } else if (($j == 7 && $origreportenabled) || ($j == 7 && !$origreportenabled && $grademarkenabled) ||
+                                    ($j == 9 && $origreportenabled && $grademarkenabled)) {
                             $cells[$j]->attributes['class'] = "raw_data";
                         } else {
                             $cells[$j]->attributes['class'] = "centered_cell";
                         }
 
-                        if ((count($submission) == 14 && $j == 9) || (count($submission) == 13 && $j == 8)) {
+                        if ((count($submission) == 15 && $j == 10) || (count($submission) == 14 && $j == 9)) {
                             $cells[$j]->attributes['class'] = "noscript_hide";
                         }
 
@@ -1077,15 +1079,17 @@ class turnitintooltwo_view {
 
         // Show date of submission or link to submit if it didn't work.
         if (empty($submission->submission_objectid) AND !empty($submission->id)) {
-
+            $rawmodified = 1;
             $modified = html_writer::link($CFG->wwwroot."/mod/turnitintooltwo/view.php?id=".$cm->id."&action=manualsubmission".
                                             "&sub=".$submission->id.'&sesskey='.sesskey(),
                                                 $OUTPUT->pix_icon('icon-sml', get_string('submittoturnitin', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo')." ".get_string('submittoturnitin', 'turnitintooltwo'));
 
         } else if (empty($submission->submission_objectid)) {
+            $rawmodified = 0;
             $modified = "--";
         } else {
+            $rawmodified = (int)$submission->submission_modified;
             $modified = userdate($submission->submission_modified, get_string('strftimedatetimeshort', 'langconfig'));
             if ($submission->submission_modified > $parts[$partid]->dtdue) {
                 $modified = html_writer::tag('span', $modified, array("class" => "late_submission"));
@@ -1287,7 +1291,7 @@ class turnitintooltwo_view {
             }
         }
 
-        $data = array($partid, $checkbox, $studentname, $title, $objectid, $modified);
+        $data = array($partid, $checkbox, $studentname, $title, $objectid, $rawmodified, $modified);
         if (($istutor) || (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $data[] = $rawscore;
             $data[] = $score;
