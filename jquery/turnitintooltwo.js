@@ -554,11 +554,9 @@ jQuery(document).ready(function($) {
         });
 
         // Enable other editable fields when an editable form is closed
-        $('.editable_date, .editable_text').on('hidden', function(e, reason) {
-            if (reason == 'nochange' || reason == 'manual') {
-                var current = ($(this).prop('id'));
-                $('.editable_date, .editable_text').not('#'+current).editable('enable');
-            }
+        $('.editable_date, .editable_text').on('hidden', function() {
+            var current = ($(this).prop('id'));
+            $('.editable_date, .editable_text').not('#'+current).editable('enable');
         });
     }
 
