@@ -223,6 +223,7 @@ jQuery(document).ready(function($) {
 
     // Define column definitions as there can be different number of columns
     var submissionsDataTableColumnDefs = [];
+    var visibleCols = [];
     var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
     var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
     var useGrademark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
@@ -230,16 +231,21 @@ jQuery(document).ready(function($) {
     for (var i=0; i < noOfColumns; i++) {
         if (i == 2 || i == 3) {
             submissionsDataTableColumnDefs.push({"aTargets": [ i ]});
+            visibleCols.push(true);
         } else if (i == 4) {
             submissionsDataTableColumnDefs.push({"sClass": "right", "aTargets": [ i ]});
+            visibleCols.push(true);
         } else if (i == 6 || (i == 8 && showOrigReport) || ((i == 8 && !showOrigReport) || (i == 10 && useGrademark))) {
             submissionsDataTableColumnDefs.push({"sClass": "right", "aTargets": [ i ], "iDataSort": i-1, "sType":"numeric"});
+            visibleCols.push(true);
         } else if (i == 1 || ((i >= 7 && !showOrigReport && !useGrademark)
                                 || (i >= 9 && ((!showOrigReport && useGrademark) || (showOrigReport && !useGrademark))) 
                                 || (i >= 11 && showOrigReport && useGrademark))) {
             submissionsDataTableColumnDefs.push({"sClass": "center", "bSortable": false, "aTargets": [ i ]});
+            visibleCols.push(true);
         } else if ((i == 0) || (i == 5) || (i == 7 && showOrigReport) || ((i == 7 && !showOrigReport) || (i == 9 && useGrademark))) {
-            submissionsDataTableColumnDefs.push({"bVisible": false, "aTargets": [ i ]});
+            submissionsDataTableColumnDefs.push({"bVisible": true, "aTargets": [ i ]});
+            visibleCols.push(false);
         }
     }
 
@@ -273,15 +279,19 @@ jQuery(document).ready(function($) {
                 });
             },
             "bStateSave": true,
+            "iCookieDuration": 600,
             "fnStateSave": function (oSettings, oData) {
                 try {
-                    localStorage.setItem( uid+'DataTables', JSON.stringify(oData) );
+                    localStorage.setItem( part_id+'DataTables', JSON.stringify(oData) );
                 } catch ( e ) {
                 }
             },
+            "fnStateSaveParams": function (oSettings, oData) {
+                oData.abVisCols = visibleCols;
+            },
             "fnStateLoad": function (oSettings) {
                 try {
-                    return JSON.parse( localStorage.getItem(uid+'DataTables') );
+                    return JSON.parse( localStorage.getItem(part_id+'DataTables') );
                 } catch ( e ) {
                 }
             },
