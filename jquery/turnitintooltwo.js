@@ -279,7 +279,6 @@ jQuery(document).ready(function($) {
                 });
             },
             "bStateSave": true,
-            "iCookieDuration": 600,
             "fnStateSave": function (oSettings, oData) {
                 try {
                     localStorage.setItem( part_id+'DataTables', JSON.stringify(oData) );
@@ -304,6 +303,8 @@ jQuery(document).ready(function($) {
                 initialiseUnanoymiseForm("all", 0, 0);
             }
         });
+
+        partTables[part_id].fnSetColumnVis(visibleCols.toString())
     });
 
     $('table.submissionsDataTable').each(function() {
