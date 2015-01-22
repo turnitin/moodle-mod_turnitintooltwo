@@ -223,6 +223,7 @@ jQuery(document).ready(function($) {
 
     // Define column definitions as there can be different number of columns
     var submissionsDataTableColumns = [];
+    var visibleCols = [];
     var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
     var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
     var useGrademark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
@@ -230,16 +231,21 @@ jQuery(document).ready(function($) {
     for (var i=0; i < noOfColumns; i++) {
         if (i == 2 || i == 3) {
             submissionsDataTableColumns.push(null);
+            visibleCols.push(true);
         } else if (i == 4) {
             submissionsDataTableColumns.push({"sClass": "right"});
+            visibleCols.push(true);
         } else if (i == 6 || (i == 8 && showOrigReport) || ((i == 8 && !showOrigReport) || (i == 10 && useGrademark))) {
             submissionsDataTableColumns.push({"sClass": "right", "iDataSort": i-1, "sType":"numeric"});
+            visibleCols.push(true);
         } else if (i == 1 || ((i >= 7 && !showOrigReport && !useGrademark)
                                 || (i >= 9 && ((!showOrigReport && useGrademark) || (showOrigReport && !useGrademark))) 
                                 || (i >= 11 && showOrigReport && useGrademark))) {
             submissionsDataTableColumns.push({"sClass": "center", "bSortable": false});
+            visibleCols.push(true);
         } else if ((i == 0) || (i == 5) || (i == 7 && showOrigReport) || ((i == 7 && !showOrigReport) || (i == 9 && useGrademark))) {
             submissionsDataTableColumns.push({"bVisible": false});
+            visibleCols.push(false);
         }
     }
 
@@ -279,11 +285,17 @@ jQuery(document).ready(function($) {
                 } catch ( e ) {
                 }
             },
+            "fnStateSaveParams": function(oSettings, oData) {
+                oData.abVisCols = visibleCols;
+            },
             "fnStateLoad": function (oSettings) {
                 try {
                     return JSON.parse( localStorage.getItem(part_id+'DataTables') );
                 } catch ( e ) {
                 }
+            },
+            "fnStateLoadParams": function(oSettings, oData) {
+                oData.abVisCols = visibleCols;
             },
             "fnDrawCallback":  function( oSettings ) {
                 initialiseDVLaunchers("all", 0, part_id, 0);
