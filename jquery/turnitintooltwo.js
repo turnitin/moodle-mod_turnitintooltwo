@@ -222,7 +222,6 @@ jQuery(document).ready(function($) {
     // There are tabs to toggle which part table is displayed.
 
     // Define column definitions as there can be different number of columns
-    var submissionsDataTableColumnDefs = [];
     var submissionsDataTableColumns = [];
     var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
     var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
