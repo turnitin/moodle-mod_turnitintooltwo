@@ -430,11 +430,7 @@ if ($cmd != 'class_recreation' && $cmd != 'multiple_class_recreation') {
     echo html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo'), array("class" => "warning"));
 }
 
-$class = "";
-if ($jsrequired) {
-    $class = " js_required";
-}
-
+$class = ($jsrequired) ? " js_required" : "";
 if ($cmd == 'viewreport') {
     echo $OUTPUT->box($output, 'generalbox scrollbox'.$class);
 } else if ($cmd == 'class_recreation') {

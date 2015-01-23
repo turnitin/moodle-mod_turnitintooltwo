@@ -46,12 +46,11 @@ $do = optional_param('do', "submissions", PARAM_ALPHAEXT);
 $action = optional_param('action', "", PARAM_ALPHA);
 $viewcontext = optional_param('view_context', "window", PARAM_ALPHAEXT);
 
+$notice = null;
 if (isset($_SESSION["notice"])) {
     $notice = $_SESSION["notice"];
     $notice["type"] = (empty($_SESSION["notice"]["type"])) ? "general" : $_SESSION["notice"]["type"];
     unset($_SESSION["notice"]);
-} else {
-    $notice = null;
 }
 
 if ($id) {
@@ -77,21 +76,14 @@ if ($id) {
 }
 
 // If opening DV then $viewcontext needs to be set to box
-if ($do == "origreport" || $do == "grademark") {
-    $viewcontext = "box";
-}
+$viewcontext = ($do == "origreport" || $do == "grademark") ? "box" : $viewcontext;
 
 require_login($course->id);
 turnitintooltwo_activitylog('view.php?id='.$id.'&do='.$do, "REQUEST");
 
 // Settings for page navigation
 if ($viewcontext == "window") {
-    // This adds "general" to navbar which we don't want.
-    // $PAGE->set_cm($cm, $course);
     $PAGE->set_course($course);
-
-    // We will stick with a full width layout for now.
-    // $PAGE->set_pagelayout('incourse');
 }
 
 // Configure URL correctly.
