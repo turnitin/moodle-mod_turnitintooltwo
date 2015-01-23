@@ -84,7 +84,7 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
             $course = turnitintooltwo_assignment::get_course_data($_SESSION['course_id']);
 
             // Remove Turnitin link from course
-            $turnitin_course = new object();
+            $turnitin_course = new stdClass();
             $turnitin_course->id = $course->tii_rel_id;
             $turnitin_course->turnitin_cid = 0;
             $DB->update_record('turnitintooltwo_courses', $turnitin_course);

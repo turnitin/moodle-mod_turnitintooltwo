@@ -77,7 +77,7 @@ class turnitintooltwo_submission {
         $this->submission_objectid = null;
         $this->submissionunanon = 0;
 
-        $submission = new object();
+        $submission = new stdClass();
         $submission->userid = $data['studentsname'];
         $submission->turnitintooltwoid = $this->turnitintooltwoid;
         $submission->submission_part = $data['submissionpart'];
@@ -369,7 +369,7 @@ class turnitintooltwo_submission {
             $response = $turnitincall->createNothingSubmission($newsubmission);
             $newsubmission = $response->getSubmission();
 
-            $submission = new object();
+            $submission = new stdClass();
             $submission->userid = $userid;
             $submission->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
             $submission->submission_part = $partid;
@@ -458,7 +458,7 @@ class turnitintooltwo_submission {
                 $newsubmission = $response->getSubmission();
 
                 // Save the submission.
-                $submission = new object();
+                $submission = new stdClass();
                 $submission->id = $this->id;
                 $submission->userid = $this->userid;
                 $submission->turnitintooltwoid = $this->turnitintooltwoid;
@@ -549,7 +549,7 @@ class turnitintooltwo_submission {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
         }
 
-        $sub = new object();
+        $sub = new stdClass();
         $sub->submission_title = $tiisubmissiondata->getTitle();
         $sub->submission_part = $this->submission_part;
         $sub->submission_objectid = $tiisubmissiondata->getSubmissionId();

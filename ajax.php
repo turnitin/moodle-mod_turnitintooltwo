@@ -89,7 +89,7 @@ switch ($action) {
         $turnitin_user = $DB->get_record('turnitintooltwo_users', array('userid' => $eula_user_id));
 
         // Build user object for update
-        $eula_user = new object();
+        $eula_user = new stdClass();
         $eula_user->id += $turnitin_user->id;
         $eula_user->userid = $eula_user_id;
         $eula_user->user_agreement_accepted = 1;
@@ -471,7 +471,7 @@ switch ($action) {
                 $i++;
             }
 
-            $result = new object();
+            $result = new stdClass();
             $result->completed = $i;
             $result->total = count($classids);
             $msg = get_string('recreatemulticlassescomplete', 'turnitintooltwo', $result);
@@ -516,7 +516,7 @@ switch ($action) {
             $tiicourseid = optional_param('tii_course_id', 0, PARAM_INT);
             $coursetolink = optional_param('course_to_link', 0, PARAM_INT);
 
-            $turnitincourse = new object();
+            $turnitincourse = new stdClass();
             $turnitincourse->courseid = $coursetolink;
             $turnitincourse->ownerid = $USER->id;
             $turnitincourse->turnitin_cid = $tiicourseid;
