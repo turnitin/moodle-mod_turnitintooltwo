@@ -94,6 +94,11 @@ if ($viewcontext == "window") {
     // $PAGE->set_pagelayout('incourse');
 }
 
+// Configure URL correctly.
+$urlparams = array('id' => $id, 'a' => $a, 'part' => $part, 'user' => $user, 'do' => $do, 'action' => $action, 
+                    'view_context' => $viewcontext);
+$url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
+
 // Load Javascript and CSS.
 $turnitintooltwoview->load_page_components();
 
@@ -253,8 +258,7 @@ if (!empty($action)) {
                 }
             }
 
-            $params = array_merge(array('id' => $id, 'do' => $do, 'view_context' => $viewcontext), $extraparams);
-            redirect(new moodle_url('/mod/turnitintooltwo/view.php', $params));
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array_merge($urlparams, $extraparams)));
             exit;
             break;
 
@@ -295,7 +299,7 @@ if (!empty($action)) {
 if ($viewcontext == "box" || $viewcontext == "box_solid") {
     $turnitintooltwoview->output_header($cm,
             $course,
-            '/mod/turnitintooltwo/view.php',
+            $url,
             '',
             '',
             array(),
@@ -314,7 +318,7 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     $turnitintooltwoview->output_header($cm,
             $course,
-            '/mod/turnitintooltwo/view.php',
+            $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
             $SITE->fullname,
             $extranavigation,

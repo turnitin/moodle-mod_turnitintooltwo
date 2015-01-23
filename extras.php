@@ -42,6 +42,10 @@ require_login();
 // Load Javascript and CSS.
 $turnitintooltwoview->load_page_components($hidebg);
 
+// Configure URL correctly.
+$urlparams = array('cmd' => $cmd, 'view_context' => $viewcontext);
+$url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
+
 switch ($cmd) {
     case "courses":
         require_capability('moodle/course:create', context_system::instance());
@@ -128,6 +132,10 @@ switch ($cmd) {
 
         $assignments = optional_param('assignments', 0, PARAM_INT);
         $category = optional_param('category', 0, PARAM_INT);
+
+        $urlparams['assignments'] = $assignments;
+        $urlparams['category'] = $category;
+
         $classids = array();
         foreach ($_REQUEST as $k => $v) {
             if (strstr($k, "class_id") !== false) {
@@ -154,6 +162,7 @@ switch ($cmd) {
         require_capability('moodle/course:create', context_system::instance());
 
         $tiicourseid = optional_param('id', 0, PARAM_INT);
+        $urlparams['id'] = $tiicourseid;
 
         $output = "";
 
@@ -188,7 +197,7 @@ $nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "cla
 // Build page.
 echo $turnitintooltwoview->output_header(null,
             null,
-            '/mod/turnitintooltwo/extras.php',
+            $url,
             $title,
             $title,
             $nav,
