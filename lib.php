@@ -581,11 +581,15 @@ function turnitintooltwo_filetype_array($setup = true) {
 /**
  * Creates a temp file for submission to Turnitin, uses a random number suffixed with the stored filename
  *
+ * @param array $filename Used to build a more readable filename
  * @param string $suffix The file extension for the upload
  * @return string $file The filepath of the temp file
  */
-function turnitintooltwo_tempfile($suffix) {
+function turnitintooltwo_tempfile(array $filename, $suffix) {
     global $CFG;
+
+    $filename = implode('_', $filename);
+
     $fp = false;
     $tempdir = $CFG->dataroot.'/temp/turnitintooltwo';
     if (!file_exists($tempdir)) {
@@ -594,12 +598,14 @@ function turnitintooltwo_tempfile($suffix) {
     // Get file extension and shorten filename if too long.
     $pathparts = explode('.', $suffix);
     $ext = array_pop($pathparts);
-    $filename = implode('.', $pathparts);
+
     $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - strlen($tempdir.DIRECTORY_SEPARATOR);
     if (strlen($filename) > $permittedstrlength) {
         $filename = substr($filename, 0, $permittedstrlength);
     }
-    $filename = mt_rand().$filename.'.'.$ext;
+
+    // filename with random string at the end
+    $filename = $filename . '_' . mt_rand() . '.'.$ext;
 
     while (!$fp) {
         $file = $tempdir.DIRECTORY_SEPARATOR.$filename;

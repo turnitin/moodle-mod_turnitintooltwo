@@ -415,8 +415,20 @@ class turnitintooltwo_submission {
         $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, 'mod_turnitintooltwo', 'submissions', $this->id, "timecreated", false);
         $tempfile = "";
+
         foreach ($files as $file) {
-            $tempfile = turnitintooltwo_tempfile("_".$file->get_filename());
+            $filename = array(
+                $this->userid,
+                $user->firstname,
+                $user->lastname,
+                str_replace(' ', '_', $this->submission_title),
+                $cm->id
+            );
+
+            $suffix = $file->get_filename();
+
+            $tempfile = turnitintooltwo_tempfile($filename, $suffix);
+
             $fh = fopen($tempfile, "w");
             fwrite($fh, $file->get_content());
             fclose($fh);
