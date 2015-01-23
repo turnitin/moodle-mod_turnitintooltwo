@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
     function refreshPPPeermarkAssignments() {
         $.ajax({
             type: "POST",
-            url: "../plagiarism/turnitin/ajax.php",
+            url: M.cfg.wwwroot +"/plagiarism/turnitin/ajax.php",
             dataType: "json",
             data: {action: "refresh_peermark_assignments", cmid: $('input[name="coursemodule"]').val(), sesskey: M.cfg.sesskey},
             success: function(data) {}
@@ -154,7 +154,7 @@ jQuery(document).ready(function($) {
     function refreshScores(submission_id, coursemoduleid) {
         $.ajax({
             type: "POST",
-            url: "../../plagiarism/turnitin/ajax.php",
+            url: M.cfg.wwwroot+"/plagiarism/turnitin/ajax.php",
             dataType: "json",
             data: {action: "update_grade", submission: submission_id, cmid: coursemoduleid, sesskey: M.cfg.sesskey},
             success: function(data) {
@@ -168,7 +168,7 @@ jQuery(document).ready(function($) {
     function userAgreementAccepted( user_id ){
         $.ajax({
             type: "POST",
-            url: "../../plagiarism/turnitin/ajax.php",
+            url: M.cfg.wwwroot +"/plagiarism/turnitin/ajax.php",
             dataType: "json",
             data: {action: 'acceptuseragreement', user_id: user_id},
             success: function(data) {
