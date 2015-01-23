@@ -116,7 +116,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
             // Turnitin class owner not found so use restoring user as owner
             $data->ownerid = $USER->id;
         }
-        $tiiowner = new object();
+        $tiiowner = new stdClass();
         $tiiowner->userid = $data->ownerid;
         $tiiowner->turnitin_uid = $data->ownertiiuid;
         if (!$tiiuser = $DB->get_record('turnitintooltwo_users', array('userid' => $data->ownerid))) {

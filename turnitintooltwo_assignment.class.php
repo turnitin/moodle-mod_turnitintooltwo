@@ -209,7 +209,7 @@ class turnitintooltwo_assignment {
         }
 
         $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
-        $coursemodule = new object();
+        $coursemodule = new stdClass();
         $coursemodule->course = $courseid;
         $coursemodule->module = $module->id;
         $coursemodule->added = time();
@@ -275,14 +275,14 @@ class turnitintooltwo_assignment {
         global $DB, $CFG, $USER;
         require_once($CFG->dirroot."/course/lib.php");
 
-        $data = new object;
+        $data = new stdClass();
         $data->category = $coursecategory;
         $data->fullname = $coursename;
         $data->shortname = "Turnitin (".$tiicourseid.")";
         $data->maxbytes = 2097152;
 
         if ($course = create_course($data)) {
-            $turnitincourse = new object();
+            $turnitincourse = new stdClass();
             $turnitincourse->courseid = $course->id;
             $turnitincourse->turnitin_cid = $tiicourseid;
             $turnitincourse->turnitin_ctl = $tiicoursetitle;
@@ -352,7 +352,7 @@ class turnitintooltwo_assignment {
             $response = $turnitincall->createClass($class);
             $newclass = $response->getClass();
 
-            $turnitincourse = new object();
+            $turnitincourse = new stdClass();
             $turnitincourse->courseid = $course->id;
             $turnitincourse->ownerid = $ownerid;
             $turnitincourse->turnitin_cid = $newclass->getClassId();
@@ -410,7 +410,7 @@ class turnitintooltwo_assignment {
         try {
             $turnitincall->updateClass($class);
 
-            $turnitincourse = new object();
+            $turnitincourse = new stdClass();
 
             $turnitintooltwocourse = $DB->get_record("turnitintooltwo_courses",
                                 array("courseid" => $course->id, "course_type" => $coursetype));
@@ -735,7 +735,7 @@ class turnitintooltwo_assignment {
     public function create_event($toolid, $partname, $duedate) {
         global $CFG;
 
-        $properties = new object();
+        $properties = new stdClass();
         $properties->name = $this->turnitintooltwo->name . ' - ' . $partname;
         $properties->description = ($this->turnitintooltwo->intro == null) ? '' : $this->turnitintooltwo->intro;
         $properties->courseid = $this->turnitintooltwo->course;
@@ -903,7 +903,7 @@ class turnitintooltwo_assignment {
                         array($toolid, $turnitintooltwonow->name.' - '.$part->partname));
 
         // Update number of parts for the turnitintooltwo.
-        $turnitintooltwo = new object();
+        $turnitintooltwo = new stdClass();
         $turnitintooltwo->id = $toolid;
         $turnitintooltwo->numparts = $turnitintooltwonow->numparts - 1;
         $DB->update_record("turnitintooltwo", $turnitintooltwo);
@@ -1265,7 +1265,7 @@ class turnitintooltwo_assignment {
             $part->dtdue = strtotime($assignment->getDueDate());
             $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
 
-            $properties = new object();
+            $properties = new stdClass();
             $properties->name = $this->turnitintooltwo->name.' - '.$part->partname;
             $properties->description = $this->turnitintooltwo->intro;
             $properties->courseid = $this->turnitintooltwo->course;
@@ -1509,7 +1509,7 @@ class turnitintooltwo_assignment {
             $assignmentdetails = "";
             $newparts = array();
             foreach ($readassignments as $readassignment) {
-                $part = new object();
+                $part = new stdClass();
                 $part->dtstart = strtotime($readassignment->getStartDate());
                 $part->dtdue = strtotime($readassignment->getDueDate());
                 $part->dtpost = strtotime($readassignment->getFeedbackReleaseDate());
@@ -1529,7 +1529,7 @@ class turnitintooltwo_assignment {
 
                 // Update main turnitintooltwo details but only once.
                 if (empty($assignmentdetails)) {
-                    $assignmentdetails = new object();
+                    $assignmentdetails = new stdClass();
                     if ($assignmentids == 0) {
                         $assignmentdetails->id = $this->turnitintooltwo->id;
                     } else {
@@ -1573,7 +1573,7 @@ class turnitintooltwo_assignment {
                     $peermarkids = array();
 
                     foreach ($peermarkassignments as $peermarkassignment) {
-                        $peermark = new object();
+                        $peermark = new stdClass();
                         $peermark->tiiassignid = $peermarkassignment->getAssignmentId();
                         $peermark->parent_tii_assign_id = $part->tiiassignid;
                         $peermark->dtstart = strtotime($peermarkassignment->getStartDate());
@@ -1752,7 +1752,7 @@ class turnitintooltwo_assignment {
         foreach ($parts as $part) {
             $submissions[$part->id] = array();
             foreach ($users as $user) {
-                $emptysubmission = new object();
+                $emptysubmission = new stdClass();
                 $emptysubmission->userid = $user->id;
                 $emptysubmission->firstname = $user->firstname;
                 $emptysubmission->lastname = $user->lastname;
@@ -1816,7 +1816,7 @@ class turnitintooltwo_assignment {
         $parts = $this->get_parts();
 
         foreach ($parts as $part) {
-            $tiipart = new object();
+            $tiipart = new stdClass();
             $tiipart->id = $part->id;
             $tiipart->tiiassignid = 0;
 

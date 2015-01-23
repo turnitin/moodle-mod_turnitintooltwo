@@ -294,7 +294,7 @@ class turnitintooltwo_user {
     public function unlink_user($tiidbid) {
         global $DB;
 
-        $tiiuser = new object();
+        $tiiuser = new stdClass();
         $tiiuser->id = $tiidbid;
         $tiiuser->turnitin_uid = 0;
         $DB->update_record('turnitintooltwo_users', $tiiuser);
@@ -310,7 +310,7 @@ class turnitintooltwo_user {
      */
     private function save_tii_user() {
         global $DB;
-        $user = new object();
+        $user = new stdClass();
         $user->userid = $this->id;
         $user->turnitin_uid = $this->tii_user_id;
         $user->turnitin_utp = 1;
@@ -515,7 +515,7 @@ class turnitintooltwo_user {
                                 "excludequoted", "excludevalue", "excludetype", "erater", "erater_handbook",
                                 "erater_dictionary", "transmatch");
 
-        $instructordefaults = new object();
+        $instructordefaults = new stdClass();
         foreach ($settingstosave as $setting) {
             $instructordefaults->$setting = $turnitintooltwo->$setting;
         }

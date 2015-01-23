@@ -232,7 +232,7 @@ if (!empty($action)) {
                             $do = "submitpaper";
                         } else {
                             // Lock the assignment setting for anon marking.
-                            $locked_assignment = new object();
+                            $locked_assignment = new stdClass();
                             $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
                             $locked_assignment->submitted = 1;
                             $DB->update_record('turnitintooltwo', $locked_assignment);
