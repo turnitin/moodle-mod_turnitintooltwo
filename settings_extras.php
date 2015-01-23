@@ -233,7 +233,7 @@ switch ($cmd) {
         // Do the table headers.
         $cells = array();
         $cells[0] = new html_table_cell(html_writer::checkbox('selectallcb', 1, false));
-        $cells[0]->attributes['class'] = 'centered_cell';
+        $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
         $cells['turnitinid'] = new html_table_cell(get_string('turnitinid', 'turnitintooltwo'));
         $cells['lastname'] = new html_table_cell(get_string('lastname'));
         $cells['firstname'] = new html_table_cell(get_string('firstname'));

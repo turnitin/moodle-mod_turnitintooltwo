@@ -237,6 +237,11 @@
     text-align:center !important;
 }
 
+.mod_turnitintooltwo .centered_cb_cell input {
+    position: relative;
+    left: 4px;
+}
+
 .mod_turnitintooltwo .enrolledMembers .left, .mod_turnitintooltwo .submissionsDataTable .left, 
 .mod_turnitintooltwo .partDetails .left {
     text-align:left;
