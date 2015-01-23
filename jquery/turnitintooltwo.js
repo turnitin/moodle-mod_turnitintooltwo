@@ -534,7 +534,8 @@ jQuery(document).ready(function($) {
             'combodate': {
                             'minuteStep': 1,
                             'minYear': 2000,
-                            'maxYear': theDate.getFullYear()+2
+                            'maxYear': theDate.getFullYear()+2,
+                            'smartDays': true
                         },
             success: function(response, newValue) {
                 if(!response.success) {
