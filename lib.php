@@ -589,7 +589,8 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
     global $CFG;
 
     $filename = implode('_', $filename);
-
+    $filename = str_replace(' ', '_', $filename);
+    
     $fp = false;
     $tempdir = $CFG->dataroot.'/temp/turnitintooltwo';
     if (!file_exists($tempdir)) {

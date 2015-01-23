@@ -417,13 +417,21 @@ class turnitintooltwo_submission {
         $tempfile = "";
 
         foreach ($files as $file) {
+
             $filename = array(
-                $this->userid,
-                $user->firstname,
-                $user->lastname,
-                str_replace(' ', '_', $this->submission_title),
+                $this->submission_title,
                 $cm->id
             );
+
+            if ( ! $turnitintooltwoassignment->turnitintooltwo->anon) {
+                $user_details = array(
+                    $this->userid,
+                    $user->firstname,
+                    $user->lastname
+                );
+
+                $filename = array_merge($user_details, $filename);
+            }
 
             $suffix = $file->get_filename();
 
