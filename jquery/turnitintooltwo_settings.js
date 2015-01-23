@@ -26,7 +26,8 @@ jQuery(document).ready(function($) {
     	}
     });
 
-    $('.tii_upgrade_check').click(function() {
+    $('.tii_upgrade_check').click(function(e) {
+    	e.preventDefault();
     	// Change Url depending on Settings page
 	    var url = "ajax.php";
 	    if ($('.settingsform fieldset div.formsettingheading').length > 0) {

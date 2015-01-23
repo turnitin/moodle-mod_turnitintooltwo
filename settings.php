@@ -53,8 +53,8 @@ if ($ADMIN->fulltree) {
     }
 
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
-    $upgrade = html_writer::tag('span', get_string('checkupgrade', 'turnitintooltwo'), 
-                    array('class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
+    $upgrade = html_writer::tag('a', get_string('checkupgrade', 'turnitintooltwo'), 
+                    array('href' => '#', 'class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
     $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader', get_string('checkingupgrade', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo')." ".get_string('checkingupgrade', 'turnitintooltwo'), 
                                                     array('class' => 'tii_upgrading_check'));
