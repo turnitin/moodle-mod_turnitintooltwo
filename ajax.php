@@ -54,7 +54,18 @@ switch ($action) {
                 case "dtdue":
                 case "dtpost":
                     $fieldvalue = required_param('value', PARAM_RAW);
-                    $fieldvalue = strtotime($fieldvalue);
+                    // We need to work out the users timezone or GMT offset.
+                    $usertimezone = get_user_timezone();
+                    if (is_numeric($usertimezone)) {
+                        if ($usertimezone > 0) {
+                            $usertimezone = "GMT+$usertimezone";
+                        } else if ($usertimezone < 0) {
+                            $usertimezone = "GMT$usertimezone";
+                        } else {
+                            $usertimezone = 'GMT';
+                        }
+                    }
+                    $fieldvalue = strtotime($fieldvalue.' '.$usertimezone);
                     break;
             }
 
