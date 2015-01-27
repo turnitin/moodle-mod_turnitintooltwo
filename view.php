@@ -250,7 +250,8 @@ if (!empty($action)) {
                 }
             }
 
-            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array_merge($urlparams, $extraparams)));
+            $params = array_merge(array('id' => $id, 'do' => $do, 'view_context' => $viewcontext), $extraparams);
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', $params));
             exit;
             break;
 
