@@ -415,8 +415,28 @@ class turnitintooltwo_submission {
         $fs = get_file_storage();
         $files = $fs->get_area_files($context->id, 'mod_turnitintooltwo', 'submissions', $this->id, "timecreated", false);
         $tempfile = "";
+
         foreach ($files as $file) {
-            $tempfile = turnitintooltwo_tempfile("_".$file->get_filename());
+
+            $filename = array(
+                $this->submission_title,
+                $cm->id
+            );
+
+            if ( ! $turnitintooltwoassignment->turnitintooltwo->anon) {
+                $user_details = array(
+                    $this->userid,
+                    $user->firstname,
+                    $user->lastname
+                );
+
+                $filename = array_merge($user_details, $filename);
+            }
+
+            $suffix = $file->get_filename();
+
+            $tempfile = turnitintooltwo_tempfile($filename, $suffix);
+
             $fh = fopen($tempfile, "w");
             fwrite($fh, $file->get_content());
             fclose($fh);
