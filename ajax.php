@@ -66,6 +66,13 @@ switch ($action) {
                         }
                     }
                     $fieldvalue = strtotime($fieldvalue.' '.$usertimezone);
+
+                    if ($fieldname == "dtpost" && $turnitintooltwoassignment->turnitintooltwo->anon && $fieldvalue < time()) {
+                        $anon_assignment = new stdClass();
+                        $anon_assignment->id = required_param('assignment', PARAM_INT);
+                        $anon_assignment->anon = 0;
+                        $DB->update_record('turnitintooltwo', $anon_assignment, $bulk=false);
+                    }
                     break;
             }
 
