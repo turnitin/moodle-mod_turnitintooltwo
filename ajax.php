@@ -71,7 +71,7 @@ switch ($action) {
                         $anon_assignment = new stdClass();
                         $anon_assignment->id = required_param('assignment', PARAM_INT);
                         $anon_assignment->anon = 0;
-                        $DB->update_record('turnitintooltwo', $anon_assignment, $bulk=false);
+                        $DB->update_record('turnitintooltwo', $anon_assignment);
                     }
                     break;
             }
