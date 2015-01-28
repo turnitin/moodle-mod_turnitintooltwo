@@ -355,7 +355,7 @@ jQuery(document).ready(function($) {
             if (message === "turnitin_eula_declined") {
                 window.parent.$('.upload_box').colorbox.close();
             } else {
-                window.parent.$('.upload_box').data('launchEula', 1);
+                window.parent.$('.upload_box').data('launchEula', 0);
                 window.parent.$('.upload_box').colorbox.resize({
                     width: "80%",
                     height: "80%"
