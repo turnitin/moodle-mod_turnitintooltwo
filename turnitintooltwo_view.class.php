@@ -393,8 +393,9 @@ class turnitintooltwo_view {
             $ula = "";
             if ($userid == $USER->id) {
                 if (!$eulaaccepted) {
-                    $ula = html_writer::tag('div', turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
-                                "Learner", get_string('turnitinula', 'turnitintooltwo'), false),
+                    $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'));
+                    $ula .= html_writer::tag('div', turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
+                                "Learner", get_string('turnitinula_btn', 'turnitintooltwo'), false),
                                     array('class' => 'turnitin_ula', 'data-userid' => $userid));
 
                     $noscriptula = html_writer::tag('noscript',
@@ -1224,12 +1225,23 @@ class turnitintooltwo_view {
             }
 
             $uploadtext = (!$istutor) ? html_writer::tag('span', get_string('submitpaper', 'turnitintooltwo')) : '';
+            
+            $launcheula = false;
+
+            if ($submission->userid == $USER->id) {
+                $submission_user = new turnitintooltwo_user($submission->userid, "Learner");
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+                $submission_user->join_user_to_class($coursedata->turnitin_cid);
+                $eulaaccepted = (!$submission_user->user_agreement_accepted) ? $submission_user->get_accepted_user_agreement() : $submission_user->user_agreement_accepted;
+                
+                $launcheula = ( ! $eulaaccepted) ? 1 : 0;
+            }
 
             $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
                                         $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.
                                         $OUTPUT->pix_icon('file-upload', get_string('submittoturnitin', 'turnitintooltwo'),
                                             'mod_turnitintooltwo'),
-                                        array("class" => "upload_box", "id" => "upload_".$submission->submission_objectid.
+                                        array("class" => "upload_box", "data-launch-eula" => $launcheula, "id" => "upload_".$submission->submission_objectid.
                                                             "_".$partid."_".$submission->userid));
         } else {
             $upload = "&nbsp;";

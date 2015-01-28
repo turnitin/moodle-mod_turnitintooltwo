@@ -3,6 +3,8 @@
 // Date: 2014-07-25
 // Language: en
 
+$string['turnitinula_btn'] = 'Please click here to read and accept the Agreement.';
+$string['turnitinula'] = 'You must accept the latest Turnitin User Agreement before you can make a submission.';
 $string['listsubmissionsdesc'] = 'User viewed the list of submissions at course';
 $string['viewsubmissiondesc'] = 'User viewed submission';
 $string['addsubmissiondesc'] = 'User added submission';
@@ -265,7 +267,6 @@ $string['selectcoursecategory'] = 'Select Course Category';
 $string['module'] = 'Module';
 $string['source'] = 'Source';
 $string['similarity'] = 'Similarity';
-$string['turnitinula'] = 'You must accept the latest Turnitin User Agreement before you can make a submission. Please click here to read and accept the Agreement.';
 $string['moodlelinked'] = 'Linked to Moodle';
 $string['coursegettiierror'] = 'Could not get course data from Turnitin';
 $string['savecourseenddateerror'] = 'There was an error when trying to save a new course end date in Turnitin';

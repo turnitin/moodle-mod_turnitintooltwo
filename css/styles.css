@@ -298,10 +298,34 @@
 }
 
 .mod_turnitintooltwo .turnitin_ula {
-    padding-left:15%;
-    padding-top:24px;
+    width: 355px;
+    margin: 0 auto;
     cursor:pointer;
     text-decoration: underline;
+}
+
+#colorbox {
+    outline: 0 !important;
+}
+
+.cboxIframe {
+    border-radius: 5px;
+}
+
+#page-mod-turnitintooltwo-view {
+    padding-top: 15px;
+}
+
+#page-mod-turnitintooltwo-view p {
+    text-align: center;
+}
+
+.turnitin_ula input[type="submit"] {
+    margin: 0;
+}
+
+#cboxContent {
+    margin-top: 0;
 }
 
 .mod_turnitintooltwo .fitem_fbutton {
