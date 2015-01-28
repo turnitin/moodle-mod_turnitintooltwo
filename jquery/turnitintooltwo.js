@@ -352,9 +352,28 @@ jQuery(document).ready(function($) {
 
         $(window).on("message", function(ev) {
             var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
+            if (message === "turnitin_eula_declined") {
+                window.parent.$('.upload_box').colorbox.close();
+            } else {
+                window.parent.$('.upload_box').data('launchEula', 0);
+                window.parent.$('.upload_box').colorbox.resize({
+                    width: "80%",
+                    height: "80%"
+                });     
+            }
+            
             $('iframe.cboxIframe').attr('src', $('iframe.cboxIframe').attr('src'));
         });
     }
+
+    $('.turnitin_ula input[type="submit"]').click(function() {
+        $(this).hide();
+        $(this).parent().parent().parent().find("p").hide();
+        window.parent.$('.upload_box').colorbox.resize({
+            width: "800px",
+            height: "565px"
+        });     
+    });
 
     // Enrol all students link on the enrolled students page
     $(".enrol_link").click(function () {
@@ -793,10 +812,18 @@ jQuery(document).ready(function($) {
             identifier = "#upload_"+submission_id+"_"+part_id+"_"+user_id;
         }
 
-        var colorBoxWidth = ($(window).width() < 1000) ? "860px" : "80%";
-        var colorBoxHeight = ($(window).height() < 700) ? "556px" : "80%";
+        var colorBoxWidth = "700px";
+        var colorBoxHeight = "90px";
 
         $(identifier).colorbox({
+            onComplete: function() {
+                if ( $('.upload_box').data('launchEula') === 0 ) {
+                    window.parent.$('.upload_box').colorbox.resize({
+                       width: "80%",
+                       height: "80%"
+                    });  
+                }
+            },
             onLoad: function() {
                 $('.upload #cboxClose').hide();
                 getLoadingGif();
@@ -1058,4 +1085,5 @@ jQuery(document).ready(function($) {
             }
         }
     }
+    
 });
