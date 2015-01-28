@@ -1034,7 +1034,7 @@ class turnitintooltwo_assignment {
                 break;
 
             case "maxmarks":
-                if (!is_int($fieldvalue) || $fieldvalue < 0 || $fieldvalue > 100) {
+                if (!is_numeric($fieldvalue) || $fieldvalue < 0 || $fieldvalue > 100) {
                     $return["success"] = false;
                     $return["msg"] = get_string('maxmarkserror', 'turnitintooltwo');
                 } else {

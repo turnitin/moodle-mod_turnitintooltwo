@@ -148,6 +148,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('membercheckerror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('resubmissiongradewarn', 'turnitintooltwo');
         $PAGE->requires->string_for_js('submitnothingwarning', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('maxmarkserror', 'turnitintooltwo');
     }
 
     /**
