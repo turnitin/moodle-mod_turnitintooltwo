@@ -237,9 +237,14 @@
     text-align:center !important;
 }
 
-.mod_turnitintooltwo .centered_cb_cell input {
+.mod_turnitintooltwo .centered_cb_cell {
+    padding-right:8px;
+    padding-left:8px;
+}
+
+body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     position: relative;
-    left: 4px;
+    left: -1px;
 }
 
 .mod_turnitintooltwo .enrolledMembers .left, .mod_turnitintooltwo .submissionsDataTable .left, 

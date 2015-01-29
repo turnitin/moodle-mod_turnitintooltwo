@@ -27,6 +27,7 @@ jQuery(document).ready(function($) {
         "bProcessing": true,
         "bServerSide": true,
         "oLanguage": dataTablesLang,
+        "aaSorting": [[ 2, "asc" ]],
         "sAjaxSource": "ajax.php?action=get_users",
         "aoColumns": [
                         {"bSortable": false,
