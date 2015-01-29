@@ -49,15 +49,24 @@ if ($ADMIN->fulltree) {
         if ($current_section == 'modsettingturnitintooltwo') {
             $PAGE->requires->jquery();
             $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+            $PAGE->requires->string_for_js('upgradeavailable', 'turnitintooltwo');
         }
     }
 
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
-    $upgrade = html_writer::tag('a', get_string('checkupgrade', 'turnitintooltwo'), 
-                    array('href' => '#', 'class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
-    $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader', get_string('checkingupgrade', 'turnitintooltwo'),
-                                                    'mod_turnitintooltwo')." ".get_string('checkingupgrade', 'turnitintooltwo'), 
-                                                    array('class' => 'tii_upgrading_check'));
+
+    if (is_siteadmin()) {
+        $data = turnitintooltwo_updateavailable($version);
+
+        if ($data['update']) {
+            $upgrade = html_writer::tag('a', get_string('upgradeavailable', 'turnitintooltwo'), array('href' => $data['file']));
+        } else {
+            $upgrade = html_writer::tag('span', get_string('upgradenotavailable', 'turnitintooltwo'), array('class' => 'tii_no_upgrade'));
+            $upgrade .= html_writer::tag('a', $OUTPUT->pix_icon('refresh', get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'), array('href' => '#', 'class' => 'tii_upgrade_check', 'id' => 'version_'.'11'));
+        }
+    }
+    
+    $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader', get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'), array('class' => 'tii_upgrading_check'));
 
     // Offline mode provided by Androgogic. Set tiioffline in config.php.
     $offlinecomment = '';

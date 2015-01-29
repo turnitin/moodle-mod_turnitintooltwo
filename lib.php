@@ -618,7 +618,7 @@ function turnitintooltwo_tempfile($suffix) {
 function turnitintooltwo_updateavailable($current_version) {
     global $CFG;
 
-    $returnvalue = get_string('usinglatest', 'mod_turnitintooltwo');
+    $updateneeded['update'] = 0;
 
     try {
         // Open connection.
@@ -646,7 +646,8 @@ function turnitintooltwo_updateavailable($current_version) {
         $xml = simplexml_load_string($result);
         if ((isset($xml)) AND (isset($xml->version))) {
             if ($xml->version > $current_version) {
-                $returnvalue = html_writer::link($xml->filename, get_string("upgradeavailable", "turnitintooltwo"));
+                $updateneeded['update'] = 1;
+                $updateneeded['file'] = $xml->filename;
             }
         }
 
@@ -654,7 +655,7 @@ function turnitintooltwo_updateavailable($current_version) {
         turnitintooltwo_comms::handle_exceptions($e, 'checkupdateavailableerror', false);
     }
 
-    return $returnvalue;
+    return $updateneeded;
 }
 
 /**

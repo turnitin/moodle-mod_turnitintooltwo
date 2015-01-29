@@ -610,8 +610,7 @@ switch ($action) {
         if (is_siteadmin()) {
             $data = turnitintooltwo_updateavailable($current_version);
         }
-
-        echo $data;
+        echo json_encode($data);
         break;
 
     case "test_connection":
