@@ -531,7 +531,7 @@ jQuery(document).ready(function($) {
 
         $('.editable_text').editable({
             validate: function(value) {
-                if ($(this).attr('id').indexOf("marks_") >= 0 && (Math.floor(value) != value || !$.isNumeric(value))) {
+                if ($(this).attr('id').indexOf("marks_") >= 0 && (Math.floor(value) != value || !$.isNumeric(value) || value.indexOf(".") != -1)) {
                     return M.str.turnitintooltwo.maxmarkserror;
                 }
             },
