@@ -317,11 +317,12 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     border-radius: 5px;
 }
 
-#page-mod-turnitintooltwo-view {
-    padding-top: 15px;
+#page-mod-turnitintooltwo-view div {
+    margin-bottom: 0;
 }
 
-#page-mod-turnitintooltwo-view p {
+.turnitin_ula_text {
+    padding-top: 15px;
     text-align: center;
 }
 

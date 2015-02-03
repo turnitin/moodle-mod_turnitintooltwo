@@ -394,7 +394,7 @@ class turnitintooltwo_view {
             $ula = "";
             if ($userid == $USER->id) {
                 if (!$eulaaccepted) {
-                    $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'));
+                    $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula_text'));
                     $ula .= html_writer::tag('div', turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
                                 "Learner", get_string('turnitinula_btn', 'turnitintooltwo'), false),
                                     array('class' => 'turnitin_ula', 'data-userid' => $userid));
