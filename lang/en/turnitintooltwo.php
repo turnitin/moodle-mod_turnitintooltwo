@@ -238,6 +238,7 @@ $string['turnitinsubmissionid'] = 'Turnitin submission id';
 $string['defaults'] = 'Default Settings';
 $string['defaults_desc'] = 'The following settings will be the default settings used for new instances of the Moodle Direct Turnitin Assignment 2';
 $string['upgradeavailable'] = 'Upgrade Available';
+$string['upgradenotavailable'] = 'No Upgrades Available';
 $string['coursemodidincorrect'] = 'Course Module ID was incorrect';
 $string['coursemisconfigured'] = 'Course is misconfigured';
 $string['coursemodincorrect'] = 'Course module is incorrect';

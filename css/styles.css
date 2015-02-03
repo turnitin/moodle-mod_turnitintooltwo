@@ -333,6 +333,11 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     margin-top: 0;
 }
 
+.tii_upgrade_check img,
+.tii_upgrading_check img {
+    padding: 0 0 5px 5px;
+}
+
 .mod_turnitintooltwo .fitem_fbutton {
     padding-top:12px;
 }
