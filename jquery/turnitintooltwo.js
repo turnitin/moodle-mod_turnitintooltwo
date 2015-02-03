@@ -46,11 +46,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-        // If we are in submission window then show close window text
-    if ($('.submission_form_container').length > 0) {
-        $('.upload #cboxClose', top.document).attr("title", M.str.turnitintooltwo.close).attr("name", M.str.turnitintooltwo.close).css("display", "block");
-    }
-
     // Show loading if submission passes validation
     $(document).on('submit', '.submission_form_container form', function() {
         try {
@@ -400,7 +395,13 @@ jQuery(document).ready(function($) {
     if ($('.rubric_manager_launch').length > 0) {
         $('.rubric_manager_launch').colorbox({
             iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_manager", transition: "none",
-            onLoad: function() { getLoadingGif(); },
+            onLoad: function() { 
+                $('#colorbox').append('<a href="#" onclick="$.colorbox.close(); return false;" id="tii_close_btn"><img attr="Close modal" src="pix/x-red.png"></a>');
+                $('#tii_close_btn').on("click", function() {
+                    $(this).remove();
+                });
+                getLoadingGif(); 
+            },
             onCleanup:function() {
                 hideLoadingGif();
                 // Refresh Rubric drop down in add/update form
@@ -434,6 +435,13 @@ jQuery(document).ready(function($) {
         $('.quickmark_manager_launch, .plagiarism_turnitin_quickmark_manager_launch').colorbox({
             iframe:true, width:"700px", height:"432px", opacity: "0.7", className: "quickmark_manager", transition: "none",
             onLoad: function() { getLoadingGif(); },
+            onLoad: function() { 
+                $('#colorbox').append('<a href="#" onclick="$.colorbox.close(); return false;" id="tii_close_btn"><img attr="Close modal" src="pix/x-red.png"></a>');
+                $('#tii_close_btn').on("click", function() {
+                    $(this).remove();
+                });
+                getLoadingGif(); 
+            },
             onCleanup: function() { hideLoadingGif(); }
         });
     }
@@ -825,8 +833,11 @@ jQuery(document).ready(function($) {
                 }
             },
             onLoad: function() {
-                $('.upload #cboxClose').hide();
                 getLoadingGif();
+                $('#colorbox').append('<a href="#" onclick="$.colorbox.close(); return false;" id="tii_close_btn"><img attr="Close modal" src="pix/x-red.png"></a>');
+                $('#tii_close_btn').on("click", function() {
+                    $(this).remove();
+                });
             },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {
@@ -834,7 +845,7 @@ jQuery(document).ready(function($) {
                 var idStr = $(this).attr("id").split("_");
                 refreshInboxRow("upload", idStr[1], idStr[2], idStr[3]);
             },
-            iframe:true, width:colorBoxWidth, height:colorBoxHeight, opacity: "0.7", className: "upload", transition: "none", close: ''
+            iframe:true, width:colorBoxWidth, height:colorBoxHeight, opacity: "0.7", className: "upload", transition: "none"
         });
     }
 

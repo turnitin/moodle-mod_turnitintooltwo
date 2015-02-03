@@ -310,7 +310,26 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 }
 
 #colorbox {
+    margin-top: 20px;
     outline: 0 !important;
+    overflow: visible;
+}
+
+#tii_close_btn {
+    position: absolute;
+    z-index: 9999;
+    right: -11px;
+    top: -12px;
+    text-indent: -9999px;
+    width: 21px;
+    height: 21px;
+    border-radius: 100%;
+    background: #fff url(/theme/image.php/clean/turnitintooltwo/1422633245/colorbox/controls) no-repeat -50px 0px;
+    box-shadow: 0 0 6px -3px #000;
+}
+
+#tii_close_btn:hover {
+    background: #fff url(/theme/image.php/clean/turnitintooltwo/1422633245/colorbox/controls) no-repeat -50px -25px;
 }
 
 .cboxIframe {
