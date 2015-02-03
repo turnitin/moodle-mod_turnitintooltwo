@@ -346,7 +346,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
                 $assignment->setAnonymousMarking($turnitintooltwoassignment->turnitintooltwo->anon);
             }
             $assignment->setLateSubmissionsAllowed($turnitintooltwoassignment->turnitintooltwo->allowlate);
-            if ($config->userepository) {
+            if ($config->repositoryoption == 1) {
                 $assignment->setInstitutionCheck((isset($turnitintooltwoassignment->turnitintooltwo->institution_check)) ?
                                 $turnitintooltwoassignment->turnitintooltwo->institution_check : 0);
             }

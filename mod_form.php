@@ -35,7 +35,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
     public function definition() {
         global $CFG, $DB, $USER;
-
+        $config = turnitintooltwo_admin_config();
 
         // Module string is useful for product support.
         if ($CFG->branch >= 26) {
@@ -95,6 +95,16 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             foreach ($instructordefaults as $k => $v) {
                 $this->current->$k = $v;
             }
+        }
+
+        // Overwrite instructor default repository if admin is forcing repository setting
+        switch ($config->repositoryoption) {
+            case 2; // Force Standard Repository
+                $this->current->submitpapersto = 1;
+                break;
+            case 3; // Force No Repository
+                $this->current->submitpapersto = 0;
+                break;
         }
 
         $modulestring .= ') -->';
@@ -319,13 +329,27 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
                             1 => get_string('standardrepository', 'turnitintooltwo'));
-        if ($config->userepository == "1") {
-            $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
-        }
+        switch ($config->repositoryoption) {
+            case 0; // Standard options
+                $mform->addElement('select', 'submitpapersto', get_string('submitpapersto', 'turnitintooltwo'), $suboptions);
+                $mform->addHelpButton('submitpapersto', 'submitpapersto', 'turnitintooltwo');
+                $mform->setDefault('submitpapersto', $config->default_submitpapersto);
+                break;
+            case 1; // Standard options + Allow Instituional Repository
+                $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
 
-        $mform->addElement('select', 'submitpapersto', get_string('submitpapersto', 'turnitintooltwo'), $suboptions);
-        $mform->addHelpButton('submitpapersto', 'submitpapersto', 'turnitintooltwo');
-        $mform->setDefault('submitpapersto', $config->default_submitpapersto);
+                $mform->addElement('select', 'submitpapersto', get_string('submitpapersto', 'turnitintooltwo'), $suboptions);
+                $mform->addHelpButton('submitpapersto', 'submitpapersto', 'turnitintooltwo');
+                $mform->setDefault('submitpapersto', $config->default_submitpapersto);
+
+                break;
+            case 2; // Force Standard Repository
+                $mform->addElement('hidden', 'submitpapersto', 1);
+                break;
+            case 3; // Force No Repository
+                $mform->addElement('hidden', 'submitpapersto', 0);
+                break;
+        }
 
         $mform->addElement('select', 'spapercheck', get_string('spapercheck', 'turnitintooltwo'), $ynoptions);
         $mform->addHelpButton('spapercheck', 'spapercheck', 'turnitintooltwo');
@@ -339,7 +363,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('journalcheck', 'journalcheck', 'turnitintooltwo');
         $mform->setDefault('journalcheck', $config->default_journalcheck);
 
-        if ($config->userepository == "1") {
+        if ($config->repositoryoption == "1") {
             $mform->addElement('select', 'institution_check', get_string('institutionalcheck', 'turnitintooltwo'), $ynoptions);
             $mform->setDefault('institution_check', $config->default_institutioncheck);
         }
