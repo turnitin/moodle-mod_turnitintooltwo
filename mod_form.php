@@ -345,9 +345,11 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 break;
             case 2; // Force Standard Repository
                 $mform->addElement('hidden', 'submitpapersto', 1);
+                $mform->setType('submitpapersto', PARAM_RAW);
                 break;
             case 3; // Force No Repository
                 $mform->addElement('hidden', 'submitpapersto', 0);
+                $mform->setType('submitpapersto', PARAM_RAW);
                 break;
         }
 
