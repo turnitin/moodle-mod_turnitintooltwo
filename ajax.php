@@ -56,8 +56,11 @@ switch ($action) {
                     $fieldvalue = required_param('value', PARAM_RAW);
                     // We need to work out the users timezone or GMT offset.
                     $usertimezone = get_user_timezone();
+
                     if (is_numeric($usertimezone)) {
-                        if ($usertimezone > 0) {
+                        if ($usertimezone > 13) {
+                            $usertimezone = "";
+                        } else if ($usertimezone <= 13 && $usertimezone > 0) {
                             $usertimezone = "GMT+$usertimezone";
                         } else if ($usertimezone < 0) {
                             $usertimezone = "GMT$usertimezone";
@@ -65,6 +68,7 @@ switch ($action) {
                             $usertimezone = 'GMT';
                         }
                     }
+                    
                     $fieldvalue = strtotime($fieldvalue.' '.$usertimezone);
 
                     if ($fieldname == "dtpost" && $turnitintooltwoassignment->turnitintooltwo->anon && $fieldvalue < time()) {
