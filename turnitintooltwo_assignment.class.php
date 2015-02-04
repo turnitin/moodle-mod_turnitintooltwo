@@ -660,7 +660,7 @@ class turnitintooltwo_assignment {
             }
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->userepository) {
+            if ($config->repositoryoption == 1) {
                 $assignment->setInstitutionCheck((isset($this->turnitintooltwo->institution_check)) ?
                                                         $this->turnitintooltwo->institution_check : 0);
             }
@@ -1204,7 +1204,7 @@ class turnitintooltwo_assignment {
                 $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
             }
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->userepository) {
+            if ($config->repositoryoption == 1) {
                 $assignment->setInstitutionCheck((isset($this->turnitintooltwo->institution_check)) ?
                                                         $this->turnitintooltwo->institution_check : 0);
             }

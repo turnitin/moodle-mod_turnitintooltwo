@@ -135,11 +135,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitinuseerater_desc', 'turnitintooltwo'),
                                                     0, $ynoptions));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/userepository',
-                                                    get_string('turnitinuserepository', 'turnitintooltwo'),
-                                                    get_string('turnitinuserepository_desc', 'turnitintooltwo'),
-                                                    0, $ynoptions));
-
     $settings->add(new admin_setting_configselect('turnitintooltwo/useanon',
                                                     get_string('turnitinuseanon', 'turnitintooltwo'),
                                                     get_string('turnitinuseanon_desc', 'turnitintooltwo'),
@@ -149,6 +144,18 @@ if ($ADMIN->fulltree) {
                                                     get_string('transmatch', 'turnitintooltwo'),
                                                     get_string('transmatch_desc', 'turnitintooltwo'),
                                                     0, $ynoptions));
+
+    $repositoryoptions = array(
+            0 => get_string('repositoryoptions_0', 'turnitintooltwo'),
+            1 => get_string('repositoryoptions_1', 'turnitintooltwo'),
+            2 => get_string('repositoryoptions_2', 'turnitintooltwo'),
+            3 => get_string('repositoryoptions_3', 'turnitintooltwo')
+        );
+
+    $settings->add(new admin_setting_configselect('turnitintooltwo/repositoryoption',
+                                                    get_string('turnitinrepositoryoptions', 'turnitintooltwo'),
+                                                    get_string('turnitinrepositoryoptions_desc', 'turnitintooltwo'),
+                                                    0, $repositoryoptions));
 
     if (empty($config->agreement)) {
         $config->agreement = get_string('turnitintooltwoagreement_default', 'turnitintooltwo');
@@ -273,15 +280,23 @@ if ($ADMIN->fulltree) {
                                                     get_string('reportgenspeed', 'turnitintooltwo'),
                                                     '', 0, $genoptions ));
 
-    $suboptions = array( 0 => get_string('norepository', 'turnitintooltwo'), 1 =>
-                                            get_string('standardrepository', 'turnitintooltwo'));
-    if (!empty($config->userepository)) {
-        array_push($suboptions, get_string('institutionalrepository', 'turnitintooltwo'));
-    }
+    $suboptions = array( 0 => get_string('norepository', 'turnitintooltwo'), 
+                        1 => get_string('standardrepository', 'turnitintooltwo'));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
+    switch ($config->repositoryoption) {
+        case 0; // Standard options
+            $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
                                                     get_string('submitpapersto', 'turnitintooltwo'),
                                                     '', 1, $suboptions ));
+            break;
+        case 1; // Standard options + Allow Instituional Repository
+            $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
+
+            $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
+                                                    get_string('submitpapersto', 'turnitintooltwo'),
+                                                    '', 1, $suboptions ));
+            break;
+    }
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_spapercheck',
                                                     get_string('spapercheck', 'turnitintooltwo'),
