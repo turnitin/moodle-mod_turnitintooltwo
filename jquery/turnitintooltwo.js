@@ -564,11 +564,25 @@ jQuery(document).ready(function($) {
             'viewformat': 'D MMM YYYY, HH:mm',
             'template': 'D MMM YYYY  HH:mm',
             'combodate': {
-                            'minuteStep': 1,
-                            'minYear': 2000,
-                            'maxYear': theDate.getFullYear()+2,
-                            'smartDays': true
-                        },
+                'minuteStep': 1,
+                'minYear': 2000,
+                'maxYear': theDate.getFullYear()+2,
+                'smartDays': true
+            },
+            validate: function(value) {
+                if( value.format("X") < moment().unix() && 
+                    $(this).hasClass('editable_postdue') &&
+                    $(this).data('anon') === 1 &&
+                    $(this).data('submitted') === 1 )
+                {
+                    if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
+                        $('.editable-open').editableContainer('hide');
+                        
+                        // Hackery. Todo: Needs refactoring. Validation only fails if string is returned (We need a string).
+                        return ' ';
+                    }
+                }
+            },
             success: function(response, newValue) {
                 if(!response.success) {
                     return response.msg;

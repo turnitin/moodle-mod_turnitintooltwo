@@ -3,6 +3,7 @@
 // Date: 2014-07-25
 // Language: en
 
+$string['disableanonconfirm'] = 'Doing this will permanently disable anonymous marking on this assignment. Are you sure?';
 $string['turnitinula_btn'] = 'Please click here to read and accept the Agreement.';
 $string['turnitinula'] = 'You must accept the latest Turnitin User Agreement before you can make a submission.';
 $string['listsubmissionsdesc'] = 'User viewed the list of submissions at course';
