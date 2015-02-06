@@ -497,11 +497,7 @@ jQuery(document).ready(function($) {
             var height = $(window).height();
             dvWindow.document.write('<title>Document Viewer</title>');
             dvWindow.document.write('<style>html, body { margin: 0; padding: 0; border: 0; }</style>');
-            if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-                dvWindow.document.write('<iframe id="dvWindow" name="dvWindow" width="'+width+'" height="'+height+'" sandbox="allow-popups allow-same-origin allow-top-navigation allow-forms allow-scripts"></iframe>');
-            } else {
-                dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
-            }
+            dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
             dvWindow.document.getElementById('dvWindow').src = url;
             dvWindow.document.close();
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
