@@ -477,7 +477,7 @@ class turnitintooltwo_view {
         }
 
         $origreportenabled = ($turnitintooltwoassignment->turnitintooltwo->studentreports) ? 1 : 0;
-        $grademarkenabled = ($config->usegrademark && $turnitintooltwoassignment->turnitintooltwo->usegrademark) ? 1 : 0;
+        $grademarkenabled = ($config->usegrademark) ? 1 : 0;
 
         // Do the table headers.
         $cells = array();
@@ -1131,7 +1131,7 @@ class turnitintooltwo_view {
         }
 
         // Show grade and link to DV.
-        if ($config->usegrademark && $turnitintooltwoassignment->turnitintooltwo->usegrademark) {
+        if ($config->usegrademark) {
             if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                 $submissiongrade = (!is_null($submission->submission_grade)) ? $submission->submission_grade : '';
 
@@ -1309,7 +1309,7 @@ class turnitintooltwo_view {
             $data[] = $rawscore;
             $data[] = $score;
         }
-        if ($config->usegrademark AND $turnitintooltwoassignment->turnitintooltwo->usegrademark == 1) {
+        if ($config->usegrademark) {
             $data[] = $rawgrade;
             $data[] = $grade;
             if (count($parts) > 1 || $turnitintooltwoassignment->turnitintooltwo->grade < 0) {
