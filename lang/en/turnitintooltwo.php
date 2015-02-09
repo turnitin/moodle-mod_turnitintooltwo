@@ -1,16 +1,8 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: en
 
-$string['turnitinula_btn'] = 'Please click here to read and accept the Agreement.';
-$string['turnitinula'] = 'You must accept the latest Turnitin User Agreement before you can make a submission.';
-$string['listsubmissionsdesc'] = 'User viewed the list of submissions at course';
-$string['viewsubmissiondesc'] = 'User viewed submission';
-$string['addsubmissiondesc'] = 'User added submission';
-$string['deletesubmissiondesc'] = 'User deleted the submission';
-$string['listsubmissions'] = 'List Submissions';
-$string['viewsubmission'] = 'View Submission';
 $string['addsubmission'] = 'Add Submission';
 $string['allowlate'] = 'Allow Submissions after the Due Date';
 $string['allsubmissions'] = 'Submission Inbox';
@@ -238,7 +230,6 @@ $string['turnitinsubmissionid'] = 'Turnitin submission id';
 $string['defaults'] = 'Default Settings';
 $string['defaults_desc'] = 'The following settings will be the default settings used for new instances of the Moodle Direct Turnitin Assignment 2';
 $string['upgradeavailable'] = 'Upgrade Available';
-$string['upgradenotavailable'] = 'No Upgrades Available';
 $string['coursemodidincorrect'] = 'Course Module ID was incorrect';
 $string['coursemisconfigured'] = 'Course is misconfigured';
 $string['coursemodincorrect'] = 'Course module is incorrect';
@@ -257,7 +248,7 @@ $string['migrationcoursegeterror'] = 'Unable to get any of the classes from Turn
 $string['migrationassignmentgeterror'] = 'Unable to get any of the assignments from Turnitin';
 $string['getassignmenterror'] = 'Could not get migration assignments from Turnitin';
 $string['checkupdateavailableerror'] = 'Could not check for Moodle Direct version update';
-$string['maxmarkserror'] = 'Maximum Marks must an integer value between 0 and 100';
+$string['maxmarkserror'] = 'Maximum Marks must be an integer value between 0 and 100';
 $string['nosubmissiondataavailable'] = 'No other submission data available';
 $string['nointegration'] = 'No Integration';
 $string['testingconnection'] = 'Testing Connection to Turnitin';
@@ -465,8 +456,6 @@ $string['ppsubmissionerrorseelogs'] = 'This file has not been submitted to Turni
 $string['ppsubmissionerrorstudent'] = 'This file has not been submitted to Turnitin, please consult your tutor for further details';
 $string['turnitinppula'] = 'IMPORTANT: You must accept the Turnitin End User Licence Agreement. Please click this link to accept.';
 $string['redirecttoeula'] = 'We are redirecting you to the End User Licence Agreement';
-$string['turnitintoolofflineerror'] = 'We are experiencing a temporary problem. Please try again shortly.';
-$string['offlinestatus'] = 'Turnitin has been set to offline. (The variable $CFG->tiioffline has been set to true.)';
 $string['filedoesnotexist'] = 'File has been deleted';
 $string['errorenrollingall'] = 'There has been an error enrolling all students on Turnitin - Please consult the API logs for further information';
 $string['eventremoved'] = 'This event has been removed the cron queue and will not be processed again.';
@@ -477,6 +466,12 @@ $string['pp_assignmentcreateerror'] = 'This module could not be created on Turni
 $string['pp_assignmentediterror'] = 'This module could not be edited on Turnitin, please consult your API logs for further information';
 $string['pp_classcreationerror'] = 'This class could not be created on Turnitin, please consult your API logs for further information';
 $string['pp_assignmentsubmiterror'] = 'There is a problem with replicating your module in Turnitin which is preventing submissions, please consult your API logs for further information';
+$string['listsubmissions'] = 'List Submissions';
+$string['viewsubmission'] = 'View Submission';
+$string['listsubmissionsdesc'] = 'User viewed the list of submissions at course';
+$string['viewsubmissiondesc'] = 'User viewed submission';
+$string['addsubmissiondesc'] = 'User added submission';
+$string['deletesubmissiondesc'] = 'User deleted the submission';
 $string['turnitinrepositoryoptions'] = 'Paper Repository Assignments';
 $string['turnitinrepositoryoptions_desc'] = 'Choose the repository options for Turnitin Assignments.<br /><i>(An Institutional Repository is only available to those that have this enabled for their account)</i>';
 $string['turnitinrepositoryoptions_help'] = 'Use this setting to change the repository options available on the assignment set up screen.<br /><i>(An Institutional Repository is only available to those that have this enabled for their account)</i>';
@@ -484,3 +479,8 @@ $string['repositoryoptions_0'] = 'Enable instructor standard repository options'
 $string['repositoryoptions_1'] = 'Enable instructor expanded repository options';
 $string['repositoryoptions_2'] = 'Submit all papers to the standard repository';
 $string['repositoryoptions_3'] = 'Do not submit any papers into a repository';
+$string['turnitinula_btn'] = 'Please click here to read and accept the Agreement.';
+$string['turnitinula'] = 'You must accept the latest Turnitin User Agreement before you can make a submission.';
+$string['upgradenotavailable'] = 'No Upgrade Available';
+$string['turnitintoolofflineerror'] = 'We are experiencing a temporary problem. Please try again shortly.';
+$string['offlinestatus'] = 'Turnitin has been set to offline. (The variable $CFG->tiioffline has been set to true.)';

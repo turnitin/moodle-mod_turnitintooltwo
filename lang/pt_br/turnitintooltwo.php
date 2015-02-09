@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: pt_br
 
 $string['addsubmission'] = 'Adicionar Envio';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Houve um erro ao digitar Parte {$a} dentro do banco de
 $string['partupdateerror'] = 'Ocorreu um erro ao atualizar a parte {$a} no banco de dados<br />';
 $string['partdeleteerror'] = 'Não foi possível apagar dados da parte do trabalho {$a}';
 $string['partdeletewarning'] = 'A parte do trabalho que você está tentando apagar contem envios. Você perderá esses envios se você apagar parte desse trabalho.\n\nTem certeza que deseja continuar?';
-$string['partposterror'] = 'A data de entrega deve ser antes da data de publicação.<br />';
+$string['partposterror'] = 'A data de entrega deve ser antes da data de publicação.';
 $string['partgeterror'] = 'Não foi possível obter dados dessa parte do trabalho';
 $string['partname'] = 'Parte do trabalho';
 $string['partnameerror'] = 'O nome da parte não pode ser deixada em branco.';
@@ -446,3 +446,25 @@ $string['checkupgrade'] = 'Verificar atualizações disponíveis';
 $string['checkingupgrade'] = 'Verificando atualizações disponíveis';
 $string['usinglatest'] = 'Você está usando a versão mais recente!';
 $string['useturnitin_mod'] = 'Habilitar Turnitin para {a}';
+$string['usemoodlecert'] = 'Usar certificado SSL do Moodle';
+$string['errorcode1'] = 'Esse arquivo não contém conteúdo suficiente para o Turnitin gerar um Relatório de Originalidade.';
+$string['errorcode2'] = 'Esse arquivo não será enviado ao Turnitin pois excede o tamanho máximo de {$a} permitido.';
+$string['notorcapable'] = 'Não é possível gerar um Relatório de Originalidade para esse arquivo. ';
+$string['pastfiveattempts'] = 'Esse arquivo não será enviado ao Turnitin pois excede as 5 tentativas permitidas. ';
+$string['notacceptedeula'] = 'Esse arquivo não foi enviado ao Turnitin porque o usuário não aceitou o Contrato de Licença do Usuário Final Turnitin';
+$string['ppsubmissionerrorseelogs'] = 'Esse arquivo não foi enviado ao Turnitin. Consulte os registros de API para obter mais detalhes.';
+$string['ppsubmissionerrorstudent'] = 'Esse arquivo não foi enviado ao Turnitin. Consulte seu tutor para obter mais detalhes.';
+$string['turnitinppula'] = 'IMPORTANTE: aceite o Contrato de Licença do Usuário Final. Clique nesse link para aceitá-lo.';
+$string['redirecttoeula'] = 'Estamos redirecionando-o para o Contrato de Licença do Usuário Final';
+$string['filedoesnotexist'] = 'O arquivo foi excluído';
+$string['errorenrollingall'] = 'Ocorreu um erro ao matricular todos os alunos no Turnitin. Consulte os registros de API para obter mais informações';
+$string['eventremoved'] = 'Esse evento foi removido da fila do &#34;cron&#34; e não será processado novamente.';
+$string['partnametoolarge'] = 'O nome da parte é muito longo. Limite a 40 caracteres.';
+$string['enableperformancelogs'] = 'Habilitar registro de desempenho de rede';
+$string['enableperformancelogs_desc'] = 'Se habilitado, cada solicitação no servidor do Turnitin será registrado em {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Não foi possível criar esse módulo no Turnitin. Consulte os registros de API para obter mais informações.';
+$string['pp_assignmentediterror'] = 'Não foi possível editar esse módulo no Turnitin. Consulte os registros de API para obter mais informações.';
+$string['pp_classcreationerror'] = 'Não foi possível criar esse aula no Turnitin. Consulte os registros de API para obter mais informações.';
+$string['pp_assignmentsubmiterror'] = 'Há um problema na replicação do módulo no Turnitin que está impedindo o envio de documentos. Consulte os registros de API para obter mais informações.';
+$string['listsubmissions'] = 'Listar envios de documentos';
+$string['viewsubmission'] = 'Visualizar documento';

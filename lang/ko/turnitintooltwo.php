@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: ko
 
 $string['addsubmission'] = '제출물 추가';
@@ -72,7 +72,7 @@ $string['partdberror'] = ' {$a} 부분을 데이타베이스에 입력하는 데
 $string['partupdateerror'] = ' {$a} 부분을 데이타베이스 상에서 업데이트하는 데 문제가 발생하였습니다<br />';
 $string['partdeleteerror'] = '과제 부분 {$a} 데이타를 삭제할 수 없었습니다. ';
 $string['partdeletewarning'] = '귀하가 삭제하려는 과제 부분에는 제출물이 포함되어 있습니다. 과제 부분 삭제시에는 제출물도 삭제됩니다.\n\n계속하시겠습니까?';
-$string['partposterror'] = '마감일은 게시일 이전이어야 합니다.<br />';
+$string['partposterror'] = '마감일은 게시일 이전이어야 합니다.';
 $string['partgeterror'] = '과제 부분 데이타를 가져올 수 없었습니다';
 $string['partname'] = '과제 부분';
 $string['partnameerror'] = '부분 명칭을 공백으로 남길 수 없습니다.';
@@ -275,7 +275,7 @@ $string['downloadorigfileszip'] = '원본 파일들 다운로드하기';
 $string['uploadingsubtoturnitin'] = 'Turnitin에 제출물 업로드하기';
 $string['emptycreatedfile'] = '귀하가 제출하려는 파일은 비어있거나 오류가 있는 파일입니다';
 $string['studentdataprivacy'] = '학생 데이타 개인 정보 환경';
-$string['studentdataprivacy_desc'] = 'The following settings can be configured to ensure that student&#39s personal data is not transmitted to Turnitin via the API.';
+$string['studentdataprivacy_desc'] = 'The following settings can be configured to ensure that students personal data is not transmitted to Turnitin via the API.';
 $string['enablepseudo'] = '학생 개인 정보 보호 활성화하기';
 $string['enablepseudo_desc'] = '본 옵션을 선택할 경우, 학생 이메일들이 Turnitin API 콜을 위해 가명으로 전환될 것입니다.<br /><i>(<b>참고:</b> 본 옵션은 Moodle 사용자 데이타가 벌써 동시화된 경우 변경할 수 없습니다))</i>';
 $string['pseudofirstname'] = '학생 가명 (이름)';
@@ -447,3 +447,25 @@ $string['checkupgrade'] = '사용 가능한 업그레이드 확인하기';
 $string['checkingupgrade'] = '사용 가능한 업그레이드 확인 중';
 $string['usinglatest'] = '최신 버전을 사용하고 있습니다!';
 $string['useturnitin_mod'] = '{a}를 위해 Turnitin을 활성화하기';
+$string['usemoodlecert'] = 'Moodle SSL 인증서 사용';
+$string['errorcode1'] = '이 파일은 내용이 충분하지 않아서 Turnitin이 독창성 보고서를 생성할 수 없습니다.';
+$string['errorcode2'] = '이 파일은 크기 한도를 초과하기 때문에 Turnitin에 제출되지 않을 것입니다. ';
+$string['notorcapable'] = '이 파일에 대해 독창성 보고서를 생성할 수 없습니다.';
+$string['pastfiveattempts'] = '이 파일은 5번의 시도 한도를 초과했기 때문에 Turnitin에 제출되지 않을 것입니다.';
+$string['notacceptedeula'] = '사용자가 Turnitin 최종 사용자 라이센스 계약을 수락하지 않았기 때문에 이 파일은 Turnitin에 제출되지 않았습니다.';
+$string['ppsubmissionerrorseelogs'] = '이 파일은 Turnitin에 제출되지 않았습니다. 자세한 내용은 해당 API 로그를 참조하십시오.';
+$string['ppsubmissionerrorstudent'] = '이 파일은 Turnitin에 제출되지 않았습니다. 자세한 내용은 담당 튜터와 상의하십시오.';
+$string['turnitinppula'] = '중요: Turnitin 최종 사용자 라이센스 계약을 수락해야 합니다. 수락하려면 이 링크를 클릭하십시오.';
+$string['redirecttoeula'] = '최종 사용자 라이센스 계약으로 리다이렉트합니다.';
+$string['filedoesnotexist'] = '파일이 삭제되었습니다.';
+$string['errorenrollingall'] = 'Turnitin 학생 모두를 등록시키는 중에 오류가 발생했습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
+$string['eventremoved'] = '이 이벤트는 cron queue에서 삭제되었으며 다시 처리되지 않을 것입니다.';
+$string['partnametoolarge'] = '파트명이 너무 깁니다. 40자 이내로 작성해 주십시오.';
+$string['enableperformancelogs'] = '네크워크 성능 로깅 활성화';
+$string['enableperformancelogs_desc'] = '활성화되면 Turnitin 서버에 대한 각 요청은 {dataroot}/temp/turnitintooltwo/logs에 기록됩니다.';
+$string['pp_assignmentcreateerror'] = '이 모듈은 Turnitin에서 생성되지 못했습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
+$string['pp_assignmentediterror'] = '이 모듈은 Turnitin에서 편집되지 못했습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
+$string['pp_classcreationerror'] = '이 클래스는 Turnitin에서 생성되지 못했습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
+$string['pp_assignmentsubmiterror'] = 'Turnitin에서 모듈 복제 중에 문제가 발생하여 제출이 안 되고 있습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
+$string['listsubmissions'] = '제출 목록';
+$string['viewsubmission'] = '제출 보기';

@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: fi
 
 $string['addsubmission'] = 'Lisää Palautus';
@@ -72,7 +72,7 @@ $string['partdberror'] = ' Osan {$a} tietokantaan siirrossa ilmeni pulma<br />';
 $string['partupdateerror'] = ' Osan {$a} tietokantapäivityksessä ilmeni pulma<br />';
 $string['partdeleteerror'] = 'Tehtävän osan {$a} tietoja ei voitu poistaa';
 $string['partdeletewarning'] = 'Tehtävän osa, jota yrität poistaa, sisältää palautuksia. Mikäli poistat tämän tehtävän osan, tulet  menettämään nuo palautukset.\n\nOletko varma, että haluat jatkaa?';
-$string['partposterror'] = 'Aloituspäivämäärän tulee olla ennen julkaisupäivämäärää.<br />';
+$string['partposterror'] = 'Aloituspäivämäärän tulee olla ennen julkaisupäivämäärää.';
 $string['partgeterror'] = 'Tehtävän osan tietoja ei voitu saada';
 $string['partname'] = 'Tehtävän Osa';
 $string['partnameerror'] = 'Osan nimeä ei voi jättää tyhjäksi.';
@@ -445,3 +445,25 @@ $string['checkupgrade'] = 'Tarkista päivityksen saatavuus';
 $string['checkingupgrade'] = 'Tarkistamassa päivityksen saatavuutta';
 $string['usinglatest'] = 'Käytät uusinta versiota!';
 $string['useturnitin_mod'] = 'Aktivoi Turnitin {a}a varten';
+$string['usemoodlecert'] = 'Käytä Moodlen SSL-sertifikaattia';
+$string['errorcode1'] = 'Tässä tiedostossa ei ole tarpeeksi sisältöä, josta Turnitin voisi kehittää Omaperäisyysraportin.';
+$string['errorcode2'] = 'Tätä tiedostoa ei voi toimittaa Turnitiniin, koska se ylittää sallitun enimmäiskoon {$}';
+$string['notorcapable'] = 'Alkuperäisyysraportin kehittäminen tälle tiedostolle on mahdotonta.';
+$string['pastfiveattempts'] = 'Tätä tiedostoa ei voi toimittaa Turnitiniin, koska suurin sallittu määrä, 5 yritystä, on saavutettu.';
+$string['notacceptedeula'] = 'Tätä tiedostoa ei ole toimitettu Turnitiniin, koska käyttäjä ei ole hyväksynyt Turnitinin loppukäyttäjän lisenssisopimusta.';
+$string['ppsubmissionerrorseelogs'] = 'Tätä tiedostoa ei ole toimitettu Turnitiniin. Ole hyvä, hae lisäohjeita API-rajapinta-lokista.';
+$string['ppsubmissionerrorstudent'] = 'Tätä tiedostoa ei ole toimitettu Turnitiniin. Pyydä lisätietoja tuutoriltasi.';
+$string['turnitinppula'] = 'TÄRKEÄÄ: Sinun täytyy hyväksyä Turnitin Loppukäyttäjän Lisenssisopimus. Ole hyvä ja hyväksy se näpäyttämällä tätä linkkiä.';
+$string['redirecttoeula'] = 'Siirrämme sinut Loppukäyttäjän Lisenssisopimukseen';
+$string['filedoesnotexist'] = 'Tiedosto on hävitetty';
+$string['errorenrollingall'] = 'Kaikkien opiskelijoiden Turnitiniin rekisteröinnissä on tapahtunut virhe - Ole hyvä ja hae lisätietoja API-lokista';
+$string['eventremoved'] = 'Tämä tapahtuma on poistettu cron-työlistalta, eikä sitä käsitellä uudestaan.';
+$string['partnametoolarge'] = 'Osan nimi on liian suuri, ole hyvä ja rajoita se 40 merkkiin.';
+$string['enableperformancelogs'] = ' Aktivoi verkon suorituskyky-loki';
+$string['enableperformancelogs_desc'] = 'Mikäli aktivoitu, jokainen pyyntö Turnitinin palvelimelle tullaan kirjaamaan tiedostoon {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Tätä modulia ei voitu luoda Turnitiniin. Ole hyvä ja hae lisätietoja API-rajapinta-lokista';
+$string['pp_assignmentediterror'] = 'Tätä modulia ei voitu muokata Turnitinissä, ole hyvä ja hae lisätietoja API-rajapinta-lokeista';
+$string['pp_classcreationerror'] = 'Tätä luokkaa ei voitu luoda Turnitiniin, ole hyvä ja hae lisätietoja API-rajapinta-lokeista';
+$string['pp_assignmentsubmiterror'] = 'Modulin replikointi Turnitinissä epäonnistui, joka estää palautusten tekemisen. Hae lisätietoja API-rajapinta-lokista.';
+$string['listsubmissions'] = 'Luetteloi Palautukset';
+$string['viewsubmission'] = 'Katsele Palautusta';

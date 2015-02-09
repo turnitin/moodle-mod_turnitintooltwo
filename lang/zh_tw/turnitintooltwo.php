@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: zh_tw
 
 $string['addsubmission'] = '添加提交物件 ';
@@ -70,7 +70,7 @@ $string['overallgrade_help'] = '總體分數決定總體作業所允許的成績
 $string['partdberror'] = '輸入第 {$a} 部分至數據庫時有誤<br />';
 $string['partdeleteerror'] = '無法刪除作業部分{$a}數據';
 $string['partdeletewarning'] = '您嘗試刪除的作業部分包含著提交物件。若您刪除此作業部分，您將會喪失這些提交部分。\n\n 您確定要繼續?';
-$string['partposterror'] = '截止日期必須在公佈日期前。<br />';
+$string['partposterror'] = '截止日期必須在公佈日期前。';
 $string['partnameerror'] = '部分名稱不可為空白。';
 $string['partdueerror'] = '截止日期必須在公佈日期前。';
 $string['pending'] = '未決的';
@@ -263,7 +263,7 @@ $string['downloadorigfileszip'] = '下載原始檔案';
 $string['uploadingsubtoturnitin'] = '上傳您的提交物件至 Turnitin';
 $string['emptycreatedfile'] = '您所嘗試提交的文檔為空白或訛誤';
 $string['studentdataprivacy'] = '學生數據隱私設定';
-$string['studentdataprivacy_desc'] = '以下設定可以調整以確保學生&#39 的個人數據不會藉由 API 傳送至 Turnitin。 ';
+$string['studentdataprivacy_desc'] = '以下設定可以調整以確保學生 的個人數據不會藉由 API 傳送至 Turnitin。 ';
 $string['enablepseudo'] = '開啟學生隱私';
 $string['enablepseudo_desc'] = '若選擇此選項，學生電子郵件地址將被轉變為擬似 Turnitin IP 的判定。.<br /><i>(<b>注意:</b> 若任何 Moodle 用戶資料已經與 Turnitin 同步，此選項不能更改)</i>';
 $string['pseudofirstname'] = '學生的假名';
@@ -433,3 +433,25 @@ $string['checkupgrade'] = '檢查可用的升級';
 $string['checkingupgrade'] = '檢查可用的升級中';
 $string['usinglatest'] = '您在使用最新的版本！';
 $string['useturnitin_mod'] = '爲 {a} 開啓 Turnitin';
+$string['usemoodlecert'] = '使用 Moodle SSL 證書';
+$string['errorcode1'] = '這個檔案尚無足夠的内容給 Turnitin 製作原創性報告。';
+$string['errorcode2'] = '這個檔案將不會被提交至 Turnitin 因爲它超過允許的檔案大小的上限 {$a} ';
+$string['notorcapable'] = '不可能爲此檔案製作原創性報告。';
+$string['pastfiveattempts'] = '這個檔案將不會被提交至 Turnitin 因爲它超過允許的5個嘗試的上限。';
+$string['notacceptedeula'] = '這個檔案尚未被提交至 Turnitin 因爲用戶尚未接收 Turnitin 終端用戶的權限合約。';
+$string['ppsubmissionerrorseelogs'] = '這個檔案尚未被提交至 Turnitin, 請參考您的 API 登記來查詢更多資訊';
+$string['ppsubmissionerrorstudent'] = '這個檔案尚未被提交至 Turnitin, 請問您的導師登記來查詢更多資訊';
+$string['turnitinppula'] = '重要: 您必須接受 Turnitin 終端用戶的權限合約。請點選此鏈接以接受。';
+$string['redirecttoeula'] = '我們正在導引您至終端用戶權限合約';
+$string['filedoesnotexist'] = '檔案已被刪除';
+$string['errorenrollingall'] = '加入所有學生至 Turnitin 時有誤 -請參考您的 API 登記來查詢更多資訊';
+$string['eventremoved'] = '這個活動已從 cron queue 被刪除，也不會再被處理。';
+$string['partnametoolarge'] = '部分名稱太大。請限制至 40 個字符。';
+$string['enableperformancelogs'] = '開啓網路成效記錄';
+$string['enableperformancelogs_desc'] = '若開啓, 每個給 Turnitin 伺服器的請求將會被記錄在 {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = '這個模組無法在 Turnitin 上建立, 請參考您的 API 登記來查詢更多資訊';
+$string['pp_assignmentediterror'] = '這個模組無法在 Turnitin 上建立, 請參考您的 API 登記來查詢更多資訊';
+$string['pp_classcreationerror'] = '這個課程無法在 Turnitin 上建立, 請參考您的 API 登記來查詢更多資訊';
+$string['pp_assignmentsubmiterror'] = '在 Turnitin 内複製您的模組時有問題，導致無法提交, 請參考您的 API 登記來查詢更多資訊';
+$string['listsubmissions'] = '列舉提交物件';
+$string['viewsubmission'] = '檢視提交物件';

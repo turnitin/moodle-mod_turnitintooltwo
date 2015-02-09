@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: ro
 
 $string['addsubmission'] = 'Adăugați depunerea';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'A survenit o problemă la introducerea Părții {$a} �
 $string['partupdateerror'] = 'A survenit o problemă la actualizarea Părții {$a} în baza de date<br />';
 $string['partdeleteerror'] = 'Nu au putut fi șterse datele părții temei {$a}';
 $string['partdeletewarning'] = 'Partea temei pe care încercați să o ștergeți conține depuneri. Veți pierde aceste depuneri dacă ștergeți această parte a temei.\n\nSunteți sigur că vreți să continuați?';
-$string['partposterror'] = 'Data de început trebuie să fie înainte de data publicării.<br />';
+$string['partposterror'] = 'Data de început trebuie să fie înainte de data publicării.';
 $string['partgeterror'] = 'Nu au putut fi obținute datele părții temei';
 $string['partname'] = 'Partea temei';
 $string['partnameerror'] = 'Numele părții nu poate fi lăsat gol.';
@@ -276,7 +276,7 @@ $string['downloadorigfileszip'] = 'Descărcați fișierele originale';
 $string['uploadingsubtoturnitin'] = 'Se încarcă depunerea dumneavoastră la Turnitin';
 $string['emptycreatedfile'] = 'Fișierul pe care ați încercat să-l depuneți este gol sau corupt';
 $string['studentdataprivacy'] = 'Setările confidențialității datelor studentului';
-$string['studentdataprivacy_desc'] = 'Următoarele setări pot fi configurate pentru a asigura că datele personale ale student&#39s nu sunt transmise către Turnitin prin intermediul API.';
+$string['studentdataprivacy_desc'] = 'Următoarele setări pot fi configurate pentru a asigura că datele personale ale student nu sunt transmise către Turnitin prin intermediul API.';
 $string['enablepseudo'] = 'Activați confidențialitatea studentului';
 $string['enablepseudo_desc'] = 'Dacă această opțiune este selectată adresele de e-mail ale studenților vor fi transformate într-un pseudoechivalent pentru apelurile API Turnitin.<br /><i>(<b>Observație:</b> Această opțiune nu poate fi schimbată dacă vreo dată de utilizator Moodle a fost deja sincronizată cu Turnitin)</i>';
 $string['pseudofirstname'] = 'Pseudoprenumele studentului';
@@ -308,7 +308,7 @@ $string['sprocessing'] = 'Se încarcă datele din Turnitin...';
 $string['szerorecords'] = 'Nu există date de afișat.';
 $string['sinfo'] = 'Afișare _ÎNCEPUT_ la _SFÂRȘIT_ din _TOTALUL_ intrărilor.';
 $string['unlinkedusers'] = 'Utilizatori dezasociați';
-$string['modulename_help'] = 'Creează o temă Turnitin Moodle Direct care asociază o activitate în Moodle cu o temă / teme în Turnitin. Odată asociată, activitatea permite profesorilor să evalueze și să ofere aprecieri pentru munca scrisă a student&#39s folosind instrumentele de evaluare disponibile în cadrul Vizualizatorului de documente Turnitin&#39s. ';
+$string['modulename_help'] = 'Creează o temă Turnitin Moodle Direct care asociază o activitate în Moodle cu o temă / teme în Turnitin. Odată asociată, activitatea permite profesorilor să evalueze și să ofere aprecieri pentru munca scrisă a student folosind instrumentele de evaluare disponibile în cadrul Vizualizatorului de documente Turnitin. ';
 $string['transmatch'] = 'Similitudini traduse';
 $string['transmatch_desc'] = 'Determină dacă Similitudini traduse va fi disponibilă ca setare pe ecranul de configurare a temei.<br /><i>(Activați această opțiune doar dacă Similitudini traduse este activată la contul dumneavoastră Turnitin)</i>';
 $string['turnitintooltwo:addinstance'] = 'Adăugați activitatea Instrumentului Turnitin';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = 'Verificare disponibilitate upgrade';
 $string['checkingupgrade'] = 'Se verifică dacă există upgrade disponibil';
 $string['usinglatest'] = 'Utilizaţi cea mai recentă versiune!';
 $string['useturnitin_mod'] = 'Activare Turnitin pentru {a}';
+$string['usemoodlecert'] = 'Utilizare certificat Moodle SSL';
+$string['errorcode1'] = 'Acest fişier nu are conţinut suficient pentru ca Turnitin să genereze un Raport privind originalitatea.';
+$string['errorcode2'] = 'Acest fişier nu va fi depus la Turnitin, deoarece depăşeşte dimensiunea maximă permisă';
+$string['notorcapable'] = 'Nu este posibil să se genereze un Raport privind originalitatea pentru acest fişier.';
+$string['pastfiveattempts'] = 'Acest fişier nu va fi depus la Turnitin, deoarece a depăşit numărul maxim de încercări permise, şi anume 5.';
+$string['notacceptedeula'] = 'Acest fişier nu a fost depus la Turnitin, deoarece utilizatorul nu a acceptat Acordul de licenţă cu utilizatorul final al Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Acest fişier nu a fost depus la Turnitin, consultaţi jurnalele API pentru mai multe detalii';
+$string['ppsubmissionerrorstudent'] = 'Acest fişier nu a fost depus la Turnitin, consultaţi-vă îndrumătorul pentru mai multe detalii';
+$string['turnitinppula'] = 'IMPORTANT: Trebuie să acceptaţi Acordul de licenţă cu utilizatorul final al Turnitin. Faceţi clic pe acest link pentru a accepta.';
+$string['redirecttoeula'] = 'Vă redirecţionăm către Acordul de licenţă cu utilizatorul final';
+$string['filedoesnotexist'] = 'Fişierul a fost şters';
+$string['errorenrollingall'] = 'A apărut o eroare la înregistrarea tuturor studenţilor pe Turnitin. Consultaţi jurnalele API pentru mai multe informaţii';
+$string['eventremoved'] = 'Acest eveniment a fost eliminat din coadă şi nu va fi procesat din nou.';
+$string['partnametoolarge'] = 'Numele părţii este prea mare. Respectaţi limita de 40 de caractere.';
+$string['enableperformancelogs'] = 'Activare Înregistrare în jurnal a performanţei reţelei';
+$string['enableperformancelogs_desc'] = 'Dacă este activată această opţiune, fiecare solicitare adresată serverului Turnitin va fi înregistrată în jurnal în {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Acest modul nu a putut fi creat pe Turnitin, consultaţi jurnalele API pentru mai multe informaţii';
+$string['pp_assignmentediterror'] = 'Acest modul nu a putut fi editat pe Turnitin, consultaţi jurnalele API pentru mai multe informaţii';
+$string['pp_classcreationerror'] = 'Acest curs nu a putut fi creat pe Turnitin, consultaţi jurnalele API pentru mai multe informaţii';
+$string['pp_assignmentsubmiterror'] = 'Există o problemă la replicarea modulului dvs. în Turnitin, fapt care împiedică depunerea. Consultaţi jurnalele API pentru mai multe informaţii';
+$string['listsubmissions'] = 'Listare depuneri';
+$string['viewsubmission'] = 'Vizualizare depunere';

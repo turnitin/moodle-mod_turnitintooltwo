@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: ja
 
 $string['addsubmission'] = '提出物を追加';
@@ -72,7 +72,7 @@ $string['partdberror'] = ' {$a} 部分をデータベースに入力中にエ�
 $string['partupdateerror'] = '{$a} 部分をデータベースで更新中に問題が発生しました<br />';
 $string['partdeleteerror'] = '課題部分{$a}データを削除できませんでした';
 $string['partdeletewarning'] = 'あなたが削除しようとしている課題部分は提出物を含んでいます。この課題部分を削除するとその提出物は削除されます。\n\n差表を続けますか？';
-$string['partposterror'] = '提出期限日は提示日の前でなければなりません。<br />';
+$string['partposterror'] = '提出期限日は提示日の前でなければなりません。';
 $string['partgeterror'] = '課題部分のデータを入手できませんでした';
 $string['partname'] = '課題部分';
 $string['partnameerror'] = '部分名を記入してください。';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = '使用できるアップグレードを確認する';
 $string['checkingupgrade'] = '使用できるアップグレードを確認中';
 $string['usinglatest'] = 'あなたは最新のバージョンを使用しています！';
 $string['useturnitin_mod'] = '{a}に対してのTurnitinを作動する';
+$string['usemoodlecert'] = 'Moodle SSL 証明書を使用する';
+$string['errorcode1'] = 'このファイルはオリジナリティーレポートを作成するのに十分な内容が含まれていません。';
+$string['errorcode2'] = 'このファイルは、許可されている最大サイズ{$a}を超えているため、Turnitin へ提出することができません。';
+$string['notorcapable'] = 'このファイルに対してオリジナリティーレポートを作成することができません。';
+$string['pastfiveattempts'] = 'このファイルは、許可されている5回以上の提出を試みているため、Turnitin へ提出することができません。';
+$string['notacceptedeula'] = 'このファイルはユーザーが、Turnitinのユーザーライセンス契約に同意していないため、Turnitinへ提出することができません';
+$string['ppsubmissionerrorseelogs'] = 'このファイルはTurnitinに提出されていません。更なる詳細に関しては、APIログまでご相談ください。';
+$string['ppsubmissionerrorstudent'] = 'このファイルはTurnitinに提出されていません。更なる詳細に関しては、チューターまでご相談ください。';
+$string['turnitinppula'] = '注意：Turnitin使用許諾契約に同意する必要があります。このリンクをクリックして同意してください。';
+$string['redirecttoeula'] = '使用許諾契約へリダイレクトします。';
+$string['filedoesnotexist'] = 'ファイルは削除されました';
+$string['errorenrollingall'] = '全ての受講生をTurnitinに登録する際にエラーが発生していますー詳しくは、APIログに相談してください。';
+$string['eventremoved'] = 'このイベントは cron queue から削除されており、再度処理されることはありません。';
+$string['partnametoolarge'] = '名前部分が大きすぎます。最高40文字までに制限してください。';
+$string['enableperformancelogs'] = 'ネットワークパフォーマンスログを作動する';
+$string['enableperformancelogs_desc'] = '作動されると、Turnitin server への各リクエストは {dataroot}/temp/turnitintooltwo/logs へログされます。';
+$string['pp_assignmentcreateerror'] = 'Turnitinでこのモジュールを作成することができません。更なる情報に関しては、 API ログにご相談ください。';
+$string['pp_assignmentediterror'] = 'Turnitinでこのモジュールを作成することができません。更なる情報に関しては、 API ログにご相談ください。';
+$string['pp_classcreationerror'] = 'Turnitinでこのクラスを作成することができません。更なる情報に関しては、 API ログにご相談ください。';
+$string['pp_assignmentsubmiterror'] = 'Turnitinでモジュールを複製中に問題が発生したため、提出が現在できなくなっています。更なる情報に関しては、 API ログにご相談ください。';
+$string['listsubmissions'] = '提出物をリストする';
+$string['viewsubmission'] = '提出物を見る';

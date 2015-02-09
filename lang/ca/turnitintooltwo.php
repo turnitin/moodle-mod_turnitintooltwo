@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: ca
 
 $string['addsubmission'] = 'Afegir Lliurament';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Hi ha hagut un problema al introduir la Part {$a} en l
 $string['partupdateerror'] = 'S\&#39;ha produït un problema amb l&#39;actualització de la Part {$a} a la base de dades.<br />';
 $string['partdeleteerror'] = 'Ho ha estat possible eliminar la dada de la part de l´assignació';
 $string['partdeletewarning'] = 'La part de l´assignació que vosté està intentant eliminar conté lliuraments. Vosté perdrà aquests lliuraments si no elimina la part de l´assignació.\n\ Está vosté segur de voler continuar?';
-$string['partposterror'] = 'La data d´inici ha de ser anterior a la data de publicació.<br />';
+$string['partposterror'] = 'La data d´inici ha de ser anterior a la data de publicació.';
 $string['partgeterror'] = 'No ha estat possible obtenir la dada de la part de l´assignació';
 $string['partname'] = 'Part de l´assignació';
 $string['partnameerror'] = 'El nome de la part no es pot deixar en blanc.';
@@ -276,7 +276,7 @@ $string['downloadorigfileszip'] = 'Descarrega els arxius originals';
 $string['uploadingsubtoturnitin'] = 'S\&#39;està carregant el lliurament a Turnitin';
 $string['emptycreatedfile'] = 'L\&#39;arxiu que ha intentat lliurar està buit o malmès';
 $string['studentdataprivacy'] = 'Configuració de seguretat de les dades de l\&#39;estudiant';
-$string['studentdataprivacy_desc'] = 'Els valors següents es poden configurar per garantir que les dades personals de l\&#39;estudiant no es transmeten a Turnitin a través de l\&#39;API.';
+$string['studentdataprivacy_desc'] = 'Els valors següents es poden configurar per garantir que les dades personals de l&#39;estudiant no es transmeten a Turnitin a través de l&#39;API.';
 $string['enablepseudo'] = 'Habilita la privacitat de l\&#39;estudiant';
 $string['enablepseudo_desc'] = 'Si se selecciona aquesta opció, las adreces electròniques de l\&#39;estudiant es transformaran en un pseudoequivalent de les trucades de Turnitin API. <br /><i>(<b>Nota:</b> aquesta opció no es pot modificar si ja s\&#39;ha sincronitzat qualsevol dada d&#39;usuari de Moodle amb Turnitin).</i>';
 $string['pseudofirstname'] = 'Pseudonom de l\&#39;estudiant';

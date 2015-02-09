@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: nl
 
 $string['addsubmission'] = 'Inzending toevoegen';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Er was een probleem bij het invoeren van Deel {$a} in 
 $string['partupdateerror'] = 'Er was een probleem bij het updaten van Deel {$a} in de database<br />';
 $string['partdeleteerror'] = 'Kon gegevens van opdrachtdeel {$a} niet verwijderen';
 $string['partdeletewarning'] = 'Het deel van de opdracht dat u probeert te verwijderen bevat inzendingen. U zult deze inzendingen verliezen als u dit opdrachtdeel verwijdert.n\n\Weet u zeker dat u door wilt gaan?';
-$string['partposterror'] = 'Startdatum moet voor publicatiedatum liggen.<br />';
+$string['partposterror'] = 'Startdatum moet voor publicatiedatum liggen.';
 $string['partgeterror'] = 'Kon gegevens van opdrachtdeel niet ophalen';
 $string['partname'] = 'Deel van opdracht';
 $string['partnameerror'] = 'Naam van deel mag niet leeg zijn.';
@@ -320,7 +320,7 @@ $string['submissiondeleted'] = 'Inzending verwijderd';
 $string['tutoradded'] = 'Tutor is toegevoegd aan de cursus in Turnitin';
 $string['tutoraddingerror'] = 'Er is een probleem opgetreden bij het toevoegen van de tutor aan de cursus in Turnitin';
 $string['tutorremoved'] = 'Tutor is verwijderd van de cursus in Turnitin';
-$string['tutorremovingerror'] = 'Er is een probleem opgetreden bij het verwijderen van de tutor aan de cursus in Turnitin';
+$string['tutorremovingerror'] = 'Er is een probleem opgetreden bij het verwijderen van de tutor van de cursus in Turnitin';
 $string['noturnitinassignemnts'] = 'Er zijn geen Turnitin-opdrachten';
 $string['notutors'] = 'Er zijn geen privédocenten ingeschreven voor deze cursus bij Turnitin';
 $string['settings'] = 'Instellingen';
@@ -447,3 +447,25 @@ $string['checkupgrade'] = 'Controleren op beschikbare upgrades';
 $string['checkingupgrade'] = 'Controleren op beschikbare upgrades';
 $string['usinglatest'] = 'U gebruikt de nieuwste versie!';
 $string['useturnitin_mod'] = 'Turnitin inschakelen voor {a}';
+$string['usemoodlecert'] = 'Moodle SSL-certificaat gebruiken';
+$string['errorcode1'] = 'Dit bestand bevat niet genoeg content om Turnitin in staat te stellen een originaliteitsrapport te genereren.';
+$string['errorcode2'] = 'Dit bestand kan niet worden ingediend bij Turnitin omdat het de maximaal toegestane grootte van {$a} overschrijdt';
+$string['notorcapable'] = 'Het is niet mogelijk om een originaliteitsrapport te genereren voor dit bestand.';
+$string['pastfiveattempts'] = 'Dit bestand zal niet worden ingediend bij Turnitin omdat het maximumaantal pogingen om het in te dienen is overschreden.';
+$string['notacceptedeula'] = 'Dit bestand is niet ingediend bij Turnitin omdat de gebruiker de Eindgebruikersovereenkomst van Turnitin niet heeft geaccepteerd.';
+$string['ppsubmissionerrorseelogs'] = 'Dit bestand is niet ingediend bij Turnitin. Raadplaag uw API-registratiegegevens voor verdere informatie.';
+$string['ppsubmissionerrorstudent'] = 'Dit bestand is niet ingediend bij Turnitin. Raadplaag uw privédocent voor verdere informatie.';
+$string['turnitinppula'] = 'BELANGRIJK: U moet de Eindgebruikersovereenkomst van Turnitin accepteren. Klik op deze link om akkoord te gaan.';
+$string['redirecttoeula'] = 'We sturen u nu door naar de Eindgebruikersovereenkomst.';
+$string['filedoesnotexist'] = 'Bestand is verwijderd';
+$string['errorenrollingall'] = 'Er is een fout opgetreden bij het inschrijven van alle studenten bij Turnitin. Raadpleeg de API-registratiegegevens voor verdere informatie.';
+$string['eventremoved'] = 'Dit proces is verwijderd uit de cron-wachtrij en zal niet opnieuw worden verwerkt.';
+$string['partnametoolarge'] = 'Het naam van dit deel is te lang. U kunt maximaal 40 tekens gebruiken.';
+$string['enableperformancelogs'] = 'Registreren van netwerkprestatie inschakelen';
+$string['enableperformancelogs_desc'] = 'Indien ingeschakeld wordt elk verzoek aan de Turnitin-server geregistreerd in {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Deze module kon niet worden aangemaakt op Turnitin. Raadpleeg uw API-registratiegegevens voor meer informatie.';
+$string['pp_assignmentediterror'] = 'Deze module kon niet worden bewerkt op Turnitin. Raadpleeg uw API-registratiegegevens voor meer informatie.';
+$string['pp_classcreationerror'] = 'Deze cursus kon niet worden aangemaakt op Turnitin. Raadpleeg uw API-registratiegegevens voor meer informatie.';
+$string['pp_assignmentsubmiterror'] = 'Er is een probleem opgetreden met het dupliceren van uw module in Turnitin waardoor er geen inzendingen kunnen worden ingediend. Raadpleeg uw API-registratiegegevens voor meer informatie.';
+$string['listsubmissions'] = 'Toon lijst van inzendingen';
+$string['viewsubmission'] = 'Bekijk inzendingen';

@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: tr
 
 $string['addsubmission'] = 'Gönderi Ekle';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Parça {$a} veri tabanına girildiğinde bir sorun o
 $string['partupdateerror'] = 'Veri merkezinde {$a} parçası yüklenirken bir sorun oluştu<br />';
 $string['partdeleteerror'] = 'Ödev parçasının {$a} verileri silinemedi';
 $string['partdeletewarning'] = 'Silmeye çalıştığınız ödev parçası bazı gönderimler içeriyor. Bu ödev parçasını sildiğinizde, yapılmış olan gönderimleri de kaybedeceksiniz.\n\nDevam etmek istediğinize emin misiniz?';
-$string['partposterror'] = 'Başlangıç tarihi posta tarihinden önce olmalıdır.<br />';
+$string['partposterror'] = 'Başlangıç tarihi posta tarihinden önce olmalıdır.';
 $string['partgeterror'] = 'Ödev parçasının verileri alınamadı';
 $string['partname'] = 'Ödev Parçası';
 $string['partnameerror'] = 'Parça adı boş bırakılamaz.';
@@ -275,7 +275,7 @@ $string['downloadorigfileszip'] = 'Orijinal Dosyaları İndir';
 $string['uploadingsubtoturnitin'] = 'Ödeviniz Turnitin&#39;e yükleniyor';
 $string['emptycreatedfile'] = 'Göndermeye çalıştığınız ödev ya boş veya bozulmuş';
 $string['studentdataprivacy'] = 'Öğrenci Veri Gizlilik Ayarları';
-$string['studentdataprivacy_desc'] = 'Aşağıdaki ayarlar, öğrenci&#39s kişisel verilerinin API aracılığıyla Turnitin&#39;e aktarılmadığından emin olmak için yapılandırıabilir.';
+$string['studentdataprivacy_desc'] = 'Aşağıdaki ayarlar, öğrencis kişisel verilerinin API aracılığıyla Turnitin&#39;e aktarılmadığından emin olmak için yapılandırıabilir.';
 $string['enablepseudo'] = 'Öğrenci Gizliliğini Etkinleştir';
 $string['enablepseudo_desc'] = 'Bu seçildiğinde öğrenci e-posta adresleri Turnitin API için sahteleri oluşturulacaktır.<br /><i>(<b>Not:</b> Herhangi bir Moodle kullanıcı verisi halihazırda Turnitin ile senkronize edilmişse bu seçenek değiştirilemez)</i>';
 $string['pseudofirstname'] = 'Sahte Öğrenci Adı';
@@ -447,3 +447,25 @@ $string['checkupgrade'] = 'Kullanılabilir yükseltmeleri denetle';
 $string['checkingupgrade'] = 'Kullanılabilir yükseltmeler denetleniyor';
 $string['usinglatest'] = 'Güncel sürümü kullanıyorsunuz!';
 $string['useturnitin_mod'] = 'Turnitin&#39;i {a} için etkinleştir';
+$string['usemoodlecert'] = 'Moodle SSL sertifikasını kullan';
+$string['errorcode1'] = 'Bu dosyada Turnitin&#39;in Özgünlük Raporu oluşturmasına yetecek kadar içerik bulunmuyor.';
+$string['errorcode2'] = 'Bu dosya izin verilen maksimum boyutu aştığından Turnitin&#39;e gönderilmeyecek';
+$string['notorcapable'] = 'Bu dosya için bir Özgünlük Raporunun oluşturulması mümkün değil.';
+$string['pastfiveattempts'] = 'Bu dosya izin verilen maksimum 5 denemeyi aştığından Turnitin&#39;e gönderilmeyecek.';
+$string['notacceptedeula'] = 'Kullanıcı, Turnitin Son Kullanıcı Lisans Sözleşmesini kabul etmediğinden bu dosya Turnitin&#39;e gönderilmemiştir.';
+$string['ppsubmissionerrorseelogs'] = 'Bu dosya Turnitin&#39;e gönderilmedi, lütfen daha ayrıntılı bilgi için API kayıtlarınıza bakın';
+$string['ppsubmissionerrorstudent'] = 'Bu dosya Turnitin&#39;e gönderilmedi, lütfen daha ayrıntılı bilgi için öğretmeninize danışın';
+$string['turnitinppula'] = 'ÖNEMLİ: Turnitin Son Kullanıcı Lisans Sözleşmesini kabul etmeniz gerekiyor. Lütfen, kabul etmek için bu bağlantıyı tıklayın.';
+$string['redirecttoeula'] = 'Sizi Son Kullanıcı Lisans Sözleşmesine yönlendiriyoruz';
+$string['filedoesnotexist'] = 'Dosya silindi';
+$string['errorenrollingall'] = 'Bütün öğrenciler Turnitin&#39;e kaydedilirken bir hata oluştu - Daha ayrıntılı bilgi için lütfen API kayıtlarınıza bakın';
+$string['eventremoved'] = 'Bu etkinlik cron sırasından kaldırıldı ve tekrar işlenmeyecek.';
+$string['partnametoolarge'] = 'Parça adı çok uzun. Lütfen 40 karakterle sınırlı tutun.';
+$string['enableperformancelogs'] = 'Ağ Performans Kaydını Etkinleştir';
+$string['enableperformancelogs_desc'] = 'Etkinleştirilirse, Turnitin sunucusuna gönderilen tüm talepler {dataroot}/temp/turnitintooltwo/logs dizinine kaydedilecektir';
+$string['pp_assignmentcreateerror'] = 'Bu modül Turnitin&#39;de oluşturulamadı, daha ayrıntılı bilgi için lütfen API kayıtlarınıza bakın';
+$string['pp_assignmentediterror'] = 'Bu modül Turnitin&#39;de düzenlenemedi, daha ayrıntılı bilgi için lütfen API kayıtlarınıza bakın';
+$string['pp_classcreationerror'] = 'Bu sınıf Turnitin&#39;de oluşturulamadı, daha ayrıntılı bilgi için lütfen API kayıtlarınıza bakın';
+$string['pp_assignmentsubmiterror'] = 'Modülünüz Turnitin&#39;de çoğaltılırken gönderileri engelleyen bir sorun meydana geldi, daha ayrıntılı bilgi için lütfen API kayıtlarınıza bakın';
+$string['listsubmissions'] = 'Gönderileri Listele';
+$string['viewsubmission'] = 'Gönderileri Göster';

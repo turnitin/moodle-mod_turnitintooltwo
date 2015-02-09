@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: fr
 
 $string['addsubmission'] = 'Ajouter un envoi';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Un problème est survenu lors de l’intégration de l
 $string['partupdateerror'] = 'Un problème est survenu lors de l’actualisation de la partie {$a} dans la base de donnée<br />';
 $string['partdeleteerror'] = 'Impossible de supprimer la partie de l´exercice {$a}';
 $string['partdeletewarning'] = 'La partie d’exercice que vous souhaitez supprimer contient des copies. Vous allez perdre ces travaux si vous effacez cette partie d’exercice. \n\nÊtes vous sûr de vouloir continuer ?';
-$string['partposterror'] = 'La date limite doit être antérieure à la date de publication.<br />';
+$string['partposterror'] = 'La date limite doit être antérieure à la date de publication.';
 $string['partgeterror'] = 'Impossible d´obtenir les données de la partie de l´exercice';
 $string['partname'] = 'Partie de l´exercice';
 $string['partnameerror'] = 'Le titre de la partie ne peut pas être vide';
@@ -276,7 +276,7 @@ $string['downloadorigfileszip'] = 'Télécharger les fichiers originaux';
 $string['uploadingsubtoturnitin'] = 'Envoyer votre travail à Turnitin';
 $string['emptycreatedfile'] = 'Le fichier que vous tentez de soummettre est soit vide soit endommagé';
 $string['studentdataprivacy'] = 'Configuration de la confidentialité des données des étudiants';
-$string['studentdataprivacy_desc'] = 'Les réglages suivants se configurer pour assurer que les données personnelles de l&#39;étudiant&#39s ne soit pas transmises à Turnitin via l&#39;API.';
+$string['studentdataprivacy_desc'] = 'Les réglages suivants se configurer pour assurer que les données personnelles de l&#39;étudiants ne soit pas transmises à Turnitin via l&#39;API.';
 $string['enablepseudo'] = 'Activer les paramètres de confidentialité de l´étudiant';
 $string['enablepseudo_desc'] = 'Si cette option est séléctionnée, les adresses e-mails des étudiants seront transformées en pseudo équivalent aux appels API de Turnitin.<br /><i>(<b>Note:</b> Cette option n´est plus modifiable dès qu´un utilisateur, tel qu´il soit, a été synchronisé avec Turnitin)</i>';
 $string['pseudofirstname'] = 'Pseudo prénom de l´étudiant';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = 'Vérifier les actualisations disponibles';
 $string['checkingupgrade'] = 'Vérification des actualisations disponibles en cours';
 $string['usinglatest'] = 'Vous utilisez la dernière version!';
 $string['useturnitin_mod'] = 'Activer Turnitin pour {a}';
+$string['usemoodlecert'] = 'Utiliser le certificat SSL de Moodle';
+$string['errorcode1'] = 'Ce fichier n´a pas suffisamment de contenu pour produire un Rapport de Similitude Turnitin';
+$string['errorcode2'] = 'Impossible de soumettre ce fichier à Turnitin car sa taille excède le maximum autorisé de {$a} ';
+$string['notorcapable'] = 'Impossible de produire un Rapport de Similitude pour ce fichier.';
+$string['pastfiveattempts'] = 'Impossible de soumettre ce fichier à Turnitin car la limite des 5 tentatives a été dépassée. ';
+$string['notacceptedeula'] = 'Le fichier n&#39;a pas été envoyé à Turnitin car l´utilisateur n´a pas accepté les termes du Contrat Utilisateur de Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Le fichier n´a pas été envoyé à Turnitin, veuillez consulter le journal de votre API pour plus de détails';
+$string['ppsubmissionerrorstudent'] = 'Le fichier n´a pas été envoyé à Turnitin, veuillez consulter votre tuteur pour plus de renseignements.';
+$string['turnitinppula'] = 'IMPORTANT: Vous devez accepter les termes du Contrat Utilisateur de Turnitin. ';
+$string['redirecttoeula'] = 'Vous allez être redirigé vers le Contrat Utilisateur de Turnitin';
+$string['filedoesnotexist'] = 'Le fichier été supprimé';
+$string['errorenrollingall'] = 'Une erreur est survenue lors de l´inscription de tous les étudiants à Turnitin. Veuillez consulter le journal de l´API pour plus d´informations.';
+$string['eventremoved'] = 'Cet évènement a été supprimé de cron queue et ne sera plus traité dans le future.';
+$string['partnametoolarge'] = 'Le nom de la partie est trop long. Veuillez vous limiter à 40 caractères.';
+$string['enableperformancelogs'] = 'Activer l´enregistrement des performances du réseau';
+$string['enableperformancelogs_desc'] = 'Une fois activé, toutes les demandes vers le serveur Turnitin seront enregistrées dans {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Il est impossible de créer le module dans Turnitin, veuillez consulter le journal de votre API pour plus d´informations.';
+$string['pp_assignmentediterror'] = 'Il est impossible de modifier le module dans Turnitin, veuillez consulter le journal de votre API pour plus d´informations.';
+$string['pp_classcreationerror'] = 'Il est impossible de créer le cours dans Turnitin, veuillez consulter le journal de votre API pour plus d´informations.';
+$string['pp_assignmentsubmiterror'] = 'Un problème est survenu en dupliquant votre module dans Turnitin, ce qui a empêché l´envoi des documents. Veuillez consulter le journal de votre API pour plus d´informations.';
+$string['listsubmissions'] = 'Lister les documents envoyés';
+$string['viewsubmission'] = 'Voir le document';

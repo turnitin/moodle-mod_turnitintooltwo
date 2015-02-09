@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: pl
 
 $string['addsubmission'] = 'Dodaj przesyłkę';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Wystąpił problem przy wprowadzaniu Części {$a} do 
 $string['partupdateerror'] = 'Wystąpił problem przy aktualizacji Części {$a} w bazie danych<br />';
 $string['partdeleteerror'] = 'Nie udało się usunąć danych części {$a} zadania';
 $string['partdeletewarning'] = 'Część zadania, którą usiłujesz usunąć zawiera przesyłki. Jeśli usuniesz tę część zadania, stracisz je.\n\nCzy na pewno chcesz kontynuować?';
-$string['partposterror'] = 'Termin rozpoczęcia musi nastąpić przed terminem zamieszczenia wyników.<br />';
+$string['partposterror'] = 'Termin rozpoczęcia musi nastąpić przed terminem zamieszczenia wyników.';
 $string['partgeterror'] = 'Nie udało się ściągnąć danych części zadania';
 $string['partname'] = 'Część zadania';
 $string['partnameerror'] = 'Nazwa części nie może być zostawiona pusta.';
@@ -275,7 +275,7 @@ $string['downloadorigfileszip'] = 'Pobierz oryginalne pliki';
 $string['uploadingsubtoturnitin'] = 'Wysyłka pracy do Turnitin';
 $string['emptycreatedfile'] = 'Plik, który usiłowano wysłać jest pusty lub uszkodzony';
 $string['studentdataprivacy'] = 'Ustawienia ochrony danych osobowych studenta';
-$string['studentdataprivacy_desc'] = 'Następujące ustawienia mogą zostać skonfigurowane, aby zapewnić, że dane osobowe studenta&#39s nie zostanąprzetransmitowane do Turnitin przez API.';
+$string['studentdataprivacy_desc'] = 'Następujące ustawienia mogą zostać skonfigurowane, aby zapewnić, że dane osobowe studenta nie zostanąprzetransmitowane do Turnitin przez API.';
 $string['enablepseudo'] = 'Aktywować ustawienia ochrony danych osobowych studenta';
 $string['enablepseudo_desc'] = 'Wybór tej opcji spowoduje, że adresy e-mail studentów otrzymają odpowiedniki dla połączeń z API Turnitin.<br /><i>(<b>Notatka:</b> Ta opcja nie może być zmieniona jeśli jakiekolwiek dane użytkownika Moodle zostały już zsynchronizowane z Turnitin)</i>';
 $string['pseudofirstname'] = 'Pseudonazwa studenta';
@@ -447,3 +447,25 @@ $string['checkupgrade'] = 'Sprawdź, czy aktualizacje są dostępne';
 $string['checkingupgrade'] = 'Sprawdzanie dostępnych aktualizacji';
 $string['usinglatest'] = 'Używasz najnowszej wersji!';
 $string['useturnitin_mod'] = 'Uruchom Turnitin dla {a}';
+$string['usemoodlecert'] = 'Użyj certyfikatu Moodle SSL';
+$string['errorcode1'] = 'Ten plik nie zawiera wystarczającej ilości materiału, aby Turnitin mógł wygenerować raport oryginalności.';
+$string['errorcode2'] = 'Ten plik nie zostanie przesłany do Turnitin, ponieważ jego wielkość {$a} przekracza dozwolone rozmiary ';
+$string['notorcapable'] = 'Wygenerowanie raportu oryginalności dla tego pliku jest niemożliwe.';
+$string['pastfiveattempts'] = 'Plik nie zostanie przesłany do Turnitin, ponieważ przekroczono dopuszczalną liczbę pięciu prób przesłania.';
+$string['notacceptedeula'] = 'Plik nie został przesłany do Turnitin, ponieważ użytkownik nie zaakceptował umowy końcowego licencjobiorcy Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Plik nie został przesłany do Turnitin, szczegółowe informacje znajdują się w logach API.';
+$string['ppsubmissionerrorstudent'] = 'Plik nie został przesłany do Turnitin, szczegóły u tutora.';
+$string['turnitinppula'] = 'WAŻNE: Musisz zaakceptować umowę końcowego licencjobiorcy Turnitin. Kliknij ten link, aby zaakceptować.';
+$string['redirecttoeula'] = 'Przekierowanie do umowy końcowego licencjobiorcy Turnitin.';
+$string['filedoesnotexist'] = 'Plik został usunięty';
+$string['errorenrollingall'] = 'Podczas rejestracji wszystkich studentów do Turnitin wystąpił błąd. Szczegółowe informacje znajdują się w logach API.';
+$string['eventremoved'] = 'Zdarzenie zostało usunięte z kolejki zadań cron i nie będzie więcej wykonywane.';
+$string['partnametoolarge'] = 'Nazwa części jest za długa. Dopuszcza się do 40 znaków.';
+$string['enableperformancelogs'] = 'Włącz rejestrowanie wydajności sieci';
+$string['enableperformancelogs_desc'] = 'Jeśli włączone, każde żądanie będzie zapisane w {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Utworzenie modułu w Turnitin nie powiodło się. Szczegółowe informacje znajdują się w logach API.';
+$string['pp_assignmentediterror'] = 'Edytowanie modułu w Turnitin nie powiodło się, szczegółowe informacje znajdują się w logach API';
+$string['pp_classcreationerror'] = 'Utworzenie klasy w Turnitin nie powiodło się. Szczegółowe informacje znajdują się w logach API.';
+$string['pp_assignmentsubmiterror'] = 'Wystąpił problem ze skopiowaniem modułu w Turnitin, co uniemożliwia dokonywanie przesyłek, szczegółowe informacje znajdują się w logach API';
+$string['listsubmissions'] = 'Pokaż listę przesyłek';
+$string['viewsubmission'] = 'Pokaż przesyłki';

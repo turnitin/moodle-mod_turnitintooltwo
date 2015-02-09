@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: it
 
 $string['addsubmission'] = 'Aggiungi consegna';
@@ -72,11 +72,11 @@ $string['partdberror'] = 'Si è verificato un problema nell&#39;inserire la part
 $string['partupdateerror'] = 'Si è verificato un errore di aggiornamento della parte di {$a} nel database<br />';
 $string['partdeleteerror'] = 'Impossibile eliminare i dati della sezione del compito';
 $string['partdeletewarning'] = 'La parte del compito che stai tentando di eliminare contiene delle consegne di elaborati. Perderai questi elaborati se eliminerai questa parte del compito. \n\nSei sicuro di voler continuare?';
-$string['partposterror'] = 'La data di inizio deve essere prima della data di pubblicazione. <br />';
+$string['partposterror'] = 'La data di inizio deve essere prima della data di pubblicazione. ';
 $string['partgeterror'] = 'Non è stato possibile i dati della parte del compito';
 $string['partname'] = 'Parte del compito';
-$string['partnameerror'] = 'Il titolo della parte non può essere lasciato in bianco..';
-$string['partdueerror'] = 'La data di inizio deve essere prima della data di pubblicazione.';
+$string['partnameerror'] = 'Il titolo della parte non può essere lasciato in bianco.';
+$string['partdueerror'] = 'La data di inizio deve essere prima della data di pubblicazione. ';
 $string['pending'] = 'In attesa';
 $string['permissiondeniederror'] = 'Non hai l&#39;autorizzazione necessaria per completare l&#39;azione richiesta';
 $string['portfolio'] = 'Portfolio';
@@ -431,3 +431,25 @@ $string['checkupgrade'] = 'Verifica aggiornamento disponibile';
 $string['checkingupgrade'] = 'Verifica aggiornamento disponibile in corso';
 $string['usinglatest'] = 'Stai utilizzando la versione più recente!';
 $string['useturnitin_mod'] = 'Abilita Turnitin per {a}';
+$string['usemoodlecert'] = 'Utilizza il certificato Moodle SSL';
+$string['errorcode1'] = 'Questo file non ha abbastanza contenuto e Turnitin non può produrre un Originality report.';
+$string['errorcode2'] = 'Questo file non verrà consegnato a Turnitin perché supera la dimensione massima di {$a} permessa';
+$string['notorcapable'] = 'Non è possibile produrre lOriginality report di questo file.';
+$string['pastfiveattempts'] = 'Questo file non verrà consegnato a Turnitin poichè ha superato il massimo di 5 tentativi consentiti.';
+$string['notacceptedeula'] = 'Questo file non è stato consegnato a Turnitin perché l&#39;utente non è stato accettato l&#39;accordo di licenza con l&#39;utente finale Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Questo file non è stato consegnato a Turnitin, consulta i log delle API per maggiori dettagli';
+$string['ppsubmissionerrorstudent'] = 'Questo file non è stato consegnato a Turnitin, consulta il tuo tutor per ulteriori dettagli';
+$string['turnitinppula'] = 'IMPORTANTE: è necessario accettare l&#39;accordo di licenza con l&#39;utente finale Turnitin. Clicca questo link per accettare.';
+$string['redirecttoeula'] = 'Ti stiamo reindirizzando al Contratto di licenza con l&#39;utente';
+$string['filedoesnotexist'] = 'Il file è stato cancellato';
+$string['errorenrollingall'] = 'Si è verificato un errore nell&#39;iscrizione di tutti gli studenti su Turnitin - Consulta i log di API per ulteriori informazioni';
+$string['eventremoved'] = 'Si è verificato un errore nell&#39;iscrizione di tutti gli studenti su Turnitin - Consulta i log di API per ulteriori informazioni';
+$string['partnametoolarge'] = 'Il nome è troppo lungo. Limitare a 40 caratteri.';
+$string['enableperformancelogs'] = 'Abilita la registrazione di Network Performance';
+$string['enableperformancelogs_desc'] = 'Se abilitata, ogni richiesta al server Turnitin verrà registrata in ';
+$string['pp_assignmentcreateerror'] = 'Questo modulo non può essere creato su Turnitin, consulta i log delle API per ulteriori informazioni';
+$string['pp_assignmentediterror'] = 'Questo modulo non può essere creato su Turnitin,consulta i log delle API per ulteriori informazioni';
+$string['pp_classcreationerror'] = 'Questa classe non può essere creata su Turnitin,consulta i log delle API per ulteriori informazioni';
+$string['pp_assignmentsubmiterror'] = 'Si è verificato un problema nel replicare il modulo in Turnitin che impedisce di consegnare, consultare i log delle API per ulteriori informazioni';
+$string['listsubmissions'] = 'Lista consegne';
+$string['viewsubmission'] = 'Visualizza consegne';

@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: de
 
 $string['addsubmission'] = 'Übermittlung hinzufügen';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Beim Einfügen von Teil {$a} in die Datenbank ist ein 
 $string['partupdateerror'] = 'Beim Aktualisieren des Teils {$a} in der Datenbank ist ein Fehler aufgetreten.<br />';
 $string['partdeleteerror'] = 'Die Daten des Aufgabenteils {$a} konnten nicht gelöscht werden.';
 $string['partdeletewarning'] = 'Der Teil der Aufgabe, den Sie löschen möchten, enthält Übermittlungen. Diese gehen verloren, wenn Sie diesen Aufgabenteil löschen.\n\Möchten Sie wirklich fortfahren?';
-$string['partposterror'] = 'Das Fälligkeitsdatum muss vor dem Veröffentlichungsdatum liegen.<br />';
+$string['partposterror'] = 'Das Fälligkeitsdatum muss vor dem Veröffentlichungsdatum liegen.';
 $string['partgeterror'] = 'Konnte keine Daten des Aufgabenteils abrufen';
 $string['partname'] = 'Aufgabenteil';
 $string['partnameerror'] = 'Der Name für den Teil darf nicht frei gelassen werden.';
@@ -405,7 +405,7 @@ $string['nonenrolledstudent'] = 'Nicht-eingeschriebener Student';
 $string['startdatenotyearago'] = 'Das Startdatum kann nicht mehr als 1 Jahr zurückliegen.';
 $string['searchcourses'] = 'Kurse suchen';
 $string['errorsdesc'] = 'Beim Versuch, die folgenden Dateien bei Turnitin hochzuladen, ist ein Problem aufgetreten.';
-$string['tiiexplain'] = 'Turnitin ist ein Verkaufsprodukt und Sie benötigen eine bezahlte Subskription, um diesen Dienst nutzen zu können. Für weitere Informationen besuchen Sie <a href=http://docs.moodle.org/en/Turnitin_administration>http://docs.moodle.org/en/Turnitin_administration</a>';
+$string['tiiexplain'] = 'Turnitin ist ein Verkaufsprodukt und Sie benötigen eine bezahlte Subskription, um diesen Dienst nutzen zu können. Für weitere Informationen besuchen Sie <a href=&#34;http://docs.moodle.org/en/Turnitin_administration>http://docs.moodle.org/en/Turnitin_administration</a>';
 $string['useturnitin'] = 'Turnitin aktivieren';
 $string['turnitinconfig'] = 'Konfiguration für das Turnitin-Plugin gegen Plagiarismus';
 $string['studentdisclosuredefault'] = 'Alle hochgeladenen Dateien werden an den Dienst Turnitin.com weitergeleitet, um dort auf Plagiarismus untersucht zu werden.';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = 'Auf verfügbare Upgrades prüfen';
 $string['checkingupgrade'] = 'Es wird auf verfügbare Upgrades geprüft';
 $string['usinglatest'] = 'Sie verwenden die neueste Version!';
 $string['useturnitin_mod'] = 'Turnitin für {a} aktivieren';
+$string['usemoodlecert'] = 'Moodle-SSL-Zertifikat verwenden';
+$string['errorcode1'] = 'Diese Datei ist nicht umfangreich genug, sodass Turnitin einen Echtheitsbericht erstellen könnte.';
+$string['errorcode2'] = 'Diese Datei wird nicht an Turnitin übermittelt, da sie die Maximalgröße von {$a} überschreitet';
+$string['notorcapable'] = 'Für diese Datei lässt sich kein Echtheitsbericht erstellen.';
+$string['pastfiveattempts'] = 'Diese Datei wird nicht an Turnitin übermittelt, da sie die maximal erlaubten fünf Versuche überschritten hat. ';
+$string['notacceptedeula'] = 'Diese Datei wurde nicht an Turnitin übermittelt, da der Benutzer die Endbenutzer-Lizenzvereinbarung nicht akzeptiert hat.';
+$string['ppsubmissionerrorseelogs'] = 'Diese Datei wurde nicht an Turnitin übermittelt, für zusätzliche Details prüfen Sie bitte Ihre API-Protokolle';
+$string['ppsubmissionerrorstudent'] = 'Diese Datei wurde nicht an Turnitin übermittelt, für zusätzliche Details kontaktieren Sie bitte Ihren Tutor';
+$string['turnitinppula'] = 'WICHTIG: Sie müssen die Endbenutzer-Lizenzvereinbarung akzeptieren. Um sie zu akzeptieren, klicken Sie bitte diesen Link.';
+$string['redirecttoeula'] = 'Wir leiten Sie zur Endbenutzer-Lizenzvereinbarung weiter.';
+$string['filedoesnotexist'] = 'Datei wurde gelöscht';
+$string['errorenrollingall'] = 'Beim Einschreiben aller Studenten bei Turnitin ist ein Fehler aufgetreten - Für zusätzliche Informationen prüfen Sie bitte Ihre API-Protokolle';
+$string['eventremoved'] = 'Dieser Vorgang wurde aus der Cron-Queue entfernt und wird nicht erneut verarbeitet.';
+$string['partnametoolarge'] = 'Der Name dieses Abschnitts ist zu lang. Bitte beschränken Sie ihn auf 40 Zeichen.';
+$string['enableperformancelogs'] = 'Netzwerkleistungsprotokolle aktivieren';
+$string['enableperformancelogs_desc'] = 'Wenn aktiviert, wird jede Anfrage an den Turnitin-Server protokolliert in {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Dieses Modul konnte auf Turnitin nicht erstellt werden, für zusätzliche Informationen prüfen Sie bitte Ihre API-Protokolle';
+$string['pp_assignmentediterror'] = 'Dieses Modul konnte auf Turnitin nicht bearbeitet werden, für zusätzliche Informationen prüfen Sie bitte Ihre API-Protokolle';
+$string['pp_classcreationerror'] = 'Dieser Kurs konnte auf Turnitin nicht erstellt werden, für zusätzliche Informationen prüfen Sie bitte Ihre API-Protokolle';
+$string['pp_assignmentsubmiterror'] = 'Beim Kopieren Ihres Moduls in Turnitin ist ein Fehler aufgetreten, der Übermittlungen verhindert, für zusätzliche Informationen prüfen Sie bitte Ihre API-Protokolle ';
+$string['listsubmissions'] = 'Übermittlungen auflisten';
+$string['viewsubmission'] = 'Übermittlung anzeigen';
