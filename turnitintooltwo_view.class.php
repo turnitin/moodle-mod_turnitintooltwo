@@ -149,6 +149,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('resubmissiongradewarn', 'turnitintooltwo');
         $PAGE->requires->string_for_js('submitnothingwarning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('maxmarkserror', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('disableanonconfirm', 'turnitintooltwo');
     }
 
     /**
@@ -729,8 +730,11 @@ class turnitintooltwo_view {
                         userdate($partdetails[$partid]->dtpost, '%d %b %Y - %H:%M') : 
                         userdate($partdetails[$partid]->dtpost, '%d %h %Y - %H:%M');
         if ($istutor) {
+
             $datefield = html_writer::link('#', $datefield,
-                                            array('class' => 'editable_date editable_date_'.$partid,
+                                            array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+                                                'data-submitted' => $turnitintooltwoassignment->turnitintooltwo->submitted,
+                                                'class' => 'editable_postdue editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtpost', 'id' => 'date_post_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".

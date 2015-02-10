@@ -484,3 +484,4 @@ $string['turnitinula'] = 'You must accept the latest Turnitin User Agreement bef
 $string['upgradenotavailable'] = 'No Upgrade Available';
 $string['turnitintoolofflineerror'] = 'We are experiencing a temporary problem. Please try again shortly.';
 $string['offlinestatus'] = 'Turnitin has been set to offline. (The variable $CFG->tiioffline has been set to true.)';
+$string['disableanonconfirm'] = 'Doing this will permanently disable anonymous marking on this assignment. Are you sure?';
