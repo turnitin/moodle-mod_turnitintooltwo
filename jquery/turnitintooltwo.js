@@ -578,7 +578,7 @@ jQuery(document).ready(function($) {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
                         $('.editable-open').editableContainer('hide');
                         
-                        // Hackery. Todo: Needs refactoring. Validation only fails if string is returned (We need a string).
+                        // Validation only fails if string is returned (We need a string).
                         return ' ';
                     }
                 }
