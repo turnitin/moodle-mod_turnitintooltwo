@@ -396,10 +396,7 @@ jQuery(document).ready(function($) {
         $('.rubric_manager_launch').colorbox({
             iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_manager", transition: "none",
             onLoad: function() { 
-                $('#colorbox').append('<a href="#" onclick="$.colorbox.close(); return false;" id="tii_close_btn"><img attr="Close modal" src="pix/x-red.png"></a>');
-                $('#tii_close_btn').on("click", function() {
-                    $(this).remove();
-                });
+                lightBoxCloseButton();
                 getLoadingGif(); 
             },
             onCleanup:function() {
@@ -408,6 +405,7 @@ jQuery(document).ready(function($) {
                 if ($(this).attr("id") != 'rubric_manager_inbox_launch') {
                     refreshRubricSelect();
                 }
+                $('#tii_close_bar').remove();
             }
         });
     }
@@ -416,8 +414,14 @@ jQuery(document).ready(function($) {
     if ($('.rubric_view_launch').length > 0) {
         $('.rubric_view_launch').colorbox({
             iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view", transition: "none",
-            onLoad: function() { getLoadingGif(); },
-            onCleanup: function() { hideLoadingGif(); }
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
+            },
+            onCleanup: function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            }
         });
     }
 
@@ -436,13 +440,13 @@ jQuery(document).ready(function($) {
             iframe:true, width:"700px", height:"432px", opacity: "0.7", className: "quickmark_manager", transition: "none",
             onLoad: function() { getLoadingGif(); },
             onLoad: function() { 
-                $('#colorbox').append('<a href="#" onclick="$.colorbox.close(); return false;" id="tii_close_btn"><img attr="Close modal" src="pix/x-red.png"></a>');
-                $('#tii_close_btn').on("click", function() {
-                    $(this).remove();
-                });
+                lightBoxCloseButton();
                 getLoadingGif(); 
             },
-            onCleanup: function() { hideLoadingGif(); }
+            onCleanup: function() { 
+                $('#tii_close_bar').remove();
+                hideLoadingGif(); 
+            }
         });
     }
 
@@ -450,8 +454,14 @@ jQuery(document).ready(function($) {
     if ($('.peermark_manager_launch').length > 0) {
         $('.peermark_manager_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_manager", transition: "none",
-            onLoad: function() { getLoadingGif(); },
-            onCleanup:function() { hideLoadingGif(); },
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
+            },
+            onCleanup:function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            },
             onClosed:function() {
                 var idStr = $(this).attr("id").split("_");
                 refreshPeermarkAssignments(idStr[2], 1);
@@ -463,8 +473,14 @@ jQuery(document).ready(function($) {
     if ($('.peermark_reviews_launch').length > 0) {
         $('.peermark_reviews_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_reviews", transition: "none",
-            onLoad: function() { getLoadingGif(); },
-            onCleanup: function() { hideLoadingGif(); }
+            onLoad: function() { 
+                lightBoxCloseButton();
+                getLoadingGif();
+            },
+            onCleanup: function() { 
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            }
         });
     }
 
@@ -472,8 +488,14 @@ jQuery(document).ready(function($) {
     if ($(".messages_inbox").length > 0) {
         $(".messages_inbox").colorbox({
             iframe:true, width:"772px", height:"772px", opacity: "0.7", className: "messages", transition: "none", closeButton: false,
-            onLoad: function() { getLoadingGif(); },
-            onCleanup: function() { hideLoadingGif(); },
+            onLoad: function() { 
+                lightBoxCloseButton();
+                getLoadingGif(); 
+            },
+            onCleanup: function() { 
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            },
             onClosed:function() {
                 refreshUserMessages();
             }
@@ -844,16 +866,15 @@ jQuery(document).ready(function($) {
             },
             onLoad: function() {
                 getLoadingGif();
-                $('#colorbox').append('<a href="#" onclick="$.colorbox.close(); return false;" id="tii_close_btn"><img attr="Close modal" src="pix/x-red.png"></a>');
-                $('#tii_close_btn').on("click", function() {
-                    $(this).remove();
-                });
+                lightBoxCloseButton();
             },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {
                 hideLoadingGif();
                 var idStr = $(this).attr("id").split("_");
                 refreshInboxRow("upload", idStr[1], idStr[2], idStr[3]);
+
+                $('#tii_close_bar').remove();
             },
             iframe:true, width:colorBoxWidth, height:colorBoxHeight, opacity: "0.7", className: "upload", transition: "none"
         });
@@ -877,8 +898,14 @@ jQuery(document).ready(function($) {
         // Open an iframe light box which requests all the submissions as pdfs from Turnitin
         $('#tabs-'+part_id+' .downloadpdf_box').colorbox({
             iframe:true, width:"40%", height:"60%", opacity: "0.7", className: "downloadpdf_window", transition: "none",
-            onLoad: function() { getLoadingGif(); },
-            onCleanup: function() { hideLoadingGif(); },
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
+            },
+            onCleanup: function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            },
             onClosed: function() {
                 refreshUserMessages();
             }
@@ -907,6 +934,10 @@ jQuery(document).ready(function($) {
             });
             return false;
         });
+    }
+
+    function lightBoxCloseButton() {
+        $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">CLOSE</a></div>');
     }
 
     function initialiseHiddenZipDownloads(part_id) {
