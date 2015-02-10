@@ -597,6 +597,10 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     cursor: pointer;
 }
 
+.default_open {
+    cursor: pointer;
+}
+
 .mod_turnitintooltwo .tii_upgrading_check img {
     position: relative;
     top: 3px;
