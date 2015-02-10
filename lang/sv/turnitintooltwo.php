@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: sv
 
 $string['addsubmission'] = 'Lägg Till Inlämning';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Det uppstod ett problem med att skriva in Del {$a} i d
 $string['partupdateerror'] = 'Det uppstod ett problem med att uppdatera Del {$a} i databasen<br />';
 $string['partdeleteerror'] = 'Kunde inte radera uppgiftens del {$a} data';
 $string['partdeletewarning'] = 'Uppgiftsdelen som du försöker radera innehåller inlämningar. Du kommer att förlora dessa inlämningar om du raderar den här uppgiftsdelen.\n\nÄr du säker på att du vill fortsätta?';
-$string['partposterror'] = 'Startdatum måste vara före publiceringsdatum.<br />';
+$string['partposterror'] = 'Startdatum måste vara före publiceringsdatum.';
 $string['partgeterror'] = 'Kunde inte hämta uppgiftens deldata';
 $string['partname'] = 'Uppgiftsdel';
 $string['partnameerror'] = 'Delnamn kan inte lämnas tomt.';
@@ -276,7 +276,7 @@ $string['downloadorigfileszip'] = 'Ladda ner Originalfiler';
 $string['uploadingsubtoturnitin'] = 'Laddar upp ditt inlämnade till Turnitin';
 $string['emptycreatedfile'] = 'Filen som du har försökt att lämna in är antingen tom eller korrupt';
 $string['studentdataprivacy'] = 'Sekretessinställningar för Studentdata';
-$string['studentdataprivacy_desc'] = 'Följande inställningar kan konfigureras för att säkerställa att student&#39ernas personliga data inte sänds till Turnitin via API.';
+$string['studentdataprivacy_desc'] = 'Följande inställningar kan konfigureras för att säkerställa att student ernas personliga data inte sänds till Turnitin via API.';
 $string['enablepseudo'] = 'Aktivera Studentsekretess';
 $string['enablepseudo_desc'] = 'Om detta alternativ väljs kommer studenternas e-postadresser att omvandlas till en pseudo motsvarighet för Turnitin API-samtal.<br /><i>(<b>Obs:</b> Detta alternativ går inte att ändra om Moodle användardata redan har synkroniserats med Turnitin vid ett tidigare tillfälle)</i>';
 $string['pseudofirstname'] = 'Pseudo Förnamn (Student)';
@@ -310,7 +310,7 @@ $string['sinfo'] = 'Visar BÖRJAN_till_SLUT_av_TOTALA_inlägg.';
 $string['unlinkedusers'] = 'Olänkade Användare';
 $string['modulename_help'] = 'Skapar en uppgift i Turnitin Moodle Direkt som länkar en aktivitet i Moodle till en uppgift/uppgifter i Turnitin. Så snart aktiviteten blivit länkad tillåts instruktörer att utvärdera och lämna respons för studenternas skriftliga arbeten med hjälp av utvärderingsverktyg som finns tillgängliga inom Turnitins Dokumentvisare.';
 $string['transmatch'] = 'Matchande Översättning';
-$string['transmatch_desc'] = 'Avgör huruvida Matchande Översättning kommer att bli tillgängligt som en inställning på uppgiftens installationsskärm.<br /><i>(Aktivera endast detta alternativ om Matchande Översättning har aktiverats på ditt Turnitin konto)</i>';
+$string['transmatch_desc'] = 'Avgör huruvida Matchande Översättning kommer att bli tillgängligt som en inställning på uppgiftens installationsskärm.<br /><i>(Aktivera endast detta alternativ om Matchande Översättning har aktiverats på ditt Turnitin konto)</i>';
 $string['turnitintooltwo:addinstance'] = 'Lägg till Turnitin Verktygsaktivitet';
 $string['copyrightagreementerror'] = 'Vänligen markera kryssrutan för att indikera att du accepterar avtalet innan du lämnar in.';
 $string['updatepart'] = 'Uppdatera Del';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = 'Sök efter tillgängliga uppgraderingar';
 $string['checkingupgrade'] = 'Söker efter tillgängliga uppgraderingar';
 $string['usinglatest'] = 'Du har den senaste versionen!';
 $string['useturnitin_mod'] = 'Aktivera Turnitin för {a}';
+$string['usemoodlecert'] = 'Använd Moodle SSL-certifikat';
+$string['errorcode1'] = 'Filens innehåll är inte tillräckligt för att skapa en originalitetsrapport.';
+$string['errorcode2'] = 'Den här filen kommer inte att skickas till Turnitin eftersom den överstiger högsta tillåtna storlek.';
+$string['notorcapable'] = 'Det går inte att skapa en originalitetsrapport för den här filen.';
+$string['pastfiveattempts'] = 'Den här filen kommer inte att skickas till Turnitin eftersom den har överskridit fem inlämningsförsök.';
+$string['notacceptedeula'] = 'Den här filen kunde inte skickas till Turnitin eftersom användaren inte har godkänt Turnitins licensavtal för slutanvändare.';
+$string['ppsubmissionerrorseelogs'] = 'Den här filen har inte skickas till Turnitin. Hänvisa till dina API-loggar för mer information.';
+$string['ppsubmissionerrorstudent'] = 'Den här filen har inte skickas till Turnitin. Be din lärare om hjälp.';
+$string['turnitinppula'] = 'OBS: Du måste godkänna Turnitins licensavtal för slutanvändare. Klicka på länken för att godkänna.';
+$string['redirecttoeula'] = 'Du omdirigeras nu till Turnitins licensavtal för slutanvändare.';
+$string['filedoesnotexist'] = 'Filen har raderats';
+$string['errorenrollingall'] = 'Ett fel uppstod vid inskrivning av studenter i Turnitin. Se API-loggarna för mer information.';
+$string['eventremoved'] = 'Händelsen har tagits bort från Cron-kön och kommer inte att behandlas igen.';
+$string['partnametoolarge'] = 'Delnamnet är för långt. Begränsa till högst 40 tecken.';
+$string['enableperformancelogs'] = 'Aktivera Loggning av nätverksprestanda';
+$string['enableperformancelogs_desc'] = 'Vid aktivering kommer varje begäran till Turnitins server att loggas i {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Den här modulen kunde inte skapas i Turnitin. Hänvisa till dina API-loggar för mer information.';
+$string['pp_assignmentediterror'] = 'Den här modulen kunde inte redigeras i Turnitin. Hänvisa till dina API-loggar för mer information.';
+$string['pp_classcreationerror'] = 'Den här klassen kunde inte skapas i Turnitin. Hänvisa till dina API-loggar för mer information.';
+$string['pp_assignmentsubmiterror'] = 'Det uppstod ett fel när din modul skulle kopieras i Turnitin vilket förhindrar inlämning av uppgifter. Hänvisa till dina API-loggar för mer information.';
+$string['listsubmissions'] = 'Lista inlämningar';
+$string['viewsubmission'] = 'Visa inlämning';

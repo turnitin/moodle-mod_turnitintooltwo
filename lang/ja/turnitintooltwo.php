@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: ja
 
 $string['addsubmission'] = '提出物を追加';
@@ -9,7 +9,7 @@ $string['allsubmissions'] = '提出物受信箱';
 $string['anon'] = '匿名';
 $string['anonenabled'] = '匿名でのコメント記入が可能';
 $string['anytype'] = 'いずれの提出物のタイプ';
-$string['assigngeterror'] = 'turnitintooltwo データを得られませんでした';
+$string['assigngeterror'] = 'turnitintooltwo データを得られませんでした';
 $string['ced'] = 'クラス終了日';
 $string['classcreationerror'] = 'Turnitinのクラス作成に失敗';
 $string['classupdateerror'] = 'Turnitinクラスデータを更新することができませんでした';
@@ -50,10 +50,10 @@ $string['journalcheck'] = 'ジャーナル、<br />定期刊行物、出版物�
 $string['journalcheck_help'] = 'レポートのオリジナリティーレポートを処理する際にTurnitinの学術誌、定期刊行物、および出版物レポジトリに対してチェックする。選択されないと、類似性指標は減少する場合がある。';
 $string['maxfilesize'] = '最大ファイルサイズ';
 $string['maxfilesize_help'] = 'この設定は各課題部分へのユーザーの提出物の最大ファイルサイズを決定するものです。この値に設定できる最大値はコース設定で決定された値に影響されます。また、この値は最高20Mbまで設定が可能です。（　これは Turnitin でアップロードが許可されているファイルサイズです）';
-$string['maxlength'] = ' {$a->field} の最長は {$a->length} 文字です';
+$string['maxlength'] = ' {$a->field} の最長は {$a->length} 文字です';
 $string['maxmarks'] = '最高得点';
-$string['pluginname'] = 'Turnitin 課題 2';
-$string['modulename'] = 'Turnitin 課題 2';
+$string['pluginname'] = 'Turnitin 課題 2';
+$string['modulename'] = 'Turnitin 課題 2';
 $string['modulenameplural'] = 'Turnitin課題';
 $string['moduleversion'] = 'バージョン';
 $string['mysubmissions'] = '私の提出物';
@@ -68,11 +68,11 @@ $string['numberofparts_help'] = '複数の課題の作成が可能で、各ユ�
 $string['objectid'] = 'レポートID';
 $string['overallgrade'] = '全体的な評価';
 $string['overallgrade_help'] = '全体的な評価は課題全体に許された最高評価を決定し、全体的な評価を決定するために各課題部分は、全体的な評価を決定するために均等に分配された最高数のマークを割り当てられています。';
-$string['partdberror'] = ' {$a} 部分をデータベースに入力中にエラーが発生しました<br />';
+$string['partdberror'] = ' {$a} 部分をデータベースに入力中にエラーが発生しました<br />';
 $string['partupdateerror'] = '{$a} 部分をデータベースで更新中に問題が発生しました<br />';
 $string['partdeleteerror'] = '課題部分{$a}データを削除できませんでした';
 $string['partdeletewarning'] = 'あなたが削除しようとしている課題部分は提出物を含んでいます。この課題部分を削除するとその提出物は削除されます。\n\n差表を続けますか？';
-$string['partposterror'] = '提出期限日は提示日の前でなければなりません。<br />';
+$string['partposterror'] = '提出期限日は提示日の前でなければなりません。';
 $string['partgeterror'] = '課題部分のデータを入手できませんでした';
 $string['partname'] = '課題部分';
 $string['partnameerror'] = '部分名を記入してください。';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = '使用できるアップグレードを確認する';
 $string['checkingupgrade'] = '使用できるアップグレードを確認中';
 $string['usinglatest'] = 'あなたは最新のバージョンを使用しています！';
 $string['useturnitin_mod'] = '{a}に対してのTurnitinを作動する';
+$string['usemoodlecert'] = 'Moodle SSL 証明書を使用する';
+$string['errorcode1'] = 'このファイルはオリジナリティーレポートを作成するのに十分な内容が含まれていません。';
+$string['errorcode2'] = 'このファイルは、許可されている最大サイズ{$a}を超えているため、Turnitin へ提出することができません。';
+$string['notorcapable'] = 'このファイルに対してオリジナリティーレポートを作成することができません。';
+$string['pastfiveattempts'] = 'このファイルは、許可されている5回以上の提出を試みているため、Turnitin へ提出することができません。';
+$string['notacceptedeula'] = 'このファイルはユーザーが、Turnitinのユーザーライセンス契約に同意していないため、Turnitinへ提出することができません';
+$string['ppsubmissionerrorseelogs'] = 'このファイルはTurnitinに提出されていません。更なる詳細に関しては、APIログまでご相談ください。';
+$string['ppsubmissionerrorstudent'] = 'このファイルはTurnitinに提出されていません。更なる詳細に関しては、チューターまでご相談ください。';
+$string['turnitinppula'] = '注意：Turnitin使用許諾契約に同意する必要があります。このリンクをクリックして同意してください。';
+$string['redirecttoeula'] = '使用許諾契約へリダイレクトします。';
+$string['filedoesnotexist'] = 'ファイルは削除されました';
+$string['errorenrollingall'] = '全ての受講生をTurnitinに登録する際にエラーが発生していますー詳しくは、APIログに相談してください。';
+$string['eventremoved'] = 'このイベントは cron queue から削除されており、再度処理されることはありません。';
+$string['partnametoolarge'] = '名前部分が大きすぎます。最高40文字までに制限してください。';
+$string['enableperformancelogs'] = 'ネットワークパフォーマンスログを作動する';
+$string['enableperformancelogs_desc'] = '作動されると、Turnitin server への各リクエストは {dataroot}/temp/turnitintooltwo/logs へログされます。';
+$string['pp_assignmentcreateerror'] = 'Turnitinでこのモジュールを作成することができません。更なる情報に関しては、 API ログにご相談ください。';
+$string['pp_assignmentediterror'] = 'Turnitinでこのモジュールを作成することができません。更なる情報に関しては、 API ログにご相談ください。';
+$string['pp_classcreationerror'] = 'Turnitinでこのクラスを作成することができません。更なる情報に関しては、 API ログにご相談ください。';
+$string['pp_assignmentsubmiterror'] = 'Turnitinでモジュールを複製中に問題が発生したため、提出が現在できなくなっています。更なる情報に関しては、 API ログにご相談ください。';
+$string['listsubmissions'] = '提出物をリストする';
+$string['viewsubmission'] = '提出物を見る';

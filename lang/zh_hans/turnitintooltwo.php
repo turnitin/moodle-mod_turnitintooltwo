@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: zh_hans
 
 $string['addsubmission'] = '添加提交物件';
@@ -70,7 +70,7 @@ $string['overallgrade_help'] = '总体分数决定总体作业所允许的成绩
 $string['partdberror'] = '输入第 {$a} 部分至数据库时有误<br />';
 $string['partdeleteerror'] = '无法删除作业部分{$a}数据';
 $string['partdeletewarning'] = '您尝试删除的作业部分包含着提交物件。若您删除此作业部分，您将会丧失这些提交部分。n\n\ 您确定要继续？';
-$string['partposterror'] = '截止日期必须在公布日期前。<br />';
+$string['partposterror'] = '截止日期必须在公布日期前。';
 $string['partnameerror'] = '部分名称不可为空白。';
 $string['partdueerror'] = '截止日期必须在公布日期前。';
 $string['pending'] = '未决的';
@@ -133,7 +133,7 @@ $string['turnitinanon_help'] = '只要把此项目设定为“确定”，您就
 $string['turnitinapiurl'] = 'Turnitin API URL';
 $string['turnitinapiurl_desc'] = '<b>[要求]</b><br />输入 Turnitin API URL<br /><i>(例如： https://api.turnitin.com)<br />(例如： https://submit.ac.uk)';
 $string['turnitindeleteconfirm'] = '删除文稿将会使它们从提交清单和收件匣中移除，但不会完全地从\n Turnitin 数据库移除。\n\n您确定您要刪除此提交物件吗？一旦做此动作将无法还原。 ';
-$string['turnitindeletionerror'] = 'Turnitin 提交刪除失败。电脑上的 Moodle 副本已被移除，但在 Turnitin 內的提交物件无法被刪除。 ';
+$string['turnitindeletionerror'] = 'Turnitin 提交刪除失败。电脑上的 Moodle 副本已被移除，但在 Turnitin 內的提交物件无法被刪除。 ';
 $string['turnitinenrolstudents'] = '为所有学生注册';
 $string['turnitinloading'] = '一致化数据';
 $string['turnitinpart'] = '第 {$a} 部分';
@@ -255,7 +255,7 @@ $string['newenddatedesc'] = '为以下的课程选择新的结束日期，然後
 $string['close'] = '关闭';
 $string['errors'] = '有误';
 $string['setinstructordefaults'] = '设定这些值为作业预设值';
-$string['setinstructordefaults_help'] = '这些设定将会被用在任何您新建立的 Moodle Direct Turnitin 作业上。它们将取代您的系统管理员制定的预设值并将仅为您专用。 ';
+$string['setinstructordefaults_help'] = '这些设定将会被用在任何您新建立的 Moodle Direct Turnitin 作业上。它们将取代您的系统管理员制定的预设值并将仅为您专用。 ';
 $string['messagesinbox'] = 'Turnitin 信息收件匣';
 $string['downloadgrademarkzip'] = '下载选择的 Grademark 档案';
 $string['downloadorigfileszip'] = '下载原始档案';
@@ -416,7 +416,7 @@ $string['gradingtemplate'] = '评分模板';
 $string['allownonor'] = '允许任何档案类型的提交物件？';
 $string['allownonor_help'] = '此设定将允许提交任何档案类型。若此选项设为“是”，在可行的前提下，提交物件将会被检查其原创性，提交物件将可被下载而 GradeMark 反馈工具将可被使用。';
 $string['submitnothing'] = '在无提交物件的前提下为此学生开启评分功能';
-$string['submitnothingwarning'] = '为尚未提交档案的学生点选在灰笔将建立一个评分模板，允许您给学生 GradeMark 的作业反馈。评分模板取代提交物件并将阻止学生提交至不允许提交物件的作业。.<br><br> 您确定您要在无提交物件的前提下评分吗？ ';
+$string['submitnothingwarning'] = '为尚未提交档案的学生点选在灰笔将建立一个评分模板，允许您给学生 GradeMark 的作业反馈。评分模板取代提交物件并将阻止学生提交至不允许提交物件的作业。.<br><br> 您确定您要在无提交物件的前提下评分吗？ ';
 $string['draftsubmit'] = '档案将提交至 Turnitin 内的何处？';
 $string['submitondraft'] = '在上传时提交文档';
 $string['submitonfinal'] = '当学生傳寄至标示时提交档案';
@@ -432,3 +432,25 @@ $string['checkupgrade'] = '检查可用的升级';
 $string['checkingupgrade'] = '检查可用的升级中';
 $string['usinglatest'] = '您在使用最新的版本！';
 $string['useturnitin_mod'] = '爲 {a} 开啓 Turnitin';
+$string['usemoodlecert'] = '使用 Moodle SSL 證书';
+$string['errorcode1'] = '这个档案尚无足够的内容给 Turnitin 製作原创性报告。';
+$string['errorcode2'] = '这个档案将不会被提交至 Turnitin 因爲它超过允许的档案大小的上限 {$a} ';
+$string['notorcapable'] = '不可能爲此档案製作原创性报告。';
+$string['pastfiveattempts'] = '这个档案将不会被提交至 Turnitin 因爲它超过允许的5个尝试的上限。';
+$string['notacceptedeula'] = '这个档案尚未被提交至 Turnitin 因爲用户尚未接收 Turnitin 终端用户的权限合约。';
+$string['ppsubmissionerrorseelogs'] = '这个档案尚未被提交至 Turnitin, 请参考您的 API 登记来查询更多资讯';
+$string['ppsubmissionerrorstudent'] = '这个档案尚未被提交至 Turnitin, 请问您的导师登记来查询更多资讯';
+$string['turnitinppula'] = '重要: 您必须接受 Turnitin 终端用户的权限合约。请点选此链接以接受。';
+$string['redirecttoeula'] = '我们正在导引您至终端用户权限合约';
+$string['filedoesnotexist'] = '档案已被删除';
+$string['errorenrollingall'] = '加入所有学生至 Turnitin 时有误 -请参考您的 API 登记来查询更多资讯';
+$string['eventremoved'] = '这个活动已从 cron queue 被删除，也不会再被处理。';
+$string['partnametoolarge'] = '部分名称太大。请限制至 40 个字符。';
+$string['enableperformancelogs'] = '开啓网路成效记录';
+$string['enableperformancelogs_desc'] = '若开啓, 每个给 Turnitin 伺服器的请求将会被记录在 {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = '这个模组无法在 Turnitin 上建立, 请参考您的 API 登记来查询更多资讯';
+$string['pp_assignmentediterror'] = '这个模组无法在 Turnitin 上建立, 请参考您的 API 登记来查询更多资讯';
+$string['pp_classcreationerror'] = '这个课程无法在 Turnitin 上建立, 请参考您的 API 登记来查询更多资讯';
+$string['pp_assignmentsubmiterror'] = '在 Turnitin 内複製您的模组时有问题，导致无法提交, 请参考您的 API 登记来查询更多资讯';
+$string['listsubmissions'] = '列举提交物件';
+$string['viewsubmission'] = '检视提交物件';

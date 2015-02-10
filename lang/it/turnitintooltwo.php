@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: it
 
 $string['addsubmission'] = 'Aggiungi consegna';
@@ -47,10 +47,10 @@ $string['institutionalcheck'] = 'Confronta con il repository dell&#39;istituto';
 $string['internetcheck'] = 'Confronta con Internet';
 $string['internetcheck_help'] = 'Confronta il repository Internet di Turnitin durante l&#39;elaborazione degli Originality Report relativa agli elaborati.La percentuale dell&#39;indice di somiglianza potrebbe diminuire se venisse deselezionata.';
 $string['journalcheck'] = 'Confronta con giornali, periodici e pubblicazioni';
-$string['journalcheck_help'] = 'Confronta con i repository Turnitin di riviste, periodici e pubblicazioni  repository durante l&#39;elaborazione degli Originality Report relativa agli elaborati.La percentuale dell&#39;indice di somiglianza potrebbe diminuire se venisse deselezionata.';
+$string['journalcheck_help'] = 'Confronta con i repository Turnitin di riviste, periodici e pubblicazioni  repository durante l&#39;elaborazione degli Originality Report relativa agli elaborati.La percentuale dell&#39;indice di somiglianza potrebbe diminuire se venisse deselezionata.';
 $string['maxfilesize'] = 'Dimensione massima file';
 $string['maxfilesize_help'] = 'Questa impostazione determina la dimensione massima del file per le consegne degli elaborati degli utenti per ogni sezione del compito. Il valore massimo possibile da impostare è determinato dal valore esistente nelle impostazioni del corso, questo valore è ulteriormente ridotto ad una dimensione massima di 20 MB, che è la dimensione massima consentita per il caricamento di un file su Turnitin.';
-$string['maxlength'] = 'La lunghezza massima per  {$a->field} è di {$a->length} caratteri';
+$string['maxlength'] = 'La lunghezza massima per  {$a->field} è di {$a->length} caratteri';
 $string['maxmarks'] = 'Massimo annotazioni';
 $string['pluginname'] = 'Compito 2 Turnitin';
 $string['modulename'] = 'Compito 2 Turnitin';
@@ -72,11 +72,11 @@ $string['partdberror'] = 'Si è verificato un problema nell&#39;inserire la part
 $string['partupdateerror'] = 'Si è verificato un errore di aggiornamento della parte di {$a} nel database<br />';
 $string['partdeleteerror'] = 'Impossibile eliminare i dati della sezione del compito';
 $string['partdeletewarning'] = 'La parte del compito che stai tentando di eliminare contiene delle consegne di elaborati. Perderai questi elaborati se eliminerai questa parte del compito. \n\nSei sicuro di voler continuare?';
-$string['partposterror'] = 'La data di inizio deve essere prima della data di pubblicazione. <br />';
+$string['partposterror'] = 'La data di inizio deve essere prima della data di pubblicazione. ';
 $string['partgeterror'] = 'Non è stato possibile i dati della parte del compito';
 $string['partname'] = 'Parte del compito';
-$string['partnameerror'] = 'Il titolo della parte non può essere lasciato in bianco..';
-$string['partdueerror'] = 'La data di inizio deve essere prima della data di pubblicazione.';
+$string['partnameerror'] = 'Il titolo della parte non può essere lasciato in bianco.';
+$string['partdueerror'] = 'La data di inizio deve essere prima della data di pubblicazione. ';
 $string['pending'] = 'In attesa';
 $string['permissiondeniederror'] = 'Non hai l&#39;autorizzazione necessaria per completare l&#39;azione richiesta';
 $string['portfolio'] = 'Portfolio';
@@ -271,9 +271,9 @@ $string['pseudofirstname_desc'] = 'Il nome dello studente visibile nel Visualizz
 $string['pseudolastname'] = 'Pseudo cognome dello studente';
 $string['pseudolastname_desc'] = 'Il cognome dello studente visibile nel Visualizzatore di documenti Turnitin';
 $string['psuedolastnamegen'] = 'Genera automaticamente il cognome';
-$string['psuedolastnamegen_desc'] = 'Se impostato su &#39;Sì&#39;e lo pseudo cognome  è impostato sul campo del profilo utente, il campo sarà automaticamente compilato con un identificatore univoco.';
+$string['psuedolastnamegen_desc'] = 'Se impostato su &#39;Sì&#39;e lo pseudo cognome  è impostato sul campo del profilo utente, il campo sarà automaticamente compilato con un identificatore univoco.';
 $string['pseudoemailsalt'] = 'Pseudo crittografia Salt';
-$string['pseudoemailsalt_desc'] = '<b> [Facoltativo] </ b> <br /> Un salt opzionale per aumentare la complessità del pseudo indirizzo email dello studente  <br /> (<b>. Nota: </ b> Il salt dovrebbe rimanere invariato al fine di mantenere costanti pseudo indirizzi email)';
+$string['pseudoemailsalt_desc'] = '<b> [Facoltativo] </ b> <br /> Un salt opzionale per aumentare la complessità del pseudo indirizzo email dello studente  <br /> (<b>. Nota: </ b> Il salt dovrebbe rimanere invariato al fine di mantenere costanti pseudo indirizzi email)';
 $string['pseudoemaildomain'] = 'Pseudo dominio email';
 $string['pseudoemaildomain_desc'] = '<b> [Facoltativo] </ b> <br /> Un dominio facoltativo per i pseudo indirizzi email. (Per default a @tiimoodle.com se a sinistra è vuoto )';
 $string['pseudoemailaddress'] = 'Pseudo indirizzo email';
@@ -339,7 +339,7 @@ $string['coursetitleerror'] = 'Devi fornire il titolo della classe per cercare';
 $string['createmoodlecourses'] = 'Ricrea corsi';
 $string['createmoodleassignments'] = 'Ricrea tutti i compitii delle classi selezionate in Moodle?';
 $string['recreatemulticlasses'] = 'Le classi selezionate sono ora in fase di ricostruzione e possono richiedere qualche minuto per essere completate, a seconda del numero di classi selezionate.';
-$string['recreatemulticlassescomplete'] = 'La ricostruzione della classe è stata completata. {$a->completed} di {$a->total} sono state create correttamente';
+$string['recreatemulticlassescomplete'] = 'La ricostruzione della classe è stata completata. {$a->completed} di {$a->total} sono state create correttamente';
 $string['createcourse'] = 'Crea un nuovo corso Moodle';
 $string['linkcourse'] = 'Collega il corso al corso Moodle esistente';
 $string['selectcourse'] = 'Seleziona il corso Moodle';
@@ -431,3 +431,25 @@ $string['checkupgrade'] = 'Verifica aggiornamento disponibile';
 $string['checkingupgrade'] = 'Verifica aggiornamento disponibile in corso';
 $string['usinglatest'] = 'Stai utilizzando la versione più recente!';
 $string['useturnitin_mod'] = 'Abilita Turnitin per {a}';
+$string['usemoodlecert'] = 'Utilizza il certificato Moodle SSL';
+$string['errorcode1'] = 'Questo file non ha abbastanza contenuto e Turnitin non può produrre un Originality report.';
+$string['errorcode2'] = 'Questo file non verrà consegnato a Turnitin perché supera la dimensione massima di {$a} permessa';
+$string['notorcapable'] = 'Non è possibile produrre lOriginality report di questo file.';
+$string['pastfiveattempts'] = 'Questo file non verrà consegnato a Turnitin poichè ha superato il massimo di 5 tentativi consentiti.';
+$string['notacceptedeula'] = 'Questo file non è stato consegnato a Turnitin perché l&#39;utente non è stato accettato l&#39;accordo di licenza con l&#39;utente finale Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Questo file non è stato consegnato a Turnitin, consulta i log delle API per maggiori dettagli';
+$string['ppsubmissionerrorstudent'] = 'Questo file non è stato consegnato a Turnitin, consulta il tuo tutor per ulteriori dettagli';
+$string['turnitinppula'] = 'IMPORTANTE: è necessario accettare l&#39;accordo di licenza con l&#39;utente finale Turnitin. Clicca questo link per accettare.';
+$string['redirecttoeula'] = 'Ti stiamo reindirizzando al Contratto di licenza con l&#39;utente';
+$string['filedoesnotexist'] = 'Il file è stato cancellato';
+$string['errorenrollingall'] = 'Si è verificato un errore nell&#39;iscrizione di tutti gli studenti su Turnitin - Consulta i log di API per ulteriori informazioni';
+$string['eventremoved'] = 'Si è verificato un errore nell&#39;iscrizione di tutti gli studenti su Turnitin - Consulta i log di API per ulteriori informazioni';
+$string['partnametoolarge'] = 'Il nome è troppo lungo. Limitare a 40 caratteri.';
+$string['enableperformancelogs'] = 'Abilita la registrazione di Network Performance';
+$string['enableperformancelogs_desc'] = 'Se abilitata, ogni richiesta al server Turnitin verrà registrata in ';
+$string['pp_assignmentcreateerror'] = 'Questo modulo non può essere creato su Turnitin, consulta i log delle API per ulteriori informazioni';
+$string['pp_assignmentediterror'] = 'Questo modulo non può essere creato su Turnitin,consulta i log delle API per ulteriori informazioni';
+$string['pp_classcreationerror'] = 'Questa classe non può essere creata su Turnitin,consulta i log delle API per ulteriori informazioni';
+$string['pp_assignmentsubmiterror'] = 'Si è verificato un problema nel replicare il modulo in Turnitin che impedisce di consegnare, consultare i log delle API per ulteriori informazioni';
+$string['listsubmissions'] = 'Lista consegne';
+$string['viewsubmission'] = 'Visualizza consegne';

@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: vi
 
 $string['addsubmission'] = 'Thêm Bài Nộp';
@@ -13,7 +13,7 @@ $string['assigngeterror'] = 'Không thể lấy dữ liệu turnitintooltwo';
 $string['ced'] = 'Ngày Kết thúc Lớp';
 $string['classcreationerror'] = 'Tạo Lớp Turnitin không thành công';
 $string['classupdateerror'] = 'Không thể cập nhật dữ liệu Lớp Turnitin';
-$string['configureerror'] = 'Bạn phải xác định cấu hình toàn bộ cho mô-đun này trong vai trò Người Quản trị trước khi dùng nó bên trong một khoá học. Vui lòng liên lạc Người Quản trị Moodle của bạn.';
+$string['configureerror'] = 'Bạn phải xác định cấu hình toàn bộ cho mô-đun này trong vai trò Người Quản trị trước khi dùng nó bên trong một khoá học. Vui lòng liên lạc Người Quản trị Moodle của bạn.';
 $string['connecttest'] = 'Kiểm tra Nối kết Turnitin';
 $string['connecttestcommerror'] = 'Không thể kết nối vào Turnitin. Kiểm tra lại cài đặt URL API của bạn.';
 $string['connecttesterror'] = 'Xảy ra lỗi kết nối vào Turnitin, thông điệp báo lỗi như sau: <br />';
@@ -50,7 +50,7 @@ $string['journalcheck'] = 'Đối chiếu với các tạp chí chuyên ngành, 
 $string['journalcheck_help'] = 'Đối chiếu với kho lưu trữ các tạp chí chuyên ngành, tạp chí định kỳ và các ấn phẩm xuất bản của Turnitin khi xử lý Báo cáo Độc sáng cho bài nộp. Chỉ số về tính tương đồng có thể giảm nếu huỷ chọn tuỳ chọn này.';
 $string['maxfilesize'] = 'Kích thước tối đa của tập tin';
 $string['maxfilesize_help'] = 'Cài đặt này xác định kích cỡ tập tin tối đa cho các bài của người dùng nộp vào từng phần bài tập. Số tối đa mà bạn có thể định cho giá trị này được quy định thêm bởi các giá trị trong cài đặt khoá học, giá trị này được cặp tối đa 20Mb cho kích cỡ tập tin đối với các tải lên tập tin vào Turnitin. ';
-$string['maxlength'] = 'Độ dài tối đa cho {$a->field} là {$a->length} ký tự';
+$string['maxlength'] = 'Độ dài tối đa cho {$a->field} là {$a->length} ký tự';
 $string['maxmarks'] = 'Điểm Tối đa';
 $string['pluginname'] = 'Bài tập Turnitin 2';
 $string['modulename'] = 'Bài tập Turnitin 2';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Xảy ra sự cố khi nhập Phần {$a} vào cơ s�
 $string['partupdateerror'] = 'Xảy ra sự cố khi cập nhật Phần {$a} trong cơ sở dữ liệu<br />';
 $string['partdeleteerror'] = 'Không thể xoá phần dữ liệu {$a}';
 $string['partdeletewarning'] = 'Phần bài tập bạn đang muốn xoá có chứa các bài nộp. Bạn sẽ mất các bài nộp đó nếu bạn xoá phần bài tập này.\n\nBạn có chắc bạn muốn tiếp tục không?';
-$string['partposterror'] = 'Ngày bắt đầu phải nằm trước ngày đăng tải <br />';
+$string['partposterror'] = 'Ngày bắt đầu phải nằm trước ngày đăng tải ';
 $string['partgeterror'] = 'Không thể lấy dữ liệu phần bài tập';
 $string['partname'] = 'Phần Bài tập';
 $string['partnameerror'] = 'Không thể để trống tên phần bài tập ';
@@ -269,7 +269,7 @@ $string['newenddatedesc'] = 'Chọn một ngày kết thúc mới cho khoá họ
 $string['close'] = 'Đóng';
 $string['errors'] = 'Lỗi';
 $string['setinstructordefaults'] = 'Đặt những giá trị này làm mặc định cho bài tập';
-$string['setinstructordefaults_help'] = 'Những cài đặt này sẽ được dùng cho bất kỳ những trường hợp sử dụng Bài tập Turnitin Moodle Direct mới nào do bạn tạo ra. Chúng sẽ thay thế các cài đặt mặc định đặt bởi người quản trị hệ thống của bạn và sẽ mang tính độc nhất đối với bạn';
+$string['setinstructordefaults_help'] = 'Những cài đặt này sẽ được dùng cho bất kỳ những trường hợp sử dụng Bài tập Turnitin Moodle Direct mới nào do bạn tạo ra. Chúng sẽ thay thế các cài đặt mặc định đặt bởi người quản trị hệ thống của bạn và sẽ mang tính độc nhất đối với bạn.';
 $string['messagesinbox'] = 'Hộp thư Thông Điệp Turnitin';
 $string['downloadgrademarkzip'] = 'Tải về các tập tin Grademark đã Chọn';
 $string['downloadorigfileszip'] = 'Tải về các Tập tin gốc';
@@ -283,7 +283,7 @@ $string['pseudofirstname'] = 'Tên Ảo của Học sinh';
 $string['pseudofirstname_desc'] = '<b>[Tuỳ chọn]</b><br />Tên của học sinh sẽ hiển thị trên trình xem tài liệu Turnitin';
 $string['pseudolastname'] = 'Họ Ảo của Học sinh';
 $string['pseudolastname_desc'] = 'Họ của học sinh sẽ hiển thị trên trình xem tài liệu Turnitin';
-$string['psuedolastnamegen'] = 'Tự động Tổng hợp Họ';
+$string['psuedolastnamegen'] = 'Tự động tạo Họ';
 $string['psuedolastnamegen_desc'] = 'Nếu chọn chấp thuận và họ ảo của học sinh được đặt vào trong trường hồ sơ người dùng, sau đó trường này sẽ tự động gán với một ký hiệu nhận dạng có tính độc nhất.';
 $string['pseudoemailsalt'] = 'Chìa khoá Mã Hoá Ảo';
 $string['pseudoemailsalt_desc'] = '<b>[Tuỳ chọn]</b><br />Một chìa khoá tuỳ chọn để làm tăng mức độ phức tạp của địa chỉ email ảo đã được tạo cho Học sinh.<br />(<b>Note:</b> Chìa khoá này phải được giữ không đổi để duy trì sự nhất quán của những địa chỉ email giả)';
@@ -448,3 +448,23 @@ $string['checkupgrade'] = 'Kiểm tra tìm nâng cấp khả dụng';
 $string['checkingupgrade'] = 'Đang kiểm tra tìm nâng cấp khả dụng';
 $string['usinglatest'] = 'Bạn đang dùng phiên bản mới nhất!';
 $string['useturnitin_mod'] = 'Cho phépTurnitin cho {a}';
+$string['usemoodlecert'] = 'Sử dung Chứng nhận Moodle SSL';
+$string['errorcode1'] = 'Tập tin này không có đủ nội dung để Turnitin tổng hợp một Báo cáo Tính Độc sáng.';
+$string['errorcode2'] = 'Tập tin này sẽ không được chuyển đến Turnitin bởi đã vượt quá kích thước tối đa {$a} cho phép';
+$string['notorcapable'] = 'Không thể tổng hợp một Báo cáo Tính Độc sáng cho tập tin này.';
+$string['pastfiveattempts'] = 'Tập tin này sẽ không được chuyển đến Turnitin bởi đã được thử nộp quá số lần tối đa là 5 lần.';
+$string['notacceptedeula'] = 'Tập tin này chưa được chuyển đến Turnitin bởi người dùng chưa chấp thuận Thỏa thuận Giấy phép Người Dùng Cuối của Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Tập tin này chưa được chuyển đến Turnitin, vui lòng xem các log API của bạn để biết thêm chi tiết.';
+$string['ppsubmissionerrorstudent'] = 'Tập tin này chưa được nộp vào Turnitin, Vui lòng tư vấn trợ giảng của bạn để biết thêm chi tiết.';
+$string['turnitinppula'] = 'LƯU Ý: Bạn phải chấp thuận Thỏa thuận Người Dùng Cuối. Vui lòng nhấp vào liên kết này để chấp thuận.';
+$string['redirecttoeula'] = 'Chúng tôi đang chuyển bạn đến Thỏa thuận Người Dùng Cuối';
+$string['filedoesnotexist'] = 'Tập tin đã được xóa';
+$string['errorenrollingall'] = 'Đã xảy ra lỗi khi đăng ký tất cả học sinh trên Turnitin - Vui lòng xem log API để biết thêm thông tin';
+$string['enableperformancelogs'] = 'Cho phép ghi log Hiệu năng Mạng';
+$string['enableperformancelogs_desc'] = 'Nếu cho phép, mỗi yêu cầu gởi đến máy chủ Turnitin sẽ được ghi log tại {dataroot}/temp/turnitintooltwo/logs ';
+$string['pp_assignmentcreateerror'] = 'Không thể tạo Mô đun này trên Turnitin, vui lòng xem log API của bạn để biết thêm thông tin';
+$string['pp_assignmentediterror'] = 'Không thể hiệu chỉnh Mô đun này trên Turnitin, vui lòng xem log API của bạn để biết thêm thông tin';
+$string['pp_classcreationerror'] = 'Không thể tạo lớp này trên Turnitin, vui lòng xem log API của bạn để biết thêm thông tin.';
+$string['pp_assignmentsubmiterror'] = 'Xảy ra sự cố trùng lắp với mô đun của bạn trên Turnitin làm cản trở các bài nộp vào, vui lòng xem log API của bạn để biết thêm chi tiết.';
+$string['listsubmissions'] = 'Liệt kê Các Bài nộp';
+$string['viewsubmission'] = 'Xem Bài Nộp';

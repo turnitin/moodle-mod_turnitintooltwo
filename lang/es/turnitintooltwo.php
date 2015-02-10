@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: es
 
 $string['addsubmission'] = 'Agregar Entrega';
@@ -72,11 +72,11 @@ $string['partdberror'] = 'Ha ocurrido un problema al ingresar la parte {$a} en l
 $string['partupdateerror'] = 'Ha ocurrido un problema al actualizar la parte {$a} en la base de datos<br />';
 $string['partdeleteerror'] = 'No ha sido posible eliminar los datos de la parte {$a} del ejercicio';
 $string['partdeletewarning'] = 'La parte del ejercicio que estás tratando de eliminar contiene entregas. Si borras esta parte del ejercicio perderás estas entregas. ¿Estás seguro que deseas continuar?';
-$string['partposterror'] = 'La fecha límite debe ir antes de la fecha de publicación <br />';
+$string['partposterror'] = 'La fecha límite debe ir antes de la fecha de publicación';
 $string['partgeterror'] = 'No ha sido posible obtener los datos de la parte del ejercicio';
 $string['partname'] = 'Parte del ejercicio';
-$string['partnameerror'] = 'El nombre de la parte no puede dejarse en blanco.';
-$string['partdueerror'] = 'La fecha límite debe ir antes de la fecha de publicación';
+$string['partnameerror'] = 'El nombre de la parte no puede dejarse en blanco. ';
+$string['partdueerror'] = 'La fecha límite debe ir antes de la fecha de publicación ';
 $string['pending'] = 'Pendiente';
 $string['permissiondeniederror'] = 'No tienes el permiso correcto para completar la acción solicitada';
 $string['pluginadministration'] = 'Administración del ejercicio 2 de Turnitin';
@@ -276,7 +276,7 @@ $string['downloadorigfileszip'] = 'Descargar los archivos originales';
 $string['uploadingsubtoturnitin'] = 'Subir tu entrega a Turnitin';
 $string['emptycreatedfile'] = 'El archivo que estás intentando subir está vacío o corrupto';
 $string['studentdataprivacy'] = 'Configuración de privacidad de los datos del estudiante';
-$string['studentdataprivacy_desc'] = 'Las siguientes opciones pueden configurarse para asegurarse que la información personal de estudiante&#39s no se transmite a Turnitin a través del API.';
+$string['studentdataprivacy_desc'] = 'Las siguientes opciones pueden configurarse para asegurarse que la información personal de estudiantes no se transmite a Turnitin a través del API.';
 $string['enablepseudo'] = 'Habilitar privacidad del estudiante';
 $string['enablepseudo_desc'] = 'Si se selecciona esta opción, las direcciones de correo electrónico de los estudiantes se transformarán en un pseudo equivalente a las llamadas API de Turnitin.<br /><i>(<b>Note:</b> Esta opción no puede cambiarse si la información de cualquier usuario Moodle ya ha sido sincronizada con Turnitin)</i>';
 $string['pseudofirstname'] = 'Pseudo nombre del estudiante';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = 'Comprobar si hay una actualización disponible';
 $string['checkingupgrade'] = 'Comprobando si hay una actualización disponible';
 $string['usinglatest'] = '¡Estás utilizando la última versión!';
 $string['useturnitin_mod'] = 'Habilitar Turnitin para {a}';
+$string['usemoodlecert'] = 'Usar certificado Moodle SSL';
+$string['errorcode1'] = 'Este archivo no tiene suficiente contenido para que Turnitin pueda producirun Reporte de originalidad.';
+$string['errorcode2'] = 'Este archivo no se entregará a Turnitin ya que excede el tamaño máximo de {$a} permitido';
+$string['notorcapable'] = 'No es posible producir un Reporte de originalidad para este archivo.';
+$string['pastfiveattempts'] = 'Este archivo no se entregará a Turnitin ya que ha excedido el máximo de 5 intentos permitidos.';
+$string['notacceptedeula'] = 'Este archivo no se ha entregado a Turnitin porque el usuario no ha aceptado el Acuerdo de licencia del usuario final de Turnitin';
+$string['ppsubmissionerrorseelogs'] = 'Este archivo no se ha entregado a Turnitin. Por favor, consulta tu registro API para más detalles';
+$string['ppsubmissionerrorstudent'] = 'Este archivo no se ha entregado a Turnitin. Por favor, consulta con tu tutor para más detalles';
+$string['turnitinppula'] = 'IMPORTANTE: Debes aceptar el Acuerdo de licencia del usuario final de Turnitin. Por favor, haz clic en este enlace para aceptar.';
+$string['redirecttoeula'] = 'Te estamos redirigiendo al Acuerdo de licencia del usuario final de Turnitin';
+$string['filedoesnotexist'] = 'El archivo ha sido eliminado';
+$string['errorenrollingall'] = 'Ha habido un error a la hora de inscribir a los estudiantes en Turnitin. Por favor, consulta el registro APIpara más información';
+$string['eventremoved'] = 'Este evento ha sido eliminado de la cola cron y no volverá a procesarse.';
+$string['partnametoolarge'] = 'El nombre de este parte es demasiado largo. Por favor, limítate a 40 caracteres.';
+$string['enableperformancelogs'] = 'Habilitar el registro del desempeño de red';
+$string['enableperformancelogs_desc'] = 'Si está habilitado, cada solicitud al servidor Turnitin se registrará en {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Este módulo no ha podido crearse en Turnitin. Por favor, consulta tu registro API para más información';
+$string['pp_assignmentediterror'] = 'Este módulo no ha podido editarse en Turnitin. Por favor, consulta tu registro API para más información';
+$string['pp_classcreationerror'] = 'Esta clase no ha podido crearse en Turnitin. Por favor, consulta tu registro API para más información';
+$string['pp_assignmentsubmiterror'] = 'Hay un problema con la réplica de tu módulo en Turnitin que está bloqueando las entregas. Por favor, consulta turegistro API para más información';
+$string['listsubmissions'] = 'Lista de entregas';
+$string['viewsubmission'] = 'Ver entregas';

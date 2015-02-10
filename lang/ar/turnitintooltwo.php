@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012405
-// Date: 2014-07-25
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: ar
 
 $string['addsubmission'] = 'اضافة ارسال';
@@ -72,10 +72,10 @@ $string['partdberror'] = 'حدث خطأ في ادخال الجزء{$a} في قا
 $string['partupdateerror'] = 'حدث خطأ في تحديث الجزء{$a} في قاعدة البيانات</ br>';
 $string['partdeleteerror'] = 'لا يمكن حذف بيانات {$a} جزء المهمة';
 $string['partdeletewarning'] = 'جزء المهمة الذي تحاول حذفه يحوي ارسالات. ستفقد هذه الارسالات اذا قمت بحذف جزء هذه المهمة.n\n\هل انت متأكد من الاستمرار؟';
-$string['partposterror'] = 'تاريخ البداية يجب ان يكون قبل تاريخ النشر.</ br>';
+$string['partposterror'] = 'تاريخ البداية يجب ان يكون قبل تاريخ النشر.';
 $string['partgeterror'] = 'تعذر الحصول على بيانات جزء المهمة';
 $string['partname'] = 'جزء المهمة ';
-$string['partnameerror'] = 'اسم الجزء لا يمكن ان يكون خاليا';
+$string['partnameerror'] = 'اسم الجزء لا يمكن ان يكون خاليا ';
 $string['partdueerror'] = 'تاريخ البداية يجب ان يكون قبل تاريخ النشر.';
 $string['pending'] = 'قيد الانتظار';
 $string['permissiondeniederror'] = 'لا تملك الترخيص الصحيح لأكمال الاجراء المطلوب';
@@ -275,7 +275,7 @@ $string['downloadorigfileszip'] = 'حمل الملفات الأصلية';
 $string['uploadingsubtoturnitin'] = 'يتم تحميل ما سلمته الى Turnitin';
 $string['emptycreatedfile'] = 'الملف الذي حاولت تسليمه إما أنه فارغ أو هو تالف';
 $string['studentdataprivacy'] = 'إعدادات الخصوصية لبيانات الطالب';
-$string['studentdataprivacy_desc'] = 'يمكن تهيئة الإعدادات التالية لضمان عدم نقل البيانات الشخصية للطالب&#39 الى Turnitin عبر API.';
+$string['studentdataprivacy_desc'] = 'يمكن تهيئة الإعدادات التالية لضمان عدم نقل البيانات الشخصية للطالب الى Turnitin عبر API.';
 $string['enablepseudo'] = 'تمكين خصوصية الطلبة';
 $string['enablepseudo_desc'] = 'اذا تم اختيار هذا الوضع سيتم تحويل عنوان البريد الالكتروني الى عنوان وهمي باستخدام Turnitin API.<br /><i>(<b>ملاحظة:</b> لا يمكن تغيير هذا الوضع اذا كانت بيانات مستخدم Moodle قد تم تحديثها مع Turnitin)</i>';
 $string['pseudofirstname'] = 'اسم الطالب الوهمي الاول';
@@ -446,3 +446,25 @@ $string['checkupgrade'] = 'تحقق من التحديثات المتوفرة';
 $string['checkingupgrade'] = 'التحقق من التحديثات المتوفرة';
 $string['usinglatest'] = 'انت تستخدم النسخة الاحدث';
 $string['useturnitin_mod'] = 'تمكين Turnitin {a}';
+$string['usemoodlecert'] = 'استخدام شهادة Moodle SSL';
+$string['errorcode1'] = 'لا يحتوي هذا الملف على محتوى كافٍ لكي تتمكن Turnitin من إنشاء تقرير الأصالة.';
+$string['errorcode2'] = 'لن يُرسل هذا الملف إلى Turnitin لأنه حجمه يتجاوز الحد الأقصى المسموح به.';
+$string['notorcapable'] = 'لا يمكن إنشاء تقرير أصالة لهذا الملف.';
+$string['pastfiveattempts'] = 'لن يُرسل هذا الملف إلى Turnitin لأنه قد تجاوز المحاولات الـ 5 المسموح بها.';
+$string['notacceptedeula'] = 'لم يُرسل هذا الملف إلى Turnitin لأن المستخدم لم يوافق على اتفاقية ترخيص المستخدم.';
+$string['ppsubmissionerrorseelogs'] = 'لم يُرسل هذا الملف إلى Turnitin، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من التفاصيل.';
+$string['ppsubmissionerrorstudent'] = 'لم يُرسل هذا الملف إلى Turnitin، يُرجى استشارة المدرس للحصول على مزيد من التفاصيل.';
+$string['turnitinppula'] = 'هام: يجب الموافقة على اتفاقية ترخيص المستخدم لـ Turnitin. يُرجى النقر فوق هذا الرابط للموافقة.';
+$string['redirecttoeula'] = 'نقوم بإعادة توجيهك إلى اتفاقية ترخيص المستخدم';
+$string['filedoesnotexist'] = 'تم حذف الملف';
+$string['errorenrollingall'] = 'حدث خطأ أثناء تسجيل الطلاب في Turnitin، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من التفاصيل.';
+$string['eventremoved'] = 'أزال هذا الحدث قائمة انتظار كرون (cron) ولن تتم معالجته مرة أخرى.';
+$string['partnametoolarge'] = 'اسم الجزء طويل للغاية. يُرجى الاقتصار على 40 حرفًا.';
+$string['enableperformancelogs'] = 'تمكين تسجيل أداء الشبكة';
+$string['enableperformancelogs_desc'] = 'في حالة التمكين، سيتم تسجيل كل طلب موجه إلى خادم Turnitin في {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'تعذر إنشاء هذه الوحدة النمطية على Turnitin، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من المعلومات.';
+$string['pp_assignmentediterror'] = 'تعذر تحرير هذه الوحدة النمطية على Turnitin، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من المعلومات.';
+$string['pp_classcreationerror'] = 'تعذر إنشاء هذا الصف على Turnitin، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من المعلومات.';
+$string['pp_assignmentsubmiterror'] = 'يوجد مشكلة في النسخ المتماثل لوحدتك النمطية في Turnitin ما يعوق عملية الإرسال، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من المعلومات.';
+$string['listsubmissions'] = 'قائمة الإرسالات';
+$string['viewsubmission'] = 'عرض الإرسال';

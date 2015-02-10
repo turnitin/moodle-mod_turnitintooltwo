@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012409
-// Date: 2014-10-24
+// Version: 2014012413
+// Date: 2015-02-09
 // Language: cs
 
 $string['addsubmission'] = 'Přidat odevzdání';
@@ -53,7 +53,7 @@ $string['maxfilesize_help'] = 'Toto nastavení určuje maximální velikost soub
 $string['maxlength'] = 'Maximální délka pro {$a-&gt;length} znaků';
 $string['maxmarks'] = 'Max. známky';
 $string['pluginname'] = 'Úkol Turnitin 2';
-$string['modulename'] = $string['pluginname'];
+$string['modulename'] = 'Úkol Turnitin 2';
 $string['modulenameplural'] = 'Úkoly Turnitin ';
 $string['moduleversion'] = 'Verze';
 $string['mysubmissions'] = 'Mé odevzdané práce ';
@@ -72,7 +72,7 @@ $string['partdberror'] = 'Vyskytl se problém při zadávání Části {$a} do d
 $string['partupdateerror'] = 'Vyskytl se problém při aktualizaci Části {$a} v databázi<br />';
 $string['partdeleteerror'] = 'Nelze smazat údaje o části {$a} úkolu';
 $string['partdeletewarning'] = 'Část úkolu, kterou se pokoušíte smazat, obsahuje odevzdané práce. Pokud tuto část úkolu smažete, ztratíte tyto odevzdané práce. \n\nUrčitě chcete pokračovat?';
-$string['partposterror'] = 'Počáteční datum musí být před závěrečným datem.<br />';
+$string['partposterror'] = 'Počáteční datum musí být před závěrečným datem.';
 $string['partgeterror'] = 'Nelze získat údaje o části úkolu ';
 $string['partname'] = 'Část úkolu ';
 $string['partnameerror'] = 'Název části nemůže zůstat prázdný.';
@@ -448,3 +448,25 @@ $string['checkupgrade'] = 'Zkontrolujte, zda je k dispozici aktualizace';
 $string['checkingupgrade'] = 'Kontrola dostupných aktualizací';
 $string['usinglatest'] = 'Používáte nejnovější verzi!';
 $string['useturnitin_mod'] = 'Aktivovat Turnitin pro {a}';
+$string['usemoodlecert'] = 'Použít certifikát Moodle SSL';
+$string['errorcode1'] = 'Tento soubor nemá dostatek obsahu, aby mohl Turnitin vygenerovat zprávu o původnosti.';
+$string['errorcode2'] = 'Soubor nebude předán do systému Turnitin, protože přesahuje maximální povolenou velikost.';
+$string['notorcapable'] = 'Pro tento soubor nelze vytvořit zprávu o původnosti.';
+$string['pastfiveattempts'] = 'Soubor nebude předán do systému Turnitin, protože byl překročen limit max. 5 povolených pokusů.';
+$string['notacceptedeula'] = 'Soubor nebyl předán do systému Turnitin, protože uživatel nepřijal licenční ujednání koncového uživatele systému Turnitin.';
+$string['ppsubmissionerrorseelogs'] = 'Soubor nebyl předán do systému Turnitin. Další informace najdete v API protokolu.';
+$string['ppsubmissionerrorstudent'] = 'Soubor nebyl předán do systému Turnitin. Další informace vám podá váš vyučující.';
+$string['turnitinppula'] = 'DŮLEŽITÉ: Musíte přijmout licenční ujednání koncového uživatele systému Turnitin. Přijměte ujednání kliknutím na tento odkaz.';
+$string['redirecttoeula'] = 'Přesměrováváme vás na licenční ujednání koncového uživatele systému Turnitin.';
+$string['filedoesnotexist'] = 'Soubor byl smazán.';
+$string['errorenrollingall'] = 'Došlo k chybě při zavádění všech studentů do systému Turnitin. Další informace najdete v API protokolu.';
+$string['eventremoved'] = 'Tato událost byla odebrána z fronty a nebude znovu zpracována.';
+$string['partnametoolarge'] = 'Název části je příliš dlouhý. Zkraťte prosím název na max. 40 znaků.';
+$string['enableperformancelogs'] = 'Povolte protokolování výkonu sítě';
+$string['enableperformancelogs_desc'] = 'Je-li povoleno protokolování výkonu sítě, bude každý požadavek zaslaný na server Turnitin zaznamenán do adresáře {dataroot}/temp/turnitintooltwo/logs';
+$string['pp_assignmentcreateerror'] = 'Tento modul nelze v systému Turnitin vytvořit. Další informace najdete v API protokolu.';
+$string['pp_assignmentediterror'] = 'Tento modul nelze v systému Turnitin upravit. Další informace najdete v API protokolu.';
+$string['pp_classcreationerror'] = 'Tuto třídu nelze v systému Turnitin vytvořit. Další informace najdete v API protokolu.';
+$string['pp_assignmentsubmiterror'] = 'Při replikaci vašeho modulu v systému Turnitin došlo k problému, který zabránil odeslání práce. Další informace najdete v API protokolu.';
+$string['listsubmissions'] = 'Seznam odevzdaných prací';
+$string['viewsubmission'] = 'Zobrazit odevzdané práce';
