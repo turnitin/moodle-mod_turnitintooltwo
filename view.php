@@ -230,12 +230,6 @@ if (!empty($action)) {
                             $turnitintooltwosubmission->delete_submission();
                             $_SESSION["notice"]["message"] = $doupload["message"];
                             $do = "submitpaper";
-                        } else {
-                            // Lock the assignment setting for anon marking.
-                            $locked_assignment = new stdClass();
-                            $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
-                            $locked_assignment->submitted = 1;
-                            $DB->update_record('turnitintooltwo', $locked_assignment);
                         }
                     } else if ($post['submissiontype'] == 2) {
                         $turnitintooltwosubmission->prepare_text_submission($cm, $post);
@@ -244,6 +238,12 @@ if (!empty($action)) {
                         if ($digitalreceipt = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment)) {
                             $_SESSION["digital_receipt"] = $digitalreceipt;
                         }
+
+                        $locked_assignment = new stdClass();
+                        $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
+                        $locked_assignment->submitted = 1;
+                        $DB->update_record('turnitintooltwo', $locked_assignment);
+
                         $extraparams = array();
                         unset($_SESSION['form_data']);
                     }
