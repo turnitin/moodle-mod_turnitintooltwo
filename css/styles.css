@@ -312,7 +312,11 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 #colorbox {
     margin-top: 20px;
     outline: 0 !important;
-    overflow: visible;
+    overflow: visible !important;
+}
+
+#cboxContent {
+    margin-top: 0 !important;
 }
 
 #tii_close_btn {
@@ -324,12 +328,12 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     width: 21px;
     height: 21px;
     border-radius: 100%;
-    background: #fff url(/theme/image.php/clean/turnitintooltwo/1422633245/colorbox/controls) no-repeat -50px 0px;
+    background: #fff url(../pix/colorbox/controls.png) no-repeat -50px 0px;
     box-shadow: 0 0 6px -3px #000;
 }
 
 #tii_close_btn:hover {
-    background: #fff url(/theme/image.php/clean/turnitintooltwo/1422633245/colorbox/controls) no-repeat -50px -25px;
+    background: #fff url(../pix/colorbox/controls.png) no-repeat -50px -25px;
 }
 
 .cboxIframe {
