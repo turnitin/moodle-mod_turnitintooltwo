@@ -336,8 +336,9 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     width: 100px;
     text-align: center;
     float: right;
-    padding: 12px 0;
     text-decoration: none;
+    height: 45px;
+    line-height: 43px;
 }
 
 .cboxIframe {
