@@ -936,7 +936,7 @@ jQuery(document).ready(function($) {
     }
 
     function lightBoxCloseButton() {
-        $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">CLOSE</a></div>');
+        $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">' + M.str.turnitintooltwo.closebutton + '</a></div>');
     }
 
     function initialiseHiddenZipDownloads(part_id) {
