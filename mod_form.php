@@ -529,7 +529,25 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
+        $partnames = array();
+
+        foreach ($data as $name => $value) {
+            // Get part names from array of data
+            if (strstr($name, 'partname')) $partnames[$name] = strtolower($value);
+            // We only need part names for number of parts being used
+            if (count($partnames) == $data['numparts']) break;
+        }
+
         for ($i = 1; $i <= $data['numparts']; $i++) {
+            // Get a copy of the array for unsetting purposes
+            $partnamescopy = $partnames;
+
+            $partname = 'partname'.$i;
+            unset($partnamescopy[$partname]);
+
+            if (in_array(strtolower($partnames[$partname]), $partnamescopy)) {
+                $errors[$partname] = 'Partname must be unique!';
+            }
 
             $dtstart = $data['dtstart'.$i];
             $dtdue = $data['dtdue'.$i];
