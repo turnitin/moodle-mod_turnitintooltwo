@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
 	    }
 
 	    $('.tii_upgrade_check').hide();
-	    $('.tii_upgrading_check').show();
+	    $('.tii_upgrading_check').css('display', 'inline-block');
 	    var current_version = $(this).attr('id').split('_')[1];
 
     	$.ajax({

@@ -362,9 +362,20 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     margin-top: 0;
 }
 
+h3.main {
+    line-height: 40px;
+}
+
+.tii_upgrade_check,
+.tii_upgrading_check {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+}
 .tii_upgrade_check img,
 .tii_upgrading_check img {
     padding: 0 0 5px 5px;
+    vertical-align: middle;
 }
 
 .mod_turnitintooltwo .fitem_fbutton {
