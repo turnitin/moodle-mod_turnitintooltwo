@@ -546,7 +546,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             unset($partnamescopy[$partname]);
 
             if (in_array(strtolower($partnames[$partname]), $partnamescopy)) {
-                $errors[$partname] = 'Partname must be unique!';
+                $errors[$partname] = get_string('uniquepartname', 'turnitintooltwo');
             }
 
             $dtstart = $data['dtstart'.$i];

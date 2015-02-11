@@ -1034,7 +1034,7 @@ class turnitintooltwo_assignment {
                     $return['msg'] = get_string('partnameerror', 'turnitintooltwo');
                 } else if (in_array(strtolower($fieldvalue), $names)) {
                     $return['success'] = false;
-                    $return['msg'] = 'Part name must be unique!';
+                    $return['msg'] = get_string('uniquepartname', 'turnitintooltwo');
                 } else if (strlen($fieldvalue) > 40) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnametoolarge', 'turnitintooltwo');
