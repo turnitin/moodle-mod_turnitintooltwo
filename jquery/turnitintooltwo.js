@@ -354,9 +354,9 @@ jQuery(document).ready(function($) {
                 window.parent.$('.upload_box').colorbox.resize({
                     width: "80%",
                     height: "80%"
-                });     
+                });
             }
-            
+
             $('iframe.cboxIframe').attr('src', $('iframe.cboxIframe').attr('src'));
         });
     }
@@ -367,7 +367,7 @@ jQuery(document).ready(function($) {
         window.parent.$('.upload_box').colorbox.resize({
             width: "800px",
             height: "565px"
-        });     
+        });
     });
 
     // Enrol all students link on the enrolled students page
@@ -395,9 +395,9 @@ jQuery(document).ready(function($) {
     if ($('.rubric_manager_launch').length > 0) {
         $('.rubric_manager_launch').colorbox({
             iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_manager", transition: "none",
-            onLoad: function() { 
+            onLoad: function() {
                 lightBoxCloseButton();
-                getLoadingGif(); 
+                getLoadingGif();
             },
             onCleanup:function() {
                 hideLoadingGif();
@@ -438,14 +438,13 @@ jQuery(document).ready(function($) {
     if ($('.quickmark_manager_launch').length > 0 || $('.plagiarism_turnitin_quickmark_manager_launch').length > 0) {
         $('.quickmark_manager_launch, .plagiarism_turnitin_quickmark_manager_launch').colorbox({
             iframe:true, width:"700px", height:"432px", opacity: "0.7", className: "quickmark_manager", transition: "none",
-            onLoad: function() { getLoadingGif(); },
-            onLoad: function() { 
+            onLoad: function() {
                 lightBoxCloseButton();
-                getLoadingGif(); 
+                getLoadingGif();
             },
-            onCleanup: function() { 
+            onCleanup: function() {
                 $('#tii_close_bar').remove();
-                hideLoadingGif(); 
+                hideLoadingGif();
             }
         });
     }
@@ -473,11 +472,11 @@ jQuery(document).ready(function($) {
     if ($('.peermark_reviews_launch').length > 0) {
         $('.peermark_reviews_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_reviews", transition: "none",
-            onLoad: function() { 
+            onLoad: function() {
                 lightBoxCloseButton();
                 getLoadingGif();
             },
-            onCleanup: function() { 
+            onCleanup: function() {
                 $('#tii_close_bar').remove();
                 hideLoadingGif();
             }
@@ -488,11 +487,11 @@ jQuery(document).ready(function($) {
     if ($(".messages_inbox").length > 0) {
         $(".messages_inbox").colorbox({
             iframe:true, width:"772px", height:"772px", opacity: "0.7", className: "messages", transition: "none", closeButton: false,
-            onLoad: function() { 
+            onLoad: function() {
                 lightBoxCloseButton();
-                getLoadingGif(); 
+                getLoadingGif();
             },
-            onCleanup: function() { 
+            onCleanup: function() {
                 $('#tii_close_bar').remove();
                 hideLoadingGif();
             },
@@ -595,7 +594,7 @@ jQuery(document).ready(function($) {
                 {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
                         $('.editable-open').editableContainer('hide');
-                        
+
                         // Validation only fails if string is returned (We need a string).
                         return ' ';
                     }
@@ -861,7 +860,7 @@ jQuery(document).ready(function($) {
                     window.parent.$('.upload_box').colorbox.resize({
                        width: "80%",
                        height: "80%"
-                    });  
+                    });
                 }
             },
             onLoad: function() {
@@ -1086,6 +1085,8 @@ jQuery(document).ready(function($) {
                 if (submission_id == 0) {
                     link += "_0";
                     submission_id = data.submission_id;
+                } else if (data.submission_id == null && submission_id != 0) {
+                    link = link+"_"+submission_id;
                 } else {
                     link = link+"_"+data.submission_id;
                 }
@@ -1137,5 +1138,4 @@ jQuery(document).ready(function($) {
             }
         }
     }
-    
 });

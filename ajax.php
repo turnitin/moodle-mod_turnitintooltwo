@@ -68,28 +68,8 @@ switch ($action) {
                             $usertimezone = 'GMT';
                         }
                     }
-                    
+
                     $fieldvalue = strtotime($fieldvalue.' '.$usertimezone);
-
-                    if( $fieldname == "dtpost" &&
-                        $turnitintooltwoassignment->turnitintooltwo->anon &&
-                        $turnitintooltwoassignment->turnitintooltwo->submitted == 1 &&
-                        $fieldvalue < time() ) 
-                    {
-                        // Get the Turnitin course id
-                        $turnitin_cid = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course)->turnitin_cid;
-                        
-                        // Disable anonymous marking in Turnitin
-                        $assignment = new TiiAssignment();
-                        $assignment->setClassId($turnitin_cid);
-                        $assignment->setAnonymousMarking(0);
-
-                        // Update it in Moodle
-                        $anon_assignment = new stdClass();
-                        $anon_assignment->id = required_param('assignment', PARAM_INT);
-                        $anon_assignment->anon = 0;
-                        $DB->update_record('turnitintooltwo', $anon_assignment);
-                    }
                     break;
             }
 
@@ -313,6 +293,15 @@ switch ($action) {
             $submission = $turnitintooltwoassignment->get_user_submissions($userid, $assignmentid, $partid);
             $submissionid = current(array_keys($submission));
 
+            if (!empty($submissionid)) {
+                $submission = new turnitintooltwo_submission($submissionid);
+                $submission->update_submission_from_tii(true);
+
+                // Get the submission details again in case the submission has been transferred within Turnitin.
+                $submission = $turnitintooltwoassignment->get_user_submissions($userid, $assignmentid, $partid);
+                $submissionid = current(array_keys($submission));
+            }
+
             $submission = new turnitintooltwo_submission($submissionid);
             if (empty($submissionid)) {
                 $user = new turnitintooltwo_user($userid, 'Learner', false);
@@ -320,18 +309,17 @@ switch ($action) {
                 $submission->firstname = $user->firstname;
                 $submission->lastname = $user->lastname;
                 $submission->userid = $user->id;
-            } else {
-                $submission->update_submission_from_tii(true);
             }
+
             $useroverallgrades = array();
 
             $PAGE->set_context(context_module::instance($cm->id));
 
             $turnitintooltwoview = new turnitintooltwo_view();
+            $submissionrow["submission_id"] = $submission->submission_objectid;
             $submissionrow["row"] = $turnitintooltwoview->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts,
                                                                                 $partid, $submission, $useroverallgrades,
                                                                                 $istutor, 'refresh_row');
-            $submissionrow["submission_id"] = $submission->submission_objectid;
 
             echo json_encode($submissionrow);
         }

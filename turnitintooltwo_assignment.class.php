@@ -1077,6 +1077,19 @@ class turnitintooltwo_assignment {
                         }
 
                         $setmethod = "setFeedbackReleaseDate";
+
+                        if ($fieldname == "dtpost" && $this->turnitintooltwo->anon &&
+                            $this->turnitintooltwo->submitted == 1 && $fieldvalue < time()) {
+
+                            $assignment->setAnonymousMarking(0);
+
+                            // Update it in Moodle
+                            $anon_assignment = new stdClass();
+                            $anon_assignment->id = $this->id;
+                            $anon_assignment->anon = 0;
+                            $DB->update_record('turnitintooltwo', $anon_assignment);
+                        }
+
                         break;
                 }
                 $assignment->$setmethod(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
@@ -1417,7 +1430,7 @@ class turnitintooltwo_assignment {
             foreach ($readsubmissions as $readsubmission) {
                 $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
                                                                                 "turnitin", $this, $part->id);
-                $turnitintooltwosubmission->save_updated_submission_data($readsubmission, $this, true);
+                $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
             }
 
         } catch (Exception $e) {

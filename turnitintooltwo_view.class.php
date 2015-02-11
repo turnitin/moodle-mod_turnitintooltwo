@@ -730,7 +730,6 @@ class turnitintooltwo_view {
                         userdate($partdetails[$partid]->dtpost, '%d %b %Y - %H:%M') : 
                         userdate($partdetails[$partid]->dtpost, '%d %h %Y - %H:%M');
         if ($istutor) {
-
             $datefield = html_writer::link('#', $datefield,
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
                                                 'data-submitted' => $turnitintooltwoassignment->turnitintooltwo->submitted,
@@ -1230,7 +1229,7 @@ class turnitintooltwo_view {
             }
 
             $uploadtext = (!$istutor) ? html_writer::tag('span', get_string('submitpaper', 'turnitintooltwo')) : '';
-            
+
             $launcheula = false;
 
             if ($submission->userid == $USER->id) {
@@ -1238,7 +1237,7 @@ class turnitintooltwo_view {
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
                 $submission_user->join_user_to_class($coursedata->turnitin_cid);
                 $eulaaccepted = (!$submission_user->user_agreement_accepted) ? $submission_user->get_accepted_user_agreement() : $submission_user->user_agreement_accepted;
-                
+
                 $launcheula = ( ! $eulaaccepted) ? 1 : 0;
             }
 

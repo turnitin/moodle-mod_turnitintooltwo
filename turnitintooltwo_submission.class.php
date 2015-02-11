@@ -545,7 +545,7 @@ class turnitintooltwo_submission {
             $response = $turnitincall->readSubmission($submission);
             $readsubmission = $response->getSubmission();
 
-            $this->save_updated_submission_data($readsubmission, '', false, $save);
+            $this->save_updated_submission_data($readsubmission, false, $save);
             $this->get_submission_details();
         } catch (Exception $e) {
             $turnitincomms->handle_exceptions($e, 'tiisubmissiongeterror', false);
@@ -558,20 +558,21 @@ class turnitintooltwo_submission {
      * @global type $DB
      * @param type $tiisubmissiondata
      * @param type $bulk
-     * @param type $save - save in db regradlesss of changes
+     * @param type $save - save in db regardless of changes
      * @return type
      */
-    public function save_updated_submission_data($tiisubmissiondata, $turnitintooltwoassignment = "", 
-                                                    $bulk = false, $save = false) {
+    public function save_updated_submission_data($tiisubmissiondata, $bulk = false, $save = false) {
         global $DB, $CFG;
 
-        if (empty($turnitintooltwoassignment)) {
-            $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
+        static $part;
+        if (!isset($part)) {
+            $part = $DB->get_record("turnitintooltwo_parts", array("tiiassignid" => $tiisubmissiondata->getAssignmentId()));
+            $turnitintooltwoassignment = new turnitintooltwo_assignment($part->turnitintooltwoid);
         }
 
         $sub = new stdClass();
         $sub->submission_title = $tiisubmissiondata->getTitle();
-        $sub->submission_part = $this->submission_part;
+        $sub->submission_part = $part->id;
         $sub->submission_objectid = $tiisubmissiondata->getSubmissionId();
         $sub->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
 
