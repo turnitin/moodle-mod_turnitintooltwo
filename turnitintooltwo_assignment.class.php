@@ -1029,7 +1029,7 @@ class turnitintooltwo_assignment {
                     $names[] = strtolower($name);
                 }
 
-                if (empty($fieldvalue)) {
+                if (empty($fieldvalue) || ctype_space($fieldvalue)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnameerror', 'turnitintooltwo');
                 } else if (in_array(strtolower($fieldvalue), $names)) {
