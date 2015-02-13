@@ -906,12 +906,8 @@ class turnitintooltwo_assignment {
         $turnitintooltwo = new stdClass();
         $turnitintooltwo->id = $toolid;
         $turnitintooltwo->numparts = $turnitintooltwonow->numparts - 1;
+        $turnitintooltwo->needs_updating = 1;
         $DB->update_record("turnitintooltwo", $turnitintooltwo);
-
-        $assignment = new stdClass();
-        $assignment->id = $toolid;
-        $assignment->needs_updating = 1;
-        $DB->update_record("turnitintooltwo", $assignment);
         return true;
     }
 
@@ -1023,7 +1019,7 @@ class turnitintooltwo_assignment {
         switch ($fieldname) {
             case "partname":
                 $partnames = $DB->get_records('turnitintooltwo_parts', array('turnitintooltwoid' => $partdetails->turnitintooltwoid), '', 'partname');
-                
+
                 $names = array();
                 foreach ($partnames as $name => $other) {
                     $names[] = strtolower($name);
