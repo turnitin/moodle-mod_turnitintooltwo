@@ -52,8 +52,9 @@ if ($ADMIN->fulltree) {
         } else {
                 $PAGE->requires->jquery();
                 $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
-                $PAGE->requires->string_for_js('upgradeavailable', 'turnitintooltwo');
         }
+        
+        $PAGE->requires->string_for_js('upgradeavailable', 'turnitintooltwo');
 
         if (is_siteadmin()) {
             $data = turnitintooltwo_updateavailable($version);
