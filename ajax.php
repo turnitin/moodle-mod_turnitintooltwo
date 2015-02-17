@@ -27,6 +27,17 @@ require_login();
 $action = required_param('action', PARAM_ALPHAEXT);
 
 switch ($action) {
+    case "check_anon":
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+
+        $anonData = array(
+            'anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+            'submitted' => $turnitintooltwoassignment->turnitintooltwo->submitted
+        );
+        echo json_encode($anonData);
+        break;
+        
     case "edit_field":
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');

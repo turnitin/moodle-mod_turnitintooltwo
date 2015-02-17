@@ -574,6 +574,20 @@ jQuery(document).ready(function($) {
             $('.export_data').append('<span class="empty-dash">--</span>');
         }
 
+        $('.editable_postdue').on("click", function() {
+            var $this = $(this);
+            $.ajax({
+                type: "POST",
+                url: "ajax.php",
+                dataType: "json",
+                data: {action: 'check_anon', assignment: $('#assignment_id').html()},
+                success: function(data) {
+                    $this.data('anon', data['anon']);
+                    $this.data('submitted', data['submitted']);
+                }
+            });
+        });
+
         var theDate = new Date();
         $('.editable_date').editable({
             'type': 'combodate',
@@ -589,8 +603,8 @@ jQuery(document).ready(function($) {
             validate: function(value) {
                 if( value.format("X") < moment().unix() && 
                     $(this).hasClass('editable_postdue') &&
-                    $(this).data('anon') === 1 &&
-                    $(this).data('submitted') === 1 )
+                    $(this).data('anon') == 1 &&
+                    $(this).data('submitted') == 1 )
                 {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
                         $('.editable-open').editableContainer('hide');
