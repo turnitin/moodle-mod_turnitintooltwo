@@ -841,7 +841,7 @@ jQuery(document).ready(function($) {
                         success: function(data) {
                             eval(data);
                             if (data.status == "success") {
-                                parent.$.fn.colorbox.close();
+                                $.colorbox.close()
                                 $('#submission_'+submission_id).attr('href', M.cfg.wwwroot+"/user/view.php?id="+data.userid+"&course="+data.courseid);
                                 $('#submission_'+submission_id).html(data.name);
                                 $('#submission_'+submission_id).removeClass('unanonymise cboxElement');
