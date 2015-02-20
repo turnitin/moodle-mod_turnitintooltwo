@@ -534,7 +534,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         foreach ($data as $name => $value) {
             // Get part names from array of data
-            if (strstr($name, 'partname')) $partnames[$name] = strtolower($value);
+            if (strstr($name, 'partname')) $partnames[$name] = strtolower(trim($value));
             // We only need part names for number of parts being used
             if (count($partnames) == $data['numparts']) break;
         }
