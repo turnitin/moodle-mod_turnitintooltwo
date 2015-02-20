@@ -73,14 +73,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2015012412) {
+    if ($result && $oldversion < 2014012412) {
         $table = new xmldb_table('turnitintooltwo');
         $field = new xmldb_field('needs_updating', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, 0, 'allownonor');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
     }
-
 
     return $result;
 }
