@@ -1222,8 +1222,7 @@ class turnitintooltwo_view {
 
         // Upload Submission.
         if ((!isset($submission->submission_objectid) || $turnitintooltwoassignment->turnitintooltwo->reportgenspeed != 0) &&
-                    (time() < $parts[$partid]->dtdue || $turnitintooltwoassignment->turnitintooltwo->allowlate == 1) &&
-                    empty($submission->nmoodle) && time() > $parts[$partid]->dtstart) {
+            empty($submission->nmoodle) && time() > $parts[$partid]->dtstart) {
 
             if (empty($submission->submission_objectid)) {
                 $submission->submission_objectid = 0;
@@ -1248,6 +1247,11 @@ class turnitintooltwo_view {
                                             'mod_turnitintooltwo'),
                                         array("class" => "upload_box", "data-launch-eula" => $launcheula, "id" => "upload_".$submission->submission_objectid.
                                                             "_".$partid."_".$submission->userid));
+            
+            if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
+                $upload = "&nbsp;";
+            }
+
         } else {
             $upload = "&nbsp;";
         }
