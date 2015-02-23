@@ -19,16 +19,16 @@
  * @copyright 2010 iParadigms LLC
  */
 
-require_once("../../config.php");
-require_once("lib.php");
+require_once(__DIR__."/../../config.php");
+require_once(__DIR__."/lib.php");
+require_once(__DIR__."/turnitintooltwo_view.class.php");
 
-require_once("turnitintooltwo_view.class.php");
 $turnitintooltwoview = new turnitintooltwo_view();
 
 // Load Javascript and CSS.
 $turnitintooltwoview->load_page_components();
 
-$id = required_param('id', PARAM_INT);   // Course id.
+$id = required_param('id', PARAM_INT); // Course id.
 
 // Configure URL correctly.
 $urlparams = array('id' => $id);

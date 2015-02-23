@@ -20,16 +20,16 @@
  */
 
 if ($ADMIN->fulltree) {
-    include_once($CFG->dirroot.'/mod/turnitintooltwo/lib.php');
+    include_once(__DIR__.'/lib.php');
+    require_once(__DIR__."/turnitintooltwo_view.class.php");
 
-    require_once("turnitintooltwo_view.class.php");
     $turnitintooltwoview = new turnitintooltwo_view();
 
     $config = turnitintooltwo_admin_config();
 
     $library_warning = '';
     if (!extension_loaded('XMLWriter')) {
-        $library_warning = html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'), 
+        $library_warning = html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'),
                                                 array('class' => 'library_not_present_warning'));
     }
 
@@ -39,21 +39,20 @@ if ($ADMIN->fulltree) {
                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
 
     $current_section = optional_param('section', '', PARAM_ALPHAEXT);
-    
+
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
 
     if ($current_section == 'modsettingturnitintooltwo') {
-    
         if ($CFG->branch <= 25) {
             $tabmenu .= html_writer::tag('script', '', array("type" => "text/javascript",
                                                     "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js")).
                         html_writer::tag('script', '', array("type" => "text/javascript",
                                                     "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo_settings.js"));
         } else {
-                $PAGE->requires->jquery();
-                $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery();
+            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
         }
-        
+
         $PAGE->requires->string_for_js('upgradeavailable', 'turnitintooltwo');
 
         if (is_siteadmin()) {
@@ -66,7 +65,7 @@ if ($ADMIN->fulltree) {
                 $upgrade .= html_writer::tag('a', $OUTPUT->pix_icon('refresh', get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'), array('href' => '#', 'class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
             }
         }
-        
+
         $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader', get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'), array('class' => 'tii_upgrading_check'));
     }
 
@@ -171,8 +170,8 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
                        get_string('studentdataprivacy_desc', 'turnitintooltwo')));
 
-    if ($DB->count_records('turnitintooltwo_users') > 0 AND isset($config->enablepseudo)) {
-        $selectionarray = ($config->enablepseudo == 1) ? array(1 => get_string('yes')) : array(0 => get_string('no'));
+    if ($DB->count_records('turnitintooltwo_users') > 0 AND isset($onfig->enablepseudo)) {
+        $selectionarray = ($onfig->enablepseudo == 1) ? array(1 => get_string('yes')) : array(0 => get_string('no'));
         $pseudoselect = new admin_setting_configselect('turnitintooltwo/enablepseudo',
                                                         get_string('enablepseudo', 'turnitintooltwo'),
                                                         get_string('enablepseudo_desc', 'turnitintooltwo'),

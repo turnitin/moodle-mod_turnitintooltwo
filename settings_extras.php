@@ -19,17 +19,15 @@
  * @copyright 2012 iParadigms LLC
  */
 
-require_once('../../config.php');
-require_once('../../course/lib.php');
+require_once(__DIR__.'/../../config.php');
+require_once($CFG->dirroot.'/course/lib.php');
 require_once($CFG->libdir.'/adminlib.php');
 require_once($CFG->libdir.'/tablelib.php');
-require_once("lib.php");
-
-require_once($CFG->dirroot.'/mod/turnitintooltwo/lib.php');
+require_once(__DIR__."/lib.php");
+require_once(__DIR__."/turnitintooltwo_view.class.php");
 
 admin_externalpage_setup('managemodules');
 
-require_once("turnitintooltwo_view.class.php");
 $turnitintooltwoview = new turnitintooltwo_view();
 $turnitintooltwoview->load_page_components();
 
@@ -317,7 +315,6 @@ switch ($cmd) {
         $displaylist = array();
         $parentlist = array();
 
-        require_once("../../course/lib.php");
         if (file_exists($CFG->libdir.'/coursecatlib.php')) {
             require_once($CFG->libdir.'/coursecatlib.php');
             $displaylist = coursecat::make_categories_list('');

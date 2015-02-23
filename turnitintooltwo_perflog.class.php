@@ -1,7 +1,7 @@
 <?php
 
-require_once($CFG->dirroot.'/mod/turnitintooltwo/sdk/perflog.class.php');
-require_once('lib.php');
+require_once(__DIR__.'/sdk/perflog.class.php');
+require_once(__DIR__.'/lib.php');
 
 class turnitintooltwo_perflog extends PerfLog {
 

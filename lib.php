@@ -22,7 +22,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
+require_once(__DIR__.'/turnitintooltwo_assignment.class.php');
 
 // Constants.
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 20971520);
@@ -1144,7 +1144,7 @@ function turnitintooltwo_getusers() {
         }
 
         $return["aaData"][] = array($checkbox, ($user->turnitin_uid == 0) ?
-                                '' : $user->turnitin_uid, format_string($user->lastname), 
+                                '' : $user->turnitin_uid, format_string($user->lastname),
                                         format_string($user->firstname), $pseudoemail);
     }
     $return["sEcho"] = $secho;
@@ -1264,7 +1264,7 @@ function turnitintooltwo_show_browser_new_course_form() {
     $elements[] = array('header', 'create_course_fieldset', get_string('createcourse', 'turnitintooltwo'));
     $displaylist = array();
     $parentlist = array();
-    require_once("../../course/lib.php");
+    require_once($CFG->dirroot."/course/lib.php");
 
     if (file_exists($CFG->libdir.'/coursecatlib.php')) {
         require_once($CFG->libdir.'/coursecatlib.php');

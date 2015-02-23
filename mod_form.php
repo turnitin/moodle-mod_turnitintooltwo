@@ -25,7 +25,7 @@ if (!defined('MOODLE_INTERNAL')) {
 }
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once($CFG->dirroot.'/mod/turnitintooltwo/lib.php');
+require_once(__DIR__.'/lib.php');
 
 class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
@@ -147,7 +147,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $config_warning = '';
         if (empty($config->accountid) || empty($config->secretkey) || empty($config->apiurl)) {
-            $config_warning = html_writer::tag('div', get_string('configureerror', 'turnitintooltwo'), 
+            $config_warning = html_writer::tag('div', get_string('configureerror', 'turnitintooltwo'),
                                                 array('class' => 'library_not_present_warning'));
         }
 

@@ -310,7 +310,7 @@ class turnitintooltwo_submission {
         $grades->userid = $this->userid;
         $params['idnumber'] = $cm->idnumber;
 
-        @include_once($CFG->dirroot."/lib/gradelib.php");
+        @include_once($CFG->libdir."/gradelib.php");
         grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
                         'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
 
@@ -531,7 +531,7 @@ class turnitintooltwo_submission {
     /**
      * Update and save an individual submission from Turnitin
      *
-     * @param type $save - save in db regradlesss of changes
+     * @param type $save - save in db regardless of changes
      */
     public function update_submission_from_tii($save = false) {
         // Initialise Comms Object.
@@ -635,7 +635,7 @@ class turnitintooltwo_submission {
             }
 
             // Update gradebook.
-            @include_once($CFG->dirroot."/lib/gradelib.php");
+            @include_once($CFG->libdir."/gradelib.php");
             if ($sub->userid > 0 && $sub->submission_unanon) {
                 $user = new turnitintooltwo_user($sub->userid, "Learner");
 
