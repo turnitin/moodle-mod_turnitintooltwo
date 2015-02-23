@@ -21,13 +21,13 @@
 
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/lib.php");
-require_once($CFG->libdir."/lib/formslib.php");
-require_once($CFG->libdir."/lib/form/text.php");
-require_once($CFG->libdir."/lib/form/datetimeselector.php");
-require_once($CFG->libdir."/lib/form/hidden.php");
-require_once($CFG->libdir."/lib/form/button.php");
-require_once($CFG->libdir."/lib/form/submit.php");
-require_once($CFG->libdir."/lib/uploadlib.php");
+require_once($CFG->libdir."/formslib.php");
+require_once($CFG->libdir."/form/text.php");
+require_once($CFG->libdir."/form/datetimeselector.php");
+require_once($CFG->libdir."/form/hidden.php");
+require_once($CFG->libdir."/form/button.php");
+require_once($CFG->libdir."/form/submit.php");
+require_once($CFG->libdir."/uploadlib.php");
 
 // Offline mode provided by Androgogic. Set tiioffline in config.php.
 if (!empty($CFG->tiioffline)) {
