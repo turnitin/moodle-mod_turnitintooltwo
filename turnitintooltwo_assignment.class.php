@@ -1141,9 +1141,10 @@ class turnitintooltwo_assignment {
      *
      * @global type $USER
      * @global type $DB
+     * @param boolean $createevent - setting to determine whether to create a calendar event.
      * @return boolean
      */
-    public function edit_moodle_assignment() {
+    public function edit_moodle_assignment($createevent = true) {
         global $USER, $DB, $CFG;
 
         $config = turnitintooltwo_admin_config();
@@ -1304,7 +1305,7 @@ class turnitintooltwo_assignment {
                 // Delete existing events for this assignment part.
                 $eventname = $turnitintooltwonow->name." - ".$partnow->partname;
                 $DB->delete_records_select('event', " modulename = 'turnitintooltwo' AND instance = ? AND name = ? ",
-                                            array($this->id, $eventname));
+                                              array($this->id, $eventname));
             } else {
                 if (!$dbpart = $DB->insert_record('turnitintooltwo_parts', $part)) {
                     turnitintooltwo_print_error('partdberror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
@@ -1312,9 +1313,11 @@ class turnitintooltwo_assignment {
                 }
             }
 
-            require_once($CFG->dirroot.'/calendar/lib.php');
-            $event = new calendar_event($properties);
-            $event->update($properties, false);
+            if ($createevent == true) {
+                require_once($CFG->dirroot.'/calendar/lib.php');
+                $event = new calendar_event($properties);
+                $event->update($properties, false);
+            }
         }
 
         $this->turnitintooltwo->timemodified = time();
