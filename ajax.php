@@ -673,7 +673,6 @@ switch ($action) {
         }
         $data = array("connection_status" => "fail", "msg" => get_string('connecttestcommerror', 'turnitintooltwo'));
 
-        $config = turnitintooltwo_admin_config();
         if (is_siteadmin()) {
             // Initialise API connection.
 
