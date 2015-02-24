@@ -674,23 +674,27 @@ switch ($action) {
         $data = array("connection_status" => "fail", "msg" => get_string('connecttestcommerror', 'turnitintooltwo'));
 
         $config = turnitintooltwo_admin_config();
-        if ((int)$config->accountid != 0 && !empty($config->apiurl) && !empty($config->secretkey)) {
-            if (is_siteadmin()) {
-                // Initialise API connection.
-                $turnitincomms = new turnitintooltwo_comms();
-                $istestingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
-                $tiiapi = $turnitincomms->initialise_api($istestingconnection);
+        if (is_siteadmin()) {
+            // Initialise API connection.
 
-                $class = new TiiClass();
-                $class->setTitle('Test finding a class to see if connection works');
+            $account_id = required_param('account_id', PARAM_RAW);
+            $account_shared = required_param('account_shared', PARAM_RAW);
+            $url = required_param('url', PARAM_RAW);
 
-                try {
-                    $response = $tiiapi->findClasses($class);
-                    $data["connection_status"] = "success";
-                    $data["msg"] = get_string('connecttestsuccess', 'turnitintooltwo');
-                } catch (Exception $e) {
-                    $turnitincomms->handle_exceptions($e, 'connecttesterror', false);
-                }
+            $turnitincomms = new turnitintooltwo_comms($account_id, $account_shared, $url);
+
+            $istestingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
+            $tiiapi = $turnitincomms->initialise_api($istestingconnection);
+
+            $class = new TiiClass();
+            $class->setTitle('Test finding a class to see if connection works');
+
+            try {
+                $response = $tiiapi->findClasses($class);
+                $data["connection_status"] = "success";
+                $data["msg"] = get_string('connecttestsuccess', 'turnitintooltwo');
+            } catch (Exception $e) {
+                $turnitincomms->handle_exceptions($e, 'connecttesterror', false);
             }
         }
         echo json_encode($data);

@@ -31,13 +31,15 @@ class turnitintooltwo_comms {
     private $diagnostic;
     private $langcode;
 
-    public function __construct() {
+    public function __construct($accountid = null, $accountshared = null, $url = null) {
         $config = turnitintooltwo_admin_config();
 
+        $tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
+
         $this->tiiintegrationid = 12;
-        $this->tiiaccountid = $config->accountid;
-        $this->tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
-        $this->tiisecretkey = $config->secretkey;
+        $this->tiiaccountid = is_null($accountid) ? $config->accountid : $accountid;
+        $this->tiiapiurl = is_null($url) ? $tiiapiurl : $url;
+        $this->tiisecretkey = is_null($accountshared) ? $config->secretkey : $accountshared;
 
         if (empty($this->tiiaccountid) || empty($this->tiiapiurl) || empty($this->tiisecretkey)) {
             turnitintooltwo_print_error( 'configureerror', 'turnitintooltwo' );
