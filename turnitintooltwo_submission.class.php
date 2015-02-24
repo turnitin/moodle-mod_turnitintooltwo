@@ -385,6 +385,11 @@ class turnitintooltwo_submission {
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
             } else {
+                $assignment = new stdClass();
+                $assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
+                $assignment->submitted = 1;
+                $DB->update_record('turnitintooltwo', $assignment);
+                
                 return array( "submission_id" => $newsubmission->getSubmissionId() );
             }
 
