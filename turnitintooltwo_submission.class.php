@@ -385,6 +385,11 @@ class turnitintooltwo_submission {
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
             } else {
+                $assignment = new stdClass();
+                $assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
+                $assignment->submitted = 1;
+                $DB->update_record('turnitintooltwo', $assignment);
+                
                 return array( "submission_id" => $newsubmission->getSubmissionId() );
             }
 
@@ -604,7 +609,7 @@ class turnitintooltwo_submission {
         // If save not passed in then only update if certain items have changed to save on database load.
         if ($this->submission_grade != $sub->submission_grade || $this->submission_score != $sub->submission_score ||
             $this->submission_modified != $sub->submission_modified || $this->submission_attempts != $sub->submission_attempts ||
-            $this->submission_unanon != $sub->submission_unanon) {
+            $this->submission_unanon != $sub->submission_unanon || $this->submission_part != $sub->submission_part) {
             $save = true;
         }
 

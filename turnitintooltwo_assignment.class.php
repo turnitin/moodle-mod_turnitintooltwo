@@ -1018,6 +1018,7 @@ class turnitintooltwo_assignment {
         $return["field"] = $fieldname;
         switch ($fieldname) {
             case "partname":
+                $fieldvalue = trim($fieldvalue);
                 $partnames = $DB->get_records_select('turnitintooltwo_parts', 
                                                     ' turnitintooltwoid = ? AND id != ? ',
                                                     array($partdetails->turnitintooltwoid, $partid), '', 'partname');
