@@ -81,7 +81,25 @@ switch ($action) {
                     }
 
                     $fieldvalue = strtotime($fieldvalue.' '.$usertimezone);
+                    if ($fieldname == "dtpost" &&
+                        $turnitintooltwoassignment->turnitintooltwo->anon &&
+                        $turnitintooltwoassignment->turnitintooltwo->submitted == 1 &&
+                        $fieldvalue < time()) 
+                    {
+                        // Get the Turnitin course id
+                        $turnitin_cid = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course)->turnitin_cid;
 
+                        // Disable anonymous marking in Turnitin
+                        $assignment = new TiiAssignment();
+                        $assignment->setClassId($turnitin_cid);
+                        $assignment->setAnonymousMarking(0);
+
+                        // Update it in Moodle
+                        $anon_assignment = new stdClass();
+                        $anon_assignment->id = required_param('assignment', PARAM_INT);
+                        $anon_assignment->anon = 0;
+                        $DB->update_record('turnitintooltwo', $anon_assignment);
+                    }
                     break;
             }
 
