@@ -293,6 +293,7 @@ jQuery(document).ready(function($) {
                 oData.abVisCols = visibleCols;
             },
             "fnDrawCallback":  function( oSettings ) {
+                initialiseDigitalReceipt();
                 initialiseDVLaunchers("all", 0, part_id, 0);
                 initialiseRefreshRow("all", 0, part_id, 0);
                 initialiseUploadBox("all", 0, 0, 0);
@@ -952,6 +953,26 @@ jQuery(document).ready(function($) {
     function lightBoxCloseButton() {
         $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">' + M.str.turnitintooltwo.closebutton + '</a></div>');
     }
+
+    function initialiseDigitalReceipt() {
+        if ($('.tii_digital_receipt').length > 0) {
+            $('.tii_digital_receipt').colorbox({
+                iframe:true, width:"832px", height:"482px", opacity: "0.7", className: "rubric_view", transition: "none",
+                onLoad: function() {
+                    lightBoxCloseButton();
+                    getLoadingGif();
+                },
+                onCleanup: function() {
+                    $('#tii_close_bar').remove();
+                    hideLoadingGif();
+                }
+            });
+        }
+    }
+
+    $('#tii_receipt_print').click(function() {
+        window.print();
+    });
 
     function initialiseHiddenZipDownloads(part_id) {
         // Unbind the event first to stop it being binded multiple times

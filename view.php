@@ -364,6 +364,27 @@ switch ($do) {
         unset($_SESSION["digital_receipt"]);
         break;
 
+    case "digital_receipt":
+        $submissionid = required_param('submissionid', PARAM_INT);
+        $submission = new turnitintooltwo_submission($submissionid, 'turnitin');
+
+        $table = new html_table();
+        $table->data = array(
+            array(get_string('submissionauthor', 'turnitintooltwo'), $submission->firstname . ' ' . $submission->lastname),
+            array(get_string('turnitinpaperid', 'turnitintooltwo') . ' <small>(' . get_string('refid', 'turnitintooltwo') . ')</small>', $submissionid),
+            array(get_string('submissiontitle', 'turnitintooltwo'), $submission->submission_title),
+            array(get_string('receiptassignmenttitle', 'turnitintooltwo'), $turnitintooltwoassignment->turnitintooltwo->name),
+            array(get_string('submissiondate', 'turnitintooltwo'), date("d/m/y, H:i", $submission->submission_modified))
+        );
+
+        $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo', array('class' => 'logo'));
+        $digitalreceipt .= '<h2>'.get_string('digitalreceipt', 'turnitintooltwo').'</h2>';
+        $digitalreceipt .= '<p>'.get_string('receiptparagraph', 'turnitintooltwo').'</p>';
+        $digitalreceipt .= html_writer::table($table);
+        $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo') . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
+        echo html_writer::tag("div", $digitalreceipt, array("id" => "tii_digital_receipt_box"));
+        break;
+
     case "submitpaper":
         if ($istutor || (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
                 $user == $USER->id)) {

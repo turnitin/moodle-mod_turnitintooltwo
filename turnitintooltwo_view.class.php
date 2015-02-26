@@ -470,6 +470,8 @@ class turnitintooltwo_view {
         global $CFG, $OUTPUT, $USER;
         $config = turnitintooltwo_admin_config();
 
+        $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
+
         // Output user role to hidden var for use in jQuery calls.
         $output = $OUTPUT->box($turnitintooltwouser->get_user_role(), '', 'user_role');
         $output .= $OUTPUT->box($turnitintooltwoassignment->turnitintooltwo->id, '', 'assignment_id');
@@ -485,7 +487,7 @@ class turnitintooltwo_view {
         $cells = array();
         $cells["part"] = new html_table_cell('part');
         $cells["checkbox"] = new html_table_cell('&nbsp;');
-        $cells["student"] = new html_table_cell(get_string('student', 'turnitintooltwo'));
+        $cells["student"] = ($istutor) ? new html_table_cell(get_string('student', 'turnitintooltwo')) : new html_table_cell();
         $cells["student"]->attributes['class'] = 'left';
         $cells["title"] = new html_table_cell(get_string('submissiontitle', 'turnitintooltwo'));
         $cells["title"]->attributes['class'] = 'left';
@@ -1054,9 +1056,24 @@ class turnitintooltwo_view {
             }
         } else {
             if (empty($submission->nmoodle)) {
-                $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
-                                                $turnitintooltwoassignment->turnitintooltwo->course,
-                                                format_string($submission->lastname).", ".format_string($submission->firstname));
+                
+                // If students viewing it will show 'digital receipt' link
+                if ( !empty($submission->submission_objectid) ) {
+                    $studentname = html_writer::link(
+                        $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&do=digital_receipt&submissionid='.$submission->submission_objectid.'&view_context=box',
+                        $OUTPUT->pix_icon('receipt', get_string('digitalreceipt', 'turnitintooltwo'), 'mod_turnitintooltwo', array('id' => 'tii_digital_receipt_icon')) .
+                        ' ' . get_string('viewdigitalreceipt', 'turnitintooltwo'), array('class' => 'tii_digital_receipt')
+                    );
+                } else {
+                    $studentname = "--";
+                }
+
+                if( $istutor ) {
+                    $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
+                                            $turnitintooltwoassignment->turnitintooltwo->course,
+                                            format_string($submission->lastname).", ".format_string($submission->firstname)); 
+                }
+                
             } else if (!empty($submission->nmoodle) && substr($submission->userid, 0, 3) != 'nm-') {
                 // Moodle User not enrolled on this course as a student.
                 $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".

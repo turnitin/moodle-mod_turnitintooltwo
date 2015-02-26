@@ -3,6 +3,32 @@
     Created on : 19-Nov-2012, 14:58:41
     Author     : John McGettrick
 */
+.tii_digital_receipt {
+    display: inline-block;
+    width: 150px;
+}
+#tii_digital_receipt_box {
+    padding: 20px;
+    background: #fff;
+}
+
+#tii_digital_receipt_box .generaltable {
+    width: 100%;
+}
+
+#tii_digital_receipt_box .logo {
+    display: block;
+    margin: 0 auto;
+}
+
+#tii_receipt_print {
+    text-align: right;
+    display: block;
+}
+
+#tii_digital_receipt_icon {
+    margin-top: -3px;
+}
 
 .mod_turnitintooltwo .submit_nothing img {
     padding-right: 8px;

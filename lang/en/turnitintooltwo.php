@@ -3,6 +3,16 @@
 // Date: 2015-02-09
 // Language: en
 
+$string['viewdigitalreceipt'] = 'View Digital Receipt';
+$string['submissiondate'] = 'Submission Date';
+$string['receiptassignmenttitle'] = 'Assignment Title';
+$string['refid'] = 'Ref ID';
+$string['turnitinpaperid'] = 'Turnitin Paper ID';
+$string['submissionauthor'] = 'Submission Author';
+$string['print'] = 'Print';
+$string['digitalreceipt'] = 'Digital Receipt';
+$string['receiptparagraph'] = 'This receipt ackowledges that Turnitin received your paper. Below you will find the receipt information regarding your submission.';
+$string['objectid'] = 'Turnitin Paper ID';
 $string['uniquepartname'] = 'Part name must be unique';
 $string['closebutton'] = 'Close';
 $string['addsubmission'] = 'Add Submission';
@@ -67,7 +77,6 @@ $string['nosubmissions'] = 'No submissions have been made';
 $string['notavailableyet'] = 'Not available';
 $string['numberofparts'] = 'Number of Parts';
 $string['numberofparts_help'] = 'Allows for the creation of a multi part assignment, individual users may submit one piece of work to each part.';
-$string['objectid'] = 'Paper ID';
 $string['overallgrade'] = 'Overall Grade';
 $string['overallgrade_help'] = 'The overall grade determines the maximum allowed grade for the overall assignment, each part of an assignment has a maximum mark allocated which is used to proportionally distribute the grades in order to determine the overall grade.';
 $string['partdberror'] = 'There was a problem entering Part {$a} into the database<br />';
@@ -367,8 +376,6 @@ $string['defaultassignmenttiititle'] = 'Assignment from Turnitin';
 $string['revealdesc'] = 'Please give a reason below for unmasking a students name.';
 $string['noreason'] = 'No reason specified';
 $string['unanonymiseerror'] = 'There was an error when attempting to reveal the name of a student';
-$string['digitalreceipt'] = 'Digital receipt';
-$string['viewdigitalreceipt'] = 'View digital receipt';
 $string['noscript'] = 'Turnitin requires Javascript but your browser does not have it enabled. Please enable Javascript in your browser to enable you to use the full functionality of Turnitin.';
 $string['noscriptsummary'] = 'Turnitin requires Javascript but your browser does not have it enabled. You will not be able to access Turnitin without it enabled.';
 $string['noscriptula'] = '(As you do not have javascript enabled you will have to manually refresh this page before you can make a submission after accepting the Turnitin User Agreement)';
