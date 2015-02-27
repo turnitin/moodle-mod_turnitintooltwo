@@ -1126,14 +1126,17 @@ class turnitintooltwo_view {
             $score = '--';
         } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
-            $score = $OUTPUT->box_start('row_score origreport_open',
-                                        'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
+
             // Show score.
             if (is_null($submission->submission_score)) {
+                $score = $OUTPUT->box_start('row_score',
+                                        'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
                 $score .= $OUTPUT->box('&nbsp;', 'score_colour score_colour_');
                 $score .= $OUTPUT->box(get_string('pending', 'turnitintooltwo'), 'origreport_score');
                 $rawscore = null;
             } else {
+                $score = $OUTPUT->box_start('row_score origreport_open',
+                                        'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
                 // Put EN flag if translated matching is on and that is the score used.
                 $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
                 $score .= $OUTPUT->box($transmatch, 'score_colour score_colour_'.round($submission->submission_score, -1));
