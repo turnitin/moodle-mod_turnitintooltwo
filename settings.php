@@ -170,8 +170,8 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
                        get_string('studentdataprivacy_desc', 'turnitintooltwo')));
 
-    if ($DB->count_records('turnitintooltwo_users') > 0 AND isset($onfig->enablepseudo)) {
-        $selectionarray = ($onfig->enablepseudo == 1) ? array(1 => get_string('yes')) : array(0 => get_string('no'));
+    if ($DB->count_records('turnitintooltwo_users') > 0 AND isset($config->enablepseudo)) {
+        $selectionarray = ($config->enablepseudo == 1) ? array(1 => get_string('yes')) : array(0 => get_string('no'));
         $pseudoselect = new admin_setting_configselect('turnitintooltwo/enablepseudo',
                                                         get_string('enablepseudo', 'turnitintooltwo'),
                                                         get_string('enablepseudo_desc', 'turnitintooltwo'),
