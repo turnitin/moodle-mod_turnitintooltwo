@@ -59,21 +59,34 @@ jQuery(document).ready(function($) {
     });
 
     if ($('.test_connection').length > 0) {
-    	if ($('#id_s_turnitintooltwo_accountid').val() != '' || $('#id_s_turnitintooltwo_secretkey').val() != '' 
-    		|| $('#id_s_turnitintooltwo_apiurl').val() != '') {
+    	if ($('#id_s_turnitintooltwo_accountid').val() != '' || $('#id_s_turnitintooltwo_secretkey').val() != '') {
 			$('.test_connection').show();
 			$('#test_link').show();
 		}
 
-    	$('#id_s_turnitintooltwo_accountid, #id_s_turnitintooltwo_secretkey, #id_s_turnitintooltwo_apiurl').change(function() {
-    		if ($('#id_s_turnitintooltwo_accountid').val() != '' || $('#id_s_turnitintooltwo_secretkey').val() != '' 
-	    		|| $('#id_s_turnitintooltwo_apiurl').val() != '') {
-				$('.test_connection').show();
-				$('#test_link').show();
-			}
-    	});
+        $('#id_s_turnitintooltwo_accountid, #id_s_turnitintooltwo_secretkey, #id_s_turnitintooltwo_apiurl').keyup(function() {
+            $('#testing_container').hide();
+
+            var accountid = $('#id_s_turnitintooltwo_accountid').val();
+            var accountshared = $('#id_s_turnitintooltwo_secretkey').val();
+
+            // Make sure they aren't all spaces or empty
+            if (accountid == '' ||
+                accountshared == '' ||
+                ! /\S/.test(accountid) ||
+                ! /\S/.test(accountshared))
+            {
+                $('#test_result').hide();
+                $('.test_connection').hide();
+            } else {
+                 $('.test_connection').show();
+                 $('#test_link').show();
+            }
+        });
 
     	$('#test_link').click(function() {
+    		$('#test_result').hide();
+            $('input, #id_s_turnitintooltwo_apiurl').prop('disabled', true);
 		    $('#test_link').hide();
 			$("#test_result").css('opacity', '');
 			$('#test_result').removeClass('test_link_success test_link_fail');
@@ -107,9 +120,8 @@ jQuery(document).ready(function($) {
 
 		            $('#test_result').html(data.msg);
 		            $('#test_result').show();
-		            $('#test_result').fadeOut( 4000, function() {
-		            	$('#test_link').show();
-		            });
+		            $('#test_link').show();
+                    $('input, #id_s_turnitintooltwo_apiurl').prop('disabled', false);
 		        }
 		    });
 		});

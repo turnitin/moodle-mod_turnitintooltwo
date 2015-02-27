@@ -3,6 +3,7 @@
 // Date: 2015-02-09
 // Language: en
 
+$string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Select a Turnitin API URL';
 $string['viewdigitalreceipt'] = 'View Digital Receipt';
 $string['submissiondate'] = 'Submission Date';
 $string['receiptassignmenttitle'] = 'Assignment Title';
@@ -150,7 +151,6 @@ $string['turnitinaccountid_desc'] = '<b>[Required]</b><br />Enter your Turnitin 
 $string['turnitinanon'] = 'Anonymous Marking';
 $string['turnitinanon_help'] = 'You can configure your Turnitin assignment to use Anonymous Marking by setting this value to Yes. Once anonymous marking has been enabled on an assignment it can not be disabled.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Enter the Turnitin API URL<br /><i>(e.g. https://api.turnitin.com)<br />(e.g. https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = 'Deleting papers removes them from your submissions list and inbox but does not completely\nremove them from the Turnitin database.\n\nAre you sure you want to delete this submission? This action cannot be undone.';
 $string['turnitindeletionerror'] = 'Turnitin submission deletion failed. The local Moodle copy was removed but the submission in Turnitin could not be deleted.';
 $string['turnitinenrolstudents'] = 'Enrol All Students';

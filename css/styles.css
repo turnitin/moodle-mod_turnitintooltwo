@@ -660,7 +660,6 @@ h3.main {
 }
 
 #page-admin-setting-modsettingturnitintooltwo #test_link, #page-admin-setting-modsettingturnitintooltwo #testing_container {
-    float:left;
     margin-bottom:8px;
 }
 
@@ -670,9 +669,9 @@ h3.main {
 }
 
 #page-admin-setting-modsettingturnitintooltwo #test_result {
-    float:left;
     margin: 4px 0 0;
-    padding:2px 6px;
+    padding: 5px 10px;
+    width: 300px;
 }
 
 #page-admin-setting-modsettingturnitintooltwo .test_link_success {
