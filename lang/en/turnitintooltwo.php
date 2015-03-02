@@ -3,18 +3,6 @@
 // Date: 2015-02-09
 // Language: en
 
-$string['viewdigitalreceipt'] = 'View Digital Receipt';
-$string['submissiondate'] = 'Submission Date';
-$string['receiptassignmenttitle'] = 'Assignment Title';
-$string['refid'] = 'Ref ID';
-$string['turnitinpaperid'] = 'Turnitin Paper ID';
-$string['submissionauthor'] = 'Submission Author';
-$string['print'] = 'Print';
-$string['digitalreceipt'] = 'Digital Receipt';
-$string['receiptparagraph'] = 'This receipt ackowledges that Turnitin received your paper. Below you will find the receipt information regarding your submission.';
-$string['objectid'] = 'Turnitin Paper ID';
-$string['uniquepartname'] = 'Part name must be unique';
-$string['closebutton'] = 'Close';
 $string['addsubmission'] = 'Add Submission';
 $string['allowlate'] = 'Allow Submissions after the Due Date';
 $string['allsubmissions'] = 'Submission Inbox';
@@ -493,4 +481,17 @@ $string['upgradenotavailable'] = 'No Upgrade Available';
 $string['turnitintoolofflineerror'] = 'We are experiencing a temporary problem. Please try again shortly.';
 $string['offlinestatus'] = 'Turnitin has been set to offline. (The variable $CFG->tiioffline has been set to true.)';
 $string['disableanonconfirm'] = 'Doing this will permanently disable anonymous marking on this assignment. Are you sure?';
+$string['uniquepartname'] = 'Part name must be unique';
+$string['closebutton'] = 'Close';
 $string['reportgenspeed_help'] = 'There are three options for this assignment setting: &#39;Generate reports immediately (resubmissions are not allowed)&#39;, &#39;Generate reports immediately (resubmissions are allowed until due date)&#39;, and &#39;Generate reports on due date (resubmissions are allowed until due date)&#39;<br /><br />The option &#39;Generate reports immediately (resubmissions are not allowed)&#39; generates the Originality Report immediately when a student makes a submission. With this option selected your students will not be able to resubmit to the assignment.<br /><br />To allow resubmissions, select &#39;Generate reports immediately (resubmissions are allowed until due date)&#39; option. This allows students to continuously resubmit papers to the assignment until the due date. It may take up to 24 hours to process Originality Reports for resubmissions.<br /><br />The option &#39;Generate reports on due date (resubmissions are allowed until due date)&#39; will only generate an Originality Report on the assignment&#39;s due date. This setting will make it so all papers submitted to the assignment will be compared against each other when the Originality Reports are created.';
+$string['viewdigitalreceipt'] = 'View Digital Receipt';
+$string['submissiondate'] = 'Submission Date';
+$string['receiptassignmenttitle'] = 'Assignment Title';
+$string['refid'] = 'Ref ID';
+$string['turnitinpaperid'] = 'Turnitin Paper ID';
+$string['submissionauthor'] = 'Submission Author';
+$string['print'] = 'Print';
+$string['digitalreceipt'] = 'Digital Receipt';
+$string['receiptparagraph'] = 'This receipt ackowledges that Turnitin received your paper. Below you will find the receipt information regarding your submission.';
+$string['objectid'] = 'Turnitin Paper ID';
+$string['ppanonmarkingnote'] = 'Note: Anonymous Marking only applies to Turnitin GradeMark. It is controlled by the assignment post date within Turnitin. Turnitin will use the &#39;hidden until&#39; date as the post date, which can be found by editing the grade item in the Course gradebook report.';
