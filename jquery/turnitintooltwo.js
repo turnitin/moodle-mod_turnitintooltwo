@@ -564,6 +564,9 @@ jQuery(document).ready(function($) {
                 }
             },
             success: function(response, newValue) {
+                var tabId = $(this).parentsUntil('.ui-tabs-panel').parent().attr('aria-labelledby');
+                $('#'+tabId).text(newValue);
+                
                 if(!response.success) {
                     return response.msg;
                 } else if (response.field == "maxmarks") {
