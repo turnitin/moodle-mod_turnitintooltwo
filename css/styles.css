@@ -28,6 +28,7 @@
 
 #tii_digital_receipt_icon {
     margin-top: -3px;
+    margin-right: 5px;
 }
 
 .mod_turnitintooltwo .submit_nothing img {
@@ -228,6 +229,10 @@
 
 .mod_turnitintooltwo .submissionsDataTable {
     width:100%;
+}
+
+.mod_turnitintooltwo .submissionsDataTable a {
+    text-decoration: none;
 }
 
 .mod_turnitintooltwo .score_colour {
