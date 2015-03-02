@@ -102,16 +102,21 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configtext('turnitintooltwo/accountid',
                                                     get_string("turnitinaccountid", "turnitintooltwo"),
-                                                    get_string("turnitinaccountid_desc", "turnitintooltwo").$offlinecomment.$testconnection, ''));
+                                                    get_string("turnitinaccountid_desc", "turnitintooltwo"), ''));
 
     $settings->add(new admin_setting_configpasswordunmask('turnitintooltwo/secretkey',
                                                         get_string("turnitinsecretkey", "turnitintooltwo"),
                                                         get_string("turnitinsecretkey_desc", "turnitintooltwo"), ''));
 
-    $settings->add(new admin_setting_configtext('turnitintooltwo/apiurl',
+    $testoptions = array(
+        'https://api.turnitin.com' => 'https://api.turnitin.com',
+        'https://submit.ac.uk' => 'https://submit.ac.uk',
+        'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com'
+    );
+    $settings->add(new admin_setting_configselect('turnitintooltwo/apiurl',
                                                     get_string("turnitinapiurl", "turnitintooltwo"),
-                                                    get_string("turnitinapiurl_desc", "turnitintooltwo"), ''));
-
+                                                    get_string("turnitinapiurl_desc", "turnitintooltwo").$offlinecomment.$testconnection, 0, $testoptions));
+    
     $ynoptions = array(0 => get_string('no'), 1 => get_string('yes'));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintooltwo'),
