@@ -113,6 +113,19 @@ if ($ADMIN->fulltree) {
         'https://submit.ac.uk' => 'https://submit.ac.uk',
         'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com'
     );
+
+    // Add to moodle config.php file
+    //
+    // $CFG->turnitinqa = true;
+    // $CFG->turnitinqaurls = array(
+    //     'https://sprint.turnitin.com'
+    // );
+    if ($CFG->turnitinqa == true) {
+        foreach ($CFG->turnitinqaurls as $url) {
+            $testoptions[$url] = $url;
+        }
+    }
+
     $settings->add(new admin_setting_configselect('turnitintooltwo/apiurl',
                                                     get_string("turnitinapiurl", "turnitintooltwo"),
                                                     get_string("turnitinapiurl_desc", "turnitintooltwo").$offlinecomment.$testconnection, 0, $testoptions));
