@@ -494,4 +494,4 @@ $string['print'] = 'Print';
 $string['digitalreceipt'] = 'Digital Receipt';
 $string['receiptparagraph'] = 'This receipt ackowledges that Turnitin received your paper. Below you will find the receipt information regarding your submission.';
 $string['objectid'] = 'Turnitin Paper ID';
-$string['ppanonmarkingnote'] = 'Note: Anonymous Marking only applies to Turnitin GradeMark. It is controlled by the assignment post date within Turnitin. Turnitin will use the &#39;hidden until&#39; date as the post date, which can be found by editing the grade item in the Course gradebook report.';
+$string['ppanonmarkingnote'] = 'Note: Anonymous Marking only applies to Turnitin GradeMark. It is controlled by the assignment post date within Turnitin. Turnitin will use the &#39;hidden until&#39; date as the post date, which can be set by editing the grade item in the Course gradebook report.';
