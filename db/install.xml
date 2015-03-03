@@ -74,7 +74,8 @@
                 <FIELD NAME="dtpost" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="dtdue" NEXT="maxmarks"/>
                 <FIELD NAME="maxmarks" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="dtpost" NEXT="deleted"/>
                 <FIELD NAME="deleted" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="maxmarks" NEXT="migrated"/>
-                <FIELD NAME="migrated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="deleted"/>
+                <FIELD NAME="migrated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="deleted" NEXT="unanon"/>
+                <FIELD NAME="unanon" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="migrated"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
