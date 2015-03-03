@@ -1085,6 +1085,16 @@ class turnitintooltwo_assignment {
                             $return['msg'] = get_string('partposterror', 'turnitintooltwo');
                         }
 
+                        // Disable anonymous marking in Turnitin if the post date has passed.
+                        if ($this->turnitintooltwo->anon && $this->turnitintooltwo->submitted == 1 
+                            && $partdetails->unanon == 0 && $fieldvalue < time()) {
+                            // Update anonymous marking in Moodle
+                            $unanonymisedpart = new stdClass();
+                            $unanonymisedpart->id = $partid;
+                            $unanonymisedpart->unanon = 1;
+                            $DB->update_record('turnitintooltwo_parts', $unanonymisedpart);
+                        }
+
                         $setmethod = "setFeedbackReleaseDate";
                         break;
                 }
@@ -1213,9 +1223,6 @@ class turnitintooltwo_assignment {
             $assignment->setQuotedExcluded($this->turnitintooltwo->excludequoted);
             $assignment->setSmallMatchExclusionType($this->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
-            if ($config->useanon) {
-                $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
-            }
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
             if ($config->repositoryoption == 1) {
                 $assignment->setInstitutionCheck((isset($this->turnitintooltwo->institution_check)) ?
@@ -1255,6 +1262,14 @@ class turnitintooltwo_assignment {
             $parttiiassignid = 0;
             if ($i <= count($partids) && !empty($partids[$i - 1])) {
                 $partdetails = $this->get_part_details($partids[$i - 1]);
+                // Set anonymous marking depending on whether part has been unanonymised.
+                if ($config->useanon) {
+                    if ($partdetails->unanon == 1) {
+                        $assignment->setAnonymousMarking(0);
+                    } else {
+                        $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+                    }
+                }
                 $parttiiassignid = $partdetails->tiiassignid;
             }
 
@@ -1527,6 +1542,8 @@ class turnitintooltwo_assignment {
                 $part->dtpost = strtotime($readassignment->getFeedbackReleaseDate());
                 $part->maxmarks = $readassignment->getMaxGrade();
                 $part->tiiassignid = $readassignment->getAssignmentId();
+                $anonymous = (int)$readassignment->getAnonymousMarking();
+                $part->unanon = ($this->turnitintooltwo->anon && $anonymous == 0) ? 1 : 0;
 
                 if ($assignmentids == 0) {
                     $part->id = $partids[$readassignment->getAssignmentId()];
@@ -1554,7 +1571,6 @@ class turnitintooltwo_assignment {
                         $assignmentdetails->timemodified = time();
                         $assignmentdetails->intro = $readassignment->getInstructions();
                     }
-                    $assignmentdetails->anon = (int)$readassignment->getAnonymousMarking();
                     $assignmentdetails->allowlate = $readassignment->getLateSubmissionsAllowed();
                     $assignmentdetails->reportgenspeed = $readassignment->getResubmissionRule();
                     $assignmentdetails->submitpapersto = $readassignment->getSubmitPapersTo();
