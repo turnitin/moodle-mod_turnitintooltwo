@@ -1352,10 +1352,10 @@ class turnitintooltwo_assignment {
      * @param int $userid
      * @return array of parts or empty array if there are none
      */
-    public function get_parts_available_to_submit($userid = 0) {
+    public function get_parts_available_to_submit($userid = 0, $istutor = null) {
         global $DB;
 
-        if ($this->turnitintooltwo->allowlate == 1) {
+        if ($this->turnitintooltwo->allowlate == 1 || $istutor) {
             $partsavailable = $DB->get_records_select('turnitintooltwo_parts', " turnitintooltwoid = ? AND dtstart < ? ",
                                         array($this->turnitintooltwo->id, time()));
         } else {

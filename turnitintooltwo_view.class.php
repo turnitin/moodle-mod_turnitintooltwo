@@ -322,7 +322,7 @@ class turnitintooltwo_view {
             $eulaaccepted = (!$user->user_agreement_accepted) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
         }
 
-        $parts = $turnitintooltwoassignment->get_parts_available_to_submit();
+        $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);
         if (!empty($parts)) {
 
             $elements = array();
