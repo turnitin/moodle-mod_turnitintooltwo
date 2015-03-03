@@ -1180,4 +1180,16 @@ jQuery(document).ready(function($) {
             }
         }
     }
+
+    $('#select_all_checkbox').on('click', function() {
+        if ($(this).is(':checked')) {
+            $('.inbox_checkbox').each(function() {
+                $(this).prop('checked', true);
+            });
+        } else {
+            $('.inbox_checkbox').each(function() {
+                $(this).prop('checked', false);
+            });
+        }
+    });
 });

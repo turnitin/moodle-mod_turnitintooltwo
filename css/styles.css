@@ -3,6 +3,12 @@
     Created on : 19-Nov-2012, 14:58:41
     Author     : John McGettrick
 */
+
+.ccheckbox {
+    text-align: center;
+    padding: 8px 10px 2px !important;
+}
+
 .tii_digital_receipt {
     display: inline-block;
     width: 150px;
