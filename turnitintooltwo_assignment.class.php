@@ -1085,10 +1085,9 @@ class turnitintooltwo_assignment {
                             $return['msg'] = get_string('partposterror', 'turnitintooltwo');
                         }
 
-                        // Disable anonymous marking in Turnitin if the post date has passed.
+                        // Disable anonymous marking in Moodle if the post date has passed.
                         if ($this->turnitintooltwo->anon && $this->turnitintooltwo->submitted == 1 
                             && $partdetails->unanon == 0 && $fieldvalue < time()) {
-                            // Update anonymous marking in Moodle
                             $unanonymisedpart = new stdClass();
                             $unanonymisedpart->id = $partid;
                             $unanonymisedpart->unanon = 1;
@@ -1263,12 +1262,8 @@ class turnitintooltwo_assignment {
             if ($i <= count($partids) && !empty($partids[$i - 1])) {
                 $partdetails = $this->get_part_details($partids[$i - 1]);
                 // Set anonymous marking depending on whether part has been unanonymised.
-                if ($config->useanon) {
-                    if ($partdetails->unanon == 1) {
-                        $assignment->setAnonymousMarking(0);
-                    } else {
-                        $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
-                    }
+                if ($config->useanon && $partdetails->unanon != 1) {
+                    $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
                 }
                 $parttiiassignid = $partdetails->tiiassignid;
             }
@@ -1289,6 +1284,11 @@ class turnitintooltwo_assignment {
             $part->dtstart = strtotime($assignment->getStartDate());
             $part->dtdue = strtotime($assignment->getDueDate());
             $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
+
+            // Unanonymise part if necessary.
+            if ($part->dtpost < time() && $turnitintooltwonow->submitted == 1) {
+                $part->unanon = 1;
+            }
 
             $properties = new stdClass();
             $properties->name = $this->turnitintooltwo->name.' - '.$part->partname;
