@@ -120,7 +120,7 @@ if ($ADMIN->fulltree) {
     // $CFG->turnitinqaurls = array(
     //     'https://sprint.turnitin.com'
     // );
-    if ($CFG->turnitinqa == true) {
+    if (!empty($CFG->turnitinqa)) {
         foreach ($CFG->turnitinqaurls as $url) {
             $testoptions[$url] = $url;
         }
@@ -129,7 +129,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('turnitintooltwo/apiurl',
                                                     get_string("turnitinapiurl", "turnitintooltwo"),
                                                     get_string("turnitinapiurl_desc", "turnitintooltwo").$offlinecomment.$testconnection, 0, $testoptions));
-    
+
     $ynoptions = array(0 => get_string('no'), 1 => get_string('yes'));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintooltwo'),
