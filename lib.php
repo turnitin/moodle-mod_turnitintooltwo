@@ -1464,3 +1464,21 @@ function turnitintooltwo_show_edit_course_end_date_form() {
 
     return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'edit_course_end_date_form'));
 }
+
+/**
+ * Moodle participation report hooks for views with Moodle 2.6-
+ *
+ * @return array Array of available log labels
+ */
+function turnitintooltwo_get_view_actions() {
+    return array('view');
+}
+
+/**
+ * Moodle participation report hooks for views with Moodle 2.6-
+ *
+ * @return array Array of available log labels
+ */
+function turnitintooltwo_get_post_actions() {
+    return array('submit');
+}
