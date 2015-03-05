@@ -301,6 +301,10 @@ if ($ADMIN->fulltree) {
     $suboptions = array( 0 => get_string('norepository', 'turnitintooltwo'), 
                         1 => get_string('standardrepository', 'turnitintooltwo'));
 
+    if (!isset($config->repositoryoption)) {
+        $config->repositoryoption = 0;
+    }
+
     switch ($config->repositoryoption) {
         case 0; // Standard options
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
