@@ -290,6 +290,9 @@ if (!empty($action)) {
 
 // Show header and navigation
 if ($viewcontext == "box" || $viewcontext == "box_solid") {
+
+    $PAGE->set_pagelayout('embedded');
+
     $turnitintooltwoview->output_header($cm,
             $course,
             $url,

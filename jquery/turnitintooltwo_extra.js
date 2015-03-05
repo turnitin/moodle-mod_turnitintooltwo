@@ -1,9 +1,4 @@
 jQuery(document).ready(function($) {
-    // Hide the nav in the class recreation box
-    if ($("#view_context").html() == "box" || $("#view_context").html() == "box_solid") {
-        $(".navbar, #page-navbar, .block-region, #region-pre").hide();
-    }
-
     // Add style to header row
     $('.submissionsDataTable thead tr, #courseBrowserTable thead tr').toggleClass("header");
 

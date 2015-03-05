@@ -3,12 +3,6 @@ jQuery(document).ready(function($) {
     $(".js_required").show();
     $(".js_hide").hide();
 
-    // Hide the header and footer on the modal boxes
-    if ($("#view_context").html() == "box" || $("#view_context").html() == "box_solid") {
-        $("#page-header").hide();
-        $("#page-footer").hide();
-    }
-
     // Configure submit paper form elements depending on what submission type is allowed
     if ($("#id_submissiontype").val() == 1) {
         $("#id_submissiontext").parent().parent().hide();

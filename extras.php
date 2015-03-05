@@ -126,6 +126,8 @@ switch ($cmd) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
 
+        $PAGE->set_pagelayout('embedded');
+
         require_capability('moodle/course:create', context_system::instance());
 
         $assignments = optional_param('assignments', 0, PARAM_INT);
@@ -157,6 +159,8 @@ switch ($cmd) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
 
+        $PAGE->set_pagelayout('embedded');
+
         require_capability('moodle/course:create', context_system::instance());
 
         $tiicourseid = optional_param('id', 0, PARAM_INT);
@@ -177,11 +181,15 @@ switch ($cmd) {
         break;
 
     case "rubricmanager":
+        $PAGE->set_pagelayout('embedded');
+
         echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_manager', 'Instructor'),
                                                                                 array("class" => "launch_form"));
         break;
 
     case "quickmarkmanager":
+        $PAGE->set_pagelayout('embedded');
+
         echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('quickmark_manager', 'Instructor'),
                                                                                 array("class" => "launch_form"));
         break;

@@ -371,6 +371,8 @@ switch ($cmd) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
 
+        $PAGE->set_pagelayout('embedded');
+
         $assignments = optional_param('assignments', 0, PARAM_INT);
         $category = optional_param('category', 0, PARAM_INT);
         $classids = '';
@@ -396,6 +398,8 @@ switch ($cmd) {
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
+
+        $PAGE->set_pagelayout('embedded');
 
         $tiicourseid = optional_param('id', 0, PARAM_INT);
 
