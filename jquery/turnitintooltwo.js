@@ -561,10 +561,10 @@ jQuery(document).ready(function($) {
                 if(!response.success) {
                     return response.msg;
                 } else if (response.field == "maxmarks") {
+                    $('#refresh_'+response.partid).click();
+                } else if (response.field == "partname") {
                     var tabId = $(this).parentsUntil('.ui-tabs-panel').parent().attr('aria-labelledby');
                     $('#'+tabId).text(newValue);
-
-                    $('#refresh_'+response.partid).click();
                 }
             }
         });
