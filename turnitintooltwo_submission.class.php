@@ -389,7 +389,7 @@ class turnitintooltwo_submission {
                 $assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
                 $assignment->submitted = 1;
                 $DB->update_record('turnitintooltwo', $assignment);
-                
+
                 return array( "submission_id" => $newsubmission->getSubmissionId() );
             }
 
@@ -409,6 +409,7 @@ class turnitintooltwo_submission {
     public function do_tii_submission($cm, $turnitintooltwoassignment) {
         global $DB, $USER;
 
+        $notice = array();
         $context = context_module::instance($cm->id);
 
         // Check if user is a member of class, if not then join them to it.
@@ -514,11 +515,10 @@ class turnitintooltwo_submission {
                     unlink($tempfile);
                 }
 
-                $notice = array();
+                $notice["success"] = true;
                 $notice["message"] = get_string('submissionuploadsuccess', 'turnitintooltwo');
                 $notice["extract"] = $newsubmission->getTextExtract();
                 $notice["tii_submission_id"] = $submission->submission_objectid;
-                return $notice;
 
             } catch (Exception $e) {
                 if (!is_null($this->submission_objectid)) {
@@ -526,11 +526,17 @@ class turnitintooltwo_submission {
                 } else {
                     $errorstring = "createsubmissionerror";
                 }
-                $turnitincomms->handle_exceptions($e, $errorstring);
+                $error = $turnitincomms->handle_exceptions($e, $errorstring, false, true);
+
+                $notice["message"] = $error;
+                $notice["success"] = false;
             }
         } else {
-            turnitintooltwo_print_error('emptycreatedfile', 'turnitintooltwo', null, null, __FILE__, __LINE__);
+            $notice["success"] = false;
+            $notice["message"] = get_string('emptycreatedfile', 'turnitintooltwo');
         }
+
+        return $notice;
     }
 
     /**

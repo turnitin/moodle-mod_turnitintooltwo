@@ -356,6 +356,7 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // Resize window after submitting EULA.
     $('.turnitin_ula input[type="submit"]').click(function() {
         $(this).hide();
         $(this).parent().parent().parent().find("p").hide();
@@ -364,6 +365,15 @@ jQuery(document).ready(function($) {
             height: "565px"
         });
     });
+
+    // Resize window if submission has failed.
+    if ($('.submission_failure_msg').length > 0) {
+        console.log('hello');
+        window.parent.$('.upload_box').colorbox.resize({
+            width: "800px",
+            height: "240px"
+        });
+    }
 
     // Enrol all students link on the enrolled students page
     $(".enrol_link").click(function () {

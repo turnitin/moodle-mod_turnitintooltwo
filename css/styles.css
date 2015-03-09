@@ -42,6 +42,10 @@
     cursor: pointer;
 }
 
+.mod_turnitintooltwo .submission_form_container, .mod_turnitintooltwo .class_recreation {
+    padding: 0 24px;
+}
+
 .mod_turnitintooltwo .row_score, .mod_turnitintooltwo .row_peermark_manager, .mod_turnitintooltwo .row_peermark_reviews {
     float:right;
 }
@@ -467,6 +471,15 @@ h3.main {
     text-align:center;
     display:block;
     margin-bottom:6px;
+}
+
+.mod_turnitintooltwo .submission_failure_msg {
+    padding: 16px;
+}
+
+.mod_turnitintooltwo .submission_failure_msg .general_warning {
+    margin-top: 16px;
+    width: auto;
 }
 
 .mod_turnitintooltwo #enrolling_error {

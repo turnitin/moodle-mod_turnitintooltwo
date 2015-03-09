@@ -495,3 +495,4 @@ $string['receiptparagraph'] = 'This receipt ackowledges that Turnitin received y
 $string['objectid'] = 'Turnitin Paper ID';
 $string['ppanonmarkingnote'] = 'Note: Anonymous Marking only applies to Turnitin GradeMark. It is controlled by the assignment post date within Turnitin. Turnitin will use the &#39;hidden until&#39; date as the post date, which can be set by editing the grade item in the Course gradebook report.';
 $string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Select a Turnitin API URL';
+$string['tii_submission_failure'] = 'Please consult your tutor or Moodle administrator for further details';

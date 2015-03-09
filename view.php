@@ -235,15 +235,17 @@ if (!empty($action)) {
                         $turnitintooltwosubmission->prepare_text_submission($cm, $post);
                     }
                     if ($do == "submission_success") {
-                        if ($digitalreceipt = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment)) {
-                            $_SESSION["digital_receipt"] = $digitalreceipt;
+                        $tiisubmission = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment);
+                        $_SESSION["digital_receipt"] = $tiisubmission;
+
+                        if ($tiisubmission['success'] == true) {
+                            $locked_assignment = new stdClass();
+                            $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
+                            $locked_assignment->submitted = 1;
+                            $DB->update_record('turnitintooltwo', $locked_assignment);
+                        } else {
+                            $do = "submission_failure";
                         }
-
-                        $locked_assignment = new stdClass();
-                        $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
-                        $locked_assignment->submitted = 1;
-                        $DB->update_record('turnitintooltwo', $locked_assignment);
-
                         $extraparams = array();
                         unset($_SESSION['form_data']);
                     }
@@ -364,6 +366,19 @@ switch ($do) {
             $digitalreceipt = html_writer::tag("div", $digitalreceipt, array("id" => "box_receipt"));
         }
         echo $digitalreceipt;
+        unset($_SESSION["digital_receipt"]);
+        break;
+
+    case "submission_failure":
+
+        $output = $OUTPUT->box($OUTPUT->pix_icon('icon', get_string('turnitin', 'turnitintooltwo'),
+                                                    'mod_turnitintooltwo'), 'centered_div');
+
+        $output .= html_writer::tag("div", $_SESSION["digital_receipt"]["message"], array("class" => "general_warning"));
+        if ($viewcontext == "box_solid") {
+            $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
+        }
+        echo $output;
         unset($_SESSION["digital_receipt"]);
         break;
 
