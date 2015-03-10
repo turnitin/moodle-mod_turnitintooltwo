@@ -473,7 +473,7 @@ h3.main {
     margin-bottom:6px;
 }
 
-.mod_turnitintooltwo .submission_failure_msg {
+.mod_turnitintooltwo .submission_failure_msg, .mod_turnitintooltwo .box_receipt {
     padding: 16px;
 }
 
