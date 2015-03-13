@@ -530,11 +530,11 @@ jQuery(document).ready(function($) {
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
                 // beforeunload event does not work in Safari.
                 $(dvWindow).bind('unload', function() {
-                    refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+                    $(".refresh_link").click();
                 });
             } else {
                 $(dvWindow).bind('beforeunload', function() {
-                    refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+                    $(".refresh_link").click();
                 });
             }
         }
