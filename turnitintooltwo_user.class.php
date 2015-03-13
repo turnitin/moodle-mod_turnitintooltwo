@@ -555,9 +555,6 @@ class turnitintooltwo_user {
         $user = new TiiUser();
         $user->setUserId($this->tii_user_id);
 
-        $response = $turnitincall->readUser($user);
-        $readuser = $response->getUser();
-
         try {
             $response = $turnitincall->readUser($user);
             $readuser = $response->getUser();
