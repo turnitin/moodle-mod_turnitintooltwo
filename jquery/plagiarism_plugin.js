@@ -57,6 +57,23 @@ jQuery(document).ready(function($) {
         });
     }
 
+    // Refresh submissions from settings page
+    $(document).on('click', '.plagiarism_turnitin_refresh_grades', function() {
+        $('.plagiarism_turnitin_refresh_grades').hide();
+        $('.plagiarism_turnitin_refreshing_grades').show();
+
+        $.ajax({
+            type: "POST",
+            url: M.cfg.wwwroot+"/plagiarism/turnitin/ajax.php",
+            dataType: "json",
+            data: {action: "update_grade", cmid: $('input[name="coursemodule"]').val(), sesskey: M.cfg.sesskey},
+            success: function(data) {
+                $('.plagiarism_turnitin_refresh_grades').show();
+                $('.plagiarism_turnitin_refreshing_grades').hide();
+            }
+        });
+    });
+
     // Open an iframe light box containing the Peermark reviews
     $(document).on('click', '.peermark_reviews_pp_launch', function() {
         $('.peermark_reviews_pp_launch').colorbox({
@@ -154,7 +171,6 @@ jQuery(document).ready(function($) {
             dataType: "json",
             data: {action: "update_grade", submission: submission_id, cmid: coursemoduleid, sesskey: M.cfg.sesskey},
             success: function(data) {
-                eval(data);
                 window.location = window.location;
             }
         });
