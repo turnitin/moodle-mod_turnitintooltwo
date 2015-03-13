@@ -589,7 +589,7 @@ jQuery(document).ready(function($) {
                 type: "POST",
                 url: "ajax.php",
                 dataType: "json",
-                data: {action: 'check_anon', assignment: $('#assignment_id').html()},
+                data: {action: 'check_anon', part: $this.data('pk'), assignment: $('#assignment_id').html()},
                 success: function(data) {
                     $this.data('anon', data['anon']);
                     $this.data('submitted', data['submitted']);

@@ -29,11 +29,13 @@ $action = required_param('action', PARAM_ALPHAEXT);
 switch ($action) {
     case "check_anon":
         $assignmentid = required_param('assignment', PARAM_INT);
+        $partid = required_param('part', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $part = $turnitintooltwoassignment->get_part_details($partid);
 
         $anonData = array(
             'anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
-            'submitted' => $turnitintooltwoassignment->turnitintooltwo->submitted
+            'submitted' => $part->submitted
         );
         echo json_encode($anonData);
         break;
