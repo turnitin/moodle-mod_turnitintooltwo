@@ -43,7 +43,7 @@ class admin_setting_configtext_int_only extends admin_setting_configtext {
     }
 
     public function write_setting($data) {
-    	$data = trim($data);
+        $data = trim($data);
         $validated = $this->validate($data);
         if ($validated !== true) {
             return $validated;
@@ -54,7 +54,7 @@ class admin_setting_configtext_int_only extends admin_setting_configtext {
 
 class admin_setting_config_tii_secret_key extends admin_setting_configpasswordunmask {
 
-	/**
+    /**
      * Validate data before storage
      * @param string data
      * @return mixed true if ok string if error found
