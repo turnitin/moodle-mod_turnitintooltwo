@@ -21,6 +21,7 @@
 
 if ($ADMIN->fulltree) {
     include_once(__DIR__.'/lib.php');
+    require_once(__DIR__.'/settingslib.php');
     require_once(__DIR__."/turnitintooltwo_view.class.php");
 
     $turnitintooltwoview = new turnitintooltwo_view();
@@ -100,13 +101,13 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_heading('turnitintooltwo_header', $desc, $tabmenu));
 
-    $settings->add(new admin_setting_configtext('turnitintooltwo/accountid',
+    $settings->add(new admin_setting_configtext_int_only('turnitintooltwo/accountid',
                                                     get_string("turnitinaccountid", "turnitintooltwo"),
                                                     get_string("turnitinaccountid_desc", "turnitintooltwo"), ''));
 
-    $settings->add(new admin_setting_configpasswordunmask('turnitintooltwo/secretkey',
+    $settings->add(new admin_setting_config_tii_secret_key('turnitintooltwo/secretkey',
                                                         get_string("turnitinsecretkey", "turnitintooltwo"),
-                                                        get_string("turnitinsecretkey_desc", "turnitintooltwo"), ''));
+                                                        get_string("turnitinsecretkey_desc", "turnitintooltwo"), '', 'PARAM_TEXT'));
 
     $testoptions = array(
         'https://api.turnitin.com' => 'https://api.turnitin.com',
@@ -184,7 +185,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitintooltwoagreement_desc', 'turnitintooltwo'), ''));
 
     // Following are values for student privacy settings.
-
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
                        get_string('studentdataprivacy_desc', 'turnitintooltwo')));
 

@@ -717,6 +717,18 @@ h3.main {
     top:2px;
 }
 
+#page-admin-setting-modsettingturnitintooltwo fieldset.error div.form-item {
+    border: 1px solid red;
+    padding-top: 12px;
+    background-color: #F2DEDE;
+    border-color: #EED3D7;
+}
+
+#page-admin-setting-modsettingturnitintooltwo fieldset.error div.form-item,
+#page-admin-setting-modsettingturnitintooltwo fieldset.error div.form-description {
+    color: #B94A48;
+}
+
 .mod_turnitintooltwo .tabtree {
     margin-bottom:16px;
 }
