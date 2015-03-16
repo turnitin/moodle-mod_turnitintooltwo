@@ -43,6 +43,7 @@ class admin_setting_configtext_int_only extends admin_setting_configtext {
     }
 
     public function write_setting($data) {
+    	$data = trim($data);
         $validated = $this->validate($data);
         if ($validated !== true) {
             return $validated;
