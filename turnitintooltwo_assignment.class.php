@@ -1248,9 +1248,21 @@ class turnitintooltwo_assignment {
             $attribute = "partname".$i;
             $assignment->setTitle($this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute." (Moodle TT)");
 
+            // Initialise part.
+            $part = new stdClass();
+            $part->turnitintooltwoid = $this->id;
+            $part->partname = $this->turnitintooltwo->$attribute;
+            $part->deleted = 0;
+            $part->maxmarks = $assignment->getMaxGrade();
+            $part->dtstart = strtotime($assignment->getStartDate());
+            $part->dtdue = strtotime($assignment->getDueDate());
+            $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
+
             $parttiiassignid = 0;
             if ($i <= count($partids) && !empty($partids[$i - 1])) {
                 $partdetails = $this->get_part_details($partids[$i - 1]);
+                $part->submitted = $partdetails->submitted;
+                $part->unanon = $partdetails->unanon;
                 // Set anonymous marking depending on whether part has been unanonymised.
                 if ($config->useanon && $partdetails->unanon != 1) {
                     $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
@@ -1263,20 +1275,13 @@ class turnitintooltwo_assignment {
                 $this->edit_tii_assignment($assignment);
             } else {
                 $parttiiassignid = $this->create_tii_assignment($assignment, $this->id, $i);
+                $part->submitted = 0;
             }
 
-            $part = new stdClass();
-            $part->tiiassignid = $parttiiassignid;
-            $part->turnitintooltwoid = $this->id;
-            $part->partname = $this->turnitintooltwo->$attribute;
-            $part->deleted = 0;
-            $part->maxmarks = $assignment->getMaxGrade();
-            $part->dtstart = strtotime($assignment->getStartDate());
-            $part->dtdue = strtotime($assignment->getDueDate());
-            $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
+            $part->tiiassignid = $parttiiassignid;            
 
             // Unanonymise part if necessary.
-            if ($part->dtpost < time() && $turnitintooltwonow->submitted == 1) {
+            if ($part->dtpost < time() && $part->submitted == 1) {
                 $part->unanon = 1;
             }
 
@@ -1532,8 +1537,6 @@ class turnitintooltwo_assignment {
                 $part->dtpost = strtotime($readassignment->getFeedbackReleaseDate());
                 $part->maxmarks = $readassignment->getMaxGrade();
                 $part->tiiassignid = $readassignment->getAssignmentId();
-                $anonymous = (int)$readassignment->getAnonymousMarking();
-                $part->unanon = ($this->turnitintooltwo->anon && $anonymous == 0) ? 1 : 0;
 
                 if ($assignmentids == 0) {
                     $part->id = $partids[$readassignment->getAssignmentId()];
