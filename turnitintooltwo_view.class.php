@@ -735,7 +735,7 @@ class turnitintooltwo_view {
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
-                                                'data-submitted' => $turnitintooltwoassignment->turnitintooltwo->submitted,
+                                                'data-submitted' => $partdetails[$partid]->submitted,
                                                 'class' => 'editable_postdue editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtpost', 'id' => 'date_post_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
@@ -1028,7 +1028,6 @@ class turnitintooltwo_view {
                                         false, '', array("class" => "inbox_checkbox"));
         }
 
-
         if( !$istutor ) {
             // If students viewing it will show 'digital receipt' link
             if ( !empty($submission->submission_objectid) ) {
@@ -1041,7 +1040,7 @@ class turnitintooltwo_view {
                 $studentname = "--";
             }
         } else {
-            if ($turnitintooltwoassignment->turnitintooltwo->anon) {
+            if ($turnitintooltwoassignment->turnitintooltwo->anon && $parts[$partid]->unanon != 1) {
                 if (empty($submission->submission_unanon) AND $parts[$partid]->dtpost > time() AND
                                                         !empty($submission->submission_objectid)) {
                     // Anonymous marking is on, postdate has not passed and a submission has been made.

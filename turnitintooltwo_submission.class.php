@@ -390,6 +390,11 @@ class turnitintooltwo_submission {
                 $assignment->submitted = 1;
                 $DB->update_record('turnitintooltwo', $assignment);
 
+                $part = new stdClass();
+                $part->id = $partid;
+                $part->submitted = 1;
+                $DB->update_record('turnitintooltwo_parts', $part);
+
                 return array( "submission_id" => $newsubmission->getSubmissionId() );
             }
 

@@ -1049,52 +1049,42 @@ class turnitintooltwo_assignment {
                 break;
 
             case "dtstart":
-            case "dtdue":
-            case "dtpost":
-                switch ($fieldname) {
-                    case "dtstart":
-                        if ($fieldvalue <= strtotime('1 year ago')) {
-                            $return['success'] = false;
-                            $return['msg'] = get_string('startdatenotyearago', 'turnitintooltwo');
-                        } else if ($fieldvalue >= $partdetails->dtdue) {
-                            $return['success'] = false;
-                            $return['msg'] = get_string('partdueerror', 'turnitintooltwo');
-                        } else if ($fieldvalue > $partdetails->dtpost) {
-                            $return['success'] = false;
-                            $return['msg'] = get_string('partposterror', 'turnitintooltwo');
-                        }
-
-                        $setmethod = "setStartDate";
-                        break;
-
-                    case "dtdue":
-                        if ($fieldvalue <= $partdetails->dtstart) {
-                            $return['success'] = false;
-                            $return['msg'] = get_string('partdueerror', 'turnitintooltwo');
-                        }
-
-                        $setmethod = "setDueDate";
-                        break;
-
-                    case "dtpost":
-                        if ($fieldvalue < $partdetails->dtstart) {
-                            $return['success'] = false;
-                            $return['msg'] = get_string('partposterror', 'turnitintooltwo');
-                        }
-
-                        // Disable anonymous marking in Moodle if the post date has passed.
-                        if ($this->turnitintooltwo->anon && $this->turnitintooltwo->submitted == 1 
-                            && $partdetails->unanon == 0 && $fieldvalue < time()) {
-                            $unanonymisedpart = new stdClass();
-                            $unanonymisedpart->id = $partid;
-                            $unanonymisedpart->unanon = 1;
-                            $DB->update_record('turnitintooltwo_parts', $unanonymisedpart);
-                        }
-
-                        $setmethod = "setFeedbackReleaseDate";
-                        break;
+                if ($fieldvalue <= strtotime('1 year ago')) {
+                    $return['success'] = false;
+                    $return['msg'] = get_string('startdatenotyearago', 'turnitintooltwo');
+                } else if ($fieldvalue >= $partdetails->dtdue) {
+                    $return['success'] = false;
+                    $return['msg'] = get_string('partdueerror', 'turnitintooltwo');
+                } else if ($fieldvalue > $partdetails->dtpost) {
+                    $return['success'] = false;
+                    $return['msg'] = get_string('partposterror', 'turnitintooltwo');
                 }
-                $assignment->$setmethod(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
+
+                $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
+                break;
+
+            case "dtdue":
+                if ($fieldvalue <= $partdetails->dtstart) {
+                    $return['success'] = false;
+                    $return['msg'] = get_string('partdueerror', 'turnitintooltwo');
+                }
+
+                $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
+                break;
+
+            case "dtpost":
+                if ($fieldvalue < $partdetails->dtstart) {
+                    $return['success'] = false;
+                    $return['msg'] = get_string('partposterror', 'turnitintooltwo');
+                }
+
+                // Disable anonymous marking in Moodle if the post date has passed.
+                if ($this->turnitintooltwo->anon && $partdetails->submitted == 1 
+                    && $partdetails->unanon == 0 && $fieldvalue < time()) {                            
+                    $partdetails->unanon = 1;
+                }
+
+                $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
                 break;
         }
 

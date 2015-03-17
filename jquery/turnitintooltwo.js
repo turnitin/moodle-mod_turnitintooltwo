@@ -248,6 +248,7 @@ jQuery(document).ready(function($) {
         partTables[part_id] = $('table#'+part_id).dataTable({
             "bProcessing": true,
             "aoColumns": submissionsDataTableColumns,
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "aaSorting": [[ 2, "asc" ],[ 4, "asc" ]],
             "sAjaxSource": "ajax.php",
             "oLanguage": dataTablesLang,
@@ -530,11 +531,11 @@ jQuery(document).ready(function($) {
             if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
                 // beforeunload event does not work in Safari.
                 $(dvWindow).bind('unload', function() {
-                    refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+                    $(".refresh_link").click();
                 });
             } else {
                 $(dvWindow).bind('beforeunload', function() {
-                    refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
+                    $(".refresh_link").click();
                 });
             }
         }
@@ -589,7 +590,7 @@ jQuery(document).ready(function($) {
                 type: "POST",
                 url: "ajax.php",
                 dataType: "json",
-                data: {action: 'check_anon', assignment: $('#assignment_id').html()},
+                data: {action: 'check_anon', part: $this.data('pk'), assignment: $('#assignment_id').html()},
                 success: function(data) {
                     $this.data('anon', data['anon']);
                     $this.data('submitted', data['submitted']);

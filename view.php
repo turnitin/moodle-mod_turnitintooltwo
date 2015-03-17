@@ -243,6 +243,11 @@ if (!empty($action)) {
                             $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
                             $locked_assignment->submitted = 1;
                             $DB->update_record('turnitintooltwo', $locked_assignment);
+
+                            $locked_part = new stdClass();
+                            $locked_part->id = $post['submissionpart'];
+                            $locked_part->submitted = 1;
+                            $DB->update_record('turnitintooltwo_parts', $locked_part);
                         } else {
                             $do = "submission_failure";
                         }
