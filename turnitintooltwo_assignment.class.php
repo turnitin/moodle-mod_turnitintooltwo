@@ -936,12 +936,9 @@ class turnitintooltwo_assignment {
      * @global type $DB
      * @return array Returns the parts or empty array if no parts are found
      */
-    public function get_parts() {
+    public function get_parts($peermarks = true) {
         global $DB;
         if ($parts = $DB->get_records("turnitintooltwo_parts", array("turnitintooltwoid" => $this->turnitintooltwo->id))) {
-            foreach ($parts as $part) {
-                $parts[$part->id]->peermark_assignments = $this->get_peermark_assignments($part->tiiassignid);
-            }
             return $parts;
         } else {
             return array();
