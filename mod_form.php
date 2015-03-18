@@ -132,12 +132,19 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                                             "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-ui-1.10.4.custom.min.js"));
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
                                             "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery.colorbox.js"));
+            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
+                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery.colorbox.js"));
+            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
+                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/moment.js"));
         } else {
             $PAGE->requires->jquery();
             $PAGE->requires->jquery_plugin('ui');
             $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
             $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
+            $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
         }
+
+        $PAGE->requires->string_for_js('anonalert', 'turnitintooltwo');
 
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
@@ -265,9 +272,23 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $dateoptions = array('startyear' => date( 'Y', strtotime( '-6 years' )), 'stopyear' => date( 'Y', strtotime( '+6 years' )),
                     'timezone' => 99, 'applydst' => true, 'step' => 1, 'optional' => false);
 
-        for ($i = 1; $i <= 5; $i++) {
+        if (isset($this->_cm->id)) {
+            $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
+            $parts = $turnitintooltwoassignment->get_parts();
+            
+            $partsArray = array();
+            foreach ($parts as $key => $value) {
+                $partsArray[] = $value;
+            }
+        }
 
+        for ($i = 1; $i <= 5; $i++) {
             $mform->addElement('header', 'partdates'.$i, get_string('partname', 'turnitintooltwo')." ".$i);
+
+            if (isset($this->_cm->id) && isset($partsArray[$i-1])) {
+                    $partdetails = $turnitintooltwoassignment->get_part_details($partsArray[$i-1]->id);
+                    $mform->addElement('html', '<div class="assignment-part-' . $i . '" data-anon="' . $turnitintooltwoassignment->turnitintooltwo->anon . '" data-unanon="' . $partdetails->unanon . '" data-submitted="' . $partdetails->submitted . '" data-part-id="' . $i . '">');
+            }
 
             // Delete part link.
             if ($this->updating && $this->current->numparts > 1 && $i <= $this->current->numparts) {

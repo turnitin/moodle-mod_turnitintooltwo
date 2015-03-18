@@ -1196,4 +1196,39 @@ jQuery(document).ready(function($) {
             });
         }
     });
+
+    // Settings page parts warning
+    $('[id^=id_partdates] [id^=fitem_id_dtpost] select').change(function() {
+        // Get part id from title
+        var dataEl = $(this).parent().parent().parent();
+        var post_date = buildUnixDate('#fitem_id_dtpost', dataEl.data('partId'));
+
+        if ( post_date < moment().unix() && dataEl.data('anon') == 1 && dataEl.data('unanon') == 0 && dataEl.data('submitted') == 1 ) {
+            alert(M.str.turnitintooltwo.anonalert);
+        }
+
+    });
+
+    var buildUnixDate = function(el, part_id) {
+        // option id's
+        var start = [ '_day', '_month', '_year', '_hour', '_minute' ];
+        
+        $this = $(el + part_id);
+
+        // build date:time string
+        var date = '';
+        $.each(start, function(k, v) {
+            date += $this.find('[id$=' + part_id + v + '] option:selected').text();
+            if (v === '_year') {
+                date += ' ';
+            } else if (v === '_hour') {
+                date += ':';
+            } else if ( v !== '_minute') {
+                date += '-';
+            }
+        });
+
+        // return converted moment object
+        return moment(date).unix();
+    }
 });

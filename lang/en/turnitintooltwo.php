@@ -3,6 +3,7 @@
 // Date: 2015-02-09
 // Language: en
 
+$string['anonalert'] = 'Your post date is before your current time, this will permanently disable anonymous marking for this assignment if you save this.';
 $string['addsubmission'] = 'Add Submission';
 $string['allowlate'] = 'Allow Submissions after the Due Date';
 $string['allsubmissions'] = 'Submission Inbox';
