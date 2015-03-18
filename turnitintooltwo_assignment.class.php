@@ -1082,8 +1082,7 @@ class turnitintooltwo_assignment {
                 }
 
                 // Disable anonymous marking in Moodle if the post date has passed.
-                if ($this->turnitintooltwo->anon && $partdetails->submitted == 1 
-                    && $partdetails->unanon == 0 && $fieldvalue < time()) {                            
+                if ($this->turnitintooltwo->anon && $partdetails->submitted == 1 && $fieldvalue < time()) {
                     $partdetails->unanon = 1;
                 }
 
