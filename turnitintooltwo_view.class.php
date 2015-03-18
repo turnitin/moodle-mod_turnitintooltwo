@@ -734,7 +734,7 @@ class turnitintooltwo_view {
                         userdate($partdetails[$partid]->dtpost, '%d %h %Y - %H:%M');
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
-                                            array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+                                            array('data-anon' => ($partdetails[$partid]->unanon == 1) ? 0 : 1,
                                                 'data-submitted' => $partdetails[$partid]->submitted,
                                                 'class' => 'editable_postdue editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtpost', 'id' => 'date_post_'.$partid,
