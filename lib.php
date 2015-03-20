@@ -1229,38 +1229,43 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
 
     foreach ($turnitintooltwos as $key => $turnitintooltwo) {
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
-
-        $now = time();
         $parts = $turnitintooltwoassignment->get_parts(false);
 
         $cm = get_coursemodule_from_id('turnitintooltwo', $turnitintooltwo->coursemodule);
         $context = context_module::instance($cm->id);
 
-        // Get Early and Late Date Boundries for each part of this assignment.
-        $earlydate = 0;
-        $latedate = 0;
         $partsarray = array();
+        $grader = has_capability('mod/turnitintooltwo:grade', $context);
+        if ($grader) {
+            $allusers = get_users_by_capability($context, 'mod/turnitintooltwo:submit', 'u.id', '', '', '', 0, '', false);
+            $submissionsquery = $DB->get_records_select('turnitintooltwo_submissions',
+                            'turnitintooltwoid = ? GROUP BY id, submission_part, submission_grade, submission_gmimaged',
+                            array($turnitintooltwo->id), '', 'id, submission_part, submission_grade, submission_gmimaged');
+            foreach ($submissionsquery as $submission) {
+                if(!isset($submissioncount[$submission->submission_part])) {
+                    $submissioncount[$submission->submission_part]['graded'] = 0;
+                    $submissioncount[$submission->submission_part]['submitted'] = 0;
+                }
+                if ($submission->submission_grade != 'NULL' and $submission->submission_gmimaged == 1) {
+                    $submissioncount[$submission->submission_part]['graded']++;
+                }
+                $submissioncount[$submission->submission_part]['submitted']++;
+            }
+        }
         foreach ($parts as $part) {
-            $earlydate = ($part->dtstart < $earlydate OR $earlydate == 0) ? $part->dtstart : $earlydate;
-            $latedate = ($part->dtpost > $latedate) ? $part->dtpost : $latedate;
 
             $partsarray[$part->id]['name'] = $part->partname;
             $partsarray[$part->id]['dtdue'] = $part->dtdue;
 
-            if (has_capability('mod/turnitintooltwo:grade', $context)) {
+            if ($grader) {
                 // If user is a grader.
-                $numsubmissions = $turnitintooltwoassignment->count_submissions($cm, $part->id);
-                $gradequery = $DB->count_records_select('turnitintooltwo_submissions',
-                                    'turnitintooltwoid = ? AND submission_part = ? AND userid != 0 '.
-                                    ' AND (submission_grade IS NOT NULL AND submission_gmimaged = 1)',
-                                        array($turnitintooltwo->id, $part->id), 'count(userid)');
-
-                $allusers = get_users_by_capability($context, 'mod/turnitintooltwo:submit', 'u.id', '', '', '', 0, '', false);
+                $numsubmissions = $submissioncount[$part->id]['submitted'];
+                $graded = $submissioncount[$part->id]['graded'];
                 $input = new stdClass();
                 $input->submitted = $numsubmissions;
-                $input->graded = $gradequery;
+                $input->graded = $graded;
                 $input->total = count($allusers);
-                $input->gplural = ($gradequery != 1) ? 's' : '';
+                $input->gplural = ($graded != 1) ? 's' : '';
                 $partsarray[$part->id]['status'] = get_string('tutorstatus', 'turnitintooltwo', $input);
             } else {
                 // If user is a student.
