@@ -1231,7 +1231,7 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
         $now = time();
-        $parts = $turnitintooltwoassignment->get_parts();
+        $parts = $turnitintooltwoassignment->get_parts(false);
 
         $cm = get_coursemodule_from_id('turnitintooltwo', $turnitintooltwo->coursemodule);
         $context = context_module::instance($cm->id);
