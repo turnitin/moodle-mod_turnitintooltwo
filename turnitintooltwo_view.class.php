@@ -1090,7 +1090,7 @@ class turnitintooltwo_view {
         //submission title
         if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
             $title = $OUTPUT->box_start('default_open', 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
-            $title .= $OUTPUT->box(format_string($submission->submission_title));
+            $title .= $OUTPUT->box(format_string($submission->submission_title), 'submission_title');
             $title .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'default_url_'.$submission->submission_objectid);
             $title .= $OUTPUT->box_end(true);
         } else {
