@@ -76,7 +76,7 @@ if ($id) {
 }
 
 // If opening DV then $viewcontext needs to be set to box
-$viewcontext = ($do == "origreport" || $do == "grademark") ? "box" : $viewcontext;
+$viewcontext = ($do == "origreport" || $do == "grademark" || $do == "default") ? "box" : $viewcontext;
 
 require_login($course->id);
 turnitintooltwo_activitylog('view.php?id='.$id.'&do='.$do, "REQUEST");
