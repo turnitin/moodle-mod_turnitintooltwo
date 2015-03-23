@@ -42,7 +42,8 @@
     cursor: pointer;
 }
 
-.mod_turnitintooltwo .submission_form_container, .mod_turnitintooltwo .class_recreation {
+.mod_turnitintooltwo .submission_form_container, .mod_turnitintooltwo .class_recreation, 
+.mod_turnitintooltwo #digital_receipt {
     padding: 0 24px;
 }
 
@@ -463,7 +464,7 @@ h3.main {
 }
 
 .mod_turnitintooltwo noscript.warning, .mod_turnitintooltwo .library_not_present_warning,
-.mod_turnitintooltwo .general_warning {
+.mod_turnitintooltwo .general_warning, .mod_turnitintooltwo #error {
     border: 1px solid #CC0000;
     padding: 8px;
     background: #FFE9E8;
@@ -471,6 +472,12 @@ h3.main {
     text-align:center;
     display:block;
     margin-bottom:6px;
+}
+
+.mod_turnitintooltwo #error {
+    margin-left:24px;
+    margin-right:24px;
+    width:96%;
 }
 
 .mod_turnitintooltwo .submission_failure_msg, .mod_turnitintooltwo .box_receipt {

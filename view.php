@@ -227,8 +227,11 @@ if (!empty($action)) {
                         // Upload file.
                         $doupload = $turnitintooltwosubmission->do_file_upload($cm, $turnitintooltwofileuploadoptions);
                         if (!$doupload["result"]) {
-                            $turnitintooltwosubmission->delete_submission();
+                            if (!$prevsubmission) {
+                                $turnitintooltwosubmission->delete_submission();
+                            }
                             $_SESSION["notice"]["message"] = $doupload["message"];
+                            $_SESSION["notice"]["type"] = "error";
                             $do = "submitpaper";
                         }
                     } else if ($post['submissiontype'] == 2) {
