@@ -316,6 +316,7 @@ jQuery(document).ready(function($) {
     $('.dataTables_length').after(tii_table_functions);
     $('.messages_inbox').show();
     $('.refresh_link').show();
+    $('.refreshing_link').hide();
 
     var zip_downloads = $("#zip_downloads");
     $('#zip_downloads').remove();
@@ -328,6 +329,10 @@ jQuery(document).ready(function($) {
     // When the refresh submissions link is clicked, the data in each datatable needs to be reloaded
     $(".refresh_link").click(function () {
         $(this).hide();
+
+        var part_id = $(this).attr("id").split("_")[1]; 
+        $('#refreshing_' + part_id).show();
+
         $('table.submissionsDataTable').each(function() {
             refreshRequested[$(this).attr("id")] = 1;
             partTables[$(this).attr("id")].fnReloadAjax();
@@ -716,6 +721,7 @@ jQuery(document).ready(function($) {
                     getSubmissions(table, assignment_id, part_id, start, refresh_requested, result.total);
                 } else {
                     $('#'+part_id+"_processing").attr('style', 'visibility: hidden');
+                    $('#refreshing_' + part_id).hide();
                     $('#refresh_'+part_id).show();
                     enableEditingText(part_id);
                 }
