@@ -1045,6 +1045,14 @@ class turnitintooltwo_view {
             } else {
                 $studentname = "--";
             }
+
+            //Determine whether the student can see the overall grade, based on the post time of all parts.
+            $display_overall_grade = 1;
+            foreach (array_keys($parts) as $ar_key => $ar_value) {
+                if ($parts[$ar_value]->dtpost > time()) {
+                    $display_overall_grade = 0;
+                }
+            }
         } else {
             if ($turnitintooltwoassignment->turnitintooltwo->anon && $parts[$partid]->unanon != 1) {
                 if (empty($submission->submission_unanon) AND $parts[$partid]->dtpost > time() AND
@@ -1209,8 +1217,8 @@ class turnitintooltwo_view {
                     }
 
                     if ($turnitintooltwoassignment->turnitintooltwo->grade == 0 ||
-                                                    $useroverallgrades[$submission->userid] === '--') {
-                        $overallgrade = '--';
+                                                    $useroverallgrades[$submission->userid] === '--' || 
+                                                    (!$istutor && $display_overall_grade == 0)) {
                     } else if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) { // Scale.
                         $scale = $DB->get_record('scale', array('id' => $turnitintooltwoassignment->turnitintooltwo->grade * -1));
                         $scalearray = explode(",", $scale->scale);
