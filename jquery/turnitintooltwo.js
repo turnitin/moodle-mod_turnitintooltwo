@@ -1229,6 +1229,6 @@ jQuery(document).ready(function($) {
         });
 
         // return converted moment object
-        return moment(date).unix();
+        return moment(date, "DD-MMMM-YYYY hh:mm").unix();
     }
 });
