@@ -1109,7 +1109,7 @@ jQuery(document).ready(function($) {
             success: function(data) {
                 eval(data);
                 $.cookie( 'submitnothingaccept', true, { expires: 365 } );
-                $('#' + part_id + ' .select_all_checkbox').show();
+                $('table#' + part_id + ' .select_all_checkbox').attr('checked', false);
             },
             error: function(data) {
                 $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/icon-edit-grey.png');
@@ -1131,8 +1131,7 @@ jQuery(document).ready(function($) {
             data: {action: "refresh_submission_row", assignment: $('#assignment_id').html(),
                     part: part_id, user: user_id, sesskey: M.cfg.sesskey},
             success: function(data) {
-                $('#' + part_id + ' .select_all_checkbox').show();
-
+                $('table#' + part_id + ' .select_all_checkbox').attr('checked', false);
                 eval(data);
                 var i = 0;
                 if (submission_id == 0) {
@@ -1170,6 +1169,11 @@ jQuery(document).ready(function($) {
         if (submission_id != 0) {
             identifier = 'check_'+submission_id;
         }
+
+        $('#tabs-' + part_id + ' .inbox_checkbox').click(function() {
+            $('table#' + part_id + ' .select_all_checkbox').attr('checked', false);
+        });
+
         $(document).on('click', identifier + ', .select_all_checkbox', function() {
             if ($('#tabs-' + part_id + ' .inbox_checkbox:checked').length > 0) {
                 $('#tabs-' + part_id + ' .zip_downloads').slideDown();
