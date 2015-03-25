@@ -486,7 +486,7 @@ class turnitintooltwo_view {
         // Do the table headers.
         $cells = array();
         $cells["part"] = new html_table_cell('part');
-        $cells["checkbox"] = new html_table_cell( ($istutor) ? html_writer::checkbox(false, false, false, '', array("id" => "select_all_checkbox", "class" => "inbox_checkbox")) : '&nbsp;' );
+        $cells["checkbox"] = new html_table_cell( ($istutor) ? html_writer::checkbox(false, false, false, '', array("class" => "select_all_checkbox")) : '&nbsp;' );
         $cells["student"] = ($istutor) ? new html_table_cell(get_string('student', 'turnitintooltwo')) : new html_table_cell();
         $cells["student"]->attributes['class'] = 'left';
         $cells["title"] = new html_table_cell(get_string('submissiontitle', 'turnitintooltwo'));
@@ -539,8 +539,8 @@ class turnitintooltwo_view {
                 $i++;
 
                 $tabitems[$i] = html_writer::link("#tabs-".$partid, $partobject->partname);
-                $tables .= html_writer::tag('h2', $partobject->partname, array('class' => 'js_hide'));
-                $tables .= $OUTPUT->box_start('part_table', 'tabs-'.$partid);
+                $tables .= html_writer::tag('h2', $partobject->partname, array('class' => 'js_hide', 'data-submitted' => $partobject->submitted));
+                $tables .= $OUTPUT->box_start('part_table', 'tabs-'.$partid, array('data-submitted' => $partobject->submitted));
 
                 $exportorigfileszip = "";
                 $exportgrademarkzip = "";
@@ -564,7 +564,7 @@ class turnitintooltwo_view {
                 }
 
                 // Include download links and info table.
-                $tables .= $OUTPUT->box($exportorigfileszip.$exportgrademarkzip, '', 'zip_downloads');
+                $tables .= $OUTPUT->box($exportorigfileszip.$exportgrademarkzip, 'zip_downloads', 'part_' . $partobject->id);
                 $tables .= $this->get_submission_inbox_part_details($cm, $turnitintooltwoassignment, $partdetails, $partid);
 
                 // Construct submissions table.

@@ -55,24 +55,24 @@
     display:inline;
 }
 
-.mod_turnitintooltwo #zip_downloads {
+.mod_turnitintooltwo .zip_downloads {
     float:left;
     position:relative;
     top:4px;
     height:22px;
 }
 
-.mod_turnitintooltwo #zip_downloads img {
+.mod_turnitintooltwo .zip_downloads img {
     position:relative;
     top:4px;
     left:-2px;
 }
 
-.mod_turnitintooltwo #zip_downloads a.gmpdfzip_box {
+.mod_turnitintooltwo .zip_downloads a.gmpdfzip_box {
     padding-left:16px;
 }
 
-.mod_turnitintooltwo #zip_downloads div.origchecked_zip_open {
+.mod_turnitintooltwo .zip_downloads div.origchecked_zip_open {
     padding-left:16px;
 }
 
@@ -83,7 +83,7 @@
 .mod_turnitintooltwo .hidden_class, .mod_turnitintooltwo #user_role, .mod_turnitintooltwo .launch_form, 
 .mod_turnitintooltwo #useragreement_form form, .mod_turnitintooltwo #assignment_id, .mod_turnitintooltwo #course_id, 
 .mod_turnitintooltwo #submission_id, .mod_turnitintooltwo #tii_course_id, .mod_turnitintooltwo #tii_course_name, 
-.mod_turnitintooltwo .enrolling_container, .mod_turnitintooltwo #zip_downloads, .mod_turnitintooltwo #view_context, 
+.mod_turnitintooltwo .enrolling_container, .mod_turnitintooltwo .zip_downloads, .mod_turnitintooltwo #view_context, 
 .mod_turnitintooltwo #inbox_form, .mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form, 
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #class_ids, .mod_turnitintooltwo #create_assignments,
 .mod_turnitintooltwo .row_peermark_reviews, .mod_turnitintooltwo .peermark_instructions, 

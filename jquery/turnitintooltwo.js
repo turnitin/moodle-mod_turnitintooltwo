@@ -317,9 +317,13 @@ jQuery(document).ready(function($) {
     $('.messages_inbox').show();
     $('.refresh_link').show();
 
-    var zip_downloads = $("#zip_downloads");
-    $('#zip_downloads').remove();
-    $('.dataTables_length').after(zip_downloads);
+    var zip_downloads = $(".zip_downloads");
+
+    $.each(zip_downloads, function() {
+        var part_id = $(this).attr('id').split('_')[1];
+        $(this).remove();
+        $('#' + part_id + '_length').after($(this));
+    });
 
     if ($("#user_role").html() == "Learner") {
         $(".dataTables_length, .dataTables_filter, .dt_pagination").hide();
@@ -942,7 +946,7 @@ jQuery(document).ready(function($) {
                             var submission_ids = "";
                             var i = 0;
 
-                            $('.inbox_checkbox:checked').each(function(i){
+                            $('#tabs-' + part_id + ' .inbox_checkbox:checked').each(function(i){
                                 submission_ids += "&submission_id"+i+"="+$(this).val();
                                 i++;
                             });
@@ -1037,7 +1041,7 @@ jQuery(document).ready(function($) {
     function downloadZipFile(downloadtype, part_id) {
         var submission_ids = [];
         if (downloadtype == "origchecked_zip" || downloadtype == "gmpdf_zip") {
-            $('.inbox_checkbox:checked').each(function(i){
+            $('#tabs-' + part_id + ' .inbox_checkbox:checked').each(function(i){
                 submission_ids[i] = $(this).val();
             });
         }
@@ -1105,6 +1109,7 @@ jQuery(document).ready(function($) {
             success: function(data) {
                 eval(data);
                 $.cookie( 'submitnothingaccept', true, { expires: 365 } );
+                $('#' + part_id + ' .select_all_checkbox').show();
             },
             error: function(data) {
                 $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/icon-edit-grey.png');
@@ -1126,6 +1131,8 @@ jQuery(document).ready(function($) {
             data: {action: "refresh_submission_row", assignment: $('#assignment_id').html(),
                     part: part_id, user: user_id, sesskey: M.cfg.sesskey},
             success: function(data) {
+                $('#' + part_id + ' .select_all_checkbox').show();
+
                 eval(data);
                 var i = 0;
                 if (submission_id == 0) {
@@ -1159,17 +1166,17 @@ jQuery(document).ready(function($) {
 
     // Show download links when checkboxes have been ticked
     function initialiseCheckboxes(submission_id, part_id) {
-        var identifier = 'input.inbox_checkbox';
+        var identifier = '#tabs-' + part_id + ' .inbox_checkbox';
         if (submission_id != 0) {
             identifier = 'check_'+submission_id;
         }
-        $(document).on('click', identifier, function() {
-            if ($('.inbox_checkbox:checked').length > 0) {
-                $('#zip_downloads').slideDown();
+        $(document).on('click', identifier + ', .select_all_checkbox', function() {
+            if ($('#tabs-' + part_id + ' .inbox_checkbox:checked').length > 0) {
+                $('#tabs-' + part_id + ' .zip_downloads').slideDown();
                 initialiseHiddenZipDownloads(part_id)
             } else {
                 $('#tabs-'+part_id+' .origchecked_zip_open').unbind('click');
-                $('#zip_downloads').slideUp();
+                $('#tabs-' + part_id + ' .zip_downloads').slideUp();
             }
         });
     }
@@ -1185,15 +1192,23 @@ jQuery(document).ready(function($) {
         }
     }
 
-    $('#select_all_checkbox').on('click', function() {
+    $('.select_all_checkbox').on('click', function() {
+        var id = $(this).parent().parent().parent().parent().attr('id');
+
         if ($(this).is(':checked')) {
-            $('.inbox_checkbox').each(function() {
+            if ( $('#' + id + ' .inbox_checkbox').length ) {
+                $('#tabs-' + id + ' .zip_downloads').slideDown();
+            }
+            $('#' + id + ' .inbox_checkbox').each(function() {
                 $(this).prop('checked', true);
             });
         } else {
-            $('.inbox_checkbox').each(function() {
+            $('#' + id + ' .inbox_checkbox').each(function() {
                 $(this).prop('checked', false);
             });
+            if ( $('#' + id + ' .inbox_checkbox').length ) {
+                $('#tabs-' + id + ' .zip_downloads').slideUp();
+            }
         }
     });
 
