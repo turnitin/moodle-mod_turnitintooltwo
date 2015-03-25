@@ -234,7 +234,7 @@ class turnitintooltwo_view {
     public function show_notice($notice) {
         global $OUTPUT;
 
-        return $OUTPUT->box($notice["message"], 'generalbox', $notice["type"]);
+        return $OUTPUT->box($notice["message"], 'generalbox noticebox', $notice["type"]);
     }
 
     public function show_digital_receipt($digitalreceipt) {

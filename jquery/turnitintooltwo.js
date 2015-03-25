@@ -53,6 +53,7 @@ jQuery(document).ready(function($) {
         if (validated) {
 
             $("#general").slideUp('slow');
+            $(".mod_turnitintooltwo .noticebox").slideUp('slow');
             $(".submission_form_container form").slideUp('slow');
             $("#submitting_loader").slideDown('slow');
 
