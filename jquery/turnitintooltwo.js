@@ -12,6 +12,24 @@ jQuery(document).ready(function($) {
         $("#id_submissionfile").parent().parent().hide();
     }
 
+    //Disable assignment submission if a submission agreement exists and is not checked.
+    if (($("#id_submissionagreement").length)) {
+        $('#id_submitbutton').attr('disabled', 'disabled');
+    }
+
+    //Disable/enable assignment submission when the submission checkbox is checked/unchecked.
+    $('#id_submissionagreement').on('click', function() {
+        if ($(this).is(':checked')) {
+            $('#id_submissionagreement').each(function() {
+                $('#id_submitbutton').removeAttr('disabled');
+            });
+        } else {
+            $('#id_submissionagreement').each(function() {
+                $('#id_submitbutton').attr('disabled', 'disabled');
+            });
+        }
+    });
+
     $(document).on('click', '.submit_nothing', function() {
         if ( $(this).hasClass("disabled") ) return;
         $(this).addClass('disabled');
