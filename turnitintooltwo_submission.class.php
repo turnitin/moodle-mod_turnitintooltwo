@@ -328,16 +328,7 @@ class turnitintooltwo_submission {
                 // If we have no submissions to this part then reset submitted and unanon flag.
                 $numsubs = count($DB->get_records('turnitintooltwo_submissions',
                                             array('submission_part' => $partid), 'id'));
-
-                if ($numsubs == 0) {
-                    $part = new stdClass();
-                    $part->id = $partid;
-                    $part->unanon = 0;
-                    $part->submitted = 0;
-
-                    $DB->update_record('turnitintooltwo_parts', $part);
-                }
-
+                
                 return $notice;
             } catch (Exception $e) {
                 $turnitincomms->handle_exceptions($e, 'turnitindeletionerror');
