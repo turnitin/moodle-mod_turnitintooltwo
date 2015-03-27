@@ -621,6 +621,7 @@ jQuery(document).ready(function($) {
                 data: {action: 'check_anon', part: $this.data('pk'), assignment: $('#assignment_id').html()},
                 success: function(data) {
                     $this.data('anon', data['anon']);
+                    $this.data('unanon', data['unanon']);
                     $this.data('submitted', data['submitted']);
                 }
             });
@@ -642,6 +643,7 @@ jQuery(document).ready(function($) {
                 if( value.format("X") < moment().unix() && 
                     $(this).hasClass('editable_postdue') &&
                     $(this).data('anon') == 1 &&
+                    $(this).data('unanon') == 0 &&
                     $(this).data('submitted') == 1 )
                 {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
