@@ -93,5 +93,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($result && $oldversion < 2015030303) {
+        $table = new xmldb_table('turnitintooltwo_submissions');
+        $index = new xmldb_index('submission_objectid', XMLDB_INDEX_NOTUNIQUE, array('submission_objectid'));
+        if (!$dbman->index_exists($table, $index)) {
+            $dbman->add_index($table, $index);
+        }
+    }
+
     return $result;
 }

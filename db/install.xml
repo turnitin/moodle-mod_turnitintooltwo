@@ -151,7 +151,8 @@
             </KEYS>
             <INDEXES>
                 <INDEX NAME="userid" UNIQUE="false" FIELDS="userid" NEXT="turnitintooltwoid"/>
-                <INDEX NAME="turnitintooltwoid" UNIQUE="false" FIELDS="turnitintooltwoid" PREVIOUS="userid"/>
+                <INDEX NAME="turnitintooltwoid" UNIQUE="false" FIELDS="turnitintooltwoid" PREVIOUS="userid" NEXT="submission_objectid"/>
+                <INDEX NAME="submission_objectid" UNIQUE="false" FIELDS="submission_objectid" PREVIOUS="turnitintooltwoid"/>
             </INDEXES>
         </TABLE>
         <TABLE NAME="turnitintooltwo_peermarks" COMMENT="Turnitin Tools Peermark Assignments" PREVIOUS="turnitintooltwo_submissions">
