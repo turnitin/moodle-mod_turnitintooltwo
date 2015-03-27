@@ -34,7 +34,8 @@ switch ($action) {
         $part = $turnitintooltwoassignment->get_part_details($partid);
 
         $anonData = array(
-            'anon' => ($part->unanon == 1) ? 0 : 1,
+            'anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+            'unanon' => $part->unanon,
             'submitted' => $part->submitted
         );
         echo json_encode($anonData);
