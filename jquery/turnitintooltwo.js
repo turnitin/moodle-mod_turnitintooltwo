@@ -1244,7 +1244,7 @@ jQuery(document).ready(function($) {
     });
 
     // Settings page parts warning
-    $('[id^=id_partdates] [id^=fitem_id_dtpost] select').change(function() {
+    $('[id^=fitem_id_dtpost] select').change(function() {
         // Get part id from title
         var dataEl = $(this).parent().parent().parent();
         var post_date = buildUnixDate('#fitem_id_dtpost', dataEl.data('partId'));
