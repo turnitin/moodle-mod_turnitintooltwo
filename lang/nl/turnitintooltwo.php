@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012413
-// Date: 2015-02-09
+// Version: 2015040101
+// Date: 2015-04-01
 // Language: nl
 
 $string['addsubmission'] = 'Inzending toevoegen';
@@ -65,7 +65,6 @@ $string['nosubmissions'] = 'Er zijn geen inzendingen ingediend';
 $string['notavailableyet'] = 'Niet beschikbaar';
 $string['numberofparts'] = 'Aantal delen';
 $string['numberofparts_help'] = 'Maakt het mogelijk een opdracht met meerdere delen te creëren; individuele gebruikers kunnen één stuk werk indienen voor elk deel.';
-$string['objectid'] = 'Paper-ID';
 $string['overallgrade'] = 'Totaalcijfer ';
 $string['overallgrade_help'] = 'Het totaalcijfer bepaalt het maximaal toegestane cijfer voor de totale opdracht. Elk deel van een opdracht heeft een maximum score die gebruikt wordt om de cijfers proportioneel te verdelen om het totaalcijfer te bepalen.';
 $string['partdberror'] = 'Er was een probleem bij het invoeren van Deel {$a} in de database<br />';
@@ -90,7 +89,6 @@ $string['proxyurl_desc'] = '<b>[Optioneel]</b><br />Als uw server een Proxy gebr
 $string['proxyuser'] = 'Proxy gebruikersnaam';
 $string['proxyuser_desc'] = '<b>[Optioneel]</b><br />Als uw proxy Authenticatie vereist, voer de gebruikersnaam dan hier in.';
 $string['reportgenspeed'] = 'Generatiesnelheid rapport';
-$string['reportgenspeed_help'] = 'Er zijn drie opties voor deze opdracht-instelling: &#39;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#39;, &#39;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#39; en &#39;&#39;.$string[&#39;genduedate&#39;].&#39;&#39;.<br /><br />De optie &#39;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#39; genereert het originaliteitsrapport onmiddellijk wanneer een student werk indient. Als deze optie aangevinkt is, zullen uw studenten werk niet opnieuw kunnen indienen voor de opdracht.<br /><br />Selecteer de optie &#39;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#39; om opnieuw indienen toe te staan. Dit geeft studenten de mogelijkheid papers continu opnieuw in te dienen tot de inleverdatum. Het kan maximaal 24 uur duren om originaliteitsrapporten te verwerken voor opnieuw ingediende inzendingen.<br /><br />Met de optie &#39;&#39;.$string[&#39;genduedate&#39;].&#39;&#39; wordt er alleen een originaliteitsrapport gegenereerd op de inleverdatum van de opdracht. Deze instelling zorgt ervoor dat alle papers die worden ingediend voor de opdracht met elkaar worden vergeleken wanneer de originaliteitsrapporten worden aangemaakt.';
 $string['resubmission'] = 'Opnieuw indienen';
 $string['resubmissiongradewarn'] = 'Opnieuw indienen is toegestaan ​​voor deze opdracht tot de inleverdatum voorbij is. Alle opmerkingen zullen worden verwijderd wanneer of indien de paper opnieuw wordt ingediend. Wilt u doorgaan?';
 $string['resubmissiongradewarnaware'] = 'Houd er rekening mee dat alle opmerkingen worden verwijderd als een paper opnieuw wordt ingediend.';
@@ -140,7 +138,6 @@ $string['turnitinaccountid_desc'] = '<b>[Vereist]</b><br />Voer de ID van uw Tur
 $string['turnitinanon'] = 'Anonieme Beoordeling';
 $string['turnitinanon_help'] = 'U kunt uw Turnitin-opdracht configureren om Anonieme Beoordeling te gebruiken door deze waarde in te stellen op &#39;Ja&#39;. Wanneer anonieme beoordeling eenmaal is ingeschakeld voor een opdracht kan het niet uitgeschakeld worden.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>[Vereist]</b><br />Voer de Turnitin API URL in<br /><i>(bijv. https://api.turnitin.com)<br />(bijv. https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = 'Als u papers verwijdert, worden ze van uw lijst met inzendingen en uit uw inbox gehaald, maar worden ze niet volledig uit de Turnitin-database verwijderd. Weet u zeker dat u deze inzending wilt verwijderen? Deze actie kan niet ongedaan gemaakt worden.';
 $string['turnitindeletionerror'] = 'Verwijderen van Turnitin-inzending mislukt. De lokale Moodle-kopie is verwijderd, maar de inzending in Turnitin kon niet verwijderd worden.';
 $string['turnitinenrolstudents'] = 'Alle studenten inschrijven';
@@ -259,7 +256,6 @@ $string['selectcoursecategory'] = 'Cursuscategorie selecteren';
 $string['module'] = 'Module';
 $string['source'] = 'Bron';
 $string['similarity'] = 'Similariteit';
-$string['turnitinula'] = 'U moet de nieuwste Turnitin Gebruikersovereenkomst accepteren voor u werk kunt indienen. Klik hier om de overeenkomst te lezen en accepteren.';
 $string['moodlelinked'] = 'Gekoppeld aan Moodle';
 $string['coursegettiierror'] = 'Kon geen cursusgegevens krijgen van Turnitin';
 $string['savecourseenddateerror'] = 'Er is een fout opgetreden bij een poging een nieuwe einddatum voor de cursus op te slaan in Turnitin';
@@ -446,8 +442,7 @@ $string['noxmlwriterlibrary'] = 'Om deze plugin te gebruiken moet u de PHP XMLWr
 $string['checkupgrade'] = 'Controleren op beschikbare upgrades';
 $string['checkingupgrade'] = 'Controleren op beschikbare upgrades';
 $string['usinglatest'] = 'U gebruikt de nieuwste versie!';
-$string['useturnitin_mod'] = 'Turnitin inschakelen voor {a}';
-$string['usemoodlecert'] = 'Moodle SSL-certificaat gebruiken';
+$string['useturnitin_mod'] = 'Turnitin inschakelen voor {$a}';
 $string['errorcode1'] = 'Dit bestand bevat niet genoeg content om Turnitin in staat te stellen een originaliteitsrapport te genereren.';
 $string['errorcode2'] = 'Dit bestand kan niet worden ingediend bij Turnitin omdat het de maximaal toegestane grootte van {$a} overschrijdt';
 $string['notorcapable'] = 'Het is niet mogelijk om een originaliteitsrapport te genereren voor dit bestand.';
@@ -469,3 +464,35 @@ $string['pp_classcreationerror'] = 'Deze cursus kon niet worden aangemaakt op Tu
 $string['pp_assignmentsubmiterror'] = 'Er is een probleem opgetreden met het dupliceren van uw module in Turnitin waardoor er geen inzendingen kunnen worden ingediend. Raadpleeg uw API-registratiegegevens voor meer informatie.';
 $string['listsubmissions'] = 'Toon lijst van inzendingen';
 $string['viewsubmission'] = 'Bekijk inzendingen';
+$string['listsubmissionsdesc'] = 'Gebruiker heeft de lijst met inzendingen voor deze cursus bekeken';
+$string['viewsubmissiondesc'] = 'Gebruiker heeft inzending bekeken';
+$string['addsubmissiondesc'] = 'Gebruiker heeft inzending toegevoegd';
+$string['deletesubmissiondesc'] = 'Gebruiker heeft inzending verwijderd';
+$string['turnitinrepositoryoptions'] = 'Opslag voor opdrachten bij papers';
+$string['turnitinrepositoryoptions_desc'] = 'Kies de opslagopties voor Turnitin-opdrachten.<br /><i>(Een instellingsopslag is alleen beschikbaar voor diegenen die deze functie hebben ingeschakeld voor hun account)</i>';
+$string['turnitinrepositoryoptions_help'] = 'Gebruik deze instelling om te opslagopties te wijzigen die beschikbaar zijn op het configuratiescherm van de opdracht.<br /><i>(Een instellingsopslag is alleen beschikbaar voor diegenen die deze functie hebben ingeschakeld voor hun account)</i>';
+$string['repositoryoptions_0'] = 'Standaardopslagopties voor docenten inschakelen';
+$string['repositoryoptions_1'] = 'Uitgebreide opslagopties voor docenten inschakelen';
+$string['repositoryoptions_2'] = 'Dien alle papers in bij de standaardopslag';
+$string['repositoryoptions_3'] = 'Dien geen papers in bij een opslag';
+$string['turnitinula_btn'] = 'Klik hier om de overeenkomst te lezen en accepteren.';
+$string['turnitinula'] = 'U moet de laatste Turnitin-gebruikersovereenkomst accepteren voor u een inzending kunt indienen.';
+$string['upgradenotavailable'] = 'Geen upgrade beschikbaar';
+$string['turnitintoolofflineerror'] = 'Er is een tijdelijke fout opgetreden. Probeer het later opnieuw.';
+$string['offlinestatus'] = 'Turnitin is offline. (De variabele $CFG->tiioffline is ingesteld op &#39;true&#39;.)';
+$string['disableanonconfirm'] = 'Deze handeling zal anonieme opmerkingen permanent uitschakelen voor deze opdracht. Weet u het zeker?';
+$string['uniquepartname'] = 'Naam van het deel moet uniek zijn';
+$string['closebutton'] = 'Sluiten';
+$string['reportgenspeed_help'] = 'Er zijn drie opties voor de instellingen van deze opdracht: &#39;Genereer rapporten onmiddellijk (opnieuw indienen is niet toegestaan)&#39;, &#39;Genereer rapporten onmiddellijk (opnieuw indienen is toegestaan tot de inleverdatum)&#39;, en &#39;Genereer rapporten op de inleverdatum (opnieuw indienen is toegestaan tot de inleverdatum)&#39;<br /><br />Bij de optie &#39;Genereer rapporten onmiddellijk (opnieuw indienen is niet toegestaan)&#39; wordt het originaliteitsrapport onmiddellijk gegenereerd als een student werk indient. Als deze optie is geselecteerd, kunnen uw studenten geen werk opnieuw indienen voor deze opdracht.<br /><br />Om opnieuw indienen toe te staan selecteert u de optie &#39;Genereer rapporten onmiddellijk (opnieuw indienen is toegestaan tot de inleverdatum)&#39;. Deze optie stelt studenten in staat papers meerdere keren opnieuw in te dienen tot de inleverdatum. De verwerking van originaliteitsrapporten voor opnieuw ingediend werk kan 24 uur in beslag nemen..<br /><br />Bij de optie &#39;Genereer rapporten op de inleverdatum (opnieuw indienen is toegestaan tot de inleverdatum)&#39; wordt er alleen een originaliteitsrapport gegenereerd op de inleverdatum van de opdracht. Deze instelling zorgt ervoor dat alle papers die worden ingediend voor de opdracht met elkaar worden vergeleken wanneer de originaliteitsrapporten worden aangemaakt.';
+$string['submissiondate'] = 'Datum van inzending';
+$string['receiptassignmenttitle'] = 'Titel van opdracht';
+$string['refid'] = 'Ref. nr.';
+$string['turnitinpaperid'] = 'Turnitin paper-ID';
+$string['submissionauthor'] = 'Auteur van inzending';
+$string['receiptparagraph'] = 'Dit ontvangstbewijs geeft aan dat Turnitin uw paper heeft ontvangen. Hieronder vindt u de ontvangstinformatie betreffende uw inzending.';
+$string['objectid'] = 'Turnitin paper-ID';
+$string['ppanonmarkingnote'] = 'NB: anonieme opmerkingen zijn alleen van toepassing op Turnitin GradeMark. Deze worden bepaald door de publicatiedatum van de opdracht binnen Turnitin. Turnitin gebruikt een &#39;verborgen tot&#39;-datum als de publicatiedatum, die kan worden ingesteld door het cijfer te bewerken in het cijferboekrapport van de cursus.';
+$string['anonalert'] = 'Uw publicatiedatum ligt voor de huidige datum. Als u deze datum opslaat, worden anonieme opmerkingen voor deze opdracht permanent uitgeschakeld.';
+$string['turnitinapiurl_desc'] = '<b>[Vereist]</b><br />Selecteer een Turnitin API URL';
+$string['tii_submission_failure'] = 'Neem contact op met uw privédocent of Moodle-beheerder voor verdere informatie';
+$string['turnitinrefreshingsubmissions'] = 'Inzendingen bijwerken';

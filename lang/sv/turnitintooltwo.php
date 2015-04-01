@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012413
-// Date: 2015-02-09
+// Version: 2015040101
+// Date: 2015-04-01
 // Language: sv
 
 $string['addsubmission'] = 'Lägg Till Inlämning';
@@ -65,7 +65,6 @@ $string['nosubmissions'] = 'Inga inlämningar har gjorts';
 $string['notavailableyet'] = 'Inte tillgänglig';
 $string['numberofparts'] = 'Antal Delar';
 $string['numberofparts_help'] = 'Gör det möjligt att skapa en uppgift med flera delar, enskilda användare kan lämna in ett arbete till varje del.';
-$string['objectid'] = 'Uppsats-ID';
 $string['overallgrade'] = 'Sammanlagt Betyg';
 $string['overallgrade_help'] = 'Det sammanlagda betyget avgör det maximalt tillåtna betyget för den samlade uppgiften. Varje del av en uppgift har en maximal poäng tilldelad, vilket används för att proportionellt fördela betygen i syfte att fastställa det sammanlagda betyget.';
 $string['partdberror'] = 'Det uppstod ett problem med att skriva in Del {$a} i databasen<br />';
@@ -90,7 +89,6 @@ $string['proxyurl_desc'] = '<b>[Optional]</b><br />Om din server använder en Pr
 $string['proxyuser'] = 'Proxy Användarnamn';
 $string['proxyuser_desc'] = '<b>[Valfritt]</b><br />Om din proxy kräver autentisering ange användarnamnet här.';
 $string['reportgenspeed'] = 'Rapportera Generationshastighet';
-$string['reportgenspeed_help'] = 'Det finns tre alternativ för denna uppgiftsinställning: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;, och &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />Alternativet &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; skapar en Originalitetsrapport direkt när en student gör en inlämning. Om du väljer detta alternativ kan dina studenter inte återinlämna till uppgiften.<br /><br />För att tillåta återinlämningar, välj &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; alternativet. Detta gör det möjligt för studenterna att kontinuerligt återinlämna uppsatser till uppgiften fram till förfallodagen. Det kan dröja upp till 24 timmar att bearbeta Originalitetsrapporter för återinlämningar.<br /><br />Alternativet &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; skapar en Originalitetsrapport endast på uppgiftens förfallodag. Denna inställning kommer att göra så alla uppsatser som lämnas in till uppgiften jämförs mot varandra när Originalitetsrapporterna skapas.';
 $string['resubmission'] = 'Återinlämning';
 $string['resubmissiongradewarn'] = 'Återinlämningar är tillåtna för denna uppgift fram till att förfallodagen passerar. Observera att alla eventuella kommentarer kommer att raderas ifall uppsatsen återinlämnas. Vill du fortsätta?';
 $string['resubmissiongradewarnaware'] = 'Observera att om denna återinlämning genomförs kommer alla eventuella kommentarer att raderas.';
@@ -140,7 +138,6 @@ $string['turnitinaccountid_desc'] = '<b>[Obligatoriskt]</b><br />Ange ditt Prim�
 $string['turnitinanon'] = 'Anonyma Kommentarer';
 $string['turnitinanon_help'] = 'Du kan konfigurera din Turnitin uppgift till att använda Anonyma Kommentarer genom att sätta det här värdet till Ja. När anonyma kommentarer väl har aktiverats för en uppgift kan det inte inaktiveras.';
 $string['turnitinapiurl'] = 'Turnitin API-URL';
-$string['turnitinapiurl_desc'] = '<b>[Obligatoriskt]</b><br />Ange Turnitin API-URL:en<br /><i>(t.ex. https://api.turnitin.com)<br />(t.ex. https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = 'Radering av uppsatser tar bort dem från din inlämningslista och inkorg, men tar inte\nbort dem helt från Turnitins databas.\n\nÄr du säker på att du vill radera denna inlämning? Denna åtgärd kan inte ångras.';
 $string['turnitindeletionerror'] = 'Radering av inlämning för Turnitin misslyckades. Den lokala Moodle-kopian har tagits bort men inlämningen i Turnitin kunde inte raderas.';
 $string['turnitinenrolstudents'] = 'Registrera Alla Studenter';
@@ -259,7 +256,6 @@ $string['selectcoursecategory'] = 'Välj Kurskategori';
 $string['module'] = 'Modul';
 $string['source'] = 'Källa';
 $string['similarity'] = 'Likhet';
-$string['turnitinula'] = 'Du måste acceptera Turnitins senaste användaravtal innan du kan göra en inlämning. Var god klicka här för att läsa och acceptera avtalet.';
 $string['moodlelinked'] = 'Ansluten till Moodle';
 $string['coursegettiierror'] = 'Kunde inte hämta kursdata från Turnitin';
 $string['savecourseenddateerror'] = 'Det uppstod ett fel vid försök att spara ett nytt slutdatum för kursen i Turnitin';
@@ -447,8 +443,7 @@ $string['noxmlwriterlibrary'] = 'Du måste ha PHP XMLWriter-tillägget installer
 $string['checkupgrade'] = 'Sök efter tillgängliga uppgraderingar';
 $string['checkingupgrade'] = 'Söker efter tillgängliga uppgraderingar';
 $string['usinglatest'] = 'Du har den senaste versionen!';
-$string['useturnitin_mod'] = 'Aktivera Turnitin för {a}';
-$string['usemoodlecert'] = 'Använd Moodle SSL-certifikat';
+$string['useturnitin_mod'] = 'Aktivera Turnitin för {$a}';
 $string['errorcode1'] = 'Filens innehåll är inte tillräckligt för att skapa en originalitetsrapport.';
 $string['errorcode2'] = 'Den här filen kommer inte att skickas till Turnitin eftersom den överstiger högsta tillåtna storlek.';
 $string['notorcapable'] = 'Det går inte att skapa en originalitetsrapport för den här filen.';
@@ -470,3 +465,35 @@ $string['pp_classcreationerror'] = 'Den här klassen kunde inte skapas i Turniti
 $string['pp_assignmentsubmiterror'] = 'Det uppstod ett fel när din modul skulle kopieras i Turnitin vilket förhindrar inlämning av uppgifter. Hänvisa till dina API-loggar för mer information.';
 $string['listsubmissions'] = 'Lista inlämningar';
 $string['viewsubmission'] = 'Visa inlämning';
+$string['listsubmissionsdesc'] = 'Användaren visade listan över inlämningsuppgifter för kursen';
+$string['viewsubmissiondesc'] = 'Användaren visade inlämningsuppgift';
+$string['addsubmissiondesc'] = 'Användaren lade till inlämningsuppgift';
+$string['deletesubmissiondesc'] = 'Användaren tog bort inlämningsuppgiften';
+$string['turnitinrepositoryoptions'] = 'Arkiv för uppgifter';
+$string['turnitinrepositoryoptions_desc'] = 'Välj arkivalternativen för Turnitin-uppgifter. <br /><i>(En institutions arkiv är endast tillgängligt för den som har det aktiverat på sitt konto)</i>';
+$string['turnitinrepositoryoptions_help'] = 'Använd denna inställning för att ändra de arkivalternativ som finns tillgängliga på skärmen för uppgiftskonfigurering.<br /><i>(En institutions arkiv är endast tillgängligt för den som har det aktiverat på sitt konto)</i>';
+$string['repositoryoptions_0'] = 'Aktivera standardarkiveringsalternativ för lärare';
+$string['repositoryoptions_1'] = 'Aktivera utvidgade arkiveringsalternativ för lärare';
+$string['repositoryoptions_2'] = 'Skicka alla uppsatser till standardarkivet';
+$string['repositoryoptions_3'] = 'Skicka inte in några uppsatser till ett arkiv';
+$string['turnitinula_btn'] = 'Klicka här för att läsa igenom och godkänna avtalet.';
+$string['turnitinula'] = 'Du måste godkänna det senaste användaravtalet för Turnitin innan du kan lämna in en uppgift.';
+$string['upgradenotavailable'] = 'Ingen uppgradering tillgänglig';
+$string['turnitintoolofflineerror'] = 'Vi har ett tillfälligt problem. Försök igen om en liten stund.';
+$string['offlinestatus'] = 'Turnitin är frånkopplat. (Variabeln $CFG->tiioffline är inställd som sann.)';
+$string['disableanonconfirm'] = 'Om du gör detta inaktiveras anonym betygsättning av uppgiften permanent. Är du säker?';
+$string['uniquepartname'] = 'Delnamnet måste vara unikt';
+$string['closebutton'] = 'Stäng';
+$string['reportgenspeed_help'] = 'Det finns tre alternativ för denna uppgiftsinställning: ”Skapa rapporter omedelbart (återinlämning är ej tillåtet)”, ”Skapa rapporter omedelbart (återinlämning är tillåtet fram till slutdatumet)” samt ”Skapa rapporter på slutdatumet (återinlämning är tillåtet fram till slutdatumet)”<br /><br />Alternativet ”Skapa rapporter omedelbart (återinlämning är ej tillåtet)” skapar originalrapporten direkt när en student skickar in en inlämningsuppgift. När detta alternativ är markerat kan dina studenter inte återinlämna en uppgift.<br /><br />Om du vill tillåta återinlämningar markerar du alternativet ”Skapa rapporter omedelbart (återinlämning är tillåtet fram till slutdatumet)”. Detta gör att studenterna kan skicka in uppsatser till uppgiften fortlöpande ända fram till slutdatumet. Det kan ta upp till ett dygn att behandla originalrapporter för återinlämningar. <br /><br />Alternativet ”Skapa rapporter på slutdatumet (återinlämning är tillåtet fram till slutdatumet)” skapar enbart en originalrapport på uppgiftens slutdatum. Denna inställning gör så att alla uppsatser som skickas in till uppgiften jämförs med varandra när originalrapporterna skapas.';
+$string['submissiondate'] = 'Inlämningsdatum';
+$string['receiptassignmenttitle'] = 'Uppgiftstitel';
+$string['refid'] = 'Ref. ID';
+$string['turnitinpaperid'] = 'Turnitins uppsats-ID';
+$string['submissionauthor'] = 'Inlämningsuppgiftens författare';
+$string['receiptparagraph'] = 'Detta kvitto visar att din uppsats har tagits emot i Turnitin. Nedan hittar du kvittoinformationen om din inlämningsuppgift.';
+$string['objectid'] = 'Turnitins uppsats-ID';
+$string['ppanonmarkingnote'] = 'Anteckning: Anonym betygsättning används endast för Tirnitin GradeMark. Den styrs av inlämningsuppgiftens inlämningsdatum i Turnitin. I Turnitin används ”dold till”-datumet som inlämningsdatum. Det går att ställa in genom att man redigerar betygsposten i kursgraderingsrapporten.';
+$string['anonalert'] = 'Ditt inlämningsdatum infaller före nuvarande tid. Detta inaktiverar anonym betygsättning för uppgiften permanent om du sparar.';
+$string['turnitinapiurl_desc'] = '<b>[Obligatorisk]</b><br />Välj en Turnitin API-URL';
+$string['tii_submission_failure'] = 'Vänd dig till din handledare eller Moodle-administratör för mer information.';
+$string['turnitinrefreshingsubmissions'] = 'Uppdaterar inlämningar';

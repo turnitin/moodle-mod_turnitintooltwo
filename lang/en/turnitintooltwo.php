@@ -1,9 +1,8 @@
 <?php
-// Version: 2014012413
-// Date: 2015-02-09
+// Version: 2015040101
+// Date: 2015-04-01
 // Language: en
 
-$string['anonalert'] = 'Your post date is before your current time, this will permanently disable anonymous marking for this assignment if you save this.';
 $string['addsubmission'] = 'Add Submission';
 $string['allowlate'] = 'Allow Submissions after the Due Date';
 $string['allsubmissions'] = 'Submission Inbox';
@@ -137,7 +136,6 @@ $string['title'] = 'Title';
 $string['turnitinaccountid'] = 'Turnitin Account ID';
 $string['turnitinaccountid_desc'] = '<b>[Required]</b><br />Enter your Turnitin Primary Account ID';
 $string['turnitinanon'] = 'Anonymous Marking';
-$string['turnitinanon_help'] = 'You can configure your Turnitin assignment to use Anonymous Marking by setting this value to Yes. Once a submission is made anonymous marking cannot be disabled.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
 $string['turnitindeleteconfirm'] = 'Deleting papers removes them from your submissions list and inbox but does not completely\nremove them from the Turnitin database.\n\nAre you sure you want to delete this submission? This action cannot be undone.';
 $string['turnitindeletionerror'] = 'Turnitin submission deletion failed. The local Moodle copy was removed but the submission in Turnitin could not be deleted.';
@@ -246,7 +244,7 @@ $string['migrationcoursegeterror'] = 'Unable to get any of the classes from Turn
 $string['migrationassignmentgeterror'] = 'Unable to get any of the assignments from Turnitin';
 $string['getassignmenterror'] = 'Could not get migration assignments from Turnitin';
 $string['checkupdateavailableerror'] = 'Could not check for Moodle Direct version update';
-$string['maxmarkserror'] = 'Maximum Marks must be an integer value between 0 and 100';
+$string['maxmarkserror'] = 'Maximum Marks must be between 0 and 100';
 $string['nosubmissiondataavailable'] = 'No other submission data available';
 $string['nointegration'] = 'No Integration';
 $string['testingconnection'] = 'Testing Connection to Turnitin';
@@ -364,6 +362,8 @@ $string['defaultassignmenttiititle'] = 'Assignment from Turnitin';
 $string['revealdesc'] = 'Please give a reason below for unmasking a students name.';
 $string['noreason'] = 'No reason specified';
 $string['unanonymiseerror'] = 'There was an error when attempting to reveal the name of a student';
+$string['digitalreceipt'] = 'Digital Receipt';
+$string['viewdigitalreceipt'] = 'View Digital Receipt';
 $string['noscript'] = 'Turnitin requires Javascript but your browser does not have it enabled. Please enable Javascript in your browser to enable you to use the full functionality of Turnitin.';
 $string['noscriptsummary'] = 'Turnitin requires Javascript but your browser does not have it enabled. You will not be able to access Turnitin without it enabled.';
 $string['noscriptula'] = '(As you do not have javascript enabled you will have to manually refresh this page before you can make a submission after accepting the Turnitin User Agreement)';
@@ -484,20 +484,19 @@ $string['disableanonconfirm'] = 'Doing this will permanently disable anonymous m
 $string['uniquepartname'] = 'Part name must be unique';
 $string['closebutton'] = 'Close';
 $string['reportgenspeed_help'] = 'There are three options for this assignment setting: &#39;Generate reports immediately (resubmissions are not allowed)&#39;, &#39;Generate reports immediately (resubmissions are allowed until due date)&#39;, and &#39;Generate reports on due date (resubmissions are allowed until due date)&#39;<br /><br />The option &#39;Generate reports immediately (resubmissions are not allowed)&#39; generates the Originality Report immediately when a student makes a submission. With this option selected your students will not be able to resubmit to the assignment.<br /><br />To allow resubmissions, select &#39;Generate reports immediately (resubmissions are allowed until due date)&#39; option. This allows students to continuously resubmit papers to the assignment until the due date. It may take up to 24 hours to process Originality Reports for resubmissions.<br /><br />The option &#39;Generate reports on due date (resubmissions are allowed until due date)&#39; will only generate an Originality Report on the assignment&#39;s due date. This setting will make it so all papers submitted to the assignment will be compared against each other when the Originality Reports are created.';
-$string['viewdigitalreceipt'] = 'View Digital Receipt';
 $string['submissiondate'] = 'Submission Date';
 $string['receiptassignmenttitle'] = 'Assignment Title';
-$string['refid'] = 'Ref ID';
+$string['refid'] = 'Ref. ID';
 $string['turnitinpaperid'] = 'Turnitin Paper ID';
 $string['submissionauthor'] = 'Submission Author';
-$string['print'] = 'Print';
-$string['digitalreceipt'] = 'Digital Receipt';
 $string['receiptparagraph'] = 'This receipt ackowledges that Turnitin received your paper. Below you will find the receipt information regarding your submission.';
 $string['objectid'] = 'Turnitin Paper ID';
 $string['ppanonmarkingnote'] = 'Note: Anonymous Marking only applies to Turnitin GradeMark. It is controlled by the assignment post date within Turnitin. Turnitin will use the &#39;hidden until&#39; date as the post date, which can be set by editing the grade item in the Course gradebook report.';
+$string['anonalert'] = 'Your post date is before your current time, this will permanently disable anonymous marking for this assignment if you save this.';
 $string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Select a Turnitin API URL';
 $string['tii_submission_failure'] = 'Please consult your tutor or Moodle administrator for further details';
 $string['turnitinrefreshingsubmissions'] = 'Refreshing Submissions';
+$string['turnitinanon_help'] = 'You can configure your Turnitin assignment to use Anonymous Marking by setting this value to Yes. Once a submission is made anonymous marking cannot be disabled.';
 $string['locked_message'] = 'Locked message';
 $string['locked_message_help'] = 'If any settings are locked, this message is shown to say why.';
 $string['locked_message_default'] = 'This setting is locked at the site level';

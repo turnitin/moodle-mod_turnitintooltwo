@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012413
-// Date: 2015-02-09
+// Version: 2015040101
+// Date: 2015-04-01
 // Language: cs
 
 $string['addsubmission'] = 'Přidat odevzdání';
@@ -65,7 +65,6 @@ $string['nosubmissions'] = 'Nebyla provedena žádná odevzdání';
 $string['notavailableyet'] = 'Není k dispozici';
 $string['numberofparts'] = 'Počet částí';
 $string['numberofparts_help'] = 'Umožňuje vytvoření úkolu s více částmi; jednotliví uživatelé mohou odevzdat jedno dílo u každé části.';
-$string['objectid'] = 'ID práce';
 $string['overallgrade'] = 'Celkové hodnocení';
 $string['overallgrade_help'] = 'Celkové hodnocení stanovuje maximální povolené hodnocení za celý úkol. Každá část úkolu má přidělenou maximální známku, která slouží k proporcionální distribuci známek za účelem stanovení celkového hodnocení.';
 $string['partdberror'] = 'Vyskytl se problém při zadávání Části {$a} do databáze<br />';
@@ -90,7 +89,6 @@ $string['proxyurl_desc'] = '<b>[Optional]</b><br />Pokud váš server používá
 $string['proxyuser'] = 'Uživatelské jméno proxy';
 $string['proxyuser_desc'] = '<b>[Optional]</b><br />Pokud vaše proxy vyžaduje Ověření, zadejte nyní své uživatelské jméno.';
 $string['reportgenspeed'] = 'Rychlost generování zpráv';
-$string['reportgenspeed_help'] = 'Pro toto nastavení úkolu existují tři možnosti: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; a &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br /> Možnost &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; vygeneruje zprávu o původnosti okamžitě, jakmile student odevzdá svou práci. Pokud je vybrána tato volba, vaši studenti nebudou moci opětovně odevzdat práce v úkolu.<br /><br /> Chcete-li umožnit opětovné odevzdání, zvolte možnost &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; . Tato volba umožňuje studentům nepřetržité opětovné odevzdávání prací k úkolu až do termínu odevzdání. Zpracování zpráv o původnosti u opětovného odevzdání může trvat až 24 hodin.<br /><br /> Možnost &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; vygeneruje zprávu o původnosti už v den odevzdání úkolu. Toto nastavení znamená, že všechny odevzdané práce k úkolu budou vzájemně porovnány po vytvoření zpráv o původnosti.';
 $string['resubmission'] = 'Opětovná odevzdání';
 $string['resubmissiongradewarn'] = 'Opětovná odevzdání jsou pro tento úkol povolena až do vypršení termínu. Všechny známky budou po opětovném odevzdání práce smazány. Chcete pokračovat?';
 $string['resubmissiongradewarnaware'] = 'Uvědomte si prosím, že pokud je provedeno opětovné odevzdání, všechny známky budou smazány.';
@@ -140,7 +138,6 @@ $string['turnitinaccountid_desc'] = '<b>[Required]</b><br />Zadejte své hlavní
 $string['turnitinanon'] = 'Anonymní známkování';
 $string['turnitinanon_help'] = 'Svůj Turnitin úkol můžete nakonfigurovat na možnost anonymního známkování tak, že tuto hodnotu nastavíte na Ano. Jakmile je anonymní známkování u úkolu povoleno, není možné jej zakázat.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Zadejte Turnitin API URL<br /><i>(např. https://www.turnitin.com)<br />(např. https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = 'Smazáním prací dojde k jejich odstranění ze seznamu odevzdaných prací a schránky, ale z Turnitin databáze zcela nezmizí.\n\nJste si jist/a, že chcete smazat vybrané odevzdání? Tento krok nelze vrátit zpět.';
 $string['turnitindeletionerror'] = 'Smazání odevzdaných prací Turnitin se nezdařilo. Místní kopie Moodle byla odstraněna, ale odevzdané práce v systému Turnitin nebylo možné smazat.';
 $string['turnitinenrolstudents'] = 'Zapsat všechny studenty';
@@ -259,7 +256,6 @@ $string['selectcoursecategory'] = 'Zvolte kategorii kurzu';
 $string['module'] = 'Modul';
 $string['source'] = 'Zdroj';
 $string['similarity'] = 'Podobnost';
-$string['turnitinula'] = 'Než budete moci učinit odevzdání, musíte přijmout nejnovější Podmínky pro uživatele Turnitin. Klikněte prosím sem, pokud si chcete přečíst a přijmout podmínky.';
 $string['moodlelinked'] = 'Propojeno s Moodle';
 $string['coursegettiierror'] = 'Nelze získat údaje o kurzu ze systému Turnitin';
 $string['savecourseenddateerror'] = 'Došlo k chybě při ukládání nového data ukončení kurzu v systému Turnitin.';
@@ -447,8 +443,7 @@ $string['noxmlwriterlibrary'] = 'Chcete-li použít tento plugin, budete muset m
 $string['checkupgrade'] = 'Zkontrolujte, zda je k dispozici aktualizace';
 $string['checkingupgrade'] = 'Kontrola dostupných aktualizací';
 $string['usinglatest'] = 'Používáte nejnovější verzi!';
-$string['useturnitin_mod'] = 'Aktivovat Turnitin pro {a}';
-$string['usemoodlecert'] = 'Použít certifikát Moodle SSL';
+$string['useturnitin_mod'] = 'Aktivovat Turnitin pro {$a}';
 $string['errorcode1'] = 'Tento soubor nemá dostatek obsahu, aby mohl Turnitin vygenerovat zprávu o původnosti.';
 $string['errorcode2'] = 'Soubor nebude předán do systému Turnitin, protože přesahuje maximální povolenou velikost.';
 $string['notorcapable'] = 'Pro tento soubor nelze vytvořit zprávu o původnosti.';
@@ -470,3 +465,35 @@ $string['pp_classcreationerror'] = 'Tuto třídu nelze v systému Turnitin vytvo
 $string['pp_assignmentsubmiterror'] = 'Při replikaci vašeho modulu v systému Turnitin došlo k problému, který zabránil odeslání práce. Další informace najdete v API protokolu.';
 $string['listsubmissions'] = 'Seznam odevzdaných prací';
 $string['viewsubmission'] = 'Zobrazit odevzdané práce';
+$string['listsubmissionsdesc'] = 'Uživatel si zobrazil seznam odevzdaných prací během kurzu';
+$string['viewsubmissiondesc'] = 'Uživatel si prohlédl odevzdané práce';
+$string['addsubmissiondesc'] = 'Uživatel přidal odevzdanou práci';
+$string['deletesubmissiondesc'] = 'Uživatel vymazal odevzdanou práci';
+$string['turnitinrepositoryoptions'] = 'Úkoly archivu prací';
+$string['turnitinrepositoryoptions_desc'] = 'Zvolte možnosti archivu pro úkoly Turnitin. <br /><i>(Archiv instituce mají k dispozici pouze ti, kdo si ho aktivovali u svého účtu)</i>';
+$string['turnitinrepositoryoptions_help'] = 'Použijte toto nastavení ke změně možností dostupných na obrazovce nastavení úkolu. <br /><i>(Archiv instituce mají k dispozici pouze ti, kdo si ho aktivovali u svého účtu)</i>';
+$string['repositoryoptions_0'] = 'Dát instruktorovi standardní volby archivu';
+$string['repositoryoptions_1'] = 'Aktivovat instruktorské rozšířené možnosti archivu';
+$string['repositoryoptions_2'] = 'Odevzdat všechny práce do standardního archivu';
+$string['repositoryoptions_3'] = 'Neodesílejte žádné práce do archivu';
+$string['turnitinula_btn'] = 'Klikněte prosím sem, pokud si chcete přečíst a přijmout podmínky.';
+$string['turnitinula'] = 'Než budete moci učinit odevzdání, musíte přijmout nejnovější Podmínky pro uživatele Turnitin.';
+$string['upgradenotavailable'] = 'Žádná nová verze není k dispozici';
+$string['turnitintoolofflineerror'] = 'Vyskytl se dočasný problém. Zkuste prosím za chvíli znovu.';
+$string['offlinestatus'] = 'Turnitin je offline. (Proměnná $CFG->tiioffline byla nastavena na „true“ (pravda).)';
+$string['disableanonconfirm'] = 'Tímto trvale deaktivujete anonymní známkování tohoto úkolu. Určitě to chcete udělat?';
+$string['uniquepartname'] = 'Název části musí být jedinečný';
+$string['closebutton'] = 'Zavřít';
+$string['reportgenspeed_help'] = 'Pro toto nastavení úkolu existují tři možnosti: „Generovat zprávy bezprostředně (opětovná odevzdání nejsou povolena)“, „Generovat zprávy bezprostředně (opětovná odevzdání jsou povolena až do termínu odevzdání)“ a „Generovat zprávy k termínu odevzdání (opětovná odevzdání jsou povolena až do termínu odevzdání)“.<br /><br />Možnost „Generovat zprávy bezprostředně (opětovná odevzdání nejsou povolena)“ generuje zprávu o původnosti okamžitě, jakmile student odevzdá práci. Pokud je vybrána tato volba, vaši studenti nebudou moci opětovně odevzdat práce v úkolu. <br /><br />Chcete-li umožnit opětovné odevzdání, zvolte možnost „Generovat zprávy bezprostředně (opětovná odevzdání jsou povolena až do termínu odevzdání)“. Tato volba umožňuje studentům nepřetržité opětovné odevzdání prací k úkolu až do termínu odevzdání. Zpracování zpráv o původnosti u opětovného odevzdání může trvat až 24 hodin.<br /><br /> Možnost „Generovat zprávy k termínu odevzdání (opětovná odevzdání jsou povolena až do termínu odevzdání)“ vygeneruje zprávu o původnosti až v poslední den lhůty na odevzdání úkolu. Toto nastavení znamená, že všechny odevzdané práce k úkolu budou vzájemně porovnány po vytvoření zpráv o původnosti.';
+$string['submissiondate'] = 'Datum odevzdání';
+$string['receiptassignmenttitle'] = 'Název úkolu';
+$string['refid'] = 'Ref. ID';
+$string['turnitinpaperid'] = 'ID práce v systému Turnitin';
+$string['submissionauthor'] = 'Autor odevzdané práce';
+$string['receiptparagraph'] = 'Tento doklad potvrzuje, že Turnitin přijal vaši práci. Níže najdete informace týkající se přijetí vaší práce:';
+$string['objectid'] = 'ID práce v systému Turnitin';
+$string['ppanonmarkingnote'] = 'Poznámka: Anonymní známkování se týká pouze systému Turnitin GradeMark. Je kontrolováno podle data podání práce v rámci systému Turnitin. Jako datum podání Turnitin použije datum „skryto až do“, které lze nastavit úpravou položky hodnocení ve zprávě klasifikace kurzu.';
+$string['anonalert'] = 'Vaše datum podání je před aktuálním datem. Tím bude při uložení trvale deaktivováno anonymní známkování tohoto úkolu.';
+$string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Vyberte Turnitin API URL';
+$string['tii_submission_failure'] = 'Další informace vám podá váš vyučující nebo správce systému Moodle.';
+$string['turnitinrefreshingsubmissions'] = 'Aktualizace odevzdaných prací';

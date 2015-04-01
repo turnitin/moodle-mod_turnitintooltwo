@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012413
-// Date: 2015-02-09
+// Version: 2015040101
+// Date: 2015-04-01
 // Language: ko
 
 $string['addsubmission'] = '제출물 추가';
@@ -65,7 +65,6 @@ $string['nosubmissions'] = '제출된 사항이 없습니다';
 $string['notavailableyet'] = '사용 불가';
 $string['numberofparts'] = '부분 수';
 $string['numberofparts_help'] = '다수 부분 과제의 생성을 허용합니다. 개인 사용자들이 각 부분에 대해 각각 한 가지를 작성하여 제출할 수 있습니다. ';
-$string['objectid'] = '보고서 ID ';
 $string['overallgrade'] = '전체 성적';
 $string['overallgrade_help'] = '전반 성적은 과제 전체에 대해 허용되는 최고 성적값에 의해 결정됩니다. 과제의 각 부분은 최고 채점한도가 배정되어 있어 적절한 비율로 성적을 배분하여 전반 성적을 결정합니다. ';
 $string['partdberror'] = ' {$a} 부분을 데이타베이스에 입력하는 데 문제가 발생하였습니다<br />';
@@ -90,7 +89,6 @@ $string['proxyurl_desc'] = '<b>[옵션]</b><br />귀하의 서버가 인터넷�
 $string['proxyuser'] = 'proxy 사용자 이름';
 $string['proxyuser_desc'] = '<b>[옵션]</b><br />귀하의 proxy 입증이 요구될 시, 사용자명을 여기에 입력하십시오.';
 $string['reportgenspeed'] = '보고서 생성 속도';
-$string['reportgenspeed_help'] = '본 과제 환경에는 세가지 옵션이 있습니다: &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;, 그리고 &#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />&#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; 옵션은 학생이 제출한 후 즉시 독창성 보고서를 생성합니다. 본 옵션의 경우, 학생들은 과제에 대해 재제출할 수 없습니다.<br /><br />재제출을 허용하려면 &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; 옵션을 선택하십시오. 이는 학생들이 마감일까지 과제에 대해 계속적으로 보고서를 재제출 하도록 허용합니다. 재제출물에 대한 독창성 보고서 생성은 24시간까지. 걸릴 수 있습니다<br /><br />&#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34; 옵션은 과제 마감일에만 독창성 보고서를 생성합니다. 본 환경은 독창성 보고서 생성 시, 과제에 대해 제출된 모든 보고서가 서로 비교검색되도록 합니다.';
 $string['resubmission'] = '재제출';
 $string['resubmissiongradewarn'] = '마감일이 지날 때까지 재제출이 허용됩니다. 보고서가 재제출 되는 경우 모든 채점사항이 삭제될 것입니다. 계속하시겠습니까?';
 $string['resubmissiongradewarnaware'] = '재제출을 할 경우, 모든 채점 사항이 삭제됨을 유의하십시오.';
@@ -140,7 +138,6 @@ $string['turnitinaccountid_desc'] = '<b>[필수]</b><br />Turnitin 주 계정 �
 $string['turnitinanon'] = '익명 채점';
 $string['turnitinanon_help'] = '이 항목을 &#34;예&#34; 로 지정함으로써 Turnitin 과제에 익명 채점을 사용히도록 지정할 수 있습니다. 일단 특정 과제에서 익명 채점이 활성화된 후에는 비활성화 될 수 없습니다.';
 $string['turnitinapiurl'] = 'Turnitin API URL';
-$string['turnitinapiurl_desc'] = '<b>[필수]</b><br />Turnitin API URL을 입력하십시오<br /><i>(예: https://api.turnitin.com)<br />(예: https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = '보고서를 삭제하는 것은 이를 제출 리스트와 수신함에서 제거하지만 이를 완전히 \nTurnitin 데이타베이스에서 제거하지는 않습니다.\n\n이 제출물을 삭제 하시겠습니까? 이는 되돌릴 수 없습니다. ';
 $string['turnitindeletionerror'] = 'Turnitin 제출물 삭제에 실패하였습니다.로컬 Moodle 복사본은 제거되었지만 Turnitin 상의 제출물을 삭제할 수 없었습니다.';
 $string['turnitinenrolstudents'] = '모든 학생 등록시키기';
@@ -259,7 +256,6 @@ $string['selectcoursecategory'] = '코스 카테고리 선택';
 $string['module'] = '모듈';
 $string['source'] = '출처';
 $string['similarity'] = '유사성';
-$string['turnitinula'] = '최신의 Turnitin 사용자 동의서에 동의하여야만 제출을 하실 수 있습니다. 여기를 클릭하여 동의문을 읽고 그에 동의하십시오.';
 $string['moodlelinked'] = 'Moodle과 연결됨';
 $string['coursegettiierror'] = 'Turnitin으로부터 코스 데이타를 가져올 수 없었음';
 $string['savecourseenddateerror'] = 'Turnitin에서 새로운 코스 완료일 저장을 시도하는 중 오류가 발생하였습니다';
@@ -446,8 +442,7 @@ $string['noxmlwriterlibrary'] = '이 플러그인을 사용하려면 PHP XMLWrit
 $string['checkupgrade'] = '사용 가능한 업그레이드 확인하기';
 $string['checkingupgrade'] = '사용 가능한 업그레이드 확인 중';
 $string['usinglatest'] = '최신 버전을 사용하고 있습니다!';
-$string['useturnitin_mod'] = '{a}를 위해 Turnitin을 활성화하기';
-$string['usemoodlecert'] = 'Moodle SSL 인증서 사용';
+$string['useturnitin_mod'] = '{$a}를 위해 Turnitin을 활성화하기';
 $string['errorcode1'] = '이 파일은 내용이 충분하지 않아서 Turnitin이 독창성 보고서를 생성할 수 없습니다.';
 $string['errorcode2'] = '이 파일은 크기 한도를 초과하기 때문에 Turnitin에 제출되지 않을 것입니다. ';
 $string['notorcapable'] = '이 파일에 대해 독창성 보고서를 생성할 수 없습니다.';
@@ -469,3 +464,35 @@ $string['pp_classcreationerror'] = '이 클래스는 Turnitin에서 생성되지
 $string['pp_assignmentsubmiterror'] = 'Turnitin에서 모듈 복제 중에 문제가 발생하여 제출이 안 되고 있습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
 $string['listsubmissions'] = '제출 목록';
 $string['viewsubmission'] = '제출 보기';
+$string['listsubmissionsdesc'] = '사용자가 과정 제출물 목록을 확인했습니다';
+$string['viewsubmissiondesc'] = '사용자가 제출물을 확인했습니다';
+$string['addsubmissiondesc'] = '사용자가 제출물을 추가했습니다';
+$string['deletesubmissiondesc'] = '사용자가 제출물을 삭제했습니다';
+$string['turnitinrepositoryoptions'] = '보고서 보관소 설정';
+$string['turnitinrepositoryoptions_desc'] = 'Turnitin Assignment의 보관소 옵션을 선택하십시오.<br /><i>(기관 사용자 계정이 활성화된 사용자만 기관 보관소 이용 가능)</i>';
+$string['turnitinrepositoryoptions_help'] = '과제 설정 화면에서 사용할 수 있는 보관소 옵션을 변경하려면 이 설정을 사용하십시오.<br /><i>(기관 사용자 계정이 활성화된 사용자만 기관 저장소 이용 가능)</i>';
+$string['repositoryoptions_0'] = '강사 표준 보관소 옵션 활성화';
+$string['repositoryoptions_1'] = '강사 확장 보관소 옵션 활성화';
+$string['repositoryoptions_2'] = '표준 보관소에 모든 보고서를 제출하십시오';
+$string['repositoryoptions_3'] = '보관소에 어떤 보고서도 제출하지 마십시오';
+$string['turnitinula_btn'] = '동의서를 읽고 수락하려면 여기를 클릭하십시오';
+$string['turnitinula'] = '제출하기 전에 최근 업데이트된 Turnitin 사용자 동의를 수락해야 합니다.';
+$string['upgradenotavailable'] = '업그레이드 불가';
+$string['turnitintoolofflineerror'] = '일시적인 문제가 발생했습니다. 잠시 후 다시 시도하십시오.';
+$string['offlinestatus'] = 'Turnitin은 오프라인으로 설정되었습니다. (변수 $CFG->tiioffline이 &#39;참&#39;으로 설정되었습니다.)';
+$string['disableanonconfirm'] = '이 경우 이 과제는 영구적으로 익명 표시를 할 수 없습니다. 계속하시겠습니까?';
+$string['uniquepartname'] = '파트명은 고유한 이름이어야 합니다';
+$string['closebutton'] = '닫기';
+$string['reportgenspeed_help'] = '과제물 설정을 위한 3가지 옵션: &#39;보고서 즉시 생성(재제출 허용되지 않음)&#39;, &#39;보고서 즉시 생성(기한까지 재제출 허용됨)&#39;, &#39;마감일 보고서 생성(기한까지 재제출 허용됨)&#39;<br /><br />&#39;보고서 즉시 생성(재제출 허용되지 안음)&#39; 옵션은 학생이 보고서를 제출하면 바로 독창성 보고서를 생성합니다. 이 옵션을 선택하면 학생들은 과제물을 다시 제출할 수 없습니다.<br /><br />재제출을 허용하려면 &#39;보고서 즉시 제출(기한까지 재제출이 허용됨)&#39;을 선택하십시오. 이 옵션을 선택하면 학생들이 기한까지 계속해서 과제 논문을 재제출할 수 있습니다. 재제출 시 독창성 보고서 처리 시간은 약 24시간 정도 걸릴 수 있습니다.<br /><br />&#39;마감일 보고서 생성(기한까지 재제출 허용됨)&#39; 옵션을 선택하면 제출 마감일에만 독창성 보고서를 생성합니다. 이 설정으로 독창성 보고서가 생성되면 제출된 모든 보고서를 서로 비교할 수 있습니다.';
+$string['submissiondate'] = '제출일';
+$string['receiptassignmenttitle'] = '과제 주제';
+$string['refid'] = '참고문헌 ID';
+$string['turnitinpaperid'] = 'Turnitin 보고서 ID';
+$string['submissionauthor'] = '제출자';
+$string['receiptparagraph'] = '이 수령증은 Turnitin에서 귀하의 보고서를 받았음을 증명합니다. 다음에서 제출물의 접수 정보를 확인하실 수 있습니다.';
+$string['objectid'] = 'Turnitin 보고서 ID';
+$string['ppanonmarkingnote'] = '참고: Turnitin GradeMark는 익명 표시에만 사용할 수 있으며, Turnitin 내 과제 게시일에 따라 조절됩니다. Turnitin은 &#39;기한까지 숨겨진&#39; 날짜를 게시일로 사용하여 과정 성적표에 성적 항목을 수정하여 설정할 수 있습니다.';
+$string['anonalert'] = '게시일은 사용자의 현재 시간 이전이며, 한 번 저장하면 해당 과제는 익명 표시를 영구적으로 사용할 수 없습니다.';
+$string['turnitinapiurl_desc'] = '<b>[Required]</b><br />Turnitin API URL 선택';
+$string['tii_submission_failure'] = '자세한 내용은 담당 튜터나 Moodle 관리자와 상의하십시오.';
+$string['turnitinrefreshingsubmissions'] = '제출물 새로 고침';

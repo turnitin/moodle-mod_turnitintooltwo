@@ -1,6 +1,6 @@
 <?php
-// Version: 2014012413
-// Date: 2015-02-09
+// Version: 2015040101
+// Date: 2015-04-01
 // Language: es
 
 $string['addsubmission'] = 'Agregar Entrega';
@@ -65,7 +65,6 @@ $string['nosubmissions'] = 'No se ha hecho ninguna entrega';
 $string['notavailableyet'] = 'No disponible';
 $string['numberofparts'] = 'Número de Partes';
 $string['numberofparts_help'] = 'Permite crear un ejercicio de varias partes. Los usuarios pueden entregar un trabajo para cada parte. ';
-$string['objectid'] = 'Identificador del Trabajo';
 $string['overallgrade'] = 'Calificación General';
 $string['overallgrade_help'] = 'La nota general determina la nota máxima permitida; cada parte de un ejercicio tiene un número máximo de anotaciones permitidas las cuales son usadas para distribuir proporcionalmente las notas para determinar la nota general.';
 $string['partdberror'] = 'Ha ocurrido un problema al ingresar la parte {$a} en la base de datos<br />';
@@ -90,7 +89,6 @@ $string['proxyurl_desc'] = '<b>[Opcional]</b><br />Si tu servidor utiliza un Pro
 $string['proxyuser'] = 'Nombre de Usuario Proxy';
 $string['proxyuser_desc'] = '<b>[Opcional]</b><br />Si tu Proxy requiere autenticación, introduce el nombre del usuario aquí';
 $string['reportgenspeed'] = 'Rapidez de Generación del Informe';
-$string['reportgenspeed_help'] = 'Hay tres opciones para la configuración de este ejercicio:&#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34;, &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34; y&#34;&#39;.$string[&#39;genduedate&#39;].&#39;&#34;.<br /><br />La opción &#34;&#39;.$string[&#39;genimmediately1&#39;].&#39;&#34; genera el Informe de originalidad inmediatamente cuando un estudiantes realiza una entrega. Con esta opción seleccionada, tus estudiantes no podrán volver a hacer otra entrega al ejercicio. <br /><br />Para permitir segundas entregas, selecciona la opción &#34;&#39;.$string[&#39;genimmediately2&#39;].&#39;&#34;. Ésta permitirá a los estudiantes realizar segundas entregas contínuamente al ejercicio hasta la fecha de entrega. Los Informes de originalidad pueden tardar hasta 24 horas en procesarse en el caso de segundas entregas. <br /><br />';
 $string['resubmission'] = 'Reentrega ';
 $string['resubmissiongradewarn'] = 'Se permiten las reentregas para este ejercicio hasta que la fecha límite pase. Todas las anotaciones serán eliminadas si y cuando el trabajo sea vuelva a entregar. ¿Desea continuar?';
 $string['resubmissiongradewarnaware'] = 'Por favor, ten en cuenta que si se vuelve a hacer una entrega, se eliminará cualquier corrección.';
@@ -140,7 +138,6 @@ $string['turnitinaccountid_desc'] = '<b>[Requerido]</b><br />Introduce el identi
 $string['turnitinanon'] = 'Anotaciones Anónimas';
 $string['turnitinanon_help'] = 'Puedes configurar las Anotaciones Anónimas en los ejercicios Turnitin ajustando este valor a Sí. Las Anotaciones Anónimas no pueden ser deshabilitadas una vez se han habilitado en un ejercicio .';
 $string['turnitinapiurl'] = 'URL del API de Turnitin';
-$string['turnitinapiurl_desc'] = '<b>[Requerido]</b><br />Introduce el URL del API de Turnitin <br /><i>(e.g. https://api.turnitin.com)<br />(e.g. https://submit.ac.uk)</i>';
 $string['turnitindeleteconfirm'] = 'Eliminar trabajos los saca de tu lista de entregas y tu bandeja de entrada pero no los elimina \n por completo de la base de datos Turnitin. \n\n ¿Estás seguro que deseas elimirar esta entrega? Esta acción no es reversible.';
 $string['turnitindeletionerror'] = 'La eliminación de la entrega a Turnitin ha fallado. La copia local de Moodle ha sido eliminada pero la entrega a Turnitin no.';
 $string['turnitinenrolstudents'] = 'Inscribir a todos los estudiantes';
@@ -259,7 +256,6 @@ $string['selectcoursecategory'] = 'Selecciona la categoría del curso';
 $string['module'] = 'Módulo';
 $string['source'] = 'Fuente';
 $string['similarity'] = 'Similitud';
-$string['turnitinula'] = 'Debes aceptar el Acuerdo del usuario de Turnitin más reciente antes de poder realizar una entrega. Por favor, haz clic aquí para leer y aceptar el Acuerdo.';
 $string['moodlelinked'] = 'Enlazado a Moodle';
 $string['coursegettiierror'] = 'No se pudieron obtener los datos del curso de Turnitin';
 $string['savecourseenddateerror'] = 'Hubo un error cuando se intentó guardar una nueva fecha de fin de curso en Turnitin';
@@ -447,8 +443,7 @@ $string['noxmlwriterlibrary'] = 'Para utilizar este plugin necesitarás instalar
 $string['checkupgrade'] = 'Comprobar si hay una actualización disponible';
 $string['checkingupgrade'] = 'Comprobando si hay una actualización disponible';
 $string['usinglatest'] = '¡Estás utilizando la última versión!';
-$string['useturnitin_mod'] = 'Habilitar Turnitin para {a}';
-$string['usemoodlecert'] = 'Usar certificado Moodle SSL';
+$string['useturnitin_mod'] = 'Habilitar Turnitin para {$a}';
 $string['errorcode1'] = 'Este archivo no tiene suficiente contenido para que Turnitin pueda producirun Reporte de originalidad.';
 $string['errorcode2'] = 'Este archivo no se entregará a Turnitin ya que excede el tamaño máximo de {$a} permitido';
 $string['notorcapable'] = 'No es posible producir un Reporte de originalidad para este archivo.';
@@ -470,3 +465,35 @@ $string['pp_classcreationerror'] = 'Esta clase no ha podido crearse en Turnitin.
 $string['pp_assignmentsubmiterror'] = 'Hay un problema con la réplica de tu módulo en Turnitin que está bloqueando las entregas. Por favor, consulta turegistro API para más información';
 $string['listsubmissions'] = 'Lista de entregas';
 $string['viewsubmission'] = 'Ver entregas';
+$string['listsubmissionsdesc'] = 'El usuario ha visto la lista de entregas al curso';
+$string['viewsubmissiondesc'] = 'El usuario ha visto la entrega';
+$string['addsubmissiondesc'] = 'El usuario ha añadido una entrega';
+$string['deletesubmissiondesc'] = 'El usuario ha eliminado la entrega';
+$string['turnitinrepositoryoptions'] = 'Ejercicios del depósito de trabajos';
+$string['turnitinrepositoryoptions_desc'] = 'Elije las opciones de depósito para los ejercicios de Turnitin. <br /><i>(El depósito institucional sólo está disponible para aquellos que lo hayan habilitado en su cuenta)</i>';
+$string['turnitinrepositoryoptions_help'] = 'Utiliza este ajuste para cambiar las opciones del depósito disponibles en la pantalla de configuración del ejercicio. <br /><i>(El depósito institucional sólo está disponible para aquellos que lo hayan habilitado en su cuenta)</i>';
+$string['repositoryoptions_0'] = 'Habilitar las opciones estándar del depósito del instructor';
+$string['repositoryoptions_1'] = 'Habilitar las opciones ampliadas del depósito del instructor';
+$string['repositoryoptions_2'] = 'Entregar todos los trabajos al depósito estándar';
+$string['repositoryoptions_3'] = 'No entregar ningún trabajo al depósito';
+$string['turnitinula_btn'] = 'Por favor, haz clic aquí para leer y aceptar el acuerdo';
+$string['turnitinula'] = 'Debes aceptar el acuerdo del usuario de Turnitin más reciente antes de realizar una entrega.';
+$string['upgradenotavailable'] = 'No existe ninguna actualización disponible';
+$string['turnitintoolofflineerror'] = 'Estamos experimentando un problema temporal. Por favor, vuelve a intentarlo más tarde.';
+$string['offlinestatus'] = 'Turnitin se ha configurado fuera de conexión. (La variable $CFG->tiioffline se ha fijado en verdadera.)';
+$string['disableanonconfirm'] = 'Esta acción deshabilitará permanentemente la evaluación anónima en este ejercicio. ¿Estás seguro/a?';
+$string['uniquepartname'] = 'El nombre de la parte debe ser único';
+$string['closebutton'] = 'Cerrar';
+$string['reportgenspeed_help'] = 'Existen tres opciones para la configuración de este ejercicio: &#34;Generar reportes inmediatamente (las segundas entregas no están permitidas)&#34;, &#34;Generar reportes inmediatamente (las segundas entregas están permitidas hasta la fecha de entrega)&#34; y &#34;Generar reportes en la fecha de entrega (las segundas entregas están permitidas hasta la fecha de entrega)&#34;<br /><br />La opción &#34;Generar reportes inmediatamente (las segundas entregas no están permitidas)&#34; genera el Reporte de originalidad inmediatamente cuando un estudiante realiza una entrega. Con esta opción seleccionada, tus estudiantes no podrán volver a realizar entregas all ejercicio.<br /><br />Para permitir segundas entregas, selecciona la opción &#34;Generar reportes inmediatamente (las segundas entregas están permitidas hasta la fecha de entrega)&#34;. Esta opción permite a los estudiantes volver a realizar entregas al ejercicio hasta la fecha de entrega. El proceso de los Reportes de originalidad en ese caso puede tardar hasta 24 horas.<br /><br />La opción &#34;Generar reportes en la fecha de entrega (las segundas entregas están permitidas hasta la fecha de entrega)&#34; sólo generará un Reporte de originalidad en la fecha de entrega del ejercicio. Esta configuración hará que todos los trabajos entregados al ejercicio se comparen los unos a los otros cuando se creen los Reportes de originalidad.';
+$string['submissiondate'] = 'Fecha de entrega';
+$string['receiptassignmenttitle'] = 'Título del ejercicio';
+$string['refid'] = 'Identificador de referencia';
+$string['turnitinpaperid'] = 'Identificador del trabajo de Turnitin';
+$string['submissionauthor'] = 'Autor de la entrega';
+$string['receiptparagraph'] = 'Este recibo confirma que Turnitin ha recibido tu trabajo. Más abajo encontrarás la información del recibo perteneciente a tu entrega.';
+$string['objectid'] = 'Identificador del trabajo de Turnitin';
+$string['ppanonmarkingnote'] = 'Nota: La evaluación anónima aplica sólo a Turnitin GradeMark. Está regulada por la fecha publicación del ejercicio dentro de Turnitin. Turnitin utilizará la fecha &#34;oculto hasta&#34; como fecha de publicación, la cual puede fijarse editando la sección de las notas en el reporte del cuaderno de notas del curso.';
+$string['anonalert'] = 'Tu fecha de publicación es anterior a tu horario actual, esta acción deshabilitará permanentemente la evaluación anónima para este ejercicio si haces clic en guardar.';
+$string['turnitinapiurl_desc'] = '<b>[Requerido]</b><br />Selecciona una API URL de Turnitin';
+$string['tii_submission_failure'] = 'Por favor, consulta con tu tutor o administrador de Moodle para más detalles';
+$string['turnitinrefreshingsubmissions'] = 'Actualizar entregas';
