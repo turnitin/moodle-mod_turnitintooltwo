@@ -205,7 +205,13 @@ switch ($cmd) {
                     }
 
                     // Unlink user from Turnitin.
-                    $user = new turnitintooltwo_user($muser->id);
+                    $user = new turnitintooltwo_user(
+                        $muser->id,
+                        $role = null,
+                        $enrol = null,
+                        $workflowcontext = null,
+                        $finduser = false
+                    );
                     $user->unlink_user($tiiid);
 
                     // Relink user.
