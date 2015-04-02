@@ -29,7 +29,7 @@ class turnitintooltwo_user {
     private $instructor_defaults;
     private $instructor_rubrics;
 
-    public function __construct($id, $role = "Learner", $enrol = true, $workflowcontext = "site") {
+    public function __construct($id, $role = "Learner", $enrol = true, $workflowcontext = "site", $finduser = true) {
         $this->id = $id;
         $this->set_user_role($role);
         $this->enrol = $enrol;
@@ -40,7 +40,7 @@ class turnitintooltwo_user {
         $this->email = "";
         $this->username = "";
 
-        if ($id != 0) {
+        if ($id != 0 && $finduser === true) {
             $this->get_moodle_user($this->id);
             $this->get_tii_user_id();
         }
@@ -290,10 +290,11 @@ class turnitintooltwo_user {
      * Remove Link between moodle user and Turnitin from database
      *
      * @global type $DB
+     * @param int $tiidbid The Turnitin database id
+     * @return void
      */
     public function unlink_user($tiidbid) {
         global $DB;
-
         $tiiuser = new stdClass();
         $tiiuser->id = $tiidbid;
         $tiiuser->turnitin_uid = 0;
@@ -306,7 +307,7 @@ class turnitintooltwo_user {
      * Save the link between the moodle user and Turnitin
      *
      * @global type $DB
-     * @param type $user
+     * @return void
      */
     private function save_tii_user() {
         global $DB;
