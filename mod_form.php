@@ -147,7 +147,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $PAGE->requires->string_for_js('anonalert', 'turnitintooltwo');
 
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
+                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
         $mform->addElement('html', $script);

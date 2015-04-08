@@ -79,7 +79,7 @@ class turnitintooltwo_view {
             $cssurl = new moodle_url('/mod/turnitintooltwo/css/hide_bg.css');
             $PAGE->requires->css($cssurl);
         }
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/styles.css');
+        $cssurl = new moodle_url('/mod/turnitintooltwo/styles.css');
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery-ui-1.8.4.custom.css');
         $PAGE->requires->css($cssurl);

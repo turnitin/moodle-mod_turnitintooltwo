@@ -234,7 +234,7 @@
 
 .mod_turnitintooltwo td a.editable-click {
     border:none;
-    background:url(../pix/edit.png) right -4px no-repeat;
+    background:url(pix/edit.png) right -4px no-repeat;
     padding-right: 24px;
 }
 
@@ -247,7 +247,7 @@
 }
 
 .mod_turnitintooltwo .score_colour {
-    background-image:url(../pix/gradback.jpg);
+    background-image:url(pix/gradback.jpg);
     width:36px;
     display:inline-block;
     float:right;
@@ -743,14 +743,14 @@ h3.main {
 }
 
 .mod_turnitintooltwo .rubric_manager_launch, .mod_turnitintooltwo .rubric_view_launch {
-    background:url(../pix/rubric.png) no-repeat 0px 0px;
+    background:url(pix/rubric.png) no-repeat 0px 0px;
     padding:4px 0 4px 32px;
     line-height: 22px;
     margin-left: 6px;
 }
 
 .mod_turnitintooltwo .quickmark_manager_launch {
-    background:url(../pix/quickmark.png) no-repeat 0px 0px;
+    background:url(pix/quickmark.png) no-repeat 0px 0px;
     padding: 2px 0 2px 40px;
     height: 20px;
 }
@@ -766,11 +766,11 @@ h3.main {
 }
 
 .mod_turnitintooltwo .peermark_manager_launch {
-    background:url(../pix/peermark-settings.png) no-repeat 0px 0px;
+    background:url(pix/peermark-settings.png) no-repeat 0px 0px;
 }
 
 .mod_turnitintooltwo .peermark_reviews_launch {
-    background:url(../pix/peermark-reviews.png) no-repeat 0px 0px;
+    background:url(pix/peermark-reviews.png) no-repeat 0px 0px;
 }
 
 .mod_turnitintooltwo .editable_hide_span, .mod_turnitintooltwo .peermark_loading_span {

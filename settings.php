@@ -37,7 +37,7 @@ if ($ADMIN->fulltree) {
     $tabmenu = $turnitintooltwoview->draw_settings_menu($module, 'settings').
                 html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$library_warning.
                 html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/styles.css"));
+                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
 
     $current_section = optional_param('section', '', PARAM_ALPHAEXT);
 
