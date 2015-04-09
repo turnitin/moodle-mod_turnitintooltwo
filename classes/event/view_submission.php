@@ -23,24 +23,6 @@ class view_submission extends \core\event\base {
         return new \moodle_url('/mod/turnitintooltwo/view.php', array( 'id' => $this->objectid));
     }
 
-    public function get_legacy_logdata() {
-        // Override if you are migrating an add_to_log() call.
-        return array($this->courseid, "turnitintool", "view submission", 'view.php?id='.$this->objectid, $this->other['desc'], $this->objectid);
-    }
-
-    public static function get_legacy_eventname() {
-        // Override ONLY if you are migrating events_trigger() call.
-        return 'MYPLUGIN_OLD_EVENT_NAME';
-    }
-
-    protected function get_legacy_eventdata() {
-        // Override if you migrating events_trigger() call.
-        $data = new \stdClass();
-        $data->id = $this->objectid;
-        $data->userid = $this->relateduserid;
-        return $data;
-    }
-
     /**
      * Custom validation.
      *
