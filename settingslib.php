@@ -50,6 +50,16 @@ class admin_setting_configtext_int_only extends admin_setting_configtext {
         }
         return ($this->config_write($this->name, $data) ? '' : get_string('errorsetting', 'admin'));
     }
+
+    public function validate($data) {
+        global $PAGE;
+
+        // Don't force the plugin to be fully set up when installing.
+        if ($PAGE->pagelayout === 'maintenance' && strlen($data) === 0) {
+            return true;
+        }
+        return parent::validate($data);
+    }
 }
 
 class admin_setting_config_tii_secret_key extends admin_setting_configpasswordunmask {
@@ -60,6 +70,13 @@ class admin_setting_config_tii_secret_key extends admin_setting_configpasswordun
      * @return mixed true if ok string if error found
      */
     public function validate($data) {
+        global $PAGE;
+
+        // Don't force the plugin to be fully set up when installing.
+        if ($PAGE->pagelayout === 'maintenance' && strlen($data) === 0) {
+            return true;
+        }
+
         $cleaned = clean_param($data, $this->paramtype);
         if ("$data" === "$cleaned" && strlen($data) == 8) { // implicit conversion to string is needed to do exact comparison
             return true;
