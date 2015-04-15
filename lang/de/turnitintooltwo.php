@@ -80,6 +80,7 @@ $string['pending'] = 'Unerledigt';
 $string['permissiondeniederror'] = 'Sie besitzen zum Ausführen der Anfrage keine entsprechende Berechtigung. ';
 $string['pluginadministration'] = 'Turnitin-Aufgabe 2 Administration';
 $string['portfolio'] = 'Portfolio';
+$string['print'] = 'Drucken';
 $string['proxypassword'] = 'Proxy-Passwort';
 $string['proxypassword_desc'] = '<b>[Optional]</b><br />Falls Ihr Proxy eine Authentifizierung verlangt, geben Sie das Passwort hier ein.';
 $string['proxyport'] = 'Proxy Port';
