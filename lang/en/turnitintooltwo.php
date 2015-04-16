@@ -80,6 +80,7 @@ $string['pending'] = 'Pending';
 $string['permissiondeniederror'] = 'You do not have the correct permission to complete the requested action';
 $string['pluginadministration'] = 'Turnitin Assignment 2 Administration';
 $string['portfolio'] = 'Portfolio';
+$string['print'] = 'Print';
 $string['proxypassword'] = 'Proxy Password';
 $string['proxypassword_desc'] = '<b>[Optional]</b><br />If your proxy requires Authentication enter the password here.';
 $string['proxyport'] = 'Proxy Port';
