@@ -145,11 +145,12 @@ jQuery(document).ready(function($) {
     function openDV(dvtype, submission_id, coursemoduleid, url) {
         var url = url+'&viewcontext=box&cmd='+dvtype+'&submissionid='+submission_id+'&sesskey='+M.cfg.sesskey;
 
-        var dvWindow = window.open(url, 'dv_'+submission_id);
+        var dvWindow = window.open('about:blank', 'dv_'+submission_id);
         var width = $(window).width();
         var height = $(window).height();
+        dvWindow.document.write('<title>Document Viewer</title>');
+        dvWindow.document.write('<style>html, body { margin: 0; padding: 0; border: 0; }</style>');
         dvWindow.document.write('<frameset><frame id="dvWindow" name="dvWindow"></frame></frameset>');
-        dvWindow.document.write('<script>document.body.style = \'margin: 0 0;\';</script'+'>'); 
         dvWindow.document.getElementById('dvWindow').src = url;
         dvWindow.document.close();
         if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
