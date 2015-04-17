@@ -323,12 +323,15 @@ class turnitintooltwo_submission {
             try {
                 $response = $turnitincall->deleteSubmission($submission);
 
-                $notice["message"] = get_string('submissiondeleted', 'turnitintooltwo');
+                $notice["type"] = "full-error";
+                $notice["message"] = get_string('submissiondeleted', 'turnitintooltwo').
+                                        ' ('.get_string('turnitinid', 'turnitintooltwo').
+                                            ': '.$this->submission_objectid.')';
 
                 // If we have no submissions to this part then reset submitted and unanon flag.
                 $numsubs = count($DB->get_records('turnitintooltwo_submissions',
                                             array('submission_part' => $partid), 'id'));
-                
+
                 return $notice;
             } catch (Exception $e) {
                 $turnitincomms->handle_exceptions($e, 'turnitindeletionerror');

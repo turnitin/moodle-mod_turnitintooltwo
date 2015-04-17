@@ -466,7 +466,7 @@ h3.main {
 }
 
 .mod_turnitintooltwo noscript.warning, .mod_turnitintooltwo .library_not_present_warning,
-.mod_turnitintooltwo .general_warning, .mod_turnitintooltwo #error {
+.mod_turnitintooltwo .general_warning, .mod_turnitintooltwo #error, .mod_turnitintooltwo #full-error {
     border: 1px solid #CC0000;
     padding: 8px;
     background: #FFE9E8;
