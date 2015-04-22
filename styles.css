@@ -4,6 +4,99 @@
     Author     : John McGettrick
 */
 
+.ui-widget-header {
+    background: #EFEFEF !important;
+    border: 0 !important;
+}
+
+.messages_loading_span {
+    float: none !important;
+    margin: 0 !important;
+}
+
+.listbar-container {
+    display: table;
+    width: 100%;
+}
+
+.listbar {
+    background: #fff;
+    border: 1px solid #EFEFEF;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+.listbar label,
+.listbar input,
+.listbar select {
+    margin: 0;
+}
+
+.listbar select,
+.listbar input {
+    height: 30px;
+    padding: 0 5px;
+    border: 1px solid #EFEFEF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.clearfix:after { 
+   content: "."; 
+   visibility: hidden; 
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+
+.messages_inbox {
+    float: right;
+    margin-left: 30px;
+    padding: 5px 0;
+}
+
+.messages_inbox .smallicon {
+    vertical-align: middle;
+}
+
+.refresh_link,
+.refreshing_link {
+    float: right;
+    margin-left: 30px;
+    padding: 5px 0;
+}
+
+.dataTables_filter {
+    float: right !important;
+    text-align: left !important;
+}
+
+.dataTables_length {
+    float: left !important;
+}
+
+.dataTables_paginate a {
+    display: inline-block;
+    border: 1px solid #EFEFEF;
+    padding: 2px 5px;
+}
+
+.dataTables_paginate .current {
+    background: #EFEFEF;
+}
+
+.dataTables_paginate span a {
+    border-right: 0;
+}
+
+.dataTables_paginate .previous {
+    border-right: 0;
+}
+
 .ccheckbox {
     text-align: center;
     padding: 8px 10px 2px !important;
@@ -134,7 +227,7 @@
 
 .mod_turnitintooltwo .introduction, .mod_turnitintooltwo .peermark_instructions {
     padding: 6px 10px;
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid #EFEFEF;
     display:none;
 }
 
@@ -173,16 +266,20 @@
     font-size: 13px;
     margin-bottom:0px;
     width:100%;
-    border: 1px solid #999999;
+    border: 1px solid #EFEFEF;
 }
 
 .mod_turnitintooltwo .partDetails th {
     padding: 6px 12px 6px;
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+table.dataTable thead th {
+    border-bottom: 0 !important;
 }
 
 .mod_turnitintooltwo .partDetails td {
-    border: 1px solid #999999;
+    border: 1px solid #EFEFEF;
     border-top: 0;
     padding: 12px 12px 4px;
 }
@@ -221,7 +318,7 @@
 }
 
 .mod_turnitintooltwo .peermark_assignments_container {
-    border-top: 1px solid #999999;
+    border-top: 1px solid #EFEFEF;
 }
 
 .mod_turnitintooltwo .peermark_assignments_cell .peermarkDetails td.lastcol {
@@ -307,34 +404,12 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     overflow: scroll;
 }
 
-.mod_turnitintooltwo .enrol_link, .mod_turnitintooltwo .enrolling_container, 
-.mod_turnitintooltwo .refresh_link, .mod_turnitintooltwo .refreshing_link, .mod_turnitintooltwo .messages_inbox {
-    float:right;
-    width: 190px;
-}
-
-.mod_turnitintooltwo .messages_inbox {
-    text-decoration: none;
-    padding: 2px 4px 6px 0px;
-    width: 215px;
-}
-
 .mod_turnitintooltwo .enrol_link {
     padding: 6px 18px 0 0;
 }
 
-.mod_turnitintooltwo .refresh_link, .mod_turnitintooltwo .refreshing_link {
-    padding: 2px 16px 0 12px;
-}
-
 .mod_turnitintooltwo .enrolling_container {
     padding: 4px 18px 0 0;
-}
-
-.mod_turnitintooltwo .refresh_link img, .mod_turnitintooltwo .refreshing_link img, .mod_turnitintooltwo .enrol_link img, 
-.mod_turnitintooltwo .enrolling_container img, .mod_turnitintooltwo .messages_inbox img {
-    position: relative;
-    top:4px;
 }
 
 .mod_turnitintooltwo #id_submissiontext {
@@ -509,18 +584,15 @@ h3.main {
 
 /* Datatables styles */
 
-.mod_turnitintooltwo .partDetails .navbar .dataTables_filter {
-    float: none;
-}
-
 .mod_turnitintooltwo th.narrow, .mod_turnitintooltwo td.narrow {
     width: 60px;
 }
 
 .mod_turnitintooltwo .dataTables_wrapper table.dataTable {
     font-size: 13px;
-    border:1px solid #999999;
+    border:1px solid #EFEFEF;
     width:100% !important;
+    margin-top: 6px;
 }
 
 .mod_turnitintooltwo .dataTables_wrapper table.dataTable th {
@@ -567,10 +639,6 @@ h3.main {
 
 .mod_turnitintooltwo .student_read_icon {
     top:-1px;
-}
-
-.mod_turnitintooltwo .dataTables_length, .mod_turnitintooltwo .dataTables_filter {
-    padding:6px 0;
 }
 
 .mod_turnitintooltwo .dataTables_wrapper .navbar {

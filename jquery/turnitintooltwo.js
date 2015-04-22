@@ -271,7 +271,7 @@ jQuery(document).ready(function($) {
             "aaSorting": [[ 2, "asc" ],[ 4, "asc" ]],
             "sAjaxSource": "ajax.php",
             "oLanguage": dataTablesLang,
-            "sDom": "r<\"top navbar\"lf><\"dt_pagination\"pi>t<\"bottom\"><\"dt_pagination\"pi>",
+            "sDom": 'r<"listbar-container"<"top listbar clearfix"lf>><"dt_pagination clearfix"pi>t<"bottom"><"dt_pagination clearfix"pi>',
             "fnServerData": function ( sSource, aoData, fnCallback ) {
                 $.ajax({
                     "dataType": 'json',
