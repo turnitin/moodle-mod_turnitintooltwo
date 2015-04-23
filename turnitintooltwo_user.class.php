@@ -362,6 +362,12 @@ class turnitintooltwo_user {
         } catch (Exception $e) {
             // Ignore exception as we don't need it, this saves time as the alternative
             // is checking all class memberships to see if user is already enrolled.
+            $faultcode = $e->getFaultCode();
+            if ($faultcode == 'invaliddata') {
+                return null;
+            } else {
+                return false;
+            }
         }
     }
 
