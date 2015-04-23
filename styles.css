@@ -533,7 +533,7 @@ h3.main {
 }
 
 .mod_turnitintooltwo .dataTables_wrapper table.dataTable td {
-    padding: 8px 10px 2px;
+    padding: 10px 10px;
     font-size: 13px;
     vertical-align: top;
 }
