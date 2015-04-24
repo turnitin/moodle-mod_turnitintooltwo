@@ -534,6 +534,33 @@ class turnitintooltwo_submission {
                 $notice["extract"] = $newsubmission->getTextExtract();
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
+                //Send a message to the user's Moodle inbox with the digital receipt.
+                $input = new stdClass();
+                $input->firstname = $USER->firstname;
+                $input->lastname = $USER->lastname;
+                $input->submission_title = $this->submission_title;
+                $input->assignment_name = $turnitintooltwoassignment->turnitintooltwo->name;
+                $input->course_fullname = $course->fullname;
+                $input->submission_date = date('d-M-Y h:iA');
+                $input->submission_id = $this->id;
+
+                $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
+                $message = get_string('digital_receipt_message', 'turnitintooltwo', $input);
+                $message = str_replace("<br />", "
+", $message);
+
+                $eventdata = new stdClass();
+                $eventdata->component         = 'mod_turnitintooltwo'; //your component name
+                $eventdata->name              = 'submission'; //this is the message name from messages.php
+                $eventdata->userfrom          = get_admin();
+                $eventdata->userto            = $this->userid;
+                $eventdata->subject           = $subject;
+                $eventdata->fullmessage       = $message;
+                $eventdata->fullmessageformat = FORMAT_PLAIN;
+                $eventdata->fullmessagehtml   = '';
+                $eventdata->smallmessage      = '';
+                $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
+                message_send($eventdata);
             } catch (Exception $e) {
                 if (!is_null($this->submission_objectid)) {
                     $errorstring = "updatesubmissionerror";
