@@ -501,3 +501,6 @@ $string['locked_message'] = 'Locked message';
 $string['locked_message_help'] = 'If any settings are locked, this message is shown to say why.';
 $string['locked_message_default'] = 'This setting is locked at the site level';
 $string['errorcode1'] = 'This file has not been sent to Turnitin as it does not have enough content to produce an Originality Report.';
+$string['digital_receipt_subject'] = 'This is your Turnitin Digital Receipt';
+$string['digital_receipt_message'] = 'Dear {$a->firstname} {$a->lastname},<br /><br />You have successfully submitted the file {$a->submission_title} to the assignment {$a->assignment_name} in the class {$a->course_fullname} on {$a->submission_date}. Your submission id is {$a->submission_id}. Your full digital receipt can be downloaded from the download button in your class assignment list in Turnitin or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team';
+$string['messageprovider:submission'] = 'Turnitin Digital Receipt notifications';
