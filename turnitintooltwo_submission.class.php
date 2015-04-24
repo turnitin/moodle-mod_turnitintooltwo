@@ -542,7 +542,7 @@ class turnitintooltwo_submission {
                 $input->assignment_name = $turnitintooltwoassignment->turnitintooltwo->name;
                 $input->course_fullname = $course->fullname;
                 $input->submission_date = date('d-M-Y h:iA');
-                $input->submission_id = $this->id;
+                $input->submission_id = $submission->submission_objectid;
 
                 $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
                 $message = get_string('digital_receipt_message', 'turnitintooltwo', $input);
@@ -553,9 +553,9 @@ class turnitintooltwo_submission {
                 $eventdata->userfrom          = get_admin();
                 $eventdata->userto            = $this->userid;
                 $eventdata->subject           = $subject;
-                $eventdata->fullmessage       = $message;
+                $eventdata->fullmessage       = '';
                 $eventdata->fullmessageformat = FORMAT_HTML;
-                $eventdata->fullmessagehtml   = '';
+                $eventdata->fullmessagehtml   = $message;
                 $eventdata->smallmessage      = '';
                 $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
                 message_send($eventdata);
