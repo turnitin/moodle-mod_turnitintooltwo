@@ -546,8 +546,6 @@ class turnitintooltwo_submission {
 
                 $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
                 $message = get_string('digital_receipt_message', 'turnitintooltwo', $input);
-                $message = str_replace("<br />", "
-", $message);
 
                 $eventdata = new stdClass();
                 $eventdata->component         = 'mod_turnitintooltwo'; //your component name
@@ -556,7 +554,7 @@ class turnitintooltwo_submission {
                 $eventdata->userto            = $this->userid;
                 $eventdata->subject           = $subject;
                 $eventdata->fullmessage       = $message;
-                $eventdata->fullmessageformat = FORMAT_PLAIN;
+                $eventdata->fullmessageformat = FORMAT_HTML;
                 $eventdata->fullmessagehtml   = '';
                 $eventdata->smallmessage      = '';
                 $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
