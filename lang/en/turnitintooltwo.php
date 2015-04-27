@@ -420,7 +420,6 @@ $string['defaultupdateerror'] = 'There was an error when trying to update a defa
 $string['defaultupdated'] = 'Turnitin defaults updated';
 $string['pp_createsubmissionerror'] = 'There was an error in the plagiarism plugin when creating a submission';
 $string['pp_updatesubmissionerror'] = 'There was an error in the plagiarism plugin when updating a submission';
-$string['pp_submission_error'] = 'Turnitin has returned an error with your submission:';
 $string['pp_configuredesc'] = 'You must configure this module within the turnitintooltwo module. Please click <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> to configure this plugin';
 $string['coursestomigrate'] = 'You have {$a} classes available to migrate from Turnitin';
 $string['migrationheader'] = 'Turnitin Class Migration';
@@ -504,3 +503,4 @@ $string['errorcode1'] = 'This file has not been sent to Turnitin as it does not 
 $string['digital_receipt_subject'] = 'This is your Turnitin Digital Receipt';
 $string['digital_receipt_message'] = 'Dear {$a->firstname} {$a->lastname},<br /><br />You have successfully submitted the file {$a->submission_title} to the assignment {$a->assignment_name} in the class {$a->course_fullname} on {$a->submission_date}. Your submission id is {$a->submission_id}. Your full digital receipt can be downloaded from the download button in your class assignment list in Turnitin or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team';
 $string['messageprovider:submission'] = 'Turnitin Digital Receipt notifications';
+$string['pp_submission_error'] = 'Turnitin has returned an error with your submission:';
