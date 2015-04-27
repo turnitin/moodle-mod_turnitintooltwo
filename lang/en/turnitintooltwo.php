@@ -420,7 +420,7 @@ $string['defaultupdateerror'] = 'There was an error when trying to update a defa
 $string['defaultupdated'] = 'Turnitin defaults updated';
 $string['pp_createsubmissionerror'] = 'There was an error in the plagiarism plugin when creating a submission';
 $string['pp_updatesubmissionerror'] = 'There was an error in the plagiarism plugin when updating a submission';
-$string['pp_submission_error'] = 'There has been an error with your submission:';
+$string['pp_submission_error'] = 'Turnitin has returned an error with your submission:';
 $string['pp_configuredesc'] = 'You must configure this module within the turnitintooltwo module. Please click <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> to configure this plugin';
 $string['coursestomigrate'] = 'You have {$a} classes available to migrate from Turnitin';
 $string['migrationheader'] = 'Turnitin Class Migration';
