@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+require_once(__DIR__.'/classes/digitalreceipt/receipt_message.php');
+
 class turnitintooltwo_submission {
 
     public $id;
@@ -44,8 +46,11 @@ class turnitintooltwo_submission {
     public $submission_orcapable;
     public $submission_acceptnothing;
     public $overall_grade;
+    private $receipt;
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
+        $this->receipt = new receipt_message();
+
         if ($idtype == "turnitin") {
             $this->submission_objectid = $id;
             $this->submission_part = $partid;
@@ -391,6 +396,23 @@ class turnitintooltwo_submission {
             $submission->submission_acceptnothing = 1;
             $submission->submission_orcapable = 0;
 
+            //Send a message to the user's Moodle inbox with the digital receipt.
+            $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+
+            $input = array(
+                'firstname' => $user->firstname,
+                'lastname' => $user->lastname,
+                'submission_title' => get_string('gradingtemplate', 'turnitintooltwo'),
+                'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                'assignment_part' => $partdetails->partname,
+                'course_fullname' => $course->fullname,
+                'submission_date' => date('d-M-Y h:iA'),
+                'submission_id' => $submission->submission_objectid
+            );
+
+            $message = $this->receipt->build_message($input);
+            $this->receipt->send_message($userid, $message);
+
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
             } else {
@@ -410,6 +432,7 @@ class turnitintooltwo_submission {
         } catch (Exception $e) {
             return $e->getMessage();
         }
+
         return $data;
     }
 
@@ -535,30 +558,19 @@ class turnitintooltwo_submission {
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
                 //Send a message to the user's Moodle inbox with the digital receipt.
-                $input = new stdClass();
-                $input->firstname = $USER->firstname;
-                $input->lastname = $USER->lastname;
-                $input->submission_title = $this->submission_title;
-                $input->assignment_name = $turnitintooltwoassignment->turnitintooltwo->name;
-                $input->course_fullname = $course->fullname;
-                $input->submission_date = date('d-M-Y h:iA');
-                $input->submission_id = $submission->submission_objectid;
+                $input = array(
+                    'firstname' => $user->firstname,
+                    'lastname' => $user->lastname,
+                    'submission_title' => $this->submission_title,
+                    'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                    'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
+                    'course_fullname' => $course->fullname,
+                    'submission_date' => date('d-M-Y h:iA'),
+                    'submission_id' => $submission->submission_objectid
+                );
+                $message = $this->receipt->build_message($input);
+                $this->receipt->send_message($this->userid, $message);
 
-                $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
-                $message = get_string('digital_receipt_message', 'turnitintooltwo', $input);
-
-                $eventdata = new stdClass();
-                $eventdata->component         = 'mod_turnitintooltwo'; //your component name
-                $eventdata->name              = 'submission'; //this is the message name from messages.php
-                $eventdata->userfrom          = get_admin();
-                $eventdata->userto            = $this->userid;
-                $eventdata->subject           = $subject;
-                $eventdata->fullmessage       = '';
-                $eventdata->fullmessageformat = FORMAT_HTML;
-                $eventdata->fullmessagehtml   = $message;
-                $eventdata->smallmessage      = '';
-                $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
-                message_send($eventdata);
             } catch (Exception $e) {
                 if (!is_null($this->submission_objectid)) {
                     $errorstring = "updatesubmissionerror";
