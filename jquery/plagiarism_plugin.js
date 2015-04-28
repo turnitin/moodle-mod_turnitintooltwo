@@ -109,16 +109,6 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    // Launch the Turnitin EULA
-    if ($(".pp_turnitin_ula").length > 0) {
-        if ($('.editsubmissionform').length > 0) {
-            $('.editsubmissionform').hide();
-        }
-        if ($('.pp_turnitin_ula').siblings('.mform').length > 0) {
-            $('.pp_turnitin_ula').siblings('.mform').hide();
-        }
-    }
-
     function getLoadingGif() {
         var img = '<div class="loading_gif"></div>';
         $('#cboxOverlay').after(img);
