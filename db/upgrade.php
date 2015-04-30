@@ -99,7 +99,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2015040103) {
+    if ($result && $oldversion < 2015040104) {
         $table = new xmldb_table('turnitintooltwo_users');
         // Alter datatype of user_agreement_accepted.
         $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false, XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
