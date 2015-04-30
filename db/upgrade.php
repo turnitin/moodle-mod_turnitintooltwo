@@ -99,5 +99,17 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($result && $oldversion < 2015040103) {
+        $table = new xmldb_table('turnitintooltwo_users');
+        // Alter datatype of user_agreement_accepted.
+        $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false, XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        } else {
+            $dbman->change_field_unsigned($table, $field);
+        }
+    }
+
     return $result;
 }

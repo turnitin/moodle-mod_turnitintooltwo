@@ -94,7 +94,7 @@
                 <FIELD NAME="turnitin_utp" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="turnitin_uid" NEXT="instructor_defaults"/>
                 <FIELD NAME="instructor_defaults" TYPE="text" LENGTH="medium" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="turnitin_utp" NEXT="instructor_rubrics"/>
                 <FIELD NAME="instructor_rubrics" TYPE="text" LENGTH="medium" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" PREVIOUS="instructor_defaults" NEXT="user_agreement_accepted"/>
-                <FIELD NAME="user_agreement_accepted" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="true" SEQUENCE="false" PREVIOUS="instructor_rubrics"/>
+                <FIELD NAME="user_agreement_accepted" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="instructor_rubrics"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
