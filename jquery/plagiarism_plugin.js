@@ -101,13 +101,31 @@ jQuery(document).ready(function($) {
             onComplete: function() {
                 $(window).on("message", function(ev) {
                     var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
-                    window.location.reload();
+
+                    $.ajax({
+                        type: "POST",
+                        url: M.cfg.wwwroot +"/plagiarism/turnitin/ajax.php",
+                        dataType: "json",
+                        data: {action: "actionuseragreement", message: message, sesskey: M.cfg.sesskey},
+                        success: function(data) { window.location.reload(); },
+                        error: function(data) { window.location.reload(); }
+                    });
                 });
             },
             onCleanup: function() { hideLoadingGif(); }
         });
         return false;
     });
+
+    // Hide the submission form if the user has never accepted or declined the Turnitin EULA.
+    if ($(".pp_turnitin_ula_ignored").length > 0) {
+        if ($('.editsubmissionform').length > 0) {
+            $('.editsubmissionform').hide();
+        }
+        if ($('.pp_turnitin_ula').siblings('.mform').length > 0) {
+            $('.pp_turnitin_ula').siblings('.mform').hide();
+        }
+    }
 
     function getLoadingGif() {
         var img = '<div class="loading_gif"></div>';

@@ -319,7 +319,7 @@ class turnitintooltwo_view {
             $user = new turnitintooltwo_user($userid, "Learner");
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
             $user->join_user_to_class($coursedata->turnitin_cid);
-            $eulaaccepted = (!$user->user_agreement_accepted) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
+            $eulaaccepted = ($user->user_agreement_accepted == 0) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
         }
 
         $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);
@@ -331,7 +331,7 @@ class turnitintooltwo_view {
             $elements[] = array('hidden', 'submissionassignment', $turnitintooltwoassignment->turnitintooltwo->id);
             $elements[] = array('hidden', 'action', 'submission');
 
-            if ($istutor || $eulaaccepted) {
+            if ($istutor || $eulaaccepted == 1) {
                 // Upload type.
                 switch ($turnitintooltwoassignment->turnitintooltwo->type) {
                     case 0:
@@ -395,7 +395,7 @@ class turnitintooltwo_view {
             $noscriptula = "";
             $ula = "";
             if ($userid == $USER->id) {
-                if (!$eulaaccepted) {
+                if ($eulaaccepted != 1) {
                     $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula_text'));
                     $ula .= html_writer::tag('div', turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
                                 "Learner", get_string('turnitinula_btn', 'turnitintooltwo'), false),
@@ -1270,9 +1270,10 @@ class turnitintooltwo_view {
                 $submission_user = new turnitintooltwo_user($submission->userid, "Learner");
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
                 $submission_user->join_user_to_class($coursedata->turnitin_cid);
-                $eulaaccepted = (!$submission_user->user_agreement_accepted) ? $submission_user->get_accepted_user_agreement() : $submission_user->user_agreement_accepted;
+                $eulaaccepted = ($submission_user->user_agreement_accepted == 0) ? 
+                                    $submission_user->get_accepted_user_agreement() : $submission_user->user_agreement_accepted;
 
-                $launcheula = ( ! $eulaaccepted) ? 1 : 0;
+                $launcheula = ($eulaaccepted != 1) ? 1 : 0;
             }
 
             $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
