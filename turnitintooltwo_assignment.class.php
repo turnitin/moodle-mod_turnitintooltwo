@@ -1182,7 +1182,7 @@ class turnitintooltwo_assignment {
         }
         $partids = array_keys($parts);
 
-        // Update Grademark setting depending on config setting.
+        // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
         // Set the checkbox settings for updates.
