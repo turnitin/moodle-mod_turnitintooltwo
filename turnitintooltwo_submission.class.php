@@ -627,7 +627,8 @@ class turnitintooltwo_submission {
         global $DB, $CFG;
 
         static $part;
-        if (empty($part)) {
+        static $tiiassignid;
+        if ($tiiassignid != $tiisubmissiondata->getAssignmentId() || empty($part)) {
             $part = $DB->get_record("turnitintooltwo_parts", array("tiiassignid" => $tiisubmissiondata->getAssignmentId()));
         }
         $turnitintooltwoassignment = new turnitintooltwo_assignment($part->turnitintooltwoid);
