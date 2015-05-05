@@ -234,7 +234,7 @@ jQuery(document).ready(function($) {
     var visibleCols = [];
     var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
     var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
-    var useGrademark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
+    var useGradeMark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
     var multipleParts = ($('table.submissionsDataTable th.coverallgrade').length > 0) ? true : false;
     for (var i=0; i < noOfColumns; i++) {
         if (i == 2 || i == 3) {
@@ -243,15 +243,15 @@ jQuery(document).ready(function($) {
         } else if (i == 4) {
             submissionsDataTableColumns.push({"sClass": "right"});
             visibleCols.push(true);
-        } else if (i == 6 || (i == 8 && showOrigReport) || ((i == 8 && !showOrigReport) || (i == 10 && useGrademark))) {
+        } else if (i == 6 || (i == 8 && showOrigReport) || ((i == 8 && !showOrigReport) || (i == 10 && useGradeMark))) {
             submissionsDataTableColumns.push({"sClass": "right", "iDataSort": i-1, "sType":"numeric"});
             visibleCols.push(true);
-        } else if (i == 1 || ((i >= 7 && !showOrigReport && !useGrademark)
-                                || (i >= 9 && ((!showOrigReport && useGrademark) || (showOrigReport && !useGrademark))) 
-                                || (i >= 11 && showOrigReport && useGrademark))) {
+        } else if (i == 1 || ((i >= 7 && !showOrigReport && !useGradeMark)
+                                || (i >= 9 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark))) 
+                                || (i >= 11 && showOrigReport && useGradeMark))) {
             submissionsDataTableColumns.push({"sClass": "center", "bSortable": false});
             visibleCols.push(true);
-        } else if ((i == 0) || (i == 5) || (i == 7 && showOrigReport) || ((i == 7 && !showOrigReport) || (i == 9 && useGrademark))) {
+        } else if ((i == 0) || (i == 5) || (i == 7 && showOrigReport) || ((i == 7 && !showOrigReport) || (i == 9 && useGradeMark))) {
             submissionsDataTableColumns.push({"bVisible": false});
             visibleCols.push(false);
         }
