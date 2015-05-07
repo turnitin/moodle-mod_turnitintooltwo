@@ -629,12 +629,12 @@ h3.main {
 }
 
 .mod_turnitintooltwo .upload_box span {
-    top: -7px;
     padding-right: 6px;
 }
 
 .mod_turnitintooltwo .student_dot_icon, .mod_turnitintooltwo .download_original_open img, .mod_turnitintooltwo .upload_box img {
     top:-3px;
+    vertical-align: middle;
 }
 
 .mod_turnitintooltwo .student_read_icon {
