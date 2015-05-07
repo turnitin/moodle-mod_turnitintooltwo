@@ -354,7 +354,7 @@ jQuery(document).ready(function($) {
         $(this).hide();
 
         var part_id = $(this).attr("id").split("_")[1]; 
-        $('#refreshing_' + part_id).show();
+        $('.refreshing_link').show();
 
         $('table.submissionsDataTable').each(function() {
             refreshRequested[$(this).attr("id")] = 1;
@@ -746,8 +746,8 @@ jQuery(document).ready(function($) {
                     getSubmissions(table, assignment_id, part_id, start, refresh_requested, result.total);
                 } else {
                     $('#'+part_id+"_processing").attr('style', 'visibility: hidden');
-                    $('#refreshing_' + part_id).hide();
-                    $('#refresh_'+part_id).show();
+                    $('.refreshing_link').hide();
+                    $('.refresh_link').show();
                     enableEditingText(part_id);
                 }
             },

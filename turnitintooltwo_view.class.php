@@ -626,13 +626,13 @@ class turnitintooltwo_view {
                 $refreshlink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh fa-lg',
                                                     'title' => get_string('turnitinrefreshingsubmissions', 'turnitintooltwo')))." ".
                                                     get_string('turnitinrefreshsubmissions', 'turnitintooltwo'),
-                                                        array('class' => 'refresh_link', 'id' => 'refresh_'.$partid));
+                                                        array('class' => 'refresh_link', 'id' => 'refresh'));
 
                 // Link which appears during the refresh of submissions.
                 $refreshinglink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-lg',
                                                     'title' => get_string('turnitinrefreshingsubmissions', 'turnitintooltwo')))." ".
                                                     get_string('turnitinrefreshingsubmissions', 'turnitintooltwo'),
-                                                        array('class' => 'refreshing_link', 'id' => 'refreshing_'.$partid));
+                                                        array('class' => 'refreshing_link', 'id' => 'refreshing'));
 
                 //Output the links.
                 $output .= $OUTPUT->box($messagesinbox.$refreshlink.$refreshinglink, '', 'tii_table_functions');
