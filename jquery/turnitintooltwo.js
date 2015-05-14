@@ -330,12 +330,17 @@ jQuery(document).ready(function($) {
     }
 
     // Reposition links/divs
-    var tii_table_functions = $("#tii_table_functions").html();
-    $('#tii_table_functions').remove();
-    $('.dataTables_length').after(tii_table_functions);
-    $('.messages_inbox').show();
-    $('.refresh_link').show();
-    $('.refreshing_link').hide();
+    $('.tii_table_functions').each(function() {
+        var part_id = $(this).attr('id').split('tii_table_functions_')[1];
+
+        var tii_table_functions = $("#tii_table_functions_" + part_id).html();
+        $('#tii_table_functions_' + part_id).remove();
+        $('#'+part_id+'_length').after(tii_table_functions);
+        $('.messages_inbox').show();
+
+        $('#refresh_' + part_id).show();
+        $('#refreshing_' + part_id).hide();
+    });
 
     var zip_downloads = $(".zip_downloads");
 
@@ -353,8 +358,9 @@ jQuery(document).ready(function($) {
     $(".refresh_link").click(function () {
         $(this).hide();
 
-        var part_id = $(this).attr("id").split("_")[1]; 
-        $('.refreshing_link').show();
+        var part_id = $(this).attr("id").split("_")[1];
+        $('#refreshing_' + part_id).show();
+
 
         $('table.submissionsDataTable').each(function() {
             refreshRequested[$(this).attr("id")] = 1;
@@ -746,8 +752,9 @@ jQuery(document).ready(function($) {
                     getSubmissions(table, assignment_id, part_id, start, refresh_requested, result.total);
                 } else {
                     $('#'+part_id+"_processing").attr('style', 'visibility: hidden');
-                    $('.refreshing_link').hide();
-                    $('.refresh_link').show();
+                    $('#refreshing_' + part_id).hide();
+                    $('#refresh_'+part_id).show();
+
                     enableEditingText(part_id);
                 }
             },

@@ -635,10 +635,10 @@ class turnitintooltwo_view {
                                                         array('class' => 'refreshing_link', 'id' => 'refreshing_'.$partid));
 
                 //Output the links.
-                $output .= $OUTPUT->box($messagesinbox.$refreshlink.$refreshinglink, '', 'tii_table_functions');
+                $output .= $OUTPUT->box($messagesinbox.$refreshlink.$refreshinglink, 'tii_table_functions', 'tii_table_functions_'.$partid);
             }
         }
-
+        
         $output .= html_writer::alist($tabitems, array("id" => "part_tabs_menu"));
 
         $output .= $tables;
