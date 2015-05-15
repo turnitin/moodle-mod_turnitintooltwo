@@ -354,7 +354,7 @@ class turnitintooltwo_submission {
      * @return integer $submissionid the submissions id for the submission
      */
     public function do_tii_nothing_submission($cm, $turnitintooltwoassignment, $partid, $userid) {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
 
         $context = context_module::instance($cm->id);
 
@@ -397,21 +397,23 @@ class turnitintooltwo_submission {
             $submission->submission_orcapable = 0;
 
             //Send a message to the user's Moodle inbox with the digital receipt.
-            $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+            if ( ! empty($CFG->smtphosts) && ! empty($CFG->smtpuser) && ! empty($CFG->smtppass) ) {
+                $partdetails = $turnitintooltwoassignment->get_part_details($partid);
 
-            $input = array(
-                'firstname' => $user->firstname,
-                'lastname' => $user->lastname,
-                'submission_title' => get_string('gradingtemplate', 'turnitintooltwo'),
-                'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                'assignment_part' => $partdetails->partname,
-                'course_fullname' => $course->fullname,
-                'submission_date' => date('d-M-Y h:iA'),
-                'submission_id' => $submission->submission_objectid
-            );
+                $input = array(
+                    'firstname' => $user->firstname,
+                    'lastname' => $user->lastname,
+                    'submission_title' => get_string('gradingtemplate', 'turnitintooltwo'),
+                    'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                    'assignment_part' => $partdetails->partname,
+                    'course_fullname' => $course->fullname,
+                    'submission_date' => date('d-M-Y h:iA'),
+                    'submission_id' => $submission->submission_objectid
+                );
 
-            $message = $this->receipt->build_message($input);
-            $this->receipt->send_message($userid, $message);
+                $message = $this->receipt->build_message($input);
+                $this->receipt->send_message($userid, $message);
+            }
 
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
@@ -558,18 +560,25 @@ class turnitintooltwo_submission {
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
                 //Send a message to the user's Moodle inbox with the digital receipt.
-                $input = array(
-                    'firstname' => $user->firstname,
-                    'lastname' => $user->lastname,
-                    'submission_title' => $this->submission_title,
-                    'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                    'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
-                    'course_fullname' => $course->fullname,
-                    'submission_date' => date('d-M-Y h:iA'),
-                    'submission_id' => $submission->submission_objectid
-                );
-                $message = $this->receipt->build_message($input);
-                $this->receipt->send_message($this->userid, $message);
+                if ( ! empty($CFG->smtphosts) && ! empty($CFG->smtpuser) && ! empty($CFG->smtppass) ) {
+                    $input = array(
+                        'firstname' => $user->firstname,
+                        'lastname' => $user->lastname,
+                        'submission_title' => $this->submission_title,
+                        'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                        'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
+                        'course_fullname' => $course->fullname,
+                        'submission_date' => date('d-M-Y h:iA'),
+                        'submission_id' => $submission->submission_objectid
+                    );
+
+                    $message = $this->receipt->build_message($input);
+                    
+                    $this->receipt->send_message(
+                        $this->userid,
+                        $message
+                    );
+                }
 
             } catch (Exception $e) {
                 if (!is_null($this->submission_objectid)) {

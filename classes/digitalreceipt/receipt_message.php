@@ -18,7 +18,7 @@ class receipt_message {
         $eventdata->userfrom          = get_admin();
         $eventdata->userto            = $userid;
         $eventdata->subject           = $subject;
-        $eventdata->fullmessage       = '';
+        $eventdata->fullmessage       = $message;
         $eventdata->fullmessageformat = FORMAT_HTML;
         $eventdata->fullmessagehtml   = $message;
         $eventdata->smallmessage      = '';
