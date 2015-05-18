@@ -446,7 +446,7 @@ class turnitintooltwo_submission {
      * @return string $message to display to user
      */
     public function do_tii_submission($cm, $turnitintooltwoassignment) {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
 
         $notice = array();
         $context = context_module::instance($cm->id);
