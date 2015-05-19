@@ -481,12 +481,36 @@ class turnitintooltwo_assignment {
         $membership = new TiiMembership();
         $membership->setMembershipIds($classmembers);
 
+        // Get Enrolled users from Turnitin.
         try {
             $response = $turnitincall->readMemberships($membership);
             $readmemberships = $response->getMemberships();
-            foreach ($readmemberships as $readmembership) {
+        } catch (Exception $e) {
+            $turnitincomms->handle_exceptions($e, 'membercheckerror');
+        }
 
-                if ($readmembership->getRole() == $role) {
+        // Add each user to an array.
+        foreach ($readmemberships as $readmembership) {
+            if ($readmembership->getRole() == $role) {
+                $user = new TiiUser();
+                $user->setUserId($readmembership->getUserId());
+
+                try {
+                    $response = $turnitincall->readUser($user);
+                    $readuser = $response->getUser();
+
+                    $users[$readmembership->getUserId()]["firstname"] = $readuser->getFirstName();
+                    $users[$readmembership->getUserId()]["lastname"] = $readuser->getLastName();
+                    $users[$readmembership->getUserId()]["membership_id"] = $readmembership->getMembershipId();
+
+                } catch (Exception $e) {
+                    // A read user exception occurs when users are inactive. Re-enrol user to make them active.
+                    $membership = new TiiMembership();
+                    $membership->setClassId($course->turnitin_cid);
+                    $membership->setUserId($readmembership->getUserId());
+                    $membership->setRole($role);
+
+                    $turnitincall->createMembership($membership);
 
                     $user = new TiiUser();
                     $user->setUserId($readmembership->getUserId());
@@ -498,17 +522,14 @@ class turnitintooltwo_assignment {
                         $users[$readmembership->getUserId()]["firstname"] = $readuser->getFirstName();
                         $users[$readmembership->getUserId()]["lastname"] = $readuser->getLastName();
                         $users[$readmembership->getUserId()]["membership_id"] = $readmembership->getMembershipId();
-
-                    } catch (InnerException $e) {
+                    } catch ( InnerException $e ) {
                         $turnitincomms->handle_exceptions($e, 'tiiusergeterror');
                     }
                 }
             }
-            return $users;
-
-        } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'membercheckerror');
         }
+
+        return $users;
     }
 
     /**
