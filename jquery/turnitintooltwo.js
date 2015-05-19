@@ -283,7 +283,7 @@ jQuery(document).ready(function($) {
                         // We need to force showing of loading bar as if we place fnCallback after the table is populated it is wiped when refreshing
                         fnCallback(result);
                         $('#'+part_id+"_processing").attr('style', 'visibility: visible');
-                        getSubmissions(partTables[part_id], $('#assignment_id').html(), part_id, 0, refreshRequested[part_id], 0);
+                        getSubmissions(partTables[part_id], $('#assignment_id').html(), part_id, 0, refreshRequested, 0);
                     }
                 });
             },
@@ -356,11 +356,9 @@ jQuery(document).ready(function($) {
 
     // When the refresh submissions link is clicked, the data in each datatable needs to be reloaded
     $(".refresh_link").click(function () {
-        $(this).hide();
 
-        var part_id = $(this).attr("id").split("_")[1];
-        $('#refreshing_' + part_id).show();
-
+        $(".refresh_link").hide();
+        $(".refreshing_link").show();
 
         $('table.submissionsDataTable').each(function() {
             refreshRequested[$(this).attr("id")] = 1;
@@ -739,7 +737,7 @@ jQuery(document).ready(function($) {
             "url": "ajax.php",
             "async": true,
             "data": {action: "get_submissions", assignment: assignment_id, part: part_id, start: start,
-                        refresh_requested: refresh_requested, sesskey: M.cfg.sesskey, total: total},
+                        refresh_requested: refresh_requested[part_id], sesskey: M.cfg.sesskey, total: total},
             "success": function(result) {
                 eval(result);
                 start = result.end;
@@ -752,8 +750,20 @@ jQuery(document).ready(function($) {
                     getSubmissions(table, assignment_id, part_id, start, refresh_requested, result.total);
                 } else {
                     $('#'+part_id+"_processing").attr('style', 'visibility: hidden');
-                    $('#refreshing_' + part_id).hide();
-                    $('#refresh_'+part_id).show();
+
+                    refresh_requested[part_id] = 0;
+                    var allrefreshed = 1;
+                    
+                    $.each(refresh_requested, function(k, v) {
+                        if (v == 1) {
+                            allrefreshed = 0;    
+                        }
+                    });
+
+                    if (allrefreshed == 1) {
+                        $('.refreshing_link').hide();
+                        $('.refresh_link').show();
+                    }
 
                     enableEditingText(part_id);
                 }
