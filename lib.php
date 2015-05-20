@@ -161,15 +161,16 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
     $parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ",
                                         array($turnitintooltwo->id), 'id ASC');
     foreach ($parts as $part) {
-        $event = $DB->get_record_select("event",
+        if ($event = $DB->get_record_select("event",
                                         " modulename = 'turnitintooltwo' AND instance = ? AND courseid = ? AND name LIKE ? ",
-                                        array($turnitintooltwo->id, $turnitintooltwo->course, '% - '.$part->partname));
-        $updatedevent = new stdClass();
-        $updatedevent->id = $event->id;
-        $updatedevent->userid = $USER->id;
-        $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
+                                        array($turnitintooltwo->id, $turnitintooltwo->course, '% - '.$part->partname))) {
+            $updatedevent = new stdClass();
+            $updatedevent->id = $event->id;
+            $updatedevent->userid = $USER->id;
+            $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
 
-        $DB->update_record('event', $updatedevent);
+            $DB->update_record('event', $updatedevent);
+        }
     }
 }
 
