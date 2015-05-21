@@ -19,18 +19,23 @@
  * @copyright 2012 iParadigms LLC
  */
 
-$module->version   = 2015040104;  // The current module version (Date: YYYYMMDDXX)
-$module->requires  = 2012062500;
-$module->component = 'mod_turnitintooltwo';
-$module->maturity  = MATURITY_STABLE;
-$module->cron      = 1800;        // Period for cron to check this module in seconds
+// Moodle 2.3 - 2.5
+// Uncomment the $module settings below for installing Moodle 2.3 - 2.5
+// $module->version   = 2015040104;
+// $module->release   = "2.3 - 2.5";
+// $module->requires  = 2012062500;
+// $module->component = 'mod_turnitintooltwo';
+// $module->maturity  = MATURITY_STABLE;
+// $module->cron      = 1800;
 
+// Moodle 2.6+
 if (empty($plugin)) {
 	$plugin = new StdClass();
 }
 
-$plugin->version   = 2015040104;  // The current module version (Date: YYYYMMDDXX)
+$plugin->version   = 2015040104;
+$plugin->release   = "2.6+";
 $plugin->requires  = 2012062500;
 $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->cron      = 1800;        // Period for cron to check this module in seconds
+$plugin->cron      = 1800;
