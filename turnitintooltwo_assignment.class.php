@@ -864,7 +864,14 @@ class turnitintooltwo_assignment {
         }
 
         // Delete events for this assignment / part.
-        $DB->delete_records('event', array('modulename' => 'turnitintooltwo', 'instance' => $id));
+        $dbselect = " modulename = ? AND instance = ? ";
+        // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
+        // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
+        if ($CFG->branch <= 25 && $CFG->dbtype = "sqlsrv") {
+            $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? ";
+        }
+
+        $DB->delete_records_select('event', $dbselect, array('turnitintooltwo', $id));
         if (!$DB->delete_records("turnitintooltwo", array("id" => $id))) {
             $result = false;
         }
@@ -904,7 +911,7 @@ class turnitintooltwo_assignment {
      * @return boolean
      */
     public function delete_moodle_assignment_part($toolid, $partid) {
-        global $DB;
+        global $DB, $CFG;;
 
         // Delete submissions.
         $DB->delete_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $toolid, 'submission_part' => $partid));
@@ -920,8 +927,14 @@ class turnitintooltwo_assignment {
 
         // Delete event.
         $turnitintooltwonow = $DB->get_record("turnitintooltwo", array("id" => $toolid));
-        $DB->delete_records_select('event', " modulename = 'turnitintooltwo' AND instance = ? AND name = ? ",
-                        array($toolid, $turnitintooltwonow->name.' - '.$part->partname));
+        $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
+        // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
+        // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
+        if ($CFG->branch <= 25 && $CFG->dbtype = "sqlsrv") {
+            $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? AND CAST(name AS nvarchar(max)) = ? ";
+        }
+        $DB->delete_records_select('event', $dbselect,
+                        array('turnitintooltwo', $toolid, $turnitintooltwonow->name.' - '.$part->partname));
 
         // Update number of parts for the turnitintooltwo.
         $turnitintooltwo = new stdClass();
@@ -1144,13 +1157,22 @@ class turnitintooltwo_assignment {
 
         // Update existing events for this assignment part if title or due date changed.
         if ($fieldname == "partname" || $fieldname == "dtdue") {
-            $event = $DB->get_record_select("event", " modulename = 'turnitintooltwo' AND instance = ? AND name = ?",
-                                                        array($this->turnitintooltwo->id, $currenteventname));
 
-            $event->name = $this->turnitintooltwo->name." - ".$partdetails->partname;
-            $event->timestart = $partdetails->dtdue;
-            $event->userid = $USER->id;
-            $DB->update_record('event', $event);
+            $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
+            // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
+            // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
+            if ($CFG->branch <= 25 && $CFG->dbtype = "sqlsrv") {
+                $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? AND CAST(name AS nvarchar(max)) = ? ";
+            }
+
+            if ($event = $DB->get_record_select("event", $dbselect,
+                                                array('turnitintooltwo', $this->turnitintooltwo->id, $currenteventname))) {
+
+                $event->name = $this->turnitintooltwo->name." - ".$partdetails->partname;
+                $event->timestart = $partdetails->dtdue;
+                $event->userid = $USER->id;
+                $DB->update_record('event', $event);
+            }
         }
 
         // Update grade settings.
@@ -1301,7 +1323,7 @@ class turnitintooltwo_assignment {
                 $part->submitted = 0;
             }
 
-            $part->tiiassignid = $parttiiassignid;            
+            $part->tiiassignid = $parttiiassignid;
 
             // Unanonymise part if necessary.
             if ($part->dtpost < time() && $part->submitted == 1) {
@@ -1338,8 +1360,14 @@ class turnitintooltwo_assignment {
 
                 // Delete existing events for this assignment part.
                 $eventname = $turnitintooltwonow->name." - ".$partnow->partname;
-                $DB->delete_records_select('event', " modulename = 'turnitintooltwo' AND instance = ? AND name = ? ",
-                                              array($this->id, $eventname));
+                $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
+                // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
+                // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
+                if ($CFG->branch <= 25 && $CFG->dbtype = "sqlsrv") {
+                    $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? AND CAST(name AS nvarchar(max)) = ? ";
+                }
+
+                $DB->delete_records_select('event', $dbselect, array('turnitintooltwo', $this->id, $eventname));
             } else {
                 if (!$dbpart = $DB->insert_record('turnitintooltwo_parts', $part)) {
                     turnitintooltwo_print_error('partdberror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);

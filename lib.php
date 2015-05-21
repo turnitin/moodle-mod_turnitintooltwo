@@ -152,7 +152,7 @@ function turnitintooltwo_activitylog($string, $activity) {
  * @param  boolean $nullifnone
  */
 function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnone = true) {
-    global $DB, $USER;
+    global $DB, $USER, $CFG;
 
     $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
     $turnitintooltwoassignment->edit_moodle_assignment(false);
@@ -161,9 +161,18 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
     $parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ",
                                         array($turnitintooltwo->id), 'id ASC');
     foreach ($parts as $part) {
-        if ($event = $DB->get_record_select("event",
-                                        " modulename = 'turnitintooltwo' AND instance = ? AND courseid = ? AND name LIKE ? ",
-                                        array($turnitintooltwo->id, $turnitintooltwo->course, '% - '.$part->partname))) {
+        $dbselect = " modulename = ? AND instance = ? AND courseid = ? AND name LIKE ? ";
+        // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
+        // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
+        if ($CFG->branch <= 25 && $CFG->dbtype = "sqlsrv") {
+            $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ?
+                            AND courseid = ? AND CAST(name AS nvarchar(max)) = ? ";
+        }
+
+        // Update event for assignment part
+        if ($event = $DB->get_record_select("event", $dbselect,
+                                    array('turnitintooltwo', $turnitintooltwo->id,
+                                                $turnitintooltwo->course, '% - '.$part->partname))) {
             $updatedevent = new stdClass();
             $updatedevent->id = $event->id;
             $updatedevent->userid = $USER->id;
