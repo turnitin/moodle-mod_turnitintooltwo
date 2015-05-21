@@ -567,6 +567,10 @@ h3.main {
     width: auto;
 }
 
+#page-mod-turnitintooltwo-view div.mod_turnitintooltwo .manual_submission_failure_msg {
+    margin-bottom: 12px;
+}
+
 .mod_turnitintooltwo #enrolling_error {
     margin-top: 8px;
 }

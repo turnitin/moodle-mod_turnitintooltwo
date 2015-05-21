@@ -273,9 +273,9 @@ if (!empty($action)) {
             $submissionid = required_param('sub', PARAM_INT);
             $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
 
-            if ($digitalreceipt = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment)) {
-                $_SESSION["digital_receipt"] = $digitalreceipt;
-            }
+            $digitalreceipt = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment);
+            $_SESSION["digital_receipt"] = $digitalreceipt;
+
             redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
             exit;
             break;
@@ -524,6 +524,17 @@ switch ($do) {
             if ($istutor) {
                 $turnitintooltwouser->join_user_to_class($course->turnitin_cid);
             }
+        }
+
+        // Show submission failure if this has been a manual submission.
+        if (isset($_SESSION["digital_receipt"]["success"]) && $_SESSION["digital_receipt"]["success"] == false) {
+            $output = html_writer::tag("div", $_SESSION["digital_receipt"]["message"], 
+                                    array("class" => "general_warning manual_submission_failure_msg"));
+            if ($viewcontext == "box_solid") {
+                $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
+            }
+            echo $output;
+            unset($_SESSION["digital_receipt"]);
         }
 
         // Show duplicate assignment warning if applicable.

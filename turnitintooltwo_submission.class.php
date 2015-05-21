@@ -448,7 +448,7 @@ class turnitintooltwo_submission {
     public function do_tii_submission($cm, $turnitintooltwoassignment) {
         global $DB, $USER, $CFG;
 
-        $notice = array();
+        $notice = array("success" => false);
         $context = context_module::instance($cm->id);
 
         // Check if user is a member of class, if not then join them to it.
@@ -573,7 +573,7 @@ class turnitintooltwo_submission {
                     );
 
                     $message = $this->receipt->build_message($input);
-                    
+
                     $this->receipt->send_message(
                         $this->userid,
                         $message
