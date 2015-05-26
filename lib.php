@@ -1457,7 +1457,7 @@ function turnitintooltwo_init_browser_assignment_table($tiicourseid) {
  * @return html
  */
 function turnitintooltwo_show_edit_course_end_date_form() {
-    $output = html_writer::tag("span", get_string('newenddatedesc', 'turnitintooltwo'), array("id" => "edit_end_date_desc"));
+    $output = html_writer::tag("div", get_string('newenddatedesc', 'turnitintooltwo'), array("id" => "edit_end_date_desc"));
 
     $elements = array();
     $dateoptions = array('startyear' => date( 'Y', strtotime( '-6 years' )), 'stopyear' => date( 'Y', strtotime( '+6 years' )));
