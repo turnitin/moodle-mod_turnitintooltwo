@@ -4,6 +4,40 @@
     Author     : John McGettrick
 */
 
+.edit_course_end_date_form {
+    padding: 20px;
+    background: #fff;
+}
+
+.edit_course_end_date_form #edit_end_date_desc {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.edit_course_end_date_form .fitemtitle {
+    float: none !important;
+    text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+}
+
+.edit_course_end_date_form .fdate_selector {
+    float: none !important;
+    display: block !important;
+    margin: 0 auto !important;
+    width: 256px !important;
+}
+
+.edit_course_end_date_form .fbutton {
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+.edit_course_end_date_form #id_save_end_date {
+    margin: 0 auto !important;
+    display: block !important;
+}
+
 .ui-widget-header {
     background: #EFEFEF !important;
     border: 0 !important;

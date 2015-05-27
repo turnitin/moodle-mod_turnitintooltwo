@@ -281,7 +281,10 @@ jQuery(document).ready(function($) {
     // Show light box to change the end date of a course
     function initialiseEditEndDate() {
         $("a.edit_course_end_link").colorbox({
-            inline:true, width:"60%", top: "100px", height:"260px", opacity: "0.7", className: "edit_end_date_form",
+            inline:true, width:"60%", top: "100px", background: "#fff", height:"260px", opacity: "0.7", className: "edit_end_date_form",
+            onLoad: function() {
+                lightBoxCloseButton();
+            },
             onComplete : function() {
 
                 // Get current date from the span id within the link and set
@@ -325,8 +328,13 @@ jQuery(document).ready(function($) {
             },
             onCleanup: function() {
                 $('.edit_course_end_date_form').hide();
+                $('#tii_close_bar').remove();
             }
         });
+    }
+
+    function lightBoxCloseButton() {
+        $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">' + M.str.turnitintooltwo.closebutton + '</a></div>');
     }
 
     // Show light box with a form to either create a new course or link an unlinked Moodle course
@@ -347,7 +355,13 @@ jQuery(document).ready(function($) {
         }
 
         $("a.course_recreate").colorbox({
-            iframe:true, width:colorBoxWidth, height:colorBoxHeight, top: '100px', className: "migration", opacity: "0.7"
+            iframe:true, width:colorBoxWidth, height:colorBoxHeight, top: '100px', className: "migration", opacity: "0.7",
+            onLoad: function() {
+                lightBoxCloseButton();
+            },
+            onCleanup:function() {
+                $('#tii_close_bar').remove();
+            }
         });
 
         $('.browser_checkbox').click(function() {
