@@ -505,3 +505,4 @@ $string['pp_assignmentsubmiterror'] = 'There is a problem with replicating your 
 $string['pp_submission_error'] = 'Turnitin has returned an error with your submission:';
 $string['turnitinppulapre'] = 'To submit a file to Turnitin you must first accept our EULA. Choosing to not accept our EULA will submit your file to Moodle only. Click here to accept.';
 $string['turnitinppulapost'] = 'Your file has not been submitted to Turnitin. Please click here to accept our EULA.';
+$string['errorcode0'] = 'This file has not been submitted to Turnitin, please consult your system administrator';
