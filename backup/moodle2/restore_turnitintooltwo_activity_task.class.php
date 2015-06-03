@@ -83,20 +83,32 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
 
             $course = turnitintooltwo_assignment::get_course_data($_SESSION['course_id']);
 
-            // Remove Turnitin link from course
-            $turnitin_course = new stdClass();
-            $turnitin_course->id = $course->tii_rel_id;
-            $turnitin_course->turnitin_cid = 0;
-            $DB->update_record('turnitintooltwo_courses', $turnitin_course);
+            // Get the number of assignments that already exist on this course that aren't part of recreation.
+            $assignments = 0;
+            if (!empty($_SESSION['assignments_to_create'])) {
+                $modules = $_SESSION['assignments_to_create'];
+                list($notinsql, $notinparams) = $DB->get_in_or_equal($modules, SQL_PARAMS_QM, 'param', false);
+                $assignments = $DB->count_records_select('turnitintooltwo', " course = ? AND id ".
+                                                $notinsql, array_merge(array($_SESSION['course_id']), $notinparams));
+            }
 
-            // Recreate course in Turnitin
-            $course->turnitin_cid = 0;
-            $tmpassignment = new turnitintooltwo_assignment(0, '', '');
-            $turnitin_course = $tmpassignment->create_tii_course($course, $_SESSION['course_owner_id']);
+            // Only recreate course on Turnitin if Turnitin Assignments don't exist on destination course.
+            if ($assignments == 0) {
+                // Remove Turnitin link from course
+                $turnitin_course = new stdClass();
+                $turnitin_course->id = $course->tii_rel_id;
+                $turnitin_course->turnitin_cid = 0;
+                $DB->update_record('turnitintooltwo_courses', $turnitin_course);
 
-            // Join the course as Instructor
-            $owner = new turnitintooltwo_user($_SESSION['course_owner_id'], 'Instructor');
-            $owner->join_user_to_class($turnitin_course->turnitin_cid);
+                // Recreate course in Turnitin
+                $course->turnitin_cid = 0;
+                $tmpassignment = new turnitintooltwo_assignment(0, '', '');
+                $turnitin_course = $tmpassignment->create_tii_course($course, $_SESSION['course_owner_id']);
+
+                // Join the course as Instructor
+                $owner = new turnitintooltwo_user($_SESSION['course_owner_id'], 'Instructor');
+                $owner->join_user_to_class($turnitin_course->turnitin_cid);
+            }
 
             unset($_SESSION['tii_course_reset']);
             unset($_SESSION['course_id']);

@@ -112,7 +112,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         $owner = $DB->get_record('user', array('email' => $data->owneremail));
         if ($owner) {
             $data->ownerid = $owner->id;
-        } else { 
+        } else {
             // Turnitin class owner not found so use restoring user as owner
             $data->ownerid = $USER->id;
         }
