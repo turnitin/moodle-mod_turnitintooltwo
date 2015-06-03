@@ -541,16 +541,20 @@ jQuery(document).ready(function($) {
     // Open the DV in a new window in such a way as to not be blocked by popups.
     $(document).on('click', '.default_open, .origreport_open, .grademark_open', function() {
         var proceed = true;
+        var idStr = $(this).attr("id").split("_");
+        var part_id = $('#date_due_'+idStr[2]).html();
+        var due_date = moment(part_id).unix();
 
-        // Show resubmission grade warning.
-        if ($(this).hasClass('graded_warning')) {
-            if (!confirm(M.str.turnitintooltwo.resubmissiongradewarn)) {
-                proceed = false;
+        // Show resubmission grade warning if the due date has not passed.
+        if (due_date > moment().unix()) {
+            if ($(this).hasClass('graded_warning')) {
+                if (!confirm(M.str.turnitintooltwo.resubmissiongradewarn)) {
+                     proceed = false;
+                }
             }
         }
 
         if (proceed) {
-            var idStr = $(this).attr("id").split("_");
             var url = $('#'+idStr[0]+'_url_'+idStr[1]).html()+'&viewcontext=box&do='+idStr[0]+'&submissionid='+idStr[1]+'&sesskey='+M.cfg.sesskey;
             var dvWindow = window.open('about:blank', 'dv_'+idStr[1]);
             var width = $(window).width();
