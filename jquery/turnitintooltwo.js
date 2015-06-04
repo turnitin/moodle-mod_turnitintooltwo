@@ -542,11 +542,11 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.default_open, .origreport_open, .grademark_open', function() {
         var proceed = true;
         var idStr = $(this).attr("id").split("_");
-        var part_id = $('#date_due_'+idStr[2]).html();
-        var due_date = moment(part_id).unix();
+        var due_date = $('#date_due_'+idStr[2]).html();
+        var due_date_unix = moment(due_date).unix();
 
         // Show resubmission grade warning if the due date has not passed.
-        if (due_date > moment().unix()) {
+        if (due_date_unix > moment().unix()) {
             if ($(this).hasClass('graded_warning')) {
                 if (!confirm(M.str.turnitintooltwo.resubmissiongradewarn)) {
                      proceed = false;
