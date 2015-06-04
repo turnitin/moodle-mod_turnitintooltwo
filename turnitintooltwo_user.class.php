@@ -80,8 +80,8 @@ class turnitintooltwo_user {
             $user->email = join('.', $split);
         }
 
-        $this->firstname = $user->firstname;
-        $this->lastname = $user->lastname;
+        $this->firstname = stripslashes(str_replace('/', '', $user->firstname));
+        $this->lastname = stripslashes(str_replace('/', '', $user->lastname));
         $this->email = trim(html_entity_decode($user->email));
         $this->username = $user->username;
 
