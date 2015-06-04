@@ -164,7 +164,7 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
         $dbselect = " modulename = ? AND instance = ? AND courseid = ? AND name LIKE ? ";
         // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
         // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
-        if ($CFG->branch <= 25 && $CFG->dbtype = "sqlsrv") {
+        if ($CFG->branch <= 25 && $CFG->dbtype == "sqlsrv") {
             $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ?
                             AND courseid = ? AND CAST(name AS nvarchar(max)) = ? ";
         }
