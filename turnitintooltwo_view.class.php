@@ -1709,7 +1709,6 @@ class turnitintooltwo_view {
     public function init_tii_member_by_role_table($cm, $turnitintooltwoassignment, $role = "Learner") {
         global $OUTPUT;
 
-        $_SESSION["ajax"]["tii_role"] = $role;
         $cellheader = ($role == "Instructor") ? get_string('turnitintutors', 'turnitintooltwo') :
                                                 get_string('turnitinstudents', 'turnitintooltwo');
         $output = "";
