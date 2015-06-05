@@ -619,10 +619,8 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
     $filename = str_replace(' ', '_', $filename);
     
     $fp = false;
-    $tempdir = $CFG->dataroot.'/temp/turnitintooltwo';
-    if (!file_exists($tempdir)) {
-        mkdir( $tempdir, $CFG->directorypermissions, true );
-    }
+    $tempdir = make_temp_directory('turnitintooltwo');
+
     // Get file extension and shorten filename if too long.
     $pathparts = explode('.', $suffix);
     $ext = array_pop($pathparts);
