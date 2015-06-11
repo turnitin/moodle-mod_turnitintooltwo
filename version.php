@@ -21,7 +21,7 @@
 
 // Moodle 2.3 - 2.5
 // Uncomment the $module settings below for installing Moodle 2.3 - 2.5
-// $module->version   = 2015040105;
+// $module->version   = 2015040106;
 // $module->release   = "2.3 - 2.5";
 // $module->requires  = 2012062500;
 // $module->component = 'mod_turnitintooltwo';
@@ -33,7 +33,7 @@ if (empty($plugin)) {
 	$plugin = new StdClass();
 }
 
-$plugin->version   = 2015040105;
+$plugin->version   = 2015040106;
 $plugin->release   = "2.6+";
 $plugin->requires  = 2012062500;
 $plugin->component = 'mod_turnitintooltwo';
