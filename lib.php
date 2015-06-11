@@ -495,7 +495,7 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
  * A Standard Moodle function that moodle executes at the time the cron runs
  */
 function turnitintooltwo_cron() {
-    global $DB;
+    global $DB, $CFG;
 
     // get assignment that needs updating and check whether it exists
     if ($assignment = $DB->get_record('turnitintooltwo', array("needs_updating" => 1), '*', IGNORE_MULTIPLE)) {
@@ -524,6 +524,7 @@ function turnitintooltwo_cron() {
             $grades->userid = $user->id;
             $params['idnumber'] = $cm->idnumber;
 
+            @include_once($CFG->dirroot."/lib/gradelib.php");
             grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
                 'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
         }
