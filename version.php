@@ -33,7 +33,7 @@ if (empty($plugin)) {
 	$plugin = new StdClass();
 }
 
-$plugin->version   = 2015040105;
+$plugin->version   = 2015040106;
 $plugin->release   = "2.6+";
 $plugin->requires  = 2012062500;
 $plugin->component = 'mod_turnitintooltwo';
