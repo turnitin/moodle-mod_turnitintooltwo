@@ -618,28 +618,40 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
 
     $filename = implode('_', $filename);
     $filename = str_replace(' ', '_', $filename);
-    
-    $fp = false;
 
     $tempdir = make_temp_directory('turnitintooltwo');
-    
-    // Get file extension and shorten filename if too long.
+
+    // Get the file extension (if there is one).
     $pathparts = explode('.', $suffix);
-    $ext = array_pop($pathparts);
+    $ext = '';
+    if (count($pathparts) > 1) {
+        $ext = '.' . array_pop($pathparts);
+    }
 
     $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - strlen($tempdir.DIRECTORY_SEPARATOR);
-    if (strlen($filename) > $permittedstrlength) {
-        $filename = substr($filename, 0, $permittedstrlength);
+    $extlength = strlen('_' . mt_getrandmax() . $ext);
+    if ($extlength > $permittedstrlength) {
+        // Someone has likely used a filename with an absurdly long extension, or the
+        // tempdir path is huge, so preserve the extension as much as possible.
+        $extlength = $permittedstrlength;
     }
 
-    // filename with random string at the end
-    $filename = $filename . '_' . mt_rand() . '.'.$ext;
+    // Shorten the filename as needed, taking the extension into consideration.
+    $permittedstrlength -= $extlength;
+    $filename = substr($filename, 0, $permittedstrlength);
 
-    while (!$fp) {
-        $file = $tempdir.DIRECTORY_SEPARATOR.$filename;
-        $fp = @fopen($file, 'w');
-    }
-    fclose($fp);
+    $tries = 0;
+    do {
+        if ($tries == 10) {
+            throw new invalid_dataroot_permissions("turnitintooltwo temporary file cannot be created.");
+        }
+        $tries++;
+
+        // Filename with random string at the end.
+        $file = $tempdir . DIRECTORY_SEPARATOR . $filename .
+            substr('_' . mt_rand() . $ext, 0, $extlength);
+    } while (!touch($file));
+
     return $file;
 }
 
@@ -1097,7 +1109,7 @@ function turnitintooltwo_getfiles($moduleid) {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - just send the file
  */
-function turnitintooltwo_pluginfile($course, 
+function turnitintooltwo_pluginfile($course,
                 $cm,
                 context $context,
                 $filearea,
