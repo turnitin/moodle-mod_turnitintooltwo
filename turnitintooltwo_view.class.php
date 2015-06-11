@@ -1401,17 +1401,12 @@ class turnitintooltwo_view {
         foreach ($_SESSION["submissions"][$partid] as $submission) {
             $i++;
 
-            if ($i < $start) {
-                continue;
-            } else {
-
-                $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
+            $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
                                                         $useroverallgrades, $istutor);
-                $submissiondata[] = $data;
-                // Remove submission from session
-                unset($_SESSION["submissions"][$partid][$submission->userid]);
-                $j++;
-            }
+            $submissiondata[] = $data;
+            // Remove submission from session
+            unset($_SESSION["submissions"][$partid][$submission->userid]);
+            $j++;
 
             if ($j == TURNITINTOOLTWO_SUBMISSION_GET_LIMIT) {
                 break;
