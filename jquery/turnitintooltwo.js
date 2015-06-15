@@ -241,7 +241,7 @@ jQuery(document).ready(function($) {
             submissionsDataTableColumns.push(null);
             visibleCols.push(true);
         } else if (i == 4) {
-            submissionsDataTableColumns.push({"iDataSort": i+1, "sType":"string"});
+            submissionsDataTableColumns.push({"iDataSort": i-1, "sType":"string"});
             visibleCols.push(true);
         } else if (i == 5) {
             submissionsDataTableColumns.push({"sClass": "right"});
