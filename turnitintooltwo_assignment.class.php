@@ -510,12 +510,12 @@ class turnitintooltwo_assignment {
                     $membership->setUserId($readmembership->getUserId());
                     $membership->setRole($role);
 
-                    $turnitincall->createMembership($membership);
-
-                    $user = new TiiUser();
-                    $user->setUserId($readmembership->getUserId());
-
                     try {
+                        $turnitincall->createMembership($membership);
+
+                        $user = new TiiUser();
+                        $user->setUserId($readmembership->getUserId());
+
                         $response = $turnitincall->readUser($user);
                         $readuser = $response->getUser();
 
