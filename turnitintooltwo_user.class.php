@@ -47,7 +47,7 @@ class turnitintooltwo_user {
     }
 
     /**
-     *  Get the Moodle user id from the Turnitin id
+     *  Get the Moodle user id from the Turnitin id ignoring and unlinking deleted Moodle accounts.
      *
      * @param int $tiiuserid The turnitin userid
      * @return int the moodle user id
@@ -56,9 +56,16 @@ class turnitintooltwo_user {
         global $DB;
         $userid = 0;
 
-        if ($user = $DB->get_record('turnitintooltwo_users', array('turnitin_uid' => $tiiuserid))) {
-            $userid = (int)$user->userid;
+        $tiiusers = $DB->get_records('turnitintooltwo_users', array('turnitin_uid' => $tiiuserid));
+
+        foreach ($tiiusers as $tiiuser) {
+            $moodleuser = $DB->get_record('user', array('id' => $tiiuser->userid));
+            // Don't return a deleted user
+            if ($moodleuser->deleted == 0) {
+                return (int)$tiiuser->userid;
+            }
         }
+
         return $userid;
     }
 
