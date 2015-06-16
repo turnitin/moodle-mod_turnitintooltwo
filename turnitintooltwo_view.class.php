@@ -640,7 +640,7 @@ class turnitintooltwo_view {
                 $output .= $OUTPUT->box($messagesinbox.$refreshlink.$refreshinglink, 'tii_table_functions', 'tii_table_functions_'.$partid);
             }
         }
-        
+
         $output .= html_writer::alist($tabitems, array("id" => "part_tabs_menu"));
 
         $output .= $tables;
@@ -1394,6 +1394,7 @@ class turnitintooltwo_view {
         if ($start == 0) {
             $submissions = $turnitintooltwoassignment->get_submissions($cm, $partid);
             $_SESSION["submissions"][$partid] = $submissions[$partid];
+            $_SESSION["num_submissions"][$partid] = count($submissions[$partid]);
         }
 
         $submissiondata = array();
@@ -1404,15 +1405,12 @@ class turnitintooltwo_view {
         foreach ($_SESSION["submissions"][$partid] as $submission) {
             $i++;
 
-            if ($i < $start) {
-                continue;
-            } else {
-
-                $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
+            $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
                                                         $useroverallgrades, $istutor);
-                $submissiondata[] = $data;
-                $j++;
-            }
+            $submissiondata[] = $data;
+            // Remove submission from session
+            unset($_SESSION["submissions"][$partid][$submission->userid]);
+            $j++;
 
             if ($j == TURNITINTOOLTWO_SUBMISSION_GET_LIMIT) {
                 break;
