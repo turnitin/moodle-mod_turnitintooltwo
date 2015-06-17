@@ -62,7 +62,8 @@ class turnitintooltwo_user {
             $moodleuser = $DB->get_record('user', array('id' => $tiiuser->userid));
             // Don't return a deleted user
             if ($moodleuser->deleted == 0) {
-                return (int)$tiiuser->userid;
+                $userid = (int)$tiiuser->userid;
+                break;
             }
         }
 
