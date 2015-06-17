@@ -271,27 +271,27 @@ class turnitintooltwo_user {
      */
     public function edit_tii_user() {
 
-        // $config = turnitintooltwo_admin_config();
-        // $turnitincomms = new turnitintooltwo_comms();
-        // $turnitincall = $turnitincomms->initialise_api();
+        $config = turnitintooltwo_admin_config();
+        $turnitincomms = new turnitintooltwo_comms();
+        $turnitincall = $turnitincomms->initialise_api();
 
-        // // Only update if pseudo is not enabled.
-        // if (empty($config->enablepseudo)) {
-        //     $user = new TiiUser();
-        //     $user->setFirstName($this->firstname);
-        //     $user->setLastName($this->lastname);
+        // Only update if pseudo is not enabled.
+        if (empty($config->enablepseudo)) {
+            $user = new TiiUser();
+            $user->setFirstName($this->firstname);
+            $user->setLastName($this->lastname);
 
-        //     $user->setUserId($this->tii_user_id);
-        //     $user->setDefaultRole($this->role);
+            $user->setUserId($this->tii_user_id);
+            $user->setDefaultRole($this->role);
 
-        //     try {
-        //         $turnitincall->updateUser($user);
-        //         turnitintooltwo_activitylog("Turnitin User updated: ".$this->id." (".$this->tii_user_id.")", "REQUEST");
-        //     } catch (Exception $e) {
-        //         $toscreen = ($this->workflowcontext == "cron") ? false : true;
-        //         $turnitincomms->handle_exceptions($e, 'userupdateerror', $toscreen);
-        //     }
-        // }
+            try {
+                $turnitincall->updateUser($user);
+                turnitintooltwo_activitylog("Turnitin User updated: ".$this->id." (".$this->tii_user_id.")", "REQUEST");
+            } catch (Exception $e) {
+                $toscreen = ($this->workflowcontext == "cron") ? false : true;
+                $turnitincomms->handle_exceptions($e, 'userupdateerror', $toscreen);
+            }
+        }
     }
 
     /**
