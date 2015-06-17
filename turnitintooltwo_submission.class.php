@@ -416,6 +416,9 @@ class turnitintooltwo_submission {
                 $this->receipt->send_message($userid, $message);
             }
 
+            //Add entry to log.
+            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('gradenosubmission', 'turnitintooltwo') . ": $userid", $cm->id, $userid);
+
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
             } else {

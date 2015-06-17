@@ -507,3 +507,4 @@ $string['turnitinppulapre'] = 'To submit a file to Turnitin you must first accep
 $string['turnitinppulapost'] = 'Your file has not been submitted to Turnitin. Please click here to accept our EULA.';
 $string['errorcode0'] = 'This file has not been submitted to Turnitin, please consult your system administrator';
 $string['listsubmissionsdesc_student'] = 'User viewed their submission inbox at course';
+$string['gradenosubmission'] = 'User enabled grading without a submission for the user with id';
