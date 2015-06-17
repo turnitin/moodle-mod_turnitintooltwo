@@ -77,11 +77,15 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
      * create a new course in Turnitin
      */
     public function after_restore() {
-        global $DB;
+        global $DB, $CFG;
 
         if (!empty($_SESSION['tii_course_reset'])) {
 
             $course = turnitintooltwo_assignment::get_course_data($_SESSION['course_id']);
+
+            //Get the main site admin.
+            $admins = explode(",", $CFG->siteadmins);
+            $ownerid = $admins[0];
 
             // Get the number of assignments that already exist on this course that aren't part of recreation.
             $assignments = 0;
@@ -103,16 +107,15 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
                 // Recreate course in Turnitin
                 $course->turnitin_cid = 0;
                 $tmpassignment = new turnitintooltwo_assignment(0, '', '');
-                $turnitin_course = $tmpassignment->create_tii_course($course, $_SESSION['course_owner_id']);
+                $turnitin_course = $tmpassignment->create_tii_course($course, $ownerid);
 
                 // Join the course as Instructor
-                $owner = new turnitintooltwo_user($_SESSION['course_owner_id'], 'Instructor');
+                $owner = new turnitintooltwo_user($ownerid, 'Instructor');
                 $owner->join_user_to_class($turnitin_course->turnitin_cid);
             }
 
             unset($_SESSION['tii_course_reset']);
             unset($_SESSION['course_id']);
-            unset($_SESSION['course_owner_id']);
         }
 
         if (!empty($_SESSION['assignments_to_create'])) {

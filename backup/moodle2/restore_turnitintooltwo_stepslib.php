@@ -101,7 +101,6 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         $oldid = $data->id;
         $data->courseid = $this->get_courseid();
         $_SESSION['course_id'] = $data->courseid;
-        $_SESSION['course_owner_id'] = $data->ownerid;
 
         // Deleted user's emails are hashed so we need to grab username which isin the format email.timestamp
         if (empty($data->owneremail)) {
