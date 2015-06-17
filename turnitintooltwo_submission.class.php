@@ -362,6 +362,7 @@ class turnitintooltwo_submission {
         $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
         $user = new turnitintooltwo_user($userid, 'Learner');
         $user->join_user_to_class($course->turnitin_cid);
+        $user->edit_tii_user();
 
         $part = $turnitintooltwoassignment->get_part_details($partid);
 
@@ -455,6 +456,7 @@ class turnitintooltwo_submission {
         $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
         $user = new turnitintooltwo_user($this->userid, 'Learner');
         $user->join_user_to_class($course->turnitin_cid);
+        $user->edit_tii_user();
 
         // Get the stored file and read it into a temp file for submitting to Turnitin.
         $fs = get_file_storage();
