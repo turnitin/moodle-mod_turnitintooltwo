@@ -25,7 +25,7 @@
 require_once(__DIR__.'/turnitintooltwo_assignment.class.php');
 
 // Constants.
-define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 20971520);
+define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 41943040);
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
@@ -1109,7 +1109,7 @@ function turnitintooltwo_getfiles($moduleid) {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - just send the file
  */
-function turnitintooltwo_pluginfile($course,
+function turnitintooltwo_pluginfile($course, 
                 $cm,
                 context $context,
                 $filearea,
