@@ -89,7 +89,7 @@ jQuery(document).ready(function($) {
     // Open an iframe light box containing the Rubric View
     $(document).on('click', '.rubric_view_pp_launch', function() {
         $(this).colorbox({
-            open:true,iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view",
+            href: this.href, iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view",
             onLoad: function() {
                 lightBoxCloseButton();
                 getLoadingGif();
