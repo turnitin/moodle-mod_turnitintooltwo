@@ -78,7 +78,9 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.peermark_reviews_pp_launch', function() {
         $('.peermark_reviews_pp_launch').colorbox({
             open:true,iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_reviews",
-            onLoad: function() { getLoadingGif(); },
+            onLoad: function() {
+                getLoadingGif();
+            },
             onCleanup: function() { hideLoadingGif(); }
         });
         return false;
@@ -88,8 +90,14 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.rubric_view_pp_launch', function() {
         $(this).colorbox({
             open:true,iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view",
-            onLoad: function() { getLoadingGif(); },
-            onCleanup: function() { hideLoadingGif(); }
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
+            },
+            onCleanup: function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            }
         });
         return false;
     });
@@ -125,6 +133,10 @@ jQuery(document).ready(function($) {
         if ($('.pp_turnitin_ula').siblings('.mform').length > 0) {
             $('.pp_turnitin_ula').siblings('.mform').hide();
         }
+    }
+
+    function lightBoxCloseButton(closeBtnText) {
+        $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">' + M.str.turnitintooltwo.closebutton + '</a></div>');
     }
 
     function getLoadingGif() {
