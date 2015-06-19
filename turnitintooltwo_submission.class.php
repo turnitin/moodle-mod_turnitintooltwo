@@ -286,6 +286,8 @@ class turnitintooltwo_submission {
         $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
             $turnitintooltwoassignment->turnitintooltwo->course);
 
+        $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
+
         turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "delete submission", 'view.php?id='.$cm->id, get_string('deletesubmissiondesc', 'turnitintooltwo') . " '$this->submission_title'", $cm->id, $this->userid);
 
         // Delete Moodle submission first.
@@ -302,13 +304,13 @@ class turnitintooltwo_submission {
         if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
                                                 $turnitintooltwoassignment->turnitintooltwo->id,
                                                     'userid' => $this->userid, 'submission_unanon' => 1))) {
-            $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
-            if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
-                // Using a scale.
-                $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
-            } else {
-                $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
-            }
+        $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
+        if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+            // Using a scale.
+            $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+        } else {
+            $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+        }
 
         } else {
             $grades->rawgrade = null;
@@ -321,7 +323,7 @@ class turnitintooltwo_submission {
                         'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
 
         // If we have a Turnitin Id then delete submission.
-        if (!empty($this->submission_objectid)) {
+        if ((!empty($this->submission_objectid)) && ($istutor)) {
             $submission = new TiiSubmission();
             $submission->setSubmissionId($this->submission_objectid);
 
