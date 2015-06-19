@@ -556,6 +556,10 @@ h3.main {
     font-style: italic;
 }
 
+.mod_turnitintooltwo .underline {
+    text-decoration: underline;
+}
+
 .mod_turnitintooltwo .bold, .mod_turnitintooltwo #or_container {
     font-weight:bold;
 }

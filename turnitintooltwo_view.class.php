@@ -1107,7 +1107,7 @@ class turnitintooltwo_view {
         //submission title
         if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
             $title = $OUTPUT->box_start('default_open', 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
-            $title .= $OUTPUT->box(format_string($submission->submission_title), 'submission_title');
+            $title .= $OUTPUT->box(format_string($submission->submission_title), 'submission_title underline');
             $title .= $OUTPUT->box($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id, 'dv_url', 'default_url_'.$submission->submission_objectid);
             $title .= $OUTPUT->box_end(true);
             $rawtitle = $submission->submission_title;
@@ -1174,7 +1174,12 @@ class turnitintooltwo_view {
 
         // Show grade and link to DV.
         if ($config->usegrademark) {
-            if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
+            if ($turnitintooltwoassignment->turnitintooltwo->grade == 0) {
+                //We set the grade column to N/A if there is no grade type set.
+                $rawgrade = null;
+                $grade = $OUTPUT->box('N/A', '');
+            }
+            else if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                 $submissiongrade = (!is_null($submission->submission_grade)) ? $submission->submission_grade : '';
 
                 if (is_null($submission->submission_grade) || ($submission->submission_gmimaged == 0 && !$istutor)) {
