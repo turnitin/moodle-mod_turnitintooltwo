@@ -54,7 +54,16 @@ if (isset($_SESSION["notice"])) {
 }
 
 if ($id) {
-    if (!$cm = get_coursemodule_from_id('turnitintooltwo', $id)) {
+    //Pre 2.8 does not have the function get_course_and_cm_from_cmid.
+    if ($CFG->branch >= 28) {
+        list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
+    }
+    else {
+        $cm = get_coursemodule_from_id('turnitintooltwo', $id, 0, false, MUST_EXIST);
+        $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    }
+
+    if (!$cm) {
         turnitintooltwo_print_error('coursemodidincorrect', 'turnitintooltwo');
     }
     if (!$course = $DB->get_record("course", array("id" => $cm->course))) {
@@ -78,8 +87,15 @@ if ($id) {
 // If opening DV then $viewcontext needs to be set to box
 $viewcontext = ($do == "origreport" || $do == "grademark" || $do == "default") ? "box" : $viewcontext;
 
-require_login($course->id);
+require_login($course->id, true, $cm);
 turnitintooltwo_activitylog('view.php?id='.$id.'&do='.$do, "REQUEST");
+
+//Check if the user has the capability to view the page - used when an assignment is set to hidden.
+$context = context_module::instance($cm->id);
+require_capability('mod/turnitintooltwo:view', $context);
+
+//Set the page layout to base. 
+$PAGE->set_pagelayout('base');
 
 // Settings for page navigation
 if ($viewcontext == "window") {
