@@ -304,13 +304,13 @@ class turnitintooltwo_submission {
         if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
                                                 $turnitintooltwoassignment->turnitintooltwo->id,
                                                     'userid' => $this->userid, 'submission_unanon' => 1))) {
-        $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
-        if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
-            // Using a scale.
-            $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
-        } else {
-            $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
-        }
+            $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
+            if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                // Using a scale.
+                $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+            } else {
+                $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+            }
 
         } else {
             $grades->rawgrade = null;
