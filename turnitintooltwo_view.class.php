@@ -809,7 +809,12 @@ class turnitintooltwo_view {
                                      'tii_export_options_show' : 'tii_export_options_hide';
 
             $links = $OUTPUT->box_start($export_options, 'export_options');
-            $links .= $exportxlszip.$exportpdfzip.$exportoriginalzip;
+
+            // Show the export links if they should be available. 
+            if ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) {
+                $links .= $exportxlszip.$exportpdfzip.$exportoriginalzip;
+            }
+
             $links .= $OUTPUT->box_end(true);
 
             if ($turnitintooltwoassignment->count_submissions($cm, $partid) == 0) {
