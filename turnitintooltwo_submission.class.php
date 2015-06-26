@@ -400,7 +400,7 @@ class turnitintooltwo_submission {
             $submission->submission_orcapable = 0;
 
             //Send a message to the user's Moodle inbox with the digital receipt.
-            if ( ! empty($CFG->smtphosts) && ! empty($CFG->smtpuser) && ! empty($CFG->smtppass) ) {
+            if ( ! empty($CFG->smtphosts)) {
                 $partdetails = $turnitintooltwoassignment->get_part_details($partid);
 
                 $input = array(
@@ -567,7 +567,7 @@ class turnitintooltwo_submission {
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
                 //Send a message to the user's Moodle inbox with the digital receipt.
-                if ( ! empty($CFG->smtphosts) && ! empty($CFG->smtpuser) && ! empty($CFG->smtppass) ) {
+                if ( ! empty($CFG->smtphosts)) {
                     $input = array(
                         'firstname' => $user->firstname,
                         'lastname' => $user->lastname,
