@@ -273,8 +273,8 @@ if ($ADMIN->fulltree) {
                         '', 0, $ynoptions ));
     }
     else {
-        $settings->add(new admin_setting_configselect('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
-                        '', 1, $ynoptions ));
+        $settings->add(new admin_setting_configempty('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
+                        '', 0));
     }
 
     if (!empty($config->transmatch)) {
@@ -283,9 +283,9 @@ if ($ADMIN->fulltree) {
                                                         '', 0, $ynoptions ));
     }
     else {
-        $settings->add(new admin_setting_configselect('turnitintooltwo/default_transmatch',
+        $settings->add(new admin_setting_configempty('turnitintooltwo/default_transmatch',
                                                         get_string('transmatch', 'turnitintooltwo'),
-                                                        '', 1, $ynoptions ));
+                                                        '', 0));
     }
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_studentreports',
