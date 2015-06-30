@@ -618,9 +618,9 @@ jQuery(document).ready(function($) {
             }
         });
 
-        if ( $('#export_options').hasClass('tii_export_options_hide') ) {
+        if ($('#export_options').hasClass('tii_export_options_hide')) {
             $('#export_options').hide();
-            $('.export_data').append('<span class="empty-dash">--</span>');
+            $('.export_data').html('<span class="empty-dash">--</span>');
         }
 
         $('.editable_postdue').on("click", function() {
@@ -673,7 +673,7 @@ jQuery(document).ready(function($) {
 
                     if (response.export_option == "tii_export_options_hide") {
                         $('#export_options').hide();
-                        $('.export_data').append('<span class="empty-dash">--</span>');
+                        $('.export_data').html('<span class="empty-dash">--</span>');
                     } else {
                         $('.empty-dash').remove();
                         $('#export_options').show();
