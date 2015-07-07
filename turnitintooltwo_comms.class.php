@@ -89,6 +89,10 @@ class turnitintooltwo_comms {
             $api->setProxyBypass($CFG->proxybypass);
         }
 
+        $plugin_version = turnitintooltwo_get_version();
+        $api->setIntegrationVersion($CFG->version);
+        $api->setPluginVersion($plugin_version);
+
         if (is_readable("$CFG->dataroot/moodleorgca.crt")) {
             $certificate = realpath("$CFG->dataroot/moodleorgca.crt");
             $api->setSSLCertificate($certificate);

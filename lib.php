@@ -94,6 +94,24 @@ function turnitintooltwo_supports($feature) {
 }
 
 /**
+ * @return int the plugin version for use within the plugin.
+ */
+function turnitintooltwo_get_version() {
+    global $DB, $CFG;
+    $plugin_version = '';
+
+    if ($CFG->branch >= 26) {
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintooltwo', 'name' => 'version'));
+        $plugin_version = $module->value;
+    } else {
+        $module = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
+        $plugin_version = $module->version;
+    }
+
+    return $plugin_version;
+}
+
+/**
  * @return mixed the admin config settings for the plugin
  */
 function turnitintooltwo_admin_config() {
