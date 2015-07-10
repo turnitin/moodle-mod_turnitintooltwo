@@ -14,7 +14,7 @@ Installation
 
 Before installing these plugins firstly make sure you are logged in as an Administrator and that you are using Moodle 2.3 or higher.
 
-To install, all you need to do is copy all the files into the directory in to the directory on your moodle installation. You should then go to `"Site Administration" > "Notifications"` and follow the on screen instructions.
+To install, all you need to do is copy all the files into the mod/turnitintooltwo directory on your moodle installation. You should then go to `"Site Administration" > "Notifications"` and follow the on screen instructions.
 
 If you are using a pre 2.6 version of Moodle you will have to uncomment the initialising of $module in version.php before installing.
 
