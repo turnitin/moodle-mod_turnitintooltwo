@@ -371,37 +371,6 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    // Show the Turnitin user agreement if necessary
-    if ($(".turnitin_ula").length > 0) {
-        $('#id_submitbutton').attr('disabled', 'disabled');
-        $('.submission_form_container').attr('style', 'display:none;');
-
-        $(window).on("message", function(ev) {
-            var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
-            if (message === "turnitin_eula_declined") {
-                window.parent.$('.upload_box').colorbox.close();
-            } else {
-                window.parent.$('.upload_box').data('launchEula', 0);
-                window.parent.$('.upload_box').colorbox.resize({
-                    width: "80%",
-                    height: "80%"
-                });
-            }
-
-            $('iframe.cboxIframe').attr('src', $('iframe.cboxIframe').attr('src'));
-        });
-    }
-
-    // Resize window after submitting EULA.
-    $('.turnitin_ula input[type="submit"]').click(function() {
-        $(this).hide();
-        $(this).parent().parent().parent().find("p").hide();
-        window.parent.$('.upload_box').colorbox.resize({
-            width: "800px",
-            height: "565px"
-        });
-    });
-
     // Resize window if submission has failed.
     if ($('.submission_failure_msg').length > 0) {
         window.parent.$('.upload_box').colorbox.resize({
@@ -703,18 +672,32 @@ jQuery(document).ready(function($) {
 
     $('#inbox_form form, .launch_form form').submit();
 
-    // Update the DB value for EULA accepted
-    function userAgreementAccepted( user_id ){
-        $.ajax({
-            type: "POST",
-            url: "ajax.php",
-            dataType: "json",
-            data: {action: 'acceptuseragreement', user_id: user_id},
-            success: function(data) {
-                window.location.href = window.location.href;
+    // Open a light box containing the Turnitin EULA
+    $(document).on('click', '.turnitin_eula_link', function() {
+        $(this).colorbox({
+            open:true,iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
+            onLoad: function() { getLoadingGif(); },
+            onComplete: function() {
+                $(window).on("message", function(ev) {
+                    var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
+
+                    $.ajax({
+                        type: "POST",
+                        url: M.cfg.wwwroot +"/mod/turnitintooltwo/ajax.php",
+                        dataType: "json",
+                        data: {action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey},
+                        success: function(data) { window.location.reload(); },
+                        error: function(data) { window.location.reload(); }
+                    });
+                });
+            },
+            onCleanup: function() {
+                hideLoadingGif();
             }
         });
-    }
+
+        return false;
+    });
 
     // Enable the editing fields in the inbox parts table
     function enableEditingText(part_id) {
@@ -772,6 +755,8 @@ jQuery(document).ready(function($) {
                         $('.refresh_link').show();
                     }
 
+                    submitVisibility();
+
                     enableEditingText(part_id);
                 }
             },
@@ -780,6 +765,18 @@ jQuery(document).ready(function($) {
                 $('.dataTables_empty').html(M.str.turnitintooltwo.tiisubmissionsgeterror);
             }
         });
+    }
+
+    // Show or hide the submission link depending on whether the EULA has been accepted.
+    function submitVisibility() {
+        if (($(".upload_box").data("user-type") == 1) || ($(".upload_box").data("eula") == 1)) {
+            $(".upload_box").show();
+            $(".upload_eula_not_accepted").hide();
+        }
+        else {
+            $(".upload_box").hide();  
+            $(".upload_eula_not_accepted").show(); 
+        }
     }
 
     // Get the rubrics belonging to a user from Turnitin and refresh menu accordingly
@@ -930,18 +927,10 @@ jQuery(document).ready(function($) {
             identifier = "#upload_"+submission_id+"_"+part_id+"_"+user_id;
         }
 
-        var colorBoxWidth = "700px";
-        var colorBoxHeight = "90px";
+        var colorBoxWidth = "80%";
+        var colorBoxHeight = "80%";
 
         $(identifier).colorbox({
-            onComplete: function() {
-                if ( $('.upload_box').data('launchEula') === 0 ) {
-                    window.parent.$('.upload_box').colorbox.resize({
-                       width: "80%",
-                       height: "80%"
-                    });
-                }
-            },
             onLoad: function() {
                 getLoadingGif();
                 lightBoxCloseButton();
@@ -1204,6 +1193,8 @@ jQuery(document).ready(function($) {
                 var rowindex = tr.index();
                 oTable.fnDeleteRow(tr);
                 oTable.fnAddData(data.row);
+
+                submitVisibility();
 
                 initialiseUploadBox("row", data.submission_id, part_id, user_id);
                 initialiseDVLaunchers("row", data.submission_id, part_id, user_id);

@@ -1278,24 +1278,24 @@ class turnitintooltwo_view {
 
             $uploadtext = (!$istutor) ? html_writer::tag('span', get_string('submitpaper', 'turnitintooltwo')) : '';
 
-            $launcheula = false;
-
+            $eulaaccepted = 0;
             if ($submission->userid == $USER->id) {
                 $submission_user = new turnitintooltwo_user($submission->userid, "Learner");
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
                 $submission_user->join_user_to_class($coursedata->turnitin_cid);
                 $eulaaccepted = ($submission_user->user_agreement_accepted == 0) ? 
                                     $submission_user->get_accepted_user_agreement() : $submission_user->user_agreement_accepted;
-
-                $launcheula = ($eulaaccepted != 1) ? 1 : 0;
             }
-
             $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
                                         $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.
                                         $OUTPUT->pix_icon('file-upload', get_string('submittoturnitin', 'turnitintooltwo'),
                                             'mod_turnitintooltwo'),
-                                        array("class" => "upload_box", "data-launch-eula" => $launcheula, "id" => "upload_".$submission->submission_objectid.
-                                                            "_".$partid."_".$submission->userid));
+                                        array("class" => "upload_box", "id" => "upload_".$submission->submission_objectid.
+                                                            "_".$partid."_".$submission->userid, 'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
+
+            $upload_hidden = html_writer::tag('span', get_string('submitpaper', 'turnitintooltwo'), array('class' => 'upload_eula_not_accepted'));
+
+            $upload = $upload . $upload_hidden;
 
             if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
                 $upload = "&nbsp;";

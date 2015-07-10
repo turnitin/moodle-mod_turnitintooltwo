@@ -519,6 +519,37 @@ switch ($do) {
         break;
 
     case "submissions":
+        // Output a link for the student to accept the turnitin licence agreement.
+        $noscriptula = "";
+        $ula = "";
+
+        if (!$istutor) {
+            $eulaaccepted = false;
+            $user = new turnitintooltwo_user($USER->id, $userrole);
+            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $user->join_user_to_class($coursedata->turnitin_cid);
+            $eulaaccepted = ($user->user_agreement_accepted != 1) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
+
+            // Check if the submitting user has accepted the EULA
+            if ($eulaaccepted != 1) {
+                // Moodle strips out form and script code for forum posts so we have to do the Eula Launch differently.
+                $ula_link = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid',
+                                        get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
+                                        array("class" => "turnitin_eula_link"));
+
+                $eulaignoredclass = ($eulaaccepted == 0) ? ' turnitin_ula_ignored' : '';
+                $ula = html_writer::tag('div', $ula_link, array('class' => 'turnitin_ula js_required'.$eulaignoredclass,
+                                            'data-userid' => $user->id));
+
+                $noscriptula = html_writer::tag('noscript',
+                                turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
+                                    "Learner", get_string('turnitinula', 'turnitintooltwo'), false)." ".
+                                        get_string('noscriptula', 'turnitintooltwo'),
+                                            array('class' => 'warning turnitin_ula_noscript'));
+                echo $ula.$noscriptula;
+            }
+        }
+
         $listsubmissionsdesc = ($istutor) ? "listsubmissionsdesc" : "listsubmissionsdesc_student";
         turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions", 'view.php?id='.$cm->id, get_string($listsubmissionsdesc, 'turnitintooltwo') . ": $course->id", $cm->id);
 
