@@ -1,0 +1,157 @@
+.partDetails {
+    font-size: 13px;
+    margin-bottom:0px;
+    width:100%;
+    border: 1px solid $border-color;
+
+    tr {
+        border-right: 1px solid $border-color;
+    }
+
+    th {
+        padding: 6px 12px 6px;
+        border-bottom: 1px solid $border-color;
+    }
+
+    td {
+        border: 1px solid $border-color;
+        border-top: 0;
+        padding: 12px 12px 4px;
+    }
+
+    td.data,
+    td.export_data,
+    td.rubric_qm {
+        text-align: center;
+    }
+
+    td.export_data {
+        padding-top:12px;
+    }
+
+    td.introduction_cell {
+        border:0;
+        padding:0;
+    }
+
+    td.peermarks {
+        border:0;
+    }
+
+    td.peermark_assignments_cell {
+        padding:0;
+        border:0;
+    }
+
+    .editable-click {
+        border:none;
+        background:url(pix/edit.png) right -4px no-repeat;
+        padding-right: 24px;
+
+        &:hover {
+            border-bottom: 0 !important;
+        }
+    }
+
+    /*
+     * Introduction (summary section)
+     */
+     .introduction,
+     .peermark_instructions {
+        padding: 6px 10px;
+        border-bottom: 1px solid $border-color;
+        display: none;
+    }
+
+    .introduction h2 {
+        margin: 8px 0;
+    }
+
+    .introduction p {
+        margin: 6px 0;
+    }
+
+    /*
+     * Export options
+     */
+    .row_export_xls,
+    .row_export_pdf,
+    .row_export_orig,
+    .zip_open,
+    .row_rubric_manager,
+    .row_quickmark_manager {
+        display:inline;
+    }
+
+    .toggle_peermark_instructions img {
+        display: block;
+    }
+
+    .toggle_summary,
+    .toggle_peermarks,
+    .toggle_peermark_instructions {
+        cursor: pointer;
+        float:left;
+        position: relative;
+        top:-3px;
+        margin-right:8px;
+    }
+
+    .peermark_header {
+        margin-bottom:8px;
+        float:left;
+    }
+}
+
+.peermarkDetails {
+    width: 100%;
+    border-top: 1px solid $border-color;
+
+    td {
+        padding:8px 12px;
+        border-bottom-width: 0;
+    }
+
+    td.peermark_instructions_cell {
+        border:0;
+        padding:0;
+    }
+}
+
+.quickmark_manager_launch {
+    background:url(pix/quickmark.png) no-repeat 0px 0px;
+    padding: 2px 0 2px 40px;
+    height: 20px;
+}
+
+.rubric_manager_launch,
+.rubric_view_launch {
+    background:url(pix/rubric.png) no-repeat 0px 0px;
+    padding:4px 0 4px 32px;
+    line-height: 22px;
+    margin-left: 6px;
+}
+
+.peermark_manager_launch {
+    background:url(pix/peermark-settings.png) no-repeat 0px 0px;
+}
+
+.peermark_reviews_launch {
+    background:url(pix/peermark-reviews.png) no-repeat 0px 0px;
+}
+
+.peermark_manager_launch,
+.peermark_reviews_launch {
+    padding: 4px 0 4px 46px;
+    height: 22px;
+}
+
+ .mod_turnitintooltwo .editable_hide_span, .mod_turnitintooltwo .peermark_loading_span {
+    position: relative;
+    top:4px;
+}
+
+.mod_turnitintooltwo .peermark_loading_row {
+    text-align: center;
+    margin:0 auto 8px;
+}
