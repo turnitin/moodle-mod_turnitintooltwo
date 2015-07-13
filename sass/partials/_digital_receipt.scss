@@ -1,0 +1,32 @@
+.tii_digital_receipt {
+    display: inline-block;
+    width: 150px;
+}
+
+#tii_digital_receipt_box {
+    padding: 20px;
+    background: #fff;
+
+    .generaltable {
+        width: 100%;
+    }
+
+    .logo {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #tii_receipt_print {
+        text-align: right;
+        display: block;
+    }
+
+}
+
+#digital_receipt {
+    margin: 0;
+}
+
+.mod_turnitintooltwo #upload_success {
+    color: #CC0000;
+}
