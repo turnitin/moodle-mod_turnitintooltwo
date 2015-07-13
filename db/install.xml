@@ -23,8 +23,9 @@
                 <FIELD NAME="submitpapersto" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="reportgenspeed" NEXT="spapercheck"/>
                 <FIELD NAME="spapercheck" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submitpapersto" NEXT="internetcheck"/>
                 <FIELD NAME="internetcheck" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="spapercheck" NEXT="journalcheck"/>
-                <FIELD NAME="journalcheck" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="internetcheck" NEXT="maxfilesize"/>
-                <FIELD NAME="maxfilesize" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="journalcheck" NEXT="intro"/>
+                <FIELD NAME="journalcheck" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="internetcheck" NEXT="institution_check"/>
+                <FIELD NAME="institution_check" TYPE="int" LENGTH="1" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="journalcheck" NEXT="maxfilesize"/>
+                <FIELD NAME="maxfilesize" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="institution_check" NEXT="intro"/>
                 <FIELD NAME="intro" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the Turnitin Tools activity" PREVIOUS="maxfilesize" NEXT="introformat"/>
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="intro" NEXT="timecreated"/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
