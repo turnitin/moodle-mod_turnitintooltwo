@@ -195,17 +195,6 @@ switch ($cmd) {
         break;
     case "useragreement":
         $PAGE->set_pagelayout('embedded');
-        $cssurl = new moodle_url($CFG->wwwroot.'/mod/turnitintooltwo/css/styles_pp.css');
-        $PAGE->requires->css($cssurl);
-        if ($CFG->branch <= 25) {
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-ui-1.10.4.custom.min.js');
-            $PAGE->requires->js($jsurl, true);
-        } else {
-            $PAGE->requires->jquery();
-            $PAGE->requires->jquery_plugin('ui');
-        }
         $user = new turnitintooltwo_user($USER->id, "Learner");
 
         $output .= $OUTPUT->box_start('tii_eula_launch');
