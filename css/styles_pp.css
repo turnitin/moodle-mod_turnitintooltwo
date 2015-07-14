@@ -130,7 +130,11 @@
     cursor: normal;
 }
 
-.tii_links_container .turnitin_paper_id {
+.tii_links_container .turnitin_status {
+    white-space:nowrap;
+}
+
+.tii_links_container .turnitin_status img {
     padding-right:6px;
 }
 
