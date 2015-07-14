@@ -6,3 +6,48 @@
 .turnitin_ula input[type="submit"] {
     margin: 0;
 }
+
+.tii_links_container {
+
+	.forum_eula_launch_noscript,
+	.forum_eula_launch span {
+		cursor:pointer;
+		text-decoration: underline;
+		text-align: center;
+		border: 1px solid #CC0000;
+		background:url(pix/icon.png) no-repeat center 12px;
+		padding: 48px 12px 12px;
+		color: #FF0000;
+		margin-top:12px;
+		margin-bottom:112px;
+		font-size: 14px;
+		font-weight: bold;
+		display: block;
+	}
+}
+
+.turnitin_ula {
+	cursor:pointer;
+	text-decoration: underline;
+	text-align: center;
+	border: 1px solid #CC0000;
+	background:url(pix/icon.png) no-repeat center 12px;
+	padding: 48px 12px 12px;
+	color: #FF0000;
+	margin-top:12px;
+	margin-bottom:16px !important;
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+}
+
+noscript.turnitin_ula_noscript {
+    border: 1px solid #CC0000;
+    padding: 8px;
+    background: #FFE9E8;
+    width: 99%;
+    text-align:center;
+    display:block;
+    margin:16px 6px;
+    line-height: 28px;
+}
