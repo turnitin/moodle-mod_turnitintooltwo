@@ -130,7 +130,11 @@
     cursor: normal;
 }
 
-.tii_links_container .turnitin_paper_id {
+.tii_links_container .turnitin_status {
+    white-space:nowrap;
+}
+
+.tii_links_container .turnitin_status img {
     padding-right:6px;
 }
 
@@ -246,8 +250,12 @@ noscript.turnitin_ula_noscript {
     margin-top: 12px;
 }
 
-.tii_links_container .tii_error_icon {
+.tii_links_container .pp_resubmit_link {
     cursor: pointer;
+}
+
+.tii_links_container .tii_error_icon, .tii_links_container .pp_resubmitting img {
+    padding-right:6px;
 }
 
 .tii_links_container .eularedirect {
