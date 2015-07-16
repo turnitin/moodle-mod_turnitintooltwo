@@ -471,7 +471,7 @@ class turnitintooltwo_submission {
         foreach ($files as $file) {
 
             $filename = array(
-                $this->submission_title,
+                str_replace("/", "", $this->submission_title),
                 $cm->id
             );
 
