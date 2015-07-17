@@ -973,7 +973,8 @@ class turnitintooltwo_assignment {
      */
     public function get_parts($peermarks = true) {
         global $DB;
-        if ($parts = $DB->get_records("turnitintooltwo_parts", array("turnitintooltwoid" => $this->turnitintooltwo->id))) {
+        if ($parts = $DB->get_records("turnitintooltwo_parts",
+                                        array("turnitintooltwoid" => $this->turnitintooltwo->id), 'id ASC')) {
             if ($peermarks) {
                 foreach ($parts as $part) {
                     $parts[$part->id]->peermark_assignments = $this->get_peermark_assignments($part->tiiassignid);
