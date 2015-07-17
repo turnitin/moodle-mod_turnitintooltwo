@@ -94,12 +94,18 @@ turnitintooltwo_activitylog('view.php?id='.$id.'&do='.$do, "REQUEST");
 $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
-//Set the page layout to base. 
+//Set the page layout to base.
 $PAGE->set_pagelayout('base');
 
 // Settings for page navigation
 if ($viewcontext == "window") {
     $PAGE->set_course($course);
+}
+
+// Don't show messages popup if we are in submission modal.
+$forbiddenmsgscreens = array('submission_success', 'submitpaper');
+if (in_array($do, $forbiddenmsgscreens)) {
+    $PAGE->set_popup_notification_allowed(false);
 }
 
 // Configure URL correctly.
