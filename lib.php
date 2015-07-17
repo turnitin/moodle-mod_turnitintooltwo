@@ -668,6 +668,9 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         // Filename with random string at the end.
         $file = $tempdir . DIRECTORY_SEPARATOR . $filename .
             substr('_' . mt_rand() . $ext, 0, $extlength);
+
+        // Ensure the filename doesn't have any characters that are invalid for the fs.
+        $file = clean_param($file, PARAM_FILE);
     } while (!touch($file));
 
     return $file;
