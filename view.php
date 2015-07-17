@@ -244,7 +244,7 @@ if (!empty($action)) {
                         $doupload = $turnitintooltwosubmission->do_file_upload($cm, $turnitintooltwofileuploadoptions);
                         if (!$doupload["result"]) {
                             if (!$prevsubmission) {
-                                $turnitintooltwosubmission->delete_submission();
+                                $turnitintooltwosubmission->delete_submission('failed');
                             }
                             $_SESSION["notice"]["message"] = $doupload["message"];
                             $_SESSION["notice"]["type"] = "error";
@@ -253,7 +253,17 @@ if (!empty($action)) {
                     } else if ($post['submissiontype'] == 2) {
                         $turnitintooltwosubmission->prepare_text_submission($cm, $post);
                     }
+
                     if ($do == "submission_success") {
+                        // Log successful submission to Moodle.
+                        turnitintooltwo_add_to_log(
+                            $turnitintooltwoassignment->turnitintooltwo->course,
+                            "add submission",
+                            'view.php?id='.$cm->id,
+                            get_string('addsubmissiondesc', 'turnitintooltwo') . " '" . $post['submissiontitle'] . "'",
+                            $cm->id, $post['studentsname']
+                        );
+
                         $tiisubmission = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment);
                         $_SESSION["digital_receipt"] = $tiisubmission;
 

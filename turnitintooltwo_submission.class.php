@@ -96,11 +96,6 @@ class turnitintooltwo_submission {
         if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
             return false;
         }
-        $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
-        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
-            $turnitintooltwoassignment->turnitintooltwo->course);
-
-        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('addsubmissiondesc', 'turnitintooltwo') . " '" . $data['submissiontitle'] . "'", $cm->id, $data['studentsname']);
 
         $this->reset_submission($data);
 
@@ -274,7 +269,7 @@ class turnitintooltwo_submission {
      * @param int $submission_id
      * @return type
      */
-    public function delete_submission() {
+    public function delete_submission($action = 'delete') {
         global $CFG, $DB;
         $notice = array();
         $partid = $this->submission_part;
@@ -288,13 +283,23 @@ class turnitintooltwo_submission {
 
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
 
-        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "delete submission", 'view.php?id='.$cm->id, get_string('deletesubmissiondesc', 'turnitintooltwo') . " '$this->submission_title'", $cm->id, $this->userid);
-
         // Delete Moodle submission first.
         if (!$DB->delete_records('turnitintooltwo_submissions', array('id' => $this->id))) {
             $notice["type"] = "error";
             $notice["message"] = get_string('submissiondeleteerror', 'turnitintooltwo');
             return $notice;
+        }
+
+        // Log deleted submission with Moodle.
+        if ($action == 'delete') {
+            turnitintooltwo_add_to_log(
+                $turnitintooltwoassignment->turnitintooltwo->course,
+                "delete submission",
+                'view.php?id='.$cm->id,
+                get_string('deletesubmissiondesc', 'turnitintooltwo') . " '$this->submission_title'",
+                $cm->id,
+                $this->userid
+            );
         }
 
         // Update grade in Gradecenter.
@@ -323,12 +328,21 @@ class turnitintooltwo_submission {
                         'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
 
         // If we have a Turnitin Id then delete submission.
-        if ((!empty($this->submission_objectid)) && ($istutor)) {
+        if ((!empty($this->submission_objectid)) && ($istutor) && $action == 'delete') {
             $submission = new TiiSubmission();
             $submission->setSubmissionId($this->submission_objectid);
 
             try {
                 $response = $turnitincall->deleteSubmission($submission);
+
+                turnitintooltwo_add_to_log(
+                    $turnitintooltwoassignment->turnitintooltwo->course,
+                    "delete submission",
+                    'view.php?id='.$cm->id,
+                    get_string('deletesubmissiontiidesc', 'turnitintooltwo') . " '$this->submission_title'",
+                    $cm->id,
+                    $this->userid
+                );
 
                 $notice["type"] = "full-error";
                 $notice["message"] = get_string('submissiondeleted', 'turnitintooltwo').
@@ -587,16 +601,19 @@ class turnitintooltwo_submission {
                     );
                 }
 
-                //Create a log entry for a resubmission.
-                if ($apimethod == "replaceSubmission") {
-                    turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('addsubmissiondesc', 'turnitintooltwo') . " '" . $this->submission_title . "' (" . get_string('resubmission', 'turnitintooltwo') . ")", $cm->id, $user->id);
-                }
+                //Create a log entry for submission going to Turnitin.
+                $logstring = ($apimethod == "replaceSubmission") ? 'addresubmissiontiidesc' : 'addsubmissiontiidesc';
+
+                turnitintooltwo_add_to_log(
+                    $turnitintooltwoassignment->turnitintooltwo->course,
+                    "add submission",
+                    'view.php?id='.$cm->id,
+                    get_string($logstring, 'turnitintooltwo') . " '" . $this->submission_title . "'",
+                    $cm->id,
+                    $user->id
+                );
             } catch (Exception $e) {
-                if (!is_null($this->submission_objectid)) {
-                    $errorstring = "updatesubmissionerror";
-                } else {
-                    $errorstring = "createsubmissionerror";
-                }
+                $errorstring = (!is_null($this->submission_objectid)) ? "updatesubmissionerror" : "createsubmissionerror";
                 $error = $turnitincomms->handle_exceptions($e, $errorstring, false, true);
 
                 $notice["message"] = $error;

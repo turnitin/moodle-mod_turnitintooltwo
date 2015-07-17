@@ -511,3 +511,6 @@ $string['gradenosubmission'] = 'User enabled grading without a submission for th
 $string['turnitinstatus'] = 'Turnitin status';
 $string['resubmittoturnitin'] = 'Resubmit to Turnitin';
 $string['resubmitting'] = 'Resubmitting';
+$string['addresubmissiontiidesc'] = 'User resubmission sent to Turnitin';
+$string['addsubmissiontiidesc'] = 'User submission sent to Turnitin';
+$string['deletesubmissiontiidesc'] = 'User deleted the submission from Turnitin';
