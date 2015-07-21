@@ -1293,10 +1293,6 @@ class turnitintooltwo_view {
                                         array("class" => "upload_box", "id" => "upload_".$submission->submission_objectid.
                                                             "_".$partid."_".$submission->userid, 'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
 
-            $upload_hidden = html_writer::tag('span', get_string('submitpaper', 'turnitintooltwo'), array('class' => 'upload_eula_not_accepted'));
-
-            $upload = $upload . $upload_hidden;
-
             if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
                 $upload = "&nbsp;";
             }

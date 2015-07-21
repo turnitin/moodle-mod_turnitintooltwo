@@ -771,11 +771,9 @@ jQuery(document).ready(function($) {
     function submitVisibility() {
         if (($(".upload_box").data("user-type") == 1) || ($(".upload_box").data("eula") == 1)) {
             $(".upload_box").show();
-            $(".upload_eula_not_accepted").hide();
         }
         else {
-            $(".upload_box").hide();  
-            $(".upload_eula_not_accepted").show(); 
+            $(".upload_box").hide();
         }
     }
 
