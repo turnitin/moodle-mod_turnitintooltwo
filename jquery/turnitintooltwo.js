@@ -675,7 +675,7 @@ jQuery(document).ready(function($) {
     // Open a light box containing the Turnitin EULA
     $(document).on('click', '.turnitin_eula_link', function() {
         $(this).colorbox({
-            open:true,iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
+            href: this.href, iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
             onLoad: function() { getLoadingGif(); },
             onComplete: function() {
                 $(window).on("message", function(ev) {
