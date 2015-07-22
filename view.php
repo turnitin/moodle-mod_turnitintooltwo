@@ -330,6 +330,10 @@ if (!empty($action)) {
     }
 }
 
+// Enable activity completion on page view.
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
+
 // Show header and navigation
 if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
