@@ -673,28 +673,32 @@ jQuery(document).ready(function($) {
     $('#inbox_form form, .launch_form form').submit();
 
     // Open a light box containing the Turnitin EULA
-    $(document).on('click', '.turnitin_eula_link', function() {
-        $(this).colorbox({
-            href: this.href, iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
-            onLoad: function() { getLoadingGif(); },
-            onComplete: function() {
-                $(window).on("message", function(ev) {
-                    var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
+    $(document).on('click', '.turnitin_eula_link', function(e) {
+        var $this = jQuery(this);
+        if (!$this.hasClass("colorbox-initialized")) {
+            e.preventDefault();
+            $this.addClass("colorbox-initialized").colorbox({
+                open:true,iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
+                onLoad: function() { getLoadingGif(); },
+                onComplete: function() {
+                    $(window).on("message", function(ev) {
+                        var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
 
-                    $.ajax({
-                        type: "POST",
-                        url: M.cfg.wwwroot +"/mod/turnitintooltwo/ajax.php",
-                        dataType: "json",
-                        data: {action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey},
-                        success: function(data) { window.location.reload(); },
-                        error: function(data) { window.location.reload(); }
+                        $.ajax({
+                            type: "POST",
+                            url: M.cfg.wwwroot +"/mod/turnitintooltwo/ajax.php",
+                            dataType: "json",
+                            data: {action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey},
+                            success: function(data) { window.location.reload(); },
+                            error: function(data) { window.location.reload(); }
+                        });
                     });
-                });
-            },
-            onCleanup: function() {
-                hideLoadingGif();
-            }
-        });
+                },
+                onCleanup: function() {
+                    hideLoadingGif();
+                }
+            });
+        }
 
         return false;
     });
