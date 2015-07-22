@@ -1109,7 +1109,7 @@ class turnitintooltwo_view {
             }
         }
 
-        //submission title
+        // Submission title with link to open DV.
         if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
             $title = $OUTPUT->box_start('default_open', 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid);
             $title .= $OUTPUT->box(format_string($submission->submission_title), 'submission_title underline');
@@ -1290,7 +1290,7 @@ class turnitintooltwo_view {
                                         $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.
                                         $OUTPUT->pix_icon('file-upload', get_string('submittoturnitin', 'turnitintooltwo'),
                                             'mod_turnitintooltwo'),
-                                        array("class" => "upload_box", "id" => "upload_".$submission->submission_objectid.
+                                        array("class" => "upload_box nowrap", "id" => "upload_".$submission->submission_objectid.
                                                             "_".$partid."_".$submission->userid, 'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
 
             if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
