@@ -936,6 +936,7 @@ jQuery(document).ready(function($) {
             onLoad: function() {
                 getLoadingGif();
                 lightBoxCloseButton();
+                $(this).hide();
             },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {

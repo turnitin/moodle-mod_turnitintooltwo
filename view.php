@@ -272,6 +272,7 @@ if (!empty($action)) {
 
                         $tiisubmission = $turnitintooltwosubmission->do_tii_submission($cm, $turnitintooltwoassignment);
                         $_SESSION["digital_receipt"] = $tiisubmission;
+                        $_SESSION["digital_receipt"]["is_manual"] = 0;
 
                         if ($tiisubmission['success'] == true) {
                             $locked_assignment = new stdClass();
@@ -611,7 +612,7 @@ switch ($do) {
         }
 
         if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
-                !empty($_SESSION["digital_receipt"])) {
+                !empty($_SESSION["digital_receipt"]) && !isset($_SESSION["digital_receipt"]["is_manual"])) {
             echo $turnitintooltwoview->show_digital_receipt($_SESSION["digital_receipt"]);
             unset($_SESSION["digital_receipt"]);
         }
