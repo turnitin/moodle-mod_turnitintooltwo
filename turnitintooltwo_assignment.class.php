@@ -470,6 +470,8 @@ class turnitintooltwo_assignment {
      * @return array $users
      */
     public function get_tii_users_by_role($role = "Learner") {
+        global $DB;
+
         $users = array();
         // Get Moodle Course Object.
         $course = $this->get_course_data($this->turnitintooltwo->course);
@@ -492,38 +494,48 @@ class turnitintooltwo_assignment {
         // Add each user to an array.
         foreach ($readmemberships as $readmembership) {
             if ($readmembership->getRole() == $role) {
-                $user = new TiiUser();
-                $user->setUserId($readmembership->getUserId());
 
-                try {
-                    $response = $turnitincall->readUser($user);
-                    $readuser = $response->getUser();
-
-                    $users[$readmembership->getUserId()]["firstname"] = $readuser->getFirstName();
-                    $users[$readmembership->getUserId()]["lastname"] = $readuser->getLastName();
+                // Check user is a Moodle user. otherwise we have to go to Turnitin for their name.
+                $moodleuserid = turnitintooltwo_user::get_moodle_user_id($readmembership->getUserId());
+                if (!empty($moodleuserid)) {
+                    $user = $DB->get_record('user', array('id' => $moodleuserid));
+                    $users[$readmembership->getUserId()]["firstname"] = $user->firstname;
+                    $users[$readmembership->getUserId()]["lastname"] = $user->lastname;
                     $users[$readmembership->getUserId()]["membership_id"] = $readmembership->getMembershipId();
-
-                } catch (Exception $e) {
-                    // A read user exception occurs when users are inactive. Re-enrol user to make them active.
-                    $membership = new TiiMembership();
-                    $membership->setClassId($course->turnitin_cid);
-                    $membership->setUserId($readmembership->getUserId());
-                    $membership->setRole($role);
+                } else {
+                    $user = new TiiUser();
+                    $user->setUserId($readmembership->getUserId());
 
                     try {
-                        $turnitincall->createMembership($membership);
-
-                        $user = new TiiUser();
-                        $user->setUserId($readmembership->getUserId());
-
                         $response = $turnitincall->readUser($user);
                         $readuser = $response->getUser();
 
                         $users[$readmembership->getUserId()]["firstname"] = $readuser->getFirstName();
                         $users[$readmembership->getUserId()]["lastname"] = $readuser->getLastName();
                         $users[$readmembership->getUserId()]["membership_id"] = $readmembership->getMembershipId();
-                    } catch ( InnerException $e ) {
-                        $turnitincomms->handle_exceptions($e, 'tiiusergeterror');
+
+                    } catch (Exception $e) {
+                        // A read user exception occurs when users are inactive. Re-enrol user to make them active.
+                        $membership = new TiiMembership();
+                        $membership->setClassId($course->turnitin_cid);
+                        $membership->setUserId($readmembership->getUserId());
+                        $membership->setRole($role);
+
+                        try {
+                            $turnitincall->createMembership($membership);
+
+                            $user = new TiiUser();
+                            $user->setUserId($readmembership->getUserId());
+
+                            $response = $turnitincall->readUser($user);
+                            $readuser = $response->getUser();
+
+                            $users[$readmembership->getUserId()]["firstname"] = $readuser->getFirstName();
+                            $users[$readmembership->getUserId()]["lastname"] = $readuser->getLastName();
+                            $users[$readmembership->getUserId()]["membership_id"] = $readmembership->getMembershipId();
+                        } catch ( InnerException $e ) {
+                            $turnitincomms->handle_exceptions($e, 'tiiusergeterror');
+                        }
                     }
                 }
             }
