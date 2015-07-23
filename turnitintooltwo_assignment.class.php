@@ -523,7 +523,11 @@ class turnitintooltwo_assignment {
 
                         try {
                             $turnitincall->createMembership($membership);
+                        } catch ( InnerException $e ) {
+                            // Ignore excepion.
+                        }
 
+                        try {
                             $user = new TiiUser();
                             $user->setUserId($readmembership->getUserId());
 
