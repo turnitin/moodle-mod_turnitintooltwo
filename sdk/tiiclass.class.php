@@ -149,6 +149,28 @@ class TiiClass {
     }
 
     /**
+     * Set the Shared Rubrics Id for a Find Class call
+     * 
+     * Optional on a Find Class call to determine the shared rubrics on the account that the classes are on
+     * 
+     * @param string $sharedrubrics
+     */
+    public function setSharedRubrics( $sharedrubrics ) {
+        $this->sharedrubrics = $sharedrubrics;
+    }
+
+    /**
+     * Get the Shared Rubrics for a Find Class call
+     * 
+     * Optional on a Find Class call to determine the shared rubrics on the account that the classes are on
+     * 
+     * @return string
+     */
+    public function getSharedRubrics() {
+        return $this->sharedrubrics;
+    }
+
+    /**
      * Set the User Id for a Find Class call
      * 
      * Optional on a Find Class call to determine the user to return active classes for
