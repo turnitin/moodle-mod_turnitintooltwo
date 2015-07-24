@@ -6,6 +6,8 @@
  * and open the template in the editor.
  */
 
+require_once( 'tiirubric.class.php' );
+
 /**
  * Defines the TiiSubmission data object which contains getters and setters for a Turnitin Class API object.
  * 
@@ -167,7 +169,21 @@ class TiiClass {
      * @return string
      */
     public function getSharedRubrics() {
-        return $this->sharedrubrics;
+        $rubrics = array();
+        $values = ( !empty( $this->sharedrubrics ) ) ? json_decode( $this->sharedrubrics ) : array();
+
+        foreach ($values as $key => $shared_rubric) {
+            $rubric = new TiiRubric();
+            foreach ($shared_rubric as $k => $v ) {
+                $method = 'set'.$k;
+                if (is_callable(array($rubric, $method))) {
+                    $rubric->$method( $v );
+                }
+            }
+            $rubrics[] = $rubric;
+        }
+
+        return $rubrics;
     }
 
     /**
