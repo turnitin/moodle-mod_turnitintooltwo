@@ -23,6 +23,7 @@ class TiiClass {
     private $integrationid;
     private $userid;
     private $userrole;
+    private $sharedrubrics;
 
     /**
      * Set the Class ID for this Class
