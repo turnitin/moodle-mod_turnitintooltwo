@@ -38,16 +38,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $config = turnitintooltwo_admin_config();
 
         // Module string is useful for product support.
-        if ($CFG->branch >= 26) {
-            $pluginman = \core_plugin_manager::instance();
-            $plugins = $pluginman->get_plugins();
-            $module = $plugins['mod']['turnitintooltwo'];
-        } else {
-            $module = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
-        }
-        $version = (empty($module->version)) ? $module->versiondisk : $module->version;
+        $modulestring = '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - (';
 
-        $modulestring = '<!-- Turnitin Moodle Direct Version: '.$version.' - (';
         $this->numsubs = 0;
         $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
         $instructor->set_user_values_from_tii();
@@ -280,7 +272,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         if (isset($this->_cm->id)) {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
             $parts = $turnitintooltwoassignment->get_parts();
-            
+
             $partsArray = array();
             foreach ($parts as $key => $value) {
                 $partsArray[] = $value;
