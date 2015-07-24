@@ -1192,9 +1192,10 @@ class turnitintooltwo_view {
                 }
 
                 // Show warning to instructor if student can still resubmit.
-                $class = ($istutor && $turnitintooltwoassignment->turnitintooltwo->reportgenspeed > 0 &&
-                            time() < $parts[$partid]->dtdue || $turnitintooltwoassignment->turnitintooltwo->allowlate == 1 &&
-                                empty($submission->nmoodle)) ? " graded_warning" : "";
+                $canresubmit = $turnitintooltwoassignment->turnitintooltwo->reportgenspeed > 0;
+                $tutorbeforeduedate = $istutor && time() < $parts[$partid]->dtdue;
+                $allowedlate = $turnitintooltwoassignment->turnitintooltwo->allowlate == 1 && empty($submission->nmoodle);
+                $class = $canresubmit && ($tutorbeforeduedate || $allowedlate) ? 'graded_warning' : '';
 
                 // Output grademark icon.
                 $grade = $OUTPUT->box($OUTPUT->pix_icon('icon-edit',
