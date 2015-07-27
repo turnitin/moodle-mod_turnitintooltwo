@@ -34,17 +34,39 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     private $turnitintooltwo;
 
     public function definition() {
-        global $CFG, $DB, $USER;
+        global $CFG, $DB, $USER, $COURSE;
         $config = turnitintooltwo_admin_config();
 
         // Module string is useful for product support.
         $modulestring = '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - (';
 
-        $this->numsubs = 0;
+        // Get Moodle Course Object.
+        $course = turnitintooltwo_assignment::get_course_data($COURSE->id);
+
+        // Create or edit the class in Turnitin.
+        if ($course->turnitin_cid == 0) {
+            $tiicoursedata = turnitintooltwo_assignment::create_tii_course($course, $USER->id);
+            $course->turnitin_cid = $tiicoursedata->turnitin_cid;
+            $course->turnitin_ctl = $tiicoursedata->turnitin_ctl;
+        } else {
+            turnitintooltwo_assignment::edit_tii_course($course);
+            $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
+        }
+
+        // Join this user to the class as an instructor and get their rubrics.
         $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
+        $instructor->join_user_to_class($course->turnitin_cid);
         $instructor->set_user_values_from_tii();
         $instructorrubrics = $instructor->get_instructor_rubrics();
 
+        // Get rubrics that are shared on the account.
+        $turnitinclass = new turnitintooltwo_class($course->id);
+        $turnitinclass->read_class_from_tii();
+
+        // Merge the arrays, prioitising instructor owned arrays.
+        $rubrics = $instructorrubrics + $turnitinclass->sharedrubrics;
+
+        $this->numsubs = 0;
         if (isset($this->_cm->id)) {
 
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
@@ -101,7 +123,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $modulestring .= ') -->';
 
-        $this->show_form($instructorrubrics, $modulestring);
+        $this->show_form($rubrics, $modulestring);
     }
 
     public function show_form($instructorrubrics, $modulestring = '') {
