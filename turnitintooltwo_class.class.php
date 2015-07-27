@@ -67,7 +67,7 @@ class turnitintooltwo_class {
             $this->sharedrubrics = $rubricarray;
 
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'tiiassignmentgeterror', false);
+            $turnitincomms->handle_exceptions($e, 'coursegeterror', false);
         }
     }
 }
