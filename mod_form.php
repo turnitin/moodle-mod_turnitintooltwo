@@ -190,7 +190,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'client');
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'server');
 
-        $this->add_intro_editor(true, get_string('turnitintooltwointro', 'turnitintooltwo'));
+        if ($CFG->branch >= 29) {
+            $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));
+        } else {
+            $this->add_intro_editor(true, get_string('turnitintooltwointro', 'turnitintooltwo'));
+        }
+
         $typeoptions = turnitintooltwo_filetype_array(true);
 
         $mform->addElement('select', 'type', get_string('type', 'turnitintooltwo'), $typeoptions);
