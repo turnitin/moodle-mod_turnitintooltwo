@@ -388,7 +388,7 @@ switch ($action) {
                     $pluginturnitin = new plagiarism_plugin_turnitin();
                     $cm = get_coursemodule_from_instance($modulename, $assignmentid);
                     $plagiarismsettings = $pluginturnitin->get_settings($cm->id);
-                    $turnitinclass = new turnitintooltwo_class($cm->course);
+                    $turnitinclass = new turnitin_class($cm->course);
                 }
 
                 // Get rubrics that are shared on the account.
