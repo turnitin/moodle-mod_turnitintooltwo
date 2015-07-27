@@ -382,12 +382,18 @@ switch ($action) {
             if (!empty($assignmentid)) {
                 if ($modulename == "turnitintooltwo") {
                     $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+                    $turnitinclass = new turnitintooltwo_class($turnitintooltwoassignment->turnitintooltwo->course);
                 } else {
                     require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
                     $pluginturnitin = new plagiarism_plugin_turnitin();
                     $cm = get_coursemodule_from_instance($modulename, $assignmentid);
                     $plagiarismsettings = $pluginturnitin->get_settings($cm->id);
+                    $turnitinclass = new turnitintooltwo_class($cm->course);
                 }
+
+                // Get rubrics that are shared on the account.
+                $turnitinclass->read_class_from_tii();
+                $options = $options + $turnitinclass->sharedrubrics;
 
                 if ($modulename == "turnitintooltwo") {
                     if (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {

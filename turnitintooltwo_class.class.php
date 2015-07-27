@@ -61,7 +61,7 @@ class turnitintooltwo_class {
             $rubrics = $readclass->getSharedRubrics();
 			$rubricarray = array();
         	foreach ($rubrics as $rubric) {
-            	$rubricarray[$rubric->getRubricId()] = $rubric->getRubricName()." [Shared Rubric]";
+            	$rubricarray[$rubric->getRubricId()] = $rubric->getRubricName()." [".get_string('sharedrubric', 'turnitintooltwo')."]";
             }
 
             $this->sharedrubrics = $rubricarray;
