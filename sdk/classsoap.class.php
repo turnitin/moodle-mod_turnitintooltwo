@@ -67,7 +67,7 @@ class ClassSoap extends Soap {
                 $tiiClass->setClassId( $soap->courseSectionRecord->sourcedGUID->sourcedId );
                 $tiiClass->setTitle( $soap->courseSectionRecord->courseSection->title->textString );
                 $tiiClass->setEndDate( $soap->courseSectionRecord->courseSection->timeFrame->end );
-                foreach ( $record->courseSection->extension->extensionField as $field ) {
+                foreach ( $soap->courseSectionRecord->courseSection->extension->extensionField as $field ) {
                     $name = $field->fieldName;
                     $method = 'set'.$name;
                     if ( is_callable( array( $tiiClass, $method ) ) ) $tiiClass->$method( $field->fieldValue );

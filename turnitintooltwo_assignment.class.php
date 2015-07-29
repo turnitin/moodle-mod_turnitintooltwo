@@ -338,7 +338,7 @@ class turnitintooltwo_assignment {
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      * @return object the turnitin course if created
      */
-    public function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
+    public static function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -396,7 +396,7 @@ class turnitintooltwo_assignment {
      * @param var $course The course object
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      */
-    public function edit_tii_course($course, $coursetype = "TT") {
+    public static function edit_tii_course($course, $coursetype = "TT") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();

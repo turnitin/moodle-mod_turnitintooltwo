@@ -23,6 +23,7 @@
  */
 
 require_once(__DIR__.'/turnitintooltwo_assignment.class.php');
+require_once(__DIR__.'/turnitintooltwo_class.class.php');
 
 // Constants.
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 41943040);
