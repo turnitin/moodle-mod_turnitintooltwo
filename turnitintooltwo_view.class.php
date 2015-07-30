@@ -547,26 +547,46 @@ class turnitintooltwo_view {
                 $exportorigfileszip = "";
                 $exportgrademarkzip = "";
                 if ($turnitintooltwouser->get_user_role() == 'Instructor') {
+                    if ($CFG->branch >= 27) {
+                        $origfileszipLang = "origfileszip";
+                        $grademarkzipLang = "grademarkzip";
+                    } else {
+                        $origfileszipLang = "downloadorigfileszip";
+                        $grademarkzipLang = "downloadgrademarkzip";
+                    }
+
                     // Output icon to download zip file of selected submissions in original format.
-                    $exportorigfileszip = $OUTPUT->box($OUTPUT->pix_icon('file',
-                                                get_string('downloadorigfileszip', 'turnitintooltwo'), 'mod_turnitintooltwo').
-                                                    get_string('downloadorigfileszip', 'turnitintooltwo'),
+                    $exportorigfileszip = $OUTPUT->box(html_writer::tag('i', '', array('class' => 'fa fa-file-o',
+                                                    'title' => get_string($origfileszipLang, 'turnitintooltwo'))).' '.
+                                                    get_string($origfileszipLang, 'turnitintooltwo'),
                                                 'zip_open origchecked_zip_open', 'origchecked_zip_'.$partobject->tiiassignid);
                     // Put in div placeholder for launch form.
                     $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->tiiassignid);
 
                     // Output icon to download zip file of submissions in pdf format.
                     $exportgrademarkzip = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.
-                                                        $cm->id.'&part='.$partid.'&do=export_pdfs&view_context=box_solid',
-                                                        $OUTPUT->pix_icon('file-pdf',
-                                                            get_string('downloadgrademarkzip', 'turnitintooltwo'),
-                                                                'mod_turnitintooltwo').
-                                                            get_string('downloadgrademarkzip', 'turnitintooltwo'),
+                                                    $cm->id.'&part='.$partid.'&do=export_pdfs&view_context=box_solid',
+                                                    html_writer::tag('i', '', array('class' => 'fa fa-file-pdf-o',
+                                                    'title' => get_string($grademarkzipLang, 'turnitintooltwo'))).' '.
+                                                    get_string($grademarkzipLang, 'turnitintooltwo'),
                                             array("class" => "gmpdfzip_box", "id" => "gmpdf_zip_".$partobject->tiiassignid));
+
+                    // Only Moodle versions 2.7+ came with bootstrap.
+                    if ($CFG->branch >= 27) {
+                        $downloadLinks = html_writer::tag('div',
+                                            html_writer::link('#', get_string('download', 'turnitintooltwo'), array('class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown')).
+                                                html_writer::tag('ul',
+                                                    html_writer::tag('li', $exportorigfileszip).
+                                                    html_writer::tag('li', $exportgrademarkzip),
+                                                array('class' => 'dropdown-menu')),
+                                          array('id' => 'download_links', 'class' => 'btn-group'));
+                    } else {
+                        $downloadLinks = $exportorigfileszip.$exportgrademarkzip;
+                    }
                 }
 
                 // Include download links and info table.
-                $tables .= $OUTPUT->box($exportorigfileszip.$exportgrademarkzip, 'zip_downloads', 'part_' . $partobject->id);
+                $tables .= $OUTPUT->box($downloadLinks, 'zip_downloads', 'part_' . $partobject->id);
                 $tables .= $this->get_submission_inbox_part_details($cm, $turnitintooltwoassignment, $partdetails, $partid);
 
                 // Construct submissions table.
