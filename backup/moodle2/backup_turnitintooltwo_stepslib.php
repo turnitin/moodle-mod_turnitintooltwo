@@ -115,7 +115,7 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
 
         // Define file annotations
         $turnitintooltwo->annotate_files('mod_turnitintooltwo', 'intro', null); // This file area hasn't itemid
-        $submission->annotate_files('mod_turnitintooltwo', 'submission', 'id');
+        $submission->annotate_files('mod_turnitintooltwo', 'submissions', 'id');
 
         // Return the root element (turnitintooltwo), wrapped into standard activity structure
         return $this->prepare_activity_structure($turnitintooltwo);
