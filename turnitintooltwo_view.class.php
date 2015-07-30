@@ -48,10 +48,6 @@ class turnitintooltwo_view {
         $cmid = ($cm != null) ? $cm->id : null;
         $courseid = ($course != null) ? $course->id : null;
 
-        foreach ($navigation as $nav) {
-            $PAGE->navbar->add($nav["title"], $nav["url"]);
-        }
-
         if (!is_null($cmid) && $button != '') {
             $PAGE->set_button($OUTPUT->update_module_button($cm->id, "turnitintooltwo"));
         }

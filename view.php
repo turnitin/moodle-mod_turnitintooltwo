@@ -200,7 +200,6 @@ if (!empty($action)) {
             $extraparams = array("part" => $post['submissionpart'], "user" => $post['studentsname']);
 
             // Check that text content has been provided for submission if applicable.
-
             if ($post['submissiontype'] == 2 && empty($post['submissiontext'])) {
                 $_SESSION["notice"]["message"] = get_string('submissiontexterror', 'turnitintooltwo');
                 $error = true;
@@ -352,19 +351,12 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
             '',
             '');
 } else {
-    $extranavigation = array(
-                        array('title' => get_string("modulenameplural", "turnitintooltwo"),
-                            'url' => $CFG->wwwroot."/mod/turnitintooltwo/index.php?id=".$course->id, 'type' => 'activity'),
-                        array('title' => format_string($turnitintooltwoassignment->turnitintooltwo->name),
-                            'url' => $CFG->wwwroot."/mod/turnitintooltwo/view.php?id=".$id, 'type' => 'activityinstance')
-                    );
-
     $turnitintooltwoview->output_header($cm,
             $course,
             $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
             $SITE->fullname,
-            $extranavigation,
+            array(),
             "",
             "",
             true,
