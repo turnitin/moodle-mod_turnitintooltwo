@@ -98,7 +98,7 @@ jQuery(document).ready(function($) {
         }
 
         // Toggle Summary display on Inbox
-        $('.toggle_summary img').click(function() {
+        $('.toggle_summary i').click(function() {
             if ($(this).hasClass('show_summary_'+$('#assignment_id').html())) {
                 $.cookie('show_summary_'+$('#assignment_id').html(), true, { expires: 30 });
                 $('.show_summary_'+$('#assignment_id').html()).hide();
@@ -130,7 +130,7 @@ jQuery(document).ready(function($) {
         }
 
         // Toggle Peermarks display on Inbox
-        $('.toggle_peermarks img').click(function() {
+        $('.toggle_peermarks i').click(function() {
             if ($(this).hasClass('show_peermarks_'+$('#assignment_id').html())) {
                 $.cookie('show_peermarks_'+$('#assignment_id').html(), true, { expires: 30 });
                 $('.show_peermarks_'+$('#assignment_id').html()).hide();
@@ -250,7 +250,7 @@ jQuery(document).ready(function($) {
             submissionsDataTableColumns.push({"sClass": "right", "iDataSort": i-1, "sType":"numeric"});
             visibleCols.push(true);
         } else if (i == 1 || ((i >= 8 && !showOrigReport && !useGradeMark)
-                                || (i >= 10 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark))) 
+                                || (i >= 10 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark)))
                                 || (i >= 12 && showOrigReport && useGradeMark))) {
             submissionsDataTableColumns.push({"sClass": "center", "bSortable": false});
             visibleCols.push(true);
@@ -620,13 +620,13 @@ jQuery(document).ready(function($) {
                 'smartDays': true
             },
             validate: function(value) {
-                if( value.format("X") < moment().unix() && 
+                if( value.format("X") < moment().unix() &&
                     $(this).hasClass('editable_postdue') &&
                     $(this).data('anon') == 1 &&
                     $(this).data('unanon') == 0 &&
                     $(this).data('submitted') == 1 )
                 {
-                    if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
+                    if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) {
                         $('.editable-open').editableContainer('hide');
 
                         // Validation only fails if string is returned (We need a string).
@@ -747,10 +747,10 @@ jQuery(document).ready(function($) {
 
                     refresh_requested[part_id] = 0;
                     var allrefreshed = 1;
-                    
+
                     $.each(refresh_requested, function(k, v) {
                         if (v == 1) {
-                            allrefreshed = 0;    
+                            allrefreshed = 0;
                         }
                     });
 
@@ -1053,7 +1053,7 @@ jQuery(document).ready(function($) {
 
         $(identifier).click(function() {
             $(this).hide();
-            $(this).siblings('.fa-spinner').css("display","inline-block");
+            $(this).siblings('.fa-spinner').css("display","inline-block").addClass('fa-lg');
             var idStr = $(this).parent().attr("id").split("_");
             refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
         });
@@ -1061,10 +1061,10 @@ jQuery(document).ready(function($) {
 
     // Initialise the events to open the document viewer as the links are loaded after the page
     function initialiseDVLaunchers(scope, submission_id, part_id, user_id) {
-        var identifier = '#'+part_id+' .download_original_open';//#'+part_id+' .origreport_open, #'+part_id+' .grademark_open, 
+        var identifier = '#'+part_id+' .download_original_open';//#'+part_id+' .origreport_open, #'+part_id+' .grademark_open,
         if (scope == "row") {
             identifier = '#downloadoriginal_'+submission_id+'_'+part_id+'_'+user_id;
-            //#origreport_'+submission_id+'_'+part_id+'_'+user_id+', #grademark_'+submission_id+'_'+part_id+'_'+user_id+', 
+            //#origreport_'+submission_id+'_'+part_id+'_'+user_id+', #grademark_'+submission_id+'_'+part_id+'_'+user_id+',
         }
 
         // Unbind the event first to stop it being binded multiple times
@@ -1142,7 +1142,7 @@ jQuery(document).ready(function($) {
 
     // Initiate a nothing submission
     function submitNothing( user_id, part_id ) {
-        $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/loader.gif');
+        $("#submitnothing_0_"+part_id+"_"+user_id+" i").attr('class','fa fa-spin fa-spinner fa-lg');
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -1155,7 +1155,7 @@ jQuery(document).ready(function($) {
                 $('table#' + part_id + ' .select_all_checkbox').attr('checked', false);
             },
             error: function(data) {
-                $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/icon-edit-grey.png');
+                $("#submitnothing_0_"+part_id+"_"+user_id+" i").attr('class','fa fa-pencil fa-lg');
                 $("#submitnothing_0_"+part_id+"_"+user_id).removeClass('disabled');
                 alert( data.responseText );
             },
@@ -1276,7 +1276,7 @@ jQuery(document).ready(function($) {
     var buildUnixDate = function(el, part_id) {
         // option id's
         var start = [ '_day', '_month', '_year', '_hour', '_minute' ];
-        
+
         $this = $(el + part_id);
 
         // build date:time string
