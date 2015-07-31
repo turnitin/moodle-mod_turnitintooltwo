@@ -151,7 +151,7 @@ class turnitin_plagiarism_plugin_form extends moodleform {
         require_once($CFG->dirroot.'/plagiarism/turnitin/turnitinplugin_view.class.php');
 
         $turnitinpluginview = new turnitinplugin_view();
-        $turnitinpluginview->add_elements_to_settings_form($mform, "defaults");
+        $turnitinpluginview->add_elements_to_settings_form($mform, array(), "defaults");
 
         $this->add_action_buttons(true);
     }
