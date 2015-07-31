@@ -1,5 +1,14 @@
 Releases before version 2015040106 will refer to changes made to the Turnitin's other Moodle plugins as well; the plagiarism plugin and block.
 
+### Date:       2015-July-31
+### Release:    v2015040107
+
+- Verified against Moodle 2.9
+- Fixes:
+	- Account for Shared Rubrics being returned by the API.
+
+---
+
 ### Date:       2015-June-29
 ### Release:    v2015040106
 
