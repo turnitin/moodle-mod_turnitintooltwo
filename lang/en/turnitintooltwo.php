@@ -516,3 +516,6 @@ $string['addsubmissiontiidesc'] = 'User submission sent to Turnitin';
 $string['deletesubmissiontiidesc'] = 'User deleted the submission from Turnitin';
 $string['errorcode4'] = 'You must upload a supported file type for this assignment. Accepted file types are; .doc, .docx, .ppt, .pptx, .pps, .ppsx, .pdf, .txt, .htm, .html, .hwp, .odt, .wpd, .ps and .rtf';
 $string['sharedrubric'] = 'Shared Rubric';
+$string['download'] = 'Download';
+$string['grademarkzip'] = 'Selected GradeMark Files';
+$string['origfileszip'] = 'Original Files';
