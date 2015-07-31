@@ -24,7 +24,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .mod_turnitintooltwo #inbox_form, .mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form,
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #class_ids, .mod_turnitintooltwo #create_assignments,
 .mod_turnitintooltwo .row_peermark_reviews, .mod_turnitintooltwo .peermark_instructions,
-.mod_turnitintooltwo .toggle_peermark_instructions img.hide_peermark_instructions,
+.mod_turnitintooltwo .toggle_peermark_instructions .hide_peermark_instructions,
 .mod_turnitintooltwo #courseBrowserTable_filter, .mod_turnitintooltwo .js_required,
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #create_assignments,
 #page-admin-setting-modsettingturnitintooltwo .tii_upgrading_check, #page-admin-setting-modsettingturnitintooltwo #test_link,
@@ -58,4 +58,29 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     display:none;
     padding: 16px 0 8px;
     text-align: center;
+}
+
+.grey {
+    color: $dark-grey !important;
+}
+
+.light-blue {
+    color: $light-blue !important;
+}
+
+.green {
+    color: $green !important;
+}
+
+.red {
+    color: $red !important;
+}
+
+.submissionsDataTable .fa,
+.partDetails .fa {
+    color: darken($dark-grey, 10%);
+}
+
+.middle-padding {
+    padding: 0 5px;
 }
