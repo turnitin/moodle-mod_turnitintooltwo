@@ -657,16 +657,18 @@ jQuery(document).ready(function($) {
             }
         });
 
-        // Disable other editable fields when an editable form is opened
+        // Disable other editable fields & Grading template submissions when an editable form is opened.
         $('.editable_date, .editable_text').on('shown', function(e, editable) {
             var current = ($(this).prop('id'));
             $('.editable_date, .editable_text').not('#'+current).editable('disable');
+            $('.submit_nothing').addClass('disabled');
         });
 
-        // Enable other editable fields when an editable form is closed
+        // Enable other editable fields & Grading template submissions when an editable form is closed.
         $('.editable_date, .editable_text').on('hidden', function() {
             var current = ($(this).prop('id'));
             $('.editable_date, .editable_text').not('#'+current).editable('enable');
+            $('.submit_nothing').removeClass('disabled');
         });
     }
 
