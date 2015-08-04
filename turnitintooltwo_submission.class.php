@@ -414,23 +414,20 @@ class turnitintooltwo_submission {
             $submission->submission_orcapable = 0;
 
             //Send a message to the user's Moodle inbox with the digital receipt.
-            if ( ! empty($CFG->smtphosts)) {
-                $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+            $partdetails = $turnitintooltwoassignment->get_part_details($partid);
+            $input = array(
+                'firstname' => $user->firstname,
+                'lastname' => $user->lastname,
+                'submission_title' => get_string('gradingtemplate', 'turnitintooltwo'),
+                'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                'assignment_part' => $partdetails->partname,
+                'course_fullname' => $course->fullname,
+                'submission_date' => date('d-M-Y h:iA'),
+                'submission_id' => $submission->submission_objectid
+            );
 
-                $input = array(
-                    'firstname' => $user->firstname,
-                    'lastname' => $user->lastname,
-                    'submission_title' => get_string('gradingtemplate', 'turnitintooltwo'),
-                    'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                    'assignment_part' => $partdetails->partname,
-                    'course_fullname' => $course->fullname,
-                    'submission_date' => date('d-M-Y h:iA'),
-                    'submission_id' => $submission->submission_objectid
-                );
-
-                $message = $this->receipt->build_message($input);
-                $this->receipt->send_message($userid, $message);
-            }
+            $message = $this->receipt->build_message($input);
+            $this->receipt->send_message($userid, $message);
 
             //Add entry to log.
             turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('gradenosubmission', 'turnitintooltwo') . ": $userid", $cm->id, $userid);
@@ -581,25 +578,19 @@ class turnitintooltwo_submission {
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
                 //Send a message to the user's Moodle inbox with the digital receipt.
-                if ( ! empty($CFG->smtphosts)) {
-                    $input = array(
-                        'firstname' => $user->firstname,
-                        'lastname' => $user->lastname,
-                        'submission_title' => $this->submission_title,
-                        'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                        'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
-                        'course_fullname' => $course->fullname,
-                        'submission_date' => date('d-M-Y h:iA'),
-                        'submission_id' => $submission->submission_objectid
-                    );
+                $input = array(
+                    'firstname' => $user->firstname,
+                    'lastname' => $user->lastname,
+                    'submission_title' => $this->submission_title,
+                    'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                    'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
+                    'course_fullname' => $course->fullname,
+                    'submission_date' => date('d-M-Y h:iA'),
+                    'submission_id' => $submission->submission_objectid
+                );
 
-                    $message = $this->receipt->build_message($input);
-
-                    $this->receipt->send_message(
-                        $this->userid,
-                        $message
-                    );
-                }
+                $message = $this->receipt->build_message($input);
+                $this->receipt->send_message($this->userid, $message);
 
                 //Create a log entry for submission going to Turnitin.
                 $logstring = ($apimethod == "replaceSubmission") ? 'addresubmissiontiidesc' : 'addsubmissiontiidesc';
