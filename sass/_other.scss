@@ -84,3 +84,13 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .middle-padding {
     padding: 0 5px;
 }
+
+.mod_turnitintooltwo #course_search_options, .mod_turnitintooltwo .create_checkboxes {
+    border: 1px solid $border-color;
+    padding: 6px 10px;
+}
+
+.mod_turnitintooltwo .create_checkboxes {
+    display: none;
+    margin-top: 12px;
+}
