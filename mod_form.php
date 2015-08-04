@@ -123,10 +123,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $modulestring .= ') -->';
 
-        $this->show_form($rubrics, $modulestring);
+        $this->show_form($rubrics, $modulestring, $course->turnitin_cid);
     }
 
-    public function show_form($instructorrubrics, $modulestring = '') {
+    public function show_form($instructorrubrics, $modulestring = '', $tiicourseid) {
         global $CFG, $OUTPUT, $COURSE, $PAGE;
         $PAGE->requires->string_for_js('changerubricwarning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
@@ -482,7 +482,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
                                                     html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
-                                                                    'cmd=rubricmanager&view_context=box',
+                                                                    'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
                                                                         get_string('launchrubricmanager', 'turnitintooltwo'),
                                                                 array('class' => 'rubric_manager_launch',
                                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).

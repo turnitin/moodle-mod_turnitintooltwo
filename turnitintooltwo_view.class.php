@@ -840,9 +840,11 @@ class turnitintooltwo_view {
             // Show feature links (rubric and quickmark).
             if ($config->usegrademark) {
                 // Rubric Manager.
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
                 $rubricmanagerlink = $OUTPUT->box_start('row_rubric_manager', '');
                 $rubricmanagerlink .= html_writer::link($CFG->wwwroot.
-                                        '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&view_context=box', '',
+                                        '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&tiicourseid='.
+                                            $coursedata->turnitin_cid.'&view_context=box', '',
                                                 array('class' => 'rubric_manager_launch', 'id' => 'rubric_manager_inbox_launch',
                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo')));
                 $rubricmanagerlink .= html_writer::tag('span', '', array('class' => 'launch_form', 'id' => 'rubric_manager_form'));
@@ -1604,7 +1606,7 @@ class turnitintooltwo_view {
      * @param int $userid
      * @return output form
      */
-    public static function output_lti_form_launch($type, $userrole, $partid = 0) {
+    public static function output_lti_form_launch($type, $userrole, $partid = 0, $classid = 0) {
         global $USER, $CFG;
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
@@ -1623,6 +1625,9 @@ class turnitintooltwo_view {
                 break;
 
             case "rubric_manager":
+                if ($classid != 0) {
+                    $lti->setClassId($classid);
+                }
                 $ltifunction = "outputRubricManagerForm";
                 break;
 

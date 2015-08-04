@@ -182,8 +182,9 @@ switch ($cmd) {
 
     case "rubricmanager":
         $PAGE->set_pagelayout('embedded');
+        $tiicourseid = optional_param('tiicourseid', 0, PARAM_INT);
 
-        echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_manager', 'Instructor'),
+        echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_manager', 'Instructor', 0, $tiicourseid),
                                                                                 array("class" => "launch_form"));
         break;
 
