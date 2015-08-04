@@ -311,7 +311,6 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
     $turnitintooltwouser->set_user_values_from_tii();
     $instructorrubrics = $turnitintooltwouser->get_instructor_rubrics();
 
-
     if (!$turnitintooltwos = $DB->get_records('turnitintooltwo', array('course' => $courseid))) {
         turnitintooltwo_print_error('assigngeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
         exit();
@@ -377,9 +376,15 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setClassId($currentcourse->turnitin_cid);
             $assignment->setAuthorOriginalityAccess($turnitintooltwoassignment->turnitintooltwo->studentreports);
 
+            // Get rubrics that are shared on the account.
+            $turnitinclass = new turnitintooltwo_class($courseid);
+            $turnitinclass->read_class_from_tii();
+            $rubrics = $turnitinclass->sharedrubrics;
+            $rubrics = $rubrics + $instructorrubrics;
+
             $rubric_id = (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) ?
                             $turnitintooltwoassignment->turnitintooltwo->rubric : '';
-            $rubric_id = (!empty($rubric_id) && array_key_exists($rubric_id, $instructorrubrics)) ? $rubric_id : '';
+            $rubric_id = (!empty($rubric_id) && array_key_exists($rubric_id, $rubrics)) ? $rubric_id : '';
 
             $assignment->setRubricId($rubric_id);
             $assignment->setSubmitPapersTo($turnitintooltwoassignment->turnitintooltwo->submitpapersto);
