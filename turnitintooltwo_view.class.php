@@ -81,6 +81,8 @@ class turnitintooltwo_view {
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
         $PAGE->requires->css($cssurl);
+        $cssurl = new moodle_url('/mod/turnitintooltwo/css/tii-icon-webfont.css');
+        $PAGE->requires->css($cssurl);
         if ($CFG->branch <= 25) {
             // Include CSS
             $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery.dataTables.css');
@@ -843,7 +845,8 @@ class turnitintooltwo_view {
                 // Rubric Manager.
                 $rubricmanagerlink = $OUTPUT->box_start('row_rubric_manager', '');
                 $rubricmanagerlink .= html_writer::link($CFG->wwwroot.
-                                        '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&view_context=box', '',
+                                        '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&view_context=box', 
+                                                html_writer::tag('i', '', array('class' => 'icon icon-rubric icon-lg')),
                                                 array('class' => 'rubric_manager_launch', 'id' => 'rubric_manager_inbox_launch',
                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo')));
                 $rubricmanagerlink .= html_writer::tag('span', '', array('class' => 'launch_form', 'id' => 'rubric_manager_form'));
@@ -852,7 +855,8 @@ class turnitintooltwo_view {
                 // Quickmark Manager.
                 $quickmarkmanagerlink = $OUTPUT->box_start('row_quickmark_manager', '');
                 $quickmarkmanagerlink .= html_writer::link($CFG->wwwroot.
-                                            '/mod/turnitintooltwo/extras.php?cmd=quickmarkmanager&view_context=box', '',
+                                            '/mod/turnitintooltwo/extras.php?cmd=quickmarkmanager&view_context=box', 
+                                                html_writer::tag('i', '', array('class' => 'icon icon-quickmarks icon-lg')),
                                                 array('class' => 'quickmark_manager_launch',
                                                         'title' => get_string('launchquickmarkmanager', 'turnitintooltwo')));
                 $quickmarkmanagerlink .= html_writer::tag('span', '', array('class' => 'launch_form',
@@ -896,8 +900,9 @@ class turnitintooltwo_view {
             if ($istutor) {
                 $peermarkmanagerlink .= $OUTPUT->box_start('row_peermark_manager', '');
                 $peermarkmanagerlink .= html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
-                                                            '&part='.$partid.'&do=peermarkmanager&view_context=box', '',
-                                                        array('class' => 'peermark_manager_launch',
+                                                            '&part='.$partid.'&do=peermarkmanager&view_context=box',
+                                                        html_writer::tag('i', '', array('class' => 'icon icon-settings icon-lg')),
+                                                        array('class' => 'tii_peermark_manager_launch',
                                                             'id' => 'peermark_manager_'.$partid,
                                                             'title' => get_string('launchpeermarkmanager', 'turnitintooltwo')));
                 $peermarkmanagerlink .= html_writer::tag('span', '', array('class' => 'launch_form',
@@ -908,8 +913,9 @@ class turnitintooltwo_view {
             // Peermark Reviews Link.
             $peermarkreviewslink = $OUTPUT->box_start('row_peermark_reviews', '');
             $peermarkreviewslink .= html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
-                                                        '&part='.$partid.'&do=peermarkreviews&view_context=box', '',
-                                                    array('class' => 'peermark_reviews_launch',
+                                                        '&part='.$partid.'&do=peermarkreviews&view_context=box',
+                                                    html_writer::tag('i', '', array('class' => 'icon icon-peermark icon-lg')),
+                                                    array('class' => 'tii_peermark_reviews_launch',
                                                         'title' => get_string('launchpeermarkreviews', 'turnitintooltwo')));
             $peermarkreviewslink .= html_writer::tag('span', '', array('class' => 'launch_form', 'id' => 'peermark_reviews_form'));
             $peermarkreviewslink .= $OUTPUT->box_end(true);

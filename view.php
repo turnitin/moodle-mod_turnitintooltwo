@@ -547,6 +547,7 @@ switch ($do) {
             if ($eulaaccepted != 1) {
                 // Moodle strips out form and script code for forum posts so we have to do the Eula Launch differently.
                 $ula_link = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid',
+                                        html_writer::tag('i', '', array('class' => 'icon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
                                         get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
                                         array("class" => "turnitin_eula_link"));
 

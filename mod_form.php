@@ -164,6 +164,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
+        $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
+                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/tii-icon-webfont.css"));
+
         $mform->addElement('html', $script);
 
         $config_warning = '';
@@ -483,6 +486,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
                                                     html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
                                                                     'cmd=rubricmanager&view_context=box',
+                                                                        html_writer::tag('i', '', array('class' => 'icon icon-rubric icon-lg rubric_right_margin')).' '.
                                                                         get_string('launchrubricmanager', 'turnitintooltwo'),
                                                                 array('class' => 'rubric_manager_launch',
                                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
