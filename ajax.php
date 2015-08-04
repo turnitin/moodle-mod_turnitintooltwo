@@ -378,23 +378,29 @@ switch ($action) {
 
             $options = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
 
-            // Add in rubric if the selected rubric belongs to another instructor.
+            // Get rubrics that are shared on the Turnitin account.
+            if ($modulename == "turnitintooltwo") {
+                $turnitinclass = new turnitintooltwo_class($courseid);
+            } else {
+                require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
+                $turnitinclass = new turnitin_class($courseid);
+            }
+            $turnitinclass->read_class_from_tii();
+            $options = $options + $turnitinclass->sharedrubrics;
+
+            // Get assignment details.
             if (!empty($assignmentid)) {
                 if ($modulename == "turnitintooltwo") {
                     $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
-                    $turnitinclass = new turnitintooltwo_class($turnitintooltwoassignment->turnitintooltwo->course);
                 } else {
-                    require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
                     $pluginturnitin = new plagiarism_plugin_turnitin();
                     $cm = get_coursemodule_from_instance($modulename, $assignmentid);
                     $plagiarismsettings = $pluginturnitin->get_settings($cm->id);
-                    $turnitinclass = new turnitin_class($cm->course);
                 }
+            }
 
-                // Get rubrics that are shared on the account.
-                $turnitinclass->read_class_from_tii();
-                $options = $options + $turnitinclass->sharedrubrics;
-
+            // Add in selected rubric if it belongs to another instructor.
+            if (!empty($assignmentid)) {
                 if ($modulename == "turnitintooltwo") {
                     if (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
                         $options[$turnitintooltwoassignment->turnitintooltwo->rubric] =
