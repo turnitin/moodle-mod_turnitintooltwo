@@ -540,8 +540,7 @@ class turnitintooltwo_view {
                 $tables .= html_writer::tag('h2', $partobject->partname, array('class' => 'js_hide', 'data-submitted' => $partobject->submitted));
                 $tables .= $OUTPUT->box_start('part_table', 'tabs-'.$partid, array('data-submitted' => $partobject->submitted));
 
-                $exportorigfileszip = "";
-                $exportgrademarkzip = "";
+                $downloadLinks = "";
                 if ($turnitintooltwouser->get_user_role() == 'Instructor') {
                     if ($CFG->branch >= 27) {
                         $origfileszipLang = "origfileszip";
