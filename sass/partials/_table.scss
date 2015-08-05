@@ -88,7 +88,6 @@
     }
 
     .score_colour {
-        background-image:url(pix/gradback.jpg);
         width:36px;
         display:inline-block;
         float:right;
@@ -152,17 +151,17 @@
  * 3. Score colour for originality report.
  */
 .mod_turnitintooltwo .score_colour_ { background: #999999; }
-.mod_turnitintooltwo .score_colour_0 { background-position: 0% 0%; }
-.mod_turnitintooltwo .score_colour_10 { background-position: 0% 10%; }
-.mod_turnitintooltwo .score_colour_20 { background-position: 0% 20%; }
-.mod_turnitintooltwo .score_colour_30 { background-position: 0% 30%; }
-.mod_turnitintooltwo .score_colour_40 { background-position: 0% 40%; }
-.mod_turnitintooltwo .score_colour_50 { background-position: 0% 50%; }
-.mod_turnitintooltwo .score_colour_60 { background-position: 0% 60%; }
-.mod_turnitintooltwo .score_colour_70 { background-position: 0% 70%; }
-.mod_turnitintooltwo .score_colour_80 { background-position: 0% 80%; }
-.mod_turnitintooltwo .score_colour_90 { background-position: 0% 90%; }
-.mod_turnitintooltwo .score_colour_100 { background-position: 0% 100%; }
+.mod_turnitintooltwo .score_colour_0 { background: #3552B7; }
+.mod_turnitintooltwo .score_colour_10 { background: #617B8D; }
+.mod_turnitintooltwo .score_colour_20 { background: #A1B556; }
+.mod_turnitintooltwo .score_colour_30 { background: #DAE235; }
+.mod_turnitintooltwo .score_colour_40 { background: #EDAC28; }
+.mod_turnitintooltwo .score_colour_50 { background: #EDD42F; }
+.mod_turnitintooltwo .score_colour_60 { background: #ECAD28; }
+.mod_turnitintooltwo .score_colour_70 { background: #E15A21; }
+.mod_turnitintooltwo .score_colour_80 { background: #E05A21; }
+.mod_turnitintooltwo .score_colour_90 { background: #DC4321; }
+.mod_turnitintooltwo .score_colour_100 { background: #DB4221; }
 
 
 .mod_turnitintooltwo .enrol_link {

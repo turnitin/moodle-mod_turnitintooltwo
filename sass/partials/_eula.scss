@@ -12,8 +12,7 @@
 	text-decoration: underline;
 	text-align: center;
 	border: 1px solid #CC0000;
-	background:url(pix/icon.png) no-repeat center 12px;
-	padding: 48px 12px 12px;
+	padding: 12px 12px 12px;
 	color: #FF0000;
 	margin-top:12px;
 	margin-bottom:16px !important;
@@ -31,4 +30,7 @@ noscript.turnitin_ula_noscript {
     display:block;
     margin:16px 6px;
     line-height: 28px;
+}
+.turnitin_ula_warn {
+	color: #FF0000;
 }
