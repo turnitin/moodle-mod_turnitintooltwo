@@ -846,7 +846,7 @@ class turnitintooltwo_view {
                 $rubricmanagerlink = $OUTPUT->box_start('row_rubric_manager', '');
                 $rubricmanagerlink .= html_writer::link($CFG->wwwroot.
                                         '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&tiicourseid='.
-                                            $coursedata->turnitin_cid.'&view_context=box', '',
+                                            $coursedata->turnitin_cid.'&view_context=box',
                                                 html_writer::tag('i', '', array('class' => 'icon icon-rubric icon-lg')),
                                                 array('class' => 'rubric_manager_launch', 'id' => 'rubric_manager_inbox_launch',
                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo')));
