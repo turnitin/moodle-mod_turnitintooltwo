@@ -526,4 +526,4 @@ $string['pperrorsfail'] = 'There was a problem with some of the files you select
 $string['turnitininboxlayout'] = 'Assignment Page Layout';
 $string['turnitininboxlayout_desc'] = 'Choose whether the Turnitin Assignment page should show navigation or be displayed full width.';
 $string['layoutoptions_0'] = 'Full width';
-$string['layoutoptions_1'] = 'Mooodle default - with navigation';
+$string['layoutoptions_1'] = 'Moodle default - with navigation';
