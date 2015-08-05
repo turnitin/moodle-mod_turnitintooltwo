@@ -268,22 +268,15 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_grade', get_string('overallgrade', 'turnitintooltwo'),
                        '', 100, $options));
 
-    if (!empty($config->useanon) || $CFG->branch <= 25) {
+    if (!empty($config->useanon) && $current_section == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
                         '', 0, $ynoptions ));
-    } else {
-        $settings->add(new admin_setting_configempty('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
-                        '', 0));
     }
 
-    if (!empty($config->transmatch) || $CFG->branch <= 25) {
+    if (!empty($config->transmatch) && $current_section == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_transmatch',
                                                         get_string('transmatch', 'turnitintooltwo'),
                                                         '', 0, $ynoptions ));
-    } else {
-        $settings->add(new admin_setting_configempty('turnitintooltwo/default_transmatch',
-                                                        get_string('transmatch', 'turnitintooltwo'),
-                                                        '', 0));
     }
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_studentreports',
