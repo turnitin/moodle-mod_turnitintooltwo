@@ -184,6 +184,16 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitintooltwoagreement', 'turnitintooltwo'),
                                                     get_string('turnitintooltwoagreement_desc', 'turnitintooltwo'), ''));
 
+    $layoutoptions = array(
+            0 => get_string('layoutoptions_0', 'turnitintooltwo'),
+            1 => get_string('layoutoptions_1', 'turnitintooltwo')
+        );
+
+    $settings->add(new admin_setting_configselect('turnitintooltwo/inboxlayout',
+                                                    get_string('turnitininboxlayout', 'turnitintooltwo'),
+                                                    get_string('turnitininboxlayout_desc', 'turnitintooltwo'),
+                                                    0, $layoutoptions));
+
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
                        get_string('studentdataprivacy_desc', 'turnitintooltwo')));
