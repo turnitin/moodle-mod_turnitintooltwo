@@ -144,29 +144,32 @@
 }
 
 .quickmark_manager_launch {
-    background:url(pix/quickmark.png) no-repeat 0px 0px;
-    padding: 2px 0 2px 40px;
+    padding: 2px 0 2px 30px;
     height: 20px;
+    color: #0070A8 !important;
 }
 
 .rubric_manager_launch,
 .rubric_view_launch {
-    background:url(pix/rubric.png) no-repeat 0px 0px;
-    padding:4px 0 4px 32px;
+    padding:4px 0px 4px 0px;
     line-height: 22px;
-    margin-left: 6px;
+    color: #0070A8 !important;
 }
 
-.peermark_manager_launch {
-    background:url(pix/peermark-settings.png) no-repeat 0px 0px;
+.rubric_right_margin {
+    margin-right:7px;
 }
 
-.peermark_reviews_launch {
-    background:url(pix/peermark-reviews.png) no-repeat 0px 0px;
+.tii_peermark_manager_launch {
+    color: #009900 !important;
 }
 
-.peermark_manager_launch,
-.peermark_reviews_launch {
+.tii_peermark_reviews_launch {
+    color: #009900 !important;
+}
+
+.tii_peermark_manager_launch,
+.tii_peermark_reviews_launch {
     padding: 4px 0 4px 46px;
     height: 22px;
 }

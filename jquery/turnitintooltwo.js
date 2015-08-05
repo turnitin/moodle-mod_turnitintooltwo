@@ -459,8 +459,8 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the Peermark Manager
-    if ($('.peermark_manager_launch').length > 0) {
-        $('.peermark_manager_launch').colorbox({
+    if ($('.tii_peermark_manager_launch').length > 0) {
+        $('.tii_peermark_manager_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_manager", transition: "none",
             onLoad: function() {
                 lightBoxCloseButton();
@@ -478,8 +478,8 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the Peermark Reviews
-    if ($('.peermark_reviews_launch').length > 0) {
-        $('.peermark_reviews_launch').colorbox({
+    if ($('.tii_peermark_reviews_launch').length > 0) {
+        $('.tii_peermark_reviews_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_reviews", transition: "none",
             onLoad: function() {
                 lightBoxCloseButton();
@@ -835,7 +835,7 @@ jQuery(document).ready(function($) {
     // Refresh the Peermark Assignments from Turnitin and show in Part Details section of inbox
     function refreshPeermarkAssignments(part_id, refresh_requested) {
 
-        var user_role = ($('.peermark_manager_launch').length > 0) ? 'Instructor' : 'Learner'
+        var user_role = ($('.tii_peermark_manager_launch').length > 0) ? 'Instructor' : 'Learner'
 
         if ($('#tabs-'+part_id+' .peermark_assignments_container').length > 0) {
 
