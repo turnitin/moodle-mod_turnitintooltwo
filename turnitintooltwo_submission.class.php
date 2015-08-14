@@ -148,7 +148,8 @@ class turnitintooltwo_submission {
             $condition = array("submission_objectid" => $this->submission_objectid);
         }
 
-        if ($submission = $DB->get_record('turnitintooltwo_submissions', $condition)) {
+        if ($submission = $DB->get_record('turnitintooltwo_submissions',
+                                            $condition, '*', IGNORE_MULTIPLE)) {
             if (empty($turnitintooltwoassignment)) {
                 $turnitintooltwoassignment = new turnitintooltwo_assignment($submission->turnitintooltwoid);
                 $this->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
