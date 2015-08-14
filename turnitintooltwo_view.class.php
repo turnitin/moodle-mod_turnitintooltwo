@@ -641,6 +641,11 @@ class turnitintooltwo_view {
                 }
 
                 // Link to refresh submissions with latest data from Turnitin.
+                $emailnonsubmitters = html_writer::tag('div', html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
+                                                    '&action=emailnonsubmitters&part='.$partid.'&sesskey='.sesskey(),'E-mail Non-Submitters'),
+                                                        array('class' => 'nonsubmitters_link'));
+
+                // Link to refresh submissions with latest data from Turnitin.
                 $refreshlink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh fa-lg',
                                                     'title' => get_string('turnitinrefreshingsubmissions', 'turnitintooltwo')))." ".
                                                     get_string('turnitinrefreshsubmissions', 'turnitintooltwo'),
@@ -653,7 +658,7 @@ class turnitintooltwo_view {
                                                         array('class' => 'refreshing_link', 'id' => 'refreshing_'.$partid));
 
                 //Output the links.
-                $output .= $OUTPUT->box($messagesinbox.$refreshlink.$refreshinglink, 'tii_table_functions', 'tii_table_functions_'.$partid);
+                $output .= $OUTPUT->box($messagesinbox.$emailnonsubmitters.$refreshlink.$refreshinglink, 'tii_table_functions', 'tii_table_functions_'.$partid);
             }
         }
 

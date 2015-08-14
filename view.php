@@ -37,6 +37,9 @@ if (!empty($CFG->tiioffline)) {
 require_once(__DIR__."/turnitintooltwo_view.class.php");
 $turnitintooltwoview = new turnitintooltwo_view();
 
+require_once(__DIR__.'/classes/nonsubmitters/nonsubmitters_message.php');
+$nonsubmitters = new nonsubmitters_message();
+
 // Get/Set variables and work out which function to perform.
 $id = required_param('id', PARAM_INT); // Course Module ID.
 $a = optional_param('a', 0, PARAM_INT); // Turnitintooltwo ID.
@@ -334,6 +337,32 @@ if (!empty($action)) {
             redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
             exit;
             break;
+
+        case "emailnonsubmitters":
+            $submissions = $turnitintooltwoassignment->get_submissions($cm, $part);
+
+            foreach ($submissions[$part] as $submission) {
+                if (empty($submission->submission_objectid)) {
+                    //Send a message to the user's Moodle inbox with the digital receipt.
+                    $partdetails = $turnitintooltwoassignment->get_part_details($part);
+                    $input = array(
+                        'firstname' => $submission->firstname,
+                        'lastname' => $submission->lastname,
+                        'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
+                        'assignment_part' => $partdetails->partname,
+                        'course_fullname' => $course->fullname,
+                        'duedate_part' => gmdate("Y-m-d H:i", $partdetails->dtdue)
+                    );
+                    $message = $nonsubmitters->build_message($input);
+                    $nonsubmitters->send_message($submission->userid, $message);
+                }
+            }
+            $_SESSION["notice"]["type"] = "full-error";
+            $_SESSION["notice"]["message"] = get_string('nonsubmitters_notice', 'turnitintooltwo');
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
+            exit;
+            break;
+
     }
 }
 
