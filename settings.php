@@ -111,7 +111,7 @@ if ($ADMIN->fulltree) {
 
     $testoptions = array(
         'https://api.turnitin.com' => 'https://api.turnitin.com',
-        'https://submit.ac.uk' => 'https://submit.ac.uk',
+        'https://api.turnitinuk.com' => 'https://api.turnitinuk.com',
         'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com'
     );
 
