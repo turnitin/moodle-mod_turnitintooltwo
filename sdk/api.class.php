@@ -52,7 +52,7 @@ class TurnitinAPI {
      * <ul>
      * <li><b>Account ID</b><br />The Account ID of the account to access via the API.</li>
      * <li><b>API Base URL</b><br />The base URL of the service url to access via the API<br />
-     * e.g. https://sandbox.turnitin.com / https://api.turnitin.com / https://submit.ac.uk</li>
+     * e.g. https://sandbox.turnitin.com / https://api.turnitin.com / https://api.turnitinuk.com</li>
      * <li><b>Secret Key</b><br />The secret key for the integration to connect to.</li>
      * <li><b>Integration Identifier</b><br />The identifier for the integration you want to connect to.</li>
      * <li><b>Language</b> (Optional)<br />The language to be used in API response messages (en_us,fr,es,de,cn,zh_tw,pt_br,th,ja,ko,ms,tr,sv,nl,fi,ar)</li>

@@ -121,5 +121,12 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($result && $oldversion < 2015040109) {
+        // Update URL for UK accounts.
+        $apiurl = get_config('turnitintooltwo', 'apiurl');
+        $newurl = str_replace('submit.ac.uk', 'api.turnitinuk.com', strtolower($apiurl));
+        set_config('apiurl', $newurl, 'turnitintooltwo');
+    }
+
     return $result;
 }
