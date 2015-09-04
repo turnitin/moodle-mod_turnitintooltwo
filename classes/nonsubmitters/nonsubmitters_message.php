@@ -8,10 +8,7 @@ class nonsubmitters_message {
      * @param string $message
      * @return void
      */
-    public function send_message($userid, $message) {
-
-        $subject = get_string('nonsubmitters_subject', 'turnitintooltwo');
-
+    public function send_message($userid, $subject, $message) {
         $eventdata = new stdClass();
         $eventdata->component         = 'mod_turnitintooltwo'; //your component name
         $eventdata->name              = 'nonsubmitters'; //this is the message name from messages.php
@@ -25,27 +22,5 @@ class nonsubmitters_message {
         $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
 
         message_send($eventdata);
-    }
-
-    /**
-     * Build message to send to user
-     *
-     * @param array $input - used to build message
-     * @return string
-     */
-    public function build_message($input) {
-        $message = new stdClass();
-        $message->firstname = $input['firstname'];
-        $message->lastname = $input['lastname'];
-        $message->assignment_name = $input['assignment_name'];
-        if ( isset($input['assignment_part']) ) {
-            $message->assignment_part = ": " . $input['assignment_part'];
-        } else {
-            $message->assignment_part = "";
-        }
-        $message->course_fullname = $input['course_fullname'];
-        $message->duedate_part = $input['duedate_part'];
-
-        return get_string('nonsubmitters_message', 'turnitintooltwo', $message);
     }
 }

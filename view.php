@@ -339,30 +339,51 @@ if (!empty($action)) {
             break;
 
         case "emailnonsubmitters":
-            $submissions = $turnitintooltwoassignment->get_submissions($cm, $part);
-
-            foreach ($submissions[$part] as $submission) {
-                if (empty($submission->submission_objectid)) {
-                    //Send a message to the user's Moodle inbox with the digital receipt.
-                    $partdetails = $turnitintooltwoassignment->get_part_details($part);
-                    $input = array(
-                        'firstname' => $submission->firstname,
-                        'lastname' => $submission->lastname,
-                        'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                        'assignment_part' => $partdetails->partname,
-                        'course_fullname' => $course->fullname,
-                        'duedate_part' => gmdate("Y-m-d H:i", $partdetails->dtdue)
-                    );
-                    $message = $nonsubmitters->build_message($input);
-                    $nonsubmitters->send_message($submission->userid, $message);
-                }
+            if (!confirm_sesskey()) {
+                throw new moodle_exception('invalidsesskey', 'error');
             }
-            $_SESSION["notice"]["type"] = "full-error";
-            $_SESSION["notice"]["message"] = get_string('nonsubmitters_notice', 'turnitintooltwo');
-            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
+
+            $subject = required_param('nonsubmitters_subject', PARAM_TEXT);
+            $message = required_param('nonsubmitters_message', PARAM_TEXT);
+            $sendtoself = optional_param('nonsubmitters_sendtoself', 0, PARAM_INT);
+
+            // Error handling for non submitters form.
+            $error = false;
+            if (empty($subject) || empty($message)) {
+                $_SESSION['embeddednotice'] = array("type" => "error");
+                $_SESSION["embeddednotice"]["message"] = get_string('nonsubmitterserror', 'turnitintooltwo');
+                $error = true;
+                $do = "emailnonsubmittersform";
+            }
+
+            if ($error) {
+                // Save data in session incase of error
+                $_SESSION['form_data'] = new stdClass;
+                $_SESSION['form_data']->nonsubmitters_subject = $subject;
+                $_SESSION['form_data']->nonsubmitters_message = $message;
+                $_SESSION['form_data']->nonsubmitters_sendtoself = $sendtoself;
+            } else {
+                $submissions = $turnitintooltwoassignment->get_submissions($cm, $part);
+
+                foreach ($submissions[$part] as $submission) {
+                    if (empty($submission->submission_objectid)) {
+                        //Send a message to the user's Moodle inbox with the digital receipt.
+                        $nonsubmitters->send_message($submission->userid, $subject, $message);
+                    }
+                }
+
+                // Send a copy of message to the instructor if appropriate.
+                if (!empty($sendtoself)) {
+                    $nonsubmitters->send_message($USER->id, $subject, $message);
+                }
+
+                $do = "emailsent";
+            }
+
+            $params = array('id' => $id, 'do' => $do, 'view_context' => 'box_solid');
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', $params));
             exit;
             break;
-
     }
 }
 
@@ -678,7 +699,47 @@ switch ($do) {
             echo $turnitintooltwoview->show_add_tii_tutors_form($cm, $tutors);
         }
         break;
+
+    case "emailnonsubmittersform":
+            if (!$istutor) {
+                turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
+                exit();
+            }
+
+            $output = html_writer::tag("div", get_string('nonsubmittersformdesc', 'turnitintooltwo'), array("class" => "nonsubmitters_desc"));
+
+            if (isset($_SESSION["embeddednotice"])) {
+                $output .= html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
+                unset($_SESSION["embeddednotice"]);
+            }
+
+            $elements = array();
+            $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'));
+            $elements[] = array('textarea', 'nonsubmitters_message', get_string('nonsubmittersmessage', 'turnitintooltwo'));
+
+            $elements[] = array('advcheckbox', 'nonsubmitters_sendtoself', get_string('nonsubmitterssendtoself', 'turnitintooltwo'), '', array(0, 1));
+            $customdata["checkbox_label_after"] = true;
+
+            $elements[] = array('hidden', 'id', $cm->id);
+            $elements[] = array('hidden', 'part', $part);
+            $elements[] = array('hidden', 'action', 'emailnonsubmitters');
+            $elements[] = array('submit', 'send_email', get_string('nonsubmitterssubmit', 'turnitintooltwo'));
+
+            $customdata["elements"] = $elements;
+            $customdata["hide_submit"] = true;
+            $customdata["disable_form_change_checker"] = true;
+
+            $optionsform = new turnitintooltwo_form('', $customdata);
+
+            echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'nonsubmittersform'));
+            unset($_SESSION['form_data']);
+            break;
+
+    case "emailsent":
+        echo html_writer::tag('div', get_string('nonsubmittersformsuccess', 'turnitintooltwo'), array('class' => 'nonsubmittersformsuccessmsg'));
+        break;
 }
+
 echo html_writer::end_tag("div");
 echo html_writer::end_tag("div");
 echo $OUTPUT->footer();

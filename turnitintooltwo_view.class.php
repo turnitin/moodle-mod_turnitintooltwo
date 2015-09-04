@@ -640,10 +640,11 @@ class turnitintooltwo_view {
                                                 array("class" => "messages_inbox"));
                 }
 
-                // Link to refresh submissions with latest data from Turnitin.
-                $emailnonsubmitters = html_writer::tag('div', html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
-                                                    '&action=emailnonsubmitters&part='.$partid.'&sesskey='.sesskey(),'E-mail Non-Submitters'),
-                                                        array('class' => 'nonsubmitters_link'));
+                // Link to email nonsubmitters.
+                $emailnonsubmitters = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
+                                                        '&part='.$partid.'&do=emailnonsubmittersform&view_context=box_solid',
+                                                    html_writer::tag('i', '', array('class' => 'fa fa-reply-all fa-lg')).' E-mail Non-Submitters',
+                                                        array("class" => "nonsubmitters_link"));
 
                 // Link to refresh submissions with latest data from Turnitin.
                 $refreshlink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh fa-lg',
