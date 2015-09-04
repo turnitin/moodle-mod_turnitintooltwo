@@ -527,8 +527,11 @@ $string['turnitininboxlayout'] = 'Assignment Page Layout';
 $string['turnitininboxlayout_desc'] = 'Choose whether the Turnitin Assignment page should show navigation or be displayed full width.';
 $string['layoutoptions_0'] = 'Full width';
 $string['layoutoptions_1'] = 'Moodle default - with navigation';
-
-$string['nonsubmitters_subject'] = 'Non-submission Notice';
-$string['nonsubmitters_message'] = 'Dear {$a->firstname} {$a->lastname},<br /><br />You have not made a submission for the assignment <strong>{$a->assignment_name}{$a->assignment_part}</strong> in the class <strong>{$a->course_fullname}</strong>. Please make a submission to the assignment before the due date. The due date is <strong>{$a->duedate_part}</strong>.';
-$string['nonsubmitters_notice'] = 'You have successfully emailed the non-submitters for this assignment part.';
+$string['nonsubmittersformdesc'] = 'Please enter a message below to send to students who have not yet submitted to this assignment.';
+$string['nonsubmitterssubject'] = 'Subject';
+$string['nonsubmittersmessage'] = 'Message';
+$string['nonsubmitterssendtoself'] = 'Send a copy of this message to me';
+$string['nonsubmitterssubmit'] = 'Send email';
+$string['nonsubmitterserror'] = 'Please provide a subject and message for the email';
+$string['nonsubmittersformsuccess'] = 'Your message to non-submitters has been sent';
 $string['messageprovider:nonsubmitters'] = 'Turnitin Assignment Non Submitter notifications';

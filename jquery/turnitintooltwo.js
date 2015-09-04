@@ -493,9 +493,9 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the turnitin message inbox
-    if ($(".messages_inbox").length > 0) {
-        $(".messages_inbox").colorbox({
-            iframe:true, width:"772px", height:"772px", opacity: "0.7", className: "messages", transition: "none", closeButton: false,
+    if ($(".nonsubmitters_link").length > 0) {
+        $(".nonsubmitters_link").colorbox({
+            iframe:true, width:"740px", height:"430px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: false,
             onLoad: function() {
                 lightBoxCloseButton();
                 getLoadingGif();
@@ -503,9 +503,29 @@ jQuery(document).ready(function($) {
             onCleanup: function() {
                 $('#tii_close_bar').remove();
                 hideLoadingGif();
+            }
+        });
+    }
+
+    // Resize window if submission has failed.
+    if ($('.nonsubmittersformsuccessmsg').length > 0) {
+        window.parent.$('.nonsubmitters').colorbox.resize({
+            width: "740px",
+            height: "50px"
+        });
+    }
+
+    // Open an iframe light box containing the Email non submitters form.
+    if ($('.rubric_view_launch').length > 0) {
+        $('.rubric_view_launch').colorbox({
+            iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view", transition: "none",
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
             },
-            onClosed:function() {
-                refreshUserMessages();
+            onCleanup: function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
             }
         });
     }

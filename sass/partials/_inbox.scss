@@ -42,6 +42,32 @@
     width:80%;
 }
 
+
+/*
+ * Email non submitters form
+ */
+.mod_turnitintooltwo .nonsubmitters_desc {
+    padding: 10px 0;
+}
+
+.mod_turnitintooltwo .nonsubmittersform textarea {
+    height: 90px;
+    width:80%;
+}
+
+.mod_turnitintooltwo #fitem_id_nonsubmitters_sendtoself .fitemtitle {
+    display: none;
+}
+
+.mod_turnitintooltwo .nonsubmittersform .general_warning {
+    margin-top:8px;
+}
+
+.mod_turnitintooltwo .nonsubmittersformsuccessmsg {
+    text-align: center;
+    padding-top: 10px;
+}
+
 #download_links {
     margin-left: 15px;
     top: -5px;
