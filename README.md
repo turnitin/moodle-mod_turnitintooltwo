@@ -20,4 +20,4 @@ If you are using a pre 2.6 version of Moodle you will have to uncomment the init
 
 To configure the plugin go to `"Site Administration" > "Plugins" > "Activity Modules" > "Turnitin Assignment 2"` and enter your Turnitin account Id, shared key and API URL.
 
-**Note:** *The API connection URL is different for this package to previous Turnitin plugins. It should be https://api.turnitin.com, https://submit.ac.uk. or https://sandbox.turnitin.com.*
+**Note:** *The API connection URL is different for this package to previous Turnitin plugins. It should be https://api.turnitin.com, https://api.turnitinuk.com. or https://sandbox.turnitin.com.*

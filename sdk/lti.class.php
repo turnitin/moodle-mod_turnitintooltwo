@@ -28,6 +28,9 @@ class LTI extends OAuthSimple {
     private $apibaseurl;
     private $language;
 
+    private $integrationversion;
+    private $pluginversion;
+
     private $proxyhost;
     private $proxyport;
     private $proxytype;
@@ -47,6 +50,8 @@ class LTI extends OAuthSimple {
         );
         $this->istestingconnection = false;
         $this->perflog = null;
+        $this->integrationversion = '';
+        $this->pluginversion = '';
     }
 
     /**
@@ -569,6 +574,10 @@ class LTI extends OAuthSimple {
     private function setLtiParams( $params ) {
         if ( !is_null( $this->language ) ) $params["lang"] = $this->language;
         $params = array_merge( $this->ltiparams, $params );
+
+        $params['custom_integration_version'] = $this->getIntegrationVersion();
+        $params['custom_plugin_version'] = $this->getPluginVersion();
+
         $this->ltiparams = $params;
     }
 
@@ -910,6 +919,22 @@ class LTI extends OAuthSimple {
      */
     public function setLanguage($language) {
         $this->language = $language;
+    }
+
+    public function setIntegrationVersion( $integrationversion = null ) {
+        $this->integrationversion = $integrationversion;
+    }
+
+    public function getIntegrationVersion() {
+        return $this->integrationversion;
+    }
+
+    public function setPluginVersion( $pluginversion = null ) {
+        $this->pluginversion = $pluginversion;
+    }
+
+    public function getPluginVersion() {
+        return $this->pluginversion;
     }
 
 }

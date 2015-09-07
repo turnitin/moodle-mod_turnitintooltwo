@@ -111,5 +111,22 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($result && $oldversion < 2015040107) {
+        $table = new xmldb_table('turnitintooltwo');
+        // Add field for institution check.
+        $field = new xmldb_field('institution_check', XMLDB_TYPE_INTEGER, '1', false, false, null, null, 'journalcheck');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+    if ($result && $oldversion < 2015040109) {
+        // Update URL for UK accounts.
+        $apiurl = get_config('turnitintooltwo', 'apiurl');
+        $newurl = str_replace('submit.ac.uk', 'api.turnitinuk.com', strtolower($apiurl));
+        set_config('apiurl', $newurl, 'turnitintooltwo');
+    }
+
     return $result;
 }

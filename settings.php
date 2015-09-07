@@ -111,7 +111,7 @@ if ($ADMIN->fulltree) {
 
     $testoptions = array(
         'https://api.turnitin.com' => 'https://api.turnitin.com',
-        'https://submit.ac.uk' => 'https://submit.ac.uk',
+        'https://api.turnitinuk.com' => 'https://api.turnitinuk.com',
         'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com'
     );
 
@@ -183,6 +183,16 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtextarea('turnitintooltwo/agreement',
                                                     get_string('turnitintooltwoagreement', 'turnitintooltwo'),
                                                     get_string('turnitintooltwoagreement_desc', 'turnitintooltwo'), ''));
+
+    $layoutoptions = array(
+            0 => get_string('layoutoptions_0', 'turnitintooltwo'),
+            1 => get_string('layoutoptions_1', 'turnitintooltwo')
+        );
+
+    $settings->add(new admin_setting_configselect('turnitintooltwo/inboxlayout',
+                                                    get_string('turnitininboxlayout', 'turnitintooltwo'),
+                                                    get_string('turnitininboxlayout_desc', 'turnitintooltwo'),
+                                                    0, $layoutoptions));
 
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
@@ -268,12 +278,12 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_grade', get_string('overallgrade', 'turnitintooltwo'),
                        '', 100, $options));
 
-    if (!empty($config->useanon)) {
+    if (!empty($config->useanon) && $current_section == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
                         '', 0, $ynoptions ));
     }
 
-    if (!empty($config->transmatch)) {
+    if (!empty($config->transmatch) && $current_section == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_transmatch',
                                                         get_string('transmatch', 'turnitintooltwo'),
                                                         '', 0, $ynoptions ));

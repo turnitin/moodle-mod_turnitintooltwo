@@ -34,25 +34,39 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     private $turnitintooltwo;
 
     public function definition() {
-        global $CFG, $DB, $USER;
+        global $CFG, $DB, $USER, $COURSE;
         $config = turnitintooltwo_admin_config();
 
         // Module string is useful for product support.
-        if ($CFG->branch >= 26) {
-            $pluginman = \core_plugin_manager::instance();
-            $plugins = $pluginman->get_plugins();
-            $module = $plugins['mod']['turnitintooltwo'];
-        } else {
-            $module = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
-        }
-        $version = (empty($module->version)) ? $module->versiondisk : $module->version;
+        $modulestring = '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - (';
 
-        $modulestring = '<!-- Turnitin Moodle Direct Version: '.$version.' - (';
-        $this->numsubs = 0;
+        // Get Moodle Course Object.
+        $course = turnitintooltwo_assignment::get_course_data($COURSE->id);
+
+        // Create or edit the class in Turnitin.
+        if ($course->turnitin_cid == 0) {
+            $tiicoursedata = turnitintooltwo_assignment::create_tii_course($course, $USER->id);
+            $course->turnitin_cid = $tiicoursedata->turnitin_cid;
+            $course->turnitin_ctl = $tiicoursedata->turnitin_ctl;
+        } else {
+            turnitintooltwo_assignment::edit_tii_course($course);
+            $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
+        }
+
+        // Join this user to the class as an instructor and get their rubrics.
         $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
+        $instructor->join_user_to_class($course->turnitin_cid);
         $instructor->set_user_values_from_tii();
         $instructorrubrics = $instructor->get_instructor_rubrics();
 
+        // Get rubrics that are shared on the account.
+        $turnitinclass = new turnitintooltwo_class($course->id);
+        $turnitinclass->read_class_from_tii();
+
+        // Merge the arrays, prioitising instructor owned arrays.
+        $rubrics = $instructorrubrics + $turnitinclass->sharedrubrics;
+
+        $this->numsubs = 0;
         if (isset($this->_cm->id)) {
 
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
@@ -109,10 +123,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $modulestring .= ') -->';
 
-        $this->show_form($instructorrubrics, $modulestring);
+        $this->show_form($rubrics, $modulestring, $course->turnitin_cid);
     }
 
-    public function show_form($instructorrubrics, $modulestring = '') {
+    public function show_form($instructorrubrics, $modulestring = '', $tiicourseid) {
         global $CFG, $OUTPUT, $COURSE, $PAGE;
         $PAGE->requires->string_for_js('changerubricwarning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
@@ -150,6 +164,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
+        $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
+                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/tii-icon-webfont.css"));
+
         $mform->addElement('html', $script);
 
         $config_warning = '';
@@ -220,9 +237,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addElement('hidden', 'portfolio', 0);
         $mform->setType('portfolio', PARAM_INT);
 
-        $maxbytes1 = ($CFG->maxbytes === 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+        $maxbytes1 = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
                             TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
-        $maxbytes2 = ($COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+        $maxbytes2 = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
                             TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
 
         $options = get_max_upload_sizes($maxbytes1, $maxbytes2);
@@ -280,7 +297,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         if (isset($this->_cm->id)) {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
             $parts = $turnitintooltwoassignment->get_parts();
-            
+
             $partsArray = array();
             foreach ($parts as $key => $value) {
                 $partsArray[] = $value;
@@ -468,7 +485,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
                                                     html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
-                                                                    'cmd=rubricmanager&view_context=box',
+                                                                    'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
+                                                                        html_writer::tag('i', '', array('class' => 'icon icon-rubric icon-lg icon_margin')).
                                                                         get_string('launchrubricmanager', 'turnitintooltwo'),
                                                                 array('class' => 'rubric_manager_launch',
                                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
