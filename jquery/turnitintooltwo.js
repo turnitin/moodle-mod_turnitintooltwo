@@ -495,7 +495,7 @@ jQuery(document).ready(function($) {
     // Open an iframe light box containing the turnitin message inbox
     if ($(".nonsubmitters_link").length > 0) {
         $(".nonsubmitters_link").colorbox({
-            iframe:true, width:"740px", height:"430px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: false,
+            iframe:true, width:"740px", height:"540px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: false,
             onLoad: function() {
                 lightBoxCloseButton();
                 getLoadingGif();
@@ -507,8 +507,9 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Resize window if submission has failed.
+    // Resize window when email has been sent.
     if ($('.nonsubmittersformsuccessmsg').length > 0) {
+        hideLoadingGif();
         window.parent.$('.nonsubmitters').colorbox.resize({
             width: "740px",
             height: "50px"
