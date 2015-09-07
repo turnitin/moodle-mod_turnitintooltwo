@@ -643,7 +643,7 @@ class turnitintooltwo_view {
                 // Link to email nonsubmitters.
                 $emailnonsubmitters = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                         '&part='.$partid.'&do=emailnonsubmittersform&view_context=box_solid',
-                                                    html_writer::tag('i', '', array('class' => 'fa fa-reply-all fa-lg')).' E-mail Non-Submitters',
+                                                    html_writer::tag('i', '', array('class' => 'fa fa-reply-all fa-lg')).' '.get_string('emailnonsubmitters', 'turnitintooltwo'),
                                                         array("class" => "nonsubmitters_link"));
 
                 // Link to refresh submissions with latest data from Turnitin.

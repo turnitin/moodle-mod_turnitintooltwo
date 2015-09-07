@@ -363,13 +363,21 @@ if (!empty($action)) {
                 $_SESSION['form_data']->nonsubmitters_message = $message;
                 $_SESSION['form_data']->nonsubmitters_sendtoself = $sendtoself;
             } else {
-                $submissions = $turnitintooltwoassignment->get_submissions($cm, $part);
 
-                foreach ($submissions[$part] as $submission) {
-                    if (empty($submission->submission_objectid)) {
-                        //Send a message to the user's Moodle inbox with the digital receipt.
-                        $nonsubmitters->send_message($submission->userid, $subject, $message);
-                    }
+                // Get all users enrolled in the class.
+                $context = context_module::instance($cm->id);
+                $allusers = get_users_by_capability(context_module::instance($cm->id), 'mod/turnitintooltwo:submit', 'u.id',
+                                                '', '', '', groups_get_activity_group($cm));
+
+                // Get users who've submitted.
+                $params = array('turnitintooltwoid' => $turnitintooltwo->id, 'submission_part' => $part);
+                $submittedusers = $DB->get_records('turnitintooltwo_submissions', $params, '', 'userid');
+
+                // Send message to all non submitted users.
+                $nonsubmittedusers = array_diff_key((array)$allusers, (array)$submittedusers);
+                foreach ($nonsubmittedusers as $nonsubmitteduser) {
+                    //Send a message to the user's Moodle inbox with the digital receipt.
+                    $nonsubmitters->send_message($nonsubmitteduser->id, $subject, $message);
                 }
 
                 // Send a copy of message to the instructor if appropriate.
@@ -706,17 +714,20 @@ switch ($do) {
                 exit();
             }
 
-            $output = html_writer::tag("div", get_string('nonsubmittersformdesc', 'turnitintooltwo'), array("class" => "nonsubmitters_desc"));
+            $output = '';
 
             if (isset($_SESSION["embeddednotice"])) {
-                $output .= html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
+                $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
                 unset($_SESSION["embeddednotice"]);
             }
 
             $elements = array();
-            $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'));
-            $elements[] = array('textarea', 'nonsubmitters_message', get_string('nonsubmittersmessage', 'turnitintooltwo'));
-
+            $elements[] = array('header', 'nonsubmitters_header', get_string('emailnonsubmitters', 'turnitintooltwo'));
+            $elements[] = array('static', 'nonsubmittersformdesc', get_string('nonsubmittersformdesc', 'turnitintooltwo'), '', '');
+            $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'), '', '',
+                                    'required', get_string('nonsubmitterserror', 'turnitintooltwo'), PARAM_TEXT);
+            $elements[] = array('textarea', 'nonsubmitters_message', get_string('nonsubmittersmessage', 'turnitintooltwo'), '', '',
+                                    'required', get_string('nonsubmitterserror', 'turnitintooltwo'), PARAM_TEXT);
             $elements[] = array('advcheckbox', 'nonsubmitters_sendtoself', get_string('nonsubmitterssendtoself', 'turnitintooltwo'), '', array(0, 1));
             $customdata["checkbox_label_after"] = true;
 
