@@ -556,9 +556,9 @@ class turnitintooltwo_view {
                     $exportorigfileszip = $OUTPUT->box(html_writer::tag('i', '', array('class' => 'fa fa-file-o',
                                                     'title' => get_string($origfileszipLang, 'turnitintooltwo'))).' '.
                                                     get_string($origfileszipLang, 'turnitintooltwo'),
-                                                'zip_open origchecked_zip_open', 'origchecked_zip_'.$partobject->tiiassignid);
+                                                'zip_open origchecked_zip_open', 'origchecked_zip_'.$partobject->id);
                     // Put in div placeholder for launch form.
-                    $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->tiiassignid);
+                    $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->id);
 
                     // Output icon to download zip file of submissions in pdf format.
                     $exportgrademarkzip = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.
@@ -566,7 +566,7 @@ class turnitintooltwo_view {
                                                     html_writer::tag('i', '', array('class' => 'fa fa-file-pdf-o',
                                                     'title' => get_string($grademarkzipLang, 'turnitintooltwo'))).' '.
                                                     get_string($grademarkzipLang, 'turnitintooltwo'),
-                                            array("class" => "gmpdfzip_box", "id" => "gmpdf_zip_".$partobject->tiiassignid));
+                                            array("class" => "gmpdfzip_box", "id" => "gmpdf_zip_".$partobject->id));
 
                     // Only Moodle versions 2.7+ came with bootstrap.
                     if ($CFG->branch >= 27) {
