@@ -641,6 +641,7 @@ class turnitintooltwo_view {
                 }
 
                 // Link to email nonsubmitters.
+                $emailnonsubmitters = '';
                 if ($turnitintooltwouser->get_user_role() == 'Instructor') {
                     $emailnonsubmitters = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                             '&part='.$partid.'&do=emailnonsubmittersform&view_context=box_solid',
