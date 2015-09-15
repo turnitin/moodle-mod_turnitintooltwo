@@ -536,5 +536,5 @@ $string['nonsubmitterssubmit'] = 'Send email';
 $string['nonsubmitterserror'] = 'Please provide a subject and message for the email';
 $string['nonsubmitterssubjecterror'] = 'Please provide a subject for the email';
 $string['nonsubmittersmessageerror'] = 'Please provide a message for the email';
-$string['nonsubmittersformsuccess'] = 'Your message to non-submitters has been sent';
+$string['nonsubmittersformsuccess'] = 'Your message to non-submitters has been sent.';
 $string['messageprovider:nonsubmitters'] = 'Turnitin Assignment Non Submitter notifications';

@@ -232,8 +232,12 @@ switch ($action) {
             $turnitintooltwoview = new turnitintooltwo_view();
 
             $return["aaData"] = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
+            $totalsubmitters = $DB->count_records('turnitintooltwo_submissions',
+                                                    array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
+                                                            'submission_part' => $partid));
             $return["end"] = $start + TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
             $return["total"] = $_SESSION["num_submissions"][$partid];
+            $return["nonsubmitters"] = $return["total"] - $totalsubmitters;
 
             // Remove any leftover submissions from session
             if ($return["end"] >= $return["total"]) {
