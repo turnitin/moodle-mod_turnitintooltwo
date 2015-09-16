@@ -725,9 +725,9 @@ switch ($do) {
             $elements[] = array('header', 'nonsubmitters_header', get_string('emailnonsubmitters', 'turnitintooltwo'));
             $elements[] = array('static', 'nonsubmittersformdesc', get_string('nonsubmittersformdesc', 'turnitintooltwo'), '', '');
             $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'), '', '',
-                                    'required', get_string('nonsubmitterserror', 'turnitintooltwo'), PARAM_TEXT);
+                                    'required', get_string('nonsubmitterssubjecterror', 'turnitintooltwo'), PARAM_TEXT);
             $elements[] = array('textarea', 'nonsubmitters_message', get_string('nonsubmittersmessage', 'turnitintooltwo'), '', '',
-                                    'required', get_string('nonsubmitterserror', 'turnitintooltwo'), PARAM_TEXT);
+                                    'required', get_string('nonsubmittersmessageerror', 'turnitintooltwo'), PARAM_TEXT);
             $elements[] = array('advcheckbox', 'nonsubmitters_sendtoself', get_string('nonsubmitterssendtoself', 'turnitintooltwo'), '', array(0, 1));
             $customdata["checkbox_label_after"] = true;
 
