@@ -162,6 +162,11 @@ switch ($action) {
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
 
             $partid = optional_param('part', 0, PARAM_INT);
+            if ($partid != 0 && ($action == "origchecked_zip" || $action == "gmpdf_zip")) {
+                $partdetails = $turnitintooltwoassignment->get_part_details($partid, "moodle");
+                $partid = $partdetails->tiiassignid;
+            }
+
             $user = new turnitintooltwo_user($USER->id, 'Instructor');
             $user->edit_tii_user();
 
