@@ -642,7 +642,7 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
 
     $filename = implode('_', $filename);
     $filename = str_replace(' ', '_', $filename);
-    $filename = clean_param($filename, PARAM_FILE);
+    $filename = clean_param(strip_tags($filename), PARAM_FILE);
 
     $tempdir = make_temp_directory('turnitintooltwo');
 
