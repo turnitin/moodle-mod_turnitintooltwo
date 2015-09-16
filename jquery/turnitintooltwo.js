@@ -527,7 +527,7 @@ jQuery(document).ready(function($) {
         hideLoadingGif();
         window.parent.$('.nonsubmitters').colorbox.resize({
             width: "740px",
-            height: "50px"
+            height: "120px"
         });
     }
 
@@ -800,6 +800,11 @@ jQuery(document).ready(function($) {
                     submitVisibility();
 
                     enableEditingText(part_id);
+
+                    // Enable Email non submitters link if there is any non submitters.
+                    if (result.nonsubmitters > 0) {
+                        $('.nonsubmitters_link').attr('style', 'display: block');
+                    }
                 }
             },
             "error": function(data, response) {
