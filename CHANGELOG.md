@@ -1,4 +1,21 @@
-Releases before version 2015040106 will refer to changes made to the Turnitin's other Moodle plugins as well; the plagiarism plugin and block.
+### Date:       2015-September-16
+### Release:    v2015040109
+
+- API URL for UK institutions automatically changed to api.turnitinuk.com.
+- Shared Turnitin Rubrics can be attached to assignments.
+- Digital receipts can be sent without SMTP settings enabled.
+- Icons replaced with Font Awesome and Tii font sets.
+- Modified logging on submission upload and deletion.
+- Ability added to send a message to user who not yet submitted to an assignment.
+- Fixes:
+	- Rubric Manager now shows Shared Rubrics.
+	- Submission modal resizing errors fixed as EULA has moved from submission modal to submission inbox.
+	- Extra user role check added on submission deletion.
+	- File check added before sending to Turnitin.
+	- Submissions are now correctly linked when backing up and restoring (Thanks to Adam Olley).
+	- File check added and slashes removed from filename before sending to Turnitin.
+
+---
 
 ### Date:       2015-July-31
 ### Release:    v2015040107
@@ -8,6 +25,8 @@ Releases before version 2015040106 will refer to changes made to the Turnitin's 
 	- Account for Shared Rubrics being returned by the API.
 
 ---
+
+Releases before version 2015040106 will refer to changes made to the Turnitin's other Moodle plugins as well; the plagiarism plugin and block.
 
 ### Date:       2015-June-29
 ### Release:    v2015040106

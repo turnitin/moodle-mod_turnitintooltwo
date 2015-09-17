@@ -22,6 +22,9 @@ class TurnitinAPI {
     private $debug;
     private $logpath;
 
+    protected $integrationversion;
+    protected $pluginversion;
+
     private $proxyhost;
     private $proxyport;
     private $proxytype;
@@ -29,7 +32,7 @@ class TurnitinAPI {
     private $proxypassword;
     private $proxybypass;
     private $sslcertificate;
-    
+
     private $istestingconnection;
     private $perflog;
 
@@ -49,7 +52,7 @@ class TurnitinAPI {
      * <ul>
      * <li><b>Account ID</b><br />The Account ID of the account to access via the API.</li>
      * <li><b>API Base URL</b><br />The base URL of the service url to access via the API<br />
-     * e.g. https://sandbox.turnitin.com / https://api.turnitin.com / https://submit.ac.uk</li>
+     * e.g. https://sandbox.turnitin.com / https://api.turnitin.com / https://api.turnitinuk.com</li>
      * <li><b>Secret Key</b><br />The secret key for the integration to connect to.</li>
      * <li><b>Integration Identifier</b><br />The identifier for the integration you want to connect to.</li>
      * <li><b>Language</b> (Optional)<br />The language to be used in API response messages (en_us,fr,es,de,cn,zh_tw,pt_br,th,ja,ko,ms,tr,sv,nl,fi,ar)</li>
@@ -66,7 +69,7 @@ class TurnitinAPI {
         $this->sharedkey  = $secretkey;
         $this->apibaseurl = $apibaseurl;
         $this->integrationid = $integrationid;
-        $this->language   = $language;
+        $this->language = $language;
 
         $this->istestingconnection = false;
         $this->perflog = null;
@@ -263,6 +266,42 @@ class TurnitinAPI {
     }
 
     /**
+     * Set the integration version.
+     *
+     * @param string $integrationversion
+     */
+    public function setIntegrationVersion( $integrationversion = null ) {
+        $this->integrationversion = $integrationversion;
+    }
+
+    /**
+     * Get the integration version.
+     *
+     * @return string
+     */
+    public function getIntegrationVersion() {
+        return $this->integrationversion;
+    }
+
+    /**
+     * Set the plugin version.
+     *
+     * @param string $pluginversion
+     */
+    public function setPluginVersion( $pluginversion = null ) {
+        $this->pluginversion = $pluginversion;
+    }
+
+    /**
+     * Get the plugin version.
+     *
+     * @return string
+     */
+    public function getPluginVersion() {
+        return $this->pluginversion;
+    }
+
+    /**
      * Set API communication debugging level.
      *
      * Determines whether debugging will be output to the screen, if true then API request and response data will be output to the screen.
@@ -332,6 +371,10 @@ class TurnitinAPI {
         if ((isset($this->sslcertificate)) AND ($this->sslcertificate != '')) {
             $service->setSSLCertificate( $this->sslcertificate );
         }
+
+        $service->setIntegrationVersion( $this->integrationversion);
+        $service->setPluginVersion( $this->pluginversion);
+
         $service->setIsTestingConnection($this->istestingconnection);
         $service->setPerflog($this->perflog);
         return $service;

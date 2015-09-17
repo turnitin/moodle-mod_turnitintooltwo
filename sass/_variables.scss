@@ -1,0 +1,22 @@
+// Colours
+$light-grey: #efefef;
+$dark-grey: #A8A8A8;
+$light-blue: #8383FC;
+$white: #fff;
+$red: #B94A48;
+$green: #19B719;
+
+// Table border colours
+$border-color: $light-grey;
+
+// Odd / Even colours for table
+$odd-color: $light-grey;
+$even-color: $white;
+
+// Warning colours
+$warning: $red;
+$warning-border: darken($red, 20%);
+
+// Table padding
+$table-padding: 15px;
+$table-head-padding: $table-padding - 5px;

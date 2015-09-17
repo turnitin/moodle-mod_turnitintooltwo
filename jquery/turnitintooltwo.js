@@ -98,7 +98,7 @@ jQuery(document).ready(function($) {
         }
 
         // Toggle Summary display on Inbox
-        $('.toggle_summary img').click(function() {
+        $('.toggle_summary i').click(function() {
             if ($(this).hasClass('show_summary_'+$('#assignment_id').html())) {
                 $.cookie('show_summary_'+$('#assignment_id').html(), true, { expires: 30 });
                 $('.show_summary_'+$('#assignment_id').html()).hide();
@@ -130,7 +130,7 @@ jQuery(document).ready(function($) {
         }
 
         // Toggle Peermarks display on Inbox
-        $('.toggle_peermarks img').click(function() {
+        $('.toggle_peermarks i').click(function() {
             if ($(this).hasClass('show_peermarks_'+$('#assignment_id').html())) {
                 $.cookie('show_peermarks_'+$('#assignment_id').html(), true, { expires: 30 });
                 $('.show_peermarks_'+$('#assignment_id').html()).hide();
@@ -250,7 +250,7 @@ jQuery(document).ready(function($) {
             submissionsDataTableColumns.push({"sClass": "right", "iDataSort": i-1, "sType":"numeric"});
             visibleCols.push(true);
         } else if (i == 1 || ((i >= 8 && !showOrigReport && !useGradeMark)
-                                || (i >= 10 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark))) 
+                                || (i >= 10 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark)))
                                 || (i >= 12 && showOrigReport && useGradeMark))) {
             submissionsDataTableColumns.push({"sClass": "center", "bSortable": false});
             visibleCols.push(true);
@@ -371,37 +371,6 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    // Show the Turnitin user agreement if necessary
-    if ($(".turnitin_ula").length > 0) {
-        $('#id_submitbutton').attr('disabled', 'disabled');
-        $('.submission_form_container').attr('style', 'display:none;');
-
-        $(window).on("message", function(ev) {
-            var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
-            if (message === "turnitin_eula_declined") {
-                window.parent.$('.upload_box').colorbox.close();
-            } else {
-                window.parent.$('.upload_box').data('launchEula', 0);
-                window.parent.$('.upload_box').colorbox.resize({
-                    width: "80%",
-                    height: "80%"
-                });
-            }
-
-            $('iframe.cboxIframe').attr('src', $('iframe.cboxIframe').attr('src'));
-        });
-    }
-
-    // Resize window after submitting EULA.
-    $('.turnitin_ula input[type="submit"]').click(function() {
-        $(this).hide();
-        $(this).parent().parent().parent().find("p").hide();
-        window.parent.$('.upload_box').colorbox.resize({
-            width: "800px",
-            height: "565px"
-        });
-    });
-
     // Resize window if submission has failed.
     if ($('.submission_failure_msg').length > 0) {
         window.parent.$('.upload_box').colorbox.resize({
@@ -477,7 +446,7 @@ jQuery(document).ready(function($) {
     // Open an iframe light box containing the Quickmark Manager
     if ($('.quickmark_manager_launch').length > 0 || $('.plagiarism_turnitin_quickmark_manager_launch').length > 0) {
         $('.quickmark_manager_launch, .plagiarism_turnitin_quickmark_manager_launch').colorbox({
-            iframe:true, width:"700px", height:"432px", opacity: "0.7", className: "quickmark_manager", transition: "none",
+            iframe:true, width:"770px", height:"600px", opacity: "0.7", className: "quickmark_manager", transition: "none",
             onLoad: function() {
                 lightBoxCloseButton();
                 getLoadingGif();
@@ -490,8 +459,8 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the Peermark Manager
-    if ($('.peermark_manager_launch').length > 0) {
-        $('.peermark_manager_launch').colorbox({
+    if ($('.tii_peermark_manager_launch').length > 0) {
+        $('.tii_peermark_manager_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_manager", transition: "none",
             onLoad: function() {
                 lightBoxCloseButton();
@@ -509,8 +478,8 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the Peermark Reviews
-    if ($('.peermark_reviews_launch').length > 0) {
-        $('.peermark_reviews_launch').colorbox({
+    if ($('.tii_peermark_reviews_launch').length > 0) {
+        $('.tii_peermark_reviews_launch').colorbox({
             iframe:true, width:"802px", height:"772px", opacity: "0.7", className: "peermark_reviews", transition: "none",
             onLoad: function() {
                 lightBoxCloseButton();
@@ -524,9 +493,9 @@ jQuery(document).ready(function($) {
     }
 
     // Open an iframe light box containing the turnitin message inbox
-    if ($(".messages_inbox").length > 0) {
-        $(".messages_inbox").colorbox({
-            iframe:true, width:"772px", height:"772px", opacity: "0.7", className: "messages", transition: "none", closeButton: false,
+    if ($(".nonsubmitters_link").length > 0) {
+        $(".nonsubmitters_link").colorbox({
+            iframe:true, width:"740px", height:"540px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: false,
             onLoad: function() {
                 lightBoxCloseButton();
                 getLoadingGif();
@@ -534,9 +503,30 @@ jQuery(document).ready(function($) {
             onCleanup: function() {
                 $('#tii_close_bar').remove();
                 hideLoadingGif();
+            }
+        });
+    }
+
+    // Resize window when email has been sent.
+    if ($('.nonsubmittersformsuccessmsg').length > 0) {
+        hideLoadingGif();
+        window.parent.$('.nonsubmitters').colorbox.resize({
+            width: "740px",
+            height: "120px"
+        });
+    }
+
+    // Open an iframe light box containing the Email non submitters form.
+    if ($('.rubric_view_launch').length > 0) {
+        $('.rubric_view_launch').colorbox({
+            iframe:true, width:"832px", height:"682px", opacity: "0.7", className: "rubric_view", transition: "none",
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
             },
-            onClosed:function() {
-                refreshUserMessages();
+            onCleanup: function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
             }
         });
     }
@@ -651,13 +641,13 @@ jQuery(document).ready(function($) {
                 'smartDays': true
             },
             validate: function(value) {
-                if( value.format("X") < moment().unix() && 
+                if( value.format("X") < moment().unix() &&
                     $(this).hasClass('editable_postdue') &&
                     $(this).data('anon') == 1 &&
                     $(this).data('unanon') == 0 &&
                     $(this).data('submitted') == 1 )
                 {
-                    if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) { 
+                    if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) {
                         $('.editable-open').editableContainer('hide');
 
                         // Validation only fails if string is returned (We need a string).
@@ -688,33 +678,53 @@ jQuery(document).ready(function($) {
             }
         });
 
-        // Disable other editable fields when an editable form is opened
+        // Disable other editable fields & Grading template submissions when an editable form is opened.
         $('.editable_date, .editable_text').on('shown', function(e, editable) {
             var current = ($(this).prop('id'));
             $('.editable_date, .editable_text').not('#'+current).editable('disable');
+            $('.submit_nothing').addClass('disabled');
         });
 
-        // Enable other editable fields when an editable form is closed
+        // Enable other editable fields & Grading template submissions when an editable form is closed.
         $('.editable_date, .editable_text').on('hidden', function() {
             var current = ($(this).prop('id'));
             $('.editable_date, .editable_text').not('#'+current).editable('enable');
+            $('.submit_nothing').removeClass('disabled');
         });
     }
 
     $('#inbox_form form, .launch_form form').submit();
 
-    // Update the DB value for EULA accepted
-    function userAgreementAccepted( user_id ){
-        $.ajax({
-            type: "POST",
-            url: "ajax.php",
-            dataType: "json",
-            data: {action: 'acceptuseragreement', user_id: user_id},
-            success: function(data) {
-                window.location.href = window.location.href;
-            }
-        });
-    }
+    // Open a light box containing the Turnitin EULA
+    $(document).on('click', '.turnitin_eula_link', function(e) {
+        var $this = jQuery(this);
+        if (!$this.hasClass("colorbox-initialized")) {
+            e.preventDefault();
+            $this.addClass("colorbox-initialized").colorbox({
+                open:true,iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
+                onLoad: function() { getLoadingGif(); },
+                onComplete: function() {
+                    $(window).on("message", function(ev) {
+                        var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
+
+                        $.ajax({
+                            type: "POST",
+                            url: M.cfg.wwwroot +"/mod/turnitintooltwo/ajax.php",
+                            dataType: "json",
+                            data: {action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey},
+                            success: function(data) { window.location.reload(); },
+                            error: function(data) { window.location.reload(); }
+                        });
+                    });
+                },
+                onCleanup: function() {
+                    hideLoadingGif();
+                }
+            });
+        }
+
+        return false;
+    });
 
     // Enable the editing fields in the inbox parts table
     function enableEditingText(part_id) {
@@ -760,10 +770,10 @@ jQuery(document).ready(function($) {
 
                     refresh_requested[part_id] = 0;
                     var allrefreshed = 1;
-                    
+
                     $.each(refresh_requested, function(k, v) {
                         if (v == 1) {
-                            allrefreshed = 0;    
+                            allrefreshed = 0;
                         }
                     });
 
@@ -772,7 +782,14 @@ jQuery(document).ready(function($) {
                         $('.refresh_link').show();
                     }
 
+                    submitVisibility();
+
                     enableEditingText(part_id);
+
+                    // Enable Email non submitters link if there is any non submitters.
+                    if (result.nonsubmitters > 0) {
+                        $('.nonsubmitters_link').attr('style', 'display: block');
+                    }
                 }
             },
             "error": function(data, response) {
@@ -780,6 +797,16 @@ jQuery(document).ready(function($) {
                 $('.dataTables_empty').html(M.str.turnitintooltwo.tiisubmissionsgeterror);
             }
         });
+    }
+
+    // Show or hide the submission link depending on whether the EULA has been accepted.
+    function submitVisibility() {
+        if (($(".upload_box").data("user-type") == 1) || ($(".upload_box").data("eula") == 1)) {
+            $(".upload_box").show();
+        }
+        else {
+            $(".upload_box").hide();
+        }
     }
 
     // Get the rubrics belonging to a user from Turnitin and refresh menu accordingly
@@ -834,7 +861,7 @@ jQuery(document).ready(function($) {
     // Refresh the Peermark Assignments from Turnitin and show in Part Details section of inbox
     function refreshPeermarkAssignments(part_id, refresh_requested) {
 
-        var user_role = ($('.peermark_manager_launch').length > 0) ? 'Instructor' : 'Learner'
+        var user_role = ($('.tii_peermark_manager_launch').length > 0) ? 'Instructor' : 'Learner'
 
         if ($('#tabs-'+part_id+' .peermark_assignments_container').length > 0) {
 
@@ -930,21 +957,14 @@ jQuery(document).ready(function($) {
             identifier = "#upload_"+submission_id+"_"+part_id+"_"+user_id;
         }
 
-        var colorBoxWidth = "700px";
-        var colorBoxHeight = "90px";
+        var colorBoxWidth = "80%";
+        var colorBoxHeight = "80%";
 
         $(identifier).colorbox({
-            onComplete: function() {
-                if ( $('.upload_box').data('launchEula') === 0 ) {
-                    window.parent.$('.upload_box').colorbox.resize({
-                       width: "80%",
-                       height: "80%"
-                    });
-                }
-            },
             onLoad: function() {
                 getLoadingGif();
                 lightBoxCloseButton();
+                $(this).hide();
             },
             onClosed: function() { hideLoadingGif(); },
             onCleanup:function() {
@@ -1061,7 +1081,7 @@ jQuery(document).ready(function($) {
 
         $(identifier).click(function() {
             $(this).hide();
-            $(this).siblings('.fa-spinner').css("display","inline-block");
+            $(this).siblings('.fa-spinner').css("display","inline-block").addClass('fa-lg');
             var idStr = $(this).parent().attr("id").split("_");
             refreshInboxRow(idStr[0], idStr[1], idStr[2], idStr[3]);
         });
@@ -1069,10 +1089,10 @@ jQuery(document).ready(function($) {
 
     // Initialise the events to open the document viewer as the links are loaded after the page
     function initialiseDVLaunchers(scope, submission_id, part_id, user_id) {
-        var identifier = '#'+part_id+' .download_original_open';//#'+part_id+' .origreport_open, #'+part_id+' .grademark_open, 
+        var identifier = '#'+part_id+' .download_original_open';//#'+part_id+' .origreport_open, #'+part_id+' .grademark_open,
         if (scope == "row") {
             identifier = '#downloadoriginal_'+submission_id+'_'+part_id+'_'+user_id;
-            //#origreport_'+submission_id+'_'+part_id+'_'+user_id+', #grademark_'+submission_id+'_'+part_id+'_'+user_id+', 
+            //#origreport_'+submission_id+'_'+part_id+'_'+user_id+', #grademark_'+submission_id+'_'+part_id+'_'+user_id+',
         }
 
         // Unbind the event first to stop it being binded multiple times
@@ -1150,7 +1170,7 @@ jQuery(document).ready(function($) {
 
     // Initiate a nothing submission
     function submitNothing( user_id, part_id ) {
-        $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/loader.gif');
+        $("#submitnothing_0_"+part_id+"_"+user_id+" i").attr('class','fa fa-spin fa-spinner fa-lg');
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -1163,7 +1183,7 @@ jQuery(document).ready(function($) {
                 $('table#' + part_id + ' .select_all_checkbox').attr('checked', false);
             },
             error: function(data) {
-                $("#submitnothing_0_"+part_id+"_"+user_id+" img").attr('src','pix/icon-edit-grey.png');
+                $("#submitnothing_0_"+part_id+"_"+user_id+" i").attr('class','fa fa-pencil fa-lg');
                 $("#submitnothing_0_"+part_id+"_"+user_id).removeClass('disabled');
                 alert( data.responseText );
             },
@@ -1204,6 +1224,8 @@ jQuery(document).ready(function($) {
                 var rowindex = tr.index();
                 oTable.fnDeleteRow(tr);
                 oTable.fnAddData(data.row);
+
+                submitVisibility();
 
                 initialiseUploadBox("row", data.submission_id, part_id, user_id);
                 initialiseDVLaunchers("row", data.submission_id, part_id, user_id);
@@ -1282,7 +1304,7 @@ jQuery(document).ready(function($) {
     var buildUnixDate = function(el, part_id) {
         // option id's
         var start = [ '_day', '_month', '_year', '_hour', '_minute' ];
-        
+
         $this = $(el + part_id);
 
         // build date:time string

@@ -26,7 +26,5 @@ $plugins = array(
 	'turnitintooltwo-uieditable'				=> array('files' => array('jqueryui-editable.js', 'jqueryui-editable.css')),
 	'turnitintooltwo-moment'					=> array('files' => array('moment.js')),
 	'turnitintooltwo-block'						=> array('files' => array('block_turnitin.js')),
-	'turnitintooltwo-plagiarism_plugin'			=> array('files' => array('plagiarism_plugin.js')),
-	'turnitintooltwo-tooltipster'				=> array('files' => array('tooltipster.js', 'tooltipster.css')),
-	'turnitintooltwo-plagiarism_submission'		=> array('files' => array('plagiarism_submission.js'))
+	'turnitintooltwo-tooltipster'				=> array('files' => array('tooltipster.js', 'tooltipster.css'))
 );

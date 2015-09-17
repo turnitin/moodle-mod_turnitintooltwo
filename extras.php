@@ -182,8 +182,9 @@ switch ($cmd) {
 
     case "rubricmanager":
         $PAGE->set_pagelayout('embedded');
+        $tiicourseid = optional_param('tiicourseid', 0, PARAM_INT);
 
-        echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_manager', 'Instructor'),
+        echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_manager', 'Instructor', 0, $tiicourseid),
                                                                                 array("class" => "launch_form"));
         break;
 
@@ -192,6 +193,19 @@ switch ($cmd) {
 
         echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('quickmark_manager', 'Instructor'),
                                                                                 array("class" => "launch_form"));
+        break;
+    case "useragreement":
+        $PAGE->set_pagelayout('embedded');
+        $user = new turnitintooltwo_user($USER->id, "Learner");
+
+        $output .= $OUTPUT->box_start('tii_eula_launch');
+        $output .= turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner", '');
+        $output .= $OUTPUT->box_end(true);
+        echo $output;
+
+        echo html_writer::script("<!--
+                                    window.document.forms[0].submit();
+                                    //-->");
         break;
 }
 

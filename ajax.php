@@ -112,16 +112,22 @@ switch ($action) {
         break;
 
     case "acceptuseragreement":
-        $eula_user_id = required_param('user_id', PARAM_INT);
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $message = optional_param('message', '', PARAM_ALPHAEXT);
 
         // Get the id from the turnitintooltwo_users table so we can update
-        $turnitin_user = $DB->get_record('turnitintooltwo_users', array('userid' => $eula_user_id));
+        $turnitin_user = $DB->get_record('turnitintooltwo_users', array('userid' => $USER->id));
 
         // Build user object for update
-        $eula_user = new stdClass();
-        $eula_user->id += $turnitin_user->id;
-        $eula_user->userid = $eula_user_id;
-        $eula_user->user_agreement_accepted = 1;
+        $eula_user = new object();
+        $eula_user->id = $turnitin_user->id;
+        $eula_user->user_agreement_accepted = 0;
+        if ($message == 'turnitin_eula_accepted') {
+            $eula_user->user_agreement_accepted = 1;
+        }
 
         // Update the user using the above object
         $DB->update_record('turnitintooltwo_users', $eula_user, $bulk=false);
@@ -226,8 +232,12 @@ switch ($action) {
             $turnitintooltwoview = new turnitintooltwo_view();
 
             $return["aaData"] = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
+            $totalsubmitters = $DB->count_records('turnitintooltwo_submissions',
+                                                    array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
+                                                            'submission_part' => $partid));
             $return["end"] = $start + TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
             $return["total"] = $_SESSION["num_submissions"][$partid];
+            $return["nonsubmitters"] = $return["total"] - $totalsubmitters;
 
             // Remove any leftover submissions from session
             if ($return["end"] >= $return["total"]) {
@@ -372,17 +382,29 @@ switch ($action) {
 
             $options = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
 
-            // Add in rubric if the selected rubric belongs to another instructor.
+            // Get rubrics that are shared on the Turnitin account.
+            if ($modulename == "turnitintooltwo") {
+                $turnitinclass = new turnitintooltwo_class($courseid);
+            } else {
+                require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
+                $turnitinclass = new turnitin_class($courseid);
+            }
+            $turnitinclass->read_class_from_tii();
+            $options = $options + $turnitinclass->sharedrubrics;
+
+            // Get assignment details.
             if (!empty($assignmentid)) {
                 if ($modulename == "turnitintooltwo") {
                     $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
                 } else {
-                    require_once($CFG->dirroot.'/plagiarism/turnitin/lib.php');
                     $pluginturnitin = new plagiarism_plugin_turnitin();
                     $cm = get_coursemodule_from_instance($modulename, $assignmentid);
                     $plagiarismsettings = $pluginturnitin->get_settings($cm->id);
                 }
+            }
 
+            // Add in selected rubric if it belongs to another instructor.
+            if (!empty($assignmentid)) {
                 if ($modulename == "turnitintooltwo") {
                     if (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
                         $options[$turnitintooltwoassignment->turnitintooltwo->rubric] =
