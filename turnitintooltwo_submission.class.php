@@ -341,7 +341,6 @@ class turnitintooltwo_submission {
         if ($numassignsubs == 0) {
             $unlockassign = new stdClass();
             $unlockassign->id = $turnitintooltwoassignment->turnitintooltwo->id;
-            $unlockassign->unanon = 0;
             $unlockassign->submitted = 0;
             $DB->update_record('turnitintooltwo', $unlockassign);
         }
