@@ -324,6 +324,28 @@ class turnitintooltwo_submission {
         $grades->userid = $this->userid;
         $params['idnumber'] = $cm->idnumber;
 
+        // If this is the only submission and anon marking is being used then unlock this part.
+        $numpartsubs = $DB->count_records('turnitintooltwo_submissions',
+                                            array('submission_part' => $this->submission_part));
+        if ($numpartsubs == 0) {
+            $unlockpart = new stdClass();
+            $unlockpart->id = $this->submissionpart;
+            $unlockpart->unanon = 0;
+            $unlockpart->submitted = 0;
+            $DB->update_record('turnitintooltwo_parts', $unlockpart);
+        }
+
+        // If this is the only submission and anon marking is being used then unlock this assignment.
+        $numassignsubs = $DB->count_records('turnitintooltwo_submissions',
+                                        array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id));
+        if ($numassignsubs == 0) {
+            $unlockassign = new stdClass();
+            $unlockassign->id = $turnitintooltwoassignment->turnitintooltwo->id;
+            $unlockassign->unanon = 0;
+            $unlockassign->submitted = 0;
+            $DB->update_record('turnitintooltwo', $unlockassign);
+        }
+
         @include_once($CFG->libdir."/gradelib.php");
         grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
                         'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
