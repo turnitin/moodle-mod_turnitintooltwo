@@ -538,3 +538,4 @@ $string['nonsubmitterssubjecterror'] = 'Please provide a subject for the email';
 $string['nonsubmittersmessageerror'] = 'Please provide a message for the email';
 $string['nonsubmittersformsuccess'] = 'Your message to non-submitters has been sent.';
 $string['messageprovider:nonsubmitters'] = 'Turnitin Assignment Non Submitter notifications';
+$string['checkagainstnote'] = 'Note: If you do not select "Yes" for at least one of the "Check against..." options below then an Originality report will NOT be generated.';
