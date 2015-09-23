@@ -327,9 +327,10 @@ class turnitintooltwo_submission {
         // If this is the only submission and anon marking is being used then unlock this part.
         $numpartsubs = $DB->count_records('turnitintooltwo_submissions',
                                             array('submission_part' => $this->submission_part));
+
         if ($numpartsubs == 0) {
             $unlockpart = new stdClass();
-            $unlockpart->id = $this->submissionpart;
+            $unlockpart->id = $this->submission_part;
             $unlockpart->unanon = 0;
             $unlockpart->submitted = 0;
             $DB->update_record('turnitintooltwo_parts', $unlockpart);
