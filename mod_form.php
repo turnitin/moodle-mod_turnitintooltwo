@@ -237,12 +237,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addElement('hidden', 'portfolio', 0);
         $mform->setType('portfolio', PARAM_INT);
 
-        $maxbytes1 = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+        $maxbytessite = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
                             TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
-        $maxbytes2 = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+        $maxbytescourse = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
                             TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
 
-        $options = get_max_upload_sizes($maxbytes1, $maxbytes2);
+        $options = get_max_upload_sizes($maxbytessite, $maxbytescourse, TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE);
 
         $mform->addElement('select', 'maxfilesize', get_string('maxfilesize', 'turnitintooltwo'), $options);
         $mform->addHelpButton('maxfilesize', 'maxfilesize', 'turnitintooltwo');
