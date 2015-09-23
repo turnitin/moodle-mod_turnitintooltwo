@@ -251,9 +251,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         for ($i = 0; $i <= 100; $i++) {
             $options[$i] = $i;
         }
-        $mform->addElement('modgrade', 'grade', get_string('overallgrade', 'turnitintooltwo'));
-        $mform->addHelpButton('grade', 'overallgrade', 'turnitintooltwo');
-        $mform->setDefault('grade', $config->default_grade);
 
         $ynoptions = array( 0 => get_string('no'), 1 => get_string('yes'));
 
@@ -293,6 +290,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $dateoptions = array('startyear' => date( 'Y', strtotime( '-6 years' )), 'stopyear' => date( 'Y', strtotime( '+6 years' )),
                     'timezone' => 99, 'applydst' => true, 'step' => 1, 'optional' => false);
+
+        $this->standard_grading_coursemodule_elements();
 
         if (isset($this->_cm->id)) {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
