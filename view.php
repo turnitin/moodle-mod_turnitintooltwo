@@ -102,8 +102,6 @@ $PAGE->set_pagelayout('base');
 
 // Settings for page navigation
 if ($viewcontext == "window") {
-    $PAGE->set_course($course);
-
     // Show navigation if required.
     $config = turnitintooltwo_admin_config();
     if ($config->inboxlayout == 1) {
