@@ -1320,7 +1320,7 @@ class turnitintooltwo_view {
                                     $submission_user->get_accepted_user_agreement() : $submission_user->user_agreement_accepted;
             }
             $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
-                                        $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.
+                                        $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.' '.
                                         html_writer::tag('i', '', array('class' => 'fa fa-cloud-upload fa-lg')),
                                         array("class" => "upload_box nowrap", "id" => "upload_".$submission->submission_objectid.
                                                             "_".$partid."_".$submission->userid, 'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));

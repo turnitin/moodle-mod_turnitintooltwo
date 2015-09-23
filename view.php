@@ -117,7 +117,7 @@ if (in_array($do, $forbiddenmsgscreens)) {
 }
 
 // Configure URL correctly.
-$urlparams = array('id' => $id, 'a' => $a, 'part' => $part, 'user' => $user, 'do' => $do, 'action' => $action, 
+$urlparams = array('id' => $id, 'a' => $a, 'part' => $part, 'user' => $user, 'do' => $do, 'action' => $action,
                     'view_context' => $viewcontext);
 $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 
@@ -125,8 +125,19 @@ $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 $turnitintooltwoview->load_page_components();
 
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
-// For use when submitting.
-$turnitintooltwofileuploadoptions = array('maxbytes' => $turnitintooltwoassignment->turnitintooltwo->maxfilesize,
+
+// Define file upload options.
+$maxbytessite = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
+$maxbytescourse = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
+
+$maxfilesize = get_user_max_upload_file_size(context_module::instance($cm->id),
+                                                $maxbytessite,
+                                                $maxbytescourse,
+                                                $turnitintooltwoassignment->turnitintooltwo->maxfilesize);
+$maxfilesize = ($maxfilesize <= 0) ? TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $maxfilesize;
+$turnitintooltwofileuploadoptions = array('maxbytes' => $maxfilesize,
                                             'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => '*');
 
 if (!$parts = $turnitintooltwoassignment->get_parts()) {
