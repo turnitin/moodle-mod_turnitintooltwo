@@ -292,6 +292,12 @@ if (!empty($action)) {
                             $locked_part = new stdClass();
                             $locked_part->id = $post['submissionpart'];
                             $locked_part->submitted = 1;
+
+                            //Disable anonymous marking if post date has passed.
+                            if ($parts[$post['submissionpart']]->dtpost <= time()) {
+                                $locked_part->unanon = 1;
+                            }
+
                             $DB->update_record('turnitintooltwo_parts', $locked_part);
                         } else {
                             $do = "submission_failure";
