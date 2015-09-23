@@ -396,6 +396,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 break;
         }
 
+        $mform->addElement('html', html_writer::tag('div', get_string('checkagainstnote', 'turnitintooltwo'), array('class' => 'tii_checkagainstnote')));
+
         $mform->addElement('select', 'spapercheck', get_string('spapercheck', 'turnitintooltwo'), $ynoptions);
         $mform->addHelpButton('spapercheck', 'spapercheck', 'turnitintooltwo');
         $mform->setDefault('spapercheck', $config->default_spapercheck);
