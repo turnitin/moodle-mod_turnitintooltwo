@@ -1412,7 +1412,6 @@ class turnitintooltwo_assignment {
         if (!isset($_SESSION['tii_assignment_reset'])) {
             turnitintooltwo_grade_item_update($this->turnitintooltwo);
         }
-
         return $update;
     }
 

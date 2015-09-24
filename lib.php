@@ -201,7 +201,7 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
                 $DB->update_record('event', $updatedevent);
             }
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, '', false);
+            //Ignore the exception.
         }
     }
 }
