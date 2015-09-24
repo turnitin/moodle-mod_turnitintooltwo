@@ -188,16 +188,20 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
                             AND courseid = ? AND CAST(name AS nvarchar(max)) = ? ";
         }
 
-        // Update event for assignment part
-        if ($event = $DB->get_record_select("event", $dbselect,
-                                    array('turnitintooltwo', $turnitintooltwo->id,
-                                                $turnitintooltwo->course, '% - '.$part->partname))) {
-            $updatedevent = new stdClass();
-            $updatedevent->id = $event->id;
-            $updatedevent->userid = $USER->id;
-            $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
+        try {
+            // Update event for assignment part
+            if ($event = $DB->get_record_select("event", $dbselect,
+                                        array('turnitintooltwo', $turnitintooltwo->id,
+                                                    $turnitintooltwo->course, '% - '.$part->partname))) {
+                $updatedevent = new stdClass();
+                $updatedevent->id = $event->id;
+                $updatedevent->userid = $USER->id;
+                $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
 
-            $DB->update_record('event', $updatedevent);
+                $DB->update_record('event', $updatedevent);
+            }
+        } catch (Exception $e) {
+            $turnitincomms->handle_exceptions($e, '', false);
         }
     }
 }

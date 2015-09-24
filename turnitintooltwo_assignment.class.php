@@ -1334,7 +1334,12 @@ class turnitintooltwo_assignment {
 
             if ($parttiiassignid > 0) {
                 $assignment->setAssignmentId($parttiiassignid);
-                $this->edit_tii_assignment($assignment);
+
+                try {
+                    $this->edit_tii_assignment($assignment);
+                } catch (Exception $e) {
+                    //Ignore the exception.
+                }
             } else {
                 $parttiiassignid = $this->create_tii_assignment($assignment, $this->id, $i);
                 $part->submitted = 0;
@@ -1407,6 +1412,7 @@ class turnitintooltwo_assignment {
         if (!isset($_SESSION['tii_assignment_reset'])) {
             turnitintooltwo_grade_item_update($this->turnitintooltwo);
         }
+
         return $update;
     }
 
