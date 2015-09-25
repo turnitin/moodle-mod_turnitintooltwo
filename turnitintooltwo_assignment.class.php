@@ -1335,11 +1335,7 @@ class turnitintooltwo_assignment {
             if ($parttiiassignid > 0) {
                 $assignment->setAssignmentId($parttiiassignid);
 
-                try {
-                    $this->edit_tii_assignment($assignment);
-                } catch (Exception $e) {
-                    //Ignore the exception.
-                }
+                $this->edit_tii_assignment($assignment);
             } else {
                 $parttiiassignid = $this->create_tii_assignment($assignment, $this->id, $i);
                 $part->submitted = 0;

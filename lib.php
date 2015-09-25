@@ -174,7 +174,12 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
     global $DB, $USER, $CFG;
 
     $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
-    $turnitintooltwoassignment->edit_moodle_assignment(false);
+
+    try {
+        $turnitintooltwoassignment->edit_moodle_assignment(false);
+    } catch (Exception $e) {
+        //Ignore the exception.
+    }
 
     // Update events in the calendar.
     $parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ",
