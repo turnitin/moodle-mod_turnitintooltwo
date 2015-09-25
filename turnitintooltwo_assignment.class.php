@@ -1326,7 +1326,9 @@ class turnitintooltwo_assignment {
                 $part->submitted = $partdetails->submitted;
                 $part->unanon = $partdetails->unanon;
                 // Set anonymous marking depending on whether part has been unanonymised.
-                if ($config->useanon && $partdetails->unanon != 1) {
+                if ($config->useanon
+                    && $partdetails->unanon != 1
+                    && $partdetails->submitted != 1 ) {
                     $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
                 }
                 $parttiiassignid = $partdetails->tiiassignid;

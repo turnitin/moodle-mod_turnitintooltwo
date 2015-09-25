@@ -332,18 +332,7 @@ class turnitintooltwo_submission {
             $unlockpart = new stdClass();
             $unlockpart->id = $this->submission_part;
             $unlockpart->unanon = 0;
-            $unlockpart->submitted = 0;
             $DB->update_record('turnitintooltwo_parts', $unlockpart);
-        }
-
-        // If this is the only submission and anon marking is being used then unlock this assignment.
-        $numassignsubs = $DB->count_records('turnitintooltwo_submissions',
-                                        array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id));
-        if ($numassignsubs == 0) {
-            $unlockassign = new stdClass();
-            $unlockassign->id = $turnitintooltwoassignment->turnitintooltwo->id;
-            $unlockassign->submitted = 0;
-            $DB->update_record('turnitintooltwo', $unlockassign);
         }
 
         @include_once($CFG->libdir."/gradelib.php");
