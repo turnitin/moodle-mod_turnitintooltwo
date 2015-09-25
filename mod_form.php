@@ -487,7 +487,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
                                                     html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
                                                                     'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
-                                                                        html_writer::tag('i', '', array('class' => 'icon icon-rubric icon-lg icon_margin')).
+                                                                        html_writer::tag('i', '', array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
                                                                         get_string('launchrubricmanager', 'turnitintooltwo'),
                                                                 array('class' => 'rubric_manager_launch',
                                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
