@@ -3,11 +3,11 @@ Moodle Direct v2
 
 Please be aware that the **Develop** branch should not be considered production ready, although it contains the latest fixes and features it may contain bugs. It should be avoided in favour of the **Master** branch which is the latest available branch that has been through the QA process. Please make any pull requests you would like to make to the develop branch.
 
-To see what has changed in recent versions of Moodle Direct V2, see the [CHANGELOG](https://github.com/jmcgettrick/moodle-mod_turnitintooltwo/blob/master/CHANGELOG.md).
+To see what has changed in recent versions of Moodle Direct V2, see the [CHANGELOG](https://github.com/turnitin/moodle-mod_turnitintooltwo/blob/master/CHANGELOG.md).
 
-If you would like to contribute to the plugin please see our [CONTRIBUTIONS](https://github.com/jmcgettrick/moodle-mod_turnitintooltwo/blob/master/CONTRIBUTIONS.md) page.
+If you would like to contribute to the plugin please see our [CONTRIBUTIONS](https://github.com/turnitin/moodle-mod_turnitintooltwo/blob/master/CONTRIBUTIONS.md) page.
 
-If you are having issues, please consult our [TROUBLE SHOOTING](https://github.com/jmcgettrick/moodle-mod_turnitintooltwo/blob/master/TROUBLESHOOTING.md) page.
+If you are having issues, please consult our [TROUBLE SHOOTING](https://github.com/turnitin/moodle-mod_turnitintooltwo/blob/master/TROUBLESHOOTING.md) page.
 
 Installation
 ------------
