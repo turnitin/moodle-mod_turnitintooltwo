@@ -538,3 +538,7 @@ $string['restorationassignmentcreationerror'] = 'Could not create restoration as
 $string['restorationassignmenterror3'] = 'Could not create an event for the restored assignment - course {$a}';
 $string['coursestorestore'] = 'You have {$a} classes available to restore from Turnitin';
 $string['restorationgetassignmenterror'] = 'Could not get restoration assignments from Turnitin';
+$string['migrationtool_header'] = 'Migration Tool';
+$string['migrationtool_pluginnotfound'] = 'The Moodle Direct V1 plugin was not found.';
+$string['migrationtool_oldversion'] = 'The Migration Tool does not support version {$a} of Moodle Direct V1. Please update the plugin first.';
+$string['migrationtool_processexplained'] = 'We need to enter some text here to explain the migration process.';

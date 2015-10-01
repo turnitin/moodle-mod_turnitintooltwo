@@ -372,6 +372,26 @@ switch ($cmd) {
 
         break;
 
+    case "migrationtool":
+        $jsrequired = true;
+
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool', 'name' => 'version'));
+        if ($module) {
+            if ($module->value >= 2012120401) {
+                $output = html_writer::tag('div', get_string('migrationtool_processexplained', 'turnitintooltwo'),
+                                            array('id' => 'migrationtool_explained'));
+            }
+            else {
+                $output = html_writer::tag('div', get_string('migrationtool_oldversion', 'turnitintooltwo', $module->value),
+                                            array('class' => 'tii_checkagainstnote'));
+            }
+        }
+        else {
+            $output = html_writer::tag('div', get_string('migrationtool_pluginnotfound', 'turnitintooltwo'),
+                                            array('id' => 'full-error'));
+        }
+        break;
+
     case "multiple_class_recreation":
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
