@@ -492,7 +492,22 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Open an iframe light box containing the turnitin message inbox
+    // Open an iframe light box containing the turnitin message inbox.
+    if ($(".messages_inbox").length > 0) {
+        $(".messages_inbox").colorbox({
+            iframe:true, width:"772px", height:"772px", opacity: "0.7", className: "messages", transition: "none", closeButton: false,
+            onLoad: function() {
+                lightBoxCloseButton();
+                getLoadingGif();
+            },
+            onCleanup: function() {
+                $('#tii_close_bar').remove();
+                hideLoadingGif();
+            }
+        });
+    }
+
+    // Open an iframe light box containing the form to message non submitters.
     if ($(".nonsubmitters_link").length > 0) {
         $(".nonsubmitters_link").colorbox({
             iframe:true, width:"740px", height:"540px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: false,
@@ -1064,7 +1079,7 @@ jQuery(document).ready(function($) {
         // Seperate binder for hidden zip file link
         $('#tabs-'+part_id+' .origchecked_zip_open').click(function() {
             var idStr = $(this).attr("id").split("_");
-            downloadZipFile(idStr[0]+"_"+idStr[1], idStr[2]);
+            downloadZipFile(idStr[0]+"_"+idStr[1], part_id);
             return false;
         });
     }
@@ -1111,6 +1126,7 @@ jQuery(document).ready(function($) {
     // This will download the relevant zip file
     function downloadZipFile(downloadtype, part_id) {
         var submission_ids = [];
+
         if (downloadtype == "origchecked_zip" || downloadtype == "gmpdf_zip") {
             $('#tabs-' + part_id + ' .inbox_checkbox:checked').each(function(i){
                 submission_ids[i] = $(this).val();

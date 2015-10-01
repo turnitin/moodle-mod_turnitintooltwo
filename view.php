@@ -102,8 +102,6 @@ $PAGE->set_pagelayout('base');
 
 // Settings for page navigation
 if ($viewcontext == "window") {
-    $PAGE->set_course($course);
-
     // Show navigation if required.
     $config = turnitintooltwo_admin_config();
     if ($config->inboxlayout == 1) {
@@ -119,7 +117,7 @@ if (in_array($do, $forbiddenmsgscreens)) {
 }
 
 // Configure URL correctly.
-$urlparams = array('id' => $id, 'a' => $a, 'part' => $part, 'user' => $user, 'do' => $do, 'action' => $action, 
+$urlparams = array('id' => $id, 'a' => $a, 'part' => $part, 'user' => $user, 'do' => $do, 'action' => $action,
                     'view_context' => $viewcontext);
 $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 
@@ -127,8 +125,19 @@ $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 $turnitintooltwoview->load_page_components();
 
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
-// For use when submitting.
-$turnitintooltwofileuploadoptions = array('maxbytes' => $turnitintooltwoassignment->turnitintooltwo->maxfilesize,
+
+// Define file upload options.
+$maxbytessite = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
+$maxbytescourse = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
+
+$maxfilesize = get_user_max_upload_file_size(context_module::instance($cm->id),
+                                                $maxbytessite,
+                                                $maxbytescourse,
+                                                $turnitintooltwoassignment->turnitintooltwo->maxfilesize);
+$maxfilesize = ($maxfilesize <= 0) ? TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $maxfilesize;
+$turnitintooltwofileuploadoptions = array('maxbytes' => $maxfilesize,
                                             'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => '*');
 
 if (!$parts = $turnitintooltwoassignment->get_parts()) {
@@ -292,6 +301,12 @@ if (!empty($action)) {
                             $locked_part = new stdClass();
                             $locked_part->id = $post['submissionpart'];
                             $locked_part->submitted = 1;
+
+                            //Disable anonymous marking if post date has passed.
+                            if ($parts[$post['submissionpart']]->dtpost <= time()) {
+                                $locked_part->unanon = 1;
+                            }
+
                             $DB->update_record('turnitintooltwo_parts', $locked_part);
                         } else {
                             $do = "submission_failure";
@@ -612,7 +627,7 @@ switch ($do) {
             if ($eulaaccepted != 1) {
                 // Moodle strips out form and script code for forum posts so we have to do the Eula Launch differently.
                 $ula_link = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid',
-                                        html_writer::tag('i', '', array('class' => 'icon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
+                                        html_writer::tag('i', '', array('class' => 'tiiicon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
                                         get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
                                         array("class" => "turnitin_eula_link"));
 

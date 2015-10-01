@@ -237,12 +237,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addElement('hidden', 'portfolio', 0);
         $mform->setType('portfolio', PARAM_INT);
 
-        $maxbytes1 = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+        $maxbytessite = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
                             TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
-        $maxbytes2 = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
+        $maxbytescourse = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
                             TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
 
-        $options = get_max_upload_sizes($maxbytes1, $maxbytes2);
+        $options = get_max_upload_sizes($maxbytessite, $maxbytescourse, TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE);
 
         $mform->addElement('select', 'maxfilesize', get_string('maxfilesize', 'turnitintooltwo'), $options);
         $mform->addHelpButton('maxfilesize', 'maxfilesize', 'turnitintooltwo');
@@ -251,9 +251,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         for ($i = 0; $i <= 100; $i++) {
             $options[$i] = $i;
         }
-        $mform->addElement('modgrade', 'grade', get_string('overallgrade', 'turnitintooltwo'));
-        $mform->addHelpButton('grade', 'overallgrade', 'turnitintooltwo');
-        $mform->setDefault('grade', $config->default_grade);
 
         $ynoptions = array( 0 => get_string('no'), 1 => get_string('yes'));
 
@@ -293,6 +290,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $dateoptions = array('startyear' => date( 'Y', strtotime( '-6 years' )), 'stopyear' => date( 'Y', strtotime( '+6 years' )),
                     'timezone' => 99, 'applydst' => true, 'step' => 1, 'optional' => false);
+
+        $this->standard_grading_coursemodule_elements();
 
         if (isset($this->_cm->id)) {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
@@ -397,6 +396,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 break;
         }
 
+        $mform->addElement('html', html_writer::tag('div', get_string('checkagainstnote', 'turnitintooltwo'), array('class' => 'tii_checkagainstnote')));
+
         $mform->addElement('select', 'spapercheck', get_string('spapercheck', 'turnitintooltwo'), $ynoptions);
         $mform->addHelpButton('spapercheck', 'spapercheck', 'turnitintooltwo');
         $mform->setDefault('spapercheck', $config->default_spapercheck);
@@ -486,7 +487,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
                                                     html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
                                                                     'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
-                                                                        html_writer::tag('i', '', array('class' => 'icon icon-rubric icon-lg icon_margin')).
+                                                                        html_writer::tag('i', '', array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
                                                                         get_string('launchrubricmanager', 'turnitintooltwo'),
                                                                 array('class' => 'rubric_manager_launch',
                                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).

@@ -68,12 +68,23 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     color: $light-blue !important;
 }
 
+.gm-blue {
+    color: $gm-blue !important;
+}
+
 .green {
     color: $green !important;
 }
 
 .red {
     color: $red !important;
+}
+
+.tii_checkagainstnote {
+    border: 1px solid $light-blue2;
+    background: $light-blue;
+    padding: 10px;
+    margin-bottom: 16px;
 }
 
 .submissionsDataTable .fa,

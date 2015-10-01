@@ -324,6 +324,17 @@ class turnitintooltwo_submission {
         $grades->userid = $this->userid;
         $params['idnumber'] = $cm->idnumber;
 
+        // If this is the only submission and anon marking is being used then unlock this part.
+        $numpartsubs = $DB->count_records('turnitintooltwo_submissions',
+                                            array('submission_part' => $this->submission_part));
+
+        if ($numpartsubs == 0) {
+            $unlockpart = new stdClass();
+            $unlockpart->id = $this->submission_part;
+            $unlockpart->unanon = 0;
+            $DB->update_record('turnitintooltwo_parts', $unlockpart);
+        }
+
         @include_once($CFG->libdir."/gradelib.php");
         grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
                         'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
@@ -441,10 +452,16 @@ class turnitintooltwo_submission {
                 $assignment->submitted = 1;
                 $DB->update_record('turnitintooltwo', $assignment);
 
-                $part = new stdClass();
-                $part->id = $partid;
-                $part->submitted = 1;
-                $DB->update_record('turnitintooltwo_parts', $part);
+                $part_data = new stdClass();
+                $part_data->id = $partid;
+                $part_data->submitted = 1;
+
+                //Disable anonymous marking if post date has passed.
+                if ($part->dtpost <= time()) {
+                    $part_data->unanon = 1;
+                }
+
+                $DB->update_record('turnitintooltwo_parts', $part_data);
 
                 return array( "submission_id" => $newsubmission->getSubmissionId() );
             }

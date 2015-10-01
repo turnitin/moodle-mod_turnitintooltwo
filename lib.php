@@ -174,7 +174,12 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
     global $DB, $USER, $CFG;
 
     $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
-    $turnitintooltwoassignment->edit_moodle_assignment(false);
+
+    try {
+        $turnitintooltwoassignment->edit_moodle_assignment(false);
+    } catch (Exception $e) {
+        //Ignore the exception.
+    }
 
     // Update events in the calendar.
     $parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ",
@@ -188,16 +193,20 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
                             AND courseid = ? AND CAST(name AS nvarchar(max)) = ? ";
         }
 
-        // Update event for assignment part
-        if ($event = $DB->get_record_select("event", $dbselect,
-                                    array('turnitintooltwo', $turnitintooltwo->id,
-                                                $turnitintooltwo->course, '% - '.$part->partname))) {
-            $updatedevent = new stdClass();
-            $updatedevent->id = $event->id;
-            $updatedevent->userid = $USER->id;
-            $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
+        try {
+            // Update event for assignment part
+            if ($event = $DB->get_record_select("event", $dbselect,
+                                        array('turnitintooltwo', $turnitintooltwo->id,
+                                                    $turnitintooltwo->course, '% - '.$part->partname))) {
+                $updatedevent = new stdClass();
+                $updatedevent->id = $event->id;
+                $updatedevent->userid = $USER->id;
+                $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
 
-            $DB->update_record('event', $updatedevent);
+                $DB->update_record('event', $updatedevent);
+            }
+        } catch (Exception $e) {
+            //Ignore the exception.
         }
     }
 }
@@ -642,6 +651,7 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
 
     $filename = implode('_', $filename);
     $filename = str_replace(' ', '_', $filename);
+    $filename = clean_param(strip_tags($filename), PARAM_FILE);
 
     $tempdir = make_temp_directory('turnitintooltwo');
 

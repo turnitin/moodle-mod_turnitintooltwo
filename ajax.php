@@ -19,6 +19,8 @@
  * @copyright 2012 iParadigms LLC
  */
 
+define('AJAX_SCRIPT', 1);
+
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/lib.php");
 require_once(__DIR__."/turnitintooltwo_view.class.php");
@@ -52,6 +54,7 @@ switch ($action) {
 
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
             $fieldname = required_param('name', PARAM_ALPHA);
@@ -104,6 +107,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
@@ -139,6 +143,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
             $submissionid = required_param('submission', PARAM_INT);
@@ -158,10 +163,16 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
 
             $partid = optional_param('part', 0, PARAM_INT);
+            if ($partid != 0 && ($action == "origchecked_zip" || $action == "gmpdf_zip")) {
+                $partdetails = $turnitintooltwoassignment->get_part_details($partid, "moodle");
+                $partid = $partdetails->tiiassignid;
+            }
+
             $user = new turnitintooltwo_user($USER->id, 'Instructor');
             $user->edit_tii_user();
 
@@ -194,6 +205,7 @@ switch ($action) {
         break;
 
     case "initialise_redraw":
+        $PAGE->set_context(context_system::instance());
         $return["aaData"] = array();
 
         echo json_encode($return);
@@ -208,6 +220,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
         $return = array();
 
         if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
@@ -254,6 +267,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
             $turnitintooltwouser = new turnitintooltwo_user($USER->id, 'Instructor');
@@ -274,6 +288,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
             $partid = required_param('part', PARAM_INT);
@@ -310,6 +325,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
             $partid = required_param('part', PARAM_INT);
@@ -363,6 +379,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
             echo $turnitintooltwoassignment->enrol_all_students($cm);
@@ -373,6 +390,8 @@ switch ($action) {
         $courseid = required_param('course', PARAM_INT);
         $assignmentid = required_param('assignment', PARAM_INT);
         $modulename = required_param('modulename', PARAM_ALPHA);
+
+        $PAGE->set_context(context_course::instance($courseid));
 
         if (has_capability('moodle/course:update', context_course::instance($courseid))) {
             // Set Rubric options to instructor rubrics.
@@ -428,9 +447,9 @@ switch ($action) {
         break;
 
     case "get_files":
+        $PAGE->set_context(context_system::instance());
         if (is_siteadmin()) {
             $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
-            $PAGE->set_context($modules);
             echo json_encode(turnitintooltwo_getfiles($modules->id));
         }
         break;
@@ -439,6 +458,7 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $PAGE->set_context(context_module::instance($cm->id));
 
         $return["aaData"] = array();
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
@@ -490,6 +510,7 @@ switch ($action) {
         break;
 
     case "search_classes":
+        $PAGE->set_context(context_system::instance());
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
@@ -500,13 +521,13 @@ switch ($action) {
         $requestsource = optional_param('request_source', 'mod', PARAM_TEXT);
 
         $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
-        $PAGE->set_context($modules);
 
         $return = turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, $courseintegration, $courseenddate, $requestsource);
         echo json_encode($return);
         break;
 
     case "create_courses":
+        $PAGE->set_context(context_system::instance());
         set_time_limit(0);
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
@@ -547,6 +568,7 @@ switch ($action) {
         break;
 
     case "create_course":
+        $PAGE->set_context(context_system::instance());
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
@@ -587,6 +609,8 @@ switch ($action) {
             $turnitincourse->turnitin_ctl = urldecode($tiicoursename);
             $turnitincourse->course_type = 'TT';
 
+            $PAGE->set_context(context_system::instance($coursetolink));
+
             if (!$insertid = $DB->insert_record('turnitintooltwo_courses', $turnitincourse)) {
                 echo "0";
             } else {
@@ -605,6 +629,8 @@ switch ($action) {
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
+
+        $PAGE->set_context(context_system::instance());
 
         if (has_capability('moodle/course:update', context_system::instance())) {
             $tiicourseid = required_param('tii_course_id', PARAM_INT);
@@ -650,6 +676,8 @@ switch ($action) {
 
             $enddate = mktime(00, 00, 00, $enddatem, $enddated, $enddatey);
 
+            $PAGE->set_context(context_system::instance());
+
             if (turnitintooltwo_assignment::edit_tii_course_end_date($tiicourseid, $tiicoursetitle, $enddate)) {
                 $return["status"] = "success";
                 $return["end_date"] = userdate($enddate, get_string('strftimedate', 'langconfig'));
@@ -671,6 +699,8 @@ switch ($action) {
         $data = '';
         $current_version = required_param('current_version', PARAM_INT);
 
+        $PAGE->set_context(context_system::instance());
+
         if (is_siteadmin()) {
             $data = turnitintooltwo_updateavailable($current_version);
         }
@@ -683,6 +713,7 @@ switch ($action) {
         }
         $data = array("connection_status" => "fail", "msg" => get_string('connecttestcommerror', 'turnitintooltwo'));
 
+        $PAGE->set_context(context_system::instance());
         if (is_siteadmin()) {
             // Initialise API connection.
 
@@ -718,6 +749,8 @@ switch ($action) {
         $assignmentid = required_param('assignment', PARAM_INT);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        $PAGE->set_context(context_system::instance());
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
             $partid = required_param('part', PARAM_INT);
