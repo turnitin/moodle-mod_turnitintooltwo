@@ -202,10 +202,10 @@ class turnitintooltwo_assignment {
 
         $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $newassignment["turnitintooltwo"]);
         if (!$toolid = $DB->insert_record("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo)) {
-            turnitintooltwo_activitylog(get_string('migrationassignmentcreationerror', 'turnitintooltwo', $courseid), "REQUEST");
+            turnitintooltwo_activitylog(get_string('restorationassignmentcreationerror', 'turnitintooltwo', $courseid), "REQUEST");
             return false;
         } else {
-            turnitintooltwo_activitylog(get_string('migrationassignmentcreated', 'turnitintooltwo', $toolid), "REQUEST");
+            turnitintooltwo_activitylog(get_string('restorationassignmentcreated', 'turnitintooltwo', $toolid), "REQUEST");
         }
 
         $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
@@ -220,22 +220,22 @@ class turnitintooltwo_assignment {
 
         // Add Course module and get course section.
         if (! $coursemodule->coursemodule = add_course_module($coursemodule) ) {
-            echo $OUTPUT->notification(get_string('migrationassignmenterror1', 'turnitintooltwo', $courseid));
-            turnitintooltwo_activitylog(get_string('migrationassignmenterror1', 'turnitintooltwo', $courseid), "REQUEST");
+            echo $OUTPUT->notification(get_string('restorationassignmenterror1', 'turnitintooltwo', $courseid));
+            turnitintooltwo_activitylog(get_string('restorationassignmenterror1', 'turnitintooltwo', $courseid), "REQUEST");
             return false;
         }
 
         if (is_callable('course_add_cm_to_section')) {
             if (!$sectionid = course_add_cm_to_section($coursemodule->course,
                                                 $coursemodule->coursemodule, $coursemodule->section)) {
-                echo $OUTPUT->notification(get_string('migrationassignmenterror2', 'turnitintooltwo', $courseid));
-                turnitintooltwo_activitylog(get_string('migrationassignmenterror2', 'turnitintooltwo', $courseid), "REQUEST");
+                echo $OUTPUT->notification(get_string('restorationassignmenterror2', 'turnitintooltwo', $courseid));
+                turnitintooltwo_activitylog(get_string('restorationassignmenterror2', 'turnitintooltwo', $courseid), "REQUEST");
                 return false;
             }
         } else {
             if (!$sectionid = add_mod_to_section($coursemodule)) {
-                echo $OUTPUT->notification(get_string('migrationassignmenterror2', 'turnitintooltwo', $courseid));
-                turnitintooltwo_activitylog(get_string('migrationassignmenterror2', 'turnitintooltwo', $courseid), "REQUEST");
+                echo $OUTPUT->notification(get_string('restorationassignmenterror2', 'turnitintooltwo', $courseid));
+                turnitintooltwo_activitylog(get_string('restorationassignmenterror2', 'turnitintooltwo', $courseid), "REQUEST");
                 return false;
             }
         }
@@ -247,14 +247,14 @@ class turnitintooltwo_assignment {
             $part->deleted = 0;
             $part->migrated = -1;
             if ($part->id = $DB->insert_record("turnitintooltwo_parts", $part)) {
-                turnitintooltwo_activitylog(get_string('migrationassignmentpartcreated', 'turnitintooltwo', $part->id), "REQUEST");
+                turnitintooltwo_activitylog(get_string('restorationassignmentpartcreated', 'turnitintooltwo', $part->id), "REQUEST");
             }
             if ($turnitintooltwoassignment->create_event($toolid, $part->partname, $part->dtdue)) {
                 $part->migrated = 1;
                 $DB->update_record("turnitintooltwo_parts", $part);
             } else {
-                echo $OUTPUT->notification(get_string('migrationassignmenterror3', 'turnitintooltwo', $courseid));
-                turnitintooltwo_activitylog(get_string('migrationassignmenterror3', 'turnitintooltwo', $courseid), "REQUEST");
+                echo $OUTPUT->notification(get_string('restorationassignmenterror3', 'turnitintooltwo', $courseid));
+                turnitintooltwo_activitylog(get_string('restorationassignmenterror3', 'turnitintooltwo', $courseid), "REQUEST");
             }
         }
     }
@@ -315,16 +315,16 @@ class turnitintooltwo_assignment {
             }
 
             if (!$insertid = $DB->insert_record('turnitintooltwo_courses', $turnitincourse)) {
-                turnitintooltwo_activitylog(get_string('migrationcoursecreatederror', 'turnitintooltwo',
+                turnitintooltwo_activitylog(get_string('restorationcoursecreatederror', 'turnitintooltwo',
                                             $tiicourseid).' - '.$course->id, "REQUEST");
                 return 0;
             } else {
-                turnitintooltwo_activitylog(get_string('migrationcoursecreated', 'turnitintooltwo').' - '.
+                turnitintooltwo_activitylog(get_string('restorationcoursecreated', 'turnitintooltwo').' - '.
                                             $course->id.' ('.$tiicourseid.')', "REQUEST");
                 return $course;
             }
         } else {
-            turnitintooltwo_activitylog(get_string('migrationcoursecreateerror', 'turnitintooltwo', $tiicourseid), "REQUEST");
+            turnitintooltwo_activitylog(get_string('restorationcoursecreateerror', 'turnitintooltwo', $tiicourseid), "REQUEST");
             return 0;
         }
     }

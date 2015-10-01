@@ -298,7 +298,7 @@ switch ($cmd) {
     case "courses":
         $jsrequired = true;
 
-        $output .= html_writer::tag('h2', get_string('coursebrowser', 'turnitintooltwo'));
+        $output .= html_writer::tag('h2', get_string('restorationheader', 'turnitintooltwo'));
         $output .= html_writer::tag('p', get_string('coursebrowserdesc', 'turnitintooltwo'));
 
         $coursesearchform = html_writer::label(get_string('coursetitle', 'turnitintooltwo').': ', 'search_course_title');
