@@ -765,7 +765,7 @@ function turnitintooltwo_get_assignments_from_tii($courseid, $returnformat = "js
         $findassignment = $response->getAssignment();
         $assignmentids = $findassignment->getAssignmentIds();
     } catch (Exception $e) {
-        $turnitincomms->handle_exceptions($e, 'getassignmenterror', false);
+        $turnitincomms->handle_exceptions($e, 'restorationgetassignmenterror', false);
     }
 
     $assignment = new TiiAssignment();
