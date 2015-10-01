@@ -1,3 +1,20 @@
+### Date:       2015-October-01
+### Release:    v2015040110
+
+- Unnecessary setting of course removed from view.php.
+- Grade category selectable for Turnitin Assignments.
+- Allow HTML in disclaimer message.
+- Notice added to warn assignment creators to check against sources.
+- Fixes:
+	- Download bulk files adheres to checked submissions.
+	- Anonymous marking inconsistencies when resetting assignment.
+	- File titles cleaned up before creating temp files to remove slash permission errors.
+	- Assignment edit error occuring on user enrolment when retrieving grades.
+	- Correct upload limit shows for students.
+	- Messages inbox loads in correct modal rather than new window.
+
+---
+
 ### Date:       2015-September-16
 ### Release:    v2015040109
 
