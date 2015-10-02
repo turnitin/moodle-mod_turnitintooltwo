@@ -769,4 +769,8 @@ switch ($action) {
             echo json_encode($data);
         }
     break;
+
+    case "migration":
+   echo json_encode('zzzzzz');
+    break;
 }

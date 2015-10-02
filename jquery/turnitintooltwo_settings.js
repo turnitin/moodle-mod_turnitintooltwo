@@ -126,4 +126,27 @@ jQuery(document).ready(function($) {
 		    });
 		});
     }
+
+    //Disable/enable resubmit selected files when one or more are selected.
+    $(document).on('click', '.migration_checkbox', function() {
+        if ($('.migration_checkbox:checked').length == 4) {
+        	$('.begin-migration').removeAttr('disabled');
+        } else {
+            $('.begin-migration').attr('disabled', 'disabled');
+        }
+    });
+
+    //Disable/enable resubmit selected files when one or more are selected.
+    $(document).on('click', '.begin-migration', function() {
+	    $.ajax({
+	        type: "POST",
+	        url: "ajax.php",
+	        dataType: "json",
+	        data: {action: "migration", sesskey: M.cfg.sesskey},
+	        success: function(data) {
+            },
+            error: function(data, response) {
+	        }
+	    });
+    });
 });

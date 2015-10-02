@@ -380,6 +380,35 @@ switch ($cmd) {
             if ($module->value >= 2012120401) {
                 $output = html_writer::tag('div', get_string('migrationtool_processexplained', 'turnitintooltwo'),
                                             array('id' => 'migrationtool_explained'));
+
+                // Do the table headers.
+                $cells = array();
+
+                $cells["id"] = new html_table_cell(get_string('migrationtool_checklistheader', 'turnitintooltwo'));
+                $cells["checkbox"] = new html_table_cell('');
+
+                $table = new html_table();
+                $table->head = $cells;
+
+                $rows = array();
+
+                // Do the table rows.
+                for ($i = 1; $i <= 4; $i++) {
+                    $cells = array();
+
+                    $cells["id"] = new html_table_cell(get_string('migrationtool_checklist' . $i, 'turnitintooltwo'));
+
+                    $checkbox = html_writer::checkbox('check_'.$i, $i, false, '', array("class" => "migration_checkbox"));
+                    $cells["checkbox"] = new html_table_cell($checkbox);
+                    
+                    $rows[$i] = new html_table_row($cells);
+                }
+
+                $table->data = $rows;
+                $output .= html_writer::table($table);
+
+                $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
+                                array("class" => "btn btn-primary begin-migration", "disabled" => "disabled"));
             }
             else {
                 $output = html_writer::tag('div', get_string('migrationtool_oldversion', 'turnitintooltwo', $module->value),

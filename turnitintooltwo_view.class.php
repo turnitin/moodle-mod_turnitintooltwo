@@ -186,7 +186,7 @@ class turnitintooltwo_view {
 
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool', 'name' => 'version'));
         if ($module) {
-            $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=migrationtool',
+            $tabs[] = new tabobject('migrationtool', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=migrationtool',
                         get_string('migrationtool_header', 'turnitintooltwo'), get_string('migrationtool_header', 'turnitintooltwo'), false);
         }
 
