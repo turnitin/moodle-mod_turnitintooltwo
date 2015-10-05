@@ -141,12 +141,11 @@ jQuery(document).ready(function($) {
 	    $.ajax({
 	        type: "POST",
 	        url: "ajax.php",
-	        dataType: "json",
+	        dataType: "text",
 	        data: {action: "migration", sesskey: M.cfg.sesskey},
 	        success: function(data) {
+	        	$('.generalbox').html(data);
             },
-            error: function(data, response) {
-	        }
 	    });
     });
 });
