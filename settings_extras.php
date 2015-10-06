@@ -298,7 +298,7 @@ switch ($cmd) {
     case "courses":
         $jsrequired = true;
 
-        $output .= html_writer::tag('h2', get_string('coursebrowser', 'turnitintooltwo'));
+        $output .= html_writer::tag('h2', get_string('restorationheader', 'turnitintooltwo'));
         $output .= html_writer::tag('p', get_string('coursebrowserdesc', 'turnitintooltwo'));
 
         $coursesearchform = html_writer::label(get_string('coursetitle', 'turnitintooltwo').': ', 'search_course_title');
@@ -370,6 +370,55 @@ switch ($cmd) {
 
         $output .= turnitintooltwo_show_edit_course_end_date_form();
 
+        break;
+
+    case "migrationtool":
+        $jsrequired = true;
+
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool', 'name' => 'version'));
+        if ($module) {
+            if ($module->value >= 2012120401) {
+                $output = html_writer::tag('div', get_string('migrationtool_processexplained', 'turnitintooltwo'),
+                                            array('id' => 'migrationtool_explained'));
+
+                // Do the table headers.
+                $cells = array();
+
+                $cells["id"] = new html_table_cell(get_string('migrationtool_checklistheader', 'turnitintooltwo'));
+                $cells["checkbox"] = new html_table_cell('');
+
+                $table = new html_table();
+                $table->head = $cells;
+
+                $rows = array();
+
+                // Do the table rows.
+                for ($i = 1; $i <= 4; $i++) {
+                    $cells = array();
+
+                    $cells["id"] = new html_table_cell(get_string('migrationtool_checklist' . $i, 'turnitintooltwo'));
+
+                    $checkbox = html_writer::checkbox('check_'.$i, $i, false, '', array("class" => "migration_checkbox"));
+                    $cells["checkbox"] = new html_table_cell($checkbox);
+                    
+                    $rows[$i] = new html_table_row($cells);
+                }
+
+                $table->data = $rows;
+                $output .= html_writer::table($table);
+
+                $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
+                                array("class" => "btn btn-primary begin-migration", "disabled" => "disabled"));
+            }
+            else {
+                $output = html_writer::tag('div', get_string('migrationtool_oldversion', 'turnitintooltwo', $module->value),
+                                            array('class' => 'tii_checkagainstnote'));
+            }
+        }
+        else {
+            $output = html_writer::tag('div', get_string('migrationtool_pluginnotfound', 'turnitintooltwo'),
+                                            array('id' => 'full-error'));
+        }
         break;
 
     case "multiple_class_recreation":

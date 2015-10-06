@@ -159,7 +159,7 @@ class turnitintooltwo_view {
      * @return output the menu as an HTML list
      */
     public function draw_settings_menu($module, $cmd) {
-        global $CFG, $OUTPUT;
+        global $CFG, $DB, $OUTPUT;
 
         $tabs = array();
 
@@ -182,7 +182,13 @@ class turnitintooltwo_view {
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
-                        get_string('coursebrowser', 'turnitintooltwo'), get_string('coursebrowser', 'turnitintooltwo'), false);
+                        get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
+
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool', 'name' => 'version'));
+        if ($module) {
+            $tabs[] = new tabobject('migrationtool', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=migrationtool',
+                        get_string('migrationtool_header', 'turnitintooltwo'), get_string('migrationtool_header', 'turnitintooltwo'), false);
+        }
 
         $selected = ($cmd == 'activitylog') ? 'apilog' : $cmd;
 

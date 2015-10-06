@@ -769,4 +769,48 @@ switch ($action) {
             echo json_encode($data);
         }
     break;
+
+    case "migration":
+        // Get a list of courses with V1 assignments.
+        $courses = $DB->get_records_sql("SELECT tc.id, courseid, ownerid, turnitin_cid, fullname
+                                         FROM {turnitintool_courses} tc JOIN {course} c
+                                         ON c.id = tc.courseid");
+        $data = "";
+        foreach ($courses as $course) {
+            $context = context_course::instance($course->courseid);
+            $enrolled_count = count(get_role_users('', $context, false, 'ra.id, u.firstname, u.lastname'));
+
+            // If the course ID exists in V2, we skip this course.
+            if ($DB->get_records('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'))) {
+                $data .= '<font color="brown"><h4>Course: ' . $course->fullname . ' (Course ID: ' . $course->courseid . ')</b></h4></font>
+                <b>Enrolled Users:</b> ' . $enrolled_count . '<br><br>
+                <font color="red">The course was skipped because it contains Moodle Direct V2 assignments.<br><br></font>
+                The list of Moodle Direct V1 assignments that were skipped are as follows:<br>';
+            }
+            else {
+                $data .= '<font color="green"><h4>Course: ' . $course->fullname . ' (Course ID: ' . $course->courseid . ')</h4></font>
+                <b>Enrolled Users:</b> ' . $enrolled_count . '<br><br>
+                The course can be processed because it does not contain Moodle Direct V2 assignments.<br><br>
+                The list of Moodle Direct V1 assignments on this course are as follows:<br>';
+            }
+
+            // Loop through each assignment, get its parts and submissions.
+            $v1_assignments = $DB->get_records('turnitintool', array('course' => $course->courseid));
+            foreach ($v1_assignments as $v1_assignment) {
+                $data .= '<br><b>' . $v1_assignment->name . ' (Assignment ID: ' . $v1_assignment->id . ')</b><br>
+                This assignment has the following parts:<br><br>';
+
+                $v1_parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $v1_assignment->id));
+
+                foreach ($v1_parts as $v1_part) {
+                    $submissions = $DB->get_records_sql("SELECT id FROM {turnitintool_submissions} 
+                                                         WHERE submission_part = ? ", array($v1_part->id));
+
+                    $data .= '<b>Name: ' . $v1_part->partname . ' (Part ID: ' . $v1_part->id . ')</b> - ' . count($submissions) . ' submissions.<br>';
+                }
+            }
+            $data .= '<br><br>';
+        }
+        echo $data;
+    break;
 }
