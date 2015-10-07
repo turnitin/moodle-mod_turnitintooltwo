@@ -378,44 +378,57 @@ switch ($cmd) {
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool', 'name' => 'version'));
         if ($module) {
             if ($module->value >= 2012120401) {
-                $output = html_writer::tag('div', get_string('migrationtool_processexplained', 'turnitintooltwo'),
-                                            array('id' => 'migrationtool_explained'));
+                if (!empty($CFG->maintenance_enabled)) {
+                    // Get a list of courses with V1 assignments.
+                    $courses = $DB->get_records_sql("SELECT tc.id, courseid, ownerid, turnitin_cid, fullname
+                                                     FROM {turnitintool_courses} tc JOIN {course} c
+                                                     ON c.id = tc.courseid");
 
-                // Do the table headers.
-                $cells = array();
+                    // If we have nothing to migrate, display a message, otherwise display the tool.
+                    if ($courses) {
+                        $output = html_writer::tag('div', get_string("migrationtool_processexplained", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
 
-                $cells["id"] = new html_table_cell(get_string('migrationtool_checklistheader', 'turnitintooltwo'));
-                $cells["checkbox"] = new html_table_cell('');
+                        // Do the table headers.
+                        $cells = array();
 
-                $table = new html_table();
-                $table->head = $cells;
+                        $cells["id"] = new html_table_cell(get_string('migrationtool_checklistheader', 'turnitintooltwo'));
+                        $cells["checkbox"] = new html_table_cell('');
 
-                $rows = array();
+                        $table = new html_table();
+                        $table->head = $cells;
 
-                // Do the table rows.
-                for ($i = 1; $i <= 4; $i++) {
-                    $cells = array();
+                        $rows = array();
 
-                    $cells["id"] = new html_table_cell(get_string('migrationtool_checklist' . $i, 'turnitintooltwo'));
+                        // Do the table rows.
+                        for ($i = 1; $i <= 4; $i++) {
+                            $cells = array();
 
-                    $checkbox = html_writer::checkbox('check_'.$i, $i, false, '', array("class" => "migration_checkbox"));
-                    $cells["checkbox"] = new html_table_cell($checkbox);
-                    
-                    $rows[$i] = new html_table_row($cells);
+                            $cells["id"] = new html_table_cell(get_string('migrationtool_checklist' . $i, 'turnitintooltwo'));
+
+                            $checkbox = html_writer::checkbox('check_'.$i, $i, false, '', array("class" => "migration_checkbox"));
+                            $cells["checkbox"] = new html_table_cell($checkbox);
+                            
+                            $rows[$i] = new html_table_row($cells);
+                        }
+
+                        $table->data = $rows;
+                        $output .= html_writer::table($table);
+
+                        $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
+                                        array("class" => "btn btn-primary begin-migration", "disabled" => "disabled"));
+                    } else {
+                        $output = html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'), 
+                                            array('class' => 'tii_checkagainstnote'));
+                    }
+                } else {
+                    $output = html_writer::tag('div', get_string("migrationtool_maintenancecheck", 'turnitintooltwo'), 
+                                            array('class' => 'tii_checkagainstnote'));
                 }
-
-                $table->data = $rows;
-                $output .= html_writer::table($table);
-
-                $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
-                                array("class" => "btn btn-primary begin-migration", "disabled" => "disabled"));
-            }
-            else {
+            } else {
                 $output = html_writer::tag('div', get_string('migrationtool_oldversion', 'turnitintooltwo', $module->value),
                                             array('class' => 'tii_checkagainstnote'));
             }
-        }
-        else {
+        } else {
             $output = html_writer::tag('div', get_string('migrationtool_pluginnotfound', 'turnitintooltwo'),
                                             array('id' => 'full-error'));
         }
