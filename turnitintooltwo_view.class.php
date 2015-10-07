@@ -534,6 +534,12 @@ class turnitintooltwo_view {
         $tabitems = array();
         $i = 0;
 
+        // Determine which tab position to enable after a submission deletion.
+        $tab_position = array_search(optional_param('partid', 0, PARAM_INT), array_keys($partdetails));
+        if ($tab_position) {
+            $output .= html_writer::tag('div', $tab_position, array('id' => 'tab_position', 'class' => 'hidden_class'));
+        }
+        
         foreach ($partdetails as $partid => $partobject) {
             if (!empty($partid)) {
                 $i++;
@@ -1373,7 +1379,7 @@ class turnitintooltwo_view {
 
                 $attributes = array("onclick" => "return confirm('".$string."');");
                 $delete = html_writer::link(
-                    $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
+                    $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
                     html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
                     $attributes
                 );
@@ -1386,7 +1392,7 @@ class turnitintooltwo_view {
 
                 $attributes = array("onclick" => "return confirm('".$string."');");
                 $delete = html_writer::link(
-                    $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
+                    $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
                     html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
                     $attributes
                 );

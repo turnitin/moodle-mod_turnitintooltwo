@@ -349,7 +349,7 @@ if (!empty($action)) {
             if (($istutor && $submissionid != 0) || (!$istutor && empty($turnitintooltwosubmission->submission_objectid))) {
                 $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
             }
-            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => 'submissions')));
+            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'partid' => $part, 'do' => 'submissions')));
             exit;
             break;
 
