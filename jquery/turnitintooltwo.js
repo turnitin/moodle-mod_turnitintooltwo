@@ -188,7 +188,13 @@ jQuery(document).ready(function($) {
 
     // Activate datatable tabs on submission inbox
     if ($("#tabs").length > 0) {
+        // Set tab position.
+        var activeTab = 0
+        if ($("#tab_position").length > 0) {
+            var activeTab = $('#tab_position').text();
+        }
         $("#tabs").tabs( {
+            "active": activeTab,
             "show": function(event, ui) {
                 var table = $.fn.dataTable.fnTables(true);
                 if ( table.length > 0 ) {
