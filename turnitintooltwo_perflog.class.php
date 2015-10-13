@@ -3,7 +3,7 @@
 require_once(__DIR__.'/sdk/perflog.class.php');
 require_once(__DIR__.'/lib.php');
 
-class turnitintooltwo_perflog extends PerfLog {
+class turnitintooltwo_performancelog extends PerformanceLog {
 
     /**
      * Log networking performance details of an individual request

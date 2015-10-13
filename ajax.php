@@ -723,8 +723,8 @@ switch ($action) {
 
             $turnitincomms = new turnitintooltwo_comms($account_id, $account_shared, $url);
 
-            $istestingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
-            $tiiapi = $turnitincomms->initialise_api($istestingconnection);
+            $testingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
+            $tiiapi = $turnitincomms->initialise_api($testingconnection);
 
             $class = new TiiClass();
             $class->setTitle('Test finding a class to see if connection works');
