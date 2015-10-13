@@ -26,7 +26,7 @@
 - Ability added to send a message to user who not yet submitted to an assignment.
 - Fixes:
 	- Rubric Manager now shows Shared Rubrics.
-	- Submission modal resizing errors fixed as EULA has moved from submission modal to submission inbox.
+	- Submission modal resizing errors and EULA acceptance loop fixed as EULA has moved from submission modal to submission inbox
 	- Extra user role check added on submission deletion.
 	- File check added before sending to Turnitin.
 	- Submissions are now correctly linked when backing up and restoring (Thanks to Adam Olley).
