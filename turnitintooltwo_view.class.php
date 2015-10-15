@@ -100,11 +100,11 @@ class turnitintooltwo_view {
             $PAGE->requires->js($jsurl, true);
             $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.plugins.js');
             $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo.js');
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo.min.js');
             $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_extra.js');
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_extra.min.js');
             $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_settings.js');
+            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_settings.min.js');
             $PAGE->requires->js($jsurl, true);
             $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.columnFilter.js');
             $PAGE->requires->js($jsurl, true);

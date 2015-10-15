@@ -141,7 +141,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
                                                 "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js"));
             $script .= html_writer::tag('script', '', array("id" => "plugin_turnitin_script", "type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo.js"));
+                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo.min.js"));
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
                                             "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-ui-1.10.4.custom.min.js"));
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
