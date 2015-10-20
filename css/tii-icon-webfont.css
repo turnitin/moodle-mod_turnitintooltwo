@@ -368,3 +368,6 @@ We also fixed a few sizing issues to make the sizes more consistent
 .icon-login:before {
     content: "\e606";
 }
+#rubric_view_form {
+    padding-left: 6px;
+}
