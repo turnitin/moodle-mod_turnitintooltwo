@@ -1233,7 +1233,7 @@ class turnitintooltwo_view {
                 // Output grademark icon.
                 $grade = $OUTPUT->box(
                     html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg gm-blue')),
-                    'grademark_open' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
+                    'grademark_open ' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
                     array('title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id)
                 );
 
