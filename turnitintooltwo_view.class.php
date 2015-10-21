@@ -783,15 +783,15 @@ class turnitintooltwo_view {
         $cells[3] = new html_table_cell($datefield);
         $cells[3]->attributes['class'] = 'data';
 
-        // Show Rubric view if applicable to students.
+        // Show Rubric view if applicable to students. 
         $rubricviewlink = '';
         if (!$istutor && $config->usegrademark && !empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
             $rubricviewlink .= $OUTPUT->box_start('row_rubric_manager', '');
             $rubricviewlink .= html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
-                                                    '&part='.$partid.'&do=rubricview&view_context=box', '',
+                                                    '&part='.$partid.'&do=rubricview&view_context=box',
+                                                html_writer::tag('span', '', array('class' => 'tiiicon icon-rubric icon-lg', 'id' => 'rubric_view_form')),
                                                 array('class' => 'rubric_view_launch', 'id' => 'rubric_view_launch',
                                                     'title' => get_string('launchrubricview', 'turnitintooltwo')));
-            $rubricviewlink .= html_writer::tag('span', '', array('class' => 'launch_form', 'id' => 'rubric_view_form'));
             $rubricviewlink .= $OUTPUT->box_end(true);
         }
 
