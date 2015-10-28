@@ -48,7 +48,7 @@ if ($ADMIN->fulltree) {
             $tabmenu .= html_writer::tag('script', '', array("type" => "text/javascript",
                                                     "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js")).
                         html_writer::tag('script', '', array("type" => "text/javascript",
-                                                    "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo_settings.js"));
+                                                    "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo_settings.min.js"));
         } else {
             $PAGE->requires->jquery();
             $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
