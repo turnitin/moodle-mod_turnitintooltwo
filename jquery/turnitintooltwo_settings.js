@@ -130,22 +130,82 @@ jQuery(document).ready(function($) {
     //Disable/enable resubmit selected files when one or more are selected.
     $(document).on('click', '.migration_checkbox', function() {
         if ($('.migration_checkbox:checked').length == 4) {
-        	$('.begin-migration').removeAttr('disabled');
+        	$('#trial-migration-button').removeAttr('disabled');
         } else {
-            $('.begin-migration').attr('disabled', 'disabled');
+            $('#trial-migration-button').attr('disabled', 'disabled');
         }
     });
 
-    //Disable/enable resubmit selected files when one or more are selected.
-    $(document).on('click', '.begin-migration', function() {
+
+
+    // Disable/enable resubmit selected files when one or more are selected.
+    $(document).on('click', '.migration-button', function() {
+        $("#progress-bar").removeClass("hidden_class");
+    	var id = this.id;
+		var totalCourses = $(this).data("courses");
+		var processAtOnce = 10;
+
+		if (totalCourses >= processAtOnce) {
+			var iterations = Math.round((totalCourses/processAtOnce));
+		} else {
+			var iterations = totalCourses;
+			processAtOnce = 1;
+		}
+
+		// Determine whether this is the trial run or not.
+    	if (this.id == "trial-migration-button") {
+    		var trial = 1;
+    	} else {
+    		var trial = 0;
+        	$("#begin-migration-button").addClass("hidden_class");
+    	}
+
+		// Do the migration.
+    	$('.migrationtool').html('');
+		migrateCourses(0, totalCourses, processAtOnce, iterations, 1, trial, 1);
+    });
+
+
+    function migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, migrateUsers) {
+		// Percentage increase of the progress bar on each iteration.
+    	var progressBarSegment = Math.round(100/iterations);
+
+    	// Current progress bar percentage.
+    	if (iteration == iterations) {
+    		var progressBar = 100;
+    	} else {
+    		var progressBar = progressBarSegment*iteration;
+    	}
+
 	    $.ajax({
 	        type: "POST",
 	        url: "ajax.php",
-	        dataType: "text",
-	        data: {action: "migration", sesskey: M.cfg.sesskey},
-	        success: function(data) {
-	        	$('.generalbox').html(data);
+	        dataType: "json",
+	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, migrateUsers: migrateUsers},
+	        success: function(result) {
+                $('.migrationtool').append(result.dataset);
+
+                // Update progress bar.
+                $(".bar").width((progressBar) + '%');
+                $(".bar-complete").text((progressBar) + '% Complete');
+
+                if (progressBar == 100) {
+                	$("#progress-bar").removeClass("active");
+
+        			if (trial == 1) {
+        				$("#begin-migration-button").removeClass("hidden_class");
+        			}
+        			else {
+        				$("#migrationtool_complete").removeClass("hidden_class");
+        			}
+                }
+
+                start = result.end;
+                iteration = result.iteration + 1;
+                if (result.end < totalCourses) {
+                    migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, migrateUsers);
+                }
             },
 	    });
-    });
+    }
 });

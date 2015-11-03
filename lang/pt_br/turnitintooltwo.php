@@ -414,6 +414,7 @@ $string['pp_createsubmissionerror'] = 'Ocorreu um erro no plugin de plágio ao c
 $string['pp_updatesubmissionerror'] = 'Ocorreu um erro no plugin de plágio ao atualizar o envio';
 $string['pp_submission_error'] = 'Ocorreu um erro com o seu envio:';
 $string['pp_configuredesc'] = 'Você deve configurar esse módulo dentro do módulo turnitintooltwo. Clique <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>aqui</a> para configurar esse plugin';
+$string['coursestomigrate'] = 'Você tem {$a} aulas disponíveis para migrar do Turnitin';
 $string['gradingtemplate'] = 'Modelo de avaliação';
 $string['allownonor'] = 'Permitir envios de qualquer tipo de arquivo?';
 $string['allownonor_help'] = 'Essa configuração permitirá o envio de qualquer tipo de arquivo. Com essa opção definida como &#34;Sim&#34;, a originalidade dos documentos será verificada sempre que possível, os documentos estarão disponíveis para download e as ferramentas de comentários GradeMark estarão disponíveis sempre que possível.';

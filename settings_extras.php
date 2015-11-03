@@ -375,6 +375,15 @@ switch ($cmd) {
     case "migrationtool":
         $jsrequired = true;
 
+        // Set up our progress bar.
+        $output = html_writer::tag('div', 
+                    html_writer::tag('div', 
+                        html_writer::tag('span', '0% Complete', array('class' => 'bar-complete'))
+                    , array('class' => 'bar', 'style' => 'width: 0%'))
+                  , array('id' => 'progress-bar', 'class' => 'progress progress-striped active hidden_class'));
+
+        $output .= $OUTPUT->box_start('migrationtool', 'migrationtool');
+
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool', 'name' => 'version'));
         if ($module) {
             if ($module->value >= 2012120401) {
@@ -386,7 +395,7 @@ switch ($cmd) {
 
                     // If we have nothing to migrate, display a message, otherwise display the tool.
                     if ($courses) {
-                        $output = html_writer::tag('div', get_string("migrationtool_processexplained", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
+                        $output .= html_writer::tag('div', get_string("migrationtool_processexplained", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
 
                         // Do the table headers.
                         $cells = array();
@@ -414,24 +423,35 @@ switch ($cmd) {
                         $table->data = $rows;
                         $output .= html_writer::table($table);
 
+                        $output .= html_writer::tag("button", get_string('migrationtool_trial', 'turnitintooltwo'),
+                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses), "disabled" => "disabled"));
+
+                        $output .= $OUTPUT->box_end(true);
+                        $output .= $OUTPUT->box_start();
+
                         $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
-                                        array("class" => "btn btn-primary begin-migration", "disabled" => "disabled"));
+                                        array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button hidden_class", 'data-courses' => count($courses)));
+
+                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('id' => 'migrationtool_complete', 'class' => 'hidden_class'));
+
                     } else {
-                        $output = html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'), 
+                        $output .= html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'), 
                                             array('class' => 'tii_checkagainstnote'));
                     }
                 } else {
-                    $output = html_writer::tag('div', get_string("migrationtool_maintenancecheck", 'turnitintooltwo'), 
+                    $output .= html_writer::tag('div', get_string("migrationtool_maintenancecheck", 'turnitintooltwo'), 
                                             array('class' => 'tii_checkagainstnote'));
                 }
             } else {
-                $output = html_writer::tag('div', get_string('migrationtool_oldversion', 'turnitintooltwo', $module->value),
+                $output .= html_writer::tag('div', get_string('migrationtool_oldversion', 'turnitintooltwo', $module->value),
                                             array('class' => 'tii_checkagainstnote'));
             }
         } else {
-            $output = html_writer::tag('div', get_string('migrationtool_pluginnotfound', 'turnitintooltwo'),
+            $output .= html_writer::tag('div', get_string('migrationtool_pluginnotfound', 'turnitintooltwo'),
                                             array('id' => 'full-error'));
         }
+        $output .= $OUTPUT->box_end(true);
+
         break;
 
     case "multiple_class_recreation":

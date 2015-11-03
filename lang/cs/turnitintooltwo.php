@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'Došlo k chybě v pluginu plagiátorství
 $string['pp_updatesubmissionerror'] = 'Došlo k chybě v pluginu plagiátorství při aktualizaci odevzdané práce';
 $string['pp_submission_error'] = 'Došlo k chybě při odevzdání vaší práce:';
 $string['pp_configuredesc'] = 'Tento modul musíte zcela nastavit v rámci modulu turnitintooltwo . pro konfiguraci tohoto pluginu klikněte prosím <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>sem</a> ';
+$string['coursestomigrate'] = 'Máte {$a} kurzů dostupných k přetažení ze systému Turnitin';
 $string['gradingtemplate'] = 'hodnoticí šablona';
 $string['allownonor'] = 'Povolit odevzdání jakéhokoli typu souboru?';
 $string['allownonor_help'] = 'Toto nastavení umožní nahrání jakéhokoli druhu souboru. Pokud je tato možnost nastavena jako Ano, bude původnost zkontrolována u všech odevzdaných prací, kde je to možné. Odevzdané práce budou dostupné ke stáhnutí, budou dostupné i nástroje zpětné vazby GradeMark, kde to bude možné.';

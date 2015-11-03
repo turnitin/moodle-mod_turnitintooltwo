@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'Palautusta luodessa esiintyi plagiarismi 
 $string['pp_updatesubmissionerror'] = 'Palautusta päivitettäessä esiintyi plagiarismi plugin-lisäosassa virhe ';
 $string['pp_submission_error'] = 'Palautuksessasi: kohdattiin virhe';
 $string['pp_configuredesc'] = 'Sinun pitää konfiguroida tämä moduuli turnitintyökalukaksi-moduulin sisällä. Näpäytä <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>tässä</a> kun haluat konfiguroida tämän plugin-laajennuksen';
+$string['coursestomigrate'] = 'Sinulla on {$a} luokkaa saatavilla Turnitinistä siirettäväksi';
 $string['gradingtemplate'] = 'Arvostelumalline';
 $string['allownonor'] = 'Salli kaikenlaisten tiedostoformaattien palautus?';
 $string['allownonor_help'] = 'Tämä asetus sallii kaikenlaisten tiedostoformaattien palauttamisen. Kun tämä asetus on ”Kyllä”-asennossa, tullaan palautusten alkuperäisyys tarkistamaan aina kun se on mahdollista, palautukset voidaan ladata palvelimelta sekä GradeMark-palautetyökalut ovat saatavilla, missä mahdollista. ';

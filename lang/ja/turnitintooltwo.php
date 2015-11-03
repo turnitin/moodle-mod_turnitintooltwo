@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = '提出物を作成する際に剽窃プ�
 $string['pp_updatesubmissionerror'] = '提出物を更新する際に、剽窃プラグインにエラーが発生しました';
 $string['pp_submission_error'] = '提出物に問題があります：';
 $string['pp_configuredesc'] = 'このモジュールを turnitintooltwo モジュール内で設定する必要があります。このプラグインを設定するには<a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>こちら</a> をクリックしてください。';
+$string['coursestomigrate'] = 'Turnitinから移動できるクラスがあります';
 $string['gradingtemplate'] = '評価テンプレート';
 $string['allownonor'] = 'どのファイルタイプの提出物の提出を許可しますか？';
 $string['allownonor_help'] = 'この設定でどのファイルタイプでの提出を許可することができます。この設定を &#39;はい&#39; に設定すると、提出物のオリジナリティーがチェックされ、そのダウンロードが可能になり、またGradeMark フィードバックツールが利用できるようになります。';

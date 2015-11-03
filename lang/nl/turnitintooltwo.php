@@ -415,6 +415,7 @@ $string['pp_createsubmissionerror'] = 'Er was een fout in de plagiaat-plugin bij
 $string['pp_updatesubmissionerror'] = 'Er was een fout in de plagiaat-plugin bij het updaten van een inzending';
 $string['pp_submission_error'] = 'Er is een fout opgetreden met uw inzending:';
 $string['pp_configuredesc'] = 'U moet deze module binnen de turnitintooltwo-module configureren. Klik <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>hier</a> om deze plugin te configureren';
+$string['coursestomigrate'] = 'Er zijn {$a} cursussen beschikbaar die u kunt verplaatsen vanuit Turnitin';
 $string['gradingtemplate'] = 'Beoordelingssjabloon';
 $string['allownonor'] = 'Inzendingen van elk bestandstype toestaan?';
 $string['allownonor_help'] = 'Deze instelling staat het indienen van alle bestandstypes toe. Als deze optie is ingesteld op &#39;Ja&#39;, zullen inzendingen waar mogelijk worden gecontroleerd op originaliteit, zullen inzendingen beschikbaar zijn om gedownload te worden, en zullen feedback-tools van GradeMark waar mogelijk beschikbaar zijn.';

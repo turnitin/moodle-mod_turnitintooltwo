@@ -415,6 +415,7 @@ $string['pp_createsubmissionerror'] = 'Ödev oluşturulurken intihal eklentisi i
 $string['pp_updatesubmissionerror'] = 'Ödev yüklenirken intihal eklentisi ile ilgili bir hata oluştu';
 $string['pp_submission_error'] = 'Gönderiminizle ilgili bir hata oluştu:';
 $string['pp_configuredesc'] = 'Bu modülü, turnitintooltwo modülünde yapılandırmalısınız. Bu eklentiyi yüklemek için lütfen <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>buraya</a> tıklayın';
+$string['coursestomigrate'] = 'Turnitin&#39;den geçişi gerçekleştirilecek {$a} sınıfınız bulunmaktadır';
 $string['gradingtemplate'] = 'Puanlama Şablonu';
 $string['allownonor'] = 'Tüm dosya türlerinin gönderimine izin verilsin mi?';
 $string['allownonor_help'] = 'Bu ayar, herhangi bir dosya türünün gönderimine izin verir. Bu ayar için &#39;Evet&#39; seçildiğinde, gönderimlerin originallik kontrolleri yapılacak ve indirime uygun olacaktır. Ayrıca GradeMark geri bildirim araçlarına erişilebilecektir.';

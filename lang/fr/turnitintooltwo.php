@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'Une erreur est survenue dans le plugin du
 $string['pp_updatesubmissionerror'] = 'Une erreur est survenue dans le plugin du plagiat lors de la mise à jour de la transmission';
 $string['pp_submission_error'] = 'Une erreur est survenu lors de la soumission:';
 $string['pp_configuredesc'] = 'Vous devez configurer ce module depuis le module turnitintooltwo. Veuillez cliquer sur <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>ici</a> pour configurer ce plugin';
+$string['coursestomigrate'] = 'Vous avez {$a} cours disponibles pour migrer depuis Turnitin';
 $string['gradingtemplate'] = 'Modèle d&#39;évaluation';
 $string['allownonor'] = 'Autoriser tout type de soumission?';
 $string['allownonor_help'] = 'Ce paramètre permet la soumission de tous types de fichiers. Si cette option est activée, le système vérifiera l&#39;originalité des documents envoyés, si cela est possible; les documents envoyés pourront être téléchargés et les outils de commentaires GradeMark seront aussi disponibles, si cela est possible.';

@@ -402,6 +402,7 @@ $string['pp_createsubmissionerror'] = '剽竊 plugin 在建立提交物件時有
 $string['pp_updatesubmissionerror'] = '剽竊 plugin 在更新提交物件時有誤';
 $string['pp_submission_error'] = '您的提交物件有誤';
 $string['pp_configuredesc'] = '您必須在turnitintooltwo單元內安裝此單元。請點選 <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> 以安裝此 plugin';
+$string['coursestomigrate'] = '您在 Turnitiin 內有 {$a} 課程可以遷移';
 $string['gradingtemplate'] = '評分模板';
 $string['allownonor'] = '允許任何檔案類型的提交物件？';
 $string['allownonor_help'] = '此設定將允許提交任何檔案類型。若此選項設為“是”，在可行的前提下，提交物件將會被檢查其原創性，提交物件將可被下載而 GradeMark 反饋工具將可被使用。';

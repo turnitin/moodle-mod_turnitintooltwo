@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'S\&#39;ha produït un error al complement
 $string['pp_updatesubmissionerror'] = 'S\&#39;ha produït un error al complement de plagi quan s\&#39;estava actualitzant un lliurament';
 $string['pp_submission_error'] = 'S\&#39;ha produït un error amb el teu lliurament:';
 $string['pp_configuredesc'] = 'Has de configurar aquest mòdul dins del mòdul turnitintooltwo. Fes clic <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>aquí</a> per configurar aquest complement';
+$string['coursestomigrate'] = 'Classes disponibles per migrar de Turnitin: {$a}';
 $string['gradingtemplate'] = 'Plantilla de qualificacions';
 $string['allownonor'] = 'Vols permetre que es lliuri qualsevol tipus d\&#39;arxiu?';
 $string['allownonor_help'] = 'Aquest paràmetre permetrà que es lliuri qualsevol tipus d\&#39;arxiu. Si aquesta opció està configurada en &#34;Sí&#34;, es comprovarà l\&#39;originalitat dels lliuraments i quan sigui possible, els lliuraments es podran descarregar y es podrà disposar de les eines de comentaris GradeMark.';
