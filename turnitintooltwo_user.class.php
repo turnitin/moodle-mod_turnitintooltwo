@@ -119,7 +119,8 @@ class turnitintooltwo_user {
      */
     private function get_pseudo_firstname() {
         $config = turnitintooltwo_admin_config();
-        return $config->pseudofirstname;
+
+        return !empty( $config->pseudofirstname ) ? $config->pseudofirstname : TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME;
     }
 
     /**

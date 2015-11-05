@@ -219,13 +219,10 @@ if ($ADMIN->fulltree) {
     $settings->add($pseudoselect);
 
     if (isset($config->enablepseudo) AND $config->enablepseudo) {
-        $config->pseudofirstname = ( isset( $config->pseudofirstname ) ) ?
-                                        $config->pseudofirstname : get_string('defaultcoursestudent');
-
         $settings->add(new admin_setting_configtext('turnitintooltwo/pseudofirstname',
                                                         get_string('pseudofirstname', 'turnitintooltwo'),
                                                         get_string('pseudofirstname_desc', 'turnitintooltwo'),
-                                                        get_string('defaultcoursestudent')));
+                                                        TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME));
 
         $lnoptions = array( 0 => get_string('user') );
 
