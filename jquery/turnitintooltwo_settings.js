@@ -157,7 +157,7 @@ jQuery(document).ready(function($) {
     		var trial = 1;
     	} else {
     		var trial = 0;
-        	$("#begin-migration-button").addClass("hidden_class");
+        	$("#migration-footer").addClass("hidden_class");
     	}
 
 		// Do the migration.
@@ -193,7 +193,7 @@ jQuery(document).ready(function($) {
                 	$("#progress-bar").removeClass("active");
 
         			if (trial == 1) {
-        				$("#begin-migration-button").removeClass("hidden_class");
+        				$("#migration-footer").removeClass("hidden_class");
         			}
         			else {
         				$("#migrationtool_complete").removeClass("hidden_class");

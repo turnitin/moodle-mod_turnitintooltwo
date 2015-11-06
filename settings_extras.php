@@ -397,14 +397,8 @@ switch ($cmd) {
                     if ($courses) {
                         $output .= html_writer::tag('div', get_string("migrationtool_processexplained", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
 
-                        // Do the table headers.
-                        $cells = array();
-
-                        $cells["id"] = new html_table_cell(get_string('migrationtool_checklistheader', 'turnitintooltwo'));
-                        $cells["checkbox"] = new html_table_cell('');
-
                         $table = new html_table();
-                        $table->head = $cells;
+                        // $table->head = $cells;
 
                         $rows = array();
 
@@ -427,10 +421,15 @@ switch ($cmd) {
                                         array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses), "disabled" => "disabled"));
 
                         $output .= $OUTPUT->box_end(true);
-                        $output .= $OUTPUT->box_start();
+
+                        $output .= $OUTPUT->box_start('hidden_class', 'migration-footer');
+                        $output .= html_writer::tag('div', get_string("migrationtool_contactsupport", 'turnitintooltwo'), 
+                            array('id' => 'begin-migration'));
 
                         $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
-                                        array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button hidden_class", 'data-courses' => count($courses)));
+                                        array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses)));
+                        $output .= $OUTPUT->box_end(true);
+                        $output .= $OUTPUT->box_start();
 
                         $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('id' => 'migrationtool_complete', 'class' => 'hidden_class'));
 

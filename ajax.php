@@ -802,6 +802,12 @@ switch ($action) {
 
         include_once($CFG->dirroot."/course/lib.php");
 
+        // Course header once migration has been complete.
+        if ($trial == 0) {
+            $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
+        }
+
+        // Loop through each course and migrate if we can.
         foreach ($courses as $course) {
             $context = context_course::instance($course->courseid);
             $enrolled_count = count(get_role_users('', $context, false, 'ra.id, u.firstname, u.lastname'));
@@ -810,11 +816,11 @@ switch ($action) {
             if ($DB->get_records('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'))) {
                 $canMigrate = 0;
                 $headerColour = "red";
-                $subheaderText = ($trial == 1) ? 'migrationtool_cant_migrate' : 'migrationtool_not_migrated';
+                $subheaderText = "migrationtool_cant_migrate";
             } else {
                 $canMigrate = 1;
                 $headerColour = "darkgreen";
-                $subheaderText = ($trial == 1) ? 'migrationtool_can_migrate' : 'migrationtool_migrated';
+                $subheaderText = "migrationtool_can_migrate"; 'migrationtool_migrated';
 
                 if ($trial == 0) {
                     // Insert the course to the Turnitintooltwo courses table.
@@ -826,12 +832,18 @@ switch ($action) {
                     $turnitincourse->course_type = 'TT';
 
                     $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+
                 }
             }
 
-            $data .= html_writer::tag('div', get_string('migrationtool_course_text', 'turnitintooltwo') .' '. $course->fullname, array('class' => 'courseheader '.$headerColour)).
-            html_writer::tag('div', get_string($subheaderText, 'turnitintooltwo'), array('class' => 'text-margin '.$headerColour));
-            $data .= ($trial == 1) ? html_writer::tag('div', get_string('migrationtool_course_list', 'turnitintooltwo'), array('class' => 'text-margin')) : '';
+            if ($trial == 1) {
+                $data .= html_writer::tag('div', get_string('migrationtool_course_text', 'turnitintooltwo') .' '. $course->fullname, array('class' => 'courseheader '.$headerColour)).
+                html_writer::tag('div', get_string($subheaderText, 'turnitintooltwo'), array('class' => 'text-margin '.$headerColour));
+            } else {
+                if ($canMigrate == 1) {
+                    $data .= html_writer::tag('p', $course->fullname, array('class' => $headerColour));
+                }
+            }
 
             // Loop through each assignment, get its parts and submissions.
             $v1_assignments = $DB->get_records('turnitintool', array('course' => $course->courseid));
@@ -880,7 +892,6 @@ switch ($action) {
                         $v1_part_submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1_part_id));
 
                         foreach ($v1_part_submissions as $v1_part_submission) {
-
                             $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
                             unset($v1_assignment_submissions->turnitintoolid);
                             unset($v1_part_submission->id);
@@ -892,10 +903,7 @@ switch ($action) {
                     // Update the grades for this assignment.
                     turnitintooltwo_grade_item_update($turnitintooltwo);
                 }
-
-                $data .= html_writer::tag('b', $v1_assignment->name) .'<br>';
             }
-            $data .= '<br><br>';
         }
 
         $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "migrateUsers" => $migrateUsers);

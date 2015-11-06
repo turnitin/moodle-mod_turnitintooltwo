@@ -15,8 +15,8 @@ Located at mod/turnitintooltwo/settings_extras.php?cmd=migrationtool
     color: #FF0000;
 }
 
-.text-margin {
-    margin-bottom: 10px;
+.text-margin, #migrationtool_explained {
+    margin-bottom: 20px;
 }
 
 .courseheader {
@@ -28,4 +28,8 @@ Located at mod/turnitintooltwo/settings_extras.php?cmd=migrationtool
 #migrationtool_complete {
     font-size: 25px;
     color: #2D8B22;
+}
+
+.migration-button, #begin-migration {
+    margin-top: 20px;
 }
