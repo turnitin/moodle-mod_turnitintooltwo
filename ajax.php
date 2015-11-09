@@ -809,9 +809,6 @@ switch ($action) {
 
         // Loop through each course and migrate if we can.
         foreach ($courses as $course) {
-            $context = context_course::instance($course->courseid);
-            $enrolled_count = count(get_role_users('', $context, false, 'ra.id, u.firstname, u.lastname'));
-
             // If the course ID exists in V2, we skip this course.
             if ($DB->get_records('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'))) {
                 $canMigrate = 0;
@@ -820,7 +817,7 @@ switch ($action) {
             } else {
                 $canMigrate = 1;
                 $headerColour = "darkgreen";
-                $subheaderText = "migrationtool_can_migrate"; 'migrationtool_migrated';
+                $subheaderText = "migrationtool_can_migrate";
 
                 if ($trial == 0) {
                     // Insert the course to the Turnitintooltwo courses table.
@@ -832,7 +829,6 @@ switch ($action) {
                     $turnitincourse->course_type = 'TT';
 
                     $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
-
                 }
             }
 

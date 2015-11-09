@@ -398,7 +398,6 @@ switch ($cmd) {
                         $output .= html_writer::tag('div', get_string("migrationtool_processexplained", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
 
                         $table = new html_table();
-                        // $table->head = $cells;
 
                         $rows = array();
 
