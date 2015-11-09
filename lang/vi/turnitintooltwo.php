@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'Xảy ra lỗi trong phần bổ trợ v�
 $string['pp_updatesubmissionerror'] = 'Xảy ra lỗi trong phần bổ trợ về Đạo văn khi cập nhật một bài nộp';
 $string['pp_submission_error'] = 'Xảy ra lỗi với bài nộp của bạn:';
 $string['pp_configuredesc'] = 'Bạn phải định hình mô-đun này bên trong mô-đun turnitintooltwo. Vui lòng nhấp vào <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>đây</a> để cài đặt phần bổ trợ này';
+$string['coursestomigrate'] = 'Bạn có {$a} lớp khả dụng để di dời từ Turnitin';
 $string['gradingtemplate'] = 'Mẫu Chấm Điểm';
 $string['allownonor'] = 'Cho phép nộp tập tin có định dạng bất kỳ';
 $string['allownonor_help'] = 'Cài đặt này cho phép nộp tập tin có định dạng bất kỳ. Nếu tuỳ chọn được chọn là &#34;Đồng ý&#34;, các bài nộp sẽ được kiểm tra về tính độc sáng ở những chỗ có thể, bài nộp sẽ khả dụng để tải về và các công cụ phản hồi GradeMark sẽ khả dụng ở những phần có thể. ';

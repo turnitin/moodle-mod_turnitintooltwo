@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'Det uppstod ett fel i plagiering plugin v
 $string['pp_updatesubmissionerror'] = 'Det uppstod ett fel i plagiering plugin vid uppdatering av en inlämnan';
 $string['pp_submission_error'] = 'Ett fel uppstod med ditt inlämnande:';
 $string['pp_configuredesc'] = 'Du måste konfigurera denna modul inom turnitintooltwo modulen. Var god klicka <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>här</a> för att konfigurera denna plugin';
+$string['coursestomigrate'] = 'Du har {$a} klasser tillgängliga för migration från Turnitin';
 $string['gradingtemplate'] = 'Betygsmall';
 $string['allownonor'] = 'Tillåt inlämning av alla filtyper?';
 $string['allownonor_help'] = 'Denna inställning kommer att tillåta att alla filer lämnas in. Med alternativet inställt på &#34;Ja&#34; kommer kontroll om inlämningar är original att ske där det är möjligt. Inlämningar kommer att finnas tillgängliga för nedladdning och GradeMark feedback-verktyg kommer att finnas tillgängliga där det är möjligt.';

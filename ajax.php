@@ -771,46 +771,139 @@ switch ($action) {
     break;
 
     case "migration":
-        // Get a list of courses with V1 assignments.
-        $courses = $DB->get_records_sql("SELECT tc.id, courseid, ownerid, turnitin_cid, fullname
-                                         FROM {turnitintool_courses} tc JOIN {course} c
-                                         ON c.id = tc.courseid");
-        $data = "";
-        foreach ($courses as $course) {
-            $context = context_course::instance($course->courseid);
-            $enrolled_count = count(get_role_users('', $context, false, 'ra.id, u.firstname, u.lastname'));
+        $start = required_param('start', PARAM_INT);
+        $processAtOnce = required_param('processAtOnce', PARAM_INT);
+        $iteration = required_param('iteration', PARAM_INT);
+        $trial = required_param('trial', PARAM_INT);
+        $migrateUsers = required_param('migrateUsers', PARAM_INT);
 
+        // Migrate the users and set flag as we only want to do this the first time.
+        if ($migrateUsers == 1) {
+            $turnitintool_users = ($trial == 0) ? $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp') : '';
+            foreach ($turnitintool_users as $turnitintool_user) {
+                unset($turnitintool_user->id);
+
+                if (!$DB->record_exists("turnitintooltwo_users", array('userid' => $turnitintool_user->userid))) {
+                    $DB->insert_record("turnitintooltwo_users", $turnitintool_user);
+                }
+            }
+            $migrateUsers = 0;
+        }
+
+        // Get a list of courses with V1 assignments.
+        $courses = $DB->get_records_sql("SELECT tc.id, courseid, ownerid, turnitin_ctl, turnitin_cid, fullname
+                                         FROM {turnitintool_courses} tc JOIN {course} c
+                                         ON c.id = tc.courseid", NULL, $start, $processAtOnce);
+
+        // We'll use this next time round to determine where to start.
+        $end = $start + count($courses);
+
+        $data = "";
+
+        include_once($CFG->dirroot."/course/lib.php");
+
+        // Course header once migration has been complete.
+        if ($trial == 0) {
+            $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
+        }
+
+        // Loop through each course and migrate if we can.
+        foreach ($courses as $course) {
             // If the course ID exists in V2, we skip this course.
             if ($DB->get_records('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'))) {
-                $data .= '<font color="brown"><h4>Course: ' . $course->fullname . ' (Course ID: ' . $course->courseid . ')</b></h4></font>
-                <b>Enrolled Users:</b> ' . $enrolled_count . '<br><br>
-                <font color="red">The course was skipped because it contains Moodle Direct V2 assignments.<br><br></font>
-                The list of Moodle Direct V1 assignments that were skipped are as follows:<br>';
+                $canMigrate = 0;
+                $headerColour = "red";
+                $subheaderText = "migrationtool_cant_migrate";
+            } else {
+                $canMigrate = 1;
+                $headerColour = "darkgreen";
+                $subheaderText = "migrationtool_can_migrate";
+
+                if ($trial == 0) {
+                    // Insert the course to the Turnitintooltwo courses table.
+                    $turnitincourse = new stdClass();
+                    $turnitincourse->courseid = $course->courseid;
+                    $turnitincourse->ownerid = $course->ownerid;
+                    $turnitincourse->turnitin_ctl = $course->turnitin_ctl;
+                    $turnitincourse->turnitin_cid = $course->turnitin_cid;
+                    $turnitincourse->course_type = 'TT';
+
+                    $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+                }
             }
-            else {
-                $data .= '<font color="green"><h4>Course: ' . $course->fullname . ' (Course ID: ' . $course->courseid . ')</h4></font>
-                <b>Enrolled Users:</b> ' . $enrolled_count . '<br><br>
-                The course can be processed because it does not contain Moodle Direct V2 assignments.<br><br>
-                The list of Moodle Direct V1 assignments on this course are as follows:<br>';
+
+            if ($trial == 1) {
+                $data .= html_writer::tag('div', get_string('migrationtool_course_text', 'turnitintooltwo') .' '. $course->fullname, array('class' => 'courseheader '.$headerColour)).
+                html_writer::tag('div', get_string($subheaderText, 'turnitintooltwo'), array('class' => 'text-margin '.$headerColour));
+            } else {
+                if ($canMigrate == 1) {
+                    $data .= html_writer::tag('p', $course->fullname, array('class' => $headerColour));
+                }
             }
 
             // Loop through each assignment, get its parts and submissions.
             $v1_assignments = $DB->get_records('turnitintool', array('course' => $course->courseid));
             foreach ($v1_assignments as $v1_assignment) {
-                $data .= '<br><b>' . $v1_assignment->name . ' (Assignment ID: ' . $v1_assignment->id . ')</b><br>
-                This assignment has the following parts:<br><br>';
 
-                $v1_parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $v1_assignment->id));
+                // Skip if this is the trial run or we can't migrate this course.
+                if (($trial == 0) && ($canMigrate == 1)) {
+                    $v1_assignment_id = $v1_assignment->id;
+                    unset($v1_assignment->id);
+                    $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
+                    $turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $turnitintooltwoid));
 
-                foreach ($v1_parts as $v1_part) {
-                    $submissions = $DB->get_records_sql("SELECT id FROM {turnitintool_submissions} 
-                                                         WHERE submission_part = ? ", array($v1_part->id));
+                    $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
+                    $coursemodule = new stdClass();
+                    $coursemodule->course = $course->courseid;
+                    $coursemodule->module = $module->id;
+                    $coursemodule->added = time();
+                    $coursemodule->instance = $turnitintooltwoid;
+                    $coursemodule->section = 0;
 
-                    $data .= '<b>Name: ' . $v1_part->partname . ' (Part ID: ' . $v1_part->id . ')</b> - ' . count($submissions) . ' submissions.<br>';
+                    // Add Course module and get course section.
+                    $coursemodule->coursemodule = add_course_module($coursemodule);
+
+                    if (is_callable('course_add_cm_to_section')) {
+                        $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
+                    } else {
+                        $sectionid = add_mod_to_section($coursemodule);
+                    }
+
+                    $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
+                    rebuild_course_cache($courseid);
+
+                    // Get the assignment parts.
+                    $v1_parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $v1_assignment_id));
+
+                    // Migrate the parts.
+                    foreach ($v1_parts as $v1_part) {
+                        $v1_part->turnitintooltwoid = $turnitintooltwoid;
+                        $v1_part_id = $v1_part->id;
+                        unset($v1_part->turnitintoolid);
+                        unset($v1_part->id);
+
+                        $DB->insert_record("turnitintooltwo_parts", $v1_part);
+
+                        // Get the submissions for this part.
+                        $v1_part_submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1_part_id));
+
+                        foreach ($v1_part_submissions as $v1_part_submission) {
+                            $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
+                            unset($v1_assignment_submissions->turnitintoolid);
+                            unset($v1_part_submission->id);
+
+                            $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
+                        }
+                    }
+
+                    // Update the grades for this assignment.
+                    turnitintooltwo_grade_item_update($turnitintooltwo);
                 }
             }
-            $data .= '<br><br>';
         }
-        echo $data;
+
+        $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "migrateUsers" => $migrateUsers);
+
+        echo json_encode($test);
     break;
 }

@@ -416,6 +416,7 @@ $string['pp_createsubmissionerror'] = 'Ha ocurrido un error en el plugin de plag
 $string['pp_updatesubmissionerror'] = 'Ha ocurrido un error en el plugin de plagio al actualizar una entrega';
 $string['pp_submission_error'] = 'Ha ocurrido un error con tu entrega:';
 $string['pp_configuredesc'] = 'Debes configurar este módulo dentro del módulo de turnitintooltwo. Por favor, haz clic en <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>aquí </a> para configurar este plugin';
+$string['coursestomigrate'] = 'Tienes {$a} clases disponibles para migrar desde Turnitin';
 $string['gradingtemplate'] = 'Plantilla de calificación';
 $string['allownonor'] = '¿Permitir la entrega de cualquier tipo de archivo?';
 $string['allownonor_help'] = 'Esta configuración permitirá que se entregue cualquier tipo de archivo. Con esta opción seleccionada, se comprobará la originalidad de las entregas siempre que sea posible, éstas estarán disponibles para descargar y las herramientas de comentarios de GradeMark estarán disponibles siempre que sea posible.';

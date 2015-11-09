@@ -306,7 +306,14 @@ class turnitintooltwo_user {
         $tiiuser = new stdClass();
         $tiiuser->id = $tiidbid;
         $tiiuser->turnitin_uid = 0;
-        $DB->update_record('turnitintooltwo_users', $tiiuser);
+
+        // Check if the deleted flag has been set. if yes delete the TII record rather than updating it.
+        if ($DB->get_record("user", array('id' => $this->id, 'deleted' => 1), "deleted")) {
+            $DB->delete_records('turnitintooltwo_users', array('userid' => $this->id));
+        }
+        else {
+            $DB->update_record('turnitintooltwo_users', $tiiuser);
+        }
 
         turnitintooltwo_activitylog("User unlinked: ".$this->id." (".$tiidbid.") ", "REQUEST");
     }

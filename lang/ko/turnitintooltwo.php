@@ -415,6 +415,7 @@ $string['pp_createsubmissionerror'] = '제출물 생성시 표절 plugin에 오�
 $string['pp_updatesubmissionerror'] = '제출물 업데이트시 표절 plugin에 오류가 발생하였습니다 ';
 $string['pp_submission_error'] = '귀하의 제출물에 오류가 발생하였습니다:';
 $string['pp_configuredesc'] = 'turnitintooltwo 모듈 내에서 본 모듈을 구성하여야 합니다. 본 plugin을 구성하려면 <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> 을 클릭하십시오';
+$string['coursestomigrate'] = '귀하는 {$a} 개의 클래스를 Turnitin으로부터 이동할 수 있습니다 ';
 $string['gradingtemplate'] = '채점 템플렛';
 $string['allownonor'] = '모든 파일 유형의 제출을 허용하시겠습니까?';
 $string['allownonor_help'] = '본 환경은 모든 파일 유형의 제출을 허용할 것입니다. 본 옵션이 &#34;예&#34;로 설정된 경우, 가능한 부분에서 제출물의 독창성이 검토되고, 제출물이 다운로드 가능하며, 가능한 부분에서 GradeMark 피드백 도구들을 사용할 수 있습니다.';

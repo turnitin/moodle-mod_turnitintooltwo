@@ -418,6 +418,7 @@ $string['pp_updatesubmissionerror'] = 'Beim Aktualisieren einer Übermittlung is
 $string['pp_submission_error'] = 'Bei Ihrer Übermittlung ist ein Fehler aufgetreten: ';
 $string['pp_configuredesc'] = 'Sie müssen das Modul innerhalb des turnitintooltwo-Moduls konfigurieren. Bitte gehen Sie auf <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> zum Konfigurieren des Plugins';
 $string['gradingtemplate'] = 'Benotungsvorlage';
+$string['coursestomigrate'] = 'Sie haben {$a} Kurse zum Übertragen von Turnitin zur Verfügung';
 $string['allownonor'] = 'Übermittlung von allen Dateitypen zulässig? ';
 $string['allownonor_help'] = 'Bei dieser Einstellung ist die Übermittlung aller Dateitypen zulässig. Ist diese Option auf &#34;ja&#34; gesetzt, werden alle Übermittlungen, wo dies möglich ist, auf ihre Echtheit hin überprüft, stehen Übermittlungen zum Herunterladen zur Verfügung und kann mit den GradeMark-Tools Feedback gegeben werden, wo dies möglich ist.';
 $string['submitnothing'] = 'Benoten für diesen Studenten ohne Übermittlung aktivieren';
