@@ -539,3 +539,4 @@ $string['nonsubmittersmessageerror'] = 'Please provide a message for the email';
 $string['nonsubmittersformsuccess'] = 'Your message to non-submitters has been sent.';
 $string['messageprovider:nonsubmitters'] = 'Turnitin Assignment Non Submitter notifications';
 $string['checkagainstnote'] = 'Note: If you do not select "Yes" for at least one of the "Check against..." options below then an Originality report will NOT be generated.';
+$string['anonblindmarkingnote'] = 'Note: The separate Turnitin anonymous marking setting has been removed. Turnitin will use Moodle\'s blind marking setting to determine the anonymous marking setting.';
