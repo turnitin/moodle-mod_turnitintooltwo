@@ -146,7 +146,7 @@ jQuery(document).ready(function($) {
 		var processAtOnce = 10;
 
 		if (totalCourses >= processAtOnce) {
-			var iterations = Math.round((totalCourses/processAtOnce));
+			var iterations = Math.ceil((totalCourses/processAtOnce));
 		} else {
 			var iterations = totalCourses;
 			processAtOnce = 1;
