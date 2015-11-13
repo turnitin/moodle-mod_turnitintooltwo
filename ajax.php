@@ -852,6 +852,12 @@ switch ($action) {
                     $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
                     $turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $turnitintooltwoid));
 
+                    //Update the old assignment title.
+                    $updatetitle = new stdClass();
+                    $updatetitle->id = $v1_assignment_id;
+                    $updatetitle->name = $v1_assignment->name . ' (V1)';
+                    $DB->update_record('turnitintool', $updatetitle);
+
                     $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
                     $coursemodule = new stdClass();
                     $coursemodule->course = $course->courseid;
