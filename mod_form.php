@@ -284,10 +284,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('gradedisplay', 'displaygradesas', 'turnitintooltwo');
         $mform->setDefault('gradedisplay', $config->default_gradedisplay);
 
-
-
-        //check results of find results to see how gradedisplay is saved, and check the details of $this->turnitintooltwo->gradedisplay = 1; in tii2_ass_class as we set default here but it should be pulled from somewhere
-
         $refreshoptions = array(1 => get_string('yesgrades', 'turnitintooltwo'), 0 => get_string('nogrades', 'turnitintooltwo'));
 
         $mform->addElement('select', 'autoupdates', get_string('autorefreshgrades', 'turnitintooltwo'), $refreshoptions);
