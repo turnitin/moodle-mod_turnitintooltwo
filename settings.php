@@ -290,6 +290,12 @@ if ($ADMIN->fulltree) {
                                                     get_string('studentreports', 'turnitintooltwo'),
                                                     '', 0, $ynoptions ));
 
+    $gradedisplayoptions = array(1 => get_string('displaygradesaspercent', 'turnitintooltwo'),
+                                 2 => get_string('displaygradesasfraction', 'turnitintooltwo'));
+    $settings->add(new admin_setting_configselect('turnitintooltwo/default_gradedisplay',
+                                                    get_string('displaygradesas', 'turnitintooltwo'),
+                                                    '', 2, $gradedisplayoptions ));
+
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_allownonor',
                                                     get_string('allownonor', 'turnitintooltwo'),
                                                     '', 0, $ynoptions ));

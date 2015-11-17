@@ -1238,8 +1238,15 @@ class turnitintooltwo_view {
                 );
 
                 // Show grade.
-                $grade .= $OUTPUT->box(html_writer::tag('span', $submissiongrade, array("class" => "grade"))
-                                ."/".$parts[$partid]->maxmarks, 'grademark_grade');
+                if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 2) { // 2 is fraction
+                    $grade .= $OUTPUT->box(html_writer::tag('span', $submissiongrade, array("class" => "grade"))
+                                    ."/".$parts[$partid]->maxmarks, 'grademark_grade');
+                } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage
+                    $submissiongrade = round($submissiongrade / $parts[$partid]->maxmarks * 100,1).'%';
+                    $grade .= $OUTPUT->box(html_writer::tag('span', $submissiongrade, array("class" => "grade"))
+                                    , 'grademark_grade');
+                }
+                
                 // Put in div placeholder for DV launch form.
                 $grade .= $OUTPUT->box('', 'launch_form', 'grademark_form_'.$submission->submission_objectid);
                 // URL for DV launcher

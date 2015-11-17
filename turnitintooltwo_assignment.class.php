@@ -1765,6 +1765,9 @@ class turnitintooltwo_assignment {
                     AND !is_null($submission->submission_grade) AND $weightarray[$submission->submission_part] != 0) {
                 $overallgrade += ($submission->submission_grade / $weightarray[$submission->submission_part]) *
                         ($weightarray[$submission->submission_part] / $overallweight) * $maxgrade;
+
+
+                //$overallgrade = (Grade/max marks) * (max marks/total marks) * maxgrade
             }
         }
 

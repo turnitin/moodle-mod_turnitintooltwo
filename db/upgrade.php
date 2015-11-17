@@ -128,5 +128,10 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         set_config('apiurl', $newurl, 'turnitintooltwo');
     }
 
+    if ($result && $oldversion < 2015040111) {
+        // Update gradedisplay value to be consistent with V1 plugin.
+        $DB->set_field("turnitintooltwo", "gradedisplay", 2);
+    }
+
     return $result;
 }
