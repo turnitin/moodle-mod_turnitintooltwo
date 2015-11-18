@@ -278,6 +278,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('studentreports', 'studentreports', 'turnitintooltwo');
         $mform->setDefault('studentreports', $config->default_studentreports);
 
+        $gradedisplayoptions = array(1 => get_string('displaygradesaspercent', 'turnitintooltwo'),
+                                     2 => get_string('displaygradesasfraction', 'turnitintooltwo'));
+        $mform->addElement('select', 'gradedisplay', get_string('displaygradesas', 'turnitintooltwo'), $gradedisplayoptions);
+        $mform->addHelpButton('gradedisplay', 'displaygradesas', 'turnitintooltwo');
+        $mform->setDefault('gradedisplay', $config->default_gradedisplay);
+
         $refreshoptions = array(1 => get_string('yesgrades', 'turnitintooltwo'), 0 => get_string('nogrades', 'turnitintooltwo'));
 
         $mform->addElement('select', 'autoupdates', get_string('autorefreshgrades', 'turnitintooltwo'), $refreshoptions);

@@ -540,3 +540,7 @@ $string['nonsubmittersformsuccess'] = 'Your message to non-submitters has been s
 $string['messageprovider:nonsubmitters'] = 'Turnitin Assignment Non Submitter notifications';
 $string['checkagainstnote'] = 'Note: If you do not select "Yes" for at least one of the "Check against..." options below then an Originality report will NOT be generated.';
 $string['anonblindmarkingnote'] = 'Note: The separate Turnitin anonymous marking setting has been removed. Turnitin will use Moodle\'s blind marking setting to determine the anonymous marking setting.';
+$string['displaygradesas'] = 'Grade Display';
+$string['displaygradesas_help'] = 'This option sets the display mode for grades the options are display as a percentage or display as a fraction ie 45/60.';
+$string['displaygradesasfraction'] = 'Show grades as Fraction (e.g. 89/100)';
+$string['displaygradesaspercent'] = 'Show grades as Percentage (e.g. 89&#37;)';
