@@ -532,7 +532,7 @@ class turnitintooltwo_user {
         global $DB;
 
         // Array of settings that we want to save.
-        $settingstosave = array("type", "numparts", "portfolio", "maxfilesize", "grade", "anon", "studentreports",
+        $settingstosave = array("type", "numparts", "portfolio", "maxfilesize", "grade", "anon", "studentreports", "gradedisplay",
                                 "maxmarks1", "maxmarks2", "maxmarks3", "maxmarks4", "maxmarks5", "allowlate", "reportgenspeed",
                                 "submitpapersto", "spapercheck", "internetcheck", "journalcheck", "excludebiblio",
                                 "excludequoted", "excludevalue", "excludetype", "erater", "erater_handbook",
