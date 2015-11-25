@@ -850,7 +850,9 @@ switch ($action) {
                     $v1_assignment_id = $v1_assignment->id;
                     unset($v1_assignment->id);
                     $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
-                    $turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $turnitintooltwoid));
+
+                    // Create new Turnitintooltwo object.
+                    $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwoid);
 
                     //Update the old assignment title.
                     $updatetitle = new stdClass();
@@ -888,22 +890,27 @@ switch ($action) {
                         unset($v1_part->turnitintoolid);
                         unset($v1_part->id);
 
-                        $DB->insert_record("turnitintooltwo_parts", $v1_part);
+                        $v2_part_id = $DB->insert_record("turnitintooltwo_parts", $v1_part);
 
                         // Get the submissions for this part.
                         $v1_part_submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1_part_id));
 
                         foreach ($v1_part_submissions as $v1_part_submission) {
                             $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
+                            $v1_part_submission->submission_part = $v2_part_id;
                             unset($v1_assignment_submissions->turnitintoolid);
                             unset($v1_part_submission->id);
 
-                            $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
+                            $turnitintooltwo_submissionid = $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
+
+                            // Get the V2 part and update grade book.
+                            $v2_part_submission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwo_submissionid));
+                            turnitintooltwo_submission::update_gradebook($v2_part_submission, $turnitintooltwoassignment);
                         }
                     }
 
                     // Update the grades for this assignment.
-                    turnitintooltwo_grade_item_update($turnitintooltwo);
+                    turnitintooltwo_grade_item_update($turnitintooltwoassignment->turnitintooltwo);
                 }
             }
         }
