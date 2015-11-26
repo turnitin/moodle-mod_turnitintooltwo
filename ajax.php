@@ -771,15 +771,20 @@ switch ($action) {
     break;
 
     case "migration":
+        include_once($CFG->dirroot."/course/lib.php");
+
         $start = required_param('start', PARAM_INT);
         $processAtOnce = required_param('processAtOnce', PARAM_INT);
         $iteration = required_param('iteration', PARAM_INT);
         $trial = required_param('trial', PARAM_INT);
-        $migrateUsers = required_param('migrateUsers', PARAM_INT);
+        $doOnce = required_param('doOnce', PARAM_INT);
 
-        // Migrate the users and set flag as we only want to do this the first time.
-        if ($migrateUsers == 1) {
-            $turnitintool_users = ($trial == 0) ? $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp') : '';
+        $data = "";
+        
+        // We only want to do this once, if we're not on the trial run.
+        if (($trial == 0) && ($doOnce == 1)) {
+            // Migrate the users and set flag as 
+            $turnitintool_users = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
             foreach ($turnitintool_users as $turnitintool_user) {
                 unset($turnitintool_user->id);
 
@@ -787,7 +792,11 @@ switch ($action) {
                     $DB->insert_record("turnitintooltwo_users", $turnitintool_user);
                 }
             }
-            $migrateUsers = 0;
+
+            // Course header once migration has been complete.
+            $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
+
+            $doOnce = 0;
         }
 
         // Get a list of courses with V1 assignments.
@@ -797,15 +806,6 @@ switch ($action) {
 
         // We'll use this next time round to determine where to start.
         $end = $start + count($courses);
-
-        $data = "";
-
-        include_once($CFG->dirroot."/course/lib.php");
-
-        // Course header once migration has been complete.
-        if ($trial == 0) {
-            $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
-        }
 
         // Loop through each course and migrate if we can.
         foreach ($courses as $course) {
@@ -844,7 +844,6 @@ switch ($action) {
             // Loop through each assignment, get its parts and submissions.
             $v1_assignments = $DB->get_records('turnitintool', array('course' => $course->courseid));
             foreach ($v1_assignments as $v1_assignment) {
-
                 // Skip if this is the trial run or we can't migrate this course.
                 if (($trial == 0) && ($canMigrate == 1)) {
                     $v1_assignment_id = $v1_assignment->id;
@@ -915,7 +914,7 @@ switch ($action) {
             }
         }
 
-        $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "migrateUsers" => $migrateUsers);
+        $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce);
 
         echo json_encode($test);
     break;
