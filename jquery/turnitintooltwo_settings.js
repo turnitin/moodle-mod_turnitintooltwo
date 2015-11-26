@@ -166,7 +166,7 @@ jQuery(document).ready(function($) {
     });
 
 
-    function migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, migrateUsers) {
+    function migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce) {
 		// Percentage increase of the progress bar on each iteration.
     	var progressBarSegment = Math.round(100/iterations);
 
@@ -181,7 +181,7 @@ jQuery(document).ready(function($) {
 	        type: "POST",
 	        url: "ajax.php",
 	        dataType: "json",
-	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, migrateUsers: migrateUsers},
+	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce},
 	        success: function(result) {
                 $('.migrationtool').append(result.dataset);
 
@@ -202,8 +202,9 @@ jQuery(document).ready(function($) {
 
                 start = result.end;
                 iteration = result.iteration + 1;
+                doOnce = result.doOnce;
                 if (result.end < totalCourses) {
-                    migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, migrateUsers);
+                    migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce);
                 }
             },
 	    });
