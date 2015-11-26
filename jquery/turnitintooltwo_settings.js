@@ -205,7 +205,6 @@ jQuery(document).ready(function($) {
                 doOnce = result.doOnce;
                 if (result.end < totalCourses) {
                     migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce);
-                    console.log(doOnce);
                 }
             },
 	    });
