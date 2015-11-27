@@ -397,12 +397,41 @@ switch ($cmd) {
                     if ($courses) {
                         $output .= html_writer::tag('div', get_string("migrationtool_processexplained", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
 
+                        // Map V1 setting names to V2 and the corresponding language string.
+                        $v1tov2_settings = array(
+                                array("v1field" => "turnitin_account_id", "v2field" => "accountid", "lang" => "turnitinaccountid"),
+                                array("v1field" => "turnitin_usegrademark", "v2field" => "usegrademark", "lang" => "turnitinusegrademark"),
+                                array("v1field" => "turnitin_useerater", "v2field" => "useerater", "lang" => "turnitinuseerater"),
+                                array("v1field" => "turnitin_useanon", "v2field" => "useanon", "lang" => "turnitinuseanon"),
+                                array("v1field" => "turnitin_transmatch", "v2field" => "transmatch", "lang" => "transmatch"),
+                                array("v1field" => "turnitin_userepository", "v2field" => "repositoryoption", "lang" => "turnitinuserepository"),
+                                array("v1field" => "turnitin_agreement", "v2field" => "agreement", "lang" => "turnitintooltwoagreement"),
+                                array("v1field" => "turnitin_enablepseudo", "v2field" => "enablepseudo", "lang" => "enablepseudo"));
+
+                        // Get a list of V1 and V2 settings.get_records_select
+                        $v1config = $DB->get_records_sql("SELECT name, value FROM {config} WHERE name LIKE '%turnitin%'");
+
+                        $show_setting_warning = 1;
+                        $settings_list = array();
+                        foreach ($v1tov2_settings as $k => $v) {
+                            if ((isset($v1config[$v["v1field"]])) && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) {
+                                if ($show_setting_warning) {
+                                    $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
+                                    $show_setting_warning = 0;
+                                }
+                                $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
+                            }
+                        }
+
+                        // Display the list of setting conflicts.
+                        $output .= html_writer::alist($settingslist, array('class' => 'text-margin'));
+                        $output .= html_writer::tag('div', get_string("migrationtool_checklisttext", 'turnitintooltwo'), array('class' => 'text-margin'));
+
                         $table = new html_table();
 
-                        $rows = array();
-
                         // Do the table rows.
-                        for ($i = 1; $i <= 4; $i++) {
+                        $rows = array();
+                        for ($i = 1; $i <= 2; $i++) {
                             $cells = array();
 
                             $cells["id"] = new html_table_cell(get_string('migrationtool_checklist' . $i, 'turnitintooltwo'));
