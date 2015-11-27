@@ -400,7 +400,7 @@ switch ($cmd) {
                         // Map V1 setting names to V2 and the corresponding language string.
                         $v1tov2_settings = array(
                                 array("v1field" => "turnitin_account_id", "v2field" => "accountid", "lang" => "turnitinaccountid"),
-                                array("v1field" => "turnitin_usegrademark", "v2field" => "useerater", "lang" => "turnitinusegrademark"),
+                                array("v1field" => "turnitin_usegrademark", "v2field" => "usegrademark", "lang" => "turnitinusegrademark"),
                                 array("v1field" => "turnitin_useerater", "v2field" => "useerater", "lang" => "turnitinuseerater"),
                                 array("v1field" => "turnitin_useanon", "v2field" => "useanon", "lang" => "turnitinuseanon"),
                                 array("v1field" => "turnitin_transmatch", "v2field" => "transmatch", "lang" => "transmatch"),
