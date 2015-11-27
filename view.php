@@ -777,5 +777,5 @@ foreach ($parts as $part) {
     $partsstring .= $part->partname.': '.$part->tiiassignid;
 }
 $partsstring .= ")";
-$courseID = $turnitintooltwoassignment->turnitintooltwo->course;
+$courseID = $course->turnitin_cid;
 echo '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - course ID: '.$courseID.' - '.$partsstring.' -->';
