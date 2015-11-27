@@ -545,3 +545,4 @@ $string['displaygradesas_help'] = 'This option sets the display mode for 
 $string['displaygradesasfraction'] = 'Show grades as Fraction (e.g. 89/100)';
 $string['displaygradesaspercent'] = 'Show grades as Percentage (e.g. 89&#37;)';
 $string['genspeednote'] = 'Note: Originality Report generation for resubmissions is subject to a twenty-four hour delay.';
+$string['cronsubmittedsuccessfully'] = 'Submission: {$a->title} (TII ID: {$a->submissionid}) for the assignment {$a->assignmentname} on the course {$a->coursename} was successfully submitted to Turnitin.';
