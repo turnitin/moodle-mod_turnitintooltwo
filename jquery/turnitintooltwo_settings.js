@@ -129,7 +129,7 @@ jQuery(document).ready(function($) {
 
     //Disable/enable resubmit selected files when one or more are selected.
     $(document).on('click', '.migration_checkbox', function() {
-        if ($('.migration_checkbox:checked').length == 4) {
+        if ($('.migration_checkbox:checked').length == 2) {
         	$('#trial-migration-button').removeAttr('disabled');
         } else {
             $('#trial-migration-button').attr('disabled', 'disabled');
