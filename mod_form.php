@@ -334,7 +334,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 $url = new moodle_url($CFG->wwwroot."/mod/turnitintooltwo/view.php",
                                         array('id' => $this->_cm->id, 'action' => 'delpart',
                                             'part' => $this->current->$partidattribute, 'sesskey' => sesskey()));
-                $deletelink = html_writer::link($url, html_writer::tag('i', '', array('class' => 'fa fa-times-circle fa-lg icon_smallmargin')).
+                $deletelink = html_writer::link($url, html_writer::tag('i', '', array('class' => 'fa fa-trash fa-lg icon_smallmargin')).
                         get_string('deletepart', 'turnitintooltwo'), $attributes);
                 $mform->addElement('html', $deletelink);
             }
@@ -377,7 +377,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
 
         $mform->addElement('html', html_writer::tag('div', get_string('genspeednote', 'turnitintooltwo'), array('class' => 'tii_genspeednote')));
-        
+
         $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
                             1 => get_string('standardrepository', 'turnitintooltwo'));
         switch ($config->repositoryoption) {
