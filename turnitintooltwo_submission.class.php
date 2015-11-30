@@ -483,6 +483,7 @@ class turnitintooltwo_submission {
     public function do_tii_submission($cm, $turnitintooltwoassignment) {
         global $DB, $USER, $CFG;
 
+        $config = turnitintooltwo_admin_config();
         $notice = array("success" => false);
         $context = context_module::instance($cm->id);
 
@@ -504,7 +505,7 @@ class turnitintooltwo_submission {
                 $cm->id
             );
 
-            if ( ! $turnitintooltwoassignment->turnitintooltwo->anon) {
+            if ( !$turnitintooltwoassignment->turnitintooltwo->anon && empty($config->enablepseudo) ) {
                 $user_details = array(
                     $this->userid,
                     $user->firstname,

@@ -28,6 +28,7 @@ require_once(__DIR__.'/turnitintooltwo_class.class.php');
 // Constants.
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 41943040);
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
+define('TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME', get_string('defaultcoursestudent'));
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
 

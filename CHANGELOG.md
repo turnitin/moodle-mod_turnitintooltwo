@@ -1,3 +1,25 @@
+### Date:       2015-November-30
+### Release:    v2015040111
+
+- Verified against Moodle 3.0
+- Javascript is now minified.
+- Grades can now be shown as a percentage.
+- Datatables has been updated to the latest version.
+- Added a note to highlight the 24 hour Originality Report delay for resubmissions.
+- Fixes:
+	- The assignment part displayed is now remembered upon submission deletion.
+	- TII user record is removed if Moodle user does not exist when unlinked.
+	- Fixed potential difference in temp directory path.
+	- Fixed an issue where the Rubric view link is not visible for students.
+	- Fixed an issue where the Grademark icon was not clickable if resubmissions are enabled.
+	- Shared rubrics is now initialised when creating a Turnitin class.
+	- Fixed an issue where course restore was grabbing the wrong class.
+	- Student first name default is now saved in the plugin settings when student privacy is enabled.
+	- Fixed an issue where student names are visible in the file name when student privacy is enabled.
+	- An issue where the EULA modal would not open properly when certain themes are being used.
+
+---
+
 ### Date:       2015-October-01
 ### Release:    v2015040110
 
@@ -26,7 +48,7 @@
 - Ability added to send a message to user who not yet submitted to an assignment.
 - Fixes:
 	- Rubric Manager now shows Shared Rubrics.
-	- Submission modal resizing errors fixed as EULA has moved from submission modal to submission inbox.
+	- Submission modal resizing errors and EULA acceptance loop fixed as EULA has moved from submission modal to submission inbox
 	- Extra user role check added on submission deletion.
 	- File check added before sending to Turnitin.
 	- Submissions are now correctly linked when backing up and restoring (Thanks to Adam Olley).

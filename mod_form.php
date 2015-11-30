@@ -278,6 +278,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('studentreports', 'studentreports', 'turnitintooltwo');
         $mform->setDefault('studentreports', $config->default_studentreports);
 
+        $gradedisplayoptions = array(1 => get_string('displaygradesaspercent', 'turnitintooltwo'),
+                                     2 => get_string('displaygradesasfraction', 'turnitintooltwo'));
+        $mform->addElement('select', 'gradedisplay', get_string('displaygradesas', 'turnitintooltwo'), $gradedisplayoptions);
+        $mform->addHelpButton('gradedisplay', 'displaygradesas', 'turnitintooltwo');
+        $mform->setDefault('gradedisplay', $config->default_gradedisplay);
+
         $refreshoptions = array(1 => get_string('yesgrades', 'turnitintooltwo'), 0 => get_string('nogrades', 'turnitintooltwo'));
 
         $mform->addElement('select', 'autoupdates', get_string('autorefreshgrades', 'turnitintooltwo'), $refreshoptions);
@@ -370,6 +376,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
 
+        $mform->addElement('html', html_writer::tag('div', get_string('genspeednote', 'turnitintooltwo'), array('class' => 'tii_genspeednote')));
+        
         $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
                             1 => get_string('standardrepository', 'turnitintooltwo'));
         switch ($config->repositoryoption) {
