@@ -119,7 +119,8 @@ class turnitintooltwo_user {
      */
     private function get_pseudo_firstname() {
         $config = turnitintooltwo_admin_config();
-        return $config->pseudofirstname;
+
+        return !empty( $config->pseudofirstname ) ? $config->pseudofirstname : TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME;
     }
 
     /**
@@ -306,7 +307,14 @@ class turnitintooltwo_user {
         $tiiuser = new stdClass();
         $tiiuser->id = $tiidbid;
         $tiiuser->turnitin_uid = 0;
-        $DB->update_record('turnitintooltwo_users', $tiiuser);
+
+        // Check if the deleted flag has been set. if yes delete the TII record rather than updating it.
+        if ($DB->get_record("user", array('id' => $this->id, 'deleted' => 1), "deleted")) {
+            $DB->delete_records('turnitintooltwo_users', array('userid' => $this->id));
+        }
+        else {
+            $DB->update_record('turnitintooltwo_users', $tiiuser);
+        }
 
         turnitintooltwo_activitylog("User unlinked: ".$this->id." (".$tiidbid.") ", "REQUEST");
     }
@@ -524,7 +532,7 @@ class turnitintooltwo_user {
         global $DB;
 
         // Array of settings that we want to save.
-        $settingstosave = array("type", "numparts", "portfolio", "maxfilesize", "grade", "anon", "studentreports",
+        $settingstosave = array("type", "numparts", "portfolio", "maxfilesize", "grade", "anon", "studentreports", "gradedisplay",
                                 "maxmarks1", "maxmarks2", "maxmarks3", "maxmarks4", "maxmarks5", "allowlate", "reportgenspeed",
                                 "submitpapersto", "spapercheck", "internetcheck", "journalcheck", "excludebiblio",
                                 "excludequoted", "excludevalue", "excludetype", "erater", "erater_handbook",

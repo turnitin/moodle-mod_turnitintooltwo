@@ -28,6 +28,7 @@ require_once(__DIR__.'/turnitintooltwo_class.class.php');
 // Constants.
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 41943040);
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
+define('TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME', get_string('defaultcoursestudent'));
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
 
@@ -984,7 +985,7 @@ function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
 }
 
 /**
- * Get files for displaying in settings. Called from ajax.php via turnitintooltwo.js.
+ * Get files for displaying in settings. Called from ajax.php via turnitintooltwo.min.js.
  *
  * @param  $moduleid the id of the module to return files for
  * @global type $DB
@@ -1167,7 +1168,7 @@ function turnitintooltwo_pluginfile($course,
 }
 
 /**
- * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo.js.
+ * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo.min.js.
  *
  * @global type $DB
  * @return array return array of users to display
