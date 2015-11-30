@@ -189,7 +189,7 @@ class turnitintooltwo_assignment {
         $newassignment["turnitintooltwo"]->course = $courseid;
         $newassignment["turnitintooltwo"]->name = $assignmentname;
         $newassignment["turnitintooltwo"]->numparts = count($partids);
-        $newassignment["turnitintooltwo"]->gradedisplay = 1;
+        $newassignment["turnitintooltwo"]->gradedisplay = $config->default_gradedisplay;
         $newassignment["turnitintooltwo"]->shownonsubmission = 1;
         $newassignment["turnitintooltwo"]->usegrademark = $config->usegrademark;
         // Get maximum grade.
@@ -656,7 +656,6 @@ class turnitintooltwo_assignment {
         // Insert the default options for the assignment.
         $this->turnitintooltwo->timecreated = time();
         $this->turnitintooltwo->dateformat = "d/m/Y";
-        $this->turnitintooltwo->gradedisplay = 1;
         $this->turnitintooltwo->commentedittime = 1800;
         $this->turnitintooltwo->commentmaxsize = 800;
         $this->turnitintooltwo->autosubmission = 1;
