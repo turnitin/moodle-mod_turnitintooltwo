@@ -416,15 +416,22 @@ switch ($cmd) {
                         $show_setting_warning = 1;
                         $settings_list = array();
                         foreach ($v1tov2_settings as $k => $v) {
-                            if ((isset($v1config[$v["v1field"]])) && (
-                                (($v["v1field"] != "turnitin_apiurl") && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) || 
-                                (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false))
-                                )) {
-                                if ($show_setting_warning) {
-                                    $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
-                                    $show_setting_warning = 0;
+                            // Check URL, then other settings.
+                            if (isset($v1config[$v["v1field"]])) {
+                                if (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false)) {
+                                    if ($show_setting_warning) {
+                                        $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
+                                        $show_setting_warning = 0;
+                                    }
+                                    $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
                                 }
-                                $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
+                                elseif ($v1config[$v["v1field"]]->value != $config->$v["v2field"]) {
+                                    if ($show_setting_warning) {
+                                        $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
+                                        $show_setting_warning = 0;
+                                    }
+                                    $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
+                                }
                             }
                         }
 
