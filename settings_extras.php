@@ -400,6 +400,8 @@ switch ($cmd) {
                         // Map V1 setting names to V2 and the corresponding language string.
                         $v1tov2_settings = array(
                                 array("v1field" => "turnitin_account_id", "v2field" => "accountid", "lang" => "turnitinaccountid"),
+                                array("v1field" => "turnitin_secretkey", "v2field" => "secretkey", "lang" => "turnitinsecretkey"),
+                                array("v1field" => "turnitin_apiurl", "v2field" => "apiurl", "lang" => "turnitinapiurl"),
                                 array("v1field" => "turnitin_usegrademark", "v2field" => "usegrademark", "lang" => "turnitinusegrademark"),
                                 array("v1field" => "turnitin_useerater", "v2field" => "useerater", "lang" => "turnitinuseerater"),
                                 array("v1field" => "turnitin_useanon", "v2field" => "useanon", "lang" => "turnitinuseanon"),
@@ -414,7 +416,10 @@ switch ($cmd) {
                         $show_setting_warning = 1;
                         $settings_list = array();
                         foreach ($v1tov2_settings as $k => $v) {
-                            if ((isset($v1config[$v["v1field"]])) && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) {
+                            if ((isset($v1config[$v["v1field"]])) && (
+                                (($v["v1field"] != "turnitin_apiurl") && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) || 
+                                (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false))
+                                )) {
                                 if ($show_setting_warning) {
                                     $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
                                     $show_setting_warning = 0;
