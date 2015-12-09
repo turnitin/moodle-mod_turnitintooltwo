@@ -422,7 +422,7 @@ switch ($cmd) {
                                    $show_setting_warning = 1;
                                    $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
                                }
-                               elseif ($v1config[$v["v1field"]]->value != $config->$v["v2field"]) {
+                               elseif (($v["v1field"] != "turnitin_apiurl") && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) {
                                    $show_setting_warning = 1;
                                    $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
                                }
