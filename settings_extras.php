@@ -400,6 +400,8 @@ switch ($cmd) {
                         // Map V1 setting names to V2 and the corresponding language string.
                         $v1tov2_settings = array(
                                 array("v1field" => "turnitin_account_id", "v2field" => "accountid", "lang" => "turnitinaccountid"),
+                                array("v1field" => "turnitin_secretkey", "v2field" => "secretkey", "lang" => "turnitinsecretkey"),
+                                array("v1field" => "turnitin_apiurl", "v2field" => "apiurl", "lang" => "turnitinapiurl"),
                                 array("v1field" => "turnitin_usegrademark", "v2field" => "usegrademark", "lang" => "turnitinusegrademark"),
                                 array("v1field" => "turnitin_useerater", "v2field" => "useerater", "lang" => "turnitinuseerater"),
                                 array("v1field" => "turnitin_useanon", "v2field" => "useanon", "lang" => "turnitinuseanon"),
@@ -411,16 +413,24 @@ switch ($cmd) {
                         // Get a list of V1 and V2 settings.get_records_select
                         $v1config = $DB->get_records_sql("SELECT name, value FROM {config} WHERE name LIKE '%turnitin%'");
 
-                        $show_setting_warning = 1;
+                        $show_setting_warning = 0;
                         $settings_list = array();
                         foreach ($v1tov2_settings as $k => $v) {
-                            if ((isset($v1config[$v["v1field"]])) && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) {
-                                if ($show_setting_warning) {
-                                    $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
-                                    $show_setting_warning = 0;
-                                }
-                                $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
-                            }
+                           // Check URL first, then other settings, as URL check is different.
+                           if (isset($v1config[$v["v1field"]])) {
+                               if (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false)) {
+                                   $show_setting_warning = 1;
+                                   $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
+                               }
+                               elseif ($v1config[$v["v1field"]]->value != $config->$v["v2field"]) {
+                                   $show_setting_warning = 1;
+                                   $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
+                               }
+                           }
+                        }
+                        // Output the settings warning header if any settings are different.
+                        if ($show_setting_warning) {
+                           $output .= html_writer::tag('div', get_string("migrationtool_setting_warning", 'turnitintooltwo'), array('id' => 'migrationtool_explained'));
                         }
 
                         // Display the list of setting conflicts.
