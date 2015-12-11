@@ -549,3 +549,4 @@ $string['ppeventsfailedconnection'] = 'No events will be processed by the Turnit
 $string['ppcronsubmissionlimitreached'] = 'No further submissions will be sent to Turnitin by this cron execution as only {$a} are processed per run';
 $string['errorcode5'] = 'This file has not been submitted to Turnitin because there is a problem creating the module in Turnitin which is preventing submissions, please consult your API logs for further information';
 $string['errorcode6'] = 'This file has not been submitted to Turnitin because there is a problem editing the module settings in Turnitin which is preventing submissions, please consult your API logs for further information';
+$string['ppqueuesize'] = 'Number of events in the Plagiarism Plugin events queue';
