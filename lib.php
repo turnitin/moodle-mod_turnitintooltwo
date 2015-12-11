@@ -663,8 +663,8 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         $ext = '.' . array_pop($pathparts);
     }
 
-    $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - strlen($tempdir.DIRECTORY_SEPARATOR);
-    $extlength = strlen('_' . mt_getrandmax() . $ext);
+    $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - mb_strlen($tempdir.DIRECTORY_SEPARATOR, 'UTF-8');
+    $extlength = mb_strlen('_' . mt_getrandmax() . $ext, 'UTF-8');
     if ($extlength > $permittedstrlength) {
         // Someone has likely used a filename with an absurdly long extension, or the
         // tempdir path is huge, so preserve the extension as much as possible.
@@ -673,7 +673,7 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
 
     // Shorten the filename as needed, taking the extension into consideration.
     $permittedstrlength -= $extlength;
-    $filename = substr($filename, 0, $permittedstrlength);
+    $filename = mb_substr($filename, 0, $permittedstrlength, 'UTF-8');
 
     $tries = 0;
     do {
@@ -683,7 +683,7 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         $tries++;
 
         // Ensure the filename doesn't have any characters that are invalid for the fs.
-        $filename = clean_param($filename . substr('_' . mt_rand() . $ext, 0, $extlength), PARAM_FILE);
+        $filename = clean_param($filename . mb_substr('_' . mt_rand() . $ext, 0, $extlength, 'UTF-8'), PARAM_FILE);
         $file = $tempdir . DIRECTORY_SEPARATOR . $filename;
     } while (!touch($file));
 
