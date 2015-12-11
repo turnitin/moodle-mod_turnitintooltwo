@@ -237,8 +237,8 @@ if ($ADMIN->fulltree) {
                                                         0, $lnoptions));
 
         $settings->add(new admin_setting_configselect('turnitintooltwo/lastnamegen',
-                                                        get_string('psuedolastnamegen', 'turnitintooltwo'),
-                                                        get_string('psuedolastnamegen_desc', 'turnitintooltwo' ),
+                                                        get_string('pseudolastnamegen', 'turnitintooltwo'),
+                                                        get_string('pseudolastnamegen_desc', 'turnitintooltwo' ),
                                                         0, $ynoptions));
 
         $settings->add(new admin_setting_configtext('turnitintooltwo/pseudosalt',
