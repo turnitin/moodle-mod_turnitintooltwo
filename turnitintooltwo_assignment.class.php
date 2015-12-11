@@ -345,8 +345,15 @@ class turnitintooltwo_assignment {
         $turnitincall = $turnitincomms->initialise_api();
 
         $class = new TiiClass();
-        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100)
-        $class->setTitle( mb_strlen( $course->fullname ) > 80 ? mb_substr( $course->fullname, 0, 80 ) . "..." : $course->fullname . " (Moodle " . $coursetype . ")" );
+        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100).
+        $title = "";
+        if ( mb_strlen( $course->fullname, 'UTF-8' ) > 80 ) {
+            $title .= mb_substr( $course->fullname, 0, 80, 'UTF-8' ) . "...";
+        } else {
+            $title .= $course->fullname;
+        }
+        $title .= " (Moodle " . $coursetype . ")";
+        $class->setTitle( $title );
 
         try {
             $response = $turnitincall->createClass($class);
@@ -404,8 +411,15 @@ class turnitintooltwo_assignment {
 
         $class = new TiiClass();
         $class->setClassId($course->turnitin_cid);
-        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100)
-        $class->setTitle( mb_strlen( $course->fullname ) > 80 ? mb_substr( $course->fullname, 0, 80 ) . "..." : $course->fullname . " (Moodle " . $coursetype . ")" );
+        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100).
+        $title = "";
+        if ( mb_strlen( $course->fullname, 'UTF-8' ) > 80 ) {
+            $title .= mb_substr( $course->fullname, 0, 80, 'UTF-8' ) . "...";
+        } else {
+            $title .= $course->fullname;
+        }
+        $title .= " (Moodle " . $coursetype . ")";
+        $class->setTitle( $title );
 
         try {
             $turnitincall->updateClass($class);
