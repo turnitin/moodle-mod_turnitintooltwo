@@ -551,3 +551,5 @@ $string['errorcode5'] = 'This file has not been submitted to Turnitin because th
 $string['errorcode6'] = 'This file has not been submitted to Turnitin because there is a problem editing the module settings in Turnitin which is preventing submissions, please consult your API logs for further information';
 $string['receipt_instructor_copy'] = 'A submission entitled <strong>{$a->submission_title}</strong> has been made to assignment <strong>{$a->assignment_name}{$a->assignment_part}</strong> in the class <strong>{$a->course_fullname}</strong>.<br /><br />Submission ID: <strong>{$a->submission_id}</strong><br />Submission Date: <strong>{$a->submission_date}</strong><br />';
 $string['receipt_instructor_copy_subject'] = 'Submission made to assignment';
+$string['instructorreceipt'] = 'Notify Instructor upon Submission';
+$string['instructorreceipt_desc'] = 'Choose whether to send a notification to each instructor on a course when a submission is made to an assignment.';

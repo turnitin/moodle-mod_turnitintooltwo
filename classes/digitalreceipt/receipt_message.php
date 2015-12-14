@@ -76,7 +76,7 @@ class receipt_message {
 
     /**
      * Send instructor message to instructors on course.
-     * 
+     *
      * @param array $instructors
      * @param string $message
      * @return void
@@ -89,7 +89,6 @@ class receipt_message {
         $eventdata->component         = 'mod_turnitintooltwo'; //your component name
         $eventdata->name              = 'submission'; //this is the message name from messages.php
         $eventdata->userfrom          = get_admin();
-        $eventdata->userto            = $userid;
         $eventdata->subject           = $subject;
         $eventdata->fullmessage       = $message;
         $eventdata->fullmessageformat = FORMAT_HTML;
@@ -97,6 +96,10 @@ class receipt_message {
         $eventdata->smallmessage      = '';
         $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
 
-        message_send($eventdata);
+        foreach ($instructors as $instructor) {
+            $eventdata->userto = $instructor;
+            message_send($eventdata);
+        }
+        unset($instructor);
     }
 }
