@@ -133,5 +133,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $DB->set_field("turnitintooltwo", "gradedisplay", 2);
     }
 
+    if ($result && $oldversion < 2015040112) {
+        $table = new xmldb_table('turnitintooltwo_parts');
+        $field = new xmldb_field('anongradebook', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'submitted');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return $result;
 }
