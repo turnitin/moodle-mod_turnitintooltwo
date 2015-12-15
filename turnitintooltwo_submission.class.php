@@ -43,7 +43,6 @@ class turnitintooltwo_submission {
     public $submission_unanon;
     private $submission_unanonreason;
     public $submission_transmatch;
-    public $submission_instructorreceipt;
     private $submission_instructors;
     public $submission_orcapable;
     public $submission_acceptnothing;
@@ -611,11 +610,12 @@ class turnitintooltwo_submission {
                 );
 
 
-
                 // Instructor digital receipt
-                $this->submission_instructors = get_users_by_capability(context_module::instance($cm->id),'mod/turnitintooltwo:grade', '', 'u.id');
-                $message = $this->receipt->build_instructor_message($input);
-                $this->receipt->send_instructor_message($instructors, $message);
+                if ($config->instructorreceipt) {
+                    $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', '', 'u.id');
+                    $message = $this->receipt->build_instructor_message($input);
+                    $this->receipt->send_instructor_message($this->submission_instructors, $message);
+                }
 
                 // Student digital receipt
                 $message = $this->receipt->build_message($input);
