@@ -136,7 +136,15 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $table = new xmldb_table('turnitintooltwo');
         // Add field for whether or not the OR should be synced to the gradebook.
         $field = new xmldb_field('syncreport', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'needs_updating');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
 
+        // Add field to transfer grades to gradebook for anonymous assignments.
+        $field = new xmldb_field('anongradebook', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'syncreport');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
     }
 
     return true;
