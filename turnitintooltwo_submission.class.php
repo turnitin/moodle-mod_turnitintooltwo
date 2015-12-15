@@ -611,8 +611,9 @@ class turnitintooltwo_submission {
 
 
                 // Instructor digital receipt
+
                 if ($config->instructorreceipt) {
-                    $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', '', 'u.id');
+                    $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', 'u.id');
                     $message = $this->receipt->build_instructor_message($input);
                     $this->receipt->send_instructor_message($this->submission_instructors, $message);
                 }
