@@ -30,7 +30,11 @@ if ($ADMIN->fulltree) {
 
     $library_warning = '';
     if (!extension_loaded('XMLWriter')) {
-        $library_warning = html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'),
+        $library_warning .= html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'),
+                                                array('class' => 'library_not_present_warning'));
+    }
+    if (!extension_loaded('mbstring')) {
+        $library_warning .= html_writer::tag('div', get_string('nombstringlibrary', 'turnitintooltwo'),
                                                 array('class' => 'library_not_present_warning'));
     }
 

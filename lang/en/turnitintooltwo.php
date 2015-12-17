@@ -551,3 +551,4 @@ $string['errorcode5'] = 'This file has not been submitted to Turnitin because th
 $string['errorcode6'] = 'This file has not been submitted to Turnitin because there is a problem editing the module settings in Turnitin which is preventing submissions, please consult your API logs for further information';
 $string['ppqueuesize'] = 'Number of events in the Plagiarism Plugin events queue';
 $string['errorcode7'] = 'This file has not been submitted to Turnitin because there is a problem creating the user in Turnitin which is preventing submissions, please consult your API logs for further information';
+$string['nombstringlibrary'] = 'To use this plugin you will need to have the PHP mbstring extension installed on your server.';
