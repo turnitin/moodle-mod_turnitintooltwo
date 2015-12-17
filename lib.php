@@ -537,7 +537,7 @@ function turnitintooltwo_cron() {
 
         // Update the gradebook.
         $task = "needsupdating";
-        turnitintooltwo_cron_update_gradbook($assignment, $task, $submissionFieldList);
+        turnitintooltwo_cron_update_gradbook($assignment, $task);
     }
 
     // Send grades to the gradebook for anonymous marking assignments when the post date has passed.
@@ -553,7 +553,7 @@ function turnitintooltwo_cron() {
         // Update each assignment.
         $task = "anongradebook";
         foreach ($assignmentlist as $assignment) {
-            turnitintooltwo_cron_update_gradbook($assignment, $task, $submissionFieldList);
+            turnitintooltwo_cron_update_gradbook($assignment, $task);
         }
     }
 
@@ -579,6 +579,12 @@ function turnitintooltwo_cron() {
     }
 }
 
+/**
+ * Update the gradebook for cron calls.
+ *
+ * @param type $assignment The assignment that we are going to update the grades for.
+ * @param string $task The cron task we are performing the update from.
+ */
 function turnitintooltwo_cron_update_gradbook($assignment, $task) {
     global $DB, $CFG;
     @include_once($CFG->dirroot."/lib/gradelib.php");
