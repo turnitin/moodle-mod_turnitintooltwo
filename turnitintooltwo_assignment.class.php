@@ -1159,6 +1159,14 @@ class turnitintooltwo_assignment {
                     $partdetails->unanon = 1;
                 }
 
+                // If post date is moved beyond the current time, reset anon gradebook flag.
+                if ($fieldvalue > time()) {
+                    $update_assignment = new stdClass();
+                    $update_assignment->id = $partdetails->turnitintooltwoid;
+                    $update_assignment->anongradebook = 0;
+                    $DB->update_record("turnitintooltwo", $update_assignment);
+                }
+
                 $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
                 break;
         }
