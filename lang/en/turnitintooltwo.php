@@ -552,3 +552,7 @@ $string['errorcode6'] = 'This file has not been submitted to Turnitin because th
 $string['ppqueuesize'] = 'Number of events in the Plagiarism Plugin events queue';
 $string['errorcode7'] = 'This file has not been submitted to Turnitin because there is a problem creating the user in Turnitin which is preventing submissions, please consult your API logs for further information';
 $string['nombstringlibrary'] = 'To use this plugin you will need to have the PHP mbstring extension installed on your server.';
+$string['receipt_instructor_copy'] = 'A submission entitled <strong>{$a->submission_title}</strong> has been made to assignment <strong>{$a->assignment_name}{$a->assignment_part}</strong> in the class <strong>{$a->course_fullname}</strong>.<br /><br />Submission ID: <strong>{$a->submission_id}</strong><br />Submission Date: <strong>{$a->submission_date}</strong><br />';
+$string['receipt_instructor_copy_subject'] = 'Submission made to assignment';
+$string['instructorreceipt'] = 'Notify Instructor upon Submission';
+$string['instructorreceipt_desc'] = 'Choose whether to send a notification to each instructor on a course when a submission is made to an assignment.';
