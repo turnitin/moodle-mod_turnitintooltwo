@@ -637,7 +637,6 @@ function turnitintooltwo_cron_update_gradbook($assignment, $task) {
             break;
     }
 
-    $update_assignment->anongradebook = 1;
     $DB->update_record("turnitintooltwo", $update_assignment);
 }
 
