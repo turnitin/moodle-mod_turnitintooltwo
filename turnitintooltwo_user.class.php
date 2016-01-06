@@ -292,7 +292,6 @@ class turnitintooltwo_user {
 
             try {
                 $turnitincall->updateUser($user);
-                turnitintooltwo_activitylog("Turnitin User updated: ".$this->id." (".$this->tii_user_id.")", "REQUEST");
             } catch (Exception $e) {
                 $toscreen = ($this->workflowcontext == "cron") ? false : true;
                 $turnitincomms->handle_exceptions($e, 'userupdateerror', $toscreen);
