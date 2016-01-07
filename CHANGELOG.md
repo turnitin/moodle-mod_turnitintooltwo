@@ -1,3 +1,24 @@
+### Date:       2016-January-11
+### Release:    v2016011101
+
+- Instructors to be notified when a submission has been made.
+- Contrast changed for inbox error messages.
+- Check added to verify if php_mbstring is enabled.
+- Ensure filename to be sent to Turnitin is UTF-8 encoded
+- Unnecessary addition of user being updated in Turnitin and submission inbox being viewed removed from plugin activity logs.
+- Unused (pre Moodle 2.6) $module settings removed from version.php.
+- Moodle's cron will update OR scores if necessary after the due date has passed.
+- Use default values if user has no firstname or lastname.
+- Fixes:
+	- Anonymous grades to gradebook after post date has passed processed by cron.
+	- Grademark icon visibility now dependent on whether GradeMark feedback exists rather than a grade.
+    - Multi-part assignment Delete icon missing from "delete parts".
+    - Table sorting images shown in Submission inbox.
+    - Fix object variable in ajax request for PHP7 compatability.
+	- Replace deprecated mime_content_type function in submission to Turnitin process.
+
+---
+
 ### Date:       2015-November-30
 ### Release:    v2015040111
 
