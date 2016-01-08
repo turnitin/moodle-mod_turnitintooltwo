@@ -158,9 +158,14 @@ if (!empty($action)) {
                 throw new moodle_exception('invalidsesskey', 'error');
             }
 
+            if (!$istutor) {
+                throw new moodle_exception('nopermissions', 'error', '', 'delpart');
+            }
+
             if ($turnitintooltwoassignment->delete_moodle_assignment_part($turnitintooltwoassignment->turnitintooltwo->id, $part)) {
                 $_SESSION["notice"]['message'] = get_string('partdeleted', 'turnitintooltwo');
             }
+
             redirect(new moodle_url('/course/mod.php', array('update' => $cm->id,
                                             'return' => true, 'sesskey' => sesskey())));
             exit;
@@ -171,8 +176,10 @@ if (!empty($action)) {
                 throw new moodle_exception('invalidsesskey', 'error');
             }
 
-            $tutorid = required_param('turnitintutors', PARAM_INT);
-            $_SESSION["notice"]['message'] = $turnitintooltwoassignment->add_tii_tutor($tutorid);
+            if ($istutor) {
+                $tutorid = required_param('turnitintutors', PARAM_INT);
+                $_SESSION["notice"]['message'] = $turnitintooltwoassignment->add_tii_tutor($tutorid);
+            }
 
             redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'do' => $do)));
             exit;
@@ -345,7 +352,8 @@ if (!empty($action)) {
             $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
 
             // Allow instructors to delete submission and students to delete if the submission hasn't gone to Turnitin.
-            if (($istutor && $submissionid != 0) || (!$istutor && empty($turnitintooltwosubmission->submission_objectid))) {
+            if (($istutor && $submissionid != 0) ||
+                ($USER->id == $turnitintooltwosubmission->userid && empty($turnitintooltwosubmission->submission_objectid))) {
                 $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
             }
             redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'partid' => $part, 'do' => 'submissions')));
@@ -504,20 +512,25 @@ switch ($do) {
         $submissionid = required_param('submissionid', PARAM_INT);
         $submission = new turnitintooltwo_submission($submissionid, 'turnitin');
 
-        $table = new html_table();
-        $table->data = array(
-            array(get_string('submissionauthor', 'turnitintooltwo'), $submission->firstname . ' ' . $submission->lastname),
-            array(get_string('turnitinpaperid', 'turnitintooltwo') . ' <small>(' . get_string('refid', 'turnitintooltwo') . ')</small>', $submissionid),
-            array(get_string('submissiontitle', 'turnitintooltwo'), $submission->submission_title),
-            array(get_string('receiptassignmenttitle', 'turnitintooltwo'), $turnitintooltwoassignment->turnitintooltwo->name),
-            array(get_string('submissiondate', 'turnitintooltwo'), date("d/m/y, H:i", $submission->submission_modified))
-        );
+        if ($istutor || $USER->id == $submission->userid) {
+            $table = new html_table();
+            $table->data = array(
+                array(get_string('submissionauthor', 'turnitintooltwo'), $submission->firstname . ' ' . $submission->lastname),
+                array(get_string('turnitinpaperid', 'turnitintooltwo') . ' <small>(' . get_string('refid', 'turnitintooltwo') . ')</small>', $submissionid),
+                array(get_string('submissiontitle', 'turnitintooltwo'), $submission->submission_title),
+                array(get_string('receiptassignmenttitle', 'turnitintooltwo'), $turnitintooltwoassignment->turnitintooltwo->name),
+                array(get_string('submissiondate', 'turnitintooltwo'), date("d/m/y, H:i", $submission->submission_modified))
+            );
 
-        $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo', array('class' => 'logo'));
-        $digitalreceipt .= '<h2>'.get_string('digitalreceipt', 'turnitintooltwo').'</h2>';
-        $digitalreceipt .= '<p>'.get_string('receiptparagraph', 'turnitintooltwo').'</p>';
-        $digitalreceipt .= html_writer::table($table);
-        $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo') . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
+            $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo', array('class' => 'logo'));
+            $digitalreceipt .= '<h2>'.get_string('digitalreceipt', 'turnitintooltwo').'</h2>';
+            $digitalreceipt .= '<p>'.get_string('receiptparagraph', 'turnitintooltwo').'</p>';
+            $digitalreceipt .= html_writer::table($table);
+            $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo') . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
+        } else {
+            $digitalreceipt = "";
+        }
+
         echo html_writer::tag("div", $digitalreceipt, array("id" => "tii_digital_receipt_box"));
         break;
 
@@ -671,7 +684,7 @@ switch ($do) {
 
         // Show submission failure if this has been a manual submission.
         if (isset($_SESSION["digital_receipt"]["success"]) && $_SESSION["digital_receipt"]["success"] == false) {
-            $output = html_writer::tag("div", $_SESSION["digital_receipt"]["message"], 
+            $output = html_writer::tag("div", $_SESSION["digital_receipt"]["message"],
                                     array("class" => "general_warning manual_submission_failure_msg"));
             if ($viewcontext == "box_solid") {
                 $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
