@@ -1,4 +1,4 @@
-### Date:       2016-January-11
+### Date:       2016-January-12
 ### Release:    v2016011101
 
 - Instructors to be notified when a submission has been made.
@@ -15,6 +15,7 @@
     - Multi-part assignment Delete icon missing from "delete parts".
     - Table sorting images shown in Submission inbox.
     - Fix object variable in ajax request for PHP7 compatability.
+    - Additional user status checking added to view.php functions (Thanks to Skylar Kelty)
 	- Replace deprecated mime_content_type function in submission to Turnitin process.
 
 ---
