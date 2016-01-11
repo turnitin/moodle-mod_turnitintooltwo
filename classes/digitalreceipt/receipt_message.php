@@ -60,6 +60,7 @@ class receipt_message {
      */
     public function build_instructor_message($input)
     {
+        $message = new stdClass();
         $message->submission_title = $input['submission_title'];
         $message->assignment_name = $input['assignment_name'];
         if ( isset($input['assignment_part']) ) {
@@ -97,7 +98,7 @@ class receipt_message {
         $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
 
         foreach ($instructors as $instructor) {
-            $eventdata->userto = $instructor;
+            $eventdata->userto = $instructor->id;
             message_send($eventdata);
         }
         unset($instructor);
