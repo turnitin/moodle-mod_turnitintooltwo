@@ -132,7 +132,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $DB->set_field("turnitintooltwo", "gradedisplay", 2);
     }
 
-    if ($oldversion < 2015040112) {
+    if ($oldversion < 2016011101) {
         $table = new xmldb_table('turnitintooltwo');
         // Add field for whether or not the OR should be synced to the gradebook.
         $field = new xmldb_field('syncreport', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'needs_updating');
