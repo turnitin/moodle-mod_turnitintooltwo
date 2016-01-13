@@ -8,12 +8,11 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
 
     global $CFG, $THEME, $DB, $OUTPUT;
 
-    $result = true;
     $dbman = $DB->get_manager();
 
     // Do necessary DB upgrades here
     // Newer DB Man field ($name, $type=null, $precision=null, $unsigned=null, $notnull=null, $sequence=null, $default=null, $previous=null)
-    if ($result && $oldversion < 2014012401) {
+    if ($oldversion < 2014012401) {
         $table = new xmldb_table('turnitintooltwo');
         $field = new xmldb_field('allownonor', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'rubric');
         if (!$dbman->field_exists($table, $field)) {
@@ -30,7 +29,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2014012404) {
+    if ($oldversion < 2014012404) {
         $table = new xmldb_table('turnitintooltwo_users');
         $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
         if (!$dbman->field_exists($table, $field)) {
@@ -38,7 +37,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2014012405) {
+    if ($oldversion < 2014012405) {
         $table = new xmldb_table('turnitintooltwo');
         $field = new xmldb_field('submitted', XMLDB_TYPE_INTEGER, '1', null, null, null, 0, 'anon');
         if (!$dbman->field_exists($table, $field)) {
@@ -73,7 +72,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2014012412) {
+    if ($oldversion < 2014012412) {
         $table = new xmldb_table('turnitintooltwo');
         $field = new xmldb_field('needs_updating', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'allownonor');
         if (!$dbman->field_exists($table, $field)) {
@@ -81,7 +80,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2015040101) {
+    if ($oldversion < 2015040101) {
         $table = new xmldb_table('turnitintooltwo_parts');
         $field = new xmldb_field('unanon', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'migrated');
         if (!$dbman->field_exists($table, $field)) {
@@ -99,7 +98,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2015040104) {
+    if ($oldversion < 2015040104) {
         $table = new xmldb_table('turnitintooltwo_users');
         // Alter datatype of user_agreement_accepted.
         $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false, XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
@@ -111,7 +110,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2015040107) {
+    if ($oldversion < 2015040107) {
         $table = new xmldb_table('turnitintooltwo');
         // Add field for institution check.
         $field = new xmldb_field('institution_check', XMLDB_TYPE_INTEGER, '1', false, false, null, null, 'journalcheck');
@@ -121,17 +120,32 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($result && $oldversion < 2015040109) {
+    if ($oldversion < 2015040109) {
         // Update URL for UK accounts.
         $apiurl = get_config('turnitintooltwo', 'apiurl');
         $newurl = str_replace('submit.ac.uk', 'api.turnitinuk.com', strtolower($apiurl));
         set_config('apiurl', $newurl, 'turnitintooltwo');
     }
 
-    if ($result && $oldversion < 2015040111) {
+    if ($oldversion < 2015040111) {
         // Update gradedisplay value to be consistent with V1 plugin.
         $DB->set_field("turnitintooltwo", "gradedisplay", 2);
     }
 
-    return $result;
+    if ($oldversion < 2016011101) {
+        $table = new xmldb_table('turnitintooltwo');
+        // Add field for whether or not the OR should be synced to the gradebook.
+        $field = new xmldb_field('syncreport', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'needs_updating');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Add field to transfer grades to gradebook for anonymous assignments.
+        $field = new xmldb_field('anongradebook', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'syncreport');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+    return true;
 }

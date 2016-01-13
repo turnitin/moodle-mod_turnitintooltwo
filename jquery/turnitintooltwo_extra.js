@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
         "aoColumns": [
                         {"bSortable": false,
                             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                $(nTd).addClass('center');
+                                $(nTd).addClass('centered_cell');
                             }},
                         null,
                         {"aDataSort": [ 2, 3 ]},

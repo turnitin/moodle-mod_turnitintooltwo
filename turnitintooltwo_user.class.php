@@ -90,6 +90,11 @@ class turnitintooltwo_user {
 
         $this->firstname = stripslashes(str_replace('/', '', $user->firstname));
         $this->lastname = stripslashes(str_replace('/', '', $user->lastname));
+
+        // Set a default for first and last name in the event they are empty.
+        $this->firstname = (empty(trim($this->firstname))) ? "Moodle" : $this->firstname;
+        $this->lastname = (empty(trim($this->lastname))) ? "User ".$this->id : $this->lastname;
+
         $this->email = trim(html_entity_decode($user->email));
         $this->username = $user->username;
 
@@ -115,7 +120,7 @@ class turnitintooltwo_user {
     /**
      * Convert a regular firstname into the pseudo equivelant for student data privacy purpose
      *
-     * @return string A psuedo firstname address
+     * @return string A pseudo firstname address
      */
     private function get_pseudo_firstname() {
         $config = turnitintooltwo_admin_config();
@@ -127,7 +132,7 @@ class turnitintooltwo_user {
      * Convert a regular lastname into the pseudo equivelant for student data privacy purpose
      *
      * @param string $email The users email address
-     * @return string A psuedo lastname address
+     * @return string A pseudo lastname address
      */
     private function get_pseudo_lastname() {
         global $DB;
@@ -233,7 +238,7 @@ class turnitintooltwo_user {
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
-        // Convert the email, firstname and lastname to psuedos for students if the option is set in config
+        // Convert the email, firstname and lastname to pseudos for students if the option is set in config
         // Unless the user is already logged as a tutor then use real details.
         if (!empty($config->enablepseudo) && $this->role == "Learner") {
             $user = new TiiPseudoUser($this->get_pseudo_domain());
@@ -287,7 +292,6 @@ class turnitintooltwo_user {
 
             try {
                 $turnitincall->updateUser($user);
-                turnitintooltwo_activitylog("Turnitin User updated: ".$this->id." (".$this->tii_user_id.")", "REQUEST");
             } catch (Exception $e) {
                 $toscreen = ($this->workflowcontext == "cron") ? false : true;
                 $turnitincomms->handle_exceptions($e, 'userupdateerror', $toscreen);
