@@ -556,3 +556,4 @@ $string['receipt_instructor_copy'] = 'A submission entitled <strong>{$a->submiss
 $string['receipt_instructor_copy_subject'] = 'Submission made to assignment';
 $string['instructorreceipt'] = 'Notify Instructor upon Submission';
 $string['instructorreceipt_desc'] = 'Choose whether to send a notification to each instructor on a course when a submission is made to an assignment.';
+$string['errorcode9'] = 'The file cannot be submitted as there is no accessible content in the file pool to submit.';
