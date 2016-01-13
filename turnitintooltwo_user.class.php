@@ -92,8 +92,10 @@ class turnitintooltwo_user {
         $this->lastname = stripslashes(str_replace('/', '', $user->lastname));
 
         // Set a default for first and last name in the event they are empty.
-        $this->firstname = (empty(trim($this->firstname))) ? "Moodle" : $this->firstname;
-        $this->lastname = (empty(trim($this->lastname))) ? "User ".$this->id : $this->lastname;
+        $firstname = trim($this->firstname);
+        $this->firstname = (empty($firstname)) ? "Moodle" : $firstname;
+        $lastname = trim($this->lastname);
+        $this->lastname = (empty($lastname)) ? "User ".$this->id : $lastname;
 
         $this->email = trim(html_entity_decode($user->email));
         $this->username = $user->username;
