@@ -556,4 +556,5 @@ $string['receipt_instructor_copy'] = 'A submission entitled <strong>{$a->submiss
 $string['receipt_instructor_copy_subject'] = 'Submission made to assignment';
 $string['instructorreceipt'] = 'Notify Instructor upon Submission';
 $string['instructorreceipt_desc'] = 'Choose whether to send a notification to each instructor on a course when a submission is made to an assignment.';
+$string['errorcode8'] = 'This file has not been submitted to Turnitin because there is a problem creating the temp file. The most likely cause is an invalid file name. Please rename the file and re-upload using Edit Submission.';
 $string['errorcode9'] = 'The file cannot be submitted as there is no accessible content in the file pool to submit.';
