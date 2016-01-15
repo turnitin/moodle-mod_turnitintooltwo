@@ -416,17 +416,23 @@ switch ($cmd) {
                         $show_setting_warning = 0;
                         $settings_list = array();
                         foreach ($v1tov2_settings as $k => $v) {
-                           // Check URL first, then other settings, as URL check is different.
-                           if (isset($v1config[$v["v1field"]])) {
-                               if (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false)) {
+                            // Check URL first, then reposiroty, then other settings, as URL check and repository checks are different.
+                            if (isset($v1config[$v["v1field"]])) {
+                                if (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false)) {
                                    $show_setting_warning = 1;
                                    $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
-                               }
-                               elseif (($v["v1field"] != "turnitin_apiurl") && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) {
+                                }
+                                elseif ($v["v1field"] == "turnitin_userepository") {
+                                    if ((($v1config[$v["v1field"]]->value == 0) && ($config->$v["v2field"] == 1)) || (($v1config[$v["v1field"]]->value == 1) && ($config->$v["v2field"] != 1))) {
+                                        $show_setting_warning = 1;
+                                        $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
+                                    }
+                                }
+                                elseif (($v["v1field"] != "turnitin_apiurl") && ($v1config[$v["v1field"]]->value != $config->$v["v2field"])) {
                                    $show_setting_warning = 1;
                                    $settingslist[] = get_string($v["lang"], 'turnitintooltwo');
-                               }
-                           }
+                                }
+                            }
                         }
                         // Output the settings warning header if any settings are different.
                         if ($show_setting_warning) {
