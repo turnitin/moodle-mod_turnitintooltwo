@@ -416,7 +416,7 @@ switch ($cmd) {
                         $show_setting_warning = 0;
                         $settings_list = array();
                         foreach ($v1tov2_settings as $k => $v) {
-                            // Check URL first, then reposiroty, then other settings, as URL check and repository checks are different.
+                            // Check URL first, then repository, then other settings, as URL check and repository checks are different.
                             if (isset($v1config[$v["v1field"]])) {
                                 if (($v["v1field"] == "turnitin_apiurl") && (strpos($v1config[$v["v1field"]]->value, $config->$v["v2field"]) === false)) {
                                    $show_setting_warning = 1;
