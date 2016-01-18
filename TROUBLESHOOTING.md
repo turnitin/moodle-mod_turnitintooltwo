@@ -46,3 +46,22 @@ To fix this, you need to add the following line to your to your moodle config.ph
 libxml_disable_entity_loader(false);
 
 Thanks to Dan Marsden for the information and solution.
+
+Required PHP Extensions
+-----------------------
+
+In order for the module to work correctly you must enable the following PHP extensions. 
+
+	XMLWriter
+
+This is normally enabled by default but if PHP was compiled with --disable-xmlreader set then you will need to recompile PHP without --disable-xmlreader set.
+
+	MBstring
+
+You may be able to enable this setting by uncommenting the extension listing in your php.ini file:
+
+	;extension=php_mbstring.dll
+
+Remove the semi-colon at the start of the line to activate the MBstring extension. Once you have done this you will need to restart your web server service.
+
+If you can't find this line in your php.ini file then you may need to install the php-mbstring first. Further information on this can be found here: http://www.knowledgebase-script.com/kb/article/how-to-enable-mbstring-in-php-46.html
