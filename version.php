@@ -19,23 +19,13 @@
  * @copyright 2012 iParadigms LLC
  */
 
-// Moodle 2.3 - 2.5
-// Uncomment the $module settings below for installing Moodle 2.3 - 2.5
-// $module->version   = 2015040110;
-// $module->release   = "2.3 - 2.5";
-// $module->requires  = 2012062500;
-// $module->component = 'mod_turnitintooltwo';
-// $module->maturity  = MATURITY_STABLE;
-// $module->cron      = 1800;
-
-// Moodle 2.6+
 if (empty($plugin)) {
 	$plugin = new StdClass();
 }
 
-$plugin->version   = 2015040111;
+$plugin->version   = 2016011101;
 $plugin->release   = "2.6+";
-$plugin->requires  = 2012062500;
+$plugin->requires  = 2013111800;
 $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->cron      = 1800;

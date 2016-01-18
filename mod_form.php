@@ -166,6 +166,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/tii-icon-webfont.css"));
+        $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
+                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/font-awesome.min.css"));
 
         $mform->addElement('html', $script);
 
@@ -278,6 +280,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('studentreports', 'studentreports', 'turnitintooltwo');
         $mform->setDefault('studentreports', $config->default_studentreports);
 
+        $gradedisplayoptions = array(1 => get_string('displaygradesaspercent', 'turnitintooltwo'),
+                                     2 => get_string('displaygradesasfraction', 'turnitintooltwo'));
+        $mform->addElement('select', 'gradedisplay', get_string('displaygradesas', 'turnitintooltwo'), $gradedisplayoptions);
+        $mform->addHelpButton('gradedisplay', 'displaygradesas', 'turnitintooltwo');
+        $mform->setDefault('gradedisplay', $config->default_gradedisplay);
+
         $refreshoptions = array(1 => get_string('yesgrades', 'turnitintooltwo'), 0 => get_string('nogrades', 'turnitintooltwo'));
 
         $mform->addElement('select', 'autoupdates', get_string('autorefreshgrades', 'turnitintooltwo'), $refreshoptions);
@@ -313,7 +321,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
             // Delete part link.
             if ($this->updating && $this->current->numparts > 1 && $i <= $this->current->numparts) {
-
                 $attributes = array('class' => 'delete_link');
                 $numsubsattribute = "numsubs".$i;
                 if ($this->current->$numsubsattribute > 0) {
@@ -327,9 +334,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 $url = new moodle_url($CFG->wwwroot."/mod/turnitintooltwo/view.php",
                                         array('id' => $this->_cm->id, 'action' => 'delpart',
                                             'part' => $this->current->$partidattribute, 'sesskey' => sesskey()));
-                $deletelink = html_writer::link($url, get_string('deletepart', 'turnitintooltwo')." ".
-                                                $OUTPUT->pix_icon('delete', get_string('delete'),
-                                                    'mod_turnitintooltwo'), $attributes);
+                $deletelink = html_writer::link($url, html_writer::tag('i', '', array('class' => 'fa fa-trash fa-lg icon_smallmargin')).
+                        get_string('deletepart', 'turnitintooltwo'), $attributes);
                 $mform->addElement('html', $deletelink);
             }
 
@@ -369,6 +375,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addElement('select', 'reportgenspeed', get_string('reportgenspeed', 'turnitintooltwo'), $genoptions);
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
+
+        $mform->addElement('html', html_writer::tag('div', get_string('genspeednote', 'turnitintooltwo'), array('class' => 'tii_genspeednote')));
 
         $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
                             1 => get_string('standardrepository', 'turnitintooltwo'));

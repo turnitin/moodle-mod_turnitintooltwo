@@ -28,6 +28,7 @@ require_once(__DIR__.'/turnitintooltwo_class.class.php');
 // Constants.
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 41943040);
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
+define('TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME', get_string('defaultcoursestudent'));
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
 
@@ -530,48 +531,34 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
 function turnitintooltwo_cron() {
     global $DB, $CFG;
 
-    // get assignment that needs updating and check whether it exists
+    // Update gradebook when a part has been deleted.
+    // Get assignment that needs updating and check whether it exists
     if ($assignment = $DB->get_record('turnitintooltwo', array("needs_updating" => 1), '*', IGNORE_MULTIPLE)) {
-        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignment->id);
-        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
-            $turnitintooltwoassignment->turnitintooltwo->course);
 
-        $users = $turnitintooltwoassignment->get_moodle_course_users($cm);
+        // Update the gradebook.
+        $task = "needsupdating";
+        turnitintooltwo_cron_update_gradbook($assignment, $task);
+    }
 
-        foreach ($users as $user) {
-            // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
-            $grades = new stdClass();
+    // Send grades to the gradebook for anonymous marking assignments when the post date has passed.
+    // Get a list of assignments that need updating.
+    if ($assignmentlist = $DB->get_records_sql("SELECT t.id FROM {turnitintooltwo} t
+                                                LEFT JOIN {turnitintooltwo_parts} p ON (p.turnitintooltwoid = t.id)
+                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost) 
+                                                    FROM {turnitintooltwo_parts} 
+                                                    GROUP BY turnitintooltwoid) 
+                                                AND t.anon = 1 AND t. anongradebook = 0 AND dtpost < ".time()." 
+                                                GROUP BY turnitintooltwoid")) {
 
-            if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
-                $turnitintooltwoassignment->turnitintooltwo->id,
-                'userid' => $user->id, 'submission_unanon' => 1))
-            ) {
-                $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions, $cm);
-                if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
-                    // Using a scale.
-                    $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
-                } else {
-                    $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
-                }
-            }
-            $grades->userid = $user->id;
-            $params['idnumber'] = $cm->idnumber;
-
-            @include_once($CFG->dirroot."/lib/gradelib.php");
-            grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
-                'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
+        // Update each assignment.
+        $task = "anongradebook";
+        foreach ($assignmentlist as $assignment) {
+            turnitintooltwo_cron_update_gradbook($assignment, $task);
         }
-
-        // remove the "needs updating" flag
-        $update_assignment = new stdClass();
-        $update_assignment->id = $assignment->id;
-        $update_assignment->needs_updating = 0;
-        $DB->update_record("turnitintooltwo", $update_assignment);
     }
 
     // Refresh the submissions for migrated assignment parts if there are none stored locally
     // as the 1st time this is done can be quite a long job if there are a lot of submissions.
-
     $migratedemptyparts = $DB->get_records_select('turnitintooltwo_parts', " migrated = 1 AND ".
                             " (SELECT COUNT(id) FROM {turnitintooltwo_submissions} ".
                             " WHERE submission_part = {turnitintooltwo_parts}.id) = 0 ");
@@ -590,6 +577,67 @@ function turnitintooltwo_cron() {
         }
         echo 'Turnitintool submissions downloaded for assignments: '.implode(',', $updatedassignments).' ';
     }
+}
+
+/**
+ * Update the gradebook for cron calls.
+ *
+ * @param type $assignment The assignment that we are going to update the grades for.
+ * @param string $task The cron task we are performing the update from.
+ */
+function turnitintooltwo_cron_update_gradbook($assignment, $task) {
+    global $DB, $CFG;
+    @include_once($CFG->dirroot."/lib/gradelib.php");
+
+    $turnitintooltwoassignment = new turnitintooltwo_assignment($assignment->id);
+    $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+        $turnitintooltwoassignment->turnitintooltwo->course);
+
+    $users = $turnitintooltwoassignment->get_moodle_course_users($cm);
+
+    foreach ($users as $user) {
+        $fieldList = array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
+                           'userid' => $user->id);
+
+        // Set submission_unanon when needsupdating is used.
+        if ($task == "needsupdating") {
+            $fieldList['submission_unanon'] = 1;
+        }
+
+        $grades = new stdClass();
+
+        if ($submissions = $DB->get_records('turnitintooltwo_submissions', $fieldList)) {
+            $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions, $cm);
+            if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                // Using a scale.
+                $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+            } else {
+                $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+            }
+        }
+        $grades->userid = $user->id;
+        $params['idnumber'] = $cm->idnumber;
+
+        grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
+            'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
+    }
+
+    // Remove the "anongradebook" flag
+    $update_assignment = new stdClass();
+    $update_assignment->id = $assignment->id;
+
+    // Depending on the task we need to update a different column.
+    switch($task) {
+        case "needsupdating":
+            $update_assignment->needs_updating = 0;
+            break;
+
+        case "anongradebook":
+            $update_assignment->anongradebook = 1;
+            break;
+    }
+
+    $DB->update_record("turnitintooltwo", $update_assignment);
 }
 
 /**
@@ -662,8 +710,8 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         $ext = '.' . array_pop($pathparts);
     }
 
-    $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - strlen($tempdir.DIRECTORY_SEPARATOR);
-    $extlength = strlen('_' . mt_getrandmax() . $ext);
+    $permittedstrlength = TURNITINTOOLTWO_MAX_FILENAME_LENGTH - mb_strlen($tempdir.DIRECTORY_SEPARATOR, 'UTF-8');
+    $extlength = mb_strlen('_' . mt_getrandmax() . $ext, 'UTF-8');
     if ($extlength > $permittedstrlength) {
         // Someone has likely used a filename with an absurdly long extension, or the
         // tempdir path is huge, so preserve the extension as much as possible.
@@ -672,7 +720,7 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
 
     // Shorten the filename as needed, taking the extension into consideration.
     $permittedstrlength -= $extlength;
-    $filename = substr($filename, 0, $permittedstrlength);
+    $filename = mb_substr($filename, 0, $permittedstrlength, 'UTF-8');
 
     $tries = 0;
     do {
@@ -682,7 +730,7 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         $tries++;
 
         // Ensure the filename doesn't have any characters that are invalid for the fs.
-        $filename = clean_param($filename . substr('_' . mt_rand() . $ext, 0, $extlength), PARAM_FILE);
+        $filename = clean_param($filename . mb_substr('_' . mt_rand() . $ext, 0, $extlength, 'UTF-8'), PARAM_FILE);
         $file = $tempdir . DIRECTORY_SEPARATOR . $filename;
     } while (!touch($file));
 

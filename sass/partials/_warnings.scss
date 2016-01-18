@@ -1,6 +1,18 @@
 /*
  * Warning styles
  */
+
+.tii_library_not_present_warning {
+    border: 1px solid $warning-border;
+    padding: 8px;
+    background: $warning;
+    width: 99%;
+    text-align:center;
+    display:block;
+    margin-bottom:6px;
+    color: white;
+}
+
 .mod_turnitintooltwo {
 
     noscript.warning,
@@ -15,6 +27,7 @@
         text-align:center;
         display:block;
         margin-bottom:6px;
+        color: white;
     }
 
     #error {

@@ -80,7 +80,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     color: $red !important;
 }
 
-.tii_checkagainstnote {
+.tii_checkagainstnote, .tii_genspeednote {
     border: 1px solid $light-blue2;
     background: $light-blue;
     padding: 10px;
@@ -108,4 +108,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 
 .icon_margin {
     margin-right: 20px;
+}
+.icon_smallmargin {
+    margin-right: 10px;
 }
