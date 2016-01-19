@@ -722,6 +722,9 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
     $permittedstrlength -= $extlength;
     $filename = mb_substr($filename, 0, $permittedstrlength, 'UTF-8');
 
+    // Ensure the filename doesn't have any characters that are invalid for the fs.
+    $filename = clean_param($filename . mb_substr('_' . mt_rand() . $ext, 0, $extlength, 'UTF-8'), PARAM_FILE);
+
     $tries = 0;
     do {
         if ($tries == 10) {
@@ -729,10 +732,8 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         }
         $tries++;
 
-        // Ensure the filename doesn't have any characters that are invalid for the fs.
-        $filename = clean_param($filename . mb_substr('_' . mt_rand() . $ext, 0, $extlength, 'UTF-8'), PARAM_FILE);
         $file = $tempdir . DIRECTORY_SEPARATOR . $filename;
-    } while (!touch($file));
+    } while ( !touch($file) );
 
     return $file;
 }
