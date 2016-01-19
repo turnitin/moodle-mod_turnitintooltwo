@@ -155,6 +155,9 @@ function turnitintooltwo_activitylog($string, $activity) {
             unlink($dirpath."/".$files[$i]);
         }
 
+        // Replace <br> tags with new line character.
+        $string = str_replace("<br/>", "\r\n", $string);
+
         // Write to log file.
         $filepath = $dirpath."/".$prefix.gmdate('Y-m-d', time()).".txt";
         $file = fopen($filepath, 'a');
