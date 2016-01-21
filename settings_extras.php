@@ -468,6 +468,7 @@ switch ($cmd) {
 
                         $output .= $OUTPUT->box_end(true);
 
+                        // Trial migration footer.
                         $output .= $OUTPUT->box_start('hidden_class', 'migration-footer');
                         $output .= html_writer::tag('div', get_string("migrationtool_contactsupport", 'turnitintooltwo'), 
                             array('id' => 'begin-migration'));
@@ -475,10 +476,14 @@ switch ($cmd) {
                         $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
                                         array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses)));
                         $output .= $OUTPUT->box_end(true);
+
+                        // Migration complete footer
+                        $output .= $OUTPUT->box_start('hidden_class', 'migrationtool_complete');
+                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('class' => 'migrationtool_complete_text'));
+                        $output .= html_writer::tag('div', get_string("migrationtool_v1warning", 'turnitintooltwo'));
+                        $output .= $OUTPUT->box_end(true);
+                        
                         $output .= $OUTPUT->box_start();
-
-                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('id' => 'migrationtool_complete', 'class' => 'hidden_class'));
-
                     } else {
                         $output .= html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'), 
                                             array('class' => 'tii_checkagainstnote'));
