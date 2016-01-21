@@ -181,7 +181,7 @@ jQuery(document).ready(function($) {
 	        type: "POST",
 	        url: "ajax.php",
 	        dataType: "json",
-	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce, totalToMigrate},
+	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce, totalToMigrate: totalToMigrate},
 	        success: function(result) {
                 $('.migrationtool').append(result.dataset);
                 totalToMigrate = result.totalToMigrate;
