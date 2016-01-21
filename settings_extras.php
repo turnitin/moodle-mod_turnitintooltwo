@@ -475,10 +475,14 @@ switch ($cmd) {
                         $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
                                         array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses)));
                         $output .= $OUTPUT->box_end(true);
+                        $output .= $OUTPUT->box_start('hidden_class', 'migration-footer-nothing');
+                        $output .= html_writer::tag('div', get_string("migrationtool_allcontainv2", 'turnitintooltwo'), 
+                                            array('class' => 'tii_checkagainstnote'));
+                        $output .= $OUTPUT->box_end(true);
                         $output .= $OUTPUT->box_start();
 
-                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('id' => 'migrationtool_complete', 'class' => 'hidden_class'));
-
+                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), 
+                                            array('id' => 'migrationtool_complete', 'class' => 'hidden_class'));
                     } else {
                         $output .= html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'), 
                                             array('class' => 'tii_checkagainstnote'));
