@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 require_once(__DIR__.'/classes/digitalreceipt/receipt_message.php');
+require_once(__DIR__.'/classes/digitalreceipt/instructor_message.php');
 
 class turnitintooltwo_submission {
 
@@ -51,6 +52,7 @@ class turnitintooltwo_submission {
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
         $this->receipt = new receipt_message();
+        $this->instructor_receipt = new instructor_message();
 
         if ($idtype == "turnitin") {
             $this->submission_objectid = $id;
@@ -614,13 +616,16 @@ class turnitintooltwo_submission {
 
                 if ($config->instructorreceipt) {
                     $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', 'u.id');
-                    $message = $this->receipt->build_instructor_message($input);
-                    $this->receipt->send_instructor_message($this->submission_instructors, $message);
+
                 }
 
                 // Student digital receipt
                 $message = $this->receipt->build_message($input);
                 $this->receipt->send_message($this->userid, $message);
+
+                // Instructor digital receipt
+                $message = $this->instructor_receipt->build_instructor_message($input);
+                $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
 
                 //Create a log entry for submission going to Turnitin.
                 $logstring = ($apimethod == "replaceSubmission") ? 'addresubmissiontiidesc' : 'addsubmissiontiidesc';
