@@ -127,7 +127,7 @@ jQuery(document).ready(function($) {
 		});
     }
 
-    //Disable/enable resubmit selected files when one or more are selected.
+    // Disable/enable trial migration button depending on whether items have been selected.
     $(document).on('click', '.migration_checkbox', function() {
         if ($('.migration_checkbox:checked').length == 2) {
         	$('#trial-migration-button').removeAttr('disabled');
@@ -138,7 +138,7 @@ jQuery(document).ready(function($) {
 
 
 
-    // Disable/enable resubmit selected files when one or more are selected.
+    // Run the migration.
     $(document).on('click', '.migration-button', function() {
         $("#progress-bar").removeClass("hidden_class");
     	var id = this.id;
@@ -162,11 +162,11 @@ jQuery(document).ready(function($) {
 
 		// Do the migration.
     	$('.migrationtool').html('');
-		migrateCourses(0, totalCourses, processAtOnce, iterations, 1, trial, 1);
+		migrateCourses(0, totalCourses, processAtOnce, iterations, 1, trial, 1, 0);
     });
 
 
-    function migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce) {
+    function migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce, totalToMigrate) {
 		// Percentage increase of the progress bar on each iteration.
     	var progressBarSegment = Math.round(100/iterations);
 
@@ -181,9 +181,10 @@ jQuery(document).ready(function($) {
 	        type: "POST",
 	        url: "ajax.php",
 	        dataType: "json",
-	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce},
+	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce, totalToMigrate: totalToMigrate},
 	        success: function(result) {
                 $('.migrationtool').append(result.dataset);
+                totalToMigrate = result.totalToMigrate;
 
                 // Update progress bar.
                 $(".bar").width((progressBar) + '%');
@@ -193,9 +194,12 @@ jQuery(document).ready(function($) {
                 	$("#progress-bar").removeClass("active");
 
         			if (trial == 1) {
-        				$("#migration-footer").removeClass("hidden_class");
-        			}
-        			else {
+                        if (totalToMigrate > 0) {
+        				    $("#migration-footer").removeClass("hidden_class");
+                        } else {
+                            $("#migration-footer-nothing").removeClass("hidden_class");
+                        }
+        			} else {
         				$("#migrationtool_complete").removeClass("hidden_class");
         			}
                 }
@@ -204,7 +208,7 @@ jQuery(document).ready(function($) {
                 iteration = result.iteration + 1;
                 doOnce = result.doOnce;
                 if (result.end < totalCourses) {
-                    migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce);
+                    migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce, totalToMigrate);
                 }
             },
 	    });

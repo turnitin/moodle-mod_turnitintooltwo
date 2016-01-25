@@ -778,6 +778,7 @@ switch ($action) {
         $iteration = required_param('iteration', PARAM_INT);
         $trial = required_param('trial', PARAM_INT);
         $doOnce = required_param('doOnce', PARAM_INT);
+        $totalToMigrate = required_param('totalToMigrate', PARAM_INT);
 
         $data = "";
         
@@ -816,6 +817,7 @@ switch ($action) {
                 $subheaderText = "migrationtool_cant_migrate";
             } else {
                 $canMigrate = 1;
+                $totalToMigrate++;
                 $headerColour = "darkgreen";
                 $subheaderText = "migrationtool_can_migrate";
 
@@ -914,7 +916,7 @@ switch ($action) {
             }
         }
 
-        $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce);
+        $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate);
 
         echo json_encode($test);
     break;
