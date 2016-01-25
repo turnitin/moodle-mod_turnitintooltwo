@@ -539,7 +539,7 @@ class turnitintooltwo_view {
         if ($tab_position) {
             $output .= html_writer::tag('div', $tab_position, array('id' => 'tab_position', 'class' => 'hidden_class'));
         }
-        
+
         foreach ($partdetails as $partid => $partobject) {
             if (!empty($partid)) {
                 $i++;
@@ -1246,7 +1246,7 @@ class turnitintooltwo_view {
                     $grade .= $OUTPUT->box(html_writer::tag('span', $submissiongrade, array("class" => "grade"))
                                     , 'grademark_grade');
                 }
-                
+
                 // Put in div placeholder for DV launch form.
                 $grade .= $OUTPUT->box('', 'launch_form', 'grademark_form_'.$submission->submission_objectid);
                 // URL for DV launcher
@@ -1524,10 +1524,10 @@ class turnitintooltwo_view {
         $lti->setUserId($userid);
         $lti->setRole($userrole);
         $lti->setButtonText($buttonstring);
+        $lti->setFormTarget('');
 
         switch ($type) {
             case "useragreement":
-                $lti->setFormTarget('');
                 $ltifunction = "outputUserAgreementForm";
                 break;
 
@@ -1536,17 +1536,14 @@ class turnitintooltwo_view {
                 break;
 
             case "default":
-                $lti->setFormTarget("dvWindow");
                 $ltifunction = "outputDVDefaultForm";
                 break;
 
             case "origreport":
-                $lti->setFormTarget("dvWindow");
                 $ltifunction = "outputDVReportForm";
                 break;
 
             case "grademark":
-                $lti->setFormTarget("dvWindow");
                 $ltifunction = "outputDVGradeMarkForm";
                 break;
         }

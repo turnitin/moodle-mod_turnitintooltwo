@@ -151,7 +151,12 @@ switch ($action) {
 
             $user = new turnitintooltwo_user($USER->id, $userrole);
 
-            echo turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole);
+            $launch_form = turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole, '');
+            if ($action == 'downloadoriginal') {
+                echo $launch_form;
+            } else {
+                echo json_encode($launch_form);
+            }
         }
         break;
 
