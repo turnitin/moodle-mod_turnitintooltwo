@@ -652,7 +652,7 @@ class turnitintooltwo_view {
                 if ($turnitintooltwouser->get_user_role() == 'Instructor') {
                     $emailnonsubmitters = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                             '&part='.$partid.'&do=emailnonsubmittersform&view_context=box_solid',
-                                                        html_writer::tag('i', '', array('class' => 'fa fa-reply-all fa-lg')).' '.get_string('emailnonsubmitters', 'turnitintooltwo'),
+                                                        html_writer::tag('i', '', array('class' => 'fa fa-reply-all fa-lg')).' '.get_string('messagenonsubmitters', 'turnitintooltwo'),
                                                             array("class" => "nonsubmitters_link", "id" => "nonsubmitters_".$partid));
                 }
 
