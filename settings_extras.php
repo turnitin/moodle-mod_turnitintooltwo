@@ -376,8 +376,8 @@ switch ($cmd) {
         $jsrequired = true;
 
         // Set up our progress bar.
-        $output = html_writer::tag('div', 
-                    html_writer::tag('div', 
+        $output = html_writer::tag('div',
+                    html_writer::tag('div',
                         html_writer::tag('span', '0% Complete', array('class' => 'bar-complete'))
                     , array('class' => 'bar', 'style' => 'width: 0%'))
                   , array('id' => 'progress-bar', 'class' => 'progress progress-striped active hidden_class'));
@@ -456,7 +456,7 @@ switch ($cmd) {
 
                             $checkbox = html_writer::checkbox('check_'.$i, $i, false, '', array("class" => "migration_checkbox"));
                             $cells["checkbox"] = new html_table_cell($checkbox);
-                            
+
                             $rows[$i] = new html_table_row($cells);
                         }
 
@@ -468,27 +468,33 @@ switch ($cmd) {
 
                         $output .= $OUTPUT->box_end(true);
 
+                        // Trial migration footer.
                         $output .= $OUTPUT->box_start('hidden_class', 'migration-footer');
-                        $output .= html_writer::tag('div', get_string("migrationtool_contactsupport", 'turnitintooltwo'), 
+                        $output .= html_writer::tag('div', get_string("migrationtool_contactsupport", 'turnitintooltwo'),
                             array('id' => 'begin-migration'));
 
                         $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
                                         array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses)));
                         $output .= $OUTPUT->box_end(true);
+
                         $output .= $OUTPUT->box_start('hidden_class', 'migration-footer-nothing');
-                        $output .= html_writer::tag('div', get_string("migrationtool_allcontainv2", 'turnitintooltwo'), 
+                        $output .= html_writer::tag('div', get_string("migrationtool_allcontainv2", 'turnitintooltwo'),
                                             array('class' => 'tii_checkagainstnote'));
                         $output .= $OUTPUT->box_end(true);
-                        $output .= $OUTPUT->box_start();
 
-                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), 
-                                            array('id' => 'migrationtool_complete', 'class' => 'hidden_class'));
+                        // Migration complete footer
+                        $output .= $OUTPUT->box_start('hidden_class', 'migrationtool_complete');
+                        $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('class' => 'migrationtool_complete_text'));
+                        $output .= html_writer::tag('div', get_string("migrationtool_v1warning", 'turnitintooltwo'));
+                        $output .= $OUTPUT->box_end(true);
+
+                        $output .= $OUTPUT->box_start();
                     } else {
-                        $output .= html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'), 
+                        $output .= html_writer::tag('div', get_string("migrationtool_nothingtomigrate", 'turnitintooltwo'),
                                             array('class' => 'tii_checkagainstnote'));
                     }
                 } else {
-                    $output .= html_writer::tag('div', get_string("migrationtool_maintenancecheck", 'turnitintooltwo'), 
+                    $output .= html_writer::tag('div', get_string("migrationtool_maintenancecheck", 'turnitintooltwo'),
                                             array('class' => 'tii_checkagainstnote'));
                 }
             } else {

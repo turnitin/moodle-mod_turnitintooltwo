@@ -861,6 +861,17 @@ switch ($action) {
                     $updatetitle->name = $v1_assignment->name . ' (V1)';
                     $DB->update_record('turnitintool', $updatetitle);
 
+                    // Update the old assignment title in the gradebook.
+                    @include_once($CFG->dirroot."/lib/gradelib.php");
+                    $params = array();
+                    $params['itemname'] = $updatetitle->name;
+                    grade_update('mod/turnitintool', $course->courseid, 'mod', 'turnitintool', $v1_assignment_id, 0, NULL, $params);
+
+                    // Hide the V1 assignment.
+                    $cm = get_coursemodule_from_instance('turnitintool', $v1_assignment_id);
+                    set_coursemodule_visible($cm->id, 0);
+
+                    // Set up a V2 course module.
                     $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
                     $coursemodule = new stdClass();
                     $coursemodule->course = $course->courseid;
