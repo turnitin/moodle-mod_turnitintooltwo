@@ -138,6 +138,7 @@ switch ($action) {
         break;
 
     case "downloadoriginal":
+    case "default":
     case "origreport":
     case "grademark":
         $assignmentid = required_param('assignment', PARAM_INT);
