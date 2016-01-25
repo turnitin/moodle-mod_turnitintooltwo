@@ -149,6 +149,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('maxmarkserror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('disableanonconfirm', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('loadingdv', 'turnitintooltwo');
     }
 
     /**

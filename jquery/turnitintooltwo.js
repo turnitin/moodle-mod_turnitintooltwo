@@ -574,9 +574,12 @@ jQuery(document).ready(function($) {
         }
 
         if (proceed) {
-            if (dvtype != "downloadoriginal") {
-                dvWindow = window.open('', '_blank');
-            }
+            dvWindow = window.open('', '_blank');
+            var loading = '<div style="text-align:center;">';
+            loading += '<img src="'+M.cfg.wwwroot+'/mod/turnitintooltwo/pix/tiiIcon.svg" style="width:100px; height: 100px">';
+            loading += '<p style="font-family: Arial, Helvetica, sans-serif;">'+M.str.turnitintooltwo.loadingdv+'</p>';
+            loading += '</div>';
+            $(dvWindow.document.body).html(loading);
 
             // Get html to launch DV
             $.ajax({
@@ -585,7 +588,7 @@ jQuery(document).ready(function($) {
                 dataType: "json",
                 data: {action: dvtype, submission: submission_id, assignment: $('#assignment_id').html()},
                 success: function(data) {
-                    $(dvWindow.document.body).html(data);
+                    $(dvWindow.document.body).html(loading+data);
                     dvWindow.document.forms[0].submit();
                     dvWindow.document.close();
 
