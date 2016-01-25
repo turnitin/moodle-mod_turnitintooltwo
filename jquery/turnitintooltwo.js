@@ -365,15 +365,16 @@ jQuery(document).ready(function($) {
 
     // When the refresh submissions link is clicked, the data in each datatable needs to be reloaded
     $(".refresh_link").click(function () {
+        if ($(this).is(":visible")) {
+            $(".refresh_link").hide();
+            $(".refreshing_link").show();
 
-        $(".refresh_link").hide();
-        $(".refreshing_link").show();
-
-        $('table.submissionsDataTable').each(function() {
-            refreshRequested[$(this).attr("id")] = 1;
-            partTables[$(this).attr("id")].fnReloadAjax();
-            partTables[$(this).attr("id")].fnStandingRedraw();
-        });
+            $('table.submissionsDataTable').each(function() {
+                refreshRequested[$(this).attr("id")] = 1;
+                partTables[$(this).attr("id")].fnReloadAjax();
+                partTables[$(this).attr("id")].fnStandingRedraw();
+            });
+        }
         return false;
     });
 
