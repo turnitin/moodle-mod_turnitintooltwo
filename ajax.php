@@ -156,6 +156,7 @@ switch ($action) {
             if ($action == 'downloadoriginal') {
                 echo $launch_form;
             } else {
+                $launch_form = html_writer::tag("div", $launch_form, array('style' => 'display: none'));
                 echo json_encode($launch_form);
             }
         }
