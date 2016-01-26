@@ -149,6 +149,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('maxmarkserror', 'turnitintooltwo');
         $PAGE->requires->string_for_js('disableanonconfirm', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('loadingdv', 'turnitintooltwo');
     }
 
     /**
@@ -1534,10 +1535,10 @@ class turnitintooltwo_view {
         $lti->setUserId($userid);
         $lti->setRole($userrole);
         $lti->setButtonText($buttonstring);
+        $lti->setFormTarget('');
 
         switch ($type) {
             case "useragreement":
-                $lti->setFormTarget('');
                 $ltifunction = "outputUserAgreementForm";
                 break;
 
@@ -1546,17 +1547,14 @@ class turnitintooltwo_view {
                 break;
 
             case "default":
-                $lti->setFormTarget("dvWindow");
                 $ltifunction = "outputDVDefaultForm";
                 break;
 
             case "origreport":
-                $lti->setFormTarget("dvWindow");
                 $ltifunction = "outputDVReportForm";
                 break;
 
             case "grademark":
-                $lti->setFormTarget("dvWindow");
                 $ltifunction = "outputDVGradeMarkForm";
                 break;
         }
