@@ -138,6 +138,7 @@ switch ($action) {
         break;
 
     case "downloadoriginal":
+    case "default":
     case "origreport":
     case "grademark":
         $assignmentid = required_param('assignment', PARAM_INT);
@@ -151,7 +152,13 @@ switch ($action) {
 
             $user = new turnitintooltwo_user($USER->id, $userrole);
 
-            echo turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole);
+            $launch_form = turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole, '');
+            if ($action == 'downloadoriginal') {
+                echo $launch_form;
+            } else {
+                $launch_form = html_writer::tag("div", $launch_form, array('style' => 'display: none'));
+                echo json_encode($launch_form);
+            }
         }
         break;
 
