@@ -815,11 +815,13 @@ switch ($action) {
                 $canMigrate = 0;
                 $headerColour = "red";
                 $subheaderText = "migrationtool_cant_migrate";
+                $sessionText = "migrationtool_cant_migrate";
             } else {
                 $canMigrate = 1;
                 $totalToMigrate++;
                 $headerColour = "darkgreen";
                 $subheaderText = "migrationtool_can_migrate";
+                $sessionText = "migrationtool_migrated2";
 
                 if ($trial == 0) {
                     // Insert the course to the Turnitintooltwo courses table.
@@ -841,6 +843,9 @@ switch ($action) {
                 if ($canMigrate == 1) {
                     $data .= html_writer::tag('p', $course->fullname, array('class' => $headerColour));
                 }
+
+                //Save CSV session data.
+                $_SESSION["migrationtool"]["csvdata"][] = array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo'));
             }
 
             // Loop through each assignment, get its parts and submissions.
@@ -926,9 +931,6 @@ switch ($action) {
                 }
             }
         }
-
-        $test = array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate);
-
-        echo json_encode($test);
+        echo json_encode(array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate));
     break;
 }
