@@ -612,20 +612,16 @@ class turnitintooltwo_submission {
                 );
 
 
-                // Instructor digital receipt
-
-                if ($config->instructorreceipt) {
-                    $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', 'u.id');
-
-                }
-
                 // Student digital receipt
                 $message = $this->receipt->build_message($input);
                 $this->receipt->send_message($this->userid, $message);
 
                 // Instructor digital receipt
-                $message = $this->instructor_receipt->build_instructor_message($input);
-                $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
+                $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', 'u.id');
+                if(!empty($this->submission_instructors)){
+                    $message = $this->instructor_receipt->build_instructor_message($input);
+                    $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
+                }
 
                 //Create a log entry for submission going to Turnitin.
                 $logstring = ($apimethod == "replaceSubmission") ? 'addresubmissiontiidesc' : 'addsubmissiontiidesc';

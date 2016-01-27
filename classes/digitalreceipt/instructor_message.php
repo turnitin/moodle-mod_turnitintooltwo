@@ -49,6 +49,7 @@ class instructor_message {
         $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
 
         foreach ($instructors as $instructor) {
+
             $eventdata->userto = $instructor->id;
             message_send($eventdata);
         }
