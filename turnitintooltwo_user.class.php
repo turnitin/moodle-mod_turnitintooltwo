@@ -93,9 +93,9 @@ class turnitintooltwo_user {
 
         // Set a default for first and last name in the event they are empty.
         $firstname = trim($this->firstname);
-        $this->firstname = (empty($firstname)) ? "Moodle" : $firstname;
+        $this->firstname = (empty($firstname)) ? "N/A" : $firstname;
         $lastname = trim($this->lastname);
-        $this->lastname = (empty($lastname)) ? "User ".$this->id : $lastname;
+        $this->lastname = (empty($lastname)) ? "N/A" : $lastname;
 
         $this->email = trim(html_entity_decode($user->email));
         $this->username = $user->username;
