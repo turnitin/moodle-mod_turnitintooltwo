@@ -134,6 +134,7 @@ $string['textsubmission'] = 'Textübermittlung';
 $string['texttosubmit'] = 'Zu übermittelnder Text';
 $string['texttosubmit_help'] = 'Kopieren Sie den Text Ihrer Übermittlung und fügen Sie ihn in dieses Feld ein.';
 $string['title'] = 'Titel';
+$string['task_name'] = 'Turnitin-Aufgabe Task';
 $string['turnitinaccountid'] = 'Turnitin-Account-ID';
 $string['turnitinaccountid_desc'] = '<b>[Erforderlich]</b><br />Geben Sie die ID Ihres Turnitin-Hauptaccounts an.<br />';
 $string['turnitinanon'] = 'Anonymes Markieren';
