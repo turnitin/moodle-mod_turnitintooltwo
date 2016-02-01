@@ -550,8 +550,8 @@ function turnitintooltwo_cron() {
                                                 WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost) 
                                                     FROM {turnitintooltwo_parts} 
                                                     GROUP BY turnitintooltwoid) 
-                                                AND t.anon = 1 AND t. anongradebook = 0 AND dtpost < ".time()." 
-                                                GROUP BY turnitintooltwoid")) {
+                                                AND t.anon = 1 AND t.anongradebook = 0 AND dtpost < ".time()." 
+                                                GROUP BY t.id")) {
 
         // Update each assignment.
         $task = "anongradebook";
