@@ -12,8 +12,8 @@ abstract class export_courses {
      */
     public static function getCSV() {
         global $USER, $CFG;
+
         make_temp_directory('csvimport/' . $USER->id);
-        global $CFG;
 
 		$filename = clean_filename('Migration Status');
 
