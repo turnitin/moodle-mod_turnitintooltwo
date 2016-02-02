@@ -1,4 +1,4 @@
-Moodle Direct V2 Troubleshooting
+#Moodle Direct V2 Troubleshooting
 --------------------------------
 
 1) You may need to ensure that within your designated moodledata directory; the turnitintooltwo subdirectory and the subsequent logs subdirectory have the correct permissions to be able to create directories and files.
@@ -9,21 +9,43 @@ Moodle Direct V2 Troubleshooting
 
 4) There have been very isolated reports of the settings not showing for the Plagiarism plugin despite it being enabled, this is due to it not showing in Moodle cache. The solution is for an administrator to purge all caches and it should then appear.
 
+##Required PHP Extensions
+-----------------------
 
-cURL
+In order for the module to work correctly you must enable the following PHP extensions:
+
+**cURL**
+
+>You must enable support for cURL in your php.ini file. To do this locate the following line in your php.ini file:
+
+>;extension=php_curl.dll
+>OR
+>;extension=php_curl.so
+
+>Remove the semi-colon at the start of the line to activate the php cURL extension. Once you have done this you will need to restart your web server service.
+
+>More information on cURL and more detailed instructions for installing it can be found here: http://uk3.php.net/curl
+
+
+**XMLWriter**
+
+>This is normally enabled by default but if PHP was compiled with --disable-xmlreader set then you will need to recompile PHP without --disable-xmlreader set.
+
+
+**MBstring**
+
+>You may be able to enable this setting by uncommenting the extension listing in your php.ini file:
+
+>;extension=php_mbstring.dll
+
+>Remove the semi-colon at the start of the line to activate the MBstring extension. Once you have done this you will need to restart your web server service.
+
+>If you can't find this line in your php.ini file then you may need to install the php-mbstring first. Further information on this can be found here: http://www.knowledgebase-script.com/kb/article/how-to-enable-mbstring-in-php-46.html
+
+##cURL Connectivity
 ----
 
-1) In order for the module to work correctly you must enable support for cURL in your php.ini file. To do this locate the following line in your php.ini file:
-
-	;extension=php_curl.dll
-	OR
-	;extension=php_curl.so
-
-	Remove the semi-colon at the start of the line to activate the php cURL extension. Once you have done this you will need to restart your web server service.
-
-	More information on cURL and more detailed instructions for installing it can be found here: http://uk3.php.net/curl
-
-2) If you encounter connectivity issues (error: Turnitin API Base URL incorrect or unavailable) this could be related to a CA certificate being unavailable to cURL.
+If you encounter connectivity issues (error: Turnitin API Base URL incorrect or unavailable) this could be related to a CA certificate being unavailable to cURL.
 
 If cURL has an out of date (or no) CA certificates, the interaction with Turnitin will fail due to cURL performing peer SSL certificate verification and not being able to verify the Turnitin SSL certificate.
 Until cURL 7.18.0 some CA certificates were provided, but after 7.18.0 no cs certificates have been provided at all. Because of this, the Moodle server administrator would need to ensure that an up to date CA certificate bundle is used. To be clear, Moodle doesn't need an SSL certificate, however, it needs to have the certificate bundle in place so cURL can recognize the SSL certificates of Turnitin.
@@ -46,22 +68,3 @@ To fix this, you need to add the following line to your to your moodle config.ph
 libxml_disable_entity_loader(false);
 
 Thanks to Dan Marsden for the information and solution.
-
-Required PHP Extensions
------------------------
-
-In order for the module to work correctly you must enable the following PHP extensions. 
-
-	XMLWriter
-
-This is normally enabled by default but if PHP was compiled with --disable-xmlreader set then you will need to recompile PHP without --disable-xmlreader set.
-
-	MBstring
-
-You may be able to enable this setting by uncommenting the extension listing in your php.ini file:
-
-	;extension=php_mbstring.dll
-
-Remove the semi-colon at the start of the line to activate the MBstring extension. Once you have done this you will need to restart your web server service.
-
-If you can't find this line in your php.ini file then you may need to install the php-mbstring first. Further information on this can be found here: http://www.knowledgebase-script.com/kb/article/how-to-enable-mbstring-in-php-46.html
