@@ -40,7 +40,13 @@ In order for the module to work correctly you must enable the following PHP exte
 
 >Remove the semi-colon at the start of the line to activate the MBstring extension. Once you have done this you will need to restart your web server service.
 
->If you can't find this line in your php.ini file then you may need to install the php-mbstring first. Further information on this can be found here: http://www.knowledgebase-script.com/kb/article/how-to-enable-mbstring-in-php-46.html
+>If you can't find this line in your php.ini file then you may need to install the php-mbstring first. For further information see: http://php.net/manual/en/mbstring.installation.php
+
+**fileinfo**
+
+>This extension is enabled by default as of PHP 5.3.0. Windows users must include the bundled php_fileinfo.dll DLL file in php.ini to enable this extension.
+
+>For further information see http://php.net/manual/en/fileinfo.installation.php.
 
 ##cURL Connectivity
 ----
