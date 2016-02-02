@@ -670,7 +670,10 @@ jQuery(document).ready(function($) {
                 'smartDays': true
             },
             validate: function(value) {
-                if( value.format("X") < moment().unix() &&
+                if (/*value.format("X").unix() < due_date_unix &&*/$this.data('anon') == 1 && $this(hasClass('editable_postdue'))) {
+                    confirm(M.str.turnitintooltwo.postdate_warning);
+                }
+                if( value.format("X").unix() < moment().unix() &&
                     $(this).hasClass('editable_postdue') &&
                     $(this).data('anon') == 1 &&
                     $(this).data('unanon') == 0 &&
@@ -678,7 +681,6 @@ jQuery(document).ready(function($) {
                 {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) {
                         $('.editable-open').editableContainer('hide');
-
                         // Validation only fails if string is returned (We need a string).
                         return ' ';
                     }
