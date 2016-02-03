@@ -784,6 +784,9 @@ switch ($action) {
         
         // We only want to do this once, if we're not on the trial run.
         if (($trial == 0) && ($doOnce == 1)) {
+            // Reset the session data so we can rebuild the CSV post-migration.
+            unset($_SESSION["migrationtool"]["csvdata"]);
+
             // Migrate the users and set flag as 
             $turnitintool_users = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
             foreach ($turnitintool_users as $turnitintool_user) {
@@ -843,10 +846,10 @@ switch ($action) {
                 if ($canMigrate == 1) {
                     $data .= html_writer::tag('p', $course->fullname, array('class' => $headerColour));
                 }
-
-                //Save CSV session data.
-                $_SESSION["migrationtool"]["csvdata"][] = array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo'));
             }
+
+            //Save CSV session data.
+            $_SESSION["migrationtool"]["csvdata"][] = array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo'));
 
             // Loop through each assignment, get its parts and submissions.
             $v1_assignments = $DB->get_records('turnitintool', array('course' => $course->courseid));
