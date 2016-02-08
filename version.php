@@ -28,4 +28,10 @@ $plugin->release   = "2.6+";
 $plugin->requires  = 2013111800;
 $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->cron      = 1800;
+
+global $CFG;
+if ($CFG->version > 2014051200) {
+	$plugin->cron = 0;
+}else{
+	$plugin->cron = 1800;
+}

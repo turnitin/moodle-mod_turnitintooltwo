@@ -532,7 +532,19 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
  * A Standard Moodle function that moodle executes at the time the cron runs
  */
 function turnitintooltwo_cron() {
-    global $DB, $CFG;
+    global $DB, $CFG, $TURNITIN_TASKCALL;
+
+    // 2.7 onwards we would like to be called from task calls
+    if ( $CFG->version > 2014051200 AND !$TURNITIN_TASKCALL ){
+        mtrace("[Turnitin Tool] Aborted Cron call because of active task mode");
+        return;
+    }
+
+    //Reset task call flag
+    if($TURNITIN_TASKCALL) {
+        $TURNITIN_TASKCALL = false;
+    }
+
 
     // Update gradebook when a part has been deleted.
     // Get assignment that needs updating and check whether it exists
