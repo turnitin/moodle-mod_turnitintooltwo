@@ -532,19 +532,18 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
  * A Standard Moodle function that moodle executes at the time the cron runs
  */
 function turnitintooltwo_cron() {
-    global $DB, $CFG, $TURNITIN_TASKCALL;
+    global $DB, $CFG, $TURNITINTOOLTWO_TASKCALL;
 
     // 2.7 onwards we would like to be called from task calls
-    if ( $CFG->version > 2014051200 AND !$TURNITIN_TASKCALL ){
-        mtrace("[Turnitin Tool] Aborted Cron call because of active task mode");
+    if ( $CFG->version > 2014051200 AND !$TURNITINTOOLTWO_TASKCALL ){
+        mtrace(get_string('crontaskmodeactive', 'turnitintooltwo'));
         return;
     }
 
     //Reset task call flag
-    if($TURNITIN_TASKCALL) {
-        $TURNITIN_TASKCALL = false;
+    if($TURNITINTOOLTWO_TASKCALL) {
+        $TURNITINTOOLTWO_TASKCALL = false;
     }
-
 
     // Update gradebook when a part has been deleted.
     // Get assignment that needs updating and check whether it exists
@@ -559,10 +558,10 @@ function turnitintooltwo_cron() {
     // Get a list of assignments that need updating.
     if ($assignmentlist = $DB->get_records_sql("SELECT t.id FROM {turnitintooltwo} t
                                                 LEFT JOIN {turnitintooltwo_parts} p ON (p.turnitintooltwoid = t.id)
-                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost) 
-                                                    FROM {turnitintooltwo_parts} 
-                                                    GROUP BY turnitintooltwoid) 
-                                                AND t.anon = 1 AND t.anongradebook = 0 AND dtpost < ".time()." 
+                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost)
+                                                    FROM {turnitintooltwo_parts}
+                                                    GROUP BY turnitintooltwoid)
+                                                AND t.anon = 1 AND t.anongradebook = 0 AND dtpost < ".time()."
                                                 GROUP BY t.id")) {
 
         // Update each assignment.
