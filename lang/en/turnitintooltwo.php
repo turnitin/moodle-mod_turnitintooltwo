@@ -421,7 +421,7 @@ $string['defaultupdated'] = 'Turnitin defaults updated';
 $string['pp_createsubmissionerror'] = 'There was an error in the plagiarism plugin when creating a submission';
 $string['pp_updatesubmissionerror'] = 'There was an error in the plagiarism plugin when updating a submission';
 $string['pp_configuredesc'] = 'You must configure this module within the turnitintooltwo module. Please click <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> to configure this plugin';
-$string['coursestomigrate'] = 'You have {$a} classes available to migrate from Turnitin';
+$string['coursestomigrate'] = 'You have {$a} classes available to restore from Turnitin';
 $string['migrationheader'] = 'Turnitin Class Migration';
 $string['gradingtemplate'] = 'Grading Template';
 $string['allownonor'] = 'Allow submission of any file type?';
