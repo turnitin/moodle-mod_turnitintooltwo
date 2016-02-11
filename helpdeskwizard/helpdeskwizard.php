@@ -11,7 +11,7 @@ class helpdeskwizard {
 
 		// Add standard parameters.
 		$params['user'] = 'Instructor';
-		$params['full_name'] = $USER->firstname.' '.$USER->lastname;
+		$params['name'] = $USER->firstname.' '.$USER->lastname;
 		$params['email'] = $USER->email;
 		$params['integration'] = 'Moodle';
         $params['auth'] = 'ok';

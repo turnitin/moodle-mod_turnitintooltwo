@@ -100,7 +100,7 @@ switch ($cmd) {
         $params = array(
                 'category' => '',
                 'sub_category' => '',
-                'class' => $tiiclass,
+                'class_id' => $tiiclass,
                 'moodleversion' => $CFG->version,
                 'plugintype' => 'DirectV2',
                 'pluginversion' => $plugin_version,
