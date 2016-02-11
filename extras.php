@@ -276,9 +276,9 @@ switch ($cmd) {
 }
 
 $title = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            get_string('migrationheader', 'turnitintooltwo') : '';
+            get_string('restorationheader', 'turnitintooltwo') : '';
 $nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            array(array('title' => get_string('migrationheader', 'turnitintooltwo'), 'url' => '')) : array();
+            array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => '')) : array();
 
 // Build page.
 $coursemodforheader = ($id != 0) ? $cm : null;

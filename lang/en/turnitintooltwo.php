@@ -422,7 +422,6 @@ $string['pp_createsubmissionerror'] = 'There was an error in the plagiarism plug
 $string['pp_updatesubmissionerror'] = 'There was an error in the plagiarism plugin when updating a submission';
 $string['pp_configuredesc'] = 'You must configure this module within the turnitintooltwo module. Please click <a href={$a}/admin/settings.php?section=modsettingturnitintooltwo>here</a> to configure this plugin';
 $string['coursestomigrate'] = 'You have {$a} classes available to restore from Turnitin';
-$string['migrationheader'] = 'Turnitin Class Migration';
 $string['gradingtemplate'] = 'Grading Template';
 $string['allownonor'] = 'Allow submission of any file type?';
 $string['allownonor_help'] = 'This setting will allow any file type to be submitted. With this option set to &#34;Yes&#34;, submissions will be checked for originality where possible, submissions will be available for download and GradeMark feedback tools will be available where possible.';
@@ -563,3 +562,4 @@ $string['pp_digital_receipt_message'] = 'Dear {$a->firstname} {$a->lastname},<br
 $string['messageprovider:notify_instructor_of_submission'] = 'Turnitin Assignment Instructor Digital Receipt notifications';
 $string['task_name'] = 'Turnitintooltwo Cron Task';
 $string['crontaskmodeactive'] = 'Turnitintooltwo - Aborted Cron call because of active task mode';
+$string['restorationheader'] = 'Turnitin Class Restoration';
