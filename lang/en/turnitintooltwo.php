@@ -343,7 +343,6 @@ $string['turnitinstudentsremove'] = 'Are you sure you want to remove this studen
 $string['studentremoved'] = 'Student has been removed from the course within Turnitin';
 $string['studentremovingerror'] = 'There has been a problem removing the student from the course within Turnitin';
 $string['turnitinstudents_desc'] = 'The selected Users below are enrolled on this Turnitin Class. Enrolled students can gain access to this class by logging in to the Turnitin web site.';
-$string['coursebrowser'] = 'Turnitin Class Migration';
 $string['coursebrowserdesc'] = 'You can search Turnitin for classes to recreate on Moodle as a course below';
 $string['courseexistsmoodle'] = 'This class currently exists in Moodle as:';
 $string['coursetitle'] = 'Course Title';
