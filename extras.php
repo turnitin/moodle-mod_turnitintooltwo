@@ -34,17 +34,83 @@ $output = "";
 $jsrequired = false;
 $hidebg = ($cmd == 'rubricmanager' || $cmd == 'quickmarkmanager') ? true : false;
 
-$PAGE->set_context(context_system::instance());
-require_login();
+// Module id needed for support form.
+$id = optional_param('id', 0, PARAM_INT);
+
+// Get course and module data that we've linked to here from and set context accordingly.
+if ($id != 0) {
+    //Pre 2.8 does not have the function get_course_and_cm_from_cmid.
+    if ($CFG->branch >= 28) {
+        list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
+    }
+    else {
+        $cm = get_coursemodule_from_id('turnitintooltwo', $id, 0, false, MUST_EXIST);
+        $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    }
+
+    if (!$cm) {
+        turnitintooltwo_print_error('coursemodidincorrect', 'turnitintooltwo');
+    }
+    if (!$course = $DB->get_record("course", array("id" => $cm->course))) {
+        turnitintooltwo_print_error('coursemisconfigured', 'turnitintooltwo');
+    }
+    if (!$turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $cm->instance))) {
+        turnitintooltwo_print_error('coursemodincorrect', 'turnitintooltwo');
+    }
+
+    $PAGE->set_context(context_module::instance($cm->id));
+    $PAGE->set_pagelayout('base');
+    require_login($course->id, true, $cm);
+} else {
+    $PAGE->set_context(context_system::instance());
+    require_login();
+}
 
 // Load Javascript and CSS.
 $turnitintooltwoview->load_page_components($hidebg);
 
 // Configure URL correctly.
 $urlparams = array('cmd' => $cmd, 'view_context' => $viewcontext);
+if ($id != 0) {
+    $urlparams['id'] = $id;
+}
 $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 
 switch ($cmd) {
+    case "supportwizard":
+        $output = "<p>SUPPORT WIZARD PLACEHOLDER</p>";
+        $output .= '<p><a href="?cmd=supportform">Go to Support Form</a></p>';
+        break;
+
+    case "supportform":
+        include "classes/helpdeskwizard/helpdeskwizard.php";
+        $helpdeskwizard = new helpdeskwizard();
+
+        // Get the Turnitin class id if we are in a class context.
+        $tiiclass = 0;
+        if ($id != 0) {
+            $course = turnitintooltwo_assignment::get_course_data($course->id);
+            $tiiclass = (isset($course->turnitin_cid)) ? $course->turnitin_cid : 0;
+        }
+
+        $config = turnitintooltwo_admin_config();
+        $plugin_version = turnitintooltwo_get_version();
+
+        // Parameters to pass to support form.
+        $params = array(
+                'category' => '',
+                'sub_category' => '',
+                'class' => $tiiclass,
+                'moodleversion' => $CFG->version,
+                'plugintype' => 'DirectV2',
+                'pluginversion' => $plugin_version,
+                'accountid' => $config->accountid
+            );
+
+        // Output Iframe containing Turnitin Helpdesk form.
+        $output = $helpdeskwizard->output_form( $params );
+        break;
+
     case "courses":
         require_capability('moodle/course:create', context_system::instance());
 
@@ -215,8 +281,10 @@ $nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "cla
             array(array('title' => get_string('migrationheader', 'turnitintooltwo'), 'url' => '')) : array();
 
 // Build page.
-echo $turnitintooltwoview->output_header(null,
-            null,
+$coursemodforheader = ($id != 0) ? $cm : null;
+$courseforheader = ($id != 0) ? $course : null;
+echo $turnitintooltwoview->output_header($coursemodforheader,
+            $courseforheader,
             $url,
             $title,
             $title,
