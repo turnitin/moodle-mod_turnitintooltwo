@@ -78,8 +78,7 @@ $url = new moodle_url('/mod/turnitintooltwo/extras.php', $urlparams);
 
 switch ($cmd) {
     case "supportwizard":
-        $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitin_helpdesk.js');
-        $PAGE->requires->js($jsurl, true);
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitin_helpdesk', 'mod_turnitintooltwo');
 
         include "classes/helpdeskwizard/helpdeskwizard.php";
         $helpdeskwizard = new helpdeskwizard();
