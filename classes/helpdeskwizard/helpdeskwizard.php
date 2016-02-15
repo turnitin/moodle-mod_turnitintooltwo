@@ -11,7 +11,7 @@ class helpdeskwizard {
 	        $ch = curl_init();
 
 	        // Set the url, number of POST vars, POST data.
-	        //curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodle-helpdesk.xml");
+	        // curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodle-helpdesk.xml");
 	        curl_setopt($ch, CURLOPT_URL, "http://tii_30.live.iparadigms.com/static/resources/files/moodle-helpdesk.xml");
 	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
@@ -40,7 +40,7 @@ class helpdeskwizard {
 		return $xml;
 	}
 
-	public function output_wizard() {
+	public function output_wizard($id = 0) {
 		global $CFG;
 
 		$xml = $this->read_xml_solutions_file();
@@ -106,6 +106,7 @@ class helpdeskwizard {
 		// Show link to support form.
 		$formlink = html_writer::tag('h2', 'Did you find your answer?');
 		$formlink .= html_writer::tag('button', 'No, I Need More Help', array('id' => 'btn_supportform', 'class' => 'btn'));
+		$formlink .= html_writer::tag('div', $id, array('id' => 'tii_helpdesk_mod_id'));
 		$output .= html_writer::tag('div', $formlink, array('id' => 'btn_tiisupportform_link'));
 
 		return $output;

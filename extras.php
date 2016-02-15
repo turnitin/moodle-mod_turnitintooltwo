@@ -75,19 +75,22 @@ if ($id != 0) {
     $urlparams['id'] = $id;
 }
 $url = new moodle_url('/mod/turnitintooltwo/extras.php', $urlparams);
+$title = "";
 
 switch ($cmd) {
     case "supportwizard":
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitin_helpdesk', 'mod_turnitintooltwo');
+        $title = get_string('turnitinhelpdesk', 'turnitintooltwo');
 
         include "classes/helpdeskwizard/helpdeskwizard.php";
         $helpdeskwizard = new helpdeskwizard();
-        $output = $helpdeskwizard->output_wizard();
+        $output = $helpdeskwizard->output_wizard($id);
         break;
 
     case "supportform":
         include "classes/helpdeskwizard/helpdeskwizard.php";
         $helpdeskwizard = new helpdeskwizard();
+        $title = get_string('turnitinhelpdesk', 'turnitintooltwo');
 
         // Get the Turnitin class id if we are in a class context.
         $tiiclass = 0;
@@ -120,6 +123,7 @@ switch ($cmd) {
     case "courses":
         require_capability('moodle/course:create', context_system::instance());
 
+        $title = get_string('restorationheader', 'turnitintooltwo');
         $jsrequired = true;
 
         $output .= html_writer::tag('h2', get_string('restorationheader', 'turnitintooltwo'));
@@ -199,6 +203,7 @@ switch ($cmd) {
         }
 
         $PAGE->set_pagelayout('embedded');
+        $title = get_string('restorationheader', 'turnitintooltwo');
 
         require_capability('moodle/course:create', context_system::instance());
 
@@ -232,6 +237,7 @@ switch ($cmd) {
         }
 
         $PAGE->set_pagelayout('embedded');
+        $title = get_string('restorationheader', 'turnitintooltwo');
 
         require_capability('moodle/course:create', context_system::instance());
 
@@ -281,8 +287,6 @@ switch ($cmd) {
         break;
 }
 
-$title = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            get_string('restorationheader', 'turnitintooltwo') : '';
 $nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
             array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => '')) : array();
 
