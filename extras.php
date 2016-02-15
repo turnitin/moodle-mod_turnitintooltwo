@@ -74,12 +74,16 @@ $urlparams = array('cmd' => $cmd, 'view_context' => $viewcontext);
 if ($id != 0) {
     $urlparams['id'] = $id;
 }
-$url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
+$url = new moodle_url('/mod/turnitintooltwo/extras.php', $urlparams);
 
 switch ($cmd) {
     case "supportwizard":
-        $output = "<p>SUPPORT WIZARD PLACEHOLDER</p>";
-        $output .= '<p><a href="?cmd=supportform">Go to Support Form</a></p>';
+        $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitin_helpdesk.js');
+        $PAGE->requires->js($jsurl, true);
+
+        include "classes/helpdeskwizard/helpdeskwizard.php";
+        $helpdeskwizard = new helpdeskwizard();
+        $output = $helpdeskwizard->output_wizard();
         break;
 
     case "supportform":
@@ -93,13 +97,16 @@ switch ($cmd) {
             $tiiclass = (isset($course->turnitin_cid)) ? $course->turnitin_cid : 0;
         }
 
+        $category = optional_param('category', "", PARAM_ALPHAEXT);
+        $sub_category = optional_param('sub_category', "", PARAM_ALPHAEXT);
+
         $config = turnitintooltwo_admin_config();
         $plugin_version = turnitintooltwo_get_version();
 
         // Parameters to pass to support form.
         $params = array(
-                'category' => '',
-                'sub_category' => '',
+                'category' => $category,
+                'sub_category' => $sub_category,
                 'class_id' => $tiiclass,
                 'moodleversion' => $CFG->version,
                 'plugintype' => 'DirectV2',
