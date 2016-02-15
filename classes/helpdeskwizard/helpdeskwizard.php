@@ -2,6 +2,11 @@
 
 class helpdeskwizard {
 
+	/**
+	 * Read the remote xml file containg helpdesk solutions.
+	 *
+	 * @return string - xml containing helpdesk solutions.
+	 */
 	public function read_xml_solutions_file() {
 		global $CFG;
 		$xml = '';
@@ -40,6 +45,12 @@ class helpdeskwizard {
 		return $xml;
 	}
 
+	/**
+	 * Output HTML helpdesk wizard.
+	 *
+	 * @param int - $id module id, 0 by default to indicate that it's not been accessed from a module.
+	 * @return mixed - html containing helpdesk solutions.
+	 */
 	public function output_wizard($id = 0) {
 		global $CFG;
 
@@ -112,6 +123,12 @@ class helpdeskwizard {
 		return $output;
 	}
 
+	/**
+	 * Output HTML helpdesk wizard.
+	 *
+	 * @param array - $params from helpdesk wizard to pass to Turnitin.
+	 * @return html - iframe linking to Turnitin support form.
+	 */
 	public function output_form( $params = array() ) {
 		global $USER;
 
