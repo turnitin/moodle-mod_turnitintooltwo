@@ -458,6 +458,14 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
     }
 
     $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+
+    // Show Helpdesk link for tutors.
+    if ($istutor) {
+        $helpdesklink = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?id='.$id.'&cmd=supportwizard',
+                                            get_string('helpdesklink', 'turnitintooltwo'));
+
+        echo html_writer::tag('p', $helpdesklink);
+    }
 }
 
 echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));

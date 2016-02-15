@@ -563,3 +563,4 @@ $string['task_name'] = 'Turnitintooltwo Cron Task';
 $string['crontaskmodeactive'] = 'Turnitintooltwo - Aborted Cron call because of active task mode';
 $string['restorationheader'] = 'Turnitin Class Restoration';
 $string['turnitinhelpdesk'] = 'Turnitin Helpdesk';
+$string['helpdesklink'] = 'Need Help with Turnitin?';
