@@ -129,7 +129,7 @@ jQuery(document).ready(function($) {
 
     // Disable/enable trial migration button depending on whether items have been selected.
     $(document).on('click', '.migration_checkbox', function() {
-        if ($('.migration_checkbox:checked').length == 2) {
+        if ($('.migration_checkbox:checked').length == 1) {
         	$('#trial-migration-button').removeAttr('disabled');
         } else {
             $('#trial-migration-button').attr('disabled', 'disabled');
