@@ -183,7 +183,7 @@ class turnitintooltwo_view {
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
-                        get_string('coursebrowser', 'turnitintooltwo'), get_string('coursebrowser', 'turnitintooltwo'), false);
+                        get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
 
         $selected = ($cmd == 'activitylog') ? 'apilog' : $cmd;
 
