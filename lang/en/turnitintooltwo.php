@@ -559,6 +559,7 @@ $string['migrationtool_setting_warning'] = '<b>Note:</b> The following features 
 $string['migrationtool_setting_difference'] = 'The V2 setting for "{$a}" is different to your V1 setting for this feature.';
 $string['migrationtool_v1warning'] = 'The Moodle Direct V1 assignments should not be used any more and can be deleted.';
 $string['migrationtool_exportoutput'] = 'Export Migration Output';
+$string['migrationtool_exportcsv'] = 'Click the button below to export a CSV of courses with their IDs and their migration status.';
 $string['anonblindmarkingnote'] = 'Note: The separate Turnitin anonymous marking setting has been removed. Turnitin will use Moodle\'s blind marking setting to determine the anonymous marking setting.';
 $string['displaygradesas'] = 'Grade Display';
 $string['displaygradesas_help'] = 'This option sets the display mode for grades the options are display as a percentage or display as a fraction ie 45/60.';
