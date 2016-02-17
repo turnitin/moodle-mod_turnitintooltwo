@@ -155,6 +155,9 @@ function turnitintooltwo_activitylog($string, $activity) {
             unlink($dirpath."/".$files[$i]);
         }
 
+        // Replace <br> tags with new line character.
+        $string = str_replace("<br/>", "\r\n", $string);
+
         // Write to log file.
         $filepath = $dirpath."/".$prefix.gmdate('Y-m-d', time()).".txt";
         $file = fopen($filepath, 'a');
@@ -529,7 +532,18 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
  * A Standard Moodle function that moodle executes at the time the cron runs
  */
 function turnitintooltwo_cron() {
-    global $DB, $CFG;
+    global $DB, $CFG, $TURNITINTOOLTWO_TASKCALL;
+
+    // 2.7 onwards we would like to be called from task calls
+    if ( $CFG->version > 2014051200 AND !$TURNITINTOOLTWO_TASKCALL ){
+        mtrace(get_string('crontaskmodeactive', 'turnitintooltwo'));
+        return;
+    }
+
+    //Reset task call flag
+    if($TURNITINTOOLTWO_TASKCALL) {
+        $TURNITINTOOLTWO_TASKCALL = false;
+    }
 
     // Update gradebook when a part has been deleted.
     // Get assignment that needs updating and check whether it exists
@@ -544,11 +558,11 @@ function turnitintooltwo_cron() {
     // Get a list of assignments that need updating.
     if ($assignmentlist = $DB->get_records_sql("SELECT t.id FROM {turnitintooltwo} t
                                                 LEFT JOIN {turnitintooltwo_parts} p ON (p.turnitintooltwoid = t.id)
-                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost) 
-                                                    FROM {turnitintooltwo_parts} 
-                                                    GROUP BY turnitintooltwoid) 
-                                                AND t.anon = 1 AND t. anongradebook = 0 AND dtpost < ".time()." 
-                                                GROUP BY turnitintooltwoid")) {
+                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost)
+                                                    FROM {turnitintooltwo_parts}
+                                                    GROUP BY turnitintooltwoid)
+                                                AND t.anon = 1 AND t.anongradebook = 0 AND dtpost < ".time()."
+                                                GROUP BY t.id")) {
 
         // Update each assignment.
         $task = "anongradebook";
@@ -722,6 +736,9 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
     $permittedstrlength -= $extlength;
     $filename = mb_substr($filename, 0, $permittedstrlength, 'UTF-8');
 
+    // Ensure the filename doesn't have any characters that are invalid for the fs.
+    $filename = clean_param($filename . mb_substr('_' . mt_rand() . $ext, 0, $extlength, 'UTF-8'), PARAM_FILE);
+
     $tries = 0;
     do {
         if ($tries == 10) {
@@ -729,10 +746,8 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         }
         $tries++;
 
-        // Ensure the filename doesn't have any characters that are invalid for the fs.
-        $filename = clean_param($filename . mb_substr('_' . mt_rand() . $ext, 0, $extlength, 'UTF-8'), PARAM_FILE);
         $file = $tempdir . DIRECTORY_SEPARATOR . $filename;
-    } while (!touch($file));
+    } while ( !touch($file) );
 
     return $file;
 }

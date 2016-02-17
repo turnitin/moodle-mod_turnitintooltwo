@@ -491,3 +491,5 @@ $string['anonalert'] = 'Das Veröffentlichungsdatum liegt vor dem aktuellen Datu
 $string['turnitinapiurl_desc'] = '<b>[Erforderlich]</b><br />Turnitin API URL auswählen';
 $string['tii_submission_failure'] = 'Für weitere Informationen setzten Sie sich bitte mit Ihrem Tutor oder dem Moodle-Administrator in Verbindung.';
 $string['turnitinrefreshingsubmissions'] = 'Übermittlungen aktualisieren';
+$string['task_name'] = 'Turnitin-Aufgabe2 - Cron Task';
+$string['crontaskmodeactive'] = 'Turnitin-Aufgabe2 - Cron Call abgebrochen aufgrund von aktivem Task Mode';

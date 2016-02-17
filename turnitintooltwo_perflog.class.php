@@ -3,7 +3,7 @@
 require_once(__DIR__.'/sdk/perflog.class.php');
 require_once(__DIR__.'/lib.php');
 
-class turnitintooltwo_perflog extends PerfLog {
+class turnitintooltwo_performancelog extends PerformanceLog {
 
     /**
      * Log networking performance details of an individual request
@@ -62,7 +62,9 @@ class turnitintooltwo_perflog extends PerfLog {
             $str .= " - up:" . curl_getinfo($ch, CURLINFO_SIZE_UPLOAD);
             $str .= " - down:" . curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD);
             $str .= " - userid:" . $USER->id;
-            $str .= " - " . $_SERVER['REQUEST_URI'];
+            if (array_key_exists('REQUEST_URI', $_SERVER)){
+                $str .= " - " . $_SERVER['REQUEST_URI'];
+            }
 
             if ($http_status === 0) {
                 $str .= " - " . curl_error($ch);
