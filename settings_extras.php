@@ -447,20 +447,16 @@ switch ($cmd) {
 
                         $table = new html_table();
 
-                        // Do the table rows.
                         $rows = array();
-                        for ($i = 1; $i <= 2; $i++) {
-                            $cells = array();
+                        $cells = array();
 
-                            $cells["id"] = new html_table_cell(get_string('migrationtool_checklist' . $i, 'turnitintooltwo'));
-
-                            $checkbox = html_writer::checkbox('check_'.$i, $i, false, '', array("class" => "migration_checkbox"));
-                            $cells["checkbox"] = new html_table_cell($checkbox);
-
-                            $rows[$i] = new html_table_row($cells);
-                        }
-
+                        // Do the table row.
+                        $cells["id"] = new html_table_cell(get_string('migrationtool_checklist', 'turnitintooltwo'));
+                        $checkbox = html_writer::checkbox('check_1', 1, false, '', array("class" => "migration_checkbox"));
+                        $cells["checkbox"] = new html_table_cell($checkbox);
+                        $rows[0] = new html_table_row($cells);
                         $table->data = $rows;
+
                         $output .= html_writer::table($table);
 
                         $output .= html_writer::tag("button", get_string('migrationtool_trial', 'turnitintooltwo'),
