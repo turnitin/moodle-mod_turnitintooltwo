@@ -540,7 +540,7 @@ $string['restorationgetassignmenterror'] = 'Could not get restoration assignment
 $string['migrationtool_header'] = 'V1 to V2 Migration Tool';
 $string['migrationtool_pluginnotfound'] = 'The Moodle Direct V1 plugin was not found.';
 $string['migrationtool_oldversion'] = 'The Migration Tool does not support version {$a} of Moodle Direct V1. Please update the V1 plugin to the latest version first.';
-$string['migrationtool_processexplained'] = 'This tool migrates Turnitin assignments that were created in Moodle Direct V1 to V2, including submissions.<br /><br />Please note that this does not transfer V1 assignments that exist in a course with V2 assignments. This would result in a course being mapped to Turnitin multiple times.<br /><br />Before the actual migration takes place there will be a summary listing the courses and whether or not they can be migrated. More information about this can be found on our guides here (insert link).<br /><br />If you have any further questions before you migrate please <a href="http://www.turnitinuk.com/en_gb/support">contact Product Support</a>.';
+$string['migrationtool_processexplained'] = 'This tool migrates Turnitin assignments that were created in Moodle Direct V1 to V2, including submissions.<br /><br />Please note that this does not transfer V1 assignments that exist in a course with V2 assignments. This would result in a course being mapped to Turnitin multiple times.<br /><br />Before the actual migration takes place there will be a summary listing the courses and whether or not they can be migrated. More information about this can be found on our guides here (insert link).<br /><br />If you have any further questions before you migrate please <a href="http://www.turnitinuk.com/en_gb/support" target="_blank">contact Product Support</a>.';
 $string['migrationtool_nothingtomigrate'] = 'You do not have any Moodle Direct V1 assignments to migrate.';
 $string['migrationtool_allcontainv2'] = 'No courses can be migrated as they all contain Moodle Direct V2 assignments.';
 $string['migrationtool_maintenancecheck'] = 'Moodle\'s Maintenance mode must be enabled before you can migrate.';
@@ -555,7 +555,7 @@ $string['migrationtool_cant_migrate'] = 'This course cannot be migrated because 
 $string['migrationtool_migrated'] = 'The following courses have been migrated:';
 $string['migrationtool_migrated2'] = 'This course has been migrated.';
 $string['migrationtool_not_migrated'] = 'The following assignments on this course have not been migrated as the course contains Moodle Direct V2 assignments.';
-$string['migrationtool_contactsupport'] = 'For further assistence with unsuccessful course migration, please <a href="http://www.turnitinuk.com/en_gb/support">contact Product Support</a>.';
+$string['migrationtool_contactsupport'] = 'For further assistence with unsuccessful course migration, please <a href="http://www.turnitinuk.com/en_gb/support" target="_blank">contact Product Support</a>.';
 $string['migrationtool_setting_warning'] = '<b>Note:</b> The following features have different settings in the V2 plugin to that of the V1 plugin and may cause issues with migrated assignments and submissions.<br />Please check and update your V2 plugin settings before continuing.';
 $string['migrationtool_setting_difference'] = 'The V2 setting for "{$a}" is different to your V1 setting for this feature.';
 $string['migrationtool_v1warning'] = 'The Moodle Direct V1 assignments should not be used any more and can be deleted.';
