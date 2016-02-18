@@ -732,7 +732,7 @@ switch ($do) {
         $memberrole = ($do == "tutors") ? 'Instructor' : 'Learner';
         echo $turnitintooltwoview->init_tii_member_by_role_table($cm, $turnitintooltwoassignment, $memberrole);
         if ($do == "tutors") {
-            $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor");
+            $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor", "mdl");
             echo $turnitintooltwoview->show_add_tii_tutors_form($cm, $tutors);
         }
         break;
