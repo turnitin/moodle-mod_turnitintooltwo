@@ -368,9 +368,10 @@ class OAuthSimple {
         $result = '';
         $cLength = strlen($this->_nonce_chars);
         for ($i = 0; $i < $length; $i++) {
-            $rnum = rand(0, $cLength);
+            $rnum = mt_rand(0, $cLength);
             $result .= substr($this->_nonce_chars, $rnum, 1);
         }
+        $result .= getmypid();
         $this->_parameters['oauth_nonce'] = sha1($result);
 
         return $result;
