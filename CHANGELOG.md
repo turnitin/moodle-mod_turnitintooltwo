@@ -4,10 +4,12 @@
 - Grade display help text is now wrapped.
 - Links to migration tool have been renamed to course restoration.
 - Block JavaScipt code has been moved out of the direct package as part of our efforts to separate plugins.
-- Cron functionality has been moved to scheduled tasks (Thanks to mwehr)
+- Cron functionality has been moved to scheduled tasks (Thanks to mwehr).
+- Allow emails to be sent from the noreply address.
 - Fixes:
 	- Fixed an issue where the file name would be appending multiple times if the temp file can't be created.
-	- Fixed cron warning message regarding REQUEST_URI (Thanks to AviMoto)
+	- Fixed cron warning message regarding REQUEST_URI (Thanks to AviMoto).
+	- Query fixed during cron for Postgres (Thanks to mwehr).
 
 ---
 
