@@ -1901,9 +1901,9 @@ class turnitintooltwo_view {
 
         $options = array();
         foreach ($moodletutors as $k => $v) {
-            $availabletutor = new turnitintooltwo_user($v->id, "Instructor", false);
+            $availabletutor = new turnitintooltwo_user($v->id, "Instructor", false, "site", false);
 
-            if (array_key_exists($availabletutor->tii_user_id, $tutors)) {
+            if (array_key_exists($availabletutor->id, $tutors)) {
                 unset($moodletutors[$k]);
             } else {
                 $options[$availabletutor->id] = format_string($availabletutor->lastname).', '.

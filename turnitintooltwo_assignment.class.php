@@ -481,9 +481,10 @@ class turnitintooltwo_assignment {
      * and loops through them to get each user
      *
      * @param string $role the user has in the class
+     * @param string $idkey whether to use moodle or turnitin ids as the array key
      * @return array $users
      */
-    public function get_tii_users_by_role($role = "Learner") {
+    public function get_tii_users_by_role($role = "Learner", $idkey = "tii") {
         global $DB;
 
         $users = array();
@@ -509,13 +510,14 @@ class turnitintooltwo_assignment {
         foreach ($readmemberships as $readmembership) {
             if ($readmembership->getRole() == $role) {
 
-                // Check user is a Moodle user. otherwise we have to go to Turnitin for their name.
+                // Check user is a Moodle user. Otherwise we have to go to Turnitin for their name.
                 $moodleuserid = turnitintooltwo_user::get_moodle_user_id($readmembership->getUserId());
                 if (!empty($moodleuserid)) {
                     $user = $DB->get_record('user', array('id' => $moodleuserid));
-                    $users[$readmembership->getUserId()]["firstname"] = $user->firstname;
-                    $users[$readmembership->getUserId()]["lastname"] = $user->lastname;
-                    $users[$readmembership->getUserId()]["membership_id"] = $readmembership->getMembershipId();
+                    $arraykey = ($idkey == "mdl") ? $user->id : $readmembership->getUserId();
+                    $users[$arraykey]["firstname"] = $user->firstname;
+                    $users[$arraykey]["lastname"] = $user->lastname;
+                    $users[$arraykey]["membership_id"] = $readmembership->getMembershipId();
                 } else {
                     $user = new TiiUser();
                     $user->setUserId($readmembership->getUserId());
