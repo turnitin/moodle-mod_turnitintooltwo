@@ -183,7 +183,7 @@ class turnitintooltwo_view {
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
-                        get_string('coursebrowser', 'turnitintooltwo'), get_string('coursebrowser', 'turnitintooltwo'), false);
+                        get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
 
         $selected = ($cmd == 'activitylog') ? 'apilog' : $cmd;
 
@@ -466,7 +466,7 @@ class turnitintooltwo_view {
      * @return type
      */
     public function init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser) {
-        global $CFG, $OUTPUT, $USER;
+        global $CFG, $OUTPUT, $USER, $DB;
         $config = turnitintooltwo_admin_config();
 
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
@@ -647,9 +647,19 @@ class turnitintooltwo_view {
                                                 array("class" => "messages_inbox"));
                 }
 
+                // Check that nonsubmitter messages have been configured to be sent.
+                $messageoutputs = get_config('message');
+                $nonsubsemailpermitted = false;
+                foreach ($messageoutputs as $k => $v) {
+                    if (strpos($k, '_mod_turnitintooltwo_nonsubmitters_loggedin') !== false ) {
+                        $nonsubsemailpermitted = true;
+                        break;
+                    }
+                }
+
                 // Link to email nonsubmitters.
                 $emailnonsubmitters = '';
-                if ($turnitintooltwouser->get_user_role() == 'Instructor') {
+                if ($turnitintooltwouser->get_user_role() == 'Instructor' && $nonsubsemailpermitted) {
                     $emailnonsubmitters = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                             '&part='.$partid.'&do=emailnonsubmittersform&view_context=box_solid',
                                                         html_writer::tag('i', '', array('class' => 'fa fa-reply-all fa-lg')).' '.get_string('messagenonsubmitters', 'turnitintooltwo'),

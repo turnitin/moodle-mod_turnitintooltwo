@@ -10,7 +10,10 @@ $messageproviders = array (
     'submission' => array (
     ),
     //Notify nonsubmitters for an assignment.
-    'nonsubmitters' => array ()
+    'nonsubmitters' => array (),
+    // Notify student with their digital receipt.
+    'notify_instructor_of_submission' => array (
+    )
 );
 
 ?>

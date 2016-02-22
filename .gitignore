@@ -3,3 +3,6 @@
 
 # Ignore Node.js modules
 node_modules/
+/.settings/
+/.buildpath
+/.project

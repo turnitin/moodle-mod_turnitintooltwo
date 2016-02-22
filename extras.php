@@ -50,7 +50,7 @@ switch ($cmd) {
 
         $jsrequired = true;
 
-        $output .= html_writer::tag('h2', get_string('coursebrowser', 'turnitintooltwo'));
+        $output .= html_writer::tag('h2', get_string('restorationheader', 'turnitintooltwo'));
         $output .= html_writer::tag('p', get_string('coursebrowserdesc', 'turnitintooltwo'));
 
         $coursesearchform = html_writer::label(get_string('coursetitle', 'turnitintooltwo').': ', 'search_course_title');
@@ -210,9 +210,9 @@ switch ($cmd) {
 }
 
 $title = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            get_string('migrationheader', 'turnitintooltwo') : '';
+            get_string('restorationheader', 'turnitintooltwo') : '';
 $nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            array(array('title' => get_string('migrationheader', 'turnitintooltwo'), 'url' => '')) : array();
+            array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => '')) : array();
 
 // Build page.
 echo $turnitintooltwoview->output_header(null,

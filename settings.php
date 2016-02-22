@@ -168,11 +168,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('transmatch_desc', 'turnitintooltwo'),
                                                     0, $ynoptions));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/instructorreceipt',
-                                                    get_string('instructorreceipt','turnitintooltwo'),
-                                                    get_string('instructorreceipt_desc','turnitintooltwo'),
-                                                    0, $ynoptions));
-
     $repositoryoptions = array(
             0 => get_string('repositoryoptions_0', 'turnitintooltwo'),
             1 => get_string('repositoryoptions_1', 'turnitintooltwo'),
@@ -320,7 +315,7 @@ if ($ADMIN->fulltree) {
                                                     get_string('reportgenspeed', 'turnitintooltwo'),
                                                     '', 0, $genoptions ));
 
-    $suboptions = array( 0 => get_string('norepository', 'turnitintooltwo'), 
+    $suboptions = array( 0 => get_string('norepository', 'turnitintooltwo'),
                         1 => get_string('standardrepository', 'turnitintooltwo'));
 
     if (!isset($config->repositoryoption)) {
