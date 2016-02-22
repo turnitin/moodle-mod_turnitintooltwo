@@ -564,3 +564,5 @@ $string['crontaskmodeactive'] = 'Turnitintooltwo - Aborted Cron call because of 
 $string['restorationheader'] = 'Turnitin Class Restoration';
 $string['turnitinhelpdesk'] = 'Turnitin Helpdesk';
 $string['helpdesklink'] = 'Need Help with Turnitin?';
+$string['turnitinsettingshelpwizard'] = 'Enable Turnitin helpdesk for Instructors';
+$string['turnitinsettingshelpwizard_desc'] = 'Choose whether instructors are able to access the Turnitin helpdesk wizard from within Moodle.';
