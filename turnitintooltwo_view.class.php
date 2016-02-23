@@ -1076,6 +1076,19 @@ class turnitintooltwo_view {
         $config = turnitintooltwo_admin_config();
         $moodleuserid = (substr($submission->userid, 0, 3) != 'nm-' && $submission->userid != 0) ? $submission->userid : 0;
 
+        // Determine whether we display the overall grade based on the post date of all parts to students.
+        // Also, determine whether all parts have been unanoymised for displaying overall grade to instructors.
+        $display_overall_grade = 1;
+        $all_parts_unanonymised = 1;
+        foreach (array_keys($parts) as $k => $v) {
+            if ($parts[$v]->dtpost > time()) {
+                $display_overall_grade = 0;
+            }
+            if ($parts[$ar_value] != 1 && $all_parts_unanonymised) {
+                $all_parts_unanonymised = 0;
+            }
+        }
+
         if (!$istutor) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
         }
@@ -1086,7 +1099,7 @@ class turnitintooltwo_view {
                                         false, '', array("class" => "inbox_checkbox"));
         }
 
-        if( !$istutor ) {
+        if ( !$istutor ) {
             // If students viewing it will show 'digital receipt' link
             if ( !empty($submission->submission_objectid) ) {
                 $studentname = html_writer::link(
@@ -1096,14 +1109,6 @@ class turnitintooltwo_view {
                 );
             } else {
                 $studentname = "--";
-            }
-
-            //Determine whether the student can see the overall grade, based on the post time of all parts.
-            $display_overall_grade = 1;
-            foreach (array_keys($parts) as $ar_key => $ar_value) {
-                if ($parts[$ar_value]->dtpost > time()) {
-                    $display_overall_grade = 0;
-                }
             }
         } else {
             if ($turnitintooltwoassignment->turnitintooltwo->anon && $parts[$partid]->unanon != 1) {
@@ -1281,7 +1286,8 @@ class turnitintooltwo_view {
             // Show average grade if more than 1 part.
             if (count($parts) > 1 || $turnitintooltwoassignment->turnitintooltwo->grade < 0) {
                 $overallgrade = '--';
-                if ($submission->nmoodle != 1 && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
+                if ($submission->nmoodle != 1 && $all_parts_unanonymised &&
+                        ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                     if (!isset($useroverallgrades[$submission->userid])) {
                         $usersubmissions = $turnitintooltwoassignment->get_user_submissions($submission->userid,
                                                                                 $turnitintooltwoassignment->turnitintooltwo->id);
@@ -1895,9 +1901,9 @@ class turnitintooltwo_view {
 
         $options = array();
         foreach ($moodletutors as $k => $v) {
-            $availabletutor = new turnitintooltwo_user($v->id, "Instructor", false);
+            $availabletutor = new turnitintooltwo_user($v->id, "Instructor", false, "site", false);
 
-            if (array_key_exists($availabletutor->tii_user_id, $tutors)) {
+            if (array_key_exists($availabletutor->id, $tutors)) {
                 unset($moodletutors[$k]);
             } else {
                 $options[$availabletutor->id] = format_string($availabletutor->lastname).', '.
