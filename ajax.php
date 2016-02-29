@@ -820,6 +820,9 @@ switch ($action) {
 
         // Loop through each course and migrate if we can.
         foreach ($courses as $course) {
+            // Begin transaction.
+            $transaction = $DB->start_delegated_transaction();
+
             // If the course ID exists in V2, we skip this course.
             if ($DB->get_records('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'))) {
                 $canMigrate = 0;
@@ -940,6 +943,8 @@ switch ($action) {
                     turnitintooltwo_grade_item_update($turnitintooltwoassignment->turnitintooltwo);
                 }
             }
+            // Commit transaction.
+            $transaction->allow_commit();
         }
         echo json_encode(array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate));
     break;
