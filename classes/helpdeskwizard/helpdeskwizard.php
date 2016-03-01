@@ -16,11 +16,8 @@ class helpdeskwizard {
 	        $ch = curl_init();
 
 	        // Set the url, number of POST vars, POST data.
-	        // curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodle-helpdesk.xml");
-	        curl_setopt($ch, CURLOPT_URL, "http://tii_30.live.iparadigms.com/static/resources/files/moodle-helpdesk.xml");
+	        curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodle-helpdesk.xml");
 	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-	        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 	        if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {
 	            curl_setopt($ch, CURLOPT_PROXY, $CFG->proxyhost.':'.$CFG->proxyport);
 	        }
@@ -39,7 +36,7 @@ class helpdeskwizard {
 	        $xml = simplexml_load_string($result);
 
 	    } catch (Exception $e) {
-	        turnitintooltwo_comms::handle_exceptions($e, 'gethelpdeskxmlerror', false);
+	        turnitintooltwo_comms::handle_exceptions($e, 'gethelpdeskxmlerror', true);
 	    }
 
 		return $xml;
