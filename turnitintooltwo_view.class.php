@@ -1084,7 +1084,7 @@ class turnitintooltwo_view {
             if ($parts[$v]->dtpost > time()) {
                 $display_overall_grade = 0;
             }
-            if ($parts[$ar_value] != 1 && $all_parts_unanonymised) {
+            if ($parts[$v]->unanon != 1 && $all_parts_unanonymised) {
                 $all_parts_unanonymised = 0;
             }
         }
