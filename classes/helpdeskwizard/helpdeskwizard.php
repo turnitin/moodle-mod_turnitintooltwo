@@ -78,8 +78,9 @@ class helpdeskwizard {
         		$answer = html_writer::tag('div', $solution['answer'], array('class' => 'answer'));
         		$link = "";
         		if (!empty($solution['link'])) {
-        			$linktext = 'Need further information? '.html_writer::link($solution['link'], 'Read More...');
-        			$link = html_writer::tag('div', $linktext, array('class' => 'link'));
+        			$linktext = 'Need further information?';
+        			$linktag = html_writer::link($solution['link'], 'Read More...', array('target' => '_blank'));
+        			$link = html_writer::tag('div', $linktext.' '.$linktag, array('class' => 'link'));
         		}
         		$output .= html_writer::tag('div', $issue.$answer.$link,
         										array('id' => 'tii_'.$categoryname.'_'.$i, 'class' => 'tii_solutions'));
