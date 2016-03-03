@@ -110,7 +110,7 @@ switch ($cmd) {
                 'category' => $category,
                 'sub_category' => $sub_category,
                 'class_id' => $tiiclass,
-                'moodleversion' => $CFG->version,
+                'vleversion' => $CFG->version,
                 'plugintype' => 'DirectV2',
                 'pluginversion' => $plugin_version,
                 'accountid' => $config->accountid

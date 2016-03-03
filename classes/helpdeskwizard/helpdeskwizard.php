@@ -12,11 +12,25 @@ class helpdeskwizard {
 		$xml = '';
 
 		try {
-	        // Open connection.
-	        $ch = curl_init();
 
-	        // Set the url, number of POST vars, POST data.
-	        curl_setopt($ch, CURLOPT_URL, "https://www.turnitin.com/static/resources/files/moodle-helpdesk.xml");
+			// Check if solutions exist in the user's language.
+			$solutionsurl = "https://www.turnitin.com/static/resources/files/moodle_helpdesk/moodle-helpdesk-".current_language().".xml";
+			$ch = curl_init($solutionsurl);
+    		curl_setopt($ch, CURLOPT_NOBODY, true);
+    		$result = curl_exec($ch);
+
+    		// If there is no solutions file then use English.
+		    if ($result !== false) {
+		        $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+		        if ($statusCode != 200) {
+		            $solutionsurl = "https://www.turnitin.com/static/resources/files/moodle_helpdesk/moodle-helpdesk-en.xml";
+		        }
+		    }
+
+	        // Get correct language file.
+		    $ch = curl_init();
+	        curl_setopt($ch, CURLOPT_URL, $solutionsurl);
 	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	        if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {
 	            curl_setopt($ch, CURLOPT_PROXY, $CFG->proxyhost.':'.$CFG->proxyport);
