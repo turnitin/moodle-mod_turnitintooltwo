@@ -445,7 +445,6 @@ $string['errorcode2'] = 'This file will not be submitted to Turnitin as it excee
 $string['notorcapable'] = 'It is not possible to produce an Originality Report for this file.';
 $string['pastfiveattempts'] = 'This file will not be submitted to Turnitin as it has exceeded the maximum 5 permitted attempts.';
 $string['errorcode3'] = 'This file has not been submitted to Turnitin because the user has not accepted the Turnitin End User Licence Agreement.';
-$string['ppsubmissionerrorstudent'] = 'This file has not been submitted to Turnitin, please consult your tutor for further details';
 $string['redirecttoeula'] = 'We are redirecting you to the End User Licence Agreement';
 $string['filedoesnotexist'] = 'File has been deleted';
 $string['eventremoved'] = 'This event has been removed the cron queue and will not be processed again.';
