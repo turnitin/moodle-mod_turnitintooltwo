@@ -110,10 +110,10 @@ switch ($cmd) {
                 'category' => $category,
                 'sub_category' => $sub_category,
                 'class_id' => $tiiclass,
-                'vleversion' => $CFG->version,
-                'plugintype' => 'DirectV2',
-                'pluginversion' => $plugin_version,
-                'accountid' => $config->accountid
+                'vle_version' => 'Moodle ('.$CFG->branch.') '.$CFG->version,
+                'integration_id' => 'MoodleDirectV2',
+                'integration_version' => $plugin_version,
+                'account_id' => $config->accountid
             );
 
         // Output Iframe containing Turnitin Helpdesk form.
