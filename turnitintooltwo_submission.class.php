@@ -733,9 +733,30 @@ class turnitintooltwo_submission {
             $save = true;
         }
 
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+                                                                $turnitintooltwoassignment->turnitintooltwo->course);
+
         if ($save) {
             // If the user is not a moodle user then get their name from Tii - only do this on initial save.
             $sub->userid = turnitintooltwo_user::get_moodle_user_id($tiisubmissiondata->getAuthorUserId());
+
+            // If we have no user ID get it from the Moodle database by using their Turnitin e-mail address.
+            if ($sub->userid == 0) {
+                $tmpuser = new turnitintooltwo_user(0);
+                $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
+                $tiiuser = $tmpuser->set_user_values_from_tii();
+                $userrecord = $DB->get_record('user', array('email' => $tiiuser["email"]));
+                $sub->userid = $userrecord->id;
+            }
+
+            // Check if the user is enrolled.
+            $context = context_module::instance($cm->id);
+            if (!is_enrolled($context, $sub->userid)) {ob_start();
+                // Enroll the user as a student.
+                $enrol = enrol_get_plugin('manual');
+                $instance = $DB->get_record("enrol", array('courseid'=> $cm->course, 'enrol'=>'manual'));
+                $enrol->enrol_user($instance, $sub->userid, 5);
+            }
 
             if ($sub->userid == 0 && empty($this->id)) {
                 if ($tiisubmissiondata->getAuthorUserId() > 0) {
@@ -765,8 +786,6 @@ class turnitintooltwo_submission {
             if ($sub->userid > 0 && $sub->submission_unanon) {
                 $user = new turnitintooltwo_user($sub->userid, "Learner");
 
-                $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
-                                                                $turnitintooltwoassignment->turnitintooltwo->course);
                 $grades = new stdClass();
 
                 // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking
