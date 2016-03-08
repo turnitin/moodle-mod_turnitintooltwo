@@ -40,9 +40,11 @@ class turnitintooltwo_user {
         $this->email = "";
         $this->username = "";
 
-        if ($id != 0 && $finduser === true) {
+        if ($id != 0) {
             $this->get_moodle_user($this->id);
-            $this->get_tii_user_id();
+            if ($finduser === true) {
+                $this->get_tii_user_id();
+            }
         }
     }
 

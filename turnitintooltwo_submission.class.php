@@ -623,7 +623,7 @@ class turnitintooltwo_submission {
                     $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
                 }
 
-                //Create a log entry for submission going to Turnitin.
+                // Create a log entry for submission going to Turnitin.
                 $logstring = ($apimethod == "replaceSubmission") ? 'addresubmissiontiidesc' : 'addsubmissiontiidesc';
 
                 turnitintooltwo_add_to_log(
@@ -634,6 +634,9 @@ class turnitintooltwo_submission {
                     $cm->id,
                     $user->id
                 );
+
+                // Add to activity log.
+                turnitintooltwo_activitylog("Action: Submission | Id: ".$this->turnitintooltwoid." | Part: ".$submission->submission_part." | User ID: ".$user->id." (".$user->tii_user_id.") Submission title: ".$submission->submission_title, "REQUEST");
             } catch (Exception $e) {
                 $errorstring = (!is_null($this->submission_objectid)) ? "updatesubmissionerror" : "createsubmissionerror";
                 $error = $turnitincomms->handle_exceptions($e, $errorstring, false, true);

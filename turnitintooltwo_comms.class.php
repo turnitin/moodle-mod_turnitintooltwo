@@ -54,7 +54,7 @@ class turnitintooltwo_comms {
      *
      * @return object \APITurnitin
      */
-    public function initialise_api( $istestingconnection = false ) {
+    public function initialise_api( $testingconnection = false ) {
         global $CFG, $tiipp;
 
         $api = new TurnitinAPI($this->tiiaccountid, $this->tiiapiurl, $this->tiisecretkey,
@@ -102,8 +102,8 @@ class turnitintooltwo_comms {
         if (!empty($CFG->tiioffline) && !$istestingconnection && empty($tiipp->in_use)) {
             turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
         }
-        $api->setIsTestingConnection($istestingconnection);
-        $api->setPerflog(new turnitintooltwo_perflog());
+        $api->setTestingConnection($testingconnection);
+        $api->setPerformanceLog(new turnitintooltwo_performancelog());
 
         return $api;
     }
