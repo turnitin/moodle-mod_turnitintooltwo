@@ -561,6 +561,7 @@ $string['migrationtool_setting_difference'] = 'The V2 setting for "{$a}" is diff
 $string['migrationtool_v1warning'] = 'The Moodle Direct V1 assignments should not be used any more and can be deleted.';
 $string['migrationtool_exportoutput'] = 'Export Migration Output';
 $string['migrationtool_exportcsv'] = 'Click the button below to export a CSV of courses with their IDs and their migration status.';
+$string['migrationtool_userepository'] = 'Institutional Repository - Please note that "No" in V1 corresponds to "Enable instructor standard repository options", "Submit all papers to the standard repository" and "Do not submit any papers into a repository" while "Yes" corresponds to "Enable instructor expanded repository options". <a href="https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Direct_V2/Direct_V2_Integration_Administrator_User_Manual/11_Paper_Repository_Options" target="_blank">See here</a> for further information.';
 $string['anonblindmarkingnote'] = 'Note: The separate Turnitin anonymous marking setting has been removed. Turnitin will use Moodle\'s blind marking setting to determine the anonymous marking setting.';
 $string['displaygradesas'] = 'Grade Display';
 $string['displaygradesas_help'] = 'This option sets the display mode for grades the options are display as a percentage or display as a fraction ie 45/60.';

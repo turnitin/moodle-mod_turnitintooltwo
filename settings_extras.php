@@ -406,7 +406,7 @@ switch ($cmd) {
                                 array("v1field" => "turnitin_useerater", "v2field" => "useerater", "lang" => "turnitinuseerater"),
                                 array("v1field" => "turnitin_useanon", "v2field" => "useanon", "lang" => "turnitinuseanon"),
                                 array("v1field" => "turnitin_transmatch", "v2field" => "transmatch", "lang" => "transmatch"),
-                                array("v1field" => "turnitin_userepository", "v2field" => "repositoryoption", "lang" => "turnitinuserepository"),
+                                array("v1field" => "turnitin_userepository", "v2field" => "repositoryoption", "lang" => "migrationtool_userepository"),
                                 array("v1field" => "turnitin_agreement", "v2field" => "agreement", "lang" => "turnitintooltwoagreement"),
                                 array("v1field" => "turnitin_enablepseudo", "v2field" => "enablepseudo", "lang" => "enablepseudo"));
 
