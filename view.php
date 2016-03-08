@@ -149,8 +149,9 @@ $userrole = ($istutor) ? 'Instructor' : 'Learner';
 
 // Deal with actions here.
 if (!empty($action)) {
-
-    turnitintooltwo_activitylog("Action: ".$action." | Id: ".$turnitintooltwo->id." | Part: ".$part, "REQUEST");
+    if ($action != "submission") {
+        turnitintooltwo_activitylog("Action: ".$action." | Id: ".$turnitintooltwo->id." | Part: ".$part, "REQUEST");
+    }
 
     switch ($action) {
         case "delpart":
