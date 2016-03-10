@@ -610,6 +610,12 @@ jQuery(document).ready(function($) {
         $('html').css('background', '#FFF');
     }
 
+    $('#date_post_3').on("click", function() {
+        if ($(this).data('anon') == 1) {
+            alert(M.str.turnitintooltwo.postdate_warning);
+        }
+    });
+
     if ($('.editable_text').length > 0) {
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editable.defaults.url = 'ajax.php';
@@ -670,11 +676,7 @@ jQuery(document).ready(function($) {
                 'smartDays': true
             },
             validate: function(value) {
-                // Try taking this out of the IF and seeing what happens.
-                if (/*value.format("X").unix() < due_date_unix &&*/$(this).data('anon') == 1 && $this(hasClass('editable_postdue'))) {
-                    confirm(M.str.turnitintooltwo.postdate_warning);
-                }
-                if( value.format("X").unix() < moment().unix() &&
+                if( value.format("X") < moment() && // removed .unix() as it is not a valid function
                     $(this).hasClass('editable_postdue') &&
                     $(this).data('anon') == 1 &&
                     $(this).data('unanon') == 0 &&
