@@ -670,7 +670,8 @@ jQuery(document).ready(function($) {
                 'smartDays': true
             },
             validate: function(value) {
-                if (/*value.format("X").unix() < due_date_unix &&*/$this.data('anon') == 1 && $this(hasClass('editable_postdue'))) {
+                // Try taking this out of the IF and seeing what happens.
+                if (/*value.format("X").unix() < due_date_unix &&*/$(this).data('anon') == 1 && $this(hasClass('editable_postdue'))) {
                     confirm(M.str.turnitintooltwo.postdate_warning);
                 }
                 if( value.format("X").unix() < moment().unix() &&
