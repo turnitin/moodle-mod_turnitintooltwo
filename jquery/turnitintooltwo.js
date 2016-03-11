@@ -610,7 +610,7 @@ jQuery(document).ready(function($) {
         $('html').css('background', '#FFF');
     }
 
-    $('#date_post_3').on("click", function() {
+    $('.editable_postdue').on("click", function() {
         if ($(this).data('anon') == 1) {
             alert(M.str.turnitintooltwo.postdate_warning);
         }
