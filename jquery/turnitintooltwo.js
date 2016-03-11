@@ -676,7 +676,7 @@ jQuery(document).ready(function($) {
                 'smartDays': true
             },
             validate: function(value) {
-                if( value.format("X") < moment() && // removed .unix() as it is not a valid function
+                if( value.format("X") < moment().unix() && // removed .unix() as it is not a valid function
                     $(this).hasClass('editable_postdue') &&
                     $(this).data('anon') == 1 &&
                     $(this).data('unanon') == 0 &&
