@@ -753,7 +753,7 @@ class turnitintooltwo_submission {
             // Check if the user is enrolled.
             if ($sub->userid != 0) {
                 $context = context_module::instance($cm->id);
-                if (!is_enrolled($context, $sub->userid)) {ob_start();
+                if (!is_enrolled($context, $sub->userid)) {
                     // Enroll the user as a student.
                     $enrol = enrol_get_plugin('manual');
                     $instance = $DB->get_record("enrol", array('courseid'=> $cm->course, 'enrol'=>'manual'));
