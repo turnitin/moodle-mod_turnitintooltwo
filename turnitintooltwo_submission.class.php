@@ -745,17 +745,20 @@ class turnitintooltwo_submission {
                 $tmpuser = new turnitintooltwo_user(0);
                 $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
                 $tiiuser = $tmpuser->set_user_values_from_tii();
-                $userrecord = $DB->get_record('user', array('email' => $tiiuser["email"]));
-                $sub->userid = $userrecord->id;
+                if ($userrecord = $DB->get_record('user', array('email' => $tiiuser["email"]))) {
+                    $sub->userid = $userrecord->id;
+                }
             }
 
             // Check if the user is enrolled.
-            $context = context_module::instance($cm->id);
-            if (!is_enrolled($context, $sub->userid)) {ob_start();
-                // Enroll the user as a student.
-                $enrol = enrol_get_plugin('manual');
-                $instance = $DB->get_record("enrol", array('courseid'=> $cm->course, 'enrol'=>'manual'));
-                $enrol->enrol_user($instance, $sub->userid, 5);
+            if ($sub->userid != 0) {
+                $context = context_module::instance($cm->id);
+                if (!is_enrolled($context, $sub->userid)) {ob_start();
+                    // Enroll the user as a student.
+                    $enrol = enrol_get_plugin('manual');
+                    $instance = $DB->get_record("enrol", array('courseid'=> $cm->course, 'enrol'=>'manual'));
+                    $enrol->enrol_user($instance, $sub->userid, 5);
+                }
             }
 
             if ($sub->userid == 0 && empty($this->id)) {
