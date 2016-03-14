@@ -724,7 +724,7 @@ jQuery(document).ready(function($) {
 
     $('#inbox_form form, .launch_form form').submit();
 
-    // Open an iframe light box containing the Rubric View
+    // Open an iframe light box containing the EULA View
     if ($('.turnitin_eula_link').length > 0) {
         $('.turnitin_eula_link').colorbox({
             iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",
