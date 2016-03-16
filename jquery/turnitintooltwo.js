@@ -610,6 +610,12 @@ jQuery(document).ready(function($) {
         $('html').css('background', '#FFF');
     }
 
+    $('.editable_postdue').on("click", function() {
+        if ($(this).data('anon') == 1) {
+            alert(M.str.turnitintooltwo.postdate_warning);
+        }
+    });
+
     if ($('.editable_text').length > 0) {
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editable.defaults.url = 'ajax.php';
@@ -678,7 +684,6 @@ jQuery(document).ready(function($) {
                 {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) {
                         $('.editable-open').editableContainer('hide');
-
                         // Validation only fails if string is returned (We need a string).
                         return ' ';
                     }

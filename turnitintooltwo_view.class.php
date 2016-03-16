@@ -150,6 +150,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('disableanonconfirm', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
         $PAGE->requires->string_for_js('loadingdv', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('postdate_warning','turnitintooltwo');
     }
 
     /**
@@ -794,7 +795,7 @@ class turnitintooltwo_view {
         $cells[3] = new html_table_cell($datefield);
         $cells[3]->attributes['class'] = 'data';
 
-        // Show Rubric view if applicable to students. 
+        // Show Rubric view if applicable to students.
         $rubricviewlink = '';
         if (!$istutor && $config->usegrademark && !empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
             $rubricviewlink .= $OUTPUT->box_start('row_rubric_manager', '');
