@@ -533,6 +533,7 @@ $string['instructorreceipt'] = 'Notify Instructor upon Submission';
 $string['instructorreceipt_desc'] = 'Choose whether to send a notification to each instructor on a course when a submission is made to an assignment.';
 $string['loadingdv'] = 'Loading Turnitin Document Viewer...';
 $string['messageprovider:notify_instructor_of_submission'] = 'Turnitin Assignment Instructor Digital Receipt notifications';
+$string['postdate_warning'] = 'Changing the post-date can affect anonymous marking.';
 $string['task_name'] = 'Turnitintooltwo Cron Task';
 $string['crontaskmodeactive'] = 'Turnitintooltwo - Aborted Cron call because of active task mode';
 $string['restorationheader'] = 'Turnitin Class Restoration';
