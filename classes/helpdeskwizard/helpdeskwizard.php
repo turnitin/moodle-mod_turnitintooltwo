@@ -95,6 +95,8 @@ class helpdeskwizard {
         			$linktext = 'Need further information?';
         			$linktag = html_writer::link($solution['link'], 'Read More...', array('target' => '_blank'));
         			$link = html_writer::tag('div', $linktext.' '.$linktag, array('class' => 'link'));
+        		} else {
+        			$link = html_writer::tag('div', "", array('class' => 'link'));
         		}
         		$output .= html_writer::tag('div', $issue.$answer.$link,
         										array('id' => 'tii_'.$categoryname.'_'.$i, 'class' => 'tii_solutions'));
