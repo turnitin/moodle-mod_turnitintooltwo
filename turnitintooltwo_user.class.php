@@ -369,6 +369,14 @@ class turnitintooltwo_user {
     public function join_user_to_class($tiicourseid) {
 
         $turnitincomms = new turnitintooltwo_comms();
+
+        // We only want an API log entry for this if diagnostic mode is set to Debugging
+        if (empty($config)) {
+            $config = turnitintooltwo_admin_config();
+        }
+        if ($config->enablediagnostic != 2) {
+            $turnitincomms->setDiagnostic(0);
+        }
         $turnitincall = $turnitincomms->initialise_api();
 
         $membership = new TiiMembership();

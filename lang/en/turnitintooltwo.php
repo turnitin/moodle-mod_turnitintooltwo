@@ -546,3 +546,6 @@ $string['tiiaccountsettings'] = 'Turnitin Account Settings';
 $string['tiiaccountsettings_desc'] = 'Please ensure these settings match those configured in your Turnitin account, otherwise you may experience issues with assignment creation and/or student submissions.';
 $string['tiimiscsettings'] = 'Miscellaneous Plugin Settings';
 $string['tiidebugginglogs'] = 'Debugging and Logging';
+$string['diagnosticoptions_0'] = 'Off';
+$string['diagnosticoptions_1'] = 'Standard';
+$string['diagnosticoptions_2'] = 'Debugging';
