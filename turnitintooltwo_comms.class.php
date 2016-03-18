@@ -185,4 +185,11 @@ class turnitintooltwo_comms {
         $langcode = (isset($langarray[$langcode])) ? $langarray[$langcode] : 'en_us';
         return $langcode;
     }
+
+    /**
+    * @param int $diagnostic Set diagnostic setting.
+    */
+    public function setDiagnostic($diagnostic) {
+        $this->diagnostic = $diagnostic;
+    }
 }

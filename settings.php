@@ -144,9 +144,14 @@ if ($ADMIN->fulltree) {
                                             get_string('tiidebugginglogs', 'turnitintooltwo'), ''));
 
     $ynoptions = array(0 => get_string('no'), 1 => get_string('yes'));
+    $diagnosticoptions = array(
+            0 => get_string('diagnosticoptions_0', 'turnitintooltwo'),
+            1 => get_string('diagnosticoptions_1', 'turnitintooltwo'),
+            2 => get_string('diagnosticoptions_2', 'turnitintooltwo')
+        );
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintooltwo'),
-                        get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $ynoptions));
+                        get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $diagnosticoptions));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enableperformancelogs', get_string('enableperformancelogs', 'turnitintooltwo'),
                         get_string('enableperformancelogs_desc', 'turnitintooltwo'), 0, $ynoptions));
