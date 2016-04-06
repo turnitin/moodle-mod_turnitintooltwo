@@ -32,6 +32,6 @@ $plugin->maturity  = MATURITY_STABLE;
 global $CFG;
 if ($CFG->version > 2014051200) {
 	$plugin->cron = 0;
-}else{
+} else {
 	$plugin->cron = 1800;
 }
