@@ -21,7 +21,7 @@ abstract class export_courses {
 
 		// Print names of all the fields
 		if ($etd == 1) {
-		$headerData = array('Moodle Course ID', 'Turnitin Course ID', 'Course Name', 'TII Assignment ID');
+			$headerData = array('Moodle Course ID', 'Turnitin Course ID', 'Course Name', 'TII Assignment ID');
 		} else {
 			$headerData = array('Moodle Course ID', 'Turnitin Course ID', 'Course Name', 'Status');
 		}
