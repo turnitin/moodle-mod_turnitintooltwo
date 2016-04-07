@@ -40,6 +40,7 @@ $module = $DB->get_record('modules', array('name' => "turnitintooltwo"));
 $viewcontext = optional_param('view_context', "window", PARAM_ALPHAEXT);
 $filetodelete = optional_param('file', '', PARAM_INT);
 $filehashtodelete = optional_param('filehash', '', PARAM_ALPHANUM);
+$etd = optional_param('etd', '', PARAM_INT);
 
 // Initialise variables.
 $output = "";
@@ -459,10 +460,29 @@ switch ($cmd) {
 
                         $output .= html_writer::table($table);
 
-                        $output .= html_writer::tag("button", get_string('migrationtool_trial', 'turnitintooltwo'),
-                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses), "disabled" => "disabled"));
 
+
+
+
+
+
+                        //$output .= $OUTPUT->box_start('hidden_cladss', 'migration-footer');
+
+
+
+
+                        $output .= html_writer::tag("button", get_string('migrationtool_trial', 'turnitintooltwo'),
+                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 
+                                            'data-courses' => count($courses), 'data-etd' => $etd, "disabled" => "disabled"));
+
+                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'), array('id' => 'begin-migration'));
+                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php?etd='.$etd), 
+                                            get_string("migrationtool_exportoutput", 'turnitintooltwo'), "post", array("class" => "exportcsv"));
                         $output .= $OUTPUT->box_end(true);
+                        //$output .= $OUTPUT->box_end(true);
+
+
+
 
 
                         // Ensure our session data is empty before we begin.
@@ -473,10 +493,10 @@ switch ($cmd) {
                             $output .= html_writer::tag('div', get_string("migrationtool_contactsupport", 'turnitintooltwo'),
                                             array('id' => 'begin-migration'));
                             $output .= html_writer::tag("button", get_string('migrationtool_begin', 'turnitintooltwo'),
-                                            array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses)));
-                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'),
-                                            array('id' => 'begin-migration'));
-                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php'), 
+                                            array("id" => "begin-migration-button", "class" => "btn btn-primary migration-button", 
+                                                'data-courses' => count($courses), 'data-etd' => $etd));
+                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'), array('id' => 'begin-migration'));
+                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php?etd='.$etd), 
                                             get_string("migrationtool_exportoutput", 'turnitintooltwo'), "post", array("class" => "exportcsv"));
                         $output .= $OUTPUT->box_end(true);
 
@@ -484,9 +504,8 @@ switch ($cmd) {
                         $output .= $OUTPUT->box_start('hidden_class', 'migration-footer-nothing');
                             $output .= html_writer::tag('div', get_string("migrationtool_allcontainv2", 'turnitintooltwo'),
                                                 array('class' => 'tii_checkagainstnote'));
-                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'),
-                                            array('id' => 'begin-migration'));
-                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php'), 
+                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'), array('id' => 'begin-migration'));
+                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php?etd='.$etd), 
                                             get_string("migrationtool_exportoutput", 'turnitintooltwo'), "post", array("class" => "exportcsv"));
                         $output .= $OUTPUT->box_end(true);
 
@@ -494,9 +513,8 @@ switch ($cmd) {
                         $output .= $OUTPUT->box_start('hidden_class', 'migrationtool_complete');
                             $output .= html_writer::tag('div', get_string("migrationtool_complete", 'turnitintooltwo'), array('class' => 'migrationtool_complete_text'));
                             $output .= html_writer::tag('div', get_string("migrationtool_v1warning", 'turnitintooltwo'), array('class' => 'text-margin'));
-                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'),
-                                            array('id' => 'begin-migration'));
-                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php'), 
+                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'), array('id' => 'begin-migration'));
+                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php?etd='.$etd), 
                                             get_string("migrationtool_exportoutput", 'turnitintooltwo'), "post", array("class" => "exportcsv"));
                         $output .= $OUTPUT->box_end(true);
 

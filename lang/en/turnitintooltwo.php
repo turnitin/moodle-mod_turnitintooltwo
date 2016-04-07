@@ -552,6 +552,7 @@ $string['migrationtool_checklist'] = 'Have existing courses with V1 assignments 
 $string['migrationtool_course_text'] = 'Course:';
 $string['migrationtool_can_migrate'] = 'This course can be migrated.';
 $string['migrationtool_cant_migrate'] = 'This course cannot be migrated because it contains Moodle Direct V2 assignments.';
+$string['migrationtool_cant_migrate2'] = 'This course cannot be migrated because it has already been migrated.';
 $string['migrationtool_migrated'] = 'The following courses have been migrated:';
 $string['migrationtool_migrated2'] = 'This course has been migrated.';
 $string['migrationtool_not_migrated'] = 'The following assignments on this course have not been migrated as the course contains Moodle Direct V2 assignments.';

@@ -147,5 +147,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2016011105) {
+        $table = new xmldb_table('turnitintooltwo_courses');
+        $field = new xmldb_field('migrated', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'course_type');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

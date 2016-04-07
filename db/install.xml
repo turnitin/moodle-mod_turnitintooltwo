@@ -113,7 +113,8 @@
                 <FIELD NAME="ownerid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="courseid" NEXT="turnitin_ctl"/>
                 <FIELD NAME="turnitin_ctl" TYPE="text" LENGTH="medium" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="ownerid" NEXT="turnitin_cid"/>
                 <FIELD NAME="turnitin_cid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="turnitin_ctl" NEXT="course_type"/>
-                <FIELD NAME="course_type" TYPE="char" LENGTH="20" DEFAULT="M" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="turnitin_cid"/>
+                <FIELD NAME="course_type" TYPE="char" LENGTH="20" DEFAULT="M" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="turnitin_cid" NEXT="migrated"/>
+                <FIELD NAME="migrated" TYPE="char" LENGTH="20" DEFAULT="M" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="course_type"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
