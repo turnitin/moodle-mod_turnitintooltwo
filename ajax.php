@@ -786,6 +786,7 @@ switch ($action) {
         $trial = required_param('trial', PARAM_INT);
         $doOnce = required_param('doOnce', PARAM_INT);
         $totalToMigrate = required_param('totalToMigrate', PARAM_INT);
+        $etd = required_param('etd', PARAM_INT);
 
         $data = "";
         
@@ -824,7 +825,14 @@ switch ($action) {
             $transaction = $DB->start_delegated_transaction();
 
             // If the course ID exists in V2, we skip this course.
-            if ($DB->get_records('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'))) {
+            $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'));
+
+            if ($v2course->migrated) {
+                $canMigrate = 0;
+                $headerColour = "red";
+                $subheaderText = "migrationtool_cant_migrate2";
+                $sessionText = "migrationtool_cant_migrate2";
+            } elseif (($v2course) && (!$etd)) {
                 $canMigrate = 0;
                 $headerColour = "red";
                 $subheaderText = "migrationtool_cant_migrate";
@@ -836,20 +844,32 @@ switch ($action) {
                 $subheaderText = "migrationtool_can_migrate";
                 $sessionText = "migrationtool_migrated2";
 
-                if ($trial == 0) {
-                    // Insert the course to the Turnitintooltwo courses table.
-                    $turnitincourse = new stdClass();
-                    $turnitincourse->courseid = $course->courseid;
-                    $turnitincourse->ownerid = $course->ownerid;
-                    $turnitincourse->turnitin_ctl = $course->turnitin_ctl;
-                    $turnitincourse->turnitin_cid = $course->turnitin_cid;
-                    $turnitincourse->course_type = 'TT';
+                if (!$trial) {
+                    if (!$etd) {
+                        // Insert the course to the Turnitintooltwo courses table.
+                        $turnitincourse = new stdClass();
+                        $turnitincourse->courseid = $course->courseid;
+                        $turnitincourse->ownerid = $course->ownerid;
+                        $turnitincourse->turnitin_ctl = $course->turnitin_ctl;
+                        $turnitincourse->turnitin_cid = $course->turnitin_cid;
+                        $turnitincourse->course_type = 'TT';
+                        $turnitincourse->migrated = 1;
 
-                    $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+                        $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+                    } else {
+                        $update = new stdClass();
+                        $update->id = $course->id;
+                        $update->turnitin_cid = $v2course->turnitin_cid;
+                        $DB->update_record('turnitintool_courses', $update);
+                        $update->id = $v2course->id;
+                        $update->migrated = 1;
+                        $DB->update_record('turnitintooltwo_courses', $update);
+                    }
                 }
             }
 
-            if ($trial == 1) {
+            // Output text.
+            if ($trial) {
                 $data .= html_writer::tag('div', get_string('migrationtool_course_text', 'turnitintooltwo') .' '. $course->fullname, array('class' => 'courseheader '.$headerColour)).
                 html_writer::tag('div', get_string($subheaderText, 'turnitintooltwo'), array('class' => 'text-margin '.$headerColour));
             } else {
@@ -858,57 +878,62 @@ switch ($action) {
                 }
             }
 
-            //Save CSV session data.
-            $_SESSION["migrationtool"]["csvdata"][] = array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo'));
+            // Save CSV session data.
+            if (!$etd) {
+                $_SESSION["migrationtool"]["csvdata"][] = array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo'));
+            }
 
             // Loop through each assignment, get its parts and submissions.
             $v1_assignments = $DB->get_records('turnitintool', array('course' => $course->courseid));
             foreach ($v1_assignments as $v1_assignment) {
-                // Skip if this is the trial run or we can't migrate this course.
-                if (($trial == 0) && ($canMigrate == 1)) {
+                // Skip if we can't migrate.
+                if ($canMigrate == 1) {
                     $v1_assignment_id = $v1_assignment->id;
                     unset($v1_assignment->id);
-                    $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
+
+                    if (!$trial) {
+                        $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
+
+                        //Update the old assignment title.
+                        $updatetitle = new stdClass();
+                        $updatetitle->id = $v1_assignment_id;
+                        $updatetitle->name = $v1_assignment->name . ' (V1)';
+                        $DB->update_record('turnitintool', $updatetitle);
+
+                        // Update the old assignment title in the gradebook.
+                        @include_once($CFG->dirroot."/lib/gradelib.php");
+                        $params = array();
+                        $params['itemname'] = $updatetitle->name;
+                        grade_update('mod/turnitintool', $course->courseid, 'mod', 'turnitintool', $v1_assignment_id, 0, NULL, $params);
+
+                        // Hide the V1 assignment.
+                        $cm = get_coursemodule_from_instance('turnitintool', $v1_assignment_id);
+                        set_coursemodule_visible($cm->id, 0);
+
+                        // Set up a V2 course module.
+                        $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
+                        $coursemodule = new stdClass();
+                        $coursemodule->course = $course->courseid;
+                        $coursemodule->module = $module->id;
+                        $coursemodule->added = time();
+                        $coursemodule->instance = $turnitintooltwoid;
+                        $coursemodule->section = 0;
+
+                        // Add Course module and get course section.
+                        $coursemodule->coursemodule = add_course_module($coursemodule);
+
+                        if (is_callable('course_add_cm_to_section')) {
+                            $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
+                        } else {
+                            $sectionid = add_mod_to_section($coursemodule);
+                        }
+
+                        $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
+                        rebuild_course_cache($courseid);
+                    }
 
                     // Create new Turnitintooltwo object.
                     $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwoid);
-
-                    //Update the old assignment title.
-                    $updatetitle = new stdClass();
-                    $updatetitle->id = $v1_assignment_id;
-                    $updatetitle->name = $v1_assignment->name . ' (V1)';
-                    $DB->update_record('turnitintool', $updatetitle);
-
-                    // Update the old assignment title in the gradebook.
-                    @include_once($CFG->dirroot."/lib/gradelib.php");
-                    $params = array();
-                    $params['itemname'] = $updatetitle->name;
-                    grade_update('mod/turnitintool', $course->courseid, 'mod', 'turnitintool', $v1_assignment_id, 0, NULL, $params);
-
-                    // Hide the V1 assignment.
-                    $cm = get_coursemodule_from_instance('turnitintool', $v1_assignment_id);
-                    set_coursemodule_visible($cm->id, 0);
-
-                    // Set up a V2 course module.
-                    $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
-                    $coursemodule = new stdClass();
-                    $coursemodule->course = $course->courseid;
-                    $coursemodule->module = $module->id;
-                    $coursemodule->added = time();
-                    $coursemodule->instance = $turnitintooltwoid;
-                    $coursemodule->section = 0;
-
-                    // Add Course module and get course section.
-                    $coursemodule->coursemodule = add_course_module($coursemodule);
-
-                    if (is_callable('course_add_cm_to_section')) {
-                        $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
-                    } else {
-                        $sectionid = add_mod_to_section($coursemodule);
-                    }
-
-                    $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
-                    rebuild_course_cache($courseid);
 
                     // Get the assignment parts.
                     $v1_parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $v1_assignment_id));
@@ -920,32 +945,42 @@ switch ($action) {
                         unset($v1_part->turnitintoolid);
                         unset($v1_part->id);
 
-                        $v2_part_id = $DB->insert_record("turnitintooltwo_parts", $v1_part);
+                        if (($v2course) && ($etd)) {
+                            $_SESSION["migrationtool"]["csvdata"][] = array($v2course->courseid, $v2course->turnitin_cid, $v2course->turnitin_ctl, $v1_part->tiiassignid);
+                        }
 
-                        // Get the submissions for this part.
-                        $v1_part_submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1_part_id));
+                        if (!$trial) {
+                            $v2_part_id = $DB->insert_record("turnitintooltwo_parts", $v1_part);
 
-                        foreach ($v1_part_submissions as $v1_part_submission) {
-                            $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
-                            $v1_part_submission->submission_part = $v2_part_id;
-                            unset($v1_assignment_submissions->turnitintoolid);
-                            unset($v1_part_submission->id);
+                            // Get the submissions for this part.
+                            $v1_part_submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1_part_id));
 
-                            $turnitintooltwo_submissionid = $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
+                            foreach ($v1_part_submissions as $v1_part_submission) {
+                                $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
+                                $v1_part_submission->submission_part = $v2_part_id;
+                                unset($v1_assignment_submissions->turnitintoolid);
+                                unset($v1_part_submission->id);
 
-                            // Get the V2 part and update grade book.
-                            $v2_part_submission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwo_submissionid));
-                            turnitintooltwo_submission::update_gradebook($v2_part_submission, $turnitintooltwoassignment);
+                                $turnitintooltwo_submissionid = $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
+
+                                // Get the V2 part and update grade book.
+                                $v2_part_submission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwo_submissionid));
+                                turnitintooltwo_submission::update_gradebook($v2_part_submission, $turnitintooltwoassignment);
+                            }
                         }
                     }
 
-                    // Update the grades for this assignment.
-                    turnitintooltwo_grade_item_update($turnitintooltwoassignment->turnitintooltwo);
+                    if (!$trial) {
+                        // Update the grades for this assignment.
+                        turnitintooltwo_grade_item_update($turnitintooltwoassignment->turnitintooltwo);
+                    }
                 }
             }
+
             // Commit transaction.
             $transaction->allow_commit();
         }
+
         echo json_encode(array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate));
     break;
 }

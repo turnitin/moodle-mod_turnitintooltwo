@@ -142,7 +142,8 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.migration-button', function() {
         $("#progress-bar").removeClass("hidden_class");
     	var id = this.id;
-		var totalCourses = $(this).data("courses");
+        var totalCourses = $(this).data("courses");
+        var etd = $(this).data("etd");
 		var processAtOnce = 10;
 
 		if (totalCourses >= processAtOnce) {
@@ -162,11 +163,11 @@ jQuery(document).ready(function($) {
 
 		// Do the migration.
     	$('.migrationtool').html('');
-		migrateCourses(0, totalCourses, processAtOnce, iterations, 1, trial, 1, 0);
+		migrateCourses(0, totalCourses, etd, processAtOnce, iterations, 1, trial, 1, 0);
     });
 
 
-    function migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce, totalToMigrate) {
+    function migrateCourses(start, totalCourses, etd, processAtOnce, iterations, iteration, trial, doOnce, totalToMigrate) {
 		// Percentage increase of the progress bar on each iteration.
     	var progressBarSegment = Math.round(100/iterations);
 
@@ -181,7 +182,7 @@ jQuery(document).ready(function($) {
 	        type: "POST",
 	        url: "ajax.php",
 	        dataType: "json",
-	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce, totalToMigrate: totalToMigrate},
+	        data: {action: "migration", sesskey: M.cfg.sesskey, start: start, totalCourses: totalCourses, etd: etd, processAtOnce: processAtOnce, iteration: iteration, trial: trial, doOnce: doOnce, totalToMigrate: totalToMigrate},
 	        success: function(result) {
                 $('.migrationtool').append(result.dataset);
                 totalToMigrate = result.totalToMigrate;
@@ -208,7 +209,7 @@ jQuery(document).ready(function($) {
                 iteration = result.iteration + 1;
                 doOnce = result.doOnce;
                 if (result.end < totalCourses) {
-                    migrateCourses(start, totalCourses, processAtOnce, iterations, iteration, trial, doOnce, totalToMigrate);
+                    migrateCourses(start, totalCourses, etd, processAtOnce, iterations, iteration, trial, doOnce, totalToMigrate);
                 }
             },
 	    });

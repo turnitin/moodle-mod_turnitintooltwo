@@ -552,6 +552,7 @@ $string['migrationtool_checklist'] = 'Have existing courses with V1 assignments 
 $string['migrationtool_course_text'] = 'Course:';
 $string['migrationtool_can_migrate'] = 'This course can be migrated.';
 $string['migrationtool_cant_migrate'] = 'This course cannot be migrated because it contains Moodle Direct V2 assignments.';
+$string['migrationtool_cant_migrate2'] = 'This course cannot be migrated because it has already been migrated.';
 $string['migrationtool_migrated'] = 'The following courses have been migrated:';
 $string['migrationtool_migrated2'] = 'This course has been migrated.';
 $string['migrationtool_not_migrated'] = 'The following assignments on this course have not been migrated as the course contains Moodle Direct V2 assignments.';
@@ -561,7 +562,7 @@ $string['migrationtool_setting_difference'] = 'The V2 setting for "{$a}" is diff
 $string['migrationtool_v1warning'] = 'The Moodle Direct V1 assignments should not be used any more and can be deleted.';
 $string['migrationtool_exportoutput'] = 'Export Migration Output';
 $string['migrationtool_exportcsv'] = 'Click the button below to export a CSV of courses with their IDs and their migration status.';
-$string['migrationtool_userepository'] = 'Institutional Repository - Please note that "No" in V1 corresponds to "Enable instructor standard repository options", "Submit all papers to the standard repository" and "Do not submit any papers into a repository" while "Yes" corresponds to "Enable instructor expanded repository options". <a href="https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Direct_V2/Direct_V2_Integration_Administrator_User_Manual/11_Paper_Repository_Options" target="_blank">See here</a> for further information.';
+$string['migrationtool_userepository'] = 'Institutional Repository - Please note that selecting "No" in V1 corresponds to "Enable instructor standard repository options", "Submit all papers to the standard repository" and "Do not submit any papers into a repository", while selecting "Yes" corresponds to "Enable instructor expanded repository options". <a href="https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Direct_V2/Direct_V2_Integration_Administrator_User_Manual/11_Paper_Repository_Options" target="_blank">See here</a> for further information.';
 $string['anonblindmarkingnote'] = 'Note: The separate Turnitin anonymous marking setting has been removed. Turnitin will use Moodle\'s blind marking setting to determine the anonymous marking setting.';
 $string['displaygradesas'] = 'Grade Display';
 $string['displaygradesas_help'] = 'This option sets the display mode for grades the options are display as a percentage or display as a fraction ie 45/60.';
