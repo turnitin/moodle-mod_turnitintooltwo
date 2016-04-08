@@ -460,30 +460,9 @@ switch ($cmd) {
 
                         $output .= html_writer::table($table);
 
-
-
-
-
-
-
-                        //$output .= $OUTPUT->box_start('hidden_cladss', 'migration-footer');
-
-
-
-
                         $output .= html_writer::tag("button", get_string('migrationtool_trial', 'turnitintooltwo'),
-                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 
-                                            'data-courses' => count($courses), 'data-etd' => $etd, "disabled" => "disabled"));
-
-                            $output .= html_writer::tag('div', get_string("migrationtool_exportcsv", 'turnitintooltwo'), array('id' => 'begin-migration'));
-                            $output .= $OUTPUT->single_button(new moodle_url('/mod/turnitintooltwo/classes/csvexport/export_courses.php?etd='.$etd), 
-                                            get_string("migrationtool_exportoutput", 'turnitintooltwo'), "post", array("class" => "exportcsv"));
+                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses), "disabled" => "disabled"));
                         $output .= $OUTPUT->box_end(true);
-                        //$output .= $OUTPUT->box_end(true);
-
-
-
-
 
                         // Ensure our session data is empty before we begin.
                         unset($_SESSION["migrationtool"]["csvdata"]);
