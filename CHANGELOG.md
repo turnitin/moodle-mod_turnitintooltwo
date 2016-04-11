@@ -1,7 +1,8 @@
 ### Date:       2016-April-11
 ### Release:    v2016011105
 
-- Datatables styling now specific to Turnitin tables to avoid conflict. #137
+- Added support form to contact Tii support directly from the plugin.
+- Datatables styling now specific to Turnitin tables to avoid conflict.
 - Activity logs for submissions are now more informative.
 - Created warning on config page for the customer to check whether translated matching and ETS are configured at account level
 - Fixes:
