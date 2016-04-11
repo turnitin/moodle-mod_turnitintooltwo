@@ -149,8 +149,9 @@ $userrole = ($istutor) ? 'Instructor' : 'Learner';
 
 // Deal with actions here.
 if (!empty($action)) {
-
-    turnitintooltwo_activitylog("Action: ".$action." | Id: ".$turnitintooltwo->id." | Part: ".$part, "REQUEST");
+    if ($action != "submission") {
+        turnitintooltwo_activitylog("Action: ".$action." | Id: ".$turnitintooltwo->id." | Part: ".$part, "REQUEST");
+    }
 
     switch ($action) {
         case "delpart":
@@ -458,6 +459,14 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
     }
 
     $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+
+    // Show Helpdesk link for tutors if enabled.
+    if ($istutor && $config->helpdeskwizard) {
+        $helpdesklink = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?id='.$id.'&cmd=supportwizard',
+                                            get_string('helpdesklink', 'turnitintooltwo'));
+
+        echo html_writer::tag('p', $helpdesklink);
+    }
 }
 
 echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
@@ -732,7 +741,7 @@ switch ($do) {
         $memberrole = ($do == "tutors") ? 'Instructor' : 'Learner';
         echo $turnitintooltwoview->init_tii_member_by_role_table($cm, $turnitintooltwoassignment, $memberrole);
         if ($do == "tutors") {
-            $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor");
+            $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor", "mdl");
             echo $turnitintooltwoview->show_add_tii_tutors_form($cm, $tutors);
         }
         break;

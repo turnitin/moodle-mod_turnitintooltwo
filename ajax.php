@@ -731,6 +731,15 @@ switch ($action) {
             $turnitincomms = new turnitintooltwo_comms($account_id, $account_shared, $url);
 
             $testingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
+
+            // We only want an API log entry for this if diagnostic mode is set to Debugging
+            if (empty($config)) {
+                $config = turnitintooltwo_admin_config();
+            }
+            if ($config->enablediagnostic != 2) {
+                $turnitincomms->setDiagnostic(0);
+            }
+
             $tiiapi = $turnitincomms->initialise_api($testingconnection);
 
             $class = new TiiClass();

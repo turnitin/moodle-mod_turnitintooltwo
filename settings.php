@@ -105,6 +105,10 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_heading('turnitintooltwo_header', $desc, $tabmenu));
 
+    // Turnitin account configuration.
+    $settings->add(new admin_setting_heading('turnitintooltwo_accountconfig',
+                                            get_string('tiiaccountconfig', 'turnitintooltwo'), ''));
+
     $settings->add(new admin_setting_configtext_int_only('turnitintooltwo/accountid',
                                                     get_string("turnitinaccountid", "turnitintooltwo"),
                                                     get_string("turnitinaccountid_desc", "turnitintooltwo"), ''));
@@ -135,13 +139,30 @@ if ($ADMIN->fulltree) {
                                                     get_string("turnitinapiurl", "turnitintooltwo"),
                                                     get_string("turnitinapiurl_desc", "turnitintooltwo").$offlinecomment.$testconnection, 0, $testoptions));
 
+    // Miscellaneous settings.
+    $settings->add(new admin_setting_heading('turnitintooltwo_debugginglogs',
+                                            get_string('tiidebugginglogs', 'turnitintooltwo'), ''));
+
     $ynoptions = array(0 => get_string('no'), 1 => get_string('yes'));
+    $diagnosticoptions = array(
+            0 => get_string('diagnosticoptions_0', 'turnitintooltwo'),
+            1 => get_string('diagnosticoptions_1', 'turnitintooltwo'),
+            2 => get_string('diagnosticoptions_2', 'turnitintooltwo')
+        );
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintooltwo'),
-                        get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $ynoptions));
+                        get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $diagnosticoptions));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/enableperformancelogs', get_string('enableperformancelogs', 'turnitintooltwo'),
                         get_string('enableperformancelogs_desc', 'turnitintooltwo'), 0, $ynoptions));
+
+    // Turnitin account settings.
+    $accountnote = html_writer::tag('div',
+                            get_string('tiiaccountsettings_desc', 'turnitintooltwo'),
+                            array('class' => 'tii_checkagainstnote')
+        );
+    $settings->add(new admin_setting_heading('turnitintooltwo_accountsettings',
+                                            get_string('tiiaccountsettings', 'turnitintooltwo'), $accountnote));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/usegrademark',
                                                     get_string('turnitinusegrademark', 'turnitintooltwo'),
@@ -180,6 +201,10 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitinrepositoryoptions_desc', 'turnitintooltwo'),
                                                     0, $repositoryoptions));
 
+    // Miscellaneous settings.
+    $settings->add(new admin_setting_heading('turnitintooltwo_miscsettings',
+                                            get_string('tiimiscsettings', 'turnitintooltwo'), ''));
+
     if (empty($config->agreement)) {
         $config->agreement = get_string('turnitintooltwoagreement_default', 'turnitintooltwo');
     }
@@ -197,6 +222,12 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitininboxlayout', 'turnitintooltwo'),
                                                     get_string('turnitininboxlayout_desc', 'turnitintooltwo'),
                                                     0, $layoutoptions));
+
+    $settings->add(new admin_setting_configselect('turnitintooltwo/helpdeskwizard',
+                                                    get_string('turnitinsettingshelpwizard', 'turnitintooltwo'),
+                                                    get_string('turnitinsettingshelpwizard_desc', 'turnitintooltwo'),
+                                                    0, $ynoptions
+                                                ));
 
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),

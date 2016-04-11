@@ -1,3 +1,17 @@
+### Date:       2016-April-11
+### Release:    v2016011105
+
+- Datatables styling now specific to Turnitin tables to avoid conflict. #137
+- Activity logs for submissions are now more informative.
+- Created warning on config page for the customer to check whether translated matching and ETS are configured at account level
+- Fixes:
+	- Fixed issue with postdate in anonymous marking mode - the page now warns the user the impact on anonymity of moving the post-date.
+	- Enrolls user if necessary when performing a course restoration.
+	- Fixed cron logic to prevent multiple assignment creation upon cron event failure.
+
+
+---
+
 ### Date:       2016-February-23
 ### Release:    v2016011104
 
@@ -380,7 +394,7 @@ Releases before version 2015040106 will refer to changes made to the Turnitin's 
 - Error indicators and rollover messages now displayed in inbox.
 - Error messages saved and displayed in settings area.
 - EULA moved to submission declaration and submission form hidden.
-- Turnitin Paper Id now shown next to submission to show that paper has been submitted. 
+- Turnitin Paper Id now shown next to submission to show that paper has been submitted.
 - Fixes:
 	- Long assignment titles are now truncated.
 	- Link to a file in Assignment Summary now renders correctly.
@@ -414,7 +428,7 @@ Releases before version 2015040106 will refer to changes made to the Turnitin's 
 - User creation removed from restore procedure.
 - Additonal indexes added to database tables
 - Extra permission checks added for migration tool
-- Error message now shown if ajax request to get submissions times out 
+- Error message now shown if ajax request to get submissions times out
 - Improved CSS to scope only to plugins and files added to jQuery plugin organisation
 - Forum posts are now submitted to Turnitin when posted
 - Database dump added to PP settings page
@@ -456,10 +470,10 @@ Releases before version 2015040106 will refer to changes made to the Turnitin's 
 - Submissions in Plagiarism plugin stopped if there has been 5 unsuccessful attempts.
 - Link removed for Originality Report if there is no score.
 - Fixes:
-	- Incorrect links to GradeMark and Originality Report for students have been hidden. 
+	- Incorrect links to GradeMark and Originality Report for students have been hidden.
 	- Conflicts with Bootstrap theme for tooltips and fixed grademark link position.
 	- Incorrect settings link in the Plagiarism plugin.
-	- Timestamp was being incorrectly set preventing more than 1 batch of submissions updating from Turnitin. 
+	- Timestamp was being incorrectly set preventing more than 1 batch of submissions updating from Turnitin.
 	- Student is now enrolled on the class when checking EULA acceptance to ensure they are on account.
 
 ---
@@ -492,10 +506,10 @@ Releases before version 2015040106 will refer to changes made to the Turnitin's 
 ###Release:    v2014012401
 
 - File type limit removed.
-- Ability to accept no file added so that marks / grades can be allocated to non file submissions 
+- Ability to accept no file added so that marks / grades can be allocated to non file submissions
 - Dependencies added to plagiarism plugin and blocks
 - Fixes:
-	- Error occurring in course reset 
+	- Error occurring in course reset
 
 ---
 
