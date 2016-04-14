@@ -461,7 +461,7 @@ switch ($cmd) {
                         $output .= html_writer::table($table);
 
                         $output .= html_writer::tag("button", get_string('migrationtool_trial', 'turnitintooltwo'),
-                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses), "disabled" => "disabled"));
+                                        array("id" => "trial-migration-button", "class" => "btn btn-primary migration-button", 'data-courses' => count($courses), 'data-etd' => $etd, "disabled" => "disabled"));
                         $output .= $OUTPUT->box_end(true);
 
                         // Ensure our session data is empty before we begin.
