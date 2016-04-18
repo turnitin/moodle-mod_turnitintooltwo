@@ -6,4 +6,3 @@ node_modules/
 /.settings/
 /.buildpath
 /.project
-logs/migrationtool/*
