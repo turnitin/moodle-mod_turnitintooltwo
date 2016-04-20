@@ -786,30 +786,42 @@ switch ($action) {
         $trial = required_param('trial', PARAM_INT);
         $doOnce = required_param('doOnce', PARAM_INT);
         $totalToMigrate = required_param('totalToMigrate', PARAM_INT);
-        $etd = required_param('etd', PARAM_INT);
+        $etd = optional_param('etd', 0, PARAM_INT);
 
         $data = "";
         
         // We only want to do this once, if we're not on the trial run.
-        if (($trial == 0) && ($doOnce == 1)) {
-            // Reset the session data so we can rebuild the CSV post-migration.
-            unset($_SESSION["migrationtool"]["csvdata"]);
+        if ($doOnce) {
+            $_SESSION["migrationtool"]["csvname"] = date('Y-m-d_His').' - Migration Status';
 
-            // Migrate the users and set flag as 
-            $turnitintool_users = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
-            foreach ($turnitintool_users as $turnitintool_user) {
-                unset($turnitintool_user->id);
-
-                if (!$DB->record_exists("turnitintooltwo_users", array('userid' => $turnitintool_user->userid))) {
-                    $DB->insert_record("turnitintooltwo_users", $turnitintool_user);
-                }
+            // Print names of all the fields
+            $csvexport = fopen(__DIR__."/logs/migrationtool/".$_SESSION["migrationtool"]["csvname"].".csv", "a");
+            if ($etd) {
+                fputcsv($csvexport, array('Moodle Course ID', 'Turnitin Course ID', 'Course Name', 'TII Assignment ID'));
+            } else {
+                fputcsv($csvexport, array('Moodle Course ID', 'Turnitin Course ID', 'Course Name', 'Status'));
             }
+            fclose($file);
 
-            // Course header once migration has been complete.
-            $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
+            if ((!$trial)) {
+                // Migrate the users and set flag as 
+                $turnitintool_users = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
+                foreach ($turnitintool_users as $turnitintool_user) {
+                    unset($turnitintool_user->id);
 
+                    if (!$DB->record_exists("turnitintooltwo_users", array('userid' => $turnitintool_user->userid))) {
+                        $DB->insert_record("turnitintooltwo_users", $turnitintool_user);
+                    }
+                }
+
+                // Course header once migration has been complete.
+                $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
+            }
             $doOnce = 0;
         }
+
+        // Initialise the CSV log.
+        $csvexport = fopen(__DIR__."/logs/migrationtool/".$_SESSION["migrationtool"]["csvname"].".csv", "a");
 
         // Get a list of courses with V1 assignments.
         $courses = $DB->get_records_sql("SELECT tc.id, courseid, ownerid, turnitin_ctl, turnitin_cid, fullname
@@ -880,7 +892,7 @@ switch ($action) {
 
             // Save CSV session data.
             if (!$etd) {
-                $_SESSION["migrationtool"]["csvdata"][] = array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo'));
+                fputcsv($csvexport, array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo')));
             }
 
             // Loop through each assignment, get its parts and submissions.
@@ -894,7 +906,7 @@ switch ($action) {
                     if (!$trial) {
                         $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
 
-                        //Update the old assignment title.
+                        // Update the old assignment title.
                         $updatetitle = new stdClass();
                         $updatetitle->id = $v1_assignment_id;
                         $updatetitle->name = $v1_assignment->name . ' (V1)';
@@ -946,7 +958,7 @@ switch ($action) {
                         unset($v1_part->id);
 
                         if (($v2course) && ($etd)) {
-                            $_SESSION["migrationtool"]["csvdata"][] = array($v2course->courseid, $v2course->turnitin_cid, $v2course->turnitin_ctl, $v1_part->tiiassignid);
+                            fputcsv($csvexport, array($v2course->courseid, $v2course->turnitin_cid, $v2course->turnitin_ctl, $v1_part->tiiassignid));
                         }
 
                         if (!$trial) {
@@ -980,6 +992,8 @@ switch ($action) {
             // Commit transaction.
             $transaction->allow_commit();
         }
+
+        fclose($file);
 
         echo json_encode(array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate));
     break;
