@@ -39,7 +39,7 @@ class instructor_message {
 
         $eventdata = new stdClass();
         $eventdata->component         = 'mod_turnitintooltwo'; //your component name
-        $eventdata->name              = 'submission'; //this is the message name from messages.php
+        $eventdata->name              = 'notify_instructor_of_submission'; //this is the message name from messages.php
         $eventdata->userfrom          = \core_user::get_noreply_user();
         $eventdata->subject           = $subject;
         $eventdata->fullmessage       = $message;
