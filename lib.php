@@ -608,51 +608,53 @@ function turnitintooltwo_cron_update_gradbook($assignment, $task) {
     $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
         $turnitintooltwoassignment->turnitintooltwo->course);
 
-    $users = $turnitintooltwoassignment->get_moodle_course_users($cm);
+    if ($cm) {
+        $users = $turnitintooltwoassignment->get_moodle_course_users($cm);
 
-    foreach ($users as $user) {
-        $fieldList = array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
-                           'userid' => $user->id);
+        foreach ($users as $user) {
+            $fieldList = array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
+                               'userid' => $user->id);
 
-        // Set submission_unanon when needsupdating is used.
-        if ($task == "needsupdating") {
-            $fieldList['submission_unanon'] = 1;
-        }
-
-        $grades = new stdClass();
-
-        if ($submissions = $DB->get_records('turnitintooltwo_submissions', $fieldList)) {
-            $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions, $cm);
-            if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
-                // Using a scale.
-                $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
-            } else {
-                $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+            // Set submission_unanon when needsupdating is used.
+            if ($task == "needsupdating") {
+                $fieldList['submission_unanon'] = 1;
             }
+
+            $grades = new stdClass();
+
+            if ($submissions = $DB->get_records('turnitintooltwo_submissions', $fieldList)) {
+                $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions, $cm);
+                if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                    // Using a scale.
+                    $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+                } else {
+                    $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
+                }
+            }
+            $grades->userid = $user->id;
+            $params['idnumber'] = $cm->idnumber;
+
+            grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
+                'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
         }
-        $grades->userid = $user->id;
-        $params['idnumber'] = $cm->idnumber;
 
-        grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
-            'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
+        // Remove the "anongradebook" flag
+        $update_assignment = new stdClass();
+        $update_assignment->id = $assignment->id;
+
+        // Depending on the task we need to update a different column.
+        switch($task) {
+            case "needsupdating":
+                $update_assignment->needs_updating = 0;
+                break;
+
+            case "anongradebook":
+                $update_assignment->anongradebook = 1;
+                break;
+        }
+
+        $DB->update_record("turnitintooltwo", $update_assignment);
     }
-
-    // Remove the "anongradebook" flag
-    $update_assignment = new stdClass();
-    $update_assignment->id = $assignment->id;
-
-    // Depending on the task we need to update a different column.
-    switch($task) {
-        case "needsupdating":
-            $update_assignment->needs_updating = 0;
-            break;
-
-        case "anongradebook":
-            $update_assignment->anongradebook = 1;
-            break;
-    }
-
-    $DB->update_record("turnitintooltwo", $update_assignment);
 }
 
 /**
@@ -1207,7 +1209,7 @@ function turnitintooltwo_getfiles($moduleid) {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - just send the file
  */
-function turnitintooltwo_pluginfile($course, 
+function turnitintooltwo_pluginfile($course,
                 $cm,
                 context $context,
                 $filearea,
