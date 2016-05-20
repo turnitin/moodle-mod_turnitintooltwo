@@ -1137,7 +1137,7 @@ class turnitintooltwo_view {
                     // Link to user profile.
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
                                                 $turnitintooltwoassignment->turnitintooltwo->course,
-                                                format_string($submission->lastname).", ".format_string($submission->firstname));
+                                                $submission->fullname);
                 } else if (!empty($submission->nmoodle) && substr($submission->userid, 0, 3) != 'nm-') {
                     // Moodle User not enrolled on this course as a student.
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
@@ -1864,7 +1864,7 @@ class turnitintooltwo_view {
                                                                                                         $attributes);
                 $userdetails = html_writer::link($CFG->wwwroot.'/user/view.php?id='.$membermoodleid.
                                                     '&course='.$turnitintooltwoassignment->turnitintooltwo->course,
-                                                    format_string($v['lastname']).', '.format_string($v['firstname'])).' ('.$user->username.')';
+                                                    fullname($user)).' ('.$user->email.')';
                 $memberdata[] = array($link, $userdetails);
             }
         }
@@ -1900,8 +1900,7 @@ class turnitintooltwo_view {
             if (array_key_exists($availabletutor->tii_user_id, $tutors)) {
                 unset($moodletutors[$k]);
             } else {
-                $options[$availabletutor->id] = format_string($availabletutor->lastname).', '.
-                                                    format_string($availabletutor->firstname).' ('.$availabletutor->username.')';
+                $options[$availabletutor->id] = $availabletutor->fullname.' ('.$availabletutor->email.')';
             }
         }
 
