@@ -1463,8 +1463,12 @@ class turnitintooltwo_assignment {
      * @return array of course users or empty array if none
      */
     public function get_moodle_course_users($cm) {
-        $courseusers = get_users_by_capability(context_module::instance($cm->id),
-                                'mod/turnitintooltwo:submit', '', 'u.lastname, u.firstname');
+        $context = context_module::instance($cm->id);
+        $courseusers = get_users_by_capability($context, 'mod/turnitintooltwo:submit', '', 'u.lastname, u.firstname');
+        $suser = get_suspended_userids($context);
+        foreach ($suser as $k => $v) {
+            unset($courseusers[$k]);
+        }
 
         return (!is_array($courseusers)) ? array() : $courseusers;
     }
@@ -1870,6 +1874,10 @@ class turnitintooltwo_assignment {
         if ($istutor && $userid == 0) {
             $users = get_users_by_capability($context, 'mod/turnitintooltwo:submit', 'u.id, u.firstname, u.lastname',
                                                 '', '', '', groups_get_activity_group($cm), '');
+            $suser = get_suspended_userids($context);
+            foreach ($suser as $k => $v) {
+                unset($users[$k]);
+            }
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
             $user = $DB->get_record('user', array('id' => $userid));
