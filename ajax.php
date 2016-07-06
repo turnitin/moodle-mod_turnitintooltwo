@@ -857,7 +857,7 @@ switch ($action) {
                 $sessionText = "migrationtool_migrated2";
 
                 if (!$trial) {
-                    if (!$etd) {
+                    if (!$v2course) {
                         // Insert the course to the Turnitintooltwo courses table.
                         $turnitincourse = new stdClass();
                         $turnitincourse->courseid = $course->courseid;
