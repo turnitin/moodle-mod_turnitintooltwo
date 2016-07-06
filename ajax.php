@@ -789,7 +789,7 @@ switch ($action) {
         $etd = optional_param('etd', 0, PARAM_INT);
 
         $data = "";
-        
+
         // We only want to do this once, if we're not on the trial run.
         if ($doOnce) {
             $_SESSION["migrationtool"]["csvname"] = date('Y-m-d_His').' - Migration Status';
@@ -804,7 +804,7 @@ switch ($action) {
             fclose($file);
 
             if ((!$trial)) {
-                // Migrate the users and set flag as 
+                // Migrate the users and set flag as
                 $turnitintool_users = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
                 foreach ($turnitintool_users as $turnitintool_user) {
                     unset($turnitintool_user->id);
@@ -839,7 +839,7 @@ switch ($action) {
             // If the course ID exists in V2, we skip this course.
             $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'));
 
-            if ($v2course->migrated) {
+            if (isset($v2course->migrated)) {
                 $canMigrate = 0;
                 $headerColour = "red";
                 $subheaderText = "migrationtool_cant_migrate2";
