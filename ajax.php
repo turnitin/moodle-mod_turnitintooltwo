@@ -801,7 +801,7 @@ switch ($action) {
             } else {
                 fputcsv($csvexport, array('Moodle Course ID', 'Turnitin Course ID', 'Course Name', 'Status'));
             }
-            fclose($file);
+            fclose($csvexport);
 
             if ((!$trial)) {
                 // Migrate the users and set flag as
