@@ -903,6 +903,16 @@ switch ($action) {
                     unset($v1_assignment->id);
 
                     if (!$trial) {
+                        // For old assignments we may encounter null values in Erater fields that can't be null. Fix them.
+                        $v1_assignment->erater = (is_null($v1_assignment->erater)) ? 0 : $v1_assignment->erater;
+                        $v1_assignment->erater_handbook = (is_null($v1_assignment->erater_handbook)) ? 0 : $v1_assignment->erater_handbook;
+                        $v1_assignment->erater_spelling = (is_null($v1_assignment->erater_spelling)) ? 0 : $v1_assignment->erater_spelling;
+                        $v1_assignment->erater_grammar = (is_null($v1_assignment->erater_grammar)) ? 0 : $v1_assignment->erater_grammar;
+                        $v1_assignment->erater_usage = (is_null($v1_assignment->erater_usage)) ? 0 : $v1_assignment->erater_usage;
+                        $v1_assignment->erater_mechanics = (is_null($v1_assignment->erater_mechanics)) ? 0 : $v1_assignment->erater_mechanics;
+                        $v1_assignment->erater_style = (is_null($v1_assignment->erater_style)) ? 0 : $v1_assignment->erater_style;
+                        $v1_assignment->transmatch = (is_null($v1_assignment->transmatch)) ? 0 : $v1_assignment->transmatch;
+
                         $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
 
                         // Update the old assignment title.
