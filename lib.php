@@ -987,7 +987,7 @@ function turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, 
                                                                     gmdate("j", strtotime($readclass->getEndDate()))."_".
                                                                         gmdate("n", strtotime($readclass->getEndDate()))."_".
                                                                             gmdate("Y", strtotime($readclass->getEndDate()))))." ".
-                                                $OUTPUT->pix_icon('edit', get_string('edit'), 'mod_turnitintooltwo'),
+                                                html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey')),
                                             array("class" => "edit_course_end_link", "id" => "course_date_".$readclass->getClassId()));
 
                         $checkbox = '';
