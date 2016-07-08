@@ -842,21 +842,18 @@ switch ($action) {
             if (isset($v2course->migrated)) {
                 $canMigrate = 0;
                 $headerColour = "red";
-                $subheaderText = "migrationtool_cant_migrate2";
-                $sessionText = "migrationtool_cant_migrate2";
+                $statusText = "migrationtool_cant_migrate2";
             } elseif (($v2course) && (!$etd)) {
                 $canMigrate = 0;
                 $headerColour = "red";
-                $subheaderText = "migrationtool_cant_migrate";
-                $sessionText = "migrationtool_cant_migrate";
+                $statusText = "migrationtool_cant_migrate";
             } else {
                 $canMigrate = 1;
                 $totalToMigrate++;
                 $headerColour = "darkgreen";
-                $subheaderText = "migrationtool_can_migrate";
-                $sessionText = "migrationtool_migrated2";
 
                 if (!$trial) {
+                    $statusText = "migrationtool_migrated2";
                     if (!$v2course) {
                         // Insert the course to the Turnitintooltwo courses table.
                         $turnitincourse = new stdClass();
@@ -877,13 +874,15 @@ switch ($action) {
                         $update->migrated = 1;
                         $DB->update_record('turnitintooltwo_courses', $update);
                     }
+                } else {
+                    $statusText = "migrationtool_can_migrate";
                 }
             }
 
             // Output text.
             if ($trial) {
                 $data .= html_writer::tag('div', get_string('migrationtool_course_text', 'turnitintooltwo') .' '. $course->fullname, array('class' => 'courseheader '.$headerColour)).
-                html_writer::tag('div', get_string($subheaderText, 'turnitintooltwo'), array('class' => 'text-margin '.$headerColour));
+                html_writer::tag('div', get_string($statusText, 'turnitintooltwo'), array('class' => 'text-margin '.$headerColour));
             } else {
                 if ($canMigrate == 1) {
                     $data .= html_writer::tag('p', $course->fullname, array('class' => $headerColour));
@@ -892,7 +891,7 @@ switch ($action) {
 
             // Save CSV session data.
             if (!$etd) {
-                fputcsv($csvexport, array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($sessionText, 'turnitintooltwo')));
+                fputcsv($csvexport, array($course->courseid, $course->turnitin_cid, $course->turnitin_ctl, get_string($statusText, 'turnitintooltwo')));
             }
 
             // Loop through each assignment, get its parts and submissions.
@@ -993,7 +992,7 @@ switch ($action) {
             $transaction->allow_commit();
         }
 
-        fclose($file);
+        fclose($csvexport);
 
         echo json_encode(array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate));
     break;
