@@ -903,16 +903,15 @@ switch ($action) {
                     unset($v1_assignment->id);
 
                     if (!$trial) {
-                        // For old assignments we may encounter null values in Erater fields that can't be null. Fix them.
-                        $v1_assignment->erater = (is_null($v1_assignment->erater)) ? 0 : $v1_assignment->erater;
-                        $v1_assignment->erater_handbook = (is_null($v1_assignment->erater_handbook)) ? 0 : $v1_assignment->erater_handbook;
-                        $v1_assignment->erater_spelling = (is_null($v1_assignment->erater_spelling)) ? 0 : $v1_assignment->erater_spelling;
-                        $v1_assignment->erater_grammar = (is_null($v1_assignment->erater_grammar)) ? 0 : $v1_assignment->erater_grammar;
-                        $v1_assignment->erater_usage = (is_null($v1_assignment->erater_usage)) ? 0 : $v1_assignment->erater_usage;
-                        $v1_assignment->erater_mechanics = (is_null($v1_assignment->erater_mechanics)) ? 0 : $v1_assignment->erater_mechanics;
-                        $v1_assignment->erater_style = (is_null($v1_assignment->erater_style)) ? 0 : $v1_assignment->erater_style;
-                        $v1_assignment->transmatch = (is_null($v1_assignment->transmatch)) ? 0 : $v1_assignment->transmatch;
+                        // For old assignments we may encounter null values in fields where they can't be null, check all values.
+                        $nullchecks = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat', 'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize', 'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook', 'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch');
+                        foreach ($nullchecks as $k => $v) {
+                            $v1_assignment->$v = (is_null($v1_assignment->$v)) ? 0 : $v1_assignment->$v;
+                        }
+                        $v1_assignment->excludetype = (is_null($v1_assignment->excludetype)) ? 1 : $v1_assignment->excludetype;
+                        $v1_assignment->perpage = (is_null($v1_assignment->perpage)) ? 25 : $v1_assignment->perpage;
 
+                        // Insert V1 assignment into v2 table.
                         $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
 
                         // Update the old assignment title.
