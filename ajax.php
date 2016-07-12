@@ -28,6 +28,15 @@ require_once(__DIR__."/turnitintooltwo_view.class.php");
 require_login();
 $action = required_param('action', PARAM_ALPHAEXT);
 
+/**
+ * Calculate the runtime based on a given start time.
+ *
+ * @param float $startTime Start time in microseconds.
+ */
+function calcRunTime($startTime) {
+    return number_format(( microtime(true) - $startTime), 4);
+}
+
 switch ($action) {
     case "check_anon":
         $assignmentid = required_param('assignment', PARAM_INT);
@@ -790,7 +799,10 @@ switch ($action) {
 
         $data = "";
 
-        // We only want to do this once, if we're not on the trial run.
+        // Open our debug log file.
+        $debug = fopen(__DIR__."/logs/migrationtool/debug/".date('Y-m-d').".txt", "a");
+
+        // We only want to do this once.
         if ($doOnce) {
             $_SESSION["migrationtool"]["csvname"] = date('Y-m-d_His').' - Migration Status';
 
@@ -803,7 +815,9 @@ switch ($action) {
             }
             fclose($csvexport);
 
-            if ((!$trial)) {
+            if (!$trial) {
+                fputs($debug, date('H:i:s')." - Begin migration tool (non-trial) run.\r\n");
+
                 // Migrate the users and set flag as
                 $turnitintool_users = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
                 foreach ($turnitintool_users as $turnitintool_user) {
@@ -813,11 +827,15 @@ switch ($action) {
                         $DB->insert_record("turnitintooltwo_users", $turnitintool_user);
                     }
                 }
+                fputs($debug, "+" . calcRunTime($startTime) . " seconds - Users have been migrated.\r\n");
 
                 // Course header once migration has been complete.
                 $data .= html_writer::tag('p', get_string('migrationtool_migrated', 'turnitintooltwo'), array('class' => 'courseheader darkgreen'));
             }
             $doOnce = 0;
+        }
+        if (!$trial) {
+            fputs($debug, date('H:i:s')." - Begin Ajax call with the following parameters:\r\nStart: ".$start."\r\nProcess at Once: ".$processAtOnce."\r\nIteration: ".$iteration."\r\nTrial: ".$trial."\r\nTotal To Migrate: ".$totalToMigrate."\r\nETD: ".$etd."\r\n");
         }
 
         // Initialise the CSV log.
@@ -833,8 +851,13 @@ switch ($action) {
 
         // Loop through each course and migrate if we can.
         foreach ($courses as $course) {
-            // Begin transaction.
-            $transaction = $DB->start_delegated_transaction();
+            if (!$trial) {
+                fputs($debug, date('H:i:s')." - Begin migrating a course\r\n");
+                $startTime = microtime(true);
+
+                // Begin transaction.
+                $transaction = $DB->start_delegated_transaction();
+            }
 
             // If the course ID exists in V2, we skip this course.
             $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'));
@@ -865,6 +888,7 @@ switch ($action) {
                         $turnitincourse->migrated = 1;
 
                         $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - A course record was created for the course '".$turnitincourse->turnitin_ctl."' (TII: ".$turnitincourse->turnitin_cid.") (Moodle: ".$turnitincourse->courseid.")\r\n");
                     } else {
                         $update = new stdClass();
                         $update->id = $course->id;
@@ -873,6 +897,7 @@ switch ($action) {
                         $update->id = $v2course->id;
                         $update->migrated = 1;
                         $DB->update_record('turnitintooltwo_courses', $update);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - A course record was updated for the course '".$v2course->turnitin_ctl."' (TII: ".$v2course->turnitin_cid.") (Moodle: ".$course->id.")\r\n");
                     }
                 } else {
                     $statusText = "migrationtool_can_migrate";
@@ -903,6 +928,7 @@ switch ($action) {
                     unset($v1_assignment->id);
 
                     if (!$trial) {
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - Begin migration for assignment: '".$v1_assignment->name."' (Moodle ID: ".$v1_assignment_id.")\r\n");
                         // For old assignments we may encounter null values in fields where they can't be null, check all values.
                         $nullchecks = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat', 'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize', 'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook', 'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch');
                         foreach ($nullchecks as $k => $v) {
@@ -911,8 +937,9 @@ switch ($action) {
                         $v1_assignment->excludetype = (is_null($v1_assignment->excludetype)) ? 1 : $v1_assignment->excludetype;
                         $v1_assignment->perpage = (is_null($v1_assignment->perpage)) ? 25 : $v1_assignment->perpage;
 
-                        // Insert V1 assignment into v2 table.
+                        // Insert V1 assignment into V2 table.
                         $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $v1_assignment);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - Assignment inserted to V2 table.\r\n");
 
                         // Update the old assignment title.
                         $updatetitle = new stdClass();
@@ -925,10 +952,12 @@ switch ($action) {
                         $params = array();
                         $params['itemname'] = $updatetitle->name;
                         grade_update('mod/turnitintool', $course->courseid, 'mod', 'turnitintool', $v1_assignment_id, 0, NULL, $params);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - Old assignment title has been updated in gradebook.\r\n");
 
                         // Hide the V1 assignment.
                         $cm = get_coursemodule_from_instance('turnitintool', $v1_assignment_id);
                         set_coursemodule_visible($cm->id, 0);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - V1 assignment has been hidden.\r\n");
 
                         // Set up a V2 course module.
                         $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
@@ -950,6 +979,7 @@ switch ($action) {
 
                         $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
                         rebuild_course_cache($courseid);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - Course Module has been created in Moodle.\r\n");
                     }
 
                     // Create new Turnitintooltwo object.
@@ -970,11 +1000,15 @@ switch ($action) {
                         }
 
                         if (!$trial) {
+                            fputs($debug, "+".calcRunTime($startTime)." seconds - Begin part migration for part name '".$v1_part->partname."' (TII: ".$v1_part->tiiassignid.") (Moodle: ".$v1_part_id.")\r\n");
+
                             $v2_part_id = $DB->insert_record("turnitintooltwo_parts", $v1_part);
 
                             // Get the submissions for this part.
                             $v1_part_submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1_part_id));
 
+                            fputs($debug, "+".calcRunTime($startTime)." seconds - Begin submission migration for part ".$v1_part->tiiassignid."\r\n");
+                            $total_gradebook_time = 0;
                             foreach ($v1_part_submissions as $v1_part_submission) {
                                 $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
                                 $v1_part_submission->submission_part = $v2_part_id;
@@ -984,24 +1018,39 @@ switch ($action) {
                                 $turnitintooltwo_submissionid = $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
 
                                 // Get the V2 part and update grade book.
+                                $gradebook_start = round(microtime(true) * 1000);
                                 $v2_part_submission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwo_submissionid));
                                 turnitintooltwo_submission::update_gradebook($v2_part_submission, $turnitintooltwoassignment);
+                                $gradebook_end = round(microtime(true) * 1000);
+                                $total_gradebook_time += ($gradebook_end - $gradebook_start);
                             }
+                            fputs($debug, "+".calcRunTime($startTime)." seconds - Finished submission migration for part ".$v1_part->tiiassignid."\r\n                  Time spent updating gradebook: ".($total_gradebook_time/1000)." seconds.\r\n");
+                        }
+                        if (!$trial) {
+                            fputs($debug, "+".calcRunTime($startTime)." seconds - Finished part migration for part name '".$v1_part->partname."' (TII: ".$v1_part->tiiassignid.") (Moodle: ".$v1_part_id.")\r\n");
                         }
                     }
 
                     if (!$trial) {
                         // Update the grades for this assignment.
                         turnitintooltwo_grade_item_update($turnitintooltwoassignment->turnitintooltwo);
+                        fputs($debug, "+".calcRunTime($startTime)." seconds - Finished migration for assignment: '".$v1_assignment->name."' (Moodle ID: ".$v1_assignment_id.")\r\n");
                     }
                 }
             }
 
-            // Commit transaction.
-            $transaction->allow_commit();
+            if (!$trial) {
+                // Commit transaction.
+                $transaction->allow_commit();
+                fputs($debug, "+".calcRunTime($startTime)." seconds - Finish migrating a course\r\n");
+            }
         }
 
         fclose($csvexport);
+        if (!$trial) {
+            fputs($debug, "+".calcRunTime($startTime)." seconds - End Ajax call\r\n");
+        }
+        fclose($debug);
 
         echo json_encode(array("start" => 0, "processAtOnce" => $processAtOnce, "startpost" => $start, "end" => $end, "iteration" => $iteration, "dataset" => $data, "doOnce" => $doOnce, "totalToMigrate" => $totalToMigrate));
     break;
