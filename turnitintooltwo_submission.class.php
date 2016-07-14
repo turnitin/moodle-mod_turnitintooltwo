@@ -23,6 +23,7 @@ class turnitintooltwo_submission {
     public $userid;
     public $firstname;
     public $lastname;
+    public $fullname;
     private $turnitintooltwoid;
     public $submission_part;
     public $submission_title;

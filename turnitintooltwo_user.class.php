@@ -20,6 +20,7 @@ class turnitintooltwo_user {
     private $role;
     public $firstname;
     public $lastname;
+    public $fullname;
     public $email;
     public $username;
     public $user_agreement_accepted;
@@ -37,6 +38,7 @@ class turnitintooltwo_user {
 
         $this->firstname = "";
         $this->lastname = "";
+        $this->fullname = "";
         $this->email = "";
         $this->username = "";
 
@@ -92,6 +94,7 @@ class turnitintooltwo_user {
 
         $this->firstname = stripslashes(str_replace('/', '', $user->firstname));
         $this->lastname = stripslashes(str_replace('/', '', $user->lastname));
+        $this->fullname = fullname($user);
 
         // Set a default for first and last name in the event they are empty.
         $firstname = trim($this->firstname);

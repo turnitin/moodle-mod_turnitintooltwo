@@ -1868,8 +1868,9 @@ class turnitintooltwo_assignment {
 
         // If logged in as instructor then get for all users.
         if ($istutor && $userid == 0) {
-            $users = get_users_by_capability($context, 'mod/turnitintooltwo:submit', 'u.id, u.firstname, u.lastname',
-                                                '', '', '', groups_get_activity_group($cm), '');
+            $allnames = get_all_user_name_fields();
+            $users = get_users_by_capability($context, 'mod/turnitintooltwo:submit', 'u.id, ' . implode($allnames, ', '),
+                                                 '', '', '', groups_get_activity_group($cm), '');
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
             $user = $DB->get_record('user', array('id' => $userid));
@@ -1891,6 +1892,7 @@ class turnitintooltwo_assignment {
                 $emptysubmission->userid = $user->id;
                 $emptysubmission->firstname = $user->firstname;
                 $emptysubmission->lastname = $user->lastname;
+                $emptysubmission->fullname = fullname($user);
                 $emptysubmission->submission_unanon = 0;
                 $emptysubmission->nmoodle = 0;
                 if ($submissionsonly == 0) {
@@ -1907,6 +1909,7 @@ class turnitintooltwo_assignment {
                 $user = new turnitintooltwo_user($submission->userid, 'Learner', false);
                 $submission->firstname = $user->firstname;
                 $submission->lastname = $user->lastname;
+                $submission->fullname = $user->fullname;
                 $submission->tii_user_id = $user->tii_user_id;
                 $submission->nmoodle = 0;
 
