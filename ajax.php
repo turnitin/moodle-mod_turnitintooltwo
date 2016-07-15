@@ -360,6 +360,7 @@ switch ($action) {
 
                 $submission->firstname = $user->firstname;
                 $submission->lastname = $user->lastname;
+                $submission->fullname = $user->fullname;
                 $submission->userid = $user->id;
             }
 
@@ -496,11 +497,15 @@ switch ($action) {
             $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "turnitin");
             if ($turnitintooltwosubmission->unanonymise_submission($reason)) {
                 if ($turnitintooltwosubmission->userid == 0) {
-                    $return["name"] = format_string($turnitintooltwosubmission->nmlastname).", ".
-                                        format_string($turnitintooltwosubmission->nmfirstname);
+
+                    $tmpuser = new stdClass();
+                    $tmpuser->firstname = $turnitintooltwosubmission->nmfirstname;
+                    $tmpuser->lastname = $turnitintooltwosubmission->nmlastname;
+
+                    $return["name"] = fullname($tmpuser);
                 } else {
                     $user = new turnitintooltwo_user($turnitintooltwosubmission->userid);
-                    $return["name"] = format_string($user->lastname).", ".format_string($user->firstname);
+                    $return["name"] = fullname($user);
                 }
                 $return["status"] = "success";
                 $return["userid"] = $turnitintooltwosubmission->userid;

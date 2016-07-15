@@ -1172,7 +1172,7 @@ function turnitintooltwo_getfiles($moduleid) {
         if (($file->anon_enabled == 1 && $file->unanon == 1) ||
             ($file->anon_enabled == 0 && (!empty($file->firstname) || !empty($file->lastname)))) {
             $user = html_writer::link($CFG->wwwroot.'/user/view.php?id='.$file->userid,
-                                   $file->lastname . ', ' . $file->firstname . '</a> (' . $file->email . ')');
+                                   fullname($file) . '</a> (' . $file->email . ')');
         } else if ($file->anon_enabled == 1 && empty($file->unanon)) {
             $user = get_string('anonenabled', 'turnitintooltwo');
         } else {

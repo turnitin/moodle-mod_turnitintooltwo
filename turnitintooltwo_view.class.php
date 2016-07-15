@@ -1126,14 +1126,12 @@ class turnitintooltwo_view {
                     // Post date has passed or anonymous marking disabled for user and user is a moodle user.
                     $studentname = html_writer::link(
                                     $CFG->wwwroot."/user/view.php?id=".$submission->userid."&course="
-                                        .$turnitintooltwoassignment->turnitintooltwo->course,
-                                    format_string($submission->lastname).", ".format_string($submission->firstname));
+                                        .$turnitintooltwoassignment->turnitintooltwo->course, $submission->fullname);
                 } else if (($parts[$partid]->dtpost <= time() OR
                                 !empty($submission->submission_unanon)) AND !empty($submission->nmoodle)) {
                     // Post date has passed or anonymous marking disabled for user and user is a NON moodle user.
                     $studentname = html_writer::tag("span",
-                                        format_string($submission->lastname).", ".format_string($submission->firstname)." (".
-                                                get_string('nonmoodleuser', 'turnitintooltwo').")",
+                                        $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                         array("class" => "italic"));
                 } else {
                     // User has not made a submission.
@@ -1149,13 +1147,13 @@ class turnitintooltwo_view {
                     // Moodle User not enrolled on this course as a student.
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
                                             $turnitintooltwoassignment->turnitintooltwo->course,
-                                            format_string($submission->lastname).", ".format_string($submission->firstname)." (".
-                                                get_string('nonenrolledstudent', 'turnitintooltwo').")", array("class" => "italic"));
+                                            $submission->fullname." (".get_string('nonenrolledstudent', 'turnitintooltwo').")",
+                                                array("class" => "italic"));
                 } else {
                     // Non Moodle user.
                     $studentname = html_writer::tag("span",
-                                                format_string($submission->lastname).", ".format_string($submission->firstname)." (".
-                                                    get_string('nonmoodleuser', 'turnitintooltwo').")", array("class" => "italic"));
+                                                $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
+                                                array("class" => "italic"));
                 }
             }
         }

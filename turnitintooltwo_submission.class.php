@@ -190,10 +190,17 @@ class turnitintooltwo_submission {
                 $user = $DB->get_record('user', array('id' => $submission->userid), 'firstname, lastname');
                 $this->firstname = $user->firstname;
                 $this->lastname = $user->lastname;
+                $this->fullname = fullname($user);
                 $this->nmoodle = 0;
             } else {
                 $this->firstname = $submission->submission_nmfirstname;
                 $this->lastname = $submission->submission_nmlastname;
+
+                $tmpuser = new stdClass();
+                $tmpuser->firstname = $submission->submission_nmfirstname;
+                $tmpuser->lastname = $submission->submission_nmlastname;
+                $this->fullname = fullname($tmpuser);
+
                 $this->nmoodle = 1;
             }
 
