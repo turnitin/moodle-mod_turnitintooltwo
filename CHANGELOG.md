@@ -1,3 +1,15 @@
+### Date: 		TBC
+### Release:	vTBC01
+
+- Verified against Moodle 3.1
+- Changed display of names to be consistent with Moodle (Thanks to junwan6).
+- Fixes:
+	- Ignore inherited roles when sending instructor notifications.
+	- Scheduled tasks problems with deleting classes from database where no entry exists in course_modules table.
+	- Replace a couple of missing icons in plugin configuration area.
+
+---
+
 ### Date:       2016-April-11
 ### Release:    v2016011105
 
@@ -9,7 +21,6 @@
 	- Fixed issue with postdate in anonymous marking mode - the page now warns the user the impact on anonymity of moving the post-date.
 	- Enrolls user if necessary when performing a course restoration.
 	- Fixed cron logic to prevent multiple assignment creation upon cron event failure.
-
 
 ---
 
