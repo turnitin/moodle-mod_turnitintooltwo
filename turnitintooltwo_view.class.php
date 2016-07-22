@@ -718,7 +718,9 @@ class turnitintooltwo_view {
         $cells[1] = new html_table_cell(get_string('dtstart', 'turnitintooltwo'));
         $cells[2] = new html_table_cell(get_string('dtdue', 'turnitintooltwo'));
         $cells[3] = new html_table_cell(get_string('dtpost', 'turnitintooltwo'));
-        $cells[4] = new html_table_cell(get_string('marksavailable', 'turnitintooltwo'));
+        if (!empty($config->usegrademark)) {
+            $cells[4] = new html_table_cell(get_string('marksavailable', 'turnitintooltwo'));
+        }
         if ($istutor) {
             $cells[5] = new html_table_cell(get_string('downloadexport', 'turnitintooltwo'));
             $cells[6] = new html_table_cell('');
@@ -796,30 +798,33 @@ class turnitintooltwo_view {
         $cells[3] = new html_table_cell($datefield);
         $cells[3]->attributes['class'] = 'data';
 
-        // Show Rubric view if applicable to students.
-        $rubricviewlink = '';
-        if (!$istutor && $config->usegrademark && !empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
-            $rubricviewlink .= $OUTPUT->box_start('row_rubric_manager', '');
-            $rubricviewlink .= html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
-                                                    '&part='.$partid.'&do=rubricview&view_context=box',
-                                                html_writer::tag('span', '', array('class' => 'tiiicon icon-rubric icon-lg', 'id' => 'rubric_view_form')),
-                                                array('class' => 'rubric_view_launch', 'id' => 'rubric_view_launch',
-                                                    'title' => get_string('launchrubricview', 'turnitintooltwo')));
-            $rubricviewlink .= $OUTPUT->box_end(true);
-        }
+        // Don't show Grade column if not using GradeMark.
+        if (!empty($config->usegrademark)) {
+            // Show Rubric view if applicable to students.
+            $rubricviewlink = '';
+            if (!$istutor && !empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
+                $rubricviewlink .= $OUTPUT->box_start('row_rubric_manager', '');
+                $rubricviewlink .= html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
+                                                        '&part='.$partid.'&do=rubricview&view_context=box',
+                                                    html_writer::tag('span', '', array('class' => 'tiiicon icon-rubric icon-lg', 'id' => 'rubric_view_form')),
+                                                    array('class' => 'rubric_view_launch', 'id' => 'rubric_view_launch',
+                                                        'title' => get_string('launchrubricview', 'turnitintooltwo')));
+                $rubricviewlink .= $OUTPUT->box_end(true);
+            }
 
-        // Allow marks to be editable if a tutor is logged in.
-        $textfield = $partdetails[$partid]->maxmarks.$rubricviewlink;
-        if ($istutor) {
-            $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks,
-                                            array('class' => 'editable_text editable_text_'.$partid, 'id' => 'marks_'.$partid,
-                                                'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'maxmarks',
-                                                'data-params' => "{ 'assignment': ".
-                                                                    $turnitintooltwoassignment->turnitintooltwo->id.", ".
-                                                                    "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+            // Allow marks to be editable if a tutor is logged in.
+            $textfield = $partdetails[$partid]->maxmarks.$rubricviewlink;
+            if ($istutor) {
+                $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks,
+                                                array('class' => 'editable_text editable_text_'.$partid, 'id' => 'marks_'.$partid,
+                                                    'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'maxmarks',
+                                                    'data-params' => "{ 'assignment': ".
+                                                                        $turnitintooltwoassignment->turnitintooltwo->id.", ".
+                                                                        "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+            }
+            $cells[4] = new html_table_cell($textfield);
+            $cells[4]->attributes['class'] = 'data';
         }
-        $cells[4] = new html_table_cell($textfield);
-        $cells[4]->attributes['class'] = 'data';
 
         if ($istutor) {
             // Output icon to download zip file of submissions in original format.

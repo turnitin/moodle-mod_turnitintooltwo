@@ -233,12 +233,13 @@ function turnitintooltwo_grade_item_update($turnitintooltwo, $grades = null) {
     $params['itemname'] = $turnitintooltwo->name;
     $params['idnumber'] = isset($cm->idnumber) ? $cm->idnumber : null;
 
-    if ($turnitintooltwo->grade < 0) { // If we're using a grade scale.
+    $grade = (empty($turnitintooltwo->grade)) ? 0 : $turnitintooltwo->grade;
+    if ($grade < 0) { // If we're using a grade scale.
         $params['gradetype'] = GRADE_TYPE_SCALE;
-        $params['scaleid'] = -$turnitintooltwo->grade;
-    } else if ($turnitintooltwo->grade > 0) { // If we are using a grade value.
+        $params['scaleid'] = -$grade;
+    } else if ($grade > 0) { // If we are using a grade value.
         $params['gradetype'] = GRADE_TYPE_VALUE;
-        $params['grademax'] = $turnitintooltwo->grade;
+        $params['grademax'] = $grade;
         $params['grademin'] = 0;
     } else { // If we aren't using a grade at all.
         $params['gradetype'] = GRADE_TYPE_NONE;
