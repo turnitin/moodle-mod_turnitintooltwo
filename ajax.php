@@ -241,7 +241,6 @@ switch ($action) {
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = $_SESSION["TiiSubmissions"][$partid];
-                $_SESSION["TiiSubmissionsRefreshed"][$partid] = time();
             }
 
             if ($start < $total && $updatefromtii) {

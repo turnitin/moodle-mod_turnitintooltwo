@@ -1575,9 +1575,9 @@ class turnitintooltwo_assignment {
             $submission = new TiiSubmission();
             $submission->setAssignmentId($part->tiiassignid);
 
-            // Only update submissions that have been modified since last update.
-            if (!empty($_SESSION["TiiSubmissionsRefreshed"][$part->id])) {
-                $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $_SESSION["TiiSubmissionsRefreshed"][$part->id]));
+            // Only update submissions that have been modified since an hour before last update.
+            if (!empty($part->gradesupdated)) {
+                $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $part->gradesupdated-(60*60)));
             }
 
             $response = $turnitincall->findSubmissions($submission);
