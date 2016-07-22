@@ -675,6 +675,7 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->commentedittime = 1800;
         $this->turnitintooltwo->commentmaxsize = 800;
         $this->turnitintooltwo->autosubmission = 1;
+        $this->turnitintooltwo->gradedisplay = 2;
         $this->turnitintooltwo->shownonsubmission = 1;
         $this->turnitintooltwo->timemodified = time();
         $this->turnitintooltwo->courseid = $course->id;
@@ -718,7 +719,8 @@ class turnitintooltwo_assignment {
             }
 
             $attribute = "maxmarks".$i;
-            $assignment->setMaxGrade($this->turnitintooltwo->$attribute);
+            $assignment->setMaxGrade((isset($this->turnitintooltwo->$attribute)) ?
+                                                        $this->turnitintooltwo->$attribute : 0);
             $assignment->setSubmittedDocumentsCheck($this->turnitintooltwo->spapercheck);
             $assignment->setInternetCheck($this->turnitintooltwo->internetcheck);
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
@@ -756,7 +758,7 @@ class turnitintooltwo_assignment {
             $attribute = "dtpost".$i;
             $part->dtpost = $this->turnitintooltwo->$attribute;
             $attribute = "maxmarks".$i;
-            $part->maxmarks = $this->turnitintooltwo->$attribute;
+            $part->maxmarks = (empty($this->turnitintooltwo->$attribute)) ? 0 : $this->turnitintooltwo->$attribute;
             $part->deleted = 0;
 
             if (!$insert = $DB->insert_record('turnitintooltwo_parts', $part)) {
@@ -1324,7 +1326,7 @@ class turnitintooltwo_assignment {
             }
 
             $attribute = "maxmarks".$i;
-            $assignment->setMaxGrade($this->turnitintooltwo->$attribute);
+            $assignment->setMaxGrade((isset($this->turnitintooltwo->$attribute)) ? $this->turnitintooltwo->$attribute : 0);
             $assignment->setSubmittedDocumentsCheck($this->turnitintooltwo->spapercheck);
             $assignment->setInternetCheck($this->turnitintooltwo->internetcheck);
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
@@ -1358,7 +1360,7 @@ class turnitintooltwo_assignment {
             $part->turnitintooltwoid = $this->id;
             $part->partname = $this->turnitintooltwo->$attribute;
             $part->deleted = 0;
-            $part->maxmarks = $assignment->getMaxGrade();
+            $part->maxmarks = (int)$assignment->getMaxGrade();
             $part->dtstart = strtotime($assignment->getStartDate());
             $part->dtdue = strtotime($assignment->getDueDate());
             $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
