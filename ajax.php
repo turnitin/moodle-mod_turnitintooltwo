@@ -241,7 +241,6 @@ switch ($action) {
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = $_SESSION["TiiSubmissions"][$partid];
-                $_SESSION["TiiSubmissionsRefreshed"][$partid] = time();
             }
 
             if ($start < $total && $updatefromtii) {
@@ -259,9 +258,15 @@ switch ($action) {
             $return["total"] = $_SESSION["num_submissions"][$partid];
             $return["nonsubmitters"] = $return["total"] - $totalsubmitters;
 
-            // Remove any leftover submissions from session
+            // Remove any leftover submissions from session and update grade timestamp/
             if ($return["end"] >= $return["total"]) {
                 unset($_SESSION["submissions"][$partid]);
+
+                $updatepart = new stdClass();
+                $updatepart->id = $partid;
+                // Set timestamp to 10 minutes ago to account for time taken to complete (somewhat exagerrated).
+                $updatepart->gradesupdated = time()-(60*10);
+                $DB->update_record('turnitintooltwo_parts', $updatepart);
             }
         } else {
             $return["aaData"] = '';

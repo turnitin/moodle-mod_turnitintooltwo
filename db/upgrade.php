@@ -147,5 +147,15 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2016011107) {
+        $table = new xmldb_table('turnitintooltwo_parts');
+        // Add timestamp to store when grades were last updated.
+        $field = new xmldb_field('gradesupdated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'submitted');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
