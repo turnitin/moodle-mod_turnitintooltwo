@@ -23,6 +23,7 @@ class turnitintooltwo_submission {
     public $userid;
     public $firstname;
     public $lastname;
+    public $fullname;
     private $turnitintooltwoid;
     public $submission_part;
     public $submission_title;
@@ -189,10 +190,17 @@ class turnitintooltwo_submission {
                 $user = $DB->get_record('user', array('id' => $submission->userid), 'firstname, lastname');
                 $this->firstname = $user->firstname;
                 $this->lastname = $user->lastname;
+                $this->fullname = fullname($user);
                 $this->nmoodle = 0;
             } else {
                 $this->firstname = $submission->submission_nmfirstname;
                 $this->lastname = $submission->submission_nmlastname;
+
+                $tmpuser = new stdClass();
+                $tmpuser->firstname = $submission->submission_nmfirstname;
+                $tmpuser->lastname = $submission->submission_nmlastname;
+                $this->fullname = fullname($tmpuser);
+
                 $this->nmoodle = 1;
             }
 
@@ -617,7 +625,7 @@ class turnitintooltwo_submission {
                 $this->receipt->send_message($this->userid, $message);
 
                 // Instructor digital receipt
-                $this->submission_instructors = get_users_by_capability($context,'mod/turnitintooltwo:grade', 'u.id');
+                $this->submission_instructors = get_enrolled_users($context,'mod/turnitintooltwo:grade', 0, 'u.id');
                 if(!empty($this->submission_instructors)){
                     $message = $this->instructor_receipt->build_instructor_message($input);
                     $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
