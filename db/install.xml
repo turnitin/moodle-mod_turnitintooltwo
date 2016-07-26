@@ -148,7 +148,8 @@
                 <FIELD NAME="submission_unanonreason" TYPE="text" LENGTH="medium" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_unanon" NEXT="submission_transmatch"/>
                 <FIELD NAME="submission_transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_unanonreason" NEXT="submission_acceptnothing"/>
                 <FIELD NAME="submission_acceptnothing" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_transmatch" NEXT="submission_orcapable"/>
-                <FIELD NAME="submission_orcapable" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_acceptnothing"/>
+                <FIELD NAME="submission_orcapable" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_acceptnothing" NEXT="migration_gradebook"/>
+                <FIELD NAME="migration_gradebook" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_orcapable"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />

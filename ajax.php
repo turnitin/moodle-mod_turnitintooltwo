@@ -835,7 +835,7 @@ switch ($action) {
             $doOnce = 0;
         }
         if (!$trial) {
-            fputs($debug, date('H:i:s')." - Begin Ajax call with the following parameters:\r\nStart: ".$start."\r\nProcess at Once: ".$processAtOnce."\r\nIteration: ".$iteration."\r\nTrial: ".$trial."\r\nTotal To Migrate: ".$totalToMigrate."\r\nETD: ".$etd."\r\n");
+            fputs($debug, date('H:i:s')." - Begin Ajax call with the following parameters: Start: ".$start." Process at Once: ".$processAtOnce." Iteration: ".$iteration." Trial: ".$trial." Total To Migrate: ".$totalToMigrate." ETD: ".$etd."\r\n");
         }
 
         // Initialise the CSV log.
@@ -1012,19 +1012,13 @@ switch ($action) {
                             foreach ($v1_part_submissions as $v1_part_submission) {
                                 $v1_part_submission->turnitintooltwoid = $turnitintooltwoid;
                                 $v1_part_submission->submission_part = $v2_part_id;
+                                $v1_part_submission->migration_gradebook = 1;
                                 unset($v1_assignment_submissions->turnitintoolid);
                                 unset($v1_part_submission->id);
 
                                 $turnitintooltwo_submissionid = $DB->insert_record("turnitintooltwo_submissions", $v1_part_submission);
-
-                                // Get the V2 part and update grade book.
-                                $gradebook_start = round(microtime(true) * 1000);
-                                $v2_part_submission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwo_submissionid));
-                                turnitintooltwo_submission::update_gradebook($v2_part_submission, $turnitintooltwoassignment);
-                                $gradebook_end = round(microtime(true) * 1000);
-                                $total_gradebook_time += ($gradebook_end - $gradebook_start);
                             }
-                            fputs($debug, "+".calcRunTime($startTime)." seconds - Finished submission migration for part ".$v1_part->tiiassignid."\r\n                  Time spent updating gradebook: ".($total_gradebook_time/1000)." seconds.\r\n");
+                            fputs($debug, "+".calcRunTime($startTime)." seconds - Finished submission migration for part ".$v1_part->tiiassignid."\r\n                  Time spent updating gradebook: 0 seconds.\r\n");
                         }
                         if (!$trial) {
                             fputs($debug, "+".calcRunTime($startTime)." seconds - Finished part migration for part name '".$v1_part->partname."' (TII: ".$v1_part->tiiassignid.") (Moodle: ".$v1_part_id.")\r\n");
@@ -1032,7 +1026,7 @@ switch ($action) {
                     }
 
                     if (!$trial) {
-                        // Update the grades for this assignment.
+                        // Create entry in gradebook for this assignment.
                         turnitintooltwo_grade_item_update($turnitintooltwoassignment->turnitintooltwo);
                         fputs($debug, "+".calcRunTime($startTime)." seconds - Finished migration for assignment: '".$v1_assignment->name."' (Moodle ID: ".$v1_assignment_id.")\r\n");
                     }
@@ -1048,7 +1042,7 @@ switch ($action) {
 
         fclose($csvexport);
         if (!$trial) {
-            fputs($debug, "+".calcRunTime($startTime)." seconds - End Ajax call\r\n");
+            fputs($debug, "+".calcRunTime($startTime)." seconds - End Ajax call\r\n\r\n");
         }
         fclose($debug);
 

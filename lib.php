@@ -591,6 +591,25 @@ function turnitintooltwo_cron() {
         }
         echo 'Turnitintool submissions downloaded for assignments: '.implode(',', $updatedassignments).' ';
     }
+
+    // Update gradebook grades for migrated assignments.
+    $v2_part_submissions = $DB->get_records_sql("SELECT * FROM mdl_turnitintooltwo_submissions
+                                                 WHERE migration_gradebook = 1
+                                                 GROUP BY userid, turnitintooltwoid
+                                                 ORDER BY submission_modified DESC
+                                                 LIMIT 1000");
+    $submission = new turnitintooltwo_submission();
+    foreach ($v2_part_submissions as $v2_part_submission) {
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($v2_part_submission->turnitintooltwoid);
+        $submission->update_gradebook($v2_part_submission, $turnitintooltwoassignment);
+        mtrace($v2_part_submission->id);
+
+        // Set the migrated gradebook flag to updated.
+        $update_submission = new stdClass();
+        $update_submission->id = $v2_part_submission->id;
+        $update_submission->migration_gradebook = 0;
+        $DB->update_record("turnitintooltwo_submissions", $update_submission);
+    }
 }
 
 /**
@@ -1206,7 +1225,7 @@ function turnitintooltwo_getfiles($moduleid) {
  * @param array $options additional options affecting the file serving
  * @return bool false if file not found, does not return if found - just send the file
  */
-function turnitintooltwo_pluginfile($course, 
+function turnitintooltwo_pluginfile($course,
                 $cm,
                 context $context,
                 $filearea,
