@@ -1,12 +1,14 @@
-### Date: 		TBC
-### Release:	vTBC01
+### Date: 		2016-July-26
+### Release:	v2016072601
 
 - Verified against Moodle 3.1
 - Changed display of names to be consistent with Moodle (Thanks to junwan6).
+- Improved the way grade updates are handled for entering grades to the gradebook.
 - Fixes:
 	- Ignore inherited roles when sending instructor notifications.
 	- Scheduled tasks problems with deleting classes from database where no entry exists in course_modules table.
 	- Replace a couple of missing icons in plugin configuration area.
+	- Grade related settings are now hidden if GradeMark is not enabled.
 
 ---
 
