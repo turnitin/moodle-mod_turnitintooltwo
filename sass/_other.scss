@@ -112,3 +112,32 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .icon_smallmargin {
     margin-right: 10px;
 }
+
+/**
+ * Helpdesk Form
+ */
+
+#tii_solution_template,
+.tii_wizard_options,
+.tii_solutions,
+#btn_tiisupportform_link,
+#tii_helpdesk_mod_id {
+    display: none;
+}
+
+#tii_solution_template, #tii_wizard_container {
+    border: 1px solid $light-grey;
+}
+
+#tii_solution_template {
+    padding: 0px 16px 16px;
+}
+
+#tii_wizard_container {
+    padding: 16px 16px 12px;
+    margin-bottom: 12px;
+}
+
+.mod_turnitintooltwo iframe {
+    border: 1px solid $light-grey;
+}

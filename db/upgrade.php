@@ -147,7 +147,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
-    if ($oldversion < 2016011107) {
+    if ($oldversion < 2016072602) {
         $table = new xmldb_table('turnitintooltwo_courses');
         $field = new xmldb_field('migrated', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'course_type');
         if (!$dbman->field_exists($table, $field)) {
@@ -158,8 +158,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        $table = new xmldb_table('turnitintooltwo_parts');
+        // Add timestamp to store when grades were last updated.
+        $field = new xmldb_field('gradesupdated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'submitted');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
     }
 
-    // Newer DB Man field ($name, $type=null, $precision=null, $unsigned=null, $notnull=null, $sequence=null, $default=null, $previous=null)
     return true;
 }
