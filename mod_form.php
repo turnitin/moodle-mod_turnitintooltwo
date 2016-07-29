@@ -280,11 +280,13 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('studentreports', 'studentreports', 'turnitintooltwo');
         $mform->setDefault('studentreports', $config->default_studentreports);
 
-        $gradedisplayoptions = array(1 => get_string('displaygradesaspercent', 'turnitintooltwo'),
-                                     2 => get_string('displaygradesasfraction', 'turnitintooltwo'));
-        $mform->addElement('select', 'gradedisplay', get_string('displaygradesas', 'turnitintooltwo'), $gradedisplayoptions);
-        $mform->addHelpButton('gradedisplay', 'displaygradesas', 'turnitintooltwo');
-        $mform->setDefault('gradedisplay', $config->default_gradedisplay);
+        if (!empty($config->usegrademark)) {
+            $gradedisplayoptions = array(1 => get_string('displaygradesaspercent', 'turnitintooltwo'),
+                                         2 => get_string('displaygradesasfraction', 'turnitintooltwo'));
+            $mform->addElement('select', 'gradedisplay', get_string('displaygradesas', 'turnitintooltwo'), $gradedisplayoptions);
+            $mform->addHelpButton('gradedisplay', 'displaygradesas', 'turnitintooltwo');
+            $mform->setDefault('gradedisplay', $config->default_gradedisplay);
+        }
 
         $refreshoptions = array(1 => get_string('yesgrades', 'turnitintooltwo'), 0 => get_string('nogrades', 'turnitintooltwo'));
 
@@ -299,7 +301,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $dateoptions = array('startyear' => date( 'Y', strtotime( '-6 years' )), 'stopyear' => date( 'Y', strtotime( '+6 years' )),
                     'timezone' => 99, 'applydst' => true, 'step' => 1, 'optional' => false);
 
-        $this->standard_grading_coursemodule_elements();
+        if (!empty($config->usegrademark)) {
+            $this->standard_grading_coursemodule_elements();
+        }
 
         if (isset($this->_cm->id)) {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
@@ -358,10 +362,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->addElement('date_time_selector', 'dtpost'.$i, get_string('dtpost', 'turnitintooltwo'), $dateoptions);
             $mform->setDefault('dtpost'.$i, strtotime('+7 days'));
 
-            $mform->addElement('text', 'maxmarks'.$i, get_string('maxmarks', 'turnitintooltwo'));
-            $mform->setType('maxmarks'.$i, PARAM_INT);
-            $mform->setDefault('maxmarks'.$i, '100');
-            $mform->addRule('maxmarks'.$i, null, 'numeric', null, 'client');
+            if (!empty($config->usegrademark)) {
+                $mform->addElement('text', 'maxmarks'.$i, get_string('maxmarks', 'turnitintooltwo'));
+                $mform->setType('maxmarks'.$i, PARAM_INT);
+                $mform->setDefault('maxmarks'.$i, '100');
+                $mform->addRule('maxmarks'.$i, null, 'numeric', null, 'client');
+            }
         }
 
         $mform->addElement('header', 'advanced', get_string('turnitinoroptions', 'turnitintooltwo'));
@@ -606,7 +612,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $dtstart = $data['dtstart'.$i];
             $dtdue = $data['dtdue'.$i];
             $dtpost = $data['dtpost'.$i];
-            $maxmarks = $data['maxmarks'.$i];
+            $maxmarks = (empty($data['maxmarks'.$i])) ? 0 : $data['maxmarks'.$i];
 
             if (!is_int($maxmarks) && $maxmarks > 100) {
                 $errors['maxmarks'.$i] = get_string('maxmarkserror', 'turnitintooltwo');

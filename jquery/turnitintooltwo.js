@@ -610,6 +610,12 @@ jQuery(document).ready(function($) {
         $('html').css('background', '#FFF');
     }
 
+    $('.editable_postdue').on("click", function() {
+        if ($(this).data('anon') == 1) {
+            alert(M.str.turnitintooltwo.postdate_warning);
+        }
+    });
+
     if ($('.editable_text').length > 0) {
         $.fn.editable.defaults.mode = 'inline';
         $.fn.editable.defaults.url = 'ajax.php';
@@ -678,7 +684,6 @@ jQuery(document).ready(function($) {
                 {
                     if ( ! confirm(M.str.turnitintooltwo.disableanonconfirm)) {
                         $('.editable-open').editableContainer('hide');
-
                         // Validation only fails if string is returned (We need a string).
                         return ' ';
                     }
@@ -724,7 +729,7 @@ jQuery(document).ready(function($) {
 
     $('#inbox_form form, .launch_form form').submit();
 
-    // Open an iframe light box containing the Rubric View
+    // Open an iframe light box containing the EULA View
     if ($('.turnitin_eula_link').length > 0) {
         $('.turnitin_eula_link').colorbox({
             iframe:true, width:"766px", height:"596px", opacity: "0.7", className: "eula_view", scrolling: "false",

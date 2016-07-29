@@ -20,6 +20,7 @@ class turnitintooltwo_user {
     private $role;
     public $firstname;
     public $lastname;
+    public $fullname;
     public $email;
     public $username;
     public $user_agreement_accepted;
@@ -37,12 +38,15 @@ class turnitintooltwo_user {
 
         $this->firstname = "";
         $this->lastname = "";
+        $this->fullname = "";
         $this->email = "";
         $this->username = "";
 
-        if ($id != 0 && $finduser === true) {
+        if ($id != 0) {
             $this->get_moodle_user($this->id);
-            $this->get_tii_user_id();
+            if ($finduser === true) {
+                $this->get_tii_user_id();
+            }
         }
     }
 
@@ -90,6 +94,7 @@ class turnitintooltwo_user {
 
         $this->firstname = stripslashes(str_replace('/', '', $user->firstname));
         $this->lastname = stripslashes(str_replace('/', '', $user->lastname));
+        $this->fullname = fullname($user);
 
         // Set a default for first and last name in the event they are empty.
         $firstname = trim($this->firstname);
@@ -367,6 +372,14 @@ class turnitintooltwo_user {
     public function join_user_to_class($tiicourseid) {
 
         $turnitincomms = new turnitintooltwo_comms();
+
+        // We only want an API log entry for this if diagnostic mode is set to Debugging
+        if (empty($config)) {
+            $config = turnitintooltwo_admin_config();
+        }
+        if ($config->enablediagnostic != 2) {
+            $turnitincomms->setDiagnostic(0);
+        }
         $turnitincall = $turnitincomms->initialise_api();
 
         $membership = new TiiMembership();
