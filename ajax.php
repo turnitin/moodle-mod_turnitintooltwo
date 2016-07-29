@@ -878,17 +878,25 @@ switch ($action) {
                 $transaction = $DB->start_delegated_transaction();
             }
 
-            // If the course ID exists in V2, we skip this course.
             $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $course->courseid, 'course_type' => 'TT'));
 
-            if (isset($v2course->migrated)) {
-                $canMigrate = 0;
-                $headerColour = "red";
+            // Get some values for count checks.
+            $numsubmissions = count($DB->get_records_sql("SELECT s.id FROM mdl_turnitintool_submissions s
+                                                          JOIN mdl_turnitintool t
+                                                          ON t.id = s.turnitintoolid
+                                                          WHERE t.course = :course;", array('course' => 2)));
+            $numenrolled = count_enrolled_users(context_course::instance($course->id));
+
+            $canMigrate = 0;
+            $headerColour = "red";
+            if ($numenrolled > 1000) {
+                $statusText = "migrationtool_cant_migrate1";
+            } else if ($numsubmissions > 10000) {
                 $statusText = "migrationtool_cant_migrate2";
+            } elseif (isset($v2course->migrated)) {
+                $statusText = "migrationtool_cant_migrate3";
             } elseif (($v2course) && (!$etd)) {
-                $canMigrate = 0;
-                $headerColour = "red";
-                $statusText = "migrationtool_cant_migrate";
+                $statusText = "migrationtool_cant_migrate4";
             } else {
                 $canMigrate = 1;
                 $totalToMigrate++;
