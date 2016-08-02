@@ -1862,7 +1862,7 @@ class turnitintooltwo_assignment {
                                         'u.id, ' . implode($allnamefields, ', '));
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
-            $user = $DB->get_record('user', array('id' => $userid), 'u.id, ' . implode($allnamefields, ', '));
+            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode($allnamefields, ', '));
             $users = array($userid => $user);
             $sql .= " AND userid = ? ";
             $sqlparams[] = $userid;
