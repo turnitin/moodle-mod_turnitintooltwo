@@ -389,8 +389,7 @@ if (!empty($action)) {
 
                 // Get all users enrolled in the class.
                 $context = context_module::instance($cm->id);
-                $allusers = get_users_by_capability(context_module::instance($cm->id), 'mod/turnitintooltwo:submit', 'u.id',
-                                                '', '', '', groups_get_activity_group($cm));
+                $allusers = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
                 // Get users who've submitted.
                 $params = array('turnitintooltwoid' => $turnitintooltwo->id, 'submission_part' => $part);

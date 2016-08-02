@@ -1896,8 +1896,7 @@ class turnitintooltwo_view {
     public function show_add_tii_tutors_form($cm, $tutors) {
         global $CFG, $OUTPUT;
 
-        $moodletutors = get_users_by_capability(context_module::instance($cm->id), 'mod/turnitintooltwo:grade',
-                                                        'u.id, u.firstname, u.lastname, u.username');
+        $moodletutors = get_enrolled_users(context_module::instance($cm->id), 'mod/turnitintooltwo:grade', 0, 'u.id');
 
         // Populate elements array which will generate the form elements
         // Each element is in following format: (type, name, label, helptext (minus _help), options (if select).
