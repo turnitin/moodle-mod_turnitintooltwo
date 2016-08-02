@@ -760,7 +760,7 @@ switch ($do) {
             }
 
             $elements = array();
-            $elements[] = array('header', 'nonsubmitters_header', get_string('emailnonsubmitters', 'turnitintooltwo'));
+            $elements[] = array('header', 'nonsubmitters_header', get_string('messagenonsubmitters', 'turnitintooltwo'));
             $elements[] = array('static', 'nonsubmittersformdesc', get_string('nonsubmittersformdesc', 'turnitintooltwo'), '', '');
             $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'), '', '',
                                     'required', get_string('nonsubmitterssubjecterror', 'turnitintooltwo'), PARAM_TEXT);
