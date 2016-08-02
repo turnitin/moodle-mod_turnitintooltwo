@@ -885,7 +885,8 @@ switch ($action) {
                                                           JOIN mdl_turnitintool t
                                                           ON t.id = s.turnitintoolid
                                                           WHERE t.course = :course;", array('course' => 2)));
-            $numenrolled = count_enrolled_users(context_course::instance($course->id));
+
+            $numenrolled = count_enrolled_users(context_course::instance($course->courseid), "mod/turnitintool:submit");
 
             $canMigrate = 0;
             $headerColour = "red";
