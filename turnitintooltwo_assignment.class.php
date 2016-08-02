@@ -1856,13 +1856,13 @@ class turnitintooltwo_assignment {
         $istutor = has_capability('mod/turnitintooltwo:grade', $context);
 
         // If logged in as instructor then get for all users.
+        $allnamefields = get_all_user_name_fields();
         if ($istutor && $userid == 0) {
-            $allnamefields = get_all_user_name_fields();
             $users = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm),
                                         'u.id, ' . implode($allnamefields, ', '));
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
-            $user = $DB->get_record('user', array('id' => $userid));
+            $user = $DB->get_record('user', array('id' => $userid), 'u.id, ' . implode($allnamefields, ', '));
             $users = array($userid => $user);
             $sql .= " AND userid = ? ";
             $sqlparams[] = $userid;
