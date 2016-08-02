@@ -610,7 +610,8 @@ function turnitintooltwo_cron_update_gradbook($assignment, $task) {
         $turnitintooltwoassignment->turnitintooltwo->course);
 
     if ($cm) {
-        $users = $turnitintooltwoassignment->get_moodle_course_users($cm);
+        $users = get_enrolled_users(context_module::instance($cm->id),
+                                'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
         foreach ($users as $user) {
             $fieldList = array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
