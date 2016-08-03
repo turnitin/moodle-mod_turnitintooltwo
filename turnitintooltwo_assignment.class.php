@@ -576,10 +576,10 @@ class turnitintooltwo_assignment {
         $course = $this->get_course_data($this->turnitintooltwo->course);
 
         // Get local course members.
-        $moodleclassmembers = $this->get_moodle_course_users($cm);
+        $students = get_enrolled_users(context_module::instance($cm->id),
+                                'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
-        // Get the user ids of who is already enrolled and remove them
-        // from the local course members array.
+        // Get the user ids of who is already enrolled and remove them from the students array.
         $tiiclassmemberships = $this->get_class_memberships($course->turnitin_cid);
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -593,7 +593,7 @@ class turnitintooltwo_assignment {
             foreach ($readmemberships as $readmembership) {
                 if ($readmembership->getRole() == "Learner") {
                     $moodleuserid = turnitintooltwo_user::get_moodle_user_id($readmembership->getUserId());
-                    unset($moodleclassmembers[$moodleuserid]);
+                    unset($students[$moodleuserid]);
                 }
             }
         } catch (Exception $e) {
@@ -601,7 +601,7 @@ class turnitintooltwo_assignment {
         }
 
         // Enrol remaining unenrolled users to the course.
-        $members = array_keys($moodleclassmembers);
+        $members = array_keys($students);
         foreach ($members as $member) {
             $user = new turnitintooltwo_user($member, "Learner");
             $user->join_user_to_class($course->turnitin_cid);
@@ -1459,19 +1459,6 @@ class turnitintooltwo_assignment {
     }
 
     /**
-     * Get the Moodle users who are students
-     *
-     * @param object $cm the course module
-     * @return array of course users or empty array if none
-     */
-    public function get_moodle_course_users($cm) {
-        $courseusers = get_users_by_capability(context_module::instance($cm->id),
-                                'mod/turnitintooltwo:submit', '', 'u.lastname, u.firstname');
-
-        return (!is_array($courseusers)) ? array() : $courseusers;
-    }
-
-    /**
      * Return an array with the parts still available to be submitted to
      *
      * @global type $DB
@@ -1869,13 +1856,13 @@ class turnitintooltwo_assignment {
         $istutor = has_capability('mod/turnitintooltwo:grade', $context);
 
         // If logged in as instructor then get for all users.
+        $allnamefields = get_all_user_name_fields();
         if ($istutor && $userid == 0) {
-            $allnames = get_all_user_name_fields();
-            $users = get_users_by_capability($context, 'mod/turnitintooltwo:submit', 'u.id, ' . implode($allnames, ', '),
-                                                 '', '', '', groups_get_activity_group($cm), '');
+            $users = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm),
+                                        'u.id, ' . implode($allnamefields, ', '));
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
-            $user = $DB->get_record('user', array('id' => $userid));
+            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode($allnamefields, ', '));
             $users = array($userid => $user);
             $sql .= " AND userid = ? ";
             $sqlparams[] = $userid;
