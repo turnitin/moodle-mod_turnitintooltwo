@@ -1251,7 +1251,7 @@ class turnitintooltwo_assignment {
      * @param boolean $createevent - setting to determine whether to create a calendar event.
      * @return boolean
      */
-    public function edit_moodle_assignment($createevent = true) {
+    public function edit_moodle_assignment($createevent = true, $restore = false) {
         global $USER, $DB, $CFG;
 
         $config = turnitintooltwo_admin_config();
@@ -1345,7 +1345,7 @@ class turnitintooltwo_assignment {
             $assignment->setEraterHandbook((isset($this->turnitintooltwo->erater_handbook)) ?
                                                         $this->turnitintooltwo->erater_handbook : 0);
 
-            if ($attribute < strtotime("-1 year")) {
+            if (($restore) && ($attribute < strtotime("-1 year"))) {
                 $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", time()));
                 $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
                 $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
