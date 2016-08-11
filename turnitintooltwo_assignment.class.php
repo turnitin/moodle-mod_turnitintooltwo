@@ -1110,7 +1110,7 @@ class turnitintooltwo_assignment {
         switch ($fieldname) {
             case "partname":
                 $fieldvalue = trim($fieldvalue);
-                $partnames = $DB->get_records_select('turnitintooltwo_parts', 
+                $partnames = $DB->get_records_select('turnitintooltwo_parts',
                                                     ' turnitintooltwoid = ? AND id != ? ',
                                                     array($partdetails->turnitintooltwoid, $partid), '', 'partname');
 
@@ -1251,7 +1251,7 @@ class turnitintooltwo_assignment {
      * @param boolean $createevent - setting to determine whether to create a calendar event.
      * @return boolean
      */
-    public function edit_moodle_assignment($createevent = true) {
+    public function edit_moodle_assignment($createevent = true, $restore = false) {
         global $USER, $DB, $CFG;
 
         $config = turnitintooltwo_admin_config();
@@ -1345,12 +1345,18 @@ class turnitintooltwo_assignment {
             $assignment->setEraterHandbook((isset($this->turnitintooltwo->erater_handbook)) ?
                                                         $this->turnitintooltwo->erater_handbook : 0);
 
-            $attribute = "dtstart".$i;
-            $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
-            $attribute = "dtdue".$i;
-            $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
-            $attribute = "dtpost".$i;
-            $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
+            if (($restore) && ($attribute < strtotime("-1 year"))) {
+                $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", time()));
+                $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
+                $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
+            } else {
+                $attribute = "dtstart".$i;
+                $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
+                $attribute = "dtdue".$i;
+                $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
+                $attribute = "dtpost".$i;
+                $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
+            }
 
             $attribute = "partname".$i;
             $assignment->setTitle($this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute." (Moodle TT)");
