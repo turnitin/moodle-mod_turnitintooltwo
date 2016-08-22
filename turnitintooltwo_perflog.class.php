@@ -25,7 +25,7 @@ class turnitintooltwo_performancelog extends PerformanceLog {
 
             $dirpath = $CFG->tempdir."/turnitintooltwo/logs";
             if (!file_exists($dirpath)) {
-                mkdir($dirpath, 0777, true);
+                mkdir($dirpath, $CFG->directorypermissions, true);
             }
             $dir = opendir($dirpath);
             $files = array();
