@@ -1476,11 +1476,9 @@ class turnitintooltwo_view {
 
         $submissiondata = array();
 
-        $i = -1;
         $j = 0;
 
         foreach ($_SESSION["submissions"][$partid] as $submission) {
-            $i++;
 
             $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
                                                         $useroverallgrades, $istutor);
