@@ -5,6 +5,7 @@
 - Refactored the get users functionality in several places to not include users with roles inherited from site level.
 - Fixes:
 	- Add missing string to email non submitters.
+	- Check $CFG exists before using in version.php (Thanks to @micaherne).
 	- Assignments starting more than a year ago can now be restored without user info.
 
 ---

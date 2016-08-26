@@ -30,8 +30,7 @@ $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
 
 global $CFG;
-if ($CFG->version > 2014051200) {
-	$plugin->cron = 0;
-} else {
-	$plugin->cron = 1800;
+$plugin->cron = 0;
+if (!empty($CFG->version)) {
+	$plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
 }
