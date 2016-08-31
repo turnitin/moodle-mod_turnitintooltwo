@@ -890,7 +890,7 @@ switch ($action) {
 
             $canMigrate = 0;
             $headerColour = "red";
-            if ($numenrolled > 1000) {
+            if ($numenrolled > 3000) {
                 $statusText = "migrationtool_cant_migrate1";
             } else if ($numsubmissions > 10000) {
                 $statusText = "migrationtool_cant_migrate2";
