@@ -1345,12 +1345,12 @@ class turnitintooltwo_assignment {
             $assignment->setEraterHandbook((isset($this->turnitintooltwo->erater_handbook)) ?
                                                         $this->turnitintooltwo->erater_handbook : 0);
 
-            if (($restore) && ($attribute < strtotime("-1 year"))) {
+            $attribute = "dtstart".$i;
+            if (($restore) && ($this->turnitintooltwo->$attribute < strtotime("-1 year"))) {
                 $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", time()));
                 $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
                 $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
             } else {
-                $attribute = "dtstart".$i;
                 $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
                 $attribute = "dtdue".$i;
                 $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
