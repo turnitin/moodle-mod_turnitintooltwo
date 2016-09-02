@@ -740,7 +740,8 @@ class turnitintooltwo_view {
         $textfield = $partdetails[$partid]->partname;
         if ($istutor) {
             $textfield = html_writer::link('#', $partdetails[$partid]->partname,
-                                            array('class' => 'editable_text editable_text_'.$partid,
+                                            array('title' => get_string('edit', 'turnitintooltwo'),
+                                                'class' => 'editable_text editable_text_'.$partid,
                                                 'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'partname',
                                                 'id' => 'part_name_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
@@ -755,7 +756,8 @@ class turnitintooltwo_view {
                         userdate($partdetails[$partid]->dtstart, '%d %h %Y - %H:%M');
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
-                                            array('class' => 'editable_date editable_date_'.$partid,
+                                            array('title' => get_string('edit', 'turnitintooltwo'),
+                                                'class' => 'editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtstart', 'id' => 'date_start_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
@@ -771,6 +773,7 @@ class turnitintooltwo_view {
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield,
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+                                                'title' => get_string('edit', 'turnitintooltwo'),
                                                 'class' => 'editable_postdue editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtdue', 'id' => 'date_due_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
@@ -789,6 +792,7 @@ class turnitintooltwo_view {
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
                                                 'data-unanon' => $partdetails[$partid]->unanon,
                                                 'data-submitted' => $partdetails[$partid]->submitted,
+                                                'title' => get_string('edit', 'turnitintooltwo'),
                                                 'class' => 'editable_postdue editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtpost', 'id' => 'date_post_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
@@ -816,11 +820,12 @@ class turnitintooltwo_view {
             $textfield = $partdetails[$partid]->maxmarks.$rubricviewlink;
             if ($istutor) {
                 $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks,
-                                                array('class' => 'editable_text editable_text_'.$partid, 'id' => 'marks_'.$partid,
+                                                array('title' => get_string('edit', 'turnitintooltwo'),
+                                                    'class' => 'editable_text editable_text_'.$partid, 'id' => 'marks_'.$partid,
                                                     'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'maxmarks',
                                                     'data-params' => "{ 'assignment': ".
                                                                         $turnitintooltwoassignment->turnitintooltwo->id.", ".
-                                                                        "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+                                                                        "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));                
             }
             $cells[4] = new html_table_cell($textfield);
             $cells[4]->attributes['class'] = 'data';
@@ -830,25 +835,27 @@ class turnitintooltwo_view {
             // Output icon to download zip file of submissions in original format.
             $exportoriginalzip = $OUTPUT->box_start('row_export_orig', '');
             $exportoriginalzip .= $OUTPUT->box(
-                html_writer::tag('i', '', array('class' => 'fa fa-file-o fa-lg')),
+                html_writer::tag('i', '', array('title' => get_string('exportoriginal', 'turnitintooltwo'),
+                'class' => 'fa fa-file-o fa-lg')),
                 'zip_open orig_zip_open', 'orig_zip_'.$partdetails[$partid]->tiiassignid
             );
             // Put in div placeholder for launch form.
             $exportoriginalzip .= $OUTPUT->box('', 'launch_form', 'orig_zip_form_'.$partdetails[$partid]->tiiassignid);
             $exportoriginalzip .= $OUTPUT->box_end(true);
-
             // Output icon to download zip file of submissions in pdf format.
             $exportpdfzip = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.
                                     $cm->id.'&part='.$partid.'&do=export_pdfs&view_context=box_solid',
-                                    html_writer::tag('i', '', array('class' => 'fa fa-file-pdf-o fa-lg middle-padding')),
-                                    array("class" => "downloadpdf_box",
+                                    html_writer::tag('i', '', array('title' => get_string('exportpdf', 'turnitintooltwo'), 
+                                        'class' => 'fa fa-file-pdf-o fa-lg middle-padding')),
+                                        array("class" => "downloadpdf_box",
                                             "id" => "download_".$partdetails[$partid]->tiiassignid));
 
             // Output icon to download excel spreadsheet of grades.
             $exportxlszip = $OUTPUT->box_start('row_export_xls', '');
             $exportxlszip .= $OUTPUT->box(
-                    html_writer::tag('i', '', array('class' => 'fa fa-file-excel-o fa-lg')),
-                    'zip_open xls_inbox_open', 'xls_inbox_'.$partdetails[$partid]->tiiassignid
+                    html_writer::tag('i', '', array('title' => get_string('exportexcel', 'turnitintooltwo'), 
+                        'class' => 'fa fa-file-excel-o fa-lg')),
+                        'zip_open xls_inbox_open', 'xls_inbox_'.$partdetails[$partid]->tiiassignid
                 );
             // Put in div placeholder for launch form.
             $exportxlszip .= $OUTPUT->box('', 'launch_form', 'xls_inbox_form_'.$partdetails[$partid]->tiiassignid);
@@ -1255,7 +1262,8 @@ class turnitintooltwo_view {
                 $grade = '';
                 if (!is_null($submission->submission_grade) || $submission->submission_gmimaged != 0 || $istutor) {
                     $grade = $OUTPUT->box(
-                        html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg gm-blue')),
+                        html_writer::tag('i', '', array('title' => get_string('submissiongrade', 'turnitintooltwo'),
+                        'class' => 'fa fa-pencil fa-lg gm-blue')),
                         'grademark_open ' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
                         array('title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id)
                     );
@@ -1375,8 +1383,8 @@ class turnitintooltwo_view {
         // Download submission in original format.
         if (!empty($submission->submission_objectid) && !empty($submission->id) && !$submission->submission_acceptnothing) {
             $download = $OUTPUT->box(
-                html_writer::tag('i', '', array('class' => 'fa fa-cloud-download fa-lg')),
-                'download_original_open',
+                html_writer::tag('i', '', array('title' => get_string('downloadsubmission', 'turnitintooltwo'), 
+                'class' => 'fa fa-download fa-lg')), 'download_original_open',
                 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid
             );
             $download .= $OUTPUT->box('', 'launch_form', 'downloadoriginal_form_'.$submission->submission_objectid);
@@ -1413,7 +1421,7 @@ class turnitintooltwo_view {
                 $attributes = array("onclick" => "return confirm('".$string."');");
                 $delete = html_writer::link(
                     $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
-                    html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
+                    html_writer::tag('i', '', array('title' => get_string('deletesubmission', 'turnitintooltwo'), 'class' => 'fa fa-trash-o fa-lg')),
                     $attributes
                 );
             }
@@ -1426,7 +1434,7 @@ class turnitintooltwo_view {
                 $attributes = array("onclick" => "return confirm('".$string."');");
                 $delete = html_writer::link(
                     $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
-                    html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
+                    html_writer::tag('i', '', array('title' => get_string('deletesubmission', 'turnitintooltwo'), 'class' => 'fa fa-trash-o fa-lg')),
                     $attributes
                 );
             }
@@ -1873,8 +1881,8 @@ class turnitintooltwo_view {
                                                 'action' => $removeaction, 'membership_id' => $v['membership_id']));
 
                 $attributes["onclick"] = 'return confirm(\''.$removestr.'\');';
-                $link = html_writer::link($deleteurl, html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
-                                                                                                        $attributes);
+                $link = html_writer::link($deleteurl, html_writer::tag('i', '', 
+                    array('title' => get_string('deletesubmission', 'turnitintooltwo'), 'class' => 'fa fa-trash-o fa-lg')), $attributes);
                 $userdetails = html_writer::link($CFG->wwwroot.'/user/view.php?id='.$membermoodleid.
                                                     '&course='.$turnitintooltwoassignment->turnitintooltwo->course,
                                                     fullname($user)).' ('.$user->email.')';
