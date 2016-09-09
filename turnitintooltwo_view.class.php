@@ -1252,11 +1252,14 @@ class turnitintooltwo_view {
                 $class = $canresubmit && ($tutorbeforeduedate || $allowedlate) ? 'graded_warning' : '';
 
                 // Output grademark icon.
-                $grade = $OUTPUT->box(
-                    html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg gm-blue')),
-                    'grademark_open ' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
-                    array('title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id)
-                );
+                $grade = '';
+                if (!is_null($submission->submission_grade) || $submission->submission_gmimaged != 0 || $istutor) {
+                    $grade = $OUTPUT->box(
+                        html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg gm-blue')),
+                        'grademark_open ' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
+                        array('title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id)
+                    );
+                }
 
                 // Show grade.
                 if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 2) { // 2 is fraction
