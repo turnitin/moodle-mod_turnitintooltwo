@@ -1091,7 +1091,7 @@ class turnitintooltwo_view {
             if ($parts[$v]->dtpost > time()) {
                 $display_overall_grade = 0;
             }
-            if ($parts[$v]->unanon != 1 && $all_parts_unanonymised) {
+            if ($turnitintooltwoassignment->turnitintooltwo->anon && $parts[$v]->unanon != 1 && $all_parts_unanonymised) {
                 $all_parts_unanonymised = 0;
             }
         }
@@ -1288,9 +1288,10 @@ class turnitintooltwo_view {
                 $grade = $OUTPUT->box('--', '');
             }
 
-            // Show average grade if more than 1 part.
+            // Show average grade if more than 1 part or using a scale.
             if (count($parts) > 1 || $turnitintooltwoassignment->turnitintooltwo->grade < 0) {
                 $overallgrade = '--';
+
                 if ($submission->nmoodle != 1 && $all_parts_unanonymised &&
                         ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                     if (!isset($useroverallgrades[$submission->userid])) {
