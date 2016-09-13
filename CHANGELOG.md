@@ -1,5 +1,6 @@
-### Date:		2016-xxx-xx
-### Release:	v2016xxxx01
+### Date:		2016-September-14
+### Release:	v2016091401
+
 
 - Remove leftover counter variable from get_submission_inbox function.
 - Refactored the get users functionality in several places to not include users with roles inherited from site level.
@@ -7,6 +8,9 @@
 	- Add missing string to email non submitters.
 	- Check $CFG exists before using in version.php (Thanks to @micaherne).
 	- Assignments starting more than a year ago can now be restored without user info.
+	- Check for GradeMark feedback changes when saving submission.
+	- Only show GradeMark launch to student if the paper has feedback or grade.
+	- Slight tweak to overall grade to show overall grade on normal assignments.
 
 ---
 
