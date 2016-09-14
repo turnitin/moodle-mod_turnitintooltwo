@@ -23,15 +23,14 @@ if (empty($plugin)) {
 	$plugin = new StdClass();
 }
 
-$plugin->version   = 2016072601;
+$plugin->version   = 2016091401;
 $plugin->release   = "2.6+";
 $plugin->requires  = 2013111800;
 $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
 
 global $CFG;
-if ($CFG->version > 2014051200) {
-	$plugin->cron = 0;
-} else {
-	$plugin->cron = 1800;
+$plugin->cron = 0;
+if (!empty($CFG->version)) {
+	$plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
 }

@@ -1091,7 +1091,7 @@ class turnitintooltwo_view {
             if ($parts[$v]->dtpost > time()) {
                 $display_overall_grade = 0;
             }
-            if ($parts[$v]->unanon != 1 && $all_parts_unanonymised) {
+            if ($turnitintooltwoassignment->turnitintooltwo->anon && $parts[$v]->unanon != 1 && $all_parts_unanonymised) {
                 $all_parts_unanonymised = 0;
             }
         }
@@ -1252,11 +1252,14 @@ class turnitintooltwo_view {
                 $class = $canresubmit && ($tutorbeforeduedate || $allowedlate) ? 'graded_warning' : '';
 
                 // Output grademark icon.
-                $grade = $OUTPUT->box(
-                    html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg gm-blue')),
-                    'grademark_open ' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
-                    array('title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id)
-                );
+                $grade = '';
+                if (!is_null($submission->submission_grade) || $submission->submission_gmimaged != 0 || $istutor) {
+                    $grade = $OUTPUT->box(
+                        html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg gm-blue')),
+                        'grademark_open ' . $class, 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
+                        array('title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id)
+                    );
+                }
 
                 // Show grade.
                 if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 2) { // 2 is fraction
@@ -1288,9 +1291,10 @@ class turnitintooltwo_view {
                 $grade = $OUTPUT->box('--', '');
             }
 
-            // Show average grade if more than 1 part.
+            // Show average grade if more than 1 part or using a scale.
             if (count($parts) > 1 || $turnitintooltwoassignment->turnitintooltwo->grade < 0) {
                 $overallgrade = '--';
+
                 if ($submission->nmoodle != 1 && $all_parts_unanonymised &&
                         ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                     if (!isset($useroverallgrades[$submission->userid])) {
@@ -1476,11 +1480,9 @@ class turnitintooltwo_view {
 
         $submissiondata = array();
 
-        $i = -1;
         $j = 0;
 
         foreach ($_SESSION["submissions"][$partid] as $submission) {
-            $i++;
 
             $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
                                                         $useroverallgrades, $istutor);
@@ -1896,8 +1898,7 @@ class turnitintooltwo_view {
     public function show_add_tii_tutors_form($cm, $tutors) {
         global $CFG, $OUTPUT;
 
-        $moodletutors = get_users_by_capability(context_module::instance($cm->id), 'mod/turnitintooltwo:grade',
-                                                        'u.id, u.firstname, u.lastname, u.username');
+        $moodletutors = get_enrolled_users(context_module::instance($cm->id), 'mod/turnitintooltwo:grade', 0, 'u.id');
 
         // Populate elements array which will generate the form elements
         // Each element is in following format: (type, name, label, helptext (minus _help), options (if select).

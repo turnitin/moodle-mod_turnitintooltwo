@@ -122,7 +122,7 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
             foreach($_SESSION["assignments_to_create"] as $new_assignment_id) {
                 $assignment = new turnitintooltwo_assignment($new_assignment_id);
                 $assignment->unlink_assignment();
-                $assignment->edit_moodle_assignment();
+                $assignment->edit_moodle_assignment(true, true);
             }
             unset($_SESSION['tii_assignment_reset']);
             unset($_SESSION['assignments_to_create']);
