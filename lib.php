@@ -178,6 +178,10 @@ function turnitintooltwo_activitylog($string, $activity) {
 function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnone = true) {
     global $DB, $USER, $CFG;
 
+    if ($userid != 0) {
+        return;
+    }
+
     $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
 
     try {
