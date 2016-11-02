@@ -60,16 +60,7 @@ jQuery(document).ready(function($) {
 
     // Show loading if submission passes validation
     $(document).on('submit', '.submission_form_container form', function() {
-        try {
-            var myValidator = validate_turnitintooltwo_form;
-        } catch(e) {
-            return true;
-        }
-
-        var validated = myValidator(this);
-
-        if (validated) {
-
+        if ($("#id_submissiontitle").val().length > 0) {
             $("#general").slideUp('slow');
             $(".mod_turnitintooltwo .noticebox").slideUp('slow');
             $(".submission_form_container form").slideUp('slow');
