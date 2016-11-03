@@ -1482,6 +1482,13 @@ class turnitintooltwo_view {
 
         $j = 0;
 
+        // Unanonymise parts if necessary.
+        foreach (array_keys($parts) as $k => $v) {
+            if ($parts[$v]->dtpost < time()) {
+                $parts[$v]->unanon = 1;
+            }
+        }
+
         foreach ($_SESSION["submissions"][$partid] as $submission) {
 
             $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
