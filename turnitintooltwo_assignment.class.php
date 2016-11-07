@@ -1546,9 +1546,11 @@ class turnitintooltwo_assignment {
             $readsubmissions = $response->getSubmissions();
 
             foreach ($readsubmissions as $readsubmission) {
-                $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
+                if ($readsubmission->getAuthorUserId() != "-1") {
+                    $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
                                                                                 "turnitin", $this, $part->id);
-                $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
+                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
+                }
             }
 
         } catch (Exception $e) {
