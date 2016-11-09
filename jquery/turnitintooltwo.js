@@ -243,6 +243,9 @@ jQuery(document).ready(function($) {
         } else if (i == 5) {
             submissionsDataTableColumns.push({"sClass": "right"});
             visibleCols.push(true);
+        } else if (i == 10 || (i == 12 && showOrigReport) || (i == 13 && !showOrigReport)) {
+            submissionsDataTableColumns.push({"sClass": "right"});
+            visibleCols.push(true);
         } else if (i == 7 || (i == 9 && showOrigReport) || ((i == 9 && !showOrigReport) || (i == 11 && useGradeMark))) {
             submissionsDataTableColumns.push({"sClass": "right", "iDataSort": i-1, "sType":"numeric"});
             visibleCols.push(true);
