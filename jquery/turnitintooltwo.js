@@ -246,6 +246,9 @@ jQuery(document).ready(function($) {
         } else if (i == 7 || (i == 9 && showOrigReport) || ((i == 9 && !showOrigReport) || (i == 11 && useGradeMark))) {
             submissionsDataTableColumns.push({"sClass": "right", "iDataSort": i-1, "sType":"numeric"});
             visibleCols.push(true);
+        } else if (i == 10 || (i == 12 && showOrigReport) || (i == 11 && !showOrigReport)) {
+            submissionsDataTableColumns.push({"sClass": "right"});
+            visibleCols.push(true);
         } else if (i == 1 || ((i >= 8 && !showOrigReport && !useGradeMark)
                                 || (i >= 10 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark)))
                                 || (i >= 12 && showOrigReport && useGradeMark))) {

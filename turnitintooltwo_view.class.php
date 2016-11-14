@@ -613,7 +613,7 @@ class turnitintooltwo_view {
                         $cells[$j] = new html_table_cell($cell);
                         if ($j == 2 || $j == 3 || $j == 4) {
                             $cells[$j]->attributes['class'] = "left";
-                        } else if ($j == 5 || $j == 7) {
+                        } else if ($j == 5 || $j == 7 || $j == 10) {
                             $cells[$j]->attributes['class'] = "right";
                         } else if (($j == 8 && $origreportenabled) || ($j == 8 && !$origreportenabled && $grademarkenabled) ||
                                     ($j == 10 && $origreportenabled && $grademarkenabled)) {
