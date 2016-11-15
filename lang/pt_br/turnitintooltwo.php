@@ -100,8 +100,8 @@ $string['saveusage'] = 'Salvar Dados do Despejo';
 $string['selectoption'] = 'Selecionar Opção';
 $string['showusage'] = 'Mostrar Dados do Despejo';
 $string['spapercheck'] = 'Comparar com os documentos armazenados dos alunos';
-$string['spapercheck_help'] = 'Comparar com o depósito de documentos de alunos Turnitin ao processar os Relatórios 
-de Originalidade dos documentos. A porcentagem do índice de semelhança 
+$string['spapercheck_help'] = 'Comparar com o depósito de documentos de alunos Turnitin ao processar os Relatórios
+de Originalidade dos documentos. A porcentagem do índice de semelhança
 pode baixar se essa opção for desmarcada.';
 $string['standardrepository'] = 'Depósito Padrão';
 $string['student'] = 'Aluno';
@@ -200,7 +200,7 @@ $string['turnitintutors_desc'] = 'Os Professores Particulares selecionados abaix
 $string['duplicatesfound'] = 'Foram encontradas cópias duplicadas dos mesmos trabalhos Turnitin. As duplicações ocorrem quando um ou mais trabalhos Moodle Direct estão conectados ao mesmo trabalho Turnitin via API Turnitin. Isso causa problemas, principalmente com os trabalhos enviados para um dos duplicados que irá aparecer na caixa de entrada do envio dos outros. Para corrigir isso, você deve excluir os trabalhos duplicados ou reiniciar o curso onde os trabalhos duplicados se encontram.<br /><br />As seguintes duplicações foram encontradas:';
 $string['erater'] = 'Habilitar a verificação gramatical e-rater';
 $string['eraternoun'] = 'E-rater';
-$string['erater_handbook'] = 'Manual ETS&copy';
+$string['erater_handbook'] = 'Manual ETS&copy;';
 $string['erater_dictionary'] = 'Dicionário e-rater';
 $string['erater_categories'] = 'Catrgorias e-rater';
 $string['erater_spelling'] = 'Ortografia';
@@ -217,7 +217,7 @@ $string['erater_dictionary_enus'] = 'Dicionário de Inglês Americano';
 $string['erater_dictionary_engb'] = 'Dicionário de Inglês Britânico';
 $string['erater_dictionary_en'] = 'Dicionários de Inglês Americano e Britânico';
 $string['turnitinuseerater'] = 'Habilitar ETS&copy;';
-$string['turnitinuseerater_desc'] = 'Escolha entre habilitar verificação de gramática ETS&copy.<br /><i>(Habilite essa opção apenas se o e-rater ETS&copy estiver habilitado em sua conta Turnitin)</i>';
+$string['turnitinuseerater_desc'] = 'Escolha entre habilitar verificação de gramática ETS&copy;.<br /><i>(Habilite essa opção apenas se o e-rater ETS&copy; estiver habilitado em sua conta Turnitin)</i>';
 $string['student_read'] = 'O aluno visualizou o documento em:';
 $string['student_notread'] = 'O aluno não visualizou esse documento.';
 $string['relinkusers'] = 'Revincular Usuários';
