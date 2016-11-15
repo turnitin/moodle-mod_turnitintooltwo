@@ -49,6 +49,7 @@ $config = turnitintooltwo_admin_config();
 switch ($cmd) {
     case "viewreport":
     case "savereport":
+        raise_memory_limit(MEMORY_EXTRA);
 
         if ($cmd == 'viewreport') {
 
@@ -79,7 +80,7 @@ switch ($cmd) {
 
             if ($data = $DB->get_records($table)) {
 
-                $headers = array_keys(get_object_vars(current($data)));
+                $headers = array_keys($DB->get_columns($table));
                 $columnwidth = 25;
                 if ($table == 'turnitintooltwo') {
                     $columnwidth = 20;
