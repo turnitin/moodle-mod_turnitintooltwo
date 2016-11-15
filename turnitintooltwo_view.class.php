@@ -618,7 +618,7 @@ class turnitintooltwo_view {
                         } else if (($j == 8 && $origreportenabled) || ($j == 8 && !$origreportenabled && $grademarkenabled) ||
                                     ($j == 10 && $origreportenabled && $grademarkenabled)) {
                             $cells[$j]->attributes['class'] = "raw_data";
-                        } else if ((i == 12 && $origreportenabled) || (i == 11 && !$origreportenabled)) {
+                        } else if (($j == 12 && $origreportenabled) || ($j == 11 && !$origreportenabled)) {
                             $cells[$j]->attributes['class'] = "right";
                         } else {
                             $cells[$j]->attributes['class'] = "centered_cell";
