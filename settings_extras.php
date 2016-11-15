@@ -67,6 +67,12 @@ switch ($cmd) {
         $tables = array('turnitintooltwo_users', 'turnitintooltwo_courses', 'turnitintooltwo',
                         'turnitintooltwo_parts', 'turnitintooltwo_submissions');
 
+        // Get Moodle users.
+        $moodleusers = $DB->get_records_sql('SELECT id, firstname, lastname
+                                                   FROM {user}
+                                                   WHERE id IN
+                                                         (SELECT userid FROM {turnitintooltwo_users})');
+
         foreach ($tables as $table) {
 
             $output .= "== ".$table." ==\r\n\r\n";
@@ -106,9 +112,8 @@ switch ($cmd) {
                     foreach ($datarow as $datacell) {
                         $output .= ' '.htmlspecialchars(str_pad(substr($datacell, 0, $columnwidth), $columnwidth, " ", 1)).'|';
                     }
-                    if ($table == 'turnitintooltwo_users' &&
-                            $moodleuser = $DB->get_record('user', array('id' => $datarow['userid']))) {
-                        $output .= ' '.str_pad(substr(format_string($moodleuser->firstname).' '.format_string($moodleuser->lastname), 0, $columnwidth),
+                    if ($table == 'turnitintooltwo_users' && $moodleusers[$datarow['userid']]) {
+                        $output .= ' '.str_pad(substr(format_string($moodleusers[$datarow['userid']]->firstname).' '.format_string($moodleusers[$datarow['userid']]->lastname), 0, $columnwidth),
                                                 $columnwidth, " ", 1).'|';
                     }
                     $output .= "\r\n";
