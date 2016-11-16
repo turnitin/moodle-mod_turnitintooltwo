@@ -601,13 +601,13 @@ class turnitintooltwo_assignment {
         }
 
         // Get the suspended users.
-        $suspended_users = get_suspended_userids($context);
+        $suspendedusers = get_suspended_userids($context);
 
         // Enrol remaining unenrolled users to the course.
         $members = array_keys($students);
         foreach ($members as $member) {
             // Don't include user if they are suspended.
-            if (isset($suspended_users[$user->id])) {
+            if (isset($suspendedusers[$user->id])) {
                 continue;
             }
             $user = new turnitintooltwo_user($member, "Learner");
@@ -1888,7 +1888,7 @@ class turnitintooltwo_assignment {
         }
 
         // Get the suspended users.
-        $suspended_users = get_suspended_userids($context);
+        $suspendedusers = get_suspended_userids($context);
 
         // Populate the submissions array to show all users for all parts.
         $submissions = array();
@@ -1896,7 +1896,7 @@ class turnitintooltwo_assignment {
             $submissions[$part->id] = array();
             foreach ($users as $user) {
                 // Don't include user if they are suspended.
-                if (isset($suspended_users[$user->id])) {
+                if (isset($suspendedusers[$user->id])) {
                     continue;
                 }
                 $emptysubmission = new stdClass();
