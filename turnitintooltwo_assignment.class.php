@@ -600,9 +600,16 @@ class turnitintooltwo_assignment {
             $turnitincomms->handle_exceptions($e, 'membercheckerror');
         }
 
+        // Get the suspended users.
+        $suspended_users = get_suspended_userids($context);
+
         // Enrol remaining unenrolled users to the course.
         $members = array_keys($students);
         foreach ($members as $member) {
+            // Don't include user if they are suspended.
+            if (isset($suspended_users[$user->id])) {
+                continue;
+            }
             $user = new turnitintooltwo_user($member, "Learner");
             $user->join_user_to_class($course->turnitin_cid);
         }
@@ -1880,11 +1887,18 @@ class turnitintooltwo_assignment {
             $sqlparams[] = $USER->id;
         }
 
+        // Get the suspended users.
+        $suspended_users = get_suspended_userids($context);
+
         // Populate the submissions array to show all users for all parts.
         $submissions = array();
         foreach ($parts as $part) {
             $submissions[$part->id] = array();
             foreach ($users as $user) {
+                // Don't include user if they are suspended.
+                if (isset($suspended_users[$user->id])) {
+                    continue;
+                }
                 $emptysubmission = new stdClass();
                 $emptysubmission->userid = $user->id;
                 $emptysubmission->firstname = $user->firstname;
