@@ -549,3 +549,4 @@ $string['tiidebugginglogs'] = 'Debugging and Logging';
 $string['diagnosticoptions_0'] = 'Off';
 $string['diagnosticoptions_1'] = 'Standard';
 $string['diagnosticoptions_2'] = 'Debugging';
+$string['nofinfolibrary'] = 'To use this plugin you will need to have the PHP Fileinfo extension installed on your server.';

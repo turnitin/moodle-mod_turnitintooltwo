@@ -28,6 +28,7 @@ if ($ADMIN->fulltree) {
 
     $config = turnitintooltwo_admin_config();
 
+    // Throw warning if necessary PHP libraries aren't installed.
     $library_warning = '';
     if (!extension_loaded('XMLWriter')) {
         $library_warning .= html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'),
@@ -35,6 +36,10 @@ if ($ADMIN->fulltree) {
     }
     if (!extension_loaded('mbstring')) {
         $library_warning .= html_writer::tag('div', get_string('nombstringlibrary', 'turnitintooltwo'),
+                                                array('class' => 'tii_library_not_present_warning'));
+    }
+    if (!extension_loaded('fileinfo')) {
+        $library_warning .= html_writer::tag('div', get_string('nofinfolibrary', 'turnitintooltwo'),
                                                 array('class' => 'tii_library_not_present_warning'));
     }
 
