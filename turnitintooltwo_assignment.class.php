@@ -1294,6 +1294,16 @@ class turnitintooltwo_assignment {
         }
         $partids = array_keys($parts);
 
+        // Override submitpapersto if necessary when admin is forcing standard/no repository.
+        switch ($config->repositoryoption) {
+            case 2; // Standard repository being forced.
+                $this->turnitintooltwo->submitpapersto = 1;
+                break;
+            case 3; // No repository being forced.
+                $this->turnitintooltwo->submitpapersto = 0;
+                break;
+        }
+
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
