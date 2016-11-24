@@ -1407,6 +1407,7 @@ class turnitintooltwo_view {
 
         // Delete Link.
         $delete = "--";
+        $uselink = "";
         if ($istutor) {
             if (!empty($submission->id)) {
                 $confirmstring = (empty($submission->submission_objectid)) ? 'deleteconfirm' : 'turnitindeleteconfirm';
