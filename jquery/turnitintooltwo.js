@@ -37,7 +37,6 @@ jQuery(document).ready(function($) {
         var confirmresult = confirm(confirmstr);
 
         if (confirmresult) {
-            console.log('A');
             $.ajax({
                 type: "POST",
                 url: "ajax.php",
@@ -49,7 +48,6 @@ jQuery(document).ready(function($) {
                     assignment: $(this).data("assignment")
                 },
                 success: function(data) {
-                console.log('B');
                     window.location.href = window.location.href;
                 }
             });
