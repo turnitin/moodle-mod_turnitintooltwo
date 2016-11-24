@@ -344,23 +344,6 @@ if (!empty($action)) {
             exit;
             break;
 
-        case "deletesubmission":
-            if (!confirm_sesskey()) {
-                throw new moodle_exception('invalidsesskey', 'error');
-            }
-
-            $submissionid = required_param('sub', PARAM_INT);
-            $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
-
-            // Allow instructors to delete submission and students to delete if the submission hasn't gone to Turnitin.
-            if (($istutor && $submissionid != 0) ||
-                ($USER->id == $turnitintooltwosubmission->userid && empty($turnitintooltwosubmission->submission_objectid))) {
-                $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
-            }
-            redirect(new moodle_url('/mod/turnitintooltwo/view.php', array('id' => $id, 'partid' => $part, 'do' => 'submissions')));
-            exit;
-            break;
-
         case "emailnonsubmitters":
             if (!confirm_sesskey()) {
                 throw new moodle_exception('invalidsesskey', 'error');

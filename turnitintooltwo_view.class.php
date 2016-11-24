@@ -151,6 +151,8 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
         $PAGE->requires->string_for_js('loadingdv', 'turnitintooltwo');
         $PAGE->requires->string_for_js('postdate_warning','turnitintooltwo');
+        $PAGE->requires->string_for_js('deleteconfirm','turnitintooltwo');
+        $PAGE->requires->string_for_js('turnitindeleteconfirm','turnitintooltwo');
     }
 
     /**
@@ -1405,33 +1407,28 @@ class turnitintooltwo_view {
 
         // Delete Link.
         $delete = "--";
+        $uselink = "";
         if ($istutor) {
             if (!empty($submission->id)) {
-                $fnd = array("\n", "\r");
-                $rep = array('\n', '\r');
                 $confirmstring = (empty($submission->submission_objectid)) ? 'deleteconfirm' : 'turnitindeleteconfirm';
-                $string = str_replace($fnd, $rep, get_string($confirmstring, 'turnitintooltwo'));
-
-                $attributes = array("onclick" => "return confirm('".$string."');");
-                $delete = html_writer::link(
-                    $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
-                    html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
-                    $attributes
-                );
+                $uselink = true;
             }
         } else {
+            $confirmstring = 'deleteconfirm';
             if (empty($submission->submission_objectid) && !empty($submission->id)) {
-                $fnd = array("\n", "\r");
-                $rep = array('\n', '\r');
-                $string = str_replace($fnd, $rep, get_string('deleteconfirm', 'turnitintooltwo'));
-
-                $attributes = array("onclick" => "return confirm('".$string."');");
-                $delete = html_writer::link(
-                    $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&action=deletesubmission&sub='.$submission->id.'&sesskey='.sesskey(),
-                    html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')),
-                    $attributes
-                );
+                $uselink = true;
             }
+        }
+        if ($uselink) {
+            $delete = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg',
+                                                'title' => get_string('deletesubmission', 'turnitintooltwo'))),
+                                                array('class' => 'delete_paper',
+                                                    'id' => 'delete_paperrow',
+                                                    "data-confirm" => $confirmstring,
+                                                    "data-paper" => $submission->id,
+                                                    "data-part" => $partid,
+                                                    "data-assignment" => $cm->instance
+                                                ));
         }
 
         $data = array($partid, $checkbox, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);

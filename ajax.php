@@ -794,5 +794,32 @@ switch ($action) {
         } else {
             echo json_encode($data);
         }
-    break;
+        break;
+
+    case "deletesubmission":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $submissionid = required_param('paper', PARAM_INT);
+        $part = required_param('part', PARAM_INT);
+        $assignmentid = required_param('assignment', PARAM_INT);
+
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $turnitintooltwosubmission = new turnitintooltwo_submission($submissionid, "moodle", $turnitintooltwoassignment);
+
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+
+        if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
+            $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
+        }
+
+        // Allow instructors to delete submission and students to delete if the submission hasn't gone to Turnitin.
+        if (($istutor && $submissionid != 0) ||
+            ($USER->id == $turnitintooltwosubmission->userid && empty($turnitintooltwosubmission->submission_objectid))) {
+            $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
+        }
+        exit();
+        break;
 }
