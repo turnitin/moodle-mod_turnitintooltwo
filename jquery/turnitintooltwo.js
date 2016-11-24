@@ -30,6 +30,32 @@ jQuery(document).ready(function($) {
         }
     });
 
+    $(document).on('click', '.delete_paper', function() {
+        // Set up the confirm window.
+        var confirmstrname = $(this).data("confirm");
+        var confirmstr = M.str.turnitintooltwo[confirmstrname].replace(/\\n/g,"\n");
+        var confirmresult = confirm(confirmstr);
+
+        if (confirmresult) {
+            console.log('A');
+            $.ajax({
+                type: "POST",
+                url: "ajax.php",
+                dataType: "html",
+                data: {
+                    action: 'deletesubmission',
+                    paper: $(this).data("paper"),
+                    part: $(this).data("part"),
+                    assignment: $(this).data("assignment")
+                },
+                success: function(data) {
+                console.log('B');
+                    window.location.href = window.location.href;
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.submit_nothing', function() {
         if ( $(this).hasClass("disabled") ) return;
         $(this).addClass('disabled');
