@@ -798,6 +798,10 @@ switch ($action) {
 
     case "deletesubmission":
 
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
         $submissionid = required_param('paper', PARAM_INT);
         $part = required_param('part', PARAM_INT);
         $assignmentid = required_param('assignment', PARAM_INT);
