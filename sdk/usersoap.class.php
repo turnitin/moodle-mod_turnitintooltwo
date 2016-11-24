@@ -3,11 +3,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-require_once( __DIR__.'soap.class.php' );
-require_once( __DIR__.'tiiuser.class.php' );
-require_once( __DIR__.'tiipseudouser.class.php' );
-require_once( __DIR__.'response.class.php' );
-require_once( __DIR__.'sdkexception.class.php' );
+require_once( __DIR__.'/soap.class.php' );
+require_once( __DIR__.'/tiiuser.class.php' );
+require_once( __DIR__.'/tiipseudouser.class.php' );
+require_once( __DIR__.'/response.class.php' );
+require_once( __DIR__.'/sdkexception.class.php' );
 
 /**
  * @ignore
