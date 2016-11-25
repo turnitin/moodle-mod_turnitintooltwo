@@ -18,7 +18,7 @@ gulp.task('sass', function() {
 });
 
 gulp.task('jsmin', function() {
-	return gulp.src(['./jquery/turnitintooltwo*.js', '!./jquery/turnitintooltwo*.min.js'])
+    return gulp.src(['./jquery/turnitintooltwo*.js', '!./jquery/turnitintooltwo*.min.js'])
 
     .pipe(uglify())
     .pipe(rename({suffix: '.min'}))

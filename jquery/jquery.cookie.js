@@ -27,7 +27,7 @@
 
     function converted(s) {
         if (s.indexOf('"') === 0) {
-            // This is a quoted cookie as according to RFC2068, unescape
+            // This is a quoted cookie as according to RFC2068, unescape.
             s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
         }
         try {
@@ -37,7 +37,7 @@
 
     var config = $.cookie = function (key, value, options) {
 
-        // write
+        // Write.
         if (value !== undefined) {
             options = $.extend({}, config.defaults, options);
 
@@ -50,14 +50,14 @@
 
             return (document.cookie = [
                 encodeURIComponent(key), '=', config.raw ? value : encodeURIComponent(value),
-                options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path    ? '; path=' + options.path : '',
-                options.domain  ? '; domain=' + options.domain : '',
-                options.secure  ? '; secure' : ''
+                options.expires ? '; expires=' + options.expires.toUTCString() : '', // Use expires attribute, max-age is not supported by IE.
+                options.path ? '; path=' + options.path : '',
+                options.domain ? '; domain=' + options.domain : '',
+                options.secure ? '; secure' : ''
             ].join(''));
         }
 
-        // read
+        // Read.
         var decode = config.raw ? raw : decoded;
         var cookies = document.cookie.split('; ');
         var result = key ? undefined : {};

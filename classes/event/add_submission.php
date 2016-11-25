@@ -21,7 +21,7 @@
 namespace mod_turnitintooltwo\event;
 
 /*
- * Log event when paper is submitted either by student or instructor on behalf of student
+ * Log event when paper is submitted either by student or instructor on behalf of student.
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 class add_submission extends \core\event\base {
     protected function init() {
         $this->data['crud'] = 'c';
-        $this->data['level'] = self::LEVEL_PARTICIPATING; // For 2.6, this appears to have been renamed to 'edulevel' in 2.7
+        $this->data['level'] = self::LEVEL_PARTICIPATING; // For 2.6, this appears to have been renamed to 'edulevel' in 2.7.
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
         $this->data['objecttable'] = 'turnitintooltwo';
     }

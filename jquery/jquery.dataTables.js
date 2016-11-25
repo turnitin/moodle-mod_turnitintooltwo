@@ -26,23 +26,23 @@
 
 (/** @lends <global> */function( window, document, undefined ) {
 
-(function( factory ) {
-    "use strict";
+    (function( factory ) {
+        "use strict";
 
-    if ( typeof define === 'function' && define.amd ) {
-        // Define as an AMD module if possible
-        define( 'datatables', ['jquery'], factory );
+        if ( typeof define === 'function' && define.amd ) {
+            // Define as an AMD module if possible.
+            define( 'datatables', ['jquery'], factory );
+        }
+        else if ( typeof exports === 'object' ) {
+            // Node/CommonJS.
+            module.exports = factory( require( 'jquery' ) );
+        }
+        else if ( jQuery && !jQuery.fn.dataTable ) {
+            // Define using browser globals otherwise.
+            // Prevent multiple instantiations if the script is loaded twice.
+            factory( jQuery );
+        }
     }
-    else if ( typeof exports === 'object' ) {
-        // Node/CommonJS
-        module.exports = factory( require( 'jquery' ) );
-    }
-    else if ( jQuery && !jQuery.fn.dataTable ) {
-        // Define using browser globals otherwise
-        // Prevent multiple instantiations if the script is loaded twice
-        factory( jQuery );
-    }
-}
 (/** @lends <global> */function( $ ) {
     "use strict";
 
@@ -79,7 +79,6 @@
      *    } );
      */
     var DataTable;
-
 
     /*
      * It is useful to have variables which are scoped locally so only the
@@ -122,18 +121,16 @@
     // - \u2009 is thin space and \u202F is narrow no-break space, both used in many
     //   standards as thousands separators.
     var _re_formatted_numeric = /[',$Â£â‚¬Â¥%\u2009\u202F\u20BD\u20a9\u20BArfk]/gi;
-    
-    
+
     var _empty = function ( d ) {
         return !d || d === true || d === '-' ? true : false;
     };
-    
-    
+
     var _intVal = function ( s ) {
         var integer = parseInt( s, 10 );
         return !isNaN(integer) && isFinite(s) ? integer : null;
     };
-    
+
     // Convert from a formatted number with characters other than `.` as the
     // decimal place, to a Javascript number
     var _numToDecimal = function ( num, decimalPoint ) {
@@ -145,8 +142,7 @@
             num.replace( /\./g, '' ).replace( _re_dic[ decimalPoint ], '.' ) :
             num;
     };
-    
-    
+
     var _isNumber = function ( d, decimalPoint, formatted ) {
         var strType = typeof d === 'string';
     
@@ -187,8 +183,7 @@
                 true :
                 null;
     };
-    
-    
+
     var _pluck = function ( a, prop, prop2 ) {
         var out = [];
         var i=0, ien=a.length;
@@ -239,7 +234,6 @@
         return out;
     };
     
-    
     var _range = function ( len, start )
     {
         var out = [];
@@ -260,7 +254,6 @@
     
         return out;
     };
-    
     
     var _removeEmpty = function ( a )
     {

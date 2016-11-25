@@ -1,8 +1,8 @@
-//! moment.js
-//! version : 2.7.0
-//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
-//! license : MIT
-//! momentjs.com
+// Moment.js
+// Version : 2.7.0
+// Authors : Tim Wood, Iskren Chernev, Moment.js contributors
+// License : MIT
+// Momentjs.com
 
 (function (undefined) {
 
@@ -12,7 +12,7 @@
 
     var moment,
         VERSION = "2.7.0",
-        // the global-scope this is NOT the global object in Node.js
+        // The global-scope this is NOT the global object in Node.js.
         globalScope = typeof global !== 'undefined' ? global : this,
         oldGlobalMoment,
         round = Math.round,
@@ -26,10 +26,10 @@
         SECOND = 5,
         MILLISECOND = 6,
 
-        // internal storage for language config files
+        // Internal storage for language config files.
         languages = {},
 
-        // moment internal properties
+        // Moment internal properties.
         momentProperties = {
             _isAMomentObject: null,
             _i : null,
@@ -43,18 +43,18 @@
             _lang : null  // optional
         },
 
-        // check for nodeJS
+        // Check for nodeJS.
         hasModule = (typeof module !== 'undefined' && module.exports),
 
-        // ASP.NET json date format regex
+        // ASP.NET json date format regex.
         aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
         aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
 
-        // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+        // From http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere.
         isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
 
-        // format tokens
+        // Format tokens.
         formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|X|zz?|ZZ?|.)/g,
         localFormattingTokens = /(\[[^\[]*\])|(\\)?(LT|LL?L?L?|l{1,4})/g,
 

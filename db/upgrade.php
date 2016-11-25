@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  * @package   turnitintooltwo
  * @copyright 2010 iParadigms LLC
@@ -10,8 +25,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-    // Do necessary DB upgrades here
-    // Newer DB Man field ($name, $type=null, $precision=null, $unsigned=null, $notnull=null, $sequence=null, $default=null, $previous=null)
+    // Do necessary DB upgrades here.
     if ($oldversion < 2014012401) {
         $table = new xmldb_table('turnitintooltwo');
         $field = new xmldb_field('allownonor', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'rubric');
@@ -44,7 +58,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
 
-        // Add new indexes to tables
+        // Add new indexes to tables.
         $table = new xmldb_table('turnitintooltwo_parts');
         $index = new xmldb_index('turnitintooltwoid', XMLDB_INDEX_NOTUNIQUE, array('turnitintooltwoid'));
         if (!$dbman->index_exists($table, $index)) {
