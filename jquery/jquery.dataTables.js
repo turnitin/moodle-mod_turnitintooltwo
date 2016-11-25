@@ -216,14 +216,14 @@
         // Could have the test in the loop for slightly smaller code, but speed
         // is essential here
         if ( prop2 !== undefined ) {
-            for ( ; i<ien ; i++ ) {
+            for ( ; i < ien ; i++ ) {
                 if ( a[ order[i] ][ prop ] ) {
                     out.push( a[ order[i] ][ prop ][ prop2 ] );
                 }
             }
         }
         else {
-            for ( ; i<ien ; i++ ) {
+            for ( ; i < ien ; i++ ) {
                 out.push( a[ order[i] ][ prop ] );
             }
         }
@@ -245,7 +245,7 @@
             start = len;
         }
 
-        for ( var i=start ; i<end ; i++ ) {
+        for ( var i = start ; i < end ; i++ ) {
             out.push( i );
         }
 
@@ -290,10 +290,10 @@
             i, ien=src.length,
             j, k=0;
 
-        again: for ( i=0 ; i<ien ; i++ ) {
+        again: for ( i = 0 ; i < ien ; i++ ) {
             val = src[i];
 
-            for ( j=0 ; j<k ; j++ ) {
+            for ( j = 0 ; j < k ; j++ ) {
                 if ( out[j] === val ) {
                     continue again;
                 }
@@ -467,7 +467,7 @@
         var searchCols = init.aoSearchCols;
 
         if ( searchCols ) {
-            for ( var i=0, ien=searchCols.length ; i<ien ; i++ ) {
+            for ( var i = 0, ien = searchCols.length ; i < ien ; i++ ) {
                 if ( searchCols[i] ) {
                     _fnCamelToHungarian( DataTable.models.oSearch, searchCols[i] );
                 }
@@ -784,7 +784,7 @@
             var columns = settings.aoColumns;
 
             _fnCalculateColumnWidths( settings );
-            for ( var i=0 , iLen=columns.length ; i<iLen ; i++ )
+            for ( var i = 0 , iLen = columns.length ; i < iLen ; i++ )
             {
                 columns[i].nTh.style.width = columns[i].sWidth;
             }
@@ -883,7 +883,7 @@
         var col, cell, detectedType, cache;
 
         // For each column, spin over the
-        for ( i=0, ien=columns.length ; i<ien ; i++ ) {
+        for ( i = 0, ien = columns.length ; i < ien ; i++ ) {
             col = columns[i];
             cache = [];
 
@@ -891,8 +891,8 @@
                 col.sType = col._sManualType;
             }
             else if ( ! col.sType ) {
-                for ( j=0, jen=types.length ; j<jen ; j++ ) {
-                    for ( k=0, ken=data.length ; k<ken ; k++ ) {
+                for ( j = 0, jen = types.length ; j < jen ; j++ ) {
+                    for ( k = 0, ken = data.length ; k < ken ; k++ ) {
                         // Use a cache array so we only need to get the type data
                         // from the formatter once (when using multiple detectors)
                         if ( cache[k] === undefined ) {
@@ -968,7 +968,7 @@
                     aTargets = [ aTargets ];
                 }
 
-                for ( j=0, jLen=aTargets.length ; j<jLen ; j++ )
+                for ( j = 0, jLen = aTargets.length ; j < jLen ; j++ )
                 {
                     if ( typeof aTargets[j] === 'number' && aTargets[j] >= 0 )
                     {
@@ -984,12 +984,12 @@
                     else if ( typeof aTargets[j] === 'number' && aTargets[j] < 0 )
                     {
                         /* Negative integer, right to left column counting */
-                        fn( columns.length+aTargets[j], def );
+                        fn( columns.length + aTargets[j], def );
                     }
                     else if ( typeof aTargets[j] === 'string' )
                     {
                         /* Class name matching on TH element */
-                        for ( k=0, kLen=columns.length ; k<kLen ; k++ )
+                        for ( k = 0, kLen = columns.length ; k < kLen ; k++ )
                         {
                             if ( aTargets[j] == "_all" ||
                                  $(columns[k].nTh).hasClass( aTargets[j] ) )

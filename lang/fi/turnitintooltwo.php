@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: fi.
 
 $string['addsubmission'] = 'Lisää Palautus';
 $string['allowlate'] = 'Salli Palautukset Eräpäivän jälkeen';

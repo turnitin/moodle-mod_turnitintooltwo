@@ -9,12 +9,12 @@ $.fn.dataTableExt.oApi.fnStandingRedraw = function(oSettings) {
 
         oSettings.oApi._fnReDraw(oSettings);
 
-        // Var iDisplayStart has been reset to zero - so lets change it back
+        // Var iDisplayStart has been reset to zero - so lets change it back.
         oSettings._iDisplayStart = before;
         oSettings.oApi._fnCalculateEnd(oSettings);
     }
 
-    // draw the 'current' page
+    // Draw the 'current' page.
     oSettings.oApi._fnDraw(oSettings);
 };
 

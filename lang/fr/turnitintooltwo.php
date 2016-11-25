@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: fr.
 
 $string['addsubmission'] = 'Ajouter un envoi';
 $string['allowlate'] = 'Autoriser les envois après la date limite';

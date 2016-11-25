@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: es-MX
+// Language: es-MX.
 
 $string['addsubmission'] = 'Agregar entrega';
 $string['allowlate'] = 'Permitir entregas después de la fecha de entrega';
