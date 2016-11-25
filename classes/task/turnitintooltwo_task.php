@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 class turnitintooltwo_task extends \core\task\scheduled_task {
 
     public function get_name() {
-        // Shown in admin screens
+        // Shown in admin screens.
         return get_string('task_name', 'mod_turnitintooltwo');
     }
 
