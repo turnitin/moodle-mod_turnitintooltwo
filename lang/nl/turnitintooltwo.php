@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: nl.
 
 $string['addsubmission'] = 'Inzending toevoegen';
 $string['allowlate'] = 'Inzendingen toestaan na de inleverdatum';

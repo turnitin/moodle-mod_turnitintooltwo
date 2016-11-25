@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: ko
+// Language: ko.
 
 $string['addsubmission'] = '제출물 추가';
 $string['allowlate'] = '마감일 이후의 제출을 허용';

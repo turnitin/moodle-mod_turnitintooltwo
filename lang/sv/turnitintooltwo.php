@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: sv.
 
 $string['addsubmission'] = 'Lägg till inlämning';
 $string['allowlate'] = 'Tillåta inlämningar efter förfallodag?';

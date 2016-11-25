@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: pl
+// Language: pl.
 
 $string['addsubmission'] = 'Dodaj wysyłkę';
 $string['allowlate'] = 'Zezwalaj na wysyłki po terminie oddania zadania';

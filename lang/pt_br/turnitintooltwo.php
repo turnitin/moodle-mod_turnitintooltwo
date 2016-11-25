@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: pt_br.
 
 $string['addsubmission'] = 'Adicionar Envio';
 $string['allowlate'] = 'Permitir envios após a Data de Entrega';

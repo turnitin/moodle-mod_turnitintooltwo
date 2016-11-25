@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: ru.
 
 $string['addsubmission'] = 'Добавить работу';
 $string['allowlate'] = 'Разрешить отправку работы после назначенной даты выполнения';

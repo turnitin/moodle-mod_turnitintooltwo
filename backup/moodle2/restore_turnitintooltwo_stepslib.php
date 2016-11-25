@@ -23,9 +23,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Structure step to restore one turnitintooltwo activity.
- */
+// Structure step to restore one turnitintooltwo activity.
 
 require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
 

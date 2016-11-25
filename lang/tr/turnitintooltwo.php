@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: tr.
 
 $string['addsubmission'] = 'Gönderi Ekle';
 $string['allowlate'] = 'Teslim tarihinden sonra gönderim yapılmasına izin ver';

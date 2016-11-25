@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle. If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
 $plugins = array(
     'turnitintooltwo-dataTables' => array('files' => array('jquery.dataTables.js', 'jquery.dataTables.css')),
     'turnitintooltwo-dataTables_plugins' => array('files' => array('jquery.dataTables.plugins.js')),
