@@ -63,8 +63,6 @@ class helpdeskwizard {
 	 * @return mixed - html containing helpdesk solutions.
 	 */
 	public function output_wizard($id = 0) {
-		global $CFG;
-
 		$xml = $this->read_xml_solutions_file();
 		$categories = array();
 		$output = "";
@@ -77,14 +75,13 @@ class helpdeskwizard {
 
         	// Read all issues into the array by category
         	$i = 0;
-        	foreach ($solutions as $k => $v) {
+        	foreach ($solutions as $solution) {
         		$solution = array();
         		$i++;
-        		foreach ($v as $k2 => $v2) {
-        			$solution[$k2] = (string)$v2;
+        		foreach ($solution as $k => $v) {
+        			$solution[$k] = (string)$v;
         		}
 
-        		$solutionarray[$categoryname][] = $solution;
         		$selectoptions .= html_writer::tag('option', $solution['issue'], array('value' => $i));
 
         		// Output a hidden div containing each solution.

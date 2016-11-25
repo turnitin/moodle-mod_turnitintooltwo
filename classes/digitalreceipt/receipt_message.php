@@ -9,8 +9,6 @@ class receipt_message {
      * @return void
      */
     public function send_message($userid, $message) {
-        global $CFG;
-
         $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
 
         $eventdata = new stdClass();
