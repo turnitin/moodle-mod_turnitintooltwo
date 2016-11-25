@@ -98,19 +98,19 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
             // Only recreate course on Turnitin if Turnitin Assignments don't exist on destination course.
             if ($assignments == 0) {
                 // Remove Turnitin link from course.
-                $turnitin_course = new stdClass();
-                $turnitin_course->id = $course->tii_rel_id;
-                $turnitin_course->turnitin_cid = 0;
-                $DB->update_record('turnitintooltwo_courses', $turnitin_course);
+                $turnitincourse = new stdClass();
+                $turnitincourse->id = $course->tii_rel_id;
+                $turnitincourse->turnitin_cid = 0;
+                $DB->update_record('turnitintooltwo_courses', $turnitincourse);
 
                 // Recreate course in Turnitin.
                 $course->turnitin_cid = 0;
                 $tmpassignment = new turnitintooltwo_assignment(0, '', '');
-                $turnitin_course = $tmpassignment->create_tii_course($course, $ownerid);
+                $turnitincourse = $tmpassignment->create_tii_course($course, $ownerid);
 
                 // Join the course as Instructor.
                 $owner = new turnitintooltwo_user($ownerid, 'Instructor');
-                $owner->join_user_to_class($turnitin_course->turnitin_cid);
+                $owner->join_user_to_class($turnitincourse->turnitin_cid);
             }
 
             unset($_SESSION['tii_course_reset']);
@@ -118,8 +118,8 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
         }
 
         if (!empty($_SESSION['assignments_to_create'])) {
-            foreach($_SESSION["assignments_to_create"] as $new_assignment_id) {
-                $assignment = new turnitintooltwo_assignment($new_assignment_id);
+            foreach ($_SESSION["assignments_to_create"] as $newassignmentid) {
+                $assignment = new turnitintooltwo_assignment($newassignmentid);
                 $assignment->unlink_assignment();
                 $assignment->edit_moodle_assignment(true, true);
             }
@@ -130,7 +130,8 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
     }
 
     /**
-     * Define the restore log rules that will be applied by the {@link restore_logs_processor} when restoring {@link restore_log_rule} objects.
+     * Define the restore log rules that will be applied by the {@link restore_logs_processor}
+     * when restoring {@link restore_log_rule} objects.
      */
     static public function define_restore_log_rules() {
         $rules = array();
@@ -145,7 +146,8 @@ class restore_turnitintooltwo_activity_task extends restore_activity_task {
     }
 
     /**
-     * Define the restore log rules that will be applied by the {@link restore_logs_processor} when restoring {@link restore_log_rule} objects.
+     * Define the restore log rules that will be applied by the {@link restore_logs_processor}
+     * when restoring {@link restore_log_rule} objects.
      */
     static public function define_restore_log_rules_for_course() {
         $rules = array();

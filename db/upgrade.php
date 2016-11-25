@@ -19,9 +19,11 @@
  * @copyright 2010 iParadigms LLC
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 function xmldb_turnitintooltwo_upgrade($oldversion) {
 
-    global $CFG, $THEME, $DB, $OUTPUT;
+    global $DB;
 
     $dbman = $DB->get_manager();
 
