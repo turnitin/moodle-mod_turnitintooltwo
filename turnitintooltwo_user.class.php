@@ -355,7 +355,7 @@ class turnitintooltwo_user {
                     exit();
                 }
             }
-        } else if (!$insertid = $DB->insert_record('turnitintooltwo_users', $user)) {
+        } else if (!$DB->insert_record('turnitintooltwo_users', $user)) {
             if ($this->workflowcontext != "cron") {
                 turnitintooltwo_print_error('userupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
                 exit();

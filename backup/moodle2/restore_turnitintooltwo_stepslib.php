@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -23,7 +22,7 @@
  */
 
 /**
- * Structure step to restore one turnitintooltwo activity
+ * Structure step to restore one turnitintooltwo activity.
  */
 
 require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
@@ -48,7 +47,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
             $paths[] = new restore_path_element('turnitintooltwo_submissions', '/activity/turnitintooltwo/submissions/submission');
         }
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
@@ -83,7 +82,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
             $a = new stdClass();
             $a->backupid = $data->tiiaccount;
             $a->current = $config->accountid;
-            turnitintooltwo_print_error('wrongaccountid', 'turnitintooltwo', NULL, $a);
+            turnitintooltwo_print_error('wrongaccountid', 'turnitintooltwo', null, $a);
             return false;
         } else {
             // insert the activity record
@@ -112,7 +111,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         if ($owner) {
             $data->ownerid = $owner->id;
         } else {
-            // Turnitin class owner not found so use restoring user as owner
+            // Turnitin class owner not found so use restoring user as owner.
             $data->ownerid = $USER->id;
         }
         $tiiowner = new stdClass();
