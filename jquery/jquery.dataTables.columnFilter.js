@@ -383,8 +383,8 @@
         function fnCreateSelect(oTable, aData, bRegex, oSelected) {
             var oSettings = oTable.fnSettings();
             if (aData == null && oSettings.sAjaxSource != "" && !oSettings.oFeatures.bServerSide) {
-                // Add a function to the draw callback, which will check for the Ajax data having 
-                // been loaded. Use a closure for the individual column elements that are used to 
+                // Add a function to the draw callback, which will check for the Ajax data having
+                // been loaded. Use a closure for the individual column elements that are used to
                 // built the column filter, since 'i' and 'th' (etc) are locally "global".
                 oSettings.aoDrawCallback.push({
                     "fn": (function (iColumn, nTh, sLabel) {
@@ -494,15 +494,15 @@
                         }
                     }
 
-                    //execute search
+                    // Execute search.
                     oTable.fnFilter(search, index, true, false);
                     fnOnFiltered();
                 });
             }
 
-            //filter button
+            // Filter button.
             $('#' + buttonId).button();
-            //dialog
+            // Dialog.
             $('#' + checkToggleDiv).dialog({
                 //height: 140,
                 autoOpen: false,
@@ -551,7 +551,7 @@
                 });
                 fnOnFilteredCurrent();
             };
-            //reset
+            // Reset.
             /*
             $('#'+buttonId+"Reset").button();
             $('#'+buttonId+"Reset").click(function(){
@@ -562,12 +562,9 @@
             });
             oTable.fnFilter('', index, true, false);
             return false;
-            }); 
+            });
             */
         }
-
-
-
 
         function _fnRangeLabelPart(iPlace) {
             switch (iPlace) {
@@ -579,9 +576,6 @@
                     return sRangeFormat.substring(sRangeFormat.indexOf("{to}") + 4);
             }
         }
-
-
-
 
         var oTable = this;
 
@@ -605,20 +599,20 @@
 
             var aoFilterCells = oTable.fnSettings().aoFooter[0];
 
-            var oHost = oTable.fnSettings().nTFoot; //Before fix for ColVis
-            var sFilterRow = "tr"; //Before fix for ColVis
+            var oHost = oTable.fnSettings().nTFoot; // Before fix for ColVis.
+            var sFilterRow = "tr"; // Before fix for ColVis.
 
             if (properties.sPlaceHolder == "head:after") {
                 var tr = $("tr:first", oTable.fnSettings().nTHead).detach();
-                //tr.appendTo($(oTable.fnSettings().nTHead));
+                // Used to be tr.appendTo($(oTable.fnSettings().nTHead));.
                 if (oTable.fnSettings().bSortCellsTop) {
                     tr.prependTo($(oTable.fnSettings().nTHead));
-                    //tr.appendTo($("thead", oTable));
+                    // Used to be tr.appendTo($("thead", oTable));.
                     aoFilterCells = oTable.fnSettings().aoHeader[1];
                 }
                 else {
                     tr.appendTo($(oTable.fnSettings().nTHead));
-                    //tr.prependTo($("thead", oTable));
+                    // Used to be tr.prependTo($("thead", oTable));.
                     aoFilterCells = oTable.fnSettings().aoHeader[0];
                 }
 
@@ -634,18 +628,13 @@
                 } else {
                     aoFilterCells = oTable.fnSettings().aoHeader[0];
                 }
-                /*else {
-                //tr.prependTo($("thead", oTable));
-                sFilterRow = "tr:first";
-                }*/
 
                 sFilterRow = "tr:first";
 
                 oHost = oTable.fnSettings().nTHead;
             }
 
-            //$(sFilterRow + " th", oHost).each(function (index) {//bug with ColVis
-            $(aoFilterCells).each(function (index) {//fix for ColVis
+            $(aoFilterCells).each(function (index) { // Fix for ColVis.
                 i = index;
                 var aoColumn = { type: "text",
                     bRegex: false,
@@ -658,23 +647,23 @@
                         return;
                     aoColumn = properties.aoColumns[i];
                 }
-                //label = $(this).text(); //Before fix for ColVis
-                label = $($(this)[0].cell).text(); //Fix for ColVis
+                label = $($(this)[0].cell).text(); // Fix for ColVis.
                 if (aoColumn.sSelector == null) {
-                    //th = $($(this)[0]);//Before fix for ColVis
-                    th = $($(this)[0].cell); //Fix for ColVis
+                    th = $($(this)[0].cell); // Fix for ColVis.
                 }
                 else {
                     th = $(aoColumn.sSelector);
-                    if (th.length == 0)
+                    if (th.length == 0) {
                         th = $($(this)[0].cell);
+                    }
                 }
 
                 if (aoColumn != null) {
-                    if (aoColumn.sRangeFormat != null)
+                    if (aoColumn.sRangeFormat != null) {
                         sRangeFormat = aoColumn.sRangeFormat;
-                    else
+                    } else {
                         sRangeFormat = properties.sRangeFormat;
+                    }
                     switch (aoColumn.type) {
                         case "null":
                             break;
@@ -682,8 +671,9 @@
                             fnCreateInput(oTable, true, false, true, aoColumn.iFilterLength, aoColumn.iMaxLenght);
                             break;
                         case "select":
-                            if (aoColumn.bRegex != true)
+                            if (aoColumn.bRegex != true) {
                                 aoColumn.bRegex = false;
+                            }
                             fnCreateSelect(oTable, aoColumn.values, aoColumn.bRegex, aoColumn.selected);
                             break;
                         case "number-range":
@@ -707,7 +697,7 @@
             });
 
             for (j = 0; j < aiCustomSearch_Indexes.length; j++) {
-                //var index = aiCustomSearch_Indexes[j];
+                // Var index = aiCustomSearch_Indexes[j];.
                 var fnSearch_ = function () {
                     var id = oTable.attr("id");
                     return $("#" + id + "_range_from_" + aiCustomSearch_Indexes[j]).val() + properties.sRangeSeparator + $("#" + id + "_range_to_" + aiCustomSearch_Indexes[j]).val()
@@ -725,46 +715,36 @@
                         var index = aiCustomSearch_Indexes[j];
 
                         for (k = 0; k < aoData.length; k++) {
-                            if (aoData[k].name == "sSearch_" + index)
+                            if (aoData[k].name == "sSearch_" + index) {
                                 aoData[k].value = afnSearch_[j]();
+                            }
                         }
                     }
                     aoData.push({ "name": "sRangeSeparator", "value": properties.sRangeSeparator });
 
-                    /*if (fnServerDataOriginal != null) {
-                        try {
-                            fnServerDataOriginal(sSource, aoData, fnCallback, oTable.fnSettings()); //TODO: See Issue 18
-                        } catch (ex) {
-                            fnServerDataOriginal(sSource, aoData, fnCallback);
-                        }
-                    }
-                    else {
-                        $.getJSON(sSource, aoData, function (json) {
-                            fnCallback(json)
-                        });
-                    }*/
-
                     if (fnServerDataOriginal != null) {
                         if (properties.iFilteringDelay != 0) {
-                            if (oFunctionTimeout != null)
+                            if (oFunctionTimeout != null) {
                                 window.clearTimeout(oFunctionTimeout);
-                                oFunctionTimeout = window.setTimeout(function () {
-                                    try {
-                                        fnServerDataOriginal(sSource, aoData, fnCallback, oTable.fnSettings());
-                                    } catch (ex) {
-                                        fnServerDataOriginal(sSource, aoData, fnCallback);
-                                    }
-                                }, properties.iFilteringDelay);
+                            }
+                            oFunctionTimeout = window.setTimeout(function () {
+                                try {
+                                    fnServerDataOriginal(sSource, aoData, fnCallback, oTable.fnSettings());
+                                } catch (ex) {
+                                    fnServerDataOriginal(sSource, aoData, fnCallback);
+                                }
+                            }, properties.iFilteringDelay);
                         }
                     } else {
                         if (properties.iFilteringDelay != 0) {
-                            if (oFunctionTimeout != null)
+                            if (oFunctionTimeout != null) {
                                 window.clearTimeout(oFunctionTimeout);
-                                oFunctionTimeout = window.setTimeout(function () {
-                                    $.getJSON(sSource, aoData, function (json) {
-                                        fnCallback(json)
-                                    });
-                                }, properties.iFilteringDelay);
+                            }
+                            oFunctionTimeout = window.setTimeout(function () {
+                                $.getJSON(sSource, aoData, function (json) {
+                                    fnCallback(json)
+                                });
+                            }, properties.iFilteringDelay);
                         }
                     }
                 };

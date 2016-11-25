@@ -76,19 +76,12 @@ function turnitintooltwo_supports($feature) {
     defined("FEATURE_SHOW_DESCRIPTION") or define("FEATURE_SHOW_DESCRIPTION", null);
     switch($feature) {
         case FEATURE_GROUPS:
-            return true;
         case FEATURE_GROUPMEMBERSONLY:
-            return true;
         case FEATURE_MOD_INTRO:
-            return true;
         case FEATURE_COMPLETION_TRACKS_VIEWS:
-            return true;
         case FEATURE_GRADE_HAS_GRADE:
-            return true;
         case FEATURE_GRADE_OUTCOMES:
-            return true;
         case FEATURE_BACKUP_MOODLE2:
-            return true;
         case FEATURE_SHOW_DESCRIPTION:
             return true;
         default:
@@ -335,7 +328,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
         exit();
     }
 
-    if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+    if (!$DB->get_record('course', array('id' => $courseid))) {
         turnitintooltwo_print_error('coursegeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
         exit();
     }
@@ -473,14 +466,14 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $part->dtdue = strtotime($assignment->getDueDate());
             $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
 
-            if (!$dbpart = $DB->update_record('turnitintooltwo_parts', $part)) {
+            if (!$DB->update_record('turnitintooltwo_parts', $part)) {
                 turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
                 exit();
             } else {
                 turnitintooltwo_activitylog("Moodle Assignment part updated (".$part->id.")", "REQUEST");
             }
 
-            if (!$delete = $DB->delete_records('turnitintooltwo_submissions', array('submission_part' => $partid))) {
+            if (!$DB->delete_records('turnitintooltwo_submissions', array('submission_part' => $partid))) {
                 turnitintooltwo_print_error('submissiondeleteerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
                 exit();
             }
@@ -718,8 +711,6 @@ function turnitintooltwo_filetype_array($setup = true) {
  * @return string $file The filepath of the temp file
  */
 function turnitintooltwo_tempfile(array $filename, $suffix) {
-    global $CFG;
-
     $filename = implode('_', $filename);
     $filename = str_replace(' ', '_', $filename);
     $filename = clean_param(strip_tags($filename), PARAM_FILE);
@@ -1222,7 +1213,6 @@ function turnitintooltwo_pluginfile($course,
                 $args,
                 $forcedownload,
                 array $options=array()) {
-    global $CFG;
 
     $itemid = (int)array_shift($args);
     $relativepath = implode('/', $args);
@@ -1356,7 +1346,7 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
     }
 
     $submissioncount = array();
-    foreach ($turnitintooltwos as $key => $turnitintooltwo) {
+    foreach ($turnitintooltwos as $turnitintooltwo) {
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
         $parts = $turnitintooltwoassignment->get_parts(false);
 
@@ -1442,12 +1432,11 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
 /**
  * Show form to create a new moodle course from the existing Turnitin Course
  *
- * @global type $CFG
  * @global type $OUTPUT
  * @return html the form object to create a new course
  */
 function turnitintooltwo_show_browser_new_course_form() {
-    global $OUTPUT, $CFG;
+    global $CFG;
 
     $elements = array();
     $elements[] = array('header', 'create_course_fieldset', get_string('createcourse', 'turnitintooltwo'));

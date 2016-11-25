@@ -1,4 +1,20 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+defined('MOODLE_INTERNAL') || die();
 
 class helpdeskwizard {
 
@@ -21,9 +37,9 @@ class helpdeskwizard {
 
             // If there is no solutions file then use English.
             if ($result !== false) {
-                $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-                if ($statusCode != 200) {
+                if ($statuscode != 200) {
                     $solutionsurl = "https://www.turnitin.com/static/resources/files/moodle_helpdesk/moodle-helpdesk-en.xml";
                 }
             }
@@ -67,13 +83,13 @@ class helpdeskwizard {
         $categories = array();
         $output = "";
 
-        foreach ( $xml as $category => $solutions ) {
+        foreach ($xml as $category => $solutions) {
             $categoryname = substr($category, 0, strrpos($category, '_'));
 
             $categories[ucfirst($categoryname)] = ucfirst(str_replace("_", " ", $categoryname));
             $selectoptions = "";
 
-            // Read all issues into the array by category
+            // Read all issues into the array by category.
             $i = 0;
             foreach ($solutions as $solution) {
                 $solution = array();
@@ -103,7 +119,7 @@ class helpdeskwizard {
             $output .= html_writer::tag('div', $selectoptions, array('id' => 'tii_'.$categoryname.'_options', 'class' => 'tii_wizard_options'));
         }
 
-        // Header
+        // Header.
         $output .= html_writer::tag('h2', 'Turnitin Support Wizard');
         $output .= html_writer::tag('p', 'Use the wizard below to help solve your problem');
 
@@ -119,7 +135,7 @@ class helpdeskwizard {
 
         $output .= html_writer::tag('div', $wizardform, array('id' => 'tii_wizard_container'));
 
-        // Blank solution template
+        // Blank solution template.
         $issue = html_writer::tag('h4', '', array('id' => 'solution_issue'));
         $answer = html_writer::tag('div', '', array('id' => 'solution_answer'));
         $link = html_writer::tag('div', '', array('id' => 'solution_link'));

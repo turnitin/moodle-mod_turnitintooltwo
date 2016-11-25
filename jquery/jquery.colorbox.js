@@ -94,7 +94,7 @@
     prefix = 'cbox',
     boxElement = prefix + 'Element',
 
-    // Events
+    // Events.
     event_open = prefix + '_open',
     event_load = prefix + '_load',
     event_complete = prefix + '_complete',
@@ -123,7 +123,7 @@
     $prev,
     $close,
     $groupControls,
-    $events = $('<a/>'), // $({}) would be prefered, but there is an issue with jQuery 1.4.2.
+    $events = $('<a/>'), // Todo: $({}) would be prefered, but there is an issue with jQuery 1.4.2.
 
     // Variables for cached values or use across multiple functions.
     settings,
@@ -143,11 +143,11 @@
     previousCSS = {},
     init;
 
-    // ****************
-    // HELPER FUNCTIONS
-    // ****************
+    // *****************
+    // HELPER FUNCTIONS.
+    // *****************
 
-    // Convenience function for creating new jQuery objects
+    // Convenience function for creating new jQuery objects.
     function $tag(tag, id, css) {
         var element = document.createElement(tag);
 
@@ -162,7 +162,7 @@
         return $(element);
     }
 
-    // Get the window height using innerHeight when available to avoid an issue with iOS
+    // Get the window height using innerHeight when available to avoid an issue with iOS.
     // http://bugs.jquery.com/ticket/6724.
     function winheight() {
         return window.innerHeight ? window.innerHeight : $(window).height();
@@ -260,9 +260,9 @@
     }
 
     function trigger(event) {
-        // for external use
+        // For external use.
         $(document).trigger(event);
-        // for internal use
+        // For internal use.
         $events.triggerHandler(event);
     }
 
@@ -343,9 +343,7 @@
                 }
             }
         };
-
     }());
-
 
     function launch(element) {
         var options;
@@ -363,13 +361,13 @@
 
                 setClass(settings.get('className'));
 
-                // Show colorbox so the sizes can be calculated in older versions of jQuery
+                // Show colorbox so the sizes can be calculated in older versions of jQuery.
                 $box.css({visibility:'hidden', display:'block', opacity:''});
 
                 $loaded = $tag(div, 'LoadedContent', 'width:0; height:0; overflow:hidden; visibility:hidden');
                 $content.css({width:'', height:''}).append($loaded);
 
-                // Cache values needed for size calculations
+                // Cache values needed for size calculations.
                 interfaceHeight = $topBorder.height() + $bottomBorder.height() + $content.outerHeight(true) - $content.height();
                 interfaceWidth = $leftBorder.width() + $rightBorder.width() + $content.outerWidth(true) - $content.width();
                 loadedHeight = $loaded.outerHeight(true);
@@ -395,8 +393,8 @@
                 $box.focus();
 
                 if (settings.get('trapFocus')) {
-                    // Confine focus to the modal
-                    // Uses event capturing that is not supported in IE8-
+                    // Confine focus to the modal.
+                    // Uses event capturing that is not supported in IE8.
                     if (document.addEventListener) {
 
                         document.addEventListener('focus', trapFocus, true);
@@ -407,7 +405,7 @@
                     }
                 }
 
-                // Return focus on closing
+                // Return focus on closing.
                 if (settings.get('returnFocus')) {
                     $events.one(event_closed, function () {
                         $(settings.el).focus();
@@ -424,7 +422,7 @@
             if (settings.get('closeButton')) {
                 $close.html(settings.get('close')).appendTo($content);
             } else {
-                $close.appendTo('<div/>'); // replace with .detach() when dropping jQuery < 1.4
+                $close.appendTo('<div/>'); // Replace with .detach() when dropping jQuery < 1.4.
             }
 
             load();
@@ -439,7 +437,7 @@
             $window = $(window);
             $box = $tag(div).attr({
                 id: colorbox,
-                'class': $.support.opacity === false ? prefix + 'IE' : '', // class for optional IE8 & lower targeted CSS.
+                'class': $.support.opacity === false ? prefix + 'IE' : '', // Class for optional IE8 & lower targeted CSS.
                 role: 'dialog',
                 tabindex: '-1'
             }).hide();
@@ -457,7 +455,7 @@
 
             $close = $('<button type="button"/>').attr({id:prefix + 'Close'});
 
-            $wrap.append( // The 3x3 Grid that makes up Colorbox
+            $wrap.append( // The 3x3 Grid that makes up Colorbox.
                 $tag(div).append(
                     $tag(div, "TopLeft"),
                     $topBorder = $tag(div, "TopCenter"),
@@ -483,11 +481,11 @@
         }
     }
 
-    // Add Colorbox's event bindings
+    // Add Colorbox's event bindings.
     function addBindings() {
         function clickHandler(e) {
-            // ignore non-left-mouse-clicks and clicks modified with ctrl / command, shift, or alt.
-            // See: http://jacklmoore.com/notes/click-events/
+            // Ignore non-left-mouse-clicks and clicks modified with ctrl / command, shift, or alt.
+            // See: http://jacklmoore.com/notes/click-events/.
             if (!(e.which > 1 || e.shiftKey || e.altKey || e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
                 launch(this);
@@ -514,7 +512,7 @@
                     }
                 });
 
-                // Key Bindings
+                // Key Bindings.
                 $(document).bind('keydown.' + prefix, function (e) {
                     var key = e.keyCode;
                     if (open && settings.get('escKey') && key === 27) {
@@ -533,13 +531,13 @@
                 });
 
                 if ($.isFunction($.fn.on)) {
-                    // For jQuery 1.7+
+                    // For jQuery 1.7+.
                     $(document).on('click.' + prefix, '.' + boxElement, clickHandler);
                 } else {
-                    // For jQuery 1.3.x -> 1.6.x
+                    // For jQuery 1.3.x -> 1.6.x.
                     // This code is never reached in jQuery 1.9, so do not contact me about 'live' being removed.
                     // This is not here for jQuery 1.9, it's here for legacy users.
-                    $('.'+boxElement).live('click.' + prefix, clickHandler);
+                    $('.' + boxElement).live('click.' + prefix, clickHandler);
                 }
             }
             return true;
@@ -552,15 +550,14 @@
         return;
     }
 
-    // Append the HTML when the DOM loads
+    // Append the HTML when the DOM loads.
     $(appendHTML);
 
-
-    // ****************
-    // PUBLIC FUNCTIONS
-    // Usage format: $.colorbox.close();
-    // Usage from within an iframe: parent.jQuery.colorbox.close();
-    // ****************
+    // *****************
+    // PUBLIC FUNCTIONS.
+    // Usage format: $.colorbox.close();.
+    // Usage from within an iframe: parent.jQuery.colorbox.close();.
+    // *****************
 
     publicMethod = $.fn[colorbox] = $[colorbox] = function (options, callback) {
         var settings;
@@ -568,15 +565,15 @@
 
         options = options || {};
 
-        if ($.isFunction($obj)) { // assume a call to $.colorbox
+        if ($.isFunction($obj)) { // Assume a call to $.colorbox.
             $obj = $('<a/>');
             options.open = true;
-        } else if (!$obj[0]) { // colorbox being applied to empty collection
+        } else if (!$obj[0]) { // Colorbox being applied to empty collection.
             return $obj;
         }
 
 
-        if (!$obj[0]) { // colorbox being applied to empty collection
+        if (!$obj[0]) { // Colorbox being applied to empty collection.
             return $obj;
         }
 
@@ -649,7 +646,7 @@
 
         $box.css({top: offset.top, left: offset.left, visibility:'visible'});
 
-        // this gives the wrapper plenty of breathing room so it's floated contents can move around smoothly,
+        // This gives the wrapper plenty of breathing room so it's floated contents can move around smoothly,
         // but it has to be shrank down around the size of div#colorbox when it's done.  If not,
         // it can invoke an obscure IE bug when using iframes.
         $wrap[0].style.width = $wrap[0].style.height = "9999px";
@@ -661,7 +658,7 @@
 
         css = {width: settings.w + loadedWidth + interfaceWidth, height: settings.h + loadedHeight + interfaceHeight, top: top, left: left};
 
-        // setting the speed to 0 if the content hasn't changed size or position
+        // Setting the speed to 0 if the content hasn't changed size or position.
         if (speed) {
             var tempSpeed = 0;
             $.each(css, function(i){
@@ -686,12 +683,12 @@
 
                 active = false;
 
-                // shrink the wrapper down to exactly the size of colorbox to avoid a bug in IE's iframe implementation.
+                // Shrink the wrapper down to exactly the size of colorbox to avoid a bug in IE's iframe implementation.
                 $wrap[0].style.width = (settings.w + loadedWidth + interfaceWidth) + "px";
                 $wrap[0].style.height = (settings.h + loadedHeight + interfaceHeight) + "px";
 
                 if (settings.get('reposition')) {
-                    setTimeout(function () {  // small delay before binding onresize due to an IE8 bug.
+                    setTimeout(function () {  // Small delay before binding onresize due to an IE8 bug.
                         $window.bind('resize.' + prefix, publicMethod.position);
                     }, 1);
                 }
@@ -815,7 +812,7 @@
 
                 slideshow();
 
-                // Preloads images within a rel group
+                // Preloads images within a rel group.
                 if (settings.get('preloading')) {
                     $.each([getIndex(-1), getIndex(1)], function(){
                         var img,
@@ -852,9 +849,9 @@
                 $(iframe)
                     .attr({
                         src: settings.get('href'),
-                        name: (new Date()).getTime(), // give the iframe a unique name to prevent caching
+                        name: (new Date()).getTime(), // Give the iframe a unique name to prevent caching.
                         'class': prefix + 'Iframe',
-                        allowFullScreen : true // allow HTML5 video to go fullscreen
+                        allowFullScreen : true // Allow HTML5 video to go fullscreen.
                     })
                     .one('load', complete)
                     .appendTo($loaded);
@@ -897,15 +894,13 @@
         trigger(event_load);
         settings.get('onLoad');
 
-        settings.h = settings.get('height') ?
-                setSize(settings.get('height'), 'y') - loadedHeight - interfaceHeight :
+        settings.h = settings.get('height') ? setSize(settings.get('height'), 'y') - loadedHeight - interfaceHeight :
                 settings.get('innerHeight') && setSize(settings.get('innerHeight'), 'y');
 
-        settings.w = settings.get('width') ?
-                setSize(settings.get('width'), 'x') - loadedWidth - interfaceWidth :
+        settings.w = settings.get('width') ? setSize(settings.get('width'), 'x') - loadedWidth - interfaceWidth :
                 settings.get('innerWidth') && setSize(settings.get('innerWidth'), 'x');
 
-        // Sets the minimum dimensions for use in image scaling
+        // Sets the minimum dimensions for use in image scaling.
         settings.mw = settings.w;
         settings.mh = settings.h;
 
