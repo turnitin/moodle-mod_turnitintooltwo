@@ -77,8 +77,7 @@ jQuery(document).ready(function($) {
             var nTrs = $('#filesTable tbody tr');
             var iColspan = nTrs[0].getElementsByTagName('td').length;
             var sLastGroup = "";
-            for ( var i=0 ; i<nTrs.length ; i++ )
-            {
+            for ( var i = 0; i < nTrs.length; i++ ) {
                 var iDisplayIndex = oSettings._iDisplayStart + i;
                 var sGroup = oSettings.aoData[ oSettings.aiDisplay[i] ]._aData[0];
                 if ( sGroup != sLastGroup )
@@ -136,8 +135,8 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": sSource,
                 "data": {action: "search_classes", course_title: $('#search_course_title').val(),
-                        course_integration: $('#search_course_integration').val(),
-                        course_end_date: $('#search_course_end_date').val(), sesskey: M.cfg.sesskey},
+                    course_integration: $('#search_course_integration').val(),
+                    course_end_date: $('#search_course_end_date').val(), sesskey: M.cfg.sesskey},
                 "success": function(result) {
                     fnCallback(result);
                 }
@@ -245,7 +244,7 @@ jQuery(document).ready(function($) {
                 var pageurl = window.location.href;
                 var url = pageurl.replace("cmd=courses", "cmd=multiple_class_recreation");
 
-                return url+"&view_context=box&category=" + category + "&assignments=" + assignments + class_ids + "&sesskey=" + M.cfg.sesskey;
+                return url + "&view_context=box&category=" + category + "&assignments=" + assignments + class_ids + "&sesskey=" + M.cfg.sesskey;
         },
         onCleanup: function() {
             window.location = window.location;
@@ -397,8 +396,8 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": "ajax.php",
                 "data": {action: "link_course", tii_course_id: $("#tii_course_id").html(),
-                        tii_course_name: $("#tii_course_name").html(), course_to_link: $("#id_coursetolink").val(),
-                        sesskey: M.cfg.sesskey},
+                    tii_course_name: $("#tii_course_name").html(), course_to_link: $("#id_coursetolink").val(),
+                    sesskey: M.cfg.sesskey},
                 success: function(data) {
                     var obj = jQuery.parseJSON(data);
                     hideCourseCreationOptions(obj, oTable);
@@ -408,7 +407,7 @@ jQuery(document).ready(function($) {
     }
 
     // Hide the course creation/linking form once the selected Turnitin
-    // course has been created/linked locally and initialise the create assignment button
+    // course has been created/linked locally and initialise the create assignment button.
     function hideCourseCreationOptions(obj, oTable) {
         if (obj != 0) {
             $("#course_id").html(obj.courseid);
@@ -444,7 +443,7 @@ jQuery(document).ready(function($) {
         }
     }
 
-    // Bind the event to create an assignment from the selected parts
+    // Bind the event to create an assignment from the selected parts.
     function initialiseCreateAssignmentButton(oTable) {
         $('#id_create_assignment').unbind("click");
         $('#id_create_assignment').click(function() {

@@ -143,9 +143,7 @@
     previousCSS = {},
     init;
 
-    // *****************
     // HELPER FUNCTIONS.
-    // *****************
 
     // Convenience function for creating new jQuery objects.
     function $tag(tag, id, css) {
@@ -553,11 +551,9 @@
     // Append the HTML when the DOM loads.
     $(appendHTML);
 
-    // *****************
     // PUBLIC FUNCTIONS.
     // Usage format: $.colorbox.close();.
     // Usage from within an iframe: parent.jQuery.colorbox.close();.
-    // *****************
 
     publicMethod = $.fn[colorbox] = $[colorbox] = function (options, callback) {
         var settings;
@@ -571,7 +567,6 @@
         } else if (!$obj[0]) { // Colorbox being applied to empty collection.
             return $obj;
         }
-
 
         if (!$obj[0]) { // Colorbox being applied to empty collection.
             return $obj;
@@ -1029,7 +1024,7 @@
         }
     };
 
-    // Note: to use this within an iframe use the following format: parent.jQuery.colorbox.close();
+    // Note: to use this within an iframe use the following format: parent.jQuery.colorbox.close();.
     publicMethod.close = function () {
         if (open && !closing) {
 

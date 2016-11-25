@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: vi
+// Language: vi.
 
 $string['addsubmission'] = 'Thêm Bài nộp';
 $string['allowlate'] = 'Cho phép Nộp bài sau Ngày Hạn nộp';

@@ -21,7 +21,7 @@
  */
 
 if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');    //  It must be included from a Moodle page.
+    die('Direct access to this script is forbidden.'); // It must be included from a Moodle page.
 }
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
@@ -111,12 +111,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             }
         }
 
-        // Overwrite instructor default repository if admin is forcing repository setting
+        // Overwrite instructor default repository if admin is forcing repository setting.
         switch ($config->repositoryoption) {
-            case 2; // Force Standard Repository
+            case 2; // Force Standard Repository.
                 $this->current->submitpapersto = 1;
                 break;
-            case 3; // Force No Repository
+            case 3; // Force No Repository.
                 $this->current->submitpapersto = 0;
                 break;
         }
@@ -171,14 +171,14 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $mform->addElement('html', $script);
 
-        $config_warning = '';
+        $configwarning = '';
         if (empty($config->accountid) || empty($config->secretkey) || empty($config->apiurl)) {
-            $config_warning = html_writer::tag('div', get_string('configureerror', 'turnitintooltwo'),
+            $configwarning = html_writer::tag('div', get_string('configureerror', 'turnitintooltwo'),
                                                 array('class' => 'library_not_present_warning'));
         }
 
-        if ($config_warning != '') {
-            $mform->addElement('html', $config_warning);
+        if ($configwarning != '') {
+            $mform->addElement('html', $configwarning);
         }
 
         $noscript = html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo'), array("class" => "warning"));
@@ -309,17 +309,17 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
             $parts = $turnitintooltwoassignment->get_parts();
 
-            $partsArray = array();
+            $partsarray = array();
             foreach ($parts as $key => $value) {
-                $partsArray[] = $value;
+                $partsarray[] = $value;
             }
         }
 
         for ($i = 1; $i <= 5; $i++) {
             $mform->addElement('header', 'partdates'.$i, get_string('partname', 'turnitintooltwo')." ".$i);
 
-            if (isset($this->_cm->id) && isset($partsArray[$i-1])) {
-                    $partdetails = $turnitintooltwoassignment->get_part_details($partsArray[$i-1]->id);
+            if (isset($this->_cm->id) && isset($partsarray[$i - 1])) {
+                    $partdetails = $turnitintooltwoassignment->get_part_details($partsarray[$i-1]->id);
                     $mform->addElement('html', '<div class="assignment-part-' . $i . '" data-anon="' . $turnitintooltwoassignment->turnitintooltwo->anon . '" data-unanon="' . $partdetails->unanon . '" data-submitted="' . $partdetails->submitted . '" data-part-id="' . $i . '">');
             }
 
@@ -349,7 +349,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->addRule('partname'.$i, null, 'required', null, 'client');
             $input = new stdClass();
             $input->length = 40;
-            $input->field =  get_string('partname', 'turnitintooltwo')." ".get_string('name');
+            $input->field = get_string('partname', 'turnitintooltwo') . " " . get_string('name');
             $mform->addRule('partname'.$i, get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'client');
             $mform->addRule('partname'.$i, get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'server');
 
@@ -593,9 +593,13 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         foreach ($data as $name => $value) {
             // Get part names from array of data
-            if (strstr($name, 'partname')) $partnames[$name] = strtolower(trim($value));
+            if (strstr($name, 'partname')) {
+                $partnames[$name] = strtolower(trim($value));
+            }
             // We only need part names for number of parts being used
-            if (count($partnames) == $data['numparts']) break;
+            if (count($partnames) == $data['numparts']) {
+                break;
+            }
         }
 
         for ($i = 1; $i <= $data['numparts']; $i++) {

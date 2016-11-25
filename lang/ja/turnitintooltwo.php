@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: ja.
 
 $string['addsubmission'] = '提出物を追加';
 $string['allowlate'] = '提出期限日を過ぎた提出を許可する';

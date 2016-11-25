@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: sc
+// Language: zh_hans.
 
 $string['addsubmission'] = '添加提交内容';
 $string['allowlate'] = '允许在截止日期后提交';

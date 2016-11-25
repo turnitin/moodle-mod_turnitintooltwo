@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
         $(".tii_helpdesk_sub_category").find("option:gt(0)").remove();
         $("#tii_solution_template").hide();
         if (category) {
-            $(".tii_helpdesk_sub_category").append($("#tii_"+category.toLowerCase()+"_options").html());
+            $(".tii_helpdesk_sub_category").append($("#tii_" + category.toLowerCase() + "_options").html());
         }
     });
 
@@ -20,13 +20,13 @@ jQuery(document).ready(function($) {
 
         // Populate template with solution.
         if (sub_category !== "") {
-            var issue = $("#tii_"+category.toLowerCase()+"_"+sub_category+" .issue").html();
+            var issue = $("#tii_" + category.toLowerCase() + "_" + sub_category + " .issue").html();
             $("#tii_solution_template #solution_issue").html(issue);
 
-            var answer = $("#tii_"+category.toLowerCase()+"_"+sub_category+" .answer").html();
+            var answer = $("#tii_" + category.toLowerCase() + "_" + sub_category + " .answer").html();
             $("#tii_solution_template #solution_answer").html(answer);
 
-            var link = $("#tii_"+category.toLowerCase()+"_"+sub_category+" .link").html();
+            var link = $("#tii_" + category.toLowerCase() + "_" + sub_category + " .link").html();
             $("#tii_solution_template #solution_link").html(link);
 
             $("#tii_solution_template").show();
@@ -44,6 +44,6 @@ jQuery(document).ready(function($) {
 
         var querystr = '&id=' + id + '&category=' + category + '&sub_category=' + sub_category;
 
-        window.location.href = M.cfg.wwwroot+'/mod/turnitintooltwo/extras.php?cmd=supportform' + querystr;
+        window.location.href = M.cfg.wwwroot + '/mod/turnitintooltwo/extras.php?cmd=supportform' + querystr;
     });
 });

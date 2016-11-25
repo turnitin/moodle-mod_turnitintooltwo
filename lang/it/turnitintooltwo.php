@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: en
+// Language: it.
 
 $string['addsubmission'] = 'Aggiungi consegna';
 $string['allowlate'] = 'Consenti la consegna dei compiti dopo la data di scadenza';
