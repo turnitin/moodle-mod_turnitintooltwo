@@ -12,8 +12,8 @@ class receipt_message {
         $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
 
         $eventdata = new stdClass();
-        $eventdata->component         = 'mod_turnitintooltwo'; //your component name
-        $eventdata->name              = 'submission'; //this is the message name from messages.php
+        $eventdata->component         = 'mod_turnitintooltwo';
+        $eventdata->name              = 'submission'; // This is the message name from messages.php.
         $eventdata->userfrom          = \core_user::get_noreply_user();
         $eventdata->userto            = $userid;
         $eventdata->subject           = $subject;
@@ -21,7 +21,7 @@ class receipt_message {
         $eventdata->fullmessageformat = FORMAT_HTML;
         $eventdata->fullmessagehtml   = $message;
         $eventdata->smallmessage      = '';
-        $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
+        $eventdata->notification      = 1; // This is only set to 0 for personal messages between users.
 
         message_send($eventdata);
     }
