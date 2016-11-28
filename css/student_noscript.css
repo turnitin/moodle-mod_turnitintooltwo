@@ -24,12 +24,12 @@
 }
 
 .mod_turnitintooltwo .turnitin_ula_noscript {
-	margin-top:16px;
 	line-height: 28px;
+	margin-top:16px;
 }
 
 .mod_turnitintooltwo .part_table {
-	border:1px solid #DEDEDE;
 	background:#EFEFEF;
+	border:1px solid #DEDEDE;
 	padding:10px;
 }

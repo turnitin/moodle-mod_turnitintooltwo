@@ -127,10 +127,15 @@ $turnitintooltwoview->load_page_components();
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
 // Define file upload options.
-$maxbytessite = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
-                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
-$maxbytescourse = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
-                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
+$maxbytessite = $CFG->maxbytes;
+if ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) {
+    $maxbytessite = TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE;
+}
+
+$maxbytescourse = $COURSE->maxbytes;
+if ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) {
+    $maxbytescourse = TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE;
+}
 
 $maxfilesize = get_user_max_upload_file_size(context_module::instance($cm->id),
                                                 $maxbytessite,

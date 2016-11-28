@@ -250,7 +250,8 @@ switch ($action) {
             $PAGE->set_context(context_module::instance($cm->id));
             $turnitintooltwoview = new turnitintooltwo_view();
 
-            $return["aaData"] = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
+            $view = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
+            $return["aaData"] = $view;
             $totalsubmitters = $DB->count_records('turnitintooltwo_submissions',
                                                     array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
                                                             'submission_part' => $partid));
@@ -746,7 +747,7 @@ switch ($action) {
                 $config = turnitintooltwo_admin_config();
             }
             if ($config->enablediagnostic != 2) {
-                $turnitincomms->setDiagnostic(0);
+                $turnitincomms->set_diagnostic(0);
             }
 
             $tiiapi = $turnitincomms->initialise_api($testingconnection);
