@@ -35,8 +35,10 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
         $table = new xmldb_table('turnitintooltwo_submissions');
-        $field1 = new xmldb_field('submission_acceptnothing', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'submission_transmatch');
-        $field2 = new xmldb_field('submission_orcapable', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'submission_acceptnothing');
+        $field1 = new xmldb_field('submission_acceptnothing', XMLDB_TYPE_INTEGER, '10', null,
+            XMLDB_NOTNULL, null, 0, 'submission_transmatch');
+        $field2 = new xmldb_field('submission_orcapable', XMLDB_TYPE_INTEGER, '10', null,
+            XMLDB_NOTNULL, null, 0, 'submission_acceptnothing');
         if (!$dbman->field_exists($table, $field1)) {
             $dbman->add_field($table, $field1);
         }
@@ -47,7 +49,8 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
 
     if ($oldversion < 2014012404) {
         $table = new xmldb_table('turnitintooltwo_users');
-        $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
+        $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', null,
+            XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
@@ -117,7 +120,8 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
     if ($oldversion < 2015040104) {
         $table = new xmldb_table('turnitintooltwo_users');
         // Alter datatype of user_agreement_accepted.
-        $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false, XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
+        $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false,
+            XMLDB_NOTNULL, null, 0, 'instructor_rubrics');
 
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
