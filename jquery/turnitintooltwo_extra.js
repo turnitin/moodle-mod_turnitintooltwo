@@ -77,7 +77,7 @@ jQuery(document).ready(function($) {
             var nTrs = $('#filesTable tbody tr');
             var iColspan = nTrs[0].getElementsByTagName('td').length;
             var sLastGroup = "";
-            for ( var i = 0; i < nTrs.length; i++ ) {
+            for (var i = 0; i < nTrs.length; i++) {
                 var iDisplayIndex = oSettings._iDisplayStart + i;
                 var sGroup = oSettings.aoData[ oSettings.aiDisplay[i] ]._aData[0];
                 if ( sGroup != sLastGroup )
@@ -270,7 +270,7 @@ jQuery(document).ready(function($) {
             "type": "POST",
             "url": "ajax.php",
             "data": {action: "create_courses", class_ids: class_ids, course_category: $("#course_category").html(),
-                    create_assignments: $("#create_assignments").html(), sesskey: M.cfg.sesskey},
+                create_assignments: $("#create_assignments").html(), sesskey: M.cfg.sesskey},
             success: function(data) {
                 $('#course_creation_status').html(data);
             }
@@ -372,7 +372,7 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Make the buttons on the course creation/link forms clickable and configure the relevant triggered event
+    // Make the buttons on the course creation/link forms clickable and configure the relevant triggered event.
     function initialiseCourseBrowserButtons(oTable) {
         $('#id_create_course').click(function() {
             $.ajax({
@@ -380,9 +380,9 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": "ajax.php",
                 "data": {action: "create_course", tii_course_id: $("#tii_course_id").html(),
-                        tii_course_name: encodeURIComponent($("#tii_course_name").html()),
-                        course_name: encodeURIComponent($("#id_coursename").val()),
-                        course_category: $("#id_coursecategory").val(), sesskey: M.cfg.sesskey},
+                    tii_course_name: encodeURIComponent($("#tii_course_name").html()),
+                    course_name: encodeURIComponent($("#id_coursename").val()),
+                    course_category: $("#id_coursecategory").val(), sesskey: M.cfg.sesskey},
                 success: function(data) {
                     var obj = jQuery.parseJSON(data);
                     hideCourseCreationOptions(obj, oTable);
