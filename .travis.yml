@@ -15,7 +15,8 @@ php:
 env:
  global:
   - MOODLE_BRANCH=MOODLE_31_STABLE
-  - IGNORE_PATHS=sdk/, jquery/jquery*
+  - IGNORE_PATHS=sdk/
+  - IGNORE_NAMES=jquery*
  matrix:
   - DB=pgsql
   - DB=mysqli

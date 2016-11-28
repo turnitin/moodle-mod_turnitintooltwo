@@ -23,10 +23,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Define all the backup steps that will be used by the backup_assignment_activity_task.
-   This is the Complete assignment structure for backup, with file and id annotations.
- */
+// Define all the backup steps that will be used by the backup_assignment_activity_task.
+// This is the Complete assignment structure for backup, with file and id annotations.
 
 require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
 
