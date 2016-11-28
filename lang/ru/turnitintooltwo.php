@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Version: 2015040101
 // Date: 2015-04-01
 // Language: ru.
@@ -287,8 +287,7 @@ $string['pseudoemaildomain_desc'] = '<b>[Необязательно]</b><br />В
 $string['pseudoemailaddress'] = 'Псевдоадрес электронной почты';
 $string['instructor'] = 'Преподаватель';
 $string['files'] = 'Файлы';
-$string['filedeleteconfirm'] = 'Вы уверены, что хотите удалить этот файл?
-Это действие не может быть отменено.';
+$string['filedeleteconfirm'] = 'Вы уверены, что хотите удалить этот файл? Это действие не может быть отменено.';
 $string['filebrowser'] = 'Браузер файлов Moodle Direct';
 $string['deletable'] = 'Стираемый';
 $string['inactive'] = 'Неактивный';

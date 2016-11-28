@@ -533,17 +533,17 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
  * A Standard Moodle function that moodle executes at the time the cron runs
  */
 function turnitintooltwo_cron() {
-    global $DB, $CFG, $TURNITINTOOLTWO_TASKCALL;
+    global $DB, $CFG, $tiitaskcall;
 
     // 2.7 onwards we would like to be called from task calls
-    if ( $CFG->version > 2014051200 AND !$TURNITINTOOLTWO_TASKCALL ) {
+    if ( $CFG->version > 2014051200 && !$tiitaskcall ) {
         mtrace(get_string('crontaskmodeactive', 'turnitintooltwo'));
         return;
     }
 
     // Reset task call flag.
-    if ($TURNITINTOOLTWO_TASKCALL) {
-        $TURNITINTOOLTWO_TASKCALL = false;
+    if ($tiitaskcall) {
+        $tiitaskcall = false;
     }
 
     // Update gradebook when a part has been deleted.
@@ -639,7 +639,7 @@ function turnitintooltwo_cron_update_gradbook($assignment, $task) {
                 'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
         }
 
-        // Remove the "anongradebook" flag
+        // Remove the "anongradebook" flag.
         $updateassignment = new stdClass();
         $updateassignment->id = $assignment->id;
 

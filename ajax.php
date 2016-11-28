@@ -125,7 +125,7 @@ switch ($action) {
         // Get the id from the turnitintooltwo_users table so we can update.
         $turnitinuser = $DB->get_record('turnitintooltwo_users', array('userid' => $USER->id));
 
-        // Build user object for update
+        // Build user object for update.
         $eulauser = new object();
         $eulauser->id = $turnitinuser->id;
         $eulauser->user_agreement_accepted = 0;
@@ -258,7 +258,7 @@ switch ($action) {
             $return["total"] = $_SESSION["num_submissions"][$partid];
             $return["nonsubmitters"] = $return["total"] - $totalsubmitters;
 
-            // Remove any leftover submissions from session and update grade timestamp/
+            // Remove any leftover submissions from session and update grade timestamp.
             if ($return["end"] >= $return["total"]) {
                 unset($_SESSION["submissions"][$partid]);
 

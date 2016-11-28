@@ -16,7 +16,7 @@ env:
  global:
   - MOODLE_BRANCH=MOODLE_31_STABLE
   - IGNORE_PATHS=sdk/,fonts/,pix/,
-  - IGNORE_NAMES=jquery*,moment.js,colorbox.css,tooltipster.css,bootstrap*
+  - IGNORE_NAMES=jquery*,moment.js,colorbox.css,tooltipster.css,*.min.css,*.min.js
  matrix:
   - DB=pgsql
   - DB=mysqli

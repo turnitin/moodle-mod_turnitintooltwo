@@ -114,7 +114,9 @@ switch ($cmd) {
                         $output .= ' '.htmlspecialchars(str_pad(substr($datacell, 0, $columnwidth), $columnwidth, " ", 1)).'|';
                     }
                     if ($table == 'turnitintooltwo_users' && $moodleusers[$datarow['userid']]) {
-                        $output .= ' '.str_pad(substr(format_string($moodleusers[$datarow['userid']]->firstname).' '.format_string($moodleusers[$datarow['userid']]->lastname), 0, $columnwidth),
+                        $firstname = format_string($moodleusers[$datarow['userid']]->firstname);
+                        $lastname = format_string($moodleusers[$datarow['userid']]->lastname);
+                        $output .= ' '.str_pad(substr($firstname.' '.$lastname, 0, $columnwidth),
                                                 $columnwidth, " ", 1).'|';
                     }
                     $output .= "\r\n";
