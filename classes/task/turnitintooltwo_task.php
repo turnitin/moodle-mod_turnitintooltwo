@@ -34,11 +34,11 @@ class turnitintooltwo_task extends \core\task\scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
-        global $CFG, $TURNITINTOOLTWO_TASKCALL;
+        global $CFG, $tiitaskcall;
 
         // Run turnitintooltwo cron.
         require_once("{$CFG->dirroot}/mod/turnitintooltwo/lib.php");
-        $TURNITINTOOLTWO_TASKCALL = true;
+        $tiitaskcall = true;
         turnitintooltwo_cron();
     }
 

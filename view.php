@@ -62,8 +62,7 @@ if ($id) {
     // Pre 2.8 does not have the function get_course_and_cm_from_cmid.
     if ($CFG->branch >= 28) {
         list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
-    }
-    else {
+    } else {
         $cm = get_coursemodule_from_id('turnitintooltwo', $id, 0, false, MUST_EXIST);
         $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
     }
@@ -101,7 +100,7 @@ require_capability('mod/turnitintooltwo:view', $context);
 // Set the page layout to base.
 $PAGE->set_pagelayout('base');
 
-// Settings for page navigation
+// Settings for page navigation.
 if ($viewcontext == "window") {
     // Show navigation if required.
     $config = turnitintooltwo_admin_config();
@@ -311,7 +310,7 @@ if (!empty($action)) {
                             $lockedpart->id = $post['submissionpart'];
                             $lockedpart->submitted = 1;
 
-                            //Disable anonymous marking if post date has passed.
+                            // Disable anonymous marking if post date has passed.
                             if ($parts[$post['submissionpart']]->dtpost <= time()) {
                                 $lockedpart->unanon = 1;
                             }

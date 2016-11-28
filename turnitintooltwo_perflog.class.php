@@ -25,9 +25,9 @@ class turnitintooltwo_performancelog extends PerformanceLog {
      * Log networking performance details of an individual request
      *
      * @param resource $ch The cURL handle corresponding to the request to log
-     * @param float $total_response_time Total time taken for the request in seconds
+     * @param float $totalresponsetime Total time taken for the request in seconds
      */
-    protected function log($ch, $total_response_time) {
+    protected function log($ch, $totalresponsetime) {
         global $CFG, $USER, $action;
 
         static $config;
@@ -69,12 +69,12 @@ class turnitintooltwo_performancelog extends PerformanceLog {
             $str .= " - HTTP:" . $httpstatus;
             if ($httpstatus === 0 && curl_getinfo($ch, CURLINFO_SIZE_UPLOAD) === 0) {
                 // CURLINFO_CONNECT_TIME is not reliable when the request fails to connect.
-                $connecttime = $total_response_time;
+                $connecttime = $totalresponsetime;
             } else {
                 $connecttime = curl_getinfo($ch, CURLINFO_CONNECT_TIME);
             }
             $str .= " - connect:" . sprintf('%0.3f', $connecttime);
-            $str .= " - total:" . sprintf('%0.3f', $total_response_time);
+            $str .= " - total:" . sprintf('%0.3f', $totalresponsetime);
             $str .= " - up:" . curl_getinfo($ch, CURLINFO_SIZE_UPLOAD);
             $str .= " - down:" . curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD);
             $str .= " - userid:" . $USER->id;

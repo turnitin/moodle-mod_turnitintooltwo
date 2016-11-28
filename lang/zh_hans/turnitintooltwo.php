@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Version: 2015040101
 // Date: 2015-04-01
 // Language: zh_hans.

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Version: 2015040101
 // Date: 2015-04-01
 // Language: pl.
@@ -137,8 +137,7 @@ $string['turnitinaccountid'] = 'Identyfikator konta Turnitin';
 $string['turnitinaccountid_desc'] = '<b>[Wymagane]</b><br />Wprowadź identyfikator głównego konta Turnitin';
 $string['turnitinanon'] = 'Anonimowe poprawki';
 $string['turnitinapiurl'] = 'URL API Turnitin';
-$string['turnitindeleteconfirm'] = 'Usuwanie prac usuwa je z twojej listy przesyłek i skrzynki, ale nie
-\nusuwa ich kompletnie z bazy danych Turnitin.\n\nCzy na pewno chcesz usunąć tę przesyłkę? Ta czynność nie może być anulowana.';
+$string['turnitindeleteconfirm'] = 'Usuwanie prac usuwa je z twojej listy przesyłek i skrzynki, ale nie \n usuwa ich kompletnie z bazy danych Turnitin.\n\nCzy na pewno chcesz usunąć tę przesyłkę? Ta czynność nie może być anulowana.';
 $string['turnitindeletionerror'] = 'Usunięcie wysyłki do Turnitin nie powiodło się. Lokalna kopia Moodle została usunięta, ale wysyłka do Turnitin nie może być usunięta.';
 $string['turnitinenrolstudents'] = 'Zarejestruj wszystkich studentów';
 $string['turnitinloading'] = 'Synchronizacja danych';

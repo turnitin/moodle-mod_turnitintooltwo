@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Version: 2015040101
 // Date: 2015-04-01
 // Language: fi.
@@ -104,8 +104,7 @@ $string['spapercheck_help'] = 'Tarkista Turnitinin opiskelijatöiden arkistoa va
 $string['standardrepository'] = 'Vakioarkisto';
 $string['student'] = 'Opiskelija';
 $string['studentreports'] = 'Näytä Alkuperäisyysraportit Opiskelijoille';
-$string['studentreports_help'] = 'Sallii sinun näyttää opiskelija-käyttäjille Turnitinin Alkuperäisyysraportteja. Mikäli asetus on kyllä, tulevat
-Turnitinin kehittämät alkuperäisyysraportit olemaan opiskelijan nähtävissä.';
+$string['studentreports_help'] = 'Sallii sinun näyttää opiskelija-käyttäjille Turnitinin Alkuperäisyysraportteja. Mikäli asetus on kyllä, tulevat Turnitinin kehittämät alkuperäisyysraportit olemaan opiskelijan nähtävissä.';
 $string['studentstatus'] = 'Palautettu {$a->modified} (Työtunnus: {$a->objectid})';
 $string['submissiondeleteerror'] = 'Palautuksia ei voitu poistaa';
 $string['submissionextract'] = 'Ote palautuksesta';
@@ -373,8 +372,7 @@ $string['marksavailable'] = 'Saatavilla Olevat Merkinnät';
 $string['deletepart'] = 'Poista Osa';
 $string['partdeleted'] = 'Tehtävän Osa on poistettu';
 $string['turnitin'] = 'Turnitin';
-$string['coursebrowserassignmentdesc'] = 'Alla olevasta taulukosta voit valita jopa 5 tehtävää luodaksesi
-monistetun Turnitin-tehtävän osia Moodleen.';
+$string['coursebrowserassignmentdesc'] = 'Alla olevasta taulukosta voit valita jopa 5 tehtävää luodaksesi monistetun Turnitin-tehtävän osia Moodleen.';
 $string['turnitinoroptions'] = 'Alkuperäisyysraportti-vaihtoehdot';
 $string['turnitingmoptions'] = 'GradeMark-vaihtoehdot';
 $string['attachrubric'] = 'Liitä tähän tehtävään arvostelumatriisi';
@@ -415,8 +413,7 @@ $string['turnitindefaults'] = 'Turnitin plagiarismi plugin-laajennuksen oletusas
 $string['turnitinpluginsettings'] = 'Turnitin plagiarismi plugin-laajennuksen asetukset';
 $string['defaultsdesc'] = 'Seuraavat asetukset ovat oletusarvot silloin kun Turnitin on aktivoitu Toimintamoduulin sisällä';
 $string['compareinstitution'] = 'Vertaa palautettuja tiedostoja tämän oppilaitoksen sisällä palautettuihin töihin';
-$string['defaultinserterror'] = 'Kun yritettiin lisätä oletusarvoinen asetus tietokantaan, tapahtui
-virhe';
+$string['defaultinserterror'] = 'Kun yritettiin lisätä oletusarvoinen asetus tietokantaan, tapahtui virhe';
 $string['defaultupdateerror'] = 'Kun yritettiin päivittää oletusarvoinen asetus tietokantaan, tapahtui virhe';
 $string['defaultupdated'] = 'Turnitin oletusarvot päivitetty';
 $string['pp_createsubmissionerror'] = 'Palautusta luodessa esiintyi plagiarismi plugin-lisäosassa virhe';
@@ -447,8 +444,7 @@ $string['redirecttoeula'] = 'Siirrämme sinut Loppukäyttäjän Lisenssisopimuks
 $string['filedoesnotexist'] = 'Tiedosto on hävitetty';
 $string['eventremoved'] = 'Tämä tapahtuma on poistettu cron-työlistalta, eikä sitä käsitellä uudestaan.';
 $string['partnametoolarge'] = 'Osan nimi on liian suuri, ole hyvä ja rajoita se 40 merkkiin.';
-$string['enableperformancelogs'] = 'Aktivoi
-verkon suorituskyky-loki';
+$string['enableperformancelogs'] = 'Aktivoi verkon suorituskyky-loki';
 $string['enableperformancelogs_desc'] = 'Mikäli aktivoitu, jokainen pyyntö Turnitinin palvelimelle tullaan kirjaamaan tänne: {tempdir}/turnitintooltwo/logs';
 $string['listsubmissions'] = 'Luetteloi Palautukset';
 $string['viewsubmission'] = 'Katsele Palautusta';

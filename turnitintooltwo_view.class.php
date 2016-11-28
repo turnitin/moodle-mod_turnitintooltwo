@@ -49,7 +49,6 @@ class turnitintooltwo_view {
         global $PAGE, $OUTPUT;
 
         $cmid = ($cm != null) ? $cm->id : null;
-        $courseid = ($course != null) ? $course->id : null;
 
         if (!is_null($cmid) && $button != '') {
             $PAGE->set_button($OUTPUT->update_module_button($cm->id, "turnitintooltwo"));
@@ -67,13 +66,15 @@ class turnitintooltwo_view {
     }
 
     /**
-     * Load the Javascript and CSS components for page
+     * Load the Javascript and CSS components for page.
      *
      * @global type $PAGE
      * @global type $CFG
      */
     public function load_page_components($hidebg = false) {
         global $PAGE, $CFG;
+
+        // Include CSS.
         if ($hidebg) {
             $cssurl = new moodle_url('/mod/turnitintooltwo/css/hide_bg.css');
             $PAGE->requires->css($cssurl);
@@ -86,53 +87,20 @@ class turnitintooltwo_view {
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/tii-icon-webfont.css');
         $PAGE->requires->css($cssurl);
-        if ($CFG->branch <= 25) {
-            // Include CSS
-            $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery.dataTables.css');
-            $PAGE->requires->css($cssurl);
-            $cssurl = new moodle_url('/mod/turnitintooltwo/css/colorbox.css');
-            $PAGE->requires->css($cssurl);
-            $cssurl = new moodle_url('/mod/turnitintooltwo/css/jqueryui-editable.css');
-            $PAGE->requires->css($cssurl);
-            // include JS
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery-ui-1.10.4.custom.min.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.plugins.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo.min.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_extra.min.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo_settings.min.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.dataTables.columnFilter.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.colorbox.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.cookie.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jqueryui-editable.js');
-            $PAGE->requires->js($jsurl, true);
-            $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/moment.js');
-            $PAGE->requires->js($jsurl, true);
-        } else {
-            $PAGE->requires->jquery();
-            $PAGE->requires->jquery_plugin('ui');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-dataTables', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-dataTables_plugins', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_extra', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-datatables_columnfilter', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-cookie', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-uieditable', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
-        }
+
+        // Include JS.
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-dataTables', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-dataTables_plugins', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_extra', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-datatables_columnfilter', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-cookie', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-uieditable', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
 
         // Javascript i18n strings.
         $PAGE->requires->string_for_js('close', 'turnitintooltwo');
@@ -312,7 +280,7 @@ class turnitintooltwo_view {
      */
     public function show_submission_form($cm, $turnitintooltwoassignment, $partid, $turnitintooltwofileuploadoptions,
                                 $viewcontext = "box", $userid = 0) {
-        global $CFG, $OUTPUT, $USER, $DB;
+        global $CFG, $OUTPUT, $USER;
 
         $output = "";
         $config = turnitintooltwo_admin_config();
@@ -436,7 +404,7 @@ class turnitintooltwo_view {
             $customdata = array("disable_form_change_checker" => true,
                                 "elements" => array(array('html', $OUTPUT->box('', '', 'useragreement_inputs'))));
             $eulaform = new turnitintooltwo_form($turnitincall->getApiBaseUrl().TiiLTI::EULAENDPOINT, $customdata,
-                                                    'POST', $target = 'eulaWindow', array('id' => 'eula_launch'));
+                                                    'POST', 'eulaWindow', array('id' => 'eula_launch'));
             $output .= $OUTPUT->box($eulaform->display(), '', 'useragreement_form');
         }
 
@@ -466,13 +434,12 @@ class turnitintooltwo_view {
      *
      * @global type $CFG
      * @global type $OUTPUT
-     * @global type $USER
      * @param type $cm
      * @param type $turnitintooltwoassignment
      * @return type
      */
     public function init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser) {
-        global $CFG, $OUTPUT, $USER, $DB;
+        global $CFG, $OUTPUT;
         $config = turnitintooltwo_admin_config();
 
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
@@ -998,9 +965,7 @@ class turnitintooltwo_view {
         return $output;
     }
 
-    public function show_peermark_assignment($peermarkassignments, $updating = false) {
-        global $OUTPUT;
-
+    public function show_peermark_assignment($peermarkassignments) {
         $table = new html_table();
         $rows = array();
 
@@ -1484,9 +1449,9 @@ class turnitintooltwo_view {
         $j = 0;
 
         // Unanonymise parts if necessary.
-        foreach (array_keys($parts) as $k => $v) {
-            if ($parts[$v]->dtpost < time()) {
-                $parts[$v]->unanon = 1;
+        foreach (array_keys($parts) as $part) {
+            if ($parts[$part]->dtpost < time()) {
+                $parts[$part]->unanon = 1;
             }
         }
 
@@ -1664,7 +1629,7 @@ class turnitintooltwo_view {
      * @return output form
      */
     public static function output_lti_form_launch($type, $userrole, $partid = 0, $classid = 0) {
-        global $USER, $CFG;
+        global $USER;
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -1847,7 +1812,6 @@ class turnitintooltwo_view {
      * Show Tutors/Students enrolled on a particular course with Turnitin
      *
      * @global type $CFG
-     * @global type $OUTPUT
      * @global type $DB
      * @param type $cm course module data
      * @param type $turnitintooltwoassignment the assignment object
@@ -1855,7 +1819,7 @@ class turnitintooltwo_view {
      * @return array $memberdata in a format to be shown as rows in a datatable
      */
     public function get_tii_members_by_role($cm, $turnitintooltwoassignment, $members, $role = "Learner") {
-        global $CFG, $DB, $OUTPUT;
+        global $CFG, $DB;
 
         switch ($role) {
             case "Learner":
