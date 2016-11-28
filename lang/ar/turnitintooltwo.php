@@ -1,7 +1,7 @@
 ﻿<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: ar
+// Language: ar.
 
 $string['addsubmission'] = 'إضافة مرسل';
 $string['allowlate'] = 'السماح بالإرسالات بعد تاريخ الاستحقاق';
