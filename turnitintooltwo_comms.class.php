@@ -19,6 +19,8 @@
  * and open the template in the editor.
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__.'/sdk/api.class.php');
 require_once(__DIR__.'/turnitintooltwo_perflog.class.php');
 
@@ -64,7 +66,7 @@ class turnitintooltwo_comms {
             $api->setLogPath($CFG->tempdir.'/turnitintooltwo/logs/');
         }
 
-        // Use Moodle's proxy settings if specified
+        // Use Moodle's proxy settings if specified.
         if (!empty($CFG->proxyhost)) {
             $api->setProxyHost($CFG->proxyhost);
         }
@@ -89,9 +91,9 @@ class turnitintooltwo_comms {
             $api->setProxyBypass($CFG->proxybypass);
         }
 
-        $plugin_version = turnitintooltwo_get_version();
+        $pluginversion = turnitintooltwo_get_version();
         $api->setIntegrationVersion($CFG->version);
-        $api->setPluginVersion($plugin_version);
+        $api->setPluginVersion($pluginversion);
 
         if (is_readable("$CFG->dataroot/moodleorgca.crt")) {
             $certificate = realpath("$CFG->dataroot/moodleorgca.crt");
@@ -187,8 +189,8 @@ class turnitintooltwo_comms {
     }
 
     /**
-    * @param int $diagnostic Set diagnostic setting.
-    */
+     * @param int $diagnostic Set diagnostic setting.
+     */
     public function setDiagnostic($diagnostic) {
         $this->diagnostic = $diagnostic;
     }

@@ -35,12 +35,12 @@ switch ($action) {
         $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
         $part = $turnitintooltwoassignment->get_part_details($partid);
 
-        $anonData = array(
+        $anondata = array(
             'anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
             'unanon' => $part->unanon,
             'submitted' => $part->submitted
         );
-        echo json_encode($anonData);
+        echo json_encode($anondata);
         break;
 
     case "edit_field":
@@ -97,8 +97,8 @@ switch ($action) {
 
         $partdetails = $turnitintooltwoassignment->get_parts();
 
-        $return['export_option'] = ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost) ?
-                                    "tii_export_options_show" : "tii_export_options_hide";
+        $unanonymised = ($turnitintooltwoassignment->turnitintooltwo->anon == 0 || time() > $partdetails[$partid]->dtpost);
+        $return['export_option'] = ($unanonymised) ? "tii_export_options_show" : "tii_export_options_hide";
 
         echo json_encode($return);
         break;
@@ -122,19 +122,19 @@ switch ($action) {
 
         $message = optional_param('message', '', PARAM_ALPHAEXT);
 
-        // Get the id from the turnitintooltwo_users table so we can update
-        $turnitin_user = $DB->get_record('turnitintooltwo_users', array('userid' => $USER->id));
+        // Get the id from the turnitintooltwo_users table so we can update.
+        $turnitinuser = $DB->get_record('turnitintooltwo_users', array('userid' => $USER->id));
 
         // Build user object for update
-        $eula_user = new object();
-        $eula_user->id = $turnitin_user->id;
-        $eula_user->user_agreement_accepted = 0;
+        $eulauser = new object();
+        $eulauser->id = $turnitinuser->id;
+        $eulauser->user_agreement_accepted = 0;
         if ($message == 'turnitin_eula_accepted') {
-            $eula_user->user_agreement_accepted = 1;
+            $eulauser->user_agreement_accepted = 1;
         }
 
-        // Update the user using the above object
-        $DB->update_record('turnitintooltwo_users', $eula_user, $bulk=false);
+        // Update the user using the above object.
+        $DB->update_record('turnitintooltwo_users', $eulauser, false);
         break;
 
     case "downloadoriginal":
@@ -152,12 +152,12 @@ switch ($action) {
 
             $user = new turnitintooltwo_user($USER->id, $userrole);
 
-            $launch_form = turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole, '');
+            $launchform = turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole, '');
             if ($action == 'downloadoriginal') {
-                echo $launch_form;
+                echo $launchform;
             } else {
-                $launch_form = html_writer::tag("div", $launch_form, array('style' => 'display: none'));
-                echo json_encode($launch_form);
+                $launchform = html_writer::tag("div", $launchform, array('style' => 'display: none'));
+                echo json_encode($launchform);
             }
         }
         break;
@@ -265,7 +265,7 @@ switch ($action) {
                 $updatepart = new stdClass();
                 $updatepart->id = $partid;
                 // Set timestamp to 10 minutes ago to account for time taken to complete (somewhat exagerrated).
-                $updatepart->gradesupdated = time()-(60*10);
+                $updatepart->gradesupdated = time() - (60 * 10);
                 $DB->update_record('turnitintooltwo_parts', $updatepart);
             }
         } else {
@@ -532,14 +532,14 @@ switch ($action) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
 
-        $coursetitle = optional_param('course_title', '', PARAM_TEXT);
+        $title = optional_param('course_title', '', PARAM_TEXT);
         $courseintegration = optional_param('course_integration', '', PARAM_ALPHANUM);
-        $courseenddate = optional_param('course_end_date', null, PARAM_TEXT);
-        $requestsource = optional_param('request_source', 'mod', PARAM_TEXT);
+        $enddate = optional_param('course_end_date', null, PARAM_TEXT);
+        $source = optional_param('request_source', 'mod', PARAM_TEXT);
 
         $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
 
-        $return = turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, $courseintegration, $courseenddate, $requestsource);
+        $return = turnitintooltwo_get_courses_from_tii($tiiintegrationids, $title, $courseintegration, $enddate, $source);
         echo json_encode($return);
         break;
 
@@ -558,10 +558,9 @@ switch ($action) {
 
             $i = 0;
             foreach ($classids as $tiiclassid) {
-                $tiicoursename = $_SESSION['tii_classes'][$tiiclassid];
-                $coursename = $tiicoursename;
+                $coursename = $_SESSION['tii_classes'][$tiiclassid];
 
-                $course = turnitintooltwo_assignment::create_moodle_course($tiiclassid, $tiicoursename, $coursename, $coursecategory);
+                $course = turnitintooltwo_assignment::create_moodle_course($tiiclassid, $coursename, $coursename, $coursecategory);
                 if ($createassignments == 1 && !empty($course)) {
                     $return = turnitintooltwo_get_assignments_from_tii($tiiclassid, "raw");
 
@@ -714,12 +713,12 @@ switch ($action) {
             throw new moodle_exception('invalidsesskey', 'error');
         }
         $data = '';
-        $current_version = required_param('current_version', PARAM_INT);
+        $currentversion = required_param('current_version', PARAM_INT);
 
         $PAGE->set_context(context_system::instance());
 
         if (is_siteadmin()) {
-            $data = turnitintooltwo_updateavailable($current_version);
+            $data = turnitintooltwo_updateavailable($currentversion);
         }
         echo json_encode($data);
         break;
@@ -734,15 +733,15 @@ switch ($action) {
         if (is_siteadmin()) {
             // Initialise API connection.
 
-            $account_id = required_param('account_id', PARAM_RAW);
-            $account_shared = required_param('account_shared', PARAM_RAW);
+            $accountid = required_param('accountid', PARAM_RAW);
+            $accountshared = required_param('accountshared', PARAM_RAW);
             $url = required_param('url', PARAM_RAW);
 
-            $turnitincomms = new turnitintooltwo_comms($account_id, $account_shared, $url);
+            $turnitincomms = new turnitintooltwo_comms($accountid, $accountshared, $url);
 
             $testingconnection = true; // Provided by Androgogic to override offline mode for testing connection.
 
-            // We only want an API log entry for this if diagnostic mode is set to Debugging
+            // We only want an API log entry for this if diagnostic mode is set to Debugging.
             if (empty($config)) {
                 $config = turnitintooltwo_admin_config();
             }
