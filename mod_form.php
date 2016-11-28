@@ -161,13 +161,13 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $PAGE->requires->string_for_js('anonalert', 'turnitintooltwo');
 
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
+                                                        "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
+                                                        "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/tii-icon-webfont.css"));
+                                                        "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/tii-icon-webfont.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/font-awesome.min.css"));
+                                                        "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/font-awesome.min.css"));
 
         $mform->addElement('html', $script);
 
@@ -319,7 +319,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->addElement('header', 'partdates'.$i, get_string('partname', 'turnitintooltwo')." ".$i);
 
             if (isset($this->_cm->id) && isset($partsarray[$i - 1])) {
-                    $partdetails = $turnitintooltwoassignment->get_part_details($partsarray[$i-1]->id);
+                    $partdetails = $turnitintooltwoassignment->get_part_details($partsarray[$i - 1]->id);
                     $mform->addElement('html', '<div class="assignment-part-' . $i . '" data-anon="' . $turnitintooltwoassignment->turnitintooltwo->anon . '" data-unanon="' . $partdetails->unanon . '" data-submitted="' . $partdetails->submitted . '" data-part-id="' . $i . '">');
             }
 
@@ -500,9 +500,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
                                                     html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
-                                                                    'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
-                                                                        html_writer::tag('i', '', array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
-                                                                        get_string('launchrubricmanager', 'turnitintooltwo'),
+                                                                'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
+                                                                    html_writer::tag('i', '', array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
+                                                                    get_string('launchrubricmanager', 'turnitintooltwo'),
                                                                 array('class' => 'rubric_manager_launch',
                                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
                                                     html_writer::tag('span', '',
@@ -592,18 +592,18 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $partnames = array();
 
         foreach ($data as $name => $value) {
-            // Get part names from array of data
+            // Get part names from array of data.
             if (strstr($name, 'partname')) {
                 $partnames[$name] = strtolower(trim($value));
             }
-            // We only need part names for number of parts being used
+            // We only need part names for number of parts being used.
             if (count($partnames) == $data['numparts']) {
                 break;
             }
         }
 
         for ($i = 1; $i <= $data['numparts']; $i++) {
-            // Get a copy of the array for unsetting purposes
+            // Get a copy of the array for unsetting purposes.
             $partnamescopy = $partnames;
 
             $partname = 'partname'.$i;

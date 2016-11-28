@@ -746,8 +746,8 @@ class turnitintooltwo_assignment {
             $assignment->setEraterStyle((isset($this->turnitintooltwo->erater_style)) ? $this->turnitintooltwo->erater_style : 0);
             $assignment->setEraterSpellingDictionary((isset($this->turnitintooltwo->erater_dictionary)) ?
                                                         $this->turnitintooltwo->erater_dictionary : 'en_US');
-            $assignment->setEraterHandbook((isset($this->turnitintooltwo->erater_handbook)) ?
-                                                        $this->turnitintooltwo->erater_handbook : 0);
+            $eraterhandbook = (isset($this->turnitintooltwo->erater_handbook)) ? $this->turnitintooltwo->erater_handbook : 0;
+            $assignment->setEraterHandbook($eraterhandbook);
 
             // Create Assignment on Turnitin.
             $newassignmentid = $this->create_tii_assignment($assignment, $toolid, $i);
@@ -1186,10 +1186,10 @@ class turnitintooltwo_assignment {
 
                 // If post date is moved beyond the current time, reset anon gradebook flag.
                 if ($fieldvalue > time()) {
-                    $update_assignment = new stdClass();
-                    $update_assignment->id = $partdetails->turnitintooltwoid;
-                    $update_assignment->anongradebook = 0;
-                    $DB->update_record("turnitintooltwo", $update_assignment);
+                    $updateassignment = new stdClass();
+                    $updateassignment->id = $partdetails->turnitintooltwoid;
+                    $updateassignment->anongradebook = 0;
+                    $DB->update_record("turnitintooltwo", $updateassignment);
                 }
 
                 $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $fieldvalue));
@@ -1357,8 +1357,8 @@ class turnitintooltwo_assignment {
             $assignment->setEraterUsage($this->turnitintooltwo->erater_usage);
             $assignment->setEraterMechanics($this->turnitintooltwo->erater_mechanics);
             $assignment->setEraterStyle($this->turnitintooltwo->erater_style);
-            $assignment->setEraterSpellingDictionary((isset($this->turnitintooltwo->erater_dictionary)) ?
-                                                        $this->turnitintooltwo->erater_dictionary : 'en_US');
+            $eraterdictionary = (isset($this->turnitintooltwo->erater_dictionary)) ? $this->turnitintooltwo->erater_dictionary : 'en_US';
+            $assignment->setEraterSpellingDictionary($eraterdictionary);
             $assignment->setEraterHandbook((isset($this->turnitintooltwo->erater_handbook)) ?
                                                         $this->turnitintooltwo->erater_handbook : 0);
 
@@ -1591,7 +1591,7 @@ class turnitintooltwo_assignment {
 
             // Only update submissions that have been modified since an hour before last update.
             if (!empty($part->gradesupdated)) {
-                $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $part->gradesupdated-(60*60)));
+                $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $part->gradesupdated - (60 * 60)));
             }
 
             $response = $turnitincall->findSubmissions($submission);
@@ -1802,7 +1802,7 @@ class turnitintooltwo_assignment {
         $overallgrade = null;
         $parts = $this->get_parts();
 
-        if( empty($cm) ) {
+        if (empty($cm)) {
             $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
         }
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));

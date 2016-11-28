@@ -19,8 +19,10 @@
  * @copyright 2012 iParadigms LLC
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 if (empty($plugin)) {
-	$plugin = new StdClass();
+    $plugin = new StdClass();
 }
 
 $plugin->version   = 2016091401;
@@ -32,5 +34,5 @@ $plugin->maturity  = MATURITY_STABLE;
 global $CFG;
 $plugin->cron = 0;
 if (!empty($CFG->version)) {
-	$plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
+    $plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
 }

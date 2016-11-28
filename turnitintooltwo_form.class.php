@@ -19,6 +19,8 @@
  * @copyright 2012 iParadigms LLC
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->libdir."/formslib.php");
 
 class turnitintooltwo_form extends moodleform {

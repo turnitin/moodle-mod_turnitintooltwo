@@ -19,6 +19,8 @@
  * @copyright 2012 iParadigms LLC
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 if ($ADMIN->fulltree) {
     include_once(__DIR__.'/lib.php');
     require_once(__DIR__.'/settingslib.php');
@@ -29,30 +31,30 @@ if ($ADMIN->fulltree) {
     $config = turnitintooltwo_admin_config();
 
     // Throw warning if necessary PHP libraries aren't installed.
-    $library_warning = '';
+    $librarywarning = '';
     if (!extension_loaded('XMLWriter')) {
-        $library_warning .= html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'),
+        $librarywarning .= html_writer::tag('div', get_string('noxmlwriterlibrary', 'turnitintooltwo'),
                                                 array('class' => 'tii_library_not_present_warning'));
     }
     if (!extension_loaded('mbstring')) {
-        $library_warning .= html_writer::tag('div', get_string('nombstringlibrary', 'turnitintooltwo'),
+        $librarywarning .= html_writer::tag('div', get_string('nombstringlibrary', 'turnitintooltwo'),
                                                 array('class' => 'tii_library_not_present_warning'));
     }
     if (!extension_loaded('fileinfo')) {
-        $library_warning .= html_writer::tag('div', get_string('nofinfolibrary', 'turnitintooltwo'),
+        $librarywarning .= html_writer::tag('div', get_string('nofinfolibrary', 'turnitintooltwo'),
                                                 array('class' => 'tii_library_not_present_warning'));
     }
 
     $tabmenu = $turnitintooltwoview->draw_settings_menu($module, 'settings').
-                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$library_warning.
+                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$librarywarning.
                 html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
 
-    $current_section = optional_param('section', '', PARAM_ALPHAEXT);
+    $currentsection = optional_param('section', '', PARAM_ALPHAEXT);
 
     $version = (empty($module->version)) ? $module->versiondisk : $module->version;
 
-    if ($current_section == 'modsettingturnitintooltwo') {
+    if ($currentsection == 'modsettingturnitintooltwo') {
         if ($CFG->branch <= 25) {
             $tabmenu .= html_writer::tag('script', '', array("type" => "text/javascript",
                                                     "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js")).
@@ -87,7 +89,7 @@ if ($ADMIN->fulltree) {
         $offlinecomment .= html_writer::end_tag('div');
     }
 
-    // Test connection to turnitin link
+    // Test connection to turnitin link.
     $testconnection = html_writer::start_tag('div', array('class' => 'test_connection', 'style' => 'display: none;'));
     $testconnection .= $OUTPUT->box($OUTPUT->pix_icon('globe', get_string('connecttest', 'turnitintooltwo'),
                                                 'mod_turnitintooltwo')." ".
@@ -104,7 +106,7 @@ if ($ADMIN->fulltree) {
 
     $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.')';
 
-    if ($current_section == 'modsettingturnitintooltwo') {
+    if ($currentsection == 'modsettingturnitintooltwo') {
         $desc .= ' - '.$upgrade;
     }
 
@@ -128,12 +130,7 @@ if ($ADMIN->fulltree) {
         'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com'
     );
 
-    // Add to moodle config.php file
-    //
-    // $CFG->turnitinqa = true;
-    // $CFG->turnitinqaurls = array(
-    //     'https://sprint.turnitin.com'
-    // );
+    // Set $CFG->turnitinqa and add URLs to $CFG->turnitinqaurls array in config.php file for testing other environments.
     if (!empty($CFG->turnitinqa)) {
         foreach ($CFG->turnitinqaurls as $url) {
             $testoptions[$url] = $url;
@@ -141,8 +138,8 @@ if ($ADMIN->fulltree) {
     }
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/apiurl',
-                                                    get_string("turnitinapiurl", "turnitintooltwo"),
-                                                    get_string("turnitinapiurl_desc", "turnitintooltwo").$offlinecomment.$testconnection, 0, $testoptions));
+                                    get_string("turnitinapiurl", "turnitintooltwo"),
+                                    get_string("turnitinapiurl_desc", "turnitintooltwo").$offlinecomment.$testconnection, 0, $testoptions));
 
     // Miscellaneous settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_debugginglogs',
@@ -158,7 +155,8 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('turnitintooltwo/enablediagnostic', get_string('turnitindiagnostic', 'turnitintooltwo'),
                         get_string('turnitindiagnostic_desc', 'turnitintooltwo'), 0, $diagnosticoptions));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/enableperformancelogs', get_string('enableperformancelogs', 'turnitintooltwo'),
+    $settings->add(new admin_setting_configselect('turnitintooltwo/enableperformancelogs',
+                        get_string('enableperformancelogs', 'turnitintooltwo'),
                         get_string('enableperformancelogs_desc', 'turnitintooltwo'), 0, $ynoptions));
 
     // Turnitin account settings.
@@ -315,12 +313,12 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('turnitintooltwo/default_grade', get_string('overallgrade', 'turnitintooltwo'),
                        '', 100, $options));
 
-    if (!empty($config->useanon) && $current_section == 'modsettingturnitintooltwo') {
+    if (!empty($config->useanon) && $currentsection == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
                         '', 0, $ynoptions ));
     }
 
-    if (!empty($config->transmatch) && $current_section == 'modsettingturnitintooltwo') {
+    if (!empty($config->transmatch) && $currentsection == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_transmatch',
                                                         get_string('transmatch', 'turnitintooltwo'),
                                                         '', 0, $ynoptions ));
@@ -359,12 +357,12 @@ if ($ADMIN->fulltree) {
     }
 
     switch ($config->repositoryoption) {
-        case 0; // Standard options
+        case 0; // Standard options.
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
                                                     get_string('submitpapersto', 'turnitintooltwo'),
                                                     '', 1, $suboptions ));
             break;
-        case 1; // Standard options + Allow Instituional Repository
+        case 1; // Standard options + Allow Instituional Repository.
             $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
 
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
