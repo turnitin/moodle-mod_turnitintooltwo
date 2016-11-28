@@ -273,7 +273,8 @@ if (!empty($action)) {
                     foreach ($prevsubmission as $prev) {
                         $submission = $prev;
                     }
-                    $turnitintooltwosubmission = new turnitintooltwo_submission($submission->id, "moodle", $turnitintooltwoassignment);
+                    $turnitintooltwosubmission = new turnitintooltwo_submission($submission->id, "moodle",
+                                                                $turnitintooltwoassignment);
                     $turnitintooltwosubmission->reset_submission($post);
                 }
 
@@ -516,17 +517,20 @@ switch ($do) {
             $table = new html_table();
             $table->data = array(
                 array(get_string('submissionauthor', 'turnitintooltwo'), $submission->firstname . ' ' . $submission->lastname),
-                array(get_string('turnitinpaperid', 'turnitintooltwo') . ' <small>(' . get_string('refid', 'turnitintooltwo') . ')</small>', $submissionid),
+                array(get_string('turnitinpaperid', 'turnitintooltwo') . ' <small>(' . get_string('refid', 'turnitintooltwo') . ')</small>',
+                        $submissionid),
                 array(get_string('submissiontitle', 'turnitintooltwo'), $submission->submission_title),
                 array(get_string('receiptassignmenttitle', 'turnitintooltwo'), $turnitintooltwoassignment->turnitintooltwo->name),
                 array(get_string('submissiondate', 'turnitintooltwo'), date("d/m/y, H:i", $submission->submission_modified))
             );
 
-            $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo', array('class' => 'logo'));
+            $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'),
+                                'mod_turnitintooltwo', array('class' => 'logo'));
             $digitalreceipt .= '<h2>'.get_string('digitalreceipt', 'turnitintooltwo').'</h2>';
             $digitalreceipt .= '<p>'.get_string('receiptparagraph', 'turnitintooltwo').'</p>';
             $digitalreceipt .= html_writer::table($table);
-            $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo') . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
+            $printericon = $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo');
+            $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $printericon . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
         } else {
             $digitalreceipt = "";
         }
@@ -621,7 +625,9 @@ switch ($do) {
                                                                                 array("class" => "launch_form"));
         if ($do === "origreport") {
             $submission = new turnitintooltwo_submission($submissionid, 'turnitin');
-            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "view submission", 'view.php?id='.$cm->id, get_string('viewsubmissiondesc', 'turnitintooltwo') . " '$submission->submission_title'", $cm->id, $submission->userid);
+            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "view submission",
+                'view.php?id='.$cm->id, get_string('viewsubmissiondesc', 'turnitintooltwo') . " '$submission->submission_title'",
+                $cm->id, $submission->userid);
         }
         break;
 
@@ -635,12 +641,17 @@ switch ($do) {
             $user = new turnitintooltwo_user($USER->id, $userrole);
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
             $user->join_user_to_class($coursedata->turnitin_cid);
-            $eulaaccepted = ($user->user_agreement_accepted != 1) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
+            // Has the student accepted the EULA?
+            $eulaaccepted = $user->user_agreement_accepted;
+            if ($user->user_agreement_accepted != 1) {
+                $eulaaccepted = $user->get_accepted_user_agreement();
+            }
 
             // Check if the submitting user has accepted the EULA.
             if ($eulaaccepted != 1) {
                 // Moodle strips out form and script code for forum posts so we have to do the Eula Launch differently.
-                $eulalink = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid',
+                $eulaurl = $CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid';
+                $eulalink = html_writer::link($eulaurl,
                                         html_writer::tag('i', '', array('class' => 'tiiicon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
                                         get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
                                         array("class" => "turnitin_eula_link"));
@@ -659,7 +670,8 @@ switch ($do) {
         }
 
         $listsubmissionsdesc = ($istutor) ? "listsubmissionsdesc" : "listsubmissionsdesc_student";
-        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions", 'view.php?id='.$cm->id, get_string($listsubmissionsdesc, 'turnitintooltwo') . ": $course->id", $cm->id);
+        turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions",
+                            'view.php?id='.$cm->id, get_string($listsubmissionsdesc, 'turnitintooltwo') . ": $course->id", $cm->id);
 
         if (!$istutor && !has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
@@ -725,8 +737,8 @@ switch ($do) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
             exit();
         }
-        $introtext = ($do == "tutors") ? get_string('turnitintutors_desc', 'turnitintooltwo') :
-                                            get_string('turnitinstudents_desc', 'turnitintooltwo');
+        $string = ($do == "tutors") ? 'turnitintutors_desc' : 'turnitinstudents_desc';
+        $introtext = get_string($string, 'turnitintooltwo');
         echo $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');
 
         $memberrole = ($do == "tutors") ? 'Instructor' : 'Learner';
