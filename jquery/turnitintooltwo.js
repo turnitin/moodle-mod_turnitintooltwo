@@ -56,7 +56,9 @@ jQuery(document).ready(function($) {
     });
 
     $(document).on('click', '.submit_nothing', function() {
-        if ( $(this).hasClass("disabled") ) return;
+        if ( $(this).hasClass("disabled") ) {
+            return;
+        }
         $(this).addClass('disabled');
         var part_id = $(this).prop('id').split('_')[2];
         var student_id = $(this).prop('id').split('_')[3];
@@ -1054,7 +1056,7 @@ jQuery(document).ready(function($) {
             }
         });
 
-        // Open an iframe light box which requests selected submissions as pdfs from Turnitin
+        // Open an iframe light box which requests selected submissions as pdfs from Turnitin.
         $(document).on('click', '#tabs-' + part_id + ' .gmpdfzip_box', function(e) {
             $(this).colorbox({
                 open:true,iframe:true, width:"786px", height:"300px", opacity: "0.7", className: "gmpdfzip_window", transition: "none",

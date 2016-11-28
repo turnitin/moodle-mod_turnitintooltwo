@@ -100,7 +100,7 @@ class turnitintooltwo_comms {
             $api->setSSLCertificate($certificate);
         }
 
-        // Offline mode provided by Androgogic
+        // Offline mode provided by Androgogic.
         if (!empty($CFG->tiioffline) && !$istestingconnection && empty($tiipp->in_use)) {
             turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
         }
@@ -191,7 +191,7 @@ class turnitintooltwo_comms {
     /**
      * @param int $diagnostic Set diagnostic setting.
      */
-    public function setDiagnostic($diagnostic) {
+    public function set_diagnostic($diagnostic) {
         $this->diagnostic = $diagnostic;
     }
 }

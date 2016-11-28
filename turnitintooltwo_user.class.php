@@ -380,7 +380,7 @@ class turnitintooltwo_user {
             $config = turnitintooltwo_admin_config();
         }
         if ($config->enablediagnostic != 2) {
-            $turnitincomms->setDiagnostic(0);
+            $turnitincomms->set_diagnostic(0);
         }
         $turnitincall = $turnitincomms->initialise_api();
 
