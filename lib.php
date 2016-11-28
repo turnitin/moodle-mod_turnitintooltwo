@@ -1315,8 +1315,10 @@ function turnitintooltwo_getusers() {
             $pseudoemail = $pseudouser->getEmail();
         }
 
-        $userdetails = $user->turnitin_uid, format_string($user->lastname), format_string($user->firstname), $pseudoemail
-        $return["aaData"][] = array($checkbox, ($user->turnitin_uid == 0) ? '' : $userdetails);
+        $return["aaData"][] = array($checkbox, ($user->turnitin_uid == 0) ?
+                                '' : $user->turnitin_uid, format_string($user->lastname),
+                                        format_string($user->firstname), $pseudoemail);
+
     }
     $return["sEcho"] = $secho;
     $return["iTotalRecords"] = count($users);

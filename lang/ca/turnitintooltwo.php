@@ -16,7 +16,7 @@
 
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: ca
+// Language: ca.
 
 $string['addsubmission'] = 'Afegir Lliurament';
 $string['allowlate'] = 'Permetre fer lliuraments després de la data determinada';
