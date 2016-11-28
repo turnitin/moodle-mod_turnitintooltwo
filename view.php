@@ -217,6 +217,8 @@ if (!empty($action)) {
             $post['submissiontext'] = trim($post['submissiontext']);
             $post['submissiontitle'] = optional_param('submissiontitle', '', PARAM_TEXT);
             $post['submissiontitle'] = trim(filter_var($post['submissiontitle'], FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW));
+            // Remove characters which aren't permitted in Windows file systems.
+            $post['submissiontitle'] = str_replace(array("\\", "/", ":", "*", "?", "\"", "<", ">", "|"), "", $post['submissiontitle']);
             $post['studentsname'] = optional_param('studentsname', $USER->id, PARAM_INT);
             $post['studentsname'] = ($istutor) ? $post['studentsname'] : $USER->id;
             $post['submissionpart'] = required_param('submissionpart', PARAM_INT);
