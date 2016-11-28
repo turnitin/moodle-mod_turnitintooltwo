@@ -19,6 +19,8 @@
  * @copyright 2012 iParadigms LLC *
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__.'/turnitintooltwo_comms.class.php');
 require_once(__DIR__.'/turnitintooltwo_user.class.php');
 require_once(__DIR__.'/turnitintooltwo_submission.class.php');

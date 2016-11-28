@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 // Version: 2015040101
 // Date: 2015-04-01
-// Language: cs
+// Language: cs.
 
 $string['addsubmission'] = 'Přidat odevzdání';
 $string['allowlate'] = 'Povolit odevzdání po termínu';

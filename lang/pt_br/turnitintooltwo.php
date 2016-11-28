@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // Version: 2015040101
 // Date: 2015-04-01
 // Language: pt_br.
@@ -100,9 +100,7 @@ $string['saveusage'] = 'Salvar Dados do Despejo';
 $string['selectoption'] = 'Selecionar Opção';
 $string['showusage'] = 'Mostrar Dados do Despejo';
 $string['spapercheck'] = 'Comparar com os documentos armazenados dos alunos';
-$string['spapercheck_help'] = 'Comparar com o depósito de documentos de alunos Turnitin ao processar os Relatórios
-de Originalidade dos documentos. A porcentagem do índice de semelhança
-pode baixar se essa opção for desmarcada.';
+$string['spapercheck_help'] = 'Comparar com o depósito de documentos de alunos Turnitin ao processar os Relatórios de Originalidade dos documentos. A porcentagem do índice de semelhança pode baixar se essa opção for desmarcada.';
 $string['standardrepository'] = 'Depósito Padrão';
 $string['student'] = 'Aluno';
 $string['studentreports'] = 'Exibir os Relatórios de Originalidade aos alunos';

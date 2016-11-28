@@ -1,4 +1,4 @@
-//var tiijq = jQuery.noConflict();
+// var tiijq = jQuery.noConflict();
 jQuery(document).ready(function($) {
     $(".js_required").show();
     $(".js_hide").hide();
@@ -575,7 +575,7 @@ jQuery(document).ready(function($) {
     $(document).on('click', '.default_open, .origreport_open, .grademark_open', function() {
         var proceed = true;
         var idStr = $(this).attr("id").split("_");
-        var due_date = $('#date_due_'+idStr[2]).html();
+        var due_date = $('#date_due_' + idStr[2]).html();
         var due_date_unix = moment(due_date).unix();
 
         var dvtype = idStr[0];
@@ -607,7 +607,7 @@ jQuery(document).ready(function($) {
                 dataType: "json",
                 data: {action: dvtype, submission: submission_id, assignment: $('#assignment_id').html()},
                 success: function(data) {
-                    $(dvWindow.document.body).html(loading+data);
+                    $(dvWindow.document.body).html(loading + data);
                     dvWindow.document.forms[0].submit();
                     dvWindow.document.close();
 
@@ -733,14 +733,14 @@ jQuery(document).ready(function($) {
         // Disable other editable fields & Grading template submissions when an editable form is opened.
         $('.editable_date, .editable_text').on('shown', function(e, editable) {
             var current = ($(this).prop('id'));
-            $('.editable_date, .editable_text').not('#'+current).editable('disable');
+            $('.editable_date, .editable_text').not('#' + current).editable('disable');
             $('.submit_nothing').addClass('disabled');
         });
 
         // Enable other editable fields & Grading template submissions when an editable form is closed.
         $('.editable_date, .editable_text').on('hidden', function() {
             var current = ($(this).prop('id'));
-            $('.editable_date, .editable_text').not('#'+current).editable('enable');
+            $('.editable_date, .editable_text').not('#' + current).editable('enable');
             $('.submit_nothing').removeClass('disabled');
         });
     }
@@ -758,7 +758,7 @@ jQuery(document).ready(function($) {
 
                     $.ajax({
                         type: "POST",
-                        url: M.cfg.wwwroot +"/mod/turnitintooltwo/ajax.php",
+                        url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
                         dataType: "json",
                         data: {action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey},
                         success: function(data) { window.location.reload(); },
@@ -772,12 +772,12 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Enable the editing fields in the inbox parts table
+    // Enable the editing fields in the inbox parts table.
     function enableEditingText(part_id) {
         $('#tabs-' + part_id + ' .editable_date, #tabs-' + part_id + ' .editable_text').editable('enable');
     }
 
-    // Disable the editing fields in the inbox parts table
+    // Disable the editing fields in the inbox parts table.
     function disableEditingText(part_id) {
         $('#tabs-' + part_id + ' .editable_date, #tabs-' + part_id + ' .editable_text').editable('disable');
     }
@@ -864,7 +864,7 @@ jQuery(document).ready(function($) {
             "type": "POST",
             "url": "../mod/turnitintooltwo/ajax.php",
             "data": {action: "refresh_rubric_select", assignment: $('input[name="instance"]').val(),
-                        modulename: $('input[name="modulename"]').val(), course: $('input[name="course"]').val()},
+                modulename: $('input[name="modulename"]').val(), course: $('input[name="course"]').val()},
             success: function(data) {
                 $($(rubricElementId)).empty();
                 var options = data;
@@ -918,7 +918,7 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": "ajax.php",
                 "data": {action: "refresh_peermark_assignments", assignment: $('#assignment_id').html(),
-                            part: part_id, refresh_requested: refresh_requested, sesskey: M.cfg.sesskey},
+                    part: part_id, refresh_requested: refresh_requested, sesskey: M.cfg.sesskey},
                 success: function(data) {
                     eval(data);
                     $('#tabs-' + part_id + ' .peermark_assignments_container').html(data.peermark_table);
@@ -980,12 +980,12 @@ jQuery(document).ready(function($) {
                             eval(data);
                             if (data.status == "success") {
                                 $.colorbox.close()
-                                $('#submission_'+submission_id).attr('href', M.cfg.wwwroot + "/user/view.php?id=" + data.userid + "&course=" + data.courseid);
-                                $('#submission_'+submission_id).html(data.name);
-                                $('#submission_'+submission_id).removeClass('unanonymise cboxElement');
+                                $('#submission_' + submission_id).attr('href', M.cfg.wwwroot + "/user/view.php?id=" + data.userid + "&course=" + data.courseid);
+                                $('#submission_' + submission_id).html(data.name);
+                                $('#submission_' + submission_id).removeClass('unanonymise cboxElement');
                             } else {
                                 var current_msg = $('#unanonymise_desc').html;
-                                $('#unanonymise_desc').html(current_msg+" "+data.msg);
+                                $('#unanonymise_desc').html(current_msg + " " + data.msg);
                             }
                         }
                     });
@@ -1029,17 +1029,17 @@ jQuery(document).ready(function($) {
     // ZIP containing all files as PDFs
     // ZIP containing all files in original format.
     function initialiseZipDownloads(part_id) {
-        // Unbind the event first to stop it being binded multiple times
+        // Unbind the event first to stop it being binded multiple times.
         $('#tabs-' + part_id + ' .orig_zip_open, #tabs-' + part_id + ' .pdf_zip_open, #tabs-' + part_id + ' .xls_inbox_open').unbind("click");
 
-        // Open a spreadsheet or a zip file containing all the relevant data
+        // Open a spreadsheet or a zip file containing all the relevant data.
         $('#tabs-' + part_id + ' .orig_zip_open, #tabs-' + part_id + ' .pdf_zip_open, #tabs-' + part_id + ' .xls_inbox_open').click(function() {
             var idStr = $(this).attr("id").split("_");
             downloadZipFile(idStr[0] + "_" + idStr[1], idStr[2]);
         });
 
-        // Open an iframe light box which requests all the submissions as pdfs from Turnitin
-        $('#tabs-'+part_id+' .downloadpdf_box').colorbox({
+        // Open an iframe light box which requests all the submissions as pdfs from Turnitin.
+        $('#tabs-' + part_id + ' .downloadpdf_box').colorbox({
             iframe:true, width:"40%", height:"60%", opacity: "0.7", className: "downloadpdf_window", transition: "none",
             onLoad: function() {
                 lightBoxCloseButton();
@@ -1055,7 +1055,7 @@ jQuery(document).ready(function($) {
         });
 
         // Open an iframe light box which requests selected submissions as pdfs from Turnitin
-        $(document).on('click', '#tabs-'+part_id+' .gmpdfzip_box', function(e) {
+        $(document).on('click', '#tabs-' + part_id + ' .gmpdfzip_box', function(e) {
             $(this).colorbox({
                 open:true,iframe:true, width:"786px", height:"300px", opacity: "0.7", className: "gmpdfzip_window", transition: "none",
                 href: function() {
@@ -1067,7 +1067,7 @@ jQuery(document).ready(function($) {
                                 i++;
                             });
 
-                            return $(this).attr('href')+submission_ids;
+                            return $(this).attr('href') + submission_ids;
                 },
                 onLoad: function() { getLoadingGif(); },
                 onCleanup: function() { hideLoadingGif(); },
@@ -1109,7 +1109,7 @@ jQuery(document).ready(function($) {
         // Seperate binder for hidden zip file link.
         $('#tabs-' + part_id + ' .origchecked_zip_open').click(function() {
             var idStr = $(this).attr("id").split("_");
-            downloadZipFile(idStr[0]+"_"+idStr[1], part_id);
+            downloadZipFile(idStr[0] + "_" + idStr[1], part_id);
             return false;
         });
     }
@@ -1120,7 +1120,7 @@ jQuery(document).ready(function($) {
             identifier = "#refreshrow_" + submission_id + '_' + part_id + "_" + user_id + " .fa-refresh";
         }
 
-        // Unbind the event first to stop it being binded multiple times
+        // Unbind the event first to stop it being binded multiple times.
         $(identifier).unbind("click");
 
         $(identifier).click(function() {
@@ -1180,7 +1180,7 @@ jQuery(document).ready(function($) {
         // Get html to launch DV.
         $.ajax({
             type: "POST",
-            url: M.cfg.wwwroot+"/mod/turnitintooltwo/ajax.php",
+            url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
             dataType: "html",
             data: {action: dvtype, submission: submission_id, assignment: $('#assignment_id').html()},
             success: function(data) {
@@ -1227,7 +1227,7 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Refresh a row in the inbox after a submission has been made or DV closed
+    // Refresh a row in the inbox after a submission has been made or DV closed.
     function refreshInboxRow(link, submission_id, part_id, user_id) {
         $.ajax({
             type: "POST",
@@ -1253,7 +1253,7 @@ jQuery(document).ready(function($) {
                 }
 
                 // Delete the row and re-add.
-                oTable = $('table#'+part_id).dataTable();
+                oTable = $('table#' + part_id).dataTable();
                 var tr = $("#" + link + "_" + part_id + '_' + user_id).parent().parent();
                 var rowindex = tr.index();
                 oTable.fnDeleteRow(tr);
