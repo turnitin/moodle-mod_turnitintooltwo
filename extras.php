@@ -286,8 +286,10 @@ switch ($cmd) {
         break;
 }
 
-$nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => '')) : array();
+$nav = array();
+if ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") {
+    array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => ''));
+}
 
 // Build page.
 $coursemodforheader = ($id != 0) ? $cm : null;
