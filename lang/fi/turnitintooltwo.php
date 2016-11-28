@@ -343,8 +343,7 @@ $string['turnitinstudentsremove'] = 'Oletko varma, että haluat poistaa tämän 
 $string['studentremoved'] = 'Opiskelija on poistettu Turnitinissä olevalta kurssilta';
 $string['studentremovingerror'] = 'Kun opiskelijaa poistettiin Turnitinissä olevalta kurssilta, kohdattiin pulma';
 $string['turnitinstudents_desc'] = 'Alla olevat valitut Käyttäjät ovat ilmoittautuneet tälle Turnitin-luokalle. Ilmoittautuneet opiskelijat pääsevät luokkaan sisään kirjautumalla Turnitinin web-sivustolle.';
-$string['coursebrowserdesc'] = 'Tämän alta voit etsiä Turnitinistä
-luokkia luodaksesi ne uudelleen Moodle-kursseiksi';
+$string['coursebrowserdesc'] = 'Tämän alta voit etsiä Turnitinistä luokkia luodaksesi ne uudelleen Moodle-kursseiksi';
 $string['courseexistsmoodle'] = 'Tämä luokka on tällä hetkellä Moodlessa nimellä:';
 $string['coursetitle'] = 'Kurssin Nimi';
 $string['coursetitleerror'] = 'Sinun pitää esittää luokan nimi hakeaksesi';
