@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
 class turnitintooltwo_user {
     public $id;
     public $tii_user_id;
@@ -64,7 +66,7 @@ class turnitintooltwo_user {
 
         foreach ($tiiusers as $tiiuser) {
             $moodleuser = $DB->get_record('user', array('id' => $tiiuser->userid));
-            // Don't return a deleted user
+            // Don't return a deleted user.
             if ($moodleuser->deleted == 0) {
                 $userid = (int)$tiiuser->userid;
                 break;
@@ -176,7 +178,8 @@ class turnitintooltwo_user {
      */
     private function get_tii_user_id() {
         global $DB;
-        if (!$tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid, user_agreement_accepted")) {
+        $tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid, user_agreement_accepted");
+        if (!$tiiuser) {
             $this->tii_user_id = 0;
             $this->user_agreement_accepted = 0;
         } else {
@@ -322,8 +325,7 @@ class turnitintooltwo_user {
         // Check if the deleted flag has been set. if yes delete the TII record rather than updating it.
         if ($DB->get_record("user", array('id' => $this->id, 'deleted' => 1), "deleted")) {
             $DB->delete_records('turnitintooltwo_users', array('userid' => $this->id));
-        }
-        else {
+        } else {
             $DB->update_record('turnitintooltwo_users', $tiiuser);
         }
 
@@ -373,7 +375,7 @@ class turnitintooltwo_user {
 
         $turnitincomms = new turnitintooltwo_comms();
 
-        // We only want an API log entry for this if diagnostic mode is set to Debugging
+        // We only want an API log entry for this if diagnostic mode is set to Debugging.
         if (empty($config)) {
             $config = turnitintooltwo_admin_config();
         }
@@ -604,20 +606,19 @@ class turnitintooltwo_user {
             if ($readuser->getAcceptedUserAgreement()) {
                 $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
 
-                $tii_userinfo = new stdClass();
-                $tii_userinfo->id = $turnitintooltwouser->id;
-                $tii_userinfo->user_agreement_accepted = 1;
+                $tiiuserinfo = new stdClass();
+                $tiiuserinfo->id = $turnitintooltwouser->id;
+                $tiiuserinfo->user_agreement_accepted = 1;
 
-                $DB->update_record('turnitintooltwo_users', $tii_userinfo);
+                $DB->update_record('turnitintooltwo_users', $tiiuserinfo);
                 return true;
             } else {
                 return false;
             }
         } catch (Exception $e) {
-            // User may not be joined to account so we'll join them and recall function
+            // User may not be joined to account so we'll join them and recall function.
             $this->set_user_values_from_tii();
             $this->get_accepted_user_agreement();
-            // $turnitincomms->handle_exceptions($e, 'tiiusergeterror');
         }
     }
 }

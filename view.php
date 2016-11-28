@@ -19,6 +19,8 @@
  * @copyright 2012 iParadigms LLC
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/lib.php");
 require_once($CFG->libdir."/formslib.php");
@@ -57,7 +59,7 @@ if (isset($_SESSION["notice"])) {
 }
 
 if ($id) {
-    //Pre 2.8 does not have the function get_course_and_cm_from_cmid.
+    // Pre 2.8 does not have the function get_course_and_cm_from_cmid.
     if ($CFG->branch >= 28) {
         list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
     }
@@ -87,16 +89,16 @@ if ($id) {
     }
 }
 
-// If opening DV then $viewcontext needs to be set to box
+// If opening DV then $viewcontext needs to be set to box.
 $viewcontext = ($do == "origreport" || $do == "grademark" || $do == "default") ? "box" : $viewcontext;
 
 require_login($course->id, true, $cm);
 
-//Check if the user has the capability to view the page - used when an assignment is set to hidden.
+// Check if the user has the capability to view the page - used when an assignment is set to hidden.
 $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
-//Set the page layout to base.
+// Set the page layout to base.
 $PAGE->set_pagelayout('base');
 
 // Settings for page navigation
@@ -249,7 +251,7 @@ if (!empty($action)) {
             }
 
             if ($error) {
-                // Save data in session incase of error
+                // Save data in session incase of error.
                 $_SESSION['form_data']->submissiontype = $post['submissiontype'];
                 $_SESSION['form_data']->submissiontitle = $post['submissiontitle'];
                 $_SESSION['form_data']->submissiontext = $post['submissiontext'];
@@ -302,21 +304,21 @@ if (!empty($action)) {
                         $_SESSION["digital_receipt"]["is_manual"] = 0;
 
                         if ($tiisubmission['success'] == true) {
-                            $locked_assignment = new stdClass();
-                            $locked_assignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
-                            $locked_assignment->submitted = 1;
-                            $DB->update_record('turnitintooltwo', $locked_assignment);
+                            $lockedassignment = new stdClass();
+                            $lockedassignment->id = $turnitintooltwoassignment->turnitintooltwo->id;
+                            $lockedassignment->submitted = 1;
+                            $DB->update_record('turnitintooltwo', $lockedassignment);
 
-                            $locked_part = new stdClass();
-                            $locked_part->id = $post['submissionpart'];
-                            $locked_part->submitted = 1;
+                            $lockedpart = new stdClass();
+                            $lockedpart->id = $post['submissionpart'];
+                            $lockedpart->submitted = 1;
 
                             //Disable anonymous marking if post date has passed.
                             if ($parts[$post['submissionpart']]->dtpost <= time()) {
-                                $locked_part->unanon = 1;
+                                $lockedpart->unanon = 1;
                             }
 
-                            $DB->update_record('turnitintooltwo_parts', $locked_part);
+                            $DB->update_record('turnitintooltwo_parts', $lockedpart);
                         } else {
                             $do = "submission_failure";
                         }
@@ -365,7 +367,7 @@ if (!empty($action)) {
             }
 
             if ($error) {
-                // Save data in session incase of error
+                // Save data in session incase of error.
                 $_SESSION['form_data'] = new stdClass;
                 $_SESSION['form_data']->nonsubmitters_subject = $subject;
                 $_SESSION['form_data']->nonsubmitters_message = $message;
@@ -384,7 +386,7 @@ if (!empty($action)) {
                 $suspendedusers = get_suspended_userids($context);
                 $nonsubmittedusers = array_diff_key((array)$allusers, (array)$suspendedusers, (array)$submittedusers);
                 foreach ($nonsubmittedusers as $nonsubmitteduser) {
-                    //Send a message to the user's Moodle inbox with the digital receipt.
+                    // Send a message to the user's Moodle inbox with the digital receipt.
                     $nonsubmitters->send_message($nonsubmitteduser->id, $subject, $message);
                 }
 
@@ -407,7 +409,7 @@ if (!empty($action)) {
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
 
-// Show header and navigation
+// Show header and navigation.
 if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     $PAGE->set_pagelayout('embedded');
@@ -631,16 +633,16 @@ switch ($do) {
             $user->join_user_to_class($coursedata->turnitin_cid);
             $eulaaccepted = ($user->user_agreement_accepted != 1) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
 
-            // Check if the submitting user has accepted the EULA
+            // Check if the submitting user has accepted the EULA.
             if ($eulaaccepted != 1) {
                 // Moodle strips out form and script code for forum posts so we have to do the Eula Launch differently.
-                $ula_link = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid',
+                $eulalink = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid',
                                         html_writer::tag('i', '', array('class' => 'tiiicon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
                                         get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
                                         array("class" => "turnitin_eula_link"));
 
                 $eulaignoredclass = ($eulaaccepted == 0) ? ' turnitin_ula_ignored' : '';
-                $ula = html_writer::tag('div', $ula_link, array('class' => 'turnitin_ula js_required'.$eulaignoredclass,
+                $ula = html_writer::tag('div', $eulalink, array('class' => 'turnitin_ula js_required'.$eulaignoredclass,
                                             'data-userid' => $user->id));
 
                 $noscriptula = html_writer::tag('noscript',
@@ -732,45 +734,47 @@ switch ($do) {
         break;
 
     case "emailnonsubmittersform":
-            if (!$istutor) {
-                turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
-                exit();
-            }
+        if (!$istutor) {
+            turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
+            exit();
+        }
 
-            $output = '';
+        $output = '';
 
-            if (isset($_SESSION["embeddednotice"])) {
-                $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
-                unset($_SESSION["embeddednotice"]);
-            }
+        if (isset($_SESSION["embeddednotice"])) {
+            $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
+            unset($_SESSION["embeddednotice"]);
+        }
 
-            $elements = array();
-            $elements[] = array('header', 'nonsubmitters_header', get_string('messagenonsubmitters', 'turnitintooltwo'));
-            $elements[] = array('static', 'nonsubmittersformdesc', get_string('nonsubmittersformdesc', 'turnitintooltwo'), '', '');
-            $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'), '', '',
-                                    'required', get_string('nonsubmitterssubjecterror', 'turnitintooltwo'), PARAM_TEXT);
-            $elements[] = array('textarea', 'nonsubmitters_message', get_string('nonsubmittersmessage', 'turnitintooltwo'), '', '',
-                                    'required', get_string('nonsubmittersmessageerror', 'turnitintooltwo'), PARAM_TEXT);
-            $elements[] = array('advcheckbox', 'nonsubmitters_sendtoself', get_string('nonsubmitterssendtoself', 'turnitintooltwo'), '', array(0, 1));
-            $customdata["checkbox_label_after"] = true;
+        $elements = array();
+        $elements[] = array('header', 'nonsubmitters_header', get_string('messagenonsubmitters', 'turnitintooltwo'));
+        $elements[] = array('static', 'nonsubmittersformdesc', get_string('nonsubmittersformdesc', 'turnitintooltwo'), '', '');
+        $elements[] = array('text', 'nonsubmitters_subject', get_string('nonsubmitterssubject', 'turnitintooltwo'), '', '',
+                                'required', get_string('nonsubmitterssubjecterror', 'turnitintooltwo'), PARAM_TEXT);
+        $elements[] = array('textarea', 'nonsubmitters_message', get_string('nonsubmittersmessage', 'turnitintooltwo'), '', '',
+                                'required', get_string('nonsubmittersmessageerror', 'turnitintooltwo'), PARAM_TEXT);
+        $elements[] = array('advcheckbox', 'nonsubmitters_sendtoself', get_string('nonsubmitterssendtoself', 'turnitintooltwo'),
+                            '', array(0, 1));
+        $customdata["checkbox_label_after"] = true;
 
-            $elements[] = array('hidden', 'id', $cm->id);
-            $elements[] = array('hidden', 'part', $part);
-            $elements[] = array('hidden', 'action', 'emailnonsubmitters');
-            $elements[] = array('submit', 'send_email', get_string('nonsubmitterssubmit', 'turnitintooltwo'));
+        $elements[] = array('hidden', 'id', $cm->id);
+        $elements[] = array('hidden', 'part', $part);
+        $elements[] = array('hidden', 'action', 'emailnonsubmitters');
+        $elements[] = array('submit', 'send_email', get_string('nonsubmitterssubmit', 'turnitintooltwo'));
 
-            $customdata["elements"] = $elements;
-            $customdata["hide_submit"] = true;
-            $customdata["disable_form_change_checker"] = true;
+        $customdata["elements"] = $elements;
+        $customdata["hide_submit"] = true;
+        $customdata["disable_form_change_checker"] = true;
 
-            $optionsform = new turnitintooltwo_form('', $customdata);
+        $optionsform = new turnitintooltwo_form('', $customdata);
 
-            echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'nonsubmittersform'));
-            unset($_SESSION['form_data']);
-            break;
+        echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'nonsubmittersform'));
+        unset($_SESSION['form_data']);
+        break;
 
     case "emailsent":
-        echo html_writer::tag('div', get_string('nonsubmittersformsuccess', 'turnitintooltwo'), array('class' => 'nonsubmittersformsuccessmsg'));
+        echo html_writer::tag('div', get_string('nonsubmittersformsuccess', 'turnitintooltwo'),
+                                array('class' => 'nonsubmittersformsuccessmsg'));
         break;
 }
 
@@ -785,5 +789,5 @@ foreach ($parts as $part) {
     $partsstring .= $part->partname.': '.$part->tiiassignid;
 }
 $partsstring .= ")";
-$courseID = $course->turnitin_cid;
-echo '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - course ID: '.$courseID.' - '.$partsstring.' -->';
+$courseid = $course->turnitin_cid;
+echo '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - course ID: '.$courseid.' - '.$partsstring.' -->';
