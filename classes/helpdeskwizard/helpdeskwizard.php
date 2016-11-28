@@ -30,7 +30,8 @@ class helpdeskwizard {
         try {
 
             // Check if solutions exist in the user's language.
-            $solutionsurl = "https://www.turnitin.com/static/resources/files/moodle_helpdesk/moodle-helpdesk-".current_language().".xml";
+            $tiiurl = "https://www.turnitin.com";
+            $solutionsurl = $tiiurl."/static/resources/files/moodle_helpdesk/moodle-helpdesk-".current_language().".xml";
             $ch = curl_init($solutionsurl);
             curl_setopt($ch, CURLOPT_NOBODY, true);
             $result = curl_exec($ch);
@@ -40,7 +41,7 @@ class helpdeskwizard {
                 $statuscode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
                 if ($statuscode != 200) {
-                    $solutionsurl = "https://www.turnitin.com/static/resources/files/moodle_helpdesk/moodle-helpdesk-en.xml";
+                    $solutionsurl = $tiiurl."/static/resources/files/moodle_helpdesk/moodle-helpdesk-en.xml";
                 }
             }
 
@@ -116,7 +117,8 @@ class helpdeskwizard {
             }
 
             // Output a hidden div with options for each category.
-            $output .= html_writer::tag('div', $selectoptions, array('id' => 'tii_'.$categoryname.'_options', 'class' => 'tii_wizard_options'));
+            $output .= html_writer::tag('div', $selectoptions,
+                array('id' => 'tii_'.$categoryname.'_options', 'class' => 'tii_wizard_options'));
         }
 
         // Header.
