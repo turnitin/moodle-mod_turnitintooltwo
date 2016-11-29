@@ -50,7 +50,7 @@ class turnitintooltwo_submission {
     private $submission_instructors;
     public $submission_orcapable;
     public $submission_acceptnothing;
-    public $overall_grade;
+    public $overallgrade;
     private $receipt;
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
@@ -168,19 +168,19 @@ class turnitintooltwo_submission {
                     $useroverallgrade = $turnitintooltwoassignment->get_overall_grade($usersubmissions);
 
                     if ($turnitintooltwoassignment->turnitintooltwo->grade == 0 OR $useroverallgrade === '--') {
-                        $this->overall_grade = '--';
+                        $this->overallgrade = '--';
                     } else if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) { // Scale.
                         $scale = $DB->get_record('scale', array('id' => $turnitintooltwoassignment->turnitintooltwo->grade * -1));
                         $scalearray = explode(",", $scale->scale);
                         // Array is zero indexed, Scale positions are from 1 upward.
                         $index = $useroverallgrade - 1;
-                        $this->overall_grade = $scalearray[$index];
+                        $this->overallgrade = $scalearray[$index];
                     } else {
-                        $this->overall_grade = round($useroverallgrade /
-                                                    $turnitintooltwoassignment->turnitintooltwo->grade * 100, 1).'%';
+                        $usergrade = round($useroverallgrade / $turnitintooltwoassignment->turnitintooltwo->grade * 100, 1);
+                        $this->overallgrade = $usergrade.'%';
                     }
                 } else {
-                    $this->overall_grade = '--';
+                    $this->overallgrade = '--';
                 }
             }
 
@@ -321,8 +321,8 @@ class turnitintooltwo_submission {
         $grades = new stdClass();
 
         // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking.
-        if ($submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' =>
-                                                $turnitintooltwoassignment->turnitintooltwo->id,
+        if ($submissions = $DB->get_records('turnitintooltwo_submissions',
+                                    array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
                                                     'userid' => $this->userid, 'submission_unanon' => 1))) {
             $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
             if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
@@ -456,7 +456,8 @@ class turnitintooltwo_submission {
             $this->receipt->send_message($userid, $message);
 
             // Add entry to log.
-            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission", 'view.php?id='.$cm->id, get_string('gradenosubmission', 'turnitintooltwo') . ": $userid", $cm->id, $userid);
+            turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission",
+                    'view.php?id='.$cm->id, get_string('gradenosubmission', 'turnitintooltwo') . ": $userid", $cm->id, $userid);
 
             if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
                 return get_string('submissionupdateerror', 'turnitintooltwo');
@@ -616,7 +617,7 @@ class turnitintooltwo_submission {
                     'lastname' => $user->lastname,
                     'submission_title' => $this->submission_title,
                     'assignment_name' => $turnitintooltwoassignment->turnitintooltwo->name,
-                    'assignment_part' => $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
+                    'assignment_part' => $turnitintooltwoassignment->get_part_details($this->submission_part)->partname,
                     'course_fullname' => $course->fullname,
                     'submission_date' => date('d-M-Y h:iA'),
                     'submission_id' => $submission->submission_objectid
@@ -628,7 +629,7 @@ class turnitintooltwo_submission {
 
                 // Instructor digital receipt.
                 $this->submission_instructors = get_enrolled_users($context, 'mod/turnitintooltwo:grade', 0, 'u.id');
-                if(!empty($this->submission_instructors)){
+                if (!empty($this->submission_instructors)) {
                     $message = $this->instructor_receipt->build_instructor_message($input);
                     $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
                 }
@@ -646,7 +647,9 @@ class turnitintooltwo_submission {
                 );
 
                 // Add to activity log.
-                turnitintooltwo_activitylog("Action: Submission | Id: ".$this->turnitintooltwoid." | Part: ".$submission->submission_part." | User ID: ".$user->id." (".$user->tii_user_id.") Submission title: ".$submission->submission_title, "REQUEST");
+                $logstring = "Action: Submission | Id: ".$this->turnitintooltwoid." | Part: ".$submission->submission_part;
+                $logstring .= " | User ID: ".$user->id." (".$user->tii_user_id.") Submission title: ".$submission->submission_title;
+                turnitintooltwo_activitylog($logstring, "REQUEST");
             } catch (Exception $e) {
                 $errorstring = (!is_null($this->submission_objectid)) ? "updatesubmissionerror" : "createsubmissionerror";
                 $error = $turnitincomms->handle_exceptions($e, $errorstring, false, true);
@@ -711,8 +714,11 @@ class turnitintooltwo_submission {
         $sub->submission_objectid = $tiisubmissiondata->getSubmissionId();
         $sub->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
 
-        $sub->submission_score = (is_numeric($tiisubmissiondata->getOverallSimilarity())) ?
-                                        $tiisubmissiondata->getOverallSimilarity() : null;
+        if (is_numeric($tiisubmissiondata->getOverallSimilarity())) {
+            $sub->submission_score = $tiisubmissiondata->getOverallSimilarity();
+        } else {
+            $sub->submission_score = null;
+        }
         $sub->submission_transmatch = 0;
 
         if ($turnitintooltwoassignment->turnitintooltwo->transmatch == 1 &&
@@ -728,13 +734,20 @@ class turnitintooltwo_submission {
         $sub->submission_unanon = ($tiisubmissiondata->getAnonymous() == 1) ? 0 : 1;
         $sub->submission_orcapable = ($tiisubmissiondata->getOriginalityReportCapable() == 1) ? 1 : 0;
         $sub->submission_acceptnothing = ($tiisubmissiondata->getAcceptNothingSubmission() == 1) ? 1 : 0;
-        $sub->submission_unanonreason = ($sub->submission_unanon == 1) ?
-                                            urldecode($tiisubmissiondata->getAnonymousRevealReason()) : null;
+
+        if ($sub->submission_unanon == 1) {
+            $sub->submission_unanonreason = urldecode($tiisubmissiondata->getAnonymousRevealReason());
+        } else {
+            $sub->submission_unanonreason = null;
+        }
 
         $sub->submission_modified = strtotime($tiisubmissiondata->getDate());
         $sub->translated_overall_similarity = $tiisubmissiondata->getTranslatedOverallSimilarity();
-        $sub->submission_attempts = ($tiisubmissiondata->getAuthorLastViewedFeedback() > 0) ?
-                                    strtotime($tiisubmissiondata->getAuthorLastViewedFeedback()) : 0;
+        if ($tiisubmissiondata->getAuthorLastViewedFeedback() > 0) {
+            $sub->submission_attempts = strtotime($tiisubmissiondata->getAuthorLastViewedFeedback());
+        } else {
+            $sub->submission_attempts = 0;
+        }
 
         // If save not passed in then only update if certain items have changed to save on database load.
         if ($this->submission_grade != $sub->submission_grade || $this->submission_score != $sub->submission_score ||

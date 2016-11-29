@@ -70,17 +70,15 @@ jQuery(document).ready(function($) {
             var accountid = $('#id_s_turnitintooltwo_accountid').val();
             var accountshared = $('#id_s_turnitintooltwo_secretkey').val();
 
-            // Make sure they aren't all spaces or empty.
-            if (accountid == '' ||
-                accountshared == '' ||
-                ! /\S/.test(accountid) ||
-                ! /\S/.test(accountshared))
-            {
+            // Make sure they aren't empty strings.
+            var accountid = accountid.trim();
+            var accountshared = accountshared.trim();
+            if (accountid.length == 0 || accountshared.length == 0) {
                 $('#test_result').hide();
                 $('.test_connection').hide();
             } else {
-                 $('.test_connection').show();
-                 $('#test_link').show();
+                $('.test_connection').show();
+                $('#test_link').show();
             }
         });
 
@@ -106,7 +104,7 @@ jQuery(document).ready(function($) {
                 type: "POST",
                 url: url,
                 dataType: "json",
-                data: {action: "test_connection", sesskey: M.cfg.sesskey, account_id: accountid, account_shared: accountshared, url: accounturl},
+                data: {action: "test_connection", sesskey: M.cfg.sesskey, accountid: accountid, accountshared: accountshared, url: accounturl},
                 success: function(data) {
                     eval(data);
 

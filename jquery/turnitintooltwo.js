@@ -1,4 +1,3 @@
-// var tiijq = jQuery.noConflict();
 jQuery(document).ready(function($) {
     $(".js_required").show();
     $(".js_hide").hide();

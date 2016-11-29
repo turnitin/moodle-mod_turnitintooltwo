@@ -440,17 +440,21 @@ switch ($action) {
             if (!empty($assignmentid)) {
                 if ($modulename == "turnitintooltwo") {
                     if (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
-                        $options[$turnitintooltwoassignment->turnitintooltwo->rubric] =
-                                                    (isset($options[$turnitintooltwoassignment->turnitintooltwo->rubric])) ?
-                                                                $options[$turnitintooltwoassignment->turnitintooltwo->rubric] :
-                                                                get_string('otherrubric', 'turnitintooltwo');
+                        if (isset($options[$turnitintooltwoassignment->turnitintooltwo->rubric])) {
+                            $rubricname = $options[$turnitintooltwoassignment->turnitintooltwo->rubric];
+                        } else {
+                            $rubricname = get_string('otherrubric', 'turnitintooltwo');
+                        }
+                        $options[$turnitintooltwoassignment->turnitintooltwo->rubric] = $rubricname;
                     }
                 } else {
                     if (!empty($plagiarismsettings["plagiarism_rubric"])) {
-                        $options[$plagiarismsettings["plagiarism_rubric"]] =
-                                                    (isset($options[$plagiarismsettings["plagiarism_rubric"]])) ?
-                                                                    $options[$plagiarismsettings["plagiarism_rubric"]] :
-                                                                    get_string('otherrubric', 'turnitintooltwo');
+                        if (isset($options[$plagiarismsettings["plagiarism_rubric"]])) {
+                            $rubricname = $options[$plagiarismsettings["plagiarism_rubric"]];
+                        } else {
+                            $rubricname = get_string('otherrubric', 'turnitintooltwo');
+                        }
+                        $options[$plagiarismsettings["plagiarism_rubric"]] = $rubricname;
                     }
                 }
             }
