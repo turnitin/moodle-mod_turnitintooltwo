@@ -262,9 +262,12 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $ynoptions = array( 0 => get_string('no'), 1 => get_string('yes'));
 
-        if ($this->updating AND $config->useanon AND isset($this->turnitintooltwo->anon) AND $this->turnitintooltwo->submitted == 1) {
-            $staticout = (isset($this->turnitintooltwo->anon) AND $this->turnitintooltwo->anon) ?
-                            get_string('yes') : get_string('no');
+        if ($this->updating && $config->useanon && isset($this->turnitintooltwo->anon) && $this->turnitintooltwo->submitted == 1) {
+            if (isset($this->turnitintooltwo->anon) && $this->turnitintooltwo->anon) {
+                $staticout = get_string('yes');
+            } else {
+                $staticout = get_string('no');
+            }
             $mform->addElement('static', 'static', get_string('turnitinanon', 'turnitintooltwo'), $staticout);
             $mform->addElement('hidden', 'anon', $this->turnitintooltwo->anon);
             $mform->addHelpButton('anon', 'turnitinanon', 'turnitintooltwo');
@@ -327,7 +330,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             if (isset($this->_cm->id) && isset($partsarray[$i - 1])) {
                 $partdetails = $turnitintooltwoassignment->get_part_details($partsarray[$i - 1]->id);
                 $partinfodiv = html_writer::start_tag('div',
-                    array('class' => 'assignment-part-' . $i, 'data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+                    array('class' => 'assignment-part-' . $i,
+                            'data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
                             'data-unanon' => $partdetails->unanon, 'data-submitted' => $partdetails->submitted, 'data-part-id' => $i));
                 $mform->addElement('html', $partinfodiv);
             }
@@ -347,8 +351,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 $url = new moodle_url($CFG->wwwroot."/mod/turnitintooltwo/view.php",
                                         array('id' => $this->_cm->id, 'action' => 'delpart',
                                             'part' => $this->current->$partidattribute, 'sesskey' => sesskey()));
-                $deletelink = html_writer::link($url, html_writer::tag('i', '', array('class' => 'fa fa-trash fa-lg icon_smallmargin')).
-                        get_string('deletepart', 'turnitintooltwo'), $attributes);
+                $deletelink = html_writer::link($url,
+                                html_writer::tag('i', '', array('class' => 'fa fa-trash fa-lg icon_smallmargin')).
+                                    get_string('deletepart', 'turnitintooltwo'), $attributes);
                 $mform->addElement('html', $deletelink);
             }
 
@@ -446,23 +451,29 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         if ($this->numsubs > 0) {
 
-            $staticout = (isset($this->turnitintooltwo->excludebiblio) AND $this->turnitintooltwo->excludebiblio)
-                            ? get_string('yes') : get_string('no');
+            if (isset($this->turnitintooltwo->excludebiblio) && $this->turnitintooltwo->excludebiblio) {
+                $staticout = get_string('yes');
+            } else {
+                $staticout = get_string('no');
+            }
             $mform->addElement('static', 'static', get_string('excludebiblio', 'turnitintooltwo'), $staticout);
             $mform->addElement('hidden', 'excludebiblio', $this->turnitintooltwo->excludebiblio);
 
-            $staticout = (isset($this->turnitintooltwo->excludequoted) AND $this->turnitintooltwo->excludequoted)
-                            ? get_string('yes') : get_string('no');
+            if (isset($this->turnitintooltwo->excludequoted) && $this->turnitintooltwo->excludequoted) {
+                $staticout = get_string('yes');
+            } else {
+                $staticout = get_string('no');
+            }
             $mform->addElement('static', 'static', get_string('excludequoted', 'turnitintooltwo'), $staticout);
             $mform->addElement('hidden', 'excludequoted', $this->turnitintooltwo->excludequoted);
 
-            if (isset($this->turnitintooltwo->excludetype) AND $this->turnitintooltwo->excludetype == 1) {
+            if (isset($this->turnitintooltwo->excludetype) && $this->turnitintooltwo->excludetype == 1) {
                 $staticout = get_string('excludewords', 'turnitintooltwo');
             } else {
                 $staticout = get_string('excludepercent', 'turnitintooltwo');
             }
 
-            if (isset($this->turnitintooltwo->excludevalue) AND empty($this->turnitintooltwo->excludevalue)) {
+            if (isset($this->turnitintooltwo->excludevalue) && empty($this->turnitintooltwo->excludevalue)) {
                 $staticval = get_string('nolimit', 'turnitintooltwo');
             } else {
                 $staticval = $this->turnitintooltwo->excludevalue.' '.$staticout;

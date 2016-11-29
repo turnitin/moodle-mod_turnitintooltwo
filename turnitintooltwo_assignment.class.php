@@ -1322,7 +1322,7 @@ class turnitintooltwo_assignment {
                                                         $this->turnitintooltwo->erater_style : 0;
         $this->turnitintooltwo->transmatch = (isset($this->turnitintooltwo->transmatch)) ? $this->turnitintooltwo->transmatch : 0;
         $institutioncheck = 0;
-        if (isset($this->turnitintooltwo->institution_check) {
+        if (isset($this->turnitintooltwo->institution_check)) {
             $institutioncheck = $this->turnitintooltwo->institution_check;
         }
         $this->turnitintooltwo->institution_check = $institutioncheck;
