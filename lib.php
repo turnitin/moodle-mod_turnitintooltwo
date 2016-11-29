@@ -182,7 +182,7 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
     try {
         $turnitintooltwoassignment->edit_moodle_assignment(false);
     } catch (Exception $e) {
-        // Ignore the exception.
+        turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
     }
 
     // Update events in the calendar.
@@ -210,7 +210,7 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
                 $DB->update_record('event', $updatedevent);
             }
         } catch (Exception $e) {
-            // Ignore the exception.
+            turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
         }
     }
 }
@@ -396,8 +396,10 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $rubrics = $turnitinclass->sharedrubrics;
             $rubrics = $rubrics + $instructorrubrics;
 
-            $rubricid = (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) ?
-                            $turnitintooltwoassignment->turnitintooltwo->rubric : '';
+            $rubricid = '';
+            if (!empty($turnitintooltwoassignment->turnitintooltwo->rubric)) {
+                $rubricid = $turnitintooltwoassignment->turnitintooltwo->rubric;
+            }
             $rubricid = (!empty($rubricid) && array_key_exists($rubricid, $rubrics)) ? $rubricid : '';
 
             $assignment->setRubricId($rubricid);
@@ -412,8 +414,11 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             }
             $assignment->setLateSubmissionsAllowed($turnitintooltwoassignment->turnitintooltwo->allowlate);
             if ($config->repositoryoption == 1) {
-                $assignment->setInstitutionCheck((isset($turnitintooltwoassignment->turnitintooltwo->institution_check)) ?
-                                $turnitintooltwoassignment->turnitintooltwo->institution_check : 0);
+                $institutioncheck = 0;
+                if (isset($turnitintooltwoassignment->turnitintooltwo->institution_check) {
+                    $institutioncheck = $turnitintooltwoassignment->turnitintooltwo->institution_check;
+                }
+                $assignment->setInstitutionCheck($institutioncheck);
             }
 
             $attribute = "maxmarks".$i;
@@ -425,17 +430,28 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setAllowNonOrSubmissions($turnitintooltwoassignment->turnitintooltwo->allownonor);
 
             // Erater settings.
-            $assignment->setErater((isset($turnitintooltwoassignment->turnitintooltwo->erater)) ?
-                            $turnitintooltwoassignment->turnitintooltwo->erater : 0);
+            $erater = 0;
+            if (isset($turnitintooltwoassignment->turnitintooltwo->erater) {
+                $erater = $turnitintooltwoassignment->turnitintooltwo->erater;
+            }
+            $assignment->setErater($erater);
             $assignment->setEraterSpelling($turnitintooltwoassignment->turnitintooltwo->erater_spelling);
             $assignment->setEraterGrammar($turnitintooltwoassignment->turnitintooltwo->erater_grammar);
             $assignment->setEraterUsage($turnitintooltwoassignment->turnitintooltwo->erater_usage);
             $assignment->setEraterMechanics($turnitintooltwoassignment->turnitintooltwo->erater_mechanics);
             $assignment->setEraterStyle($turnitintooltwoassignment->turnitintooltwo->erater_style);
-            $assignment->setEraterSpellingDictionary((isset($turnitintooltwoassignment->turnitintooltwo->erater_dictionary)) ?
-                            $turnitintooltwoassignment->turnitintooltwo->erater_dictionary : 'en_US');
-            $assignment->setEraterHandbook((isset($turnitintooltwoassignment->turnitintooltwo->erater_handbook)) ?
-                            $turnitintooltwoassignment->turnitintooltwo->erater_handbook : 0);
+
+            $eraterdictionary = 'en_US';
+            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_dictionary) {
+                $eraterdictionary = $turnitintooltwoassignment->turnitintooltwo->erater_dictionary;
+            }
+            $assignment->setEraterSpellingDictionary($eraterdictionary);
+
+            $eraterhandbook = 0;
+            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_handbook) {
+                $eraterhandbook = $turnitintooltwoassignment->turnitintooltwo->erater_handbook
+            }
+            $assignment->setEraterHandbook($eraterhandbook);
 
             $attribute = "dtstart".$i;
             $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
@@ -927,7 +943,7 @@ function turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, 
 
     if (!is_siteadmin()) {
         $turnitintooltwouser = new turnitintooltwo_user($USER->id, 'Instructor');
-        $tiiinstructorid = $turnitintooltwouser->tii_user_id;
+        $tiiinstructorid = $turnitintooltwouser->tiiuserid;
         $class->setUserId($tiiinstructorid);
         $class->setUserRole('Instructor');
     }
@@ -1316,10 +1332,14 @@ function turnitintooltwo_getusers() {
             $pseudoemail = $pseudouser->getEmail();
         }
 
-        $return["aaData"][] = array($checkbox, ($user->turnitin_uid == 0) ?
-                                '' : $user->turnitin_uid, format_string($user->lastname),
-                                        format_string($user->firstname), $pseudoemail);
-
+        $aadata = array($checkbox);
+        if ($user->turnitin_uid == 0) {
+            $aadata[] = '';
+        } else {
+            $userdetails = array($user->turnitin_uid, format_string($user->lastname), format_string($user->firstname), $pseudoemail);
+            $aadata = array_merge($aadata, $userdetails);
+        }
+        $return["aaData"][] = $aadata;
     }
     $return["sEcho"] = $secho;
     $return["iTotalRecords"] = count($users);

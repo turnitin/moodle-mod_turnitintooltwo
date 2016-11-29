@@ -575,7 +575,7 @@ switch ($do) {
 
         if ($istutor) {
             $user = new turnitintooltwo_user($USER->id, "Instructor");
-            echo html_writer::tag("div", $turnitintooltwoview->output_download_launch_form($downloadtype, $user->tii_user_id,
+            echo html_writer::tag("div", $turnitintooltwoview->output_download_launch_form($downloadtype, $user->tiiuserid,
                                                     $parts[$part]->tiiassignid, $submissionids), array("class" => "launch_form"));
         }
         break;
@@ -619,7 +619,7 @@ switch ($do) {
         $submissionid = required_param('submissionid', PARAM_INT);
         $user = new turnitintooltwo_user($USER->id, $userrole);
 
-        echo html_writer::tag("div", $turnitintooltwoview->output_dv_launch_form($do, $submissionid, $user->tii_user_id, $userrole),
+        echo html_writer::tag("div", $turnitintooltwoview->output_dv_launch_form($do, $submissionid, $user->tiiuserid, $userrole),
                                                                                 array("class" => "launch_form"));
         if ($do === "origreport") {
             $submission = new turnitintooltwo_submission($submissionid, 'turnitin');
@@ -640,8 +640,8 @@ switch ($do) {
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
             $user->join_user_to_class($coursedata->turnitin_cid);
             // Has the student accepted the EULA?
-            $eulaaccepted = $user->user_agreement_accepted;
-            if ($user->user_agreement_accepted != 1) {
+            $eulaaccepted = $user->useragreementaccepted;
+            if ($user->useragreementaccepted != 1) {
                 $eulaaccepted = $user->get_accepted_user_agreement();
             }
 
@@ -660,7 +660,7 @@ switch ($do) {
                                             'data-userid' => $user->id));
 
                 $noscriptula = html_writer::tag('noscript',
-                                turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
+                                turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
                                     "Learner", get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                         get_string('noscriptula', 'turnitintooltwo'),
                                             array('class' => 'warning turnitin_ula_noscript'));

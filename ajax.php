@@ -111,7 +111,7 @@ switch ($action) {
 
         if (has_capability('mod/turnitintooltwo:read', context_module::instance($cm->id))) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
-            echo turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner", "Submit", true);
+            echo turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tiiuserid, "Learner", "Submit", true);
         }
         break;
 
@@ -152,7 +152,7 @@ switch ($action) {
 
             $user = new turnitintooltwo_user($USER->id, $userrole);
 
-            $launchform = turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tii_user_id, $userrole, '');
+            $launchform = turnitintooltwo_view::output_dv_launch_form($action, $submissionid, $user->tiiuserid, $userrole, '');
             if ($action == 'downloadoriginal') {
                 echo $launchform;
             } else {
@@ -198,7 +198,7 @@ switch ($action) {
                 $submissionids = optional_param_array('submission_ids', array(), PARAM_INT);
             }
 
-            echo turnitintooltwo_view::output_download_launch_form($action, $user->tii_user_id, $partid, $submissionids);
+            echo turnitintooltwo_view::output_download_launch_form($action, $user->tiiuserid, $partid, $submissionids);
         }
         break;
 
@@ -673,8 +673,11 @@ switch ($action) {
             $partids = required_param('parts', PARAM_SEQUENCE);
             $courseid = optional_param('course_id', 0, PARAM_INT);
             $assignmentname = optional_param('assignment_name', '', PARAM_TEXT);
-            $assignmentname = (empty($assignmentname)) ? get_string('defaultassignmenttiititle', 'turnitintooltwo') :
-                                                                urldecode($assignmentname);
+            if (empty($assignmentname)) {
+                $assignmentname = get_string('defaultassignmenttiititle', 'turnitintooltwo');
+            } else {
+                $assignmentname = urldecode($assignmentname);
+            }
 
             $partids = explode(',', $partids);
             if (is_array($partids)) {
