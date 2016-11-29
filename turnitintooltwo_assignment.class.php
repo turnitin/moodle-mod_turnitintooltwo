@@ -1321,8 +1321,11 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->erater_style = (isset($this->turnitintooltwo->erater_style)) ?
                                                         $this->turnitintooltwo->erater_style : 0;
         $this->turnitintooltwo->transmatch = (isset($this->turnitintooltwo->transmatch)) ? $this->turnitintooltwo->transmatch : 0;
-        $this->turnitintooltwo->institution_check = (isset($this->turnitintooltwo->institution_check)) ?
-                                                        $this->turnitintooltwo->institution_check : 0;
+        $institutioncheck = 0;
+        if (isset($this->turnitintooltwo->institution_check) {
+            $institutioncheck = $this->turnitintooltwo->institution_check;
+        }
+        $this->turnitintooltwo->institution_check = $institutioncheck;
 
         // Update each individual part.
         for ($i = 1; $i <= $this->turnitintooltwo->numparts; $i++) {
@@ -1340,8 +1343,7 @@ class turnitintooltwo_assignment {
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
             if ($config->repositoryoption == 1) {
-                $assignment->setInstitutionCheck((isset($this->turnitintooltwo->institution_check)) ?
-                                                        $this->turnitintooltwo->institution_check : 0);
+                $assignment->setInstitutionCheck($institutioncheck);
             }
 
             $attribute = "maxmarks".$i;
@@ -1359,7 +1361,10 @@ class turnitintooltwo_assignment {
             $assignment->setEraterUsage($this->turnitintooltwo->erater_usage);
             $assignment->setEraterMechanics($this->turnitintooltwo->erater_mechanics);
             $assignment->setEraterStyle($this->turnitintooltwo->erater_style);
-            $eraterdictionary = (isset($this->turnitintooltwo->erater_dictionary)) ? $this->turnitintooltwo->erater_dictionary : 'en_US';
+            $eraterdictionary = 'en_US';
+            if (isset($this->turnitintooltwo->erater_dictionary)) {
+                $eraterdictionary = $this->turnitintooltwo->erater_dictionary;
+            }
             $assignment->setEraterSpellingDictionary($eraterdictionary);
             $assignment->setEraterHandbook((isset($this->turnitintooltwo->erater_handbook)) ?
                                                         $this->turnitintooltwo->erater_handbook : 0);
