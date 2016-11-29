@@ -34,7 +34,7 @@ install:
 script:
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
-  - moodle-plugin-ci phpmd --ignore-violations-on-exit
+  - moodle-plugin-ci phpmd --suffixes php --ignore-violations-on-exit
   - moodle-plugin-ci codechecker
   - moodle-plugin-ci csslint
   - moodle-plugin-ci shifter
