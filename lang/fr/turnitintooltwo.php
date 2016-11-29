@@ -394,9 +394,7 @@ $string['attachrubric'] = 'Joindre une grille d&#39;évaluation à cet exercice'
 $string['norubric'] = 'Aucune grille d&#39;évaluation';
 $string['otherrubric'] = 'Utiliser la grille d&#39;évaluation appartenant à un autre enseignant';
 $string['attachrubricnote'] = 'Remarque: les étudiants pourront voir les grilles d&#39;évaluation jointes et leurs contenus avant de soumettre leur devoir.';
-$string['changerubricwarning'] = 'Si vous modifiez ou supprimez une grille d&#39;évaluation, l&#39;ensemble des
-scores existants des copies de cet exercice (dont les scores des fiches
-d&#39;évaluation) seront effacés. Les notes globale des copies corrigées précédement resteront inchangées.';
+$string['changerubricwarning'] = 'Si vous modifiez ou supprimez une grille d&#39;évaluation, l&#39;ensemble des scores existants des copies de cet exercice (dont les scores des fiches d&#39;évaluation) seront effacés. Les notes globale des copies corrigées précédement resteront inchangées.';
 $string['launchrubricmanager'] = 'Démarrer le Gestionnaire des grilles d&#39;évaluation';
 $string['launchrubricview'] = 'Voir la grille d&#39;évaluation utilisée pour corriger';
 $string['launchrubricviewshort'] = 'Rubrique de correction';

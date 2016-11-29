@@ -198,7 +198,7 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
         }
 
         try {
-            // Update event for assignment part
+            // Update event for assignment part.
             if ($event = $DB->get_record_select("event", $dbselect,
                                         array('turnitintooltwo', $turnitintooltwo->id,
                                                     $turnitintooltwo->course, '% - '.$part->partname))) {
@@ -482,7 +482,8 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
         }
     }
 
-    $item = ($action == "NEWCLASS") ? get_string('copyassigndata', 'turnitintooltwo') : get_string('replaceassigndata', 'turnitintooltwo');
+    $datastr = ($action == "NEWCLASS") ? 'copyassigndata' : 'replaceassigndata';
+    $item = get_string($datastr, 'turnitintooltwo');
     $status[] = array('component' => get_string('modulenameplural', 'turnitintooltwo'), 'item' => $item, 'error' => $error);
 
     return $status;

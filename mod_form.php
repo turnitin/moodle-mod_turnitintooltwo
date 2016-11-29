@@ -34,7 +34,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     private $turnitintooltwo;
 
     public function definition() {
-        global $CFG, $DB, $USER, $COURSE;
+        global $DB, $USER, $COURSE;
         $config = turnitintooltwo_admin_config();
 
         // Module string is useful for product support.
@@ -239,10 +239,16 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addElement('hidden', 'portfolio', 0);
         $mform->setType('portfolio', PARAM_INT);
 
-        $maxbytessite = ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
-                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $CFG->maxbytes;
-        $maxbytescourse = ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) ?
-                            TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $COURSE->maxbytes;
+        // Define file upload sizes.
+        $maxbytessite = $CFG->maxbytes;
+        if ($CFG->maxbytes == 0 || $CFG->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) {
+            $maxbytessite = TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE;
+        }
+
+        $maxbytescourse = $COURSE->maxbytes;
+        if ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE) {
+            $maxbytescourse = TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE;
+        }
 
         $options = get_max_upload_sizes($maxbytessite, $maxbytescourse, TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE);
 
@@ -319,8 +325,11 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->addElement('header', 'partdates'.$i, get_string('partname', 'turnitintooltwo')." ".$i);
 
             if (isset($this->_cm->id) && isset($partsarray[$i - 1])) {
-                    $partdetails = $turnitintooltwoassignment->get_part_details($partsarray[$i - 1]->id);
-                    $mform->addElement('html', '<div class="assignment-part-' . $i . '" data-anon="' . $turnitintooltwoassignment->turnitintooltwo->anon . '" data-unanon="' . $partdetails->unanon . '" data-submitted="' . $partdetails->submitted . '" data-part-id="' . $i . '">');
+                $partdetails = $turnitintooltwoassignment->get_part_details($partsarray[$i - 1]->id);
+                $partinfodiv = html_writer::start_tag('div',
+                    array('class' => 'assignment-part-' . $i, 'data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
+                            'data-unanon' => $partdetails->unanon, 'data-submitted' => $partdetails->submitted, 'data-part-id' => $i));
+                $mform->addElement('html', $partinfodiv);
             }
 
             // Delete part link.
@@ -368,6 +377,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 $mform->setDefault('maxmarks'.$i, '100');
                 $mform->addRule('maxmarks'.$i, null, 'numeric', null, 'client');
             }
+
+            if (isset($this->_cm->id) && isset($partsarray[$i - 1])) {
+                $mform->addElement('html', html_writer::end_tag('div'));
+            }
         }
 
         $mform->addElement('header', 'advanced', get_string('turnitinoroptions', 'turnitintooltwo'));
@@ -382,7 +395,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
 
-        $mform->addElement('html', html_writer::tag('div', get_string('genspeednote', 'turnitintooltwo'), array('class' => 'tii_genspeednote')));
+        $mform->addElement('html', html_writer::tag('div', get_string('genspeednote', 'turnitintooltwo'),
+                                        array('class' => 'tii_genspeednote')));
 
         $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
                             1 => get_string('standardrepository', 'turnitintooltwo'));
@@ -410,7 +424,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 break;
         }
 
-        $mform->addElement('html', html_writer::tag('div', get_string('checkagainstnote', 'turnitintooltwo'), array('class' => 'tii_checkagainstnote')));
+        $mform->addElement('html', html_writer::tag('div', get_string('checkagainstnote', 'turnitintooltwo'),
+                            array('class' => 'tii_checkagainstnote')));
 
         $mform->addElement('select', 'spapercheck', get_string('spapercheck', 'turnitintooltwo'), $ynoptions);
         $mform->addHelpButton('spapercheck', 'spapercheck', 'turnitintooltwo');
@@ -441,10 +456,18 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->addElement('static', 'static', get_string('excludequoted', 'turnitintooltwo'), $staticout);
             $mform->addElement('hidden', 'excludequoted', $this->turnitintooltwo->excludequoted);
 
-            $staticout = (isset($this->turnitintooltwo->excludetype) AND $this->turnitintooltwo->excludetype == 1)
-                            ? get_string('excludewords', 'turnitintooltwo') : get_string('excludepercent', 'turnitintooltwo');
-            $staticval = (isset($this->turnitintooltwo->excludevalue) AND empty($this->turnitintooltwo->excludevalue))
-                            ? get_string('nolimit', 'turnitintooltwo') : $this->turnitintooltwo->excludevalue.' '.$staticout;
+            if (isset($this->turnitintooltwo->excludetype) AND $this->turnitintooltwo->excludetype == 1) {
+                $staticout = get_string('excludewords', 'turnitintooltwo');
+            } else {
+                $staticout = get_string('excludepercent', 'turnitintooltwo');
+            }
+
+            if (isset($this->turnitintooltwo->excludevalue) AND empty($this->turnitintooltwo->excludevalue)) {
+                $staticval = get_string('nolimit', 'turnitintooltwo');
+            } else {
+                $staticval = $this->turnitintooltwo->excludevalue.' '.$staticout;
+            }
+
             $mform->addElement('static', 'static', get_string('excludevalue', 'turnitintooltwo'), $staticval);
             $mform->addElement('hidden', 'excludevalue', $this->turnitintooltwo->excludevalue);
             $mform->addElement('hidden', 'excludetype', $this->turnitintooltwo->excludetype);
