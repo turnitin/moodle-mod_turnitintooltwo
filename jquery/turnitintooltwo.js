@@ -43,6 +43,7 @@ jQuery(document).ready(function($) {
                 dataType: "html",
                 data: {
                     action: 'deletesubmission',
+                    sesskey: M.cfg.sesskey,
                     paper: $(this).data("paper"),
                     part: $(this).data("part"),
                     assignment: $(this).data("assignment")
