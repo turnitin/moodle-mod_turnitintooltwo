@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
                     part: $(this).data("part"),
                     assignment: $(this).data("assignment")
                 },
-                success: function(data) {
+                success: function() {
                     window.location.href = window.location.href;
                 }
             });
@@ -205,13 +205,13 @@ jQuery(document).ready(function($) {
     // Activate datatable tabs on submission inbox.
     if ($("#tabs").length > 0) {
         // Set tab position.
-        var activeTab = 0
+        var activeTab = 0;
         if ($("#tab_position").length > 0) {
-            var activeTab = $('#tab_position').text();
+            activeTab = $('#tab_position').text();
         }
         $("#tabs").tabs( {
             "active": activeTab,
-            "show": function(event, ui) {
+            "show": function() {
                 var table = $.fn.dataTable.fnTables(true);
                 if ( table.length > 0 ) {
                     $(table).dataTable().fnAdjustColumnSizing();
@@ -582,7 +582,6 @@ jQuery(document).ready(function($) {
         var dvtype = idStr[0];
         var submission_id = idStr[1];
         var part_id = idStr[2];
-        var user_id = idStr[3];
 
         // Show resubmission grade warning if the due date has not passed.
         if (due_date_unix > moment().unix()) {

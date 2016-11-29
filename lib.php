@@ -536,7 +536,7 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
 function turnitintooltwo_cron() {
     global $DB, $CFG, $tiitaskcall;
 
-    // 2.7 onwards we would like to be called from task calls
+    // 2.7 onwards we would like to be called from task calls.
     if ( $CFG->version > 2014051200 && !$tiitaskcall ) {
         mtrace(get_string('crontaskmodeactive', 'turnitintooltwo'));
         return;
