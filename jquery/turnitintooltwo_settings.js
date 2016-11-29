@@ -71,8 +71,8 @@ jQuery(document).ready(function($) {
             var accountshared = $('#id_s_turnitintooltwo_secretkey').val();
 
             // Make sure they aren't empty strings.
-            var accountid = accountid.trim();
-            var accountshared = accountshared.trim();
+            accountid = accountid.trim();
+            accountshared = accountshared.trim();
             if (accountid.length == 0 || accountshared.length == 0) {
                 $('#test_result').hide();
                 $('.test_connection').hide();
