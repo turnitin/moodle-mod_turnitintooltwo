@@ -1938,7 +1938,7 @@ class turnitintooltwo_assignment {
                 $submission->firstname = $user->firstname;
                 $submission->lastname = $user->lastname;
                 $submission->fullname = $user->fullname;
-                $submission->tii_user_id = $user->tii_user_id;
+                $submission->tiiuserid = $user->tiiuserid;
                 $submission->nmoodle = 0;
 
                 if (isset($users[$user->id])) {

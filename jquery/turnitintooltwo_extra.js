@@ -109,21 +109,21 @@ jQuery(document).ready(function($) {
         "sAjaxSource": "ajax.php",
         "aoColumnDefs": [
                     {"bSearchable": false, "bSortable": false, "sWidth": "5%", "bVisible": true, "aTargets": [ 0 ],
-                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        "fnCreatedCell": function (nTd) {
                             $(nTd).addClass('center');
                         }},
                     {"bSearchable": true, "bVisible": true, "sWidth": "45%", "iDataSort": 6, "aTargets": [ 1 ]},
                     {"bSearchable": true, "bVisible": true, "sWidth": "10%", "aTargets": [ 2 ]},
                     {"bSearchable": true, "bVisible": true, "sWidth": "20%", "iDataSort": 7, "aTargets": [ 3 ],
-                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        "fnCreatedCell": function (nTd) {
                             $(nTd).addClass('right');
                         }},
                     {"bSearchable": false, "bVisible": true, "sWidth": "10%", "aTargets": [ 4 ],
-                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        "fnCreatedCell": function (nTd) {
                             $(nTd).addClass('right');
                         }},
                     {"bSearchable": true, "bVisible": true, "sWidth": "10%", "aTargets": [ 5 ],
-                        "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                        "fnCreatedCell": function (nTd) {
                             $(nTd).addClass('center');
                         }},
                     {"bSearchable": true, "bVisible": false, "aTargets": [ 6 ]},
@@ -219,7 +219,7 @@ jQuery(document).ready(function($) {
         "aoColumnDefs": [
             {"bSearchable": false, "bVisible": true, "aTargets": [ 0 ]},
             {"bSearchable": true, "bVisible": true, "aTargets": [ 1 ],
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                "fnCreatedCell": function (nTd) {
                     $(nTd).addClass('nowrap');
                 }},
             {"bSearchable": true, "bVisible": true, "aTargets": [ 2 ]},

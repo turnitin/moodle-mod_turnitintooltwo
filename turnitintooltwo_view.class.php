@@ -292,7 +292,7 @@ class turnitintooltwo_view {
             $user = new turnitintooltwo_user($userid, "Learner");
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
             $user->join_user_to_class($coursedata->turnitin_cid);
-            $eulaaccepted = ($user->user_agreement_accepted != 1) ? $user->get_accepted_user_agreement() : $user->user_agreement_accepted;
+            $eulaaccepted = ($user->useragreementaccepted != 1) ? $user->get_accepted_user_agreement() : $user->useragreementaccepted;
         }
 
         $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);
@@ -371,12 +371,12 @@ class turnitintooltwo_view {
             if ($userid == $USER->id) {
                 if ($eulaaccepted != 1) {
                     $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula_text'));
-                    $ula .= html_writer::tag('div', self::output_dv_launch_form("useragreement", 0, $user->tii_user_id,
+                    $ula .= html_writer::tag('div', self::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
                                 "Learner", get_string('turnitinula_btn', 'turnitintooltwo'), false),
                                     array('class' => 'turnitin_ula', 'data-userid' => $userid));
 
                     $noscriptula = html_writer::tag('noscript',
-                                            $this->output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner",
+                                            $this->output_dv_launch_form("useragreement", 0, $user->tiiuserid, "Learner",
                                             get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                                 get_string('noscriptula', 'turnitintooltwo'),
                                             array('class' => 'warning turnitin_ula_noscript'));
@@ -1296,6 +1296,7 @@ class turnitintooltwo_view {
                     if ($turnitintooltwoassignment->turnitintooltwo->grade == 0 ||
                                                     $useroverallgrades[$submission->userid] === '--' ||
                                                     (!$istutor && $displayoverallgrade == 0)) {
+                        $overallgrade = '--';
                     } else if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) { // Scale.
                         $scale = $DB->get_record('scale', array('id' => $turnitintooltwoassignment->turnitintooltwo->grade * -1));
                         $scalearray = explode(",", $scale->scale);
@@ -1347,8 +1348,8 @@ class turnitintooltwo_view {
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
                 $submissionuser->join_user_to_class($coursedata->turnitin_cid);
                 // Has the student accepted the EULA?
-                $eulaaccepted = $submissionuser->user_agreement_accepted;
-                if ($submissionuser->user_agreement_accepted == 0) {
+                $eulaaccepted = $submissionuser->useragreementaccepted;
+                if ($submissionuser->useragreementaccepted == 0) {
                     $eulaaccepted = $submissionuser->get_accepted_user_agreement();
                 }
             }
@@ -1356,8 +1357,9 @@ class turnitintooltwo_view {
             $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
                                     $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.' '.
                                     html_writer::tag('i', '', array('class' => 'fa fa-cloud-upload fa-lg')),
-                                    array("class" => "upload_box nowrap", "id" => "upload_".$submission->submission_objectid.
-                                    "_".$partid."_".$submission->userid, 'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
+                                    array("class" => "upload_box nowrap",
+                                            "id" => "upload_".$submission->submission_objectid."_".$partid."_".$submission->userid,
+                                            'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
 
             if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
                 $upload = "&nbsp;";
@@ -1379,7 +1381,7 @@ class turnitintooltwo_view {
             // Add in LTI launch form incase Javascript is disabled.
             if (!$istutor) {
                 $download .= html_writer::tag('noscript', $this->output_dv_launch_form("downloadoriginal",
-                                                $submission->submission_objectid, $user->tii_user_id, "Learner",
+                                                $submission->submission_objectid, $user->tiiuserid, "Learner",
                                                 get_string('downloadsubmission', 'turnitintooltwo')));
             }
         } else {
@@ -1661,7 +1663,7 @@ class turnitintooltwo_view {
         $user = new turnitintooltwo_user($USER->id, $userrole);
 
         $lti = new TiiLTI();
-        $lti->setUserId($user->tii_user_id);
+        $lti->setUserId($user->tiiuserid);
         $lti->setRole($userrole);
         $lti->setFormTarget('');
 

@@ -18,14 +18,14 @@ defined('MOODLE_INTERNAL') || die();
 
 class turnitintooltwo_user {
     public $id;
-    public $tii_user_id;
+    public $tiiuserid;
     private $role;
     public $firstname;
     public $lastname;
     public $fullname;
     public $email;
     public $username;
-    public $user_agreement_accepted;
+    public $useragreementaccepted;
     private $enrol;
     private $workflowcontext;
     private $usermessages;
@@ -180,19 +180,19 @@ class turnitintooltwo_user {
         global $DB;
         $tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid, user_agreement_accepted");
         if (!$tiiuser) {
-            $this->tii_user_id = 0;
-            $this->user_agreement_accepted = 0;
+            $this->tiiuserid = 0;
+            $this->useragreementaccepted = 0;
         } else {
-            $this->tii_user_id = (isset($tiiuser->turnitin_uid) && $tiiuser->turnitin_uid > 0 ) ? $tiiuser->turnitin_uid : 0;
-            $this->user_agreement_accepted = $tiiuser->user_agreement_accepted;
+            $this->tiiuserid = (isset($tiiuser->turnitin_uid) && $tiiuser->turnitin_uid > 0 ) ? $tiiuser->turnitin_uid : 0;
+            $this->useragreementaccepted = $tiiuser->user_agreement_accepted;
         }
 
-        if (empty($this->tii_user_id)) {
-            $this->tii_user_id = $this->find_tii_user_id();
-            if (empty($this->tii_user_id) && $this->enrol) {
-                $this->tii_user_id = $this->create_tii_user();
+        if (empty($this->tiiuserid)) {
+            $this->tiiuserid = $this->find_tii_user_id();
+            if (empty($this->tiiuserid) && $this->enrol) {
+                $this->tiiuserid = $this->create_tii_user();
             }
-            if (!empty($this->tii_user_id)) {
+            if (!empty($this->tiiuserid)) {
                 $this->save_tii_user();
             }
         }
@@ -297,7 +297,7 @@ class turnitintooltwo_user {
             $user->setFirstName($this->firstname);
             $user->setLastName($this->lastname);
 
-            $user->setUserId($this->tii_user_id);
+            $user->setUserId($this->tiiuserid);
             $user->setDefaultRole($this->role);
 
             try {
@@ -342,7 +342,7 @@ class turnitintooltwo_user {
         global $DB;
         $user = new stdClass();
         $user->userid = $this->id;
-        $user->turnitin_uid = $this->tii_user_id;
+        $user->turnitin_uid = $this->tiiuserid;
         $user->turnitin_utp = 1;
         if ($this->role == "Instructor") {
             $user->turnitin_utp = 2;
@@ -386,13 +386,13 @@ class turnitintooltwo_user {
 
         $membership = new TiiMembership();
         $membership->setClassId($tiicourseid);
-        $membership->setUserId($this->tii_user_id);
+        $membership->setUserId($this->tiiuserid);
         $membership->setRole($this->role);
 
         try {
             $turnitincall->createMembership($membership);
 
-            turnitintooltwo_activitylog("User ".$this->id." (".$this->tii_user_id.") joined to class (".
+            turnitintooltwo_activitylog("User ".$this->id." (".$this->tiiuserid.") joined to class (".
                                                 $tiicourseid.")", "REQUEST");
 
             return true;
@@ -439,7 +439,7 @@ class turnitintooltwo_user {
         $turnitincall = $turnitincomms->initialise_api();
 
         $user = new TiiUser();
-        $user->setUserId($this->tii_user_id);
+        $user->setUserId($this->tiiuserid);
 
         try {
             $response = $turnitincall->readUser($user);
@@ -469,7 +469,7 @@ class turnitintooltwo_user {
                 $tiiclassid = $newclass->getClassId();
                 $membership = new TiiMembership();
                 $membership->setRole($this->role);
-                $membership->setUserId($this->tii_user_id);
+                $membership->setUserId($this->tiiuserid);
                 $membership->setClassId($tiiclassid);
                 $response = $turnitincall->createMembership($membership);
                 $class->setClassId($tiiclassid);
@@ -597,7 +597,7 @@ class turnitintooltwo_user {
         $turnitincall = $turnitincomms->initialise_api();
 
         $user = new TiiUser();
-        $user->setUserId($this->tii_user_id);
+        $user->setUserId($this->tiiuserid);
 
         try {
             $response = $turnitincall->readUser($user);

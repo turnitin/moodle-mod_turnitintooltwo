@@ -411,11 +411,11 @@ class turnitintooltwo_submission {
         // Create Submission object to send to Turnitin.
         $newsubmission = new TiiSubmission();
         $newsubmission->setAssignmentId($part->tiiassignid);
-        $newsubmission->setAuthorUserId($user->tii_user_id);
+        $newsubmission->setAuthorUserId($user->tiiuserid);
         $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
         $instructor->edit_tii_user();
 
-        $newsubmission->setSubmitterUserId($instructor->tii_user_id);
+        $newsubmission->setSubmitterUserId($instructor->tiiuserid);
         $newsubmission->setRole('Instructor');
 
         // Initialise Comms Object.
@@ -556,15 +556,15 @@ class turnitintooltwo_submission {
                 $apimethod = "createSubmission";
             }
             $newsubmission->setTitle($this->submission_title);
-            $newsubmission->setAuthorUserId($user->tii_user_id);
+            $newsubmission->setAuthorUserId($user->tiiuserid);
             if ($user->id == $USER->id) {
-                $newsubmission->setSubmitterUserId($user->tii_user_id);
+                $newsubmission->setSubmitterUserId($user->tiiuserid);
                 $newsubmission->setRole('Learner');
             } else {
                 $instructor = new turnitintooltwo_user($USER->id, 'Instructor');
                 $instructor->edit_tii_user();
 
-                $newsubmission->setSubmitterUserId($instructor->tii_user_id);
+                $newsubmission->setSubmitterUserId($instructor->tiiuserid);
                 $newsubmission->setRole('Instructor');
             }
 
@@ -648,7 +648,7 @@ class turnitintooltwo_submission {
 
                 // Add to activity log.
                 $logstring = "Action: Submission | Id: ".$this->turnitintooltwoid." | Part: ".$submission->submission_part;
-                $logstring .= " | User ID: ".$user->id." (".$user->tii_user_id.") Submission title: ".$submission->submission_title;
+                $logstring .= " | User ID: ".$user->id." (".$user->tiiuserid.") Submission title: ".$submission->submission_title;
                 turnitintooltwo_activitylog($logstring, "REQUEST");
             } catch (Exception $e) {
                 $errorstring = (!is_null($this->submission_objectid)) ? "updatesubmissionerror" : "createsubmissionerror";
@@ -767,7 +767,7 @@ class turnitintooltwo_submission {
             // If we have no user ID get it from the Moodle database by using their Turnitin e-mail address.
             if ($sub->userid == 0) {
                 $tmpuser = new turnitintooltwo_user(0);
-                $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
+                $tmpuser->tiiuserid = $tiisubmissiondata->getAuthorUserId();
                 $tiiuser = $tmpuser->set_user_values_from_tii();
                 if ($userrecord = $DB->get_record('user', array('email' => $tiiuser["email"]))) {
                     $sub->userid = $userrecord->id;
@@ -789,7 +789,7 @@ class turnitintooltwo_submission {
                 if ($tiisubmissiondata->getAuthorUserId() > 0) {
                     $sub->submission_nmuserid = $tiisubmissiondata->getAuthorUserId();
                     $tmpuser = new turnitintooltwo_user(0);
-                    $tmpuser->tii_user_id = $tiisubmissiondata->getAuthorUserId();
+                    $tmpuser->tiiuserid = $tiisubmissiondata->getAuthorUserId();
                     $tiiuser = $tmpuser->set_user_values_from_tii();
 
                     $sub->submission_nmfirstname = $tiiuser["firstname"];
@@ -860,7 +860,7 @@ class turnitintooltwo_submission {
             $reason = "No specified reason: ".$reason;
         }
         $submission->setAnonymousRevealReason($reason);
-        $submission->setAnonymousRevealUser($user->tii_user_id);
+        $submission->setAnonymousRevealUser($user->tiiuserid);
         $submission->setAnonymousRevealDateTime(date("c"));
 
         try {
