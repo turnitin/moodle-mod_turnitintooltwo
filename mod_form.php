@@ -332,7 +332,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 $partinfodiv = html_writer::start_tag('div',
                     array('class' => 'assignment-part-' . $i,
                             'data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
-                            'data-unanon' => $partdetails->unanon, 'data-submitted' => $partdetails->submitted, 'data-part-id' => $i));
+                            'data-unanon' => $partdetails->unanon, 'data-submitted' => $partdetails->submitted,
+                            'data-part-id' => $i));
                 $mform->addElement('html', $partinfodiv);
             }
 
@@ -525,22 +526,23 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
             $rubricoptions = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
             if (!empty($this->turnitintooltwo->rubric)) {
-                $rubricoptions[$this->turnitintooltwo->rubric] = (isset($rubricoptions[$this->turnitintooltwo->rubric])) ?
-                                                                    $rubricoptions[$this->turnitintooltwo->rubric] :
-                                                                    get_string('otherrubric', 'turnitintooltwo');
+                if (!isset($rubricoptions[$this->turnitintooltwo->rubric])) {
+                    $rubricoptions[$this->turnitintooltwo->rubric] = get_string('otherrubric', 'turnitintooltwo');
+                }
             }
 
             $rubricline = array();
             $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);
             $rubricline[] = $mform->createElement('static', 'rubric_link', '',
-                                                    html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
-                                                                'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
-                                                                    html_writer::tag('i', '', array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
-                                                                    get_string('launchrubricmanager', 'turnitintooltwo'),
-                                                                array('class' => 'rubric_manager_launch',
-                                                                    'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
-                                                    html_writer::tag('span', '',
-                                                                    array('class' => 'launch_form', 'id' => 'rubric_manager_form')));
+                                            html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?'.
+                                                    'cmd=rubricmanager&tiicourseid='.$tiicourseid.'&view_context=box',
+                                                        html_writer::tag('i', '',
+                                                            array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
+                                                        get_string('launchrubricmanager', 'turnitintooltwo'),
+                                                    array('class' => 'rubric_manager_launch',
+                                                        'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
+                                            html_writer::tag('span', '',
+                                                        array('class' => 'launch_form', 'id' => 'rubric_manager_form')));
             $mform->setDefault('rubric', '');
             $mform->addGroup($rubricline, 'rubricline', get_string('attachrubric', 'turnitintooltwo'), array(' '), false);
             $mform->addElement('hidden', 'rubric_warning_seen', '');
