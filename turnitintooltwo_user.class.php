@@ -29,8 +29,7 @@ class turnitintooltwo_user {
     private $enrol;
     private $workflowcontext;
     private $usermessages;
-    private $instructor_defaults;
-    private $instructor_rubrics;
+    private $instructorrubrics;
 
     public function __construct($id, $role = "Learner", $enrol = true, $workflowcontext = "site", $finduser = true) {
         $this->id = $id;
@@ -109,8 +108,11 @@ class turnitintooltwo_user {
 
         $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
 
-        $this->instructor_rubrics = (!empty($turnitintooltwouser->instructor_rubrics)) ?
-                                    (array)json_decode($turnitintooltwouser->instructor_rubrics) : array();
+        $this->instructorrubrics = array();
+        if (!empty($turnitintooltwouser->instructor_rubrics)) {
+            $this->instructorrubrics = (array)json_decode($turnitintooltwouser->instructor_rubrics);
+        }
+
         return $user;
     }
 
@@ -506,7 +508,7 @@ class turnitintooltwo_user {
             $DB->update_record('turnitintooltwo_users', $turnitintooltwouser);
         }
 
-        $this->instructor_rubrics = $rubricarray;
+        $this->instructorrubrics = $rubricarray;
     }
 
     /**
@@ -542,7 +544,7 @@ class turnitintooltwo_user {
      * @return int
      */
     public function get_instructor_rubrics() {
-        return $this->instructor_rubrics;
+        return $this->instructorrubrics;
     }
 
     /**
@@ -578,9 +580,11 @@ class turnitintooltwo_user {
     public function get_instructor_defaults() {
         global $DB;
         $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
+        $instructordefaults = array();
 
-        $instructordefaults = (!empty($turnitintooltwouser->instructor_defaults)) ?
-                                    json_decode($turnitintooltwouser->instructor_defaults) : array();
+        if (!empty($turnitintooltwouser->instructor_defaults)) {
+            $instructordefaults = json_decode($turnitintooltwouser->instructor_defaults);
+        }
 
         return $instructordefaults;
     }

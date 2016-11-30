@@ -415,7 +415,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setLateSubmissionsAllowed($turnitintooltwoassignment->turnitintooltwo->allowlate);
             if ($config->repositoryoption == 1) {
                 $institutioncheck = 0;
-                if (isset($turnitintooltwoassignment->turnitintooltwo->institution_check) {
+                if (isset($turnitintooltwoassignment->turnitintooltwo->institution_check)) {
                     $institutioncheck = $turnitintooltwoassignment->turnitintooltwo->institution_check;
                 }
                 $assignment->setInstitutionCheck($institutioncheck);
@@ -431,7 +431,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
 
             // Erater settings.
             $erater = 0;
-            if (isset($turnitintooltwoassignment->turnitintooltwo->erater) {
+            if (isset($turnitintooltwoassignment->turnitintooltwo->erater)) {
                 $erater = $turnitintooltwoassignment->turnitintooltwo->erater;
             }
             $assignment->setErater($erater);
@@ -442,14 +442,14 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setEraterStyle($turnitintooltwoassignment->turnitintooltwo->erater_style);
 
             $eraterdictionary = 'en_US';
-            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_dictionary) {
+            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_dictionary)) {
                 $eraterdictionary = $turnitintooltwoassignment->turnitintooltwo->erater_dictionary;
             }
             $assignment->setEraterSpellingDictionary($eraterdictionary);
 
             $eraterhandbook = 0;
-            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_handbook) {
-                $eraterhandbook = $turnitintooltwoassignment->turnitintooltwo->erater_handbook
+            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_handbook)) {
+                $eraterhandbook = $turnitintooltwoassignment->turnitintooltwo->erater_handbook;
             }
             $assignment->setEraterHandbook($eraterhandbook);
 
