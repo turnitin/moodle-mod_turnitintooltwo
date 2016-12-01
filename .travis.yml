@@ -8,17 +8,20 @@ cache:
 
 php:
  - 5.5
- - 5.6
+# - 5.6
  - 7.0
 
 env:
  global:
-  - MOODLE_BRANCH=MOODLE_31_STABLE
   - IGNORE_PATHS=sdk/,fonts/,pix/,
   - IGNORE_NAMES=jquery*,moment.js,colorbox.css,tooltipster.css,*.min.css,*.min.js,tii-icon-webfont.css,styles.css,styles.css.map,gulpfile.js
  matrix:
-  - DB=pgsql
-  - DB=mysqli
+  - DB=pgsql MOODLE_BRANCH=MOODLE_31_STABLE
+  - DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE
+  - DB=pgsql MOODLE_BRANCH=MOODLE_30_STABLE
+  - DB=mysqli MOODLE_BRANCH=MOODLE_30_STABLE
+  - DB=pgsql MOODLE_BRANCH=MOODLE_27_STABLE
+  - DB=mysqli MOODLE_BRANCH=MOODLE_27_STABLE
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -34,10 +37,10 @@ script:
   - moodle-plugin-ci phplint
 #  - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd
-  - moodle-plugin-ci codechecker
+#  - moodle-plugin-ci codechecker
   - moodle-plugin-ci csslint
   - moodle-plugin-ci shifter
-  - moodle-plugin-ci jshint
+#  - moodle-plugin-ci jshint
   - moodle-plugin-ci validate
   - moodle-plugin-ci phpunit
   - moodle-plugin-ci behat
