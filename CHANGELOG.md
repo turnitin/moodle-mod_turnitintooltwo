@@ -1,3 +1,10 @@
+### Date:		2016-December-21
+### Release:	v2016122101
+
+- Fixes:
+	- Changed the language codes to correctly recognise Simplified Chinese in Moodle.
+	- Pass the correct Simplified Chinese language code to Turnitin.
+
 ### Date:		2016-September-14
 ### Release:	v2016091401
 
