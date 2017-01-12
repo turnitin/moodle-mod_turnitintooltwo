@@ -145,6 +145,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         $data->turnitintooltwoid = $this->get_new_parentid('turnitintooltwo');
         $data->submission_part = $this->get_mappingid('turnitintooltwo_parts', $data->submission_part);
         $data->userid = $this->get_mappingid('user', $data->userid);
+        $data->submission_hash = $data->userid.'_'.$data->turnitintooltwoid.'_'.$data->submission_part;
 
         // Create TII User Account Details.
         if (!$tiiuser = $DB->get_record('turnitintooltwo_users', array('turnitin_uid' => $data->tiiuserid))) {

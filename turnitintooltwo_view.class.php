@@ -1482,7 +1482,6 @@ class turnitintooltwo_view {
         }
 
         foreach ($_SESSION["submissions"][$partid] as $submission) {
-
             $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
                                                         $useroverallgrades, $istutor);
             $submissiondata[] = $data;

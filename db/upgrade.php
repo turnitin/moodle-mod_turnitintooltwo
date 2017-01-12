@@ -23,7 +23,7 @@ defined('MOODLE_INTERNAL') || die();
 
 function xmldb_turnitintooltwo_upgrade($oldversion) {
 
-    global $DB;
+    global $CFG, $DB;
 
     $dbman = $DB->get_manager();
 
@@ -175,6 +175,67 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+    }
+
+    if ($oldversion < 2017011301) {
+        // Grab any duplicated submission rows.
+        $query = "SELECT
+            sb.id,
+            sb.submission_objectid AS objectid,
+            sb.userid AS userid,
+            mu.firstname AS firstname,
+            mu.lastname AS lastname,
+            sb.submission_grade AS grade,
+            cm.course AS courseid,
+            tu.id AS activityid,
+            cm.id AS cmid,
+            tp.id AS partid
+            FROM ".$CFG->prefix."turnitintooltwo_submissions sb
+            LEFT JOIN ".$CFG->prefix."user mu ON mu.id = sb.userid
+            LEFT JOIN ".$CFG->prefix."turnitintooltwo_parts tp ON tp.id = sb.submission_part
+            LEFT JOIN ".$CFG->prefix."turnitintooltwo tu ON tu.id = tp.turnitintooltwoid
+            LEFT JOIN ".$CFG->prefix."course_modules cm ON tp.turnitintooltwoid = cm.instance
+            LEFT JOIN ".$CFG->prefix."modules mo ON mo.id = cm.module
+            WHERE submission_objectid IS NOT NULL
+            AND mo.name = ?
+            AND sb.submission_objectid IN (
+                SELECT submission_objectid FROM ".$CFG->prefix."turnitintooltwo_submissions
+                GROUP BY userid, turnitintooltwoid, submission_objectid
+                HAVING COUNT(1) > 1
+            )
+            ORDER BY sb.id ASC";
+        $duplicates = $DB->get_records_sql($query, array('turnitintooltwo'));
+
+        // Dump the results of query into a csv.
+        $tempdir = make_temp_directory('turnitintooltwo');
+        $filename = 'duplicate_submissions_'. time() . '.csv';
+        try {
+            $file = $tempdir . DIRECTORY_SEPARATOR . $filename;
+
+            $fh = fopen($file, "w");
+            $headers = 'Submission Record Id, Turnitin Paper Id, User Id, User Lastname, User Firstname, Grade, Course Id, Course Module Id, Part Id';
+            fwrite($fh, $headers.PHP_EOL);
+            foreach ($duplicates as $duplicate) {
+                fwrite($fh, $duplicate->id.','.$duplicate->objectid.','.$duplicate->userid.','.$duplicate->lastname.','.$duplicate->firstname.','.$duplicate->grade.','.$duplicate->courseid.','.$duplicate->cmid.','.$duplicate->partid.PHP_EOL);
+            }
+            fclose($fh);
+        } catch (Exception $e) {
+            turnitintooltwo_activitylog("Could not create file to log duplicated submissions","UPGRADE");
+        }
+
+        // Add new column that has to be unique.
+        $table = new xmldb_table('turnitintooltwo_submissions');
+        $field = new xmldb_field('submission_hash', XMLDB_TYPE_CHAR, '100', null, null, null, null, 'submission_orcapable');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Retrospectively update the new column to be id for previous submissions.
+        $DB->execute("UPDATE ".$CFG->prefix."turnitintooltwo_submissions SET submission_hash = id WHERE submission_hash IS NULL");
+
+        // Add hash as key after update.
+        $key = new xmldb_key('submission_hash', XMLDB_KEY_UNIQUE, array('submission_hash'));
+        $dbman->add_key($table, $key);
     }
 
     return true;
