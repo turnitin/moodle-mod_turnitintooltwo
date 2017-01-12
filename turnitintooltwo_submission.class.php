@@ -98,6 +98,7 @@ class turnitintooltwo_submission {
         $submission->submission_unanon = 0;
         $submission->submission_grade = null;
         $submission->submission_gmimaged = 0;
+        $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
         if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
             return false;
@@ -438,6 +439,7 @@ class turnitintooltwo_submission {
             $submission->submission_gmimaged = 0;
             $submission->submission_acceptnothing = 1;
             $submission->submission_orcapable = 0;
+            $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
             // Send a message to the user's Moodle inbox with the digital receipt.
             $partdetails = $turnitintooltwoassignment->get_part_details($partid);
@@ -598,6 +600,7 @@ class turnitintooltwo_submission {
                 $submission->submission_unanonreason = $this->submission_unanonreason;
                 $submission->submission_transmatch = $this->submission_transmatch;
                 $submission->submission_acceptnothing = 0;
+                $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
                 $DB->update_record('turnitintooltwo_submissions', $submission);
 
@@ -763,6 +766,9 @@ class turnitintooltwo_submission {
         if ($save) {
             // If the user is not a moodle user then get their name from Tii - only do this on initial save.
             $sub->userid = turnitintooltwo_user::get_moodle_user_id($tiisubmissiondata->getAuthorUserId());
+
+            // Create our submission hash to prevent duplication.
+            $sub->submission_hash = $sub->userid.'_'.$sub->turnitintooltwoid.'_'.$sub->submission_part;
 
             // If we have no user ID get it from the Moodle database by using their Turnitin e-mail address.
             if ($sub->userid == 0) {
