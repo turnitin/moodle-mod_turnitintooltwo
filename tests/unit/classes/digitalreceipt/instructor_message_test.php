@@ -1,21 +1,20 @@
 <?php
 
-/**
- * Unit tests for mod_turnitintooltwo classes/digitalreceipt/instructor_message
- */
-
 defined('MOODLE_INTERNAL') || die();
 
-class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase {
-    /**
-     * Prepares things before this test case is initialised
-     * @return void
-     */
-    public static function setUpBeforeClass() {
-        global $CFG;
-        require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/digitalreceipt/instructor_message.php');
-    }
+global $CFG;
+require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/digitalreceipt/instructor_message.php');
 
+/**
+ * Tests for classes/digitalreceipt/instructor_message
+ *
+ * @package turnitintooltwo
+ */
+class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase {
+
+    /**
+     * Test data being passed in will generate the correct output text.
+     */
     public function test_build_instructor_message() {
         $instructor_message = new instructor_message();
 
@@ -33,6 +32,9 @@ class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase 
         );
     }
 
+    /**
+     * Test data being passed in will generate the correct output text, with assignment part.
+     */
     public function test_build_instructor_message_with_assignment_part() {
         $instructor_message = new instructor_message();
 
@@ -51,6 +53,9 @@ class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase 
         );
     }
 
+    /**
+     * Test that multiple messages get sent for instructors.
+     */
     public function test_send_instructor_message() {
         global $DB;
 
