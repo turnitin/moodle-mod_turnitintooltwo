@@ -6,16 +6,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
+global $CFG;
+require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/digitalreceipt/receipt_message.php');
 
-    /**
-     * Prepares things before this test case is initialised
-     * @return void
-     */
-    public static function setUpBeforeClass() {
-        global $CFG;
-        require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/digitalreceipt/receipt_message.php');
-    }
+class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
 
     public function test_send_message() {
         global $DB;
