@@ -54,8 +54,7 @@ class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
 
         $response = $receipt_message->build_message($message);
 
-        $this->assertEquals("Dear " . $message['firstname'] . " " . $message['lastname'] . ",<br /><br />You have successfully submitted the file <strong>" . $message['submission_title'] . "</strong> to the assignment <strong>" . $message['assignment_name'] . "</strong> in the class <strong>" . $message['course_fullname'] . "</strong> on <strong>" . $date . "</strong>. Your submission id is <strong>" . $message['submission_id'] . "</strong>. Your full digital receipt can be viewed and printed from the assignment inbox or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team", $response);
-
+        $this->assertEquals(sprintf("Dear %s %s,<br /><br />You have successfully submitted the file <strong>%s</strong> to the assignment <strong>%s</strong> in the class <strong>%s</strong> on <strong>%s</strong>. Your submission id is <strong>%s</strong>. Your full digital receipt can be viewed and printed from the assignment inbox or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team", $message['firstname'], $message['lastname'], $message['submission_title'], $message['assignment_name'], $message['course_fullname'], $date, $message['submission_id']) , $response);
     }
 
     public function test_build_message_multi_part() {
