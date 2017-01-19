@@ -7,7 +7,6 @@
 defined('MOODLE_INTERNAL') || die();
 
 class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase {
-
     /**
      * Prepares things before this test case is initialised
      * @return void
@@ -21,17 +20,66 @@ class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase 
         $instructor_message = new instructor_message();
 
         $data = [
-            'submission_title' => 'lol',
-            'assignment_name' => 'lol2',
-            'course_fullname' => 'lol3',
-            'submission_date' => 'lol4',
-            'submission_id' => 'lol5'
+            'submission_title' => 'Foo',
+            'assignment_name' => 'Bar',
+            'course_fullname' => 'Foobar',
+            'submission_date' => '01-09-1994',
+            'submission_id' => '1234567'
         ];
 
         $this->assertEquals(
-            "A submission entitled <strong>lol</strong> has been made to assignment <strong>lol2</strong> in the class <strong>lol3</strong>.<br /><br />Submission ID: <strong>lol5</strong><br />Submission Date: <strong>lol4</strong><br />",
+            'A submission entitled <strong>Foo</strong> has been made to assignment <strong>Bar</strong> in the class <strong>Foobar</strong>.<br /><br />Submission ID: <strong>1234567</strong><br />Submission Date: <strong>01-09-1994</strong><br />',
             $instructor_message->build_instructor_message($data)
         );
+    }
 
+    public function test_build_instructor_message_with_assignment_part() {
+        $instructor_message = new instructor_message();
+
+        $data = [
+            'submission_title' => 'Foo',
+            'assignment_name' => 'Bar',
+            'course_fullname' => 'Foobar',
+            'submission_date' => '01-09-1994',
+            'submission_id' => '1234567',
+            'assignment_part' => 'Part 2'
+        ];
+
+        $this->assertEquals(
+            'A submission entitled <strong>Foo</strong> has been made to assignment <strong>Bar: Part 2</strong> in the class <strong>Foobar</strong>.<br /><br />Submission ID: <strong>1234567</strong><br />Submission Date: <strong>01-09-1994</strong><br />',
+            $instructor_message->build_instructor_message($data)
+        );
+    }
+
+    public function test_send_instructor_message() {
+        global $DB;
+
+        $this->resetAfterTest();
+        $this->preventResetByRollback();
+
+        $sink = $this->redirectMessages();
+
+        $instructor_message = new instructor_message();
+
+        // Generate two new users to send messages to.
+        $user1 = $this->getDataGenerator()->create_user();
+        $user2 = $this->getDataGenerator()->create_user();
+
+        $instructors = [
+            $user1,
+            $user2
+        ];
+
+        // Send message to both instructors.
+        $instructor_message->send_instructor_message($instructors, 'Instructor Message');
+
+        $messages = $sink->get_messages();
+
+        $this->assertEquals(2, count($messages));
+        $this->assertEquals('Instructor Message', $messages[0]->fullmessage);
+        $this->assertEquals('Instructor Message', $messages[1]->fullmessage);
+
+        $this->assertEquals($user1->id, $messages[0]->useridto);
+        $this->assertEquals($user2->id, $messages[1]->useridto);
     }
 }
