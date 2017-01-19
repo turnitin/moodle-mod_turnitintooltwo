@@ -35,16 +35,9 @@ class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
 
         $messages = $sink->get_messages();
 
-        var_dump($messages[0]);
-
-        $this->assertEquals("A submission entitled <strong>lol</strong> has been made to assignment <strong>lol2</strong> in the class <strong>lol3</strong>.<br /><br />Submission ID: <strong>lol5</strong><br />Submission Date: <strong>lol4</strong><br />",
-            $messages[0]
-        );
-
-        // $this->assertEquals(
-        //     "A submission entitled <strong>lol</strong> has been made to assignment <strong>lol2</strong> in the class <strong>lol3</strong>.<br /><br />Submission ID: <strong>lol5</strong><br />Submission Date: <strong>lol4</strong><br />",
-        //     $instructor_message->build_instructor_message($data)
-        // );
-
+        // Correct user was sent an email
+        $this->assertEquals($userOne->id, $messages[0]->useridto);
+        $this->assertEquals("This is your Turnitin Digital Receipt", $messages[0]->subject);
+        $this->assertEquals("Test message for email", $messages[0]->fullmessagehtml);
     }
 }
