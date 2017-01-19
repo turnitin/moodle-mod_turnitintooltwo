@@ -38,6 +38,8 @@ class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
         // Correct user was sent an email
         $this->assertEquals($userOne->id, $messages[0]->useridto);
         $this->assertEquals("This is your Turnitin Digital Receipt", $messages[0]->subject);
+        $this->assertEquals("Test message for email", $messages[0]->fullmessage);
         $this->assertEquals("Test message for email", $messages[0]->fullmessagehtml);
+        $this->assertEquals(1, $messages[0]->fullmessageformat); // HTML format
     }
 }
