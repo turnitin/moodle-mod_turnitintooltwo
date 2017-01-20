@@ -156,16 +156,12 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
 
         // Check if this hash already exists.
         if ($check_hash = $DB->get_record('turnitintooltwo_submissions', array('submission_hash' => $data->submission_hash))) {
-            // Update the row/grade if this submission is the most recent submission.
-            if ($check_hash->submission_modified > $data->submission_modified) {
-                $data->id = $check_hash->id;
-                $DB->update_record('turnitintooltwo_submissions', $data);
-            }
-        } else {
-            // Insert the submission as we have a unique hash.
-            $newitemid = $DB->insert_record('turnitintooltwo_submissions', $data);
-            $this->set_mapping('turnitintooltwo_submissions', $oldid, $newitemid);
+            $data->submission_hash = turnitintooltwo_genUuid();
         }
+
+        // Insert the submission as we have a unique hash.
+        $newitemid = $DB->insert_record('turnitintooltwo_submissions', $data);
+        $this->set_mapping('turnitintooltwo_submissions', $oldid, $newitemid);
     }
 
     protected function after_execute() {
