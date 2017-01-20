@@ -177,7 +177,7 @@ class Soap extends SoapClient {
         $this->performancelog = $performancelog;
     }
 
-    public static function genUuid() {
+    public function genUuid() {
         return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
             mt_rand( 0, 0xffff ),
             mt_rand( 0, 0xffff ),
