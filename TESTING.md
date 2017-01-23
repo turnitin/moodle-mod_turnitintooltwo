@@ -14,6 +14,15 @@ Grab an installer for the latest stable version from here:
 
 You will need PHP and [Composer](https://getcomposer.org/) installed. 
 
+## Install the plugin
+Grab a copy of the plugin. Currently the unit test branch is only available internally on GHE:
+
+[https://ghe.iparadigms.com/Integrations/turnitintooltwo](https://ghe.iparadigms.com/Integrations/turnitintooltwo)
+
+Put the plugin in the `mod` folder inside your Moodle installation.
+
+Go to the admin notifications screen in Moodle to install the plugin.
+
 ## Prepare Moodle for running unit tests
 
 * `cd` into the root folder of your Moodle installation. From here run `composer install` to install the required dependencies.
@@ -31,13 +40,6 @@ $CFG->phpunit_dbpass    = 'moodle';   // your database password
 ```
 
 * Run `php admin/tool/phpunit/cli/init.php`
-
-## Install the plugin
-Grab a copy of the plugin. Currently the unit test branch is only available internally on GHE:
-
-[https://ghe.iparadigms.com/Integrations/turnitintooltwo](https://ghe.iparadigms.com/Integrations/turnitintooltwo)
-
-Put the plugin in the `mod` folder inside your Moodle installation.
 
 ## Run the tests
 
