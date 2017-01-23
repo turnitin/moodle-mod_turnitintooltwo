@@ -21,8 +21,8 @@ You will need PHP and [Composer](https://getcomposer.org/) installed.
 * Edit `config.php` in the root of the Moodle folder and add the `phpunit` config. The following works for the MAMP Moodle install mentioned above:
 
 ```
-$CFG->phpunit_prefix = 'phpu_';
-$CFG->phpunit_dataroot = '/Applications/MAMP/data/phpu_moodledata';
+$CFG->phpunit_prefix    = 'phpu_';
+$CFG->phpunit_dataroot  = '/Applications/MAMP/data/phpu_moodledata';
 $CFG->phpunit_dbtype    = 'mysqli';      // 'pgsql', 'mariadb', 'mysqli', 'mssql', 'sqlsrv' or 'oci'
 $CFG->phpunit_dbhost    = '127.0.0.1:8889';  // eg 'localhost' or 'db.isp.com' or IP
 $CFG->phpunit_dbname    = 'moodle31';     // database name, eg moodle
