@@ -16,19 +16,21 @@ You will need PHP and [Composer](https://getcomposer.org/) installed.
 
 ## Prepare Moodle for running unit tests
 
-1. `cd` into the root folder of your Moodle installation. From here run `composer install` to install the required dependencies.
+* `cd` into the root folder of your Moodle installation. From here run `composer install` to install the required dependencies.
 
-2. Edit `config.php` in the root of the Moodle folder and add the `phpunit` config. The following works for the MAMP Moodle install mentioned above:
+* Edit `config.php` in the root of the Moodle folder and add the `phpunit` config. The following works for the MAMP Moodle install mentioned above:
 
-    $CFG->phpunit_prefix = 'phpu_';
-    $CFG->phpunit_dataroot = '/Applications/MAMP/data/phpu_moodledata';
-    $CFG->phpunit_dbtype    = 'mysqli';      // 'pgsql', 'mariadb', 'mysqli', 'mssql', 'sqlsrv' or 'oci'
-    $CFG->phpunit_dbhost    = '127.0.0.1:8889';  // eg 'localhost' or 'db.isp.com' or IP
-    $CFG->phpunit_dbname    = 'moodle31';     // database name, eg moodle
-    $CFG->phpunit_dbuser    = 'moodle';   // your database username
-    $CFG->phpunit_dbpass    = 'moodle';   // your database password
+```
+$CFG->phpunit_prefix = 'phpu_';
+$CFG->phpunit_dataroot = '/Applications/MAMP/data/phpu_moodledata';
+$CFG->phpunit_dbtype    = 'mysqli';      // 'pgsql', 'mariadb', 'mysqli', 'mssql', 'sqlsrv' or 'oci'
+$CFG->phpunit_dbhost    = '127.0.0.1:8889';  // eg 'localhost' or 'db.isp.com' or IP
+$CFG->phpunit_dbname    = 'moodle31';     // database name, eg moodle
+$CFG->phpunit_dbuser    = 'moodle';   // your database username
+$CFG->phpunit_dbpass    = 'moodle';   // your database password
+```
 
-3. Run `php admin/tool/phpunit/cli/init.php`
+* Run `php admin/tool/phpunit/cli/init.php`
 
 ## Install the plugin
 Grab a copy of the plugin. Currently the unit test branch is only available internally on GHE:
