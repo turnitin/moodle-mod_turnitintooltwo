@@ -1,3 +1,26 @@
+### Date:		2017-January-25
+### Release:	v2017012501
+
+- This release and future releases will no longer work on Moodle 2.6.
+- The language strings have been updated across all supported languages.
+- The implementation of submission deletion has been changed so that it is no longer a link.
+- Data dump display has been optimised to help with large databases.
+- If the required fileinfo extension is missing it will now be mentioned on the plugin settings page.
+- The plugin will now not make excessive calls to Turnitin when using the bulk enrolment tool.
+- Suspended users now no longer appear in the assignment inbox.
+- Non-submitter e-mails will no longer be sent to inactive students. (Thanks to @junwan6)
+- Travis-CI has been aded to the plugin as an extra QA resource to help flag any issues with the code.
+- Inclusion paths were consolidated for the ./sdk directory. (Thanks to @eviweb)
+- Fixes:
+	- Fixed an issue with duplicate submission rows showing in the Moodle database.
+	- Fixed an issue with anonymous marking where the overall grade would sometimes not appear.
+	- The assignment edit API call no longer fails if repository settings don't match the plugin settings.
+	- The submission processing message that was missing in Moodle 3.1 is now visible again.
+	- Fixed a bug where the submission inbox would not load if an enrolled student has been deleted in Turnitin.
+	- Characters that cannot be used in a file name in Windows are now removed from submission titles to prevent submission errors.
+
+---
+
 ### Date:		2016-December-21
 ### Release:	v2016122101
 
@@ -5,9 +28,10 @@
 	- Changed the language codes to correctly recognise Simplified Chinese in Moodle.
 	- Pass the correct Simplified Chinese language code to Turnitin.
 
+---
+
 ### Date:		2016-September-14
 ### Release:	v2016091401
-
 
 - Remove leftover counter variable from get_submission_inbox function.
 - Refactored the get users functionality in several places to not include users with roles inherited from site level.
