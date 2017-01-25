@@ -1333,13 +1333,9 @@ function turnitintooltwo_getusers() {
         }
 
         $aadata = array($checkbox);
-        if ($user->turnitin_uid == 0) {
-            $aadata[] = '';
-        } else {
-            $userdetails = array($user->turnitin_uid, format_string($user->lastname), format_string($user->firstname), $pseudoemail);
-            $aadata = array_merge($aadata, $userdetails);
-        }
-        $return["aaData"][] = $aadata;
+        $user->turnitin_uid = ($user->turnitin_uid == 0) ? '' : $user->turnitin_uid;
+        $userdetails = array($user->turnitin_uid, format_string($user->lastname), format_string($user->firstname), $pseudoemail);
+        $return["aaData"][] = array_merge($aadata, $userdetails);
     }
     $return["sEcho"] = $secho;
     $return["iTotalRecords"] = count($users);
