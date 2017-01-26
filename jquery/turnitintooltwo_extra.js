@@ -1,23 +1,23 @@
 jQuery(document).ready(function($) {
-    // Add style to header row
+    // Add style to header row.
     $('.submissionsDataTable thead tr, #courseBrowserTable thead tr').toggleClass("header");
 
-    // Configure datatables language settings
+    // Configure datatables language settings.
     var dataTablesLang = {
-            "nointegration": M.str.turnitintooltwo.nointegration,
-            "sProcessing": M.str.turnitintooltwo.sprocessing,
-            "sZeroRecords": M.str.turnitintooltwo.szerorecords,
-            "sInfo": M.str.turnitintooltwo.sinfo,
-            "sSearch": M.str.turnitintooltwo.ssearch,
-            "sLengthMenu": M.str.turnitintooltwo.slengthmenu,
-            "sInfoEmpty": M.str.turnitintooltwo.semptytable,
-            "oPaginate": {
-                "sNext": M.str.turnitintooltwo.snext,
-                "sPrevious": M.str.turnitintooltwo.sprevious
-            }
-        };
+        "nointegration": M.str.turnitintooltwo.nointegration,
+        "sProcessing": M.str.turnitintooltwo.sprocessing,
+        "sZeroRecords": M.str.turnitintooltwo.szerorecords,
+        "sInfo": M.str.turnitintooltwo.sinfo,
+        "sSearch": M.str.turnitintooltwo.ssearch,
+        "sLengthMenu": M.str.turnitintooltwo.slengthmenu,
+        "sInfoEmpty": M.str.turnitintooltwo.semptytable,
+        "oPaginate": {
+            "sNext": M.str.turnitintooltwo.snext,
+            "sPrevious": M.str.turnitintooltwo.sprevious
+        }
+    };
 
-    // Configure the unlink and relink users datatable in the plugin settings area
+    // Configure the unlink and relink users datatable in the plugin settings area.
     $('#unlinkUserTable').dataTable({
         "bProcessing": true,
         "bServerSide": true,
@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // Configure the files datatable in the plugin settings area, group the files by assignment
+    // Configure the files datatable in the plugin settings area, group the files by assignment.
     $('#filesTable').dataTable( {
         "bProcessing": true,
         "bServerSide": true,
@@ -69,31 +69,30 @@ jQuery(document).ready(function($) {
                     {"bSearchable": true, "bVisible": true, "aTargets": [ 8 ]}
                 ],
         "fnDrawCallback": function ( oSettings ) {
-                            if ( oSettings.aiDisplay.length == 0 )
-                            {
-                                return;
-                            }
+            if ( oSettings.aiDisplay.length == 0 )
+            {
+                return;
+            }
 
-                            var nTrs = $('#filesTable tbody tr');
-                            var iColspan = nTrs[0].getElementsByTagName('td').length;
-                            var sLastGroup = "";
-                            for ( var i=0 ; i<nTrs.length ; i++ )
-                            {
-                                var iDisplayIndex = oSettings._iDisplayStart + i;
-                                var sGroup = oSettings.aoData[ oSettings.aiDisplay[i] ]._aData[0];
-                                if ( sGroup != sLastGroup )
-                                {
-                                    var nGroup = document.createElement( 'tr' );
-                                    var nCell = document.createElement( 'td' );
-                                    nCell.colSpan = iColspan;
-                                    nCell.className = "group";
-                                    nCell.innerHTML = sGroup;
-                                    nGroup.appendChild( nCell );
-                                    nTrs[i].parentNode.insertBefore( nGroup, nTrs[i] );
-                                    sLastGroup = sGroup;
-                                }
-                            }
-                        },
+            var nTrs = $('#filesTable tbody tr');
+            var iColspan = nTrs[0].getElementsByTagName('td').length;
+            var sLastGroup = "";
+            for (var i = 0; i < nTrs.length; i++) {
+                var iDisplayIndex = oSettings._iDisplayStart + i;
+                var sGroup = oSettings.aoData[ oSettings.aiDisplay[i] ]._aData[0];
+                if ( sGroup != sLastGroup )
+                {
+                    var nGroup = document.createElement( 'tr' );
+                    var nCell = document.createElement( 'td' );
+                    nCell.colSpan = iColspan;
+                    nCell.className = "group";
+                    nCell.innerHTML = sGroup;
+                    nGroup.appendChild( nCell );
+                    nTrs[i].parentNode.insertBefore( nGroup, nTrs[i] );
+                    sLastGroup = sGroup;
+                }
+            }
+        },
         "aaSortingFixed": [[ 0, 'asc' ]],
         "aaSorting": [[ 1, 'asc' ]],
         "sDom": 'lfr<"giveHeight"t>ip'
@@ -102,7 +101,7 @@ jQuery(document).ready(function($) {
     $.datepicker.regional[""].dateFormat = 'd M yy';
     $.datepicker.setDefaults($.datepicker.regional['']);
 
-    // Configure the course browser data table and show classes from Turnitin acocunt
+    // Configure the course browser data table and show classes from Turnitin acocunt.
     var courseBrowserTable = $('#courseBrowserTable').dataTable({
         "bProcessing": true,
         "oLanguage": dataTablesLang,
@@ -110,23 +109,23 @@ jQuery(document).ready(function($) {
         "sAjaxSource": "ajax.php",
         "aoColumnDefs": [
                     {"bSearchable": false, "bSortable": false, "sWidth": "5%", "bVisible": true, "aTargets": [ 0 ],
-                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                $(nTd).addClass('center');
-                            }},
+                        "fnCreatedCell": function (nTd) {
+                            $(nTd).addClass('center');
+                        }},
                     {"bSearchable": true, "bVisible": true, "sWidth": "45%", "iDataSort": 6, "aTargets": [ 1 ]},
                     {"bSearchable": true, "bVisible": true, "sWidth": "10%", "aTargets": [ 2 ]},
                     {"bSearchable": true, "bVisible": true, "sWidth": "20%", "iDataSort": 7, "aTargets": [ 3 ],
-                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                $(nTd).addClass('right');
-                            }},
+                        "fnCreatedCell": function (nTd) {
+                            $(nTd).addClass('right');
+                        }},
                     {"bSearchable": false, "bVisible": true, "sWidth": "10%", "aTargets": [ 4 ],
-                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                $(nTd).addClass('right');
-                            }},
+                        "fnCreatedCell": function (nTd) {
+                            $(nTd).addClass('right');
+                        }},
                     {"bSearchable": true, "bVisible": true, "sWidth": "10%", "aTargets": [ 5 ],
-                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                                $(nTd).addClass('center');
-                            }},
+                        "fnCreatedCell": function (nTd) {
+                            $(nTd).addClass('center');
+                        }},
                     {"bSearchable": true, "bVisible": false, "aTargets": [ 6 ]},
                     {"bSearchable": true, "bVisible": false, "aTargets": [ 7 ]}
                 ],
@@ -136,8 +135,8 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": sSource,
                 "data": {action: "search_classes", course_title: $('#search_course_title').val(),
-                        course_integration: $('#search_course_integration').val(),
-                        course_end_date: $('#search_course_end_date').val(), sesskey: M.cfg.sesskey},
+                    course_integration: $('#search_course_integration').val(),
+                    course_end_date: $('#search_course_end_date').val(), sesskey: M.cfg.sesskey},
                 "success": function(result) {
                     fnCallback(result);
                 }
@@ -146,13 +145,13 @@ jQuery(document).ready(function($) {
         "bStateSave": true,
         "fnStateSave": function (oSettings, oData) {
             try {
-                localStorage.setItem( uid+'DataTables', JSON.stringify(oData) );
+                localStorage.setItem( uid + 'DataTables', JSON.stringify(oData) );
             } catch ( e ) {
             }
         },
         "fnStateLoad": function (oSettings) {
             try {
-                return JSON.parse( localStorage.getItem(uid+'DataTables') );
+                return JSON.parse( localStorage.getItem(uid + 'DataTables') );
             } catch ( e ) {
             }
         },
@@ -173,18 +172,18 @@ jQuery(document).ready(function($) {
 
     $('#search_course_end_date').datepicker();
 
-    // Initialise assignment browser table
+    // Initialise assignment browser table.
     var oTable = $('#assignmentBrowserTable').dataTable({
         "bProcessing": true,
         "oLanguage": dataTablesLang,
         "sAjaxSource": "ajax.php",
         "fnServerData": function ( sSource, aoData, fnCallback ) {
 
-            // Disable course buttons
+            // Disable course buttons.
             $('#id_create_course').attr('disabled','disabled');
             $('#id_update_course').attr('disabled','disabled');
 
-            // Move box within form
+            // Move box within form.
             if ($("#assignmentBrowserTable").length > 0) {
                 $(".side-pre-only #page-content #region-main").css({'margin-left' : '0px'});
             }
@@ -211,7 +210,7 @@ jQuery(document).ready(function($) {
                         $(".assignmentids_check").attr('disabled', 'disabled');
                     }
 
-                    // Enable course buttons
+                    // Enable course buttons.
                     $('#id_create_course').removeAttr('disabled');
                     $('#id_update_course').removeAttr('disabled');
                 }
@@ -220,7 +219,7 @@ jQuery(document).ready(function($) {
         "aoColumnDefs": [
             {"bSearchable": false, "bVisible": true, "aTargets": [ 0 ]},
             {"bSearchable": true, "bVisible": true, "aTargets": [ 1 ],
-                "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                "fnCreatedCell": function (nTd) {
                     $(nTd).addClass('nowrap');
                 }},
             {"bSearchable": true, "bVisible": true, "aTargets": [ 2 ]},
@@ -228,7 +227,7 @@ jQuery(document).ready(function($) {
         ]
     });
 
-    // Open an iframe light box which allows the creation of classes
+    // Open an iframe light box which allows the creation of classes.
     $('#create_classes_button').colorbox({
         iframe:true, width:'60%', top: '200px', height:'124px', opacity: "0.7", className: "course_creation",
         href: function() {
@@ -238,14 +237,14 @@ jQuery(document).ready(function($) {
                 var class_ids = "";
                 var i = 0;
                 $('.browser_checkbox:checked').each(function(i){
-                    class_ids += "&class_id"+i+"="+$(this).val();
+                    class_ids += "&class_id" + i + "=" + $(this).val();
                     i++;
                 });
 
                 var pageurl = window.location.href;
                 var url = pageurl.replace("cmd=courses", "cmd=multiple_class_recreation");
 
-                return url+"&view_context=box&category="+category+"&assignments="+assignments+class_ids+"&sesskey="+M.cfg.sesskey;
+                return url + "&view_context=box&category=" + category + "&assignments=" + assignments + class_ids + "&sesskey=" + M.cfg.sesskey;
         },
         onCleanup: function() {
             window.location = window.location;
@@ -254,7 +253,7 @@ jQuery(document).ready(function($) {
 
     if ($('#class_ids').length > 0) {
 
-        // Move box within frame
+        // Move box within frame.
         $(".side-pre-only #page-content #region-main").css({
             'margin-left' : '0px'
         });
@@ -271,14 +270,14 @@ jQuery(document).ready(function($) {
             "type": "POST",
             "url": "ajax.php",
             "data": {action: "create_courses", class_ids: class_ids, course_category: $("#course_category").html(),
-                    create_assignments: $("#create_assignments").html(), sesskey: M.cfg.sesskey},
+                create_assignments: $("#create_assignments").html(), sesskey: M.cfg.sesskey},
             success: function(data) {
                 $('#course_creation_status').html(data);
             }
         });
     }
 
-    // Show light box to change the end date of a course
+    // Show light box to change the end date of a course.
     function initialiseEditEndDate() {
         $("a.edit_course_end_link").colorbox({
             inline:true, width:"60%", top: "100px", background: "#fff", height:"260px", opacity: "0.7", className: "edit_end_date_form",
@@ -288,8 +287,8 @@ jQuery(document).ready(function($) {
             onComplete : function() {
 
                 // Get current date from the span id within the link and set
-                // the date of the datepicker in the lightbox to that
-                var current_date = $('#'+$(this).attr("id")+' span').attr("id");
+                // the date of the datepicker in the lightbox to that.
+                var current_date = $('#' + $(this).attr("id") + ' span').attr("id");
                 current_date = current_date.split("_");
                 $('#id_new_course_end_date_day').val(current_date[1]);
                 $('#id_new_course_end_date_month').val(current_date[2]);
@@ -298,7 +297,7 @@ jQuery(document).ready(function($) {
                 var idStr = $(this).attr("id").split("_");
                 var tii_course_id = idStr[2];
                 $('input[name="tii_course_id"]').val(tii_course_id);
-                $('input[name="tii_course_title"]').val($('a#course_'+tii_course_id).html());
+                $('input[name="tii_course_title"]').val($('a#course_' + tii_course_id).html());
                 $('#cboxLoadedContent .edit_course_end_date_form').show();
                 $('#dateselector-calendar-panel').css('z-index', '9999');
 
@@ -308,7 +307,7 @@ jQuery(document).ready(function($) {
                         "type": "POST",
                         "url": "ajax.php",
                         "data": {action: "edit_course_end_date", tii_course_id: tii_course_id,
-                            tii_course_title: $('a#course_'+tii_course_id).html(), sesskey: M.cfg.sesskey,
+                            tii_course_title: $('a#course_' + tii_course_id).html(), sesskey: M.cfg.sesskey,
                             end_date_d: $('#id_new_course_end_date_day').val(),
                             end_date_m: $('#id_new_course_end_date_month').val(),
                             end_date_y: $('#id_new_course_end_date_year').val()
@@ -317,10 +316,10 @@ jQuery(document).ready(function($) {
                             eval(data);
                             if (data.status == "success") {
                                 parent.$.fn.colorbox.close();
-                                $('#course_date_'+tii_course_id+' span').html(data.end_date);
+                                $('#course_date_' + tii_course_id + ' span').html(data.end_date);
                             } else {
                                 var current_msg = $('#edit_end_date_desc').html;
-                                $('#edit_end_date_desc').html(current_msg+" "+data.msg);
+                                $('#edit_end_date_desc').html(current_msg + " " + data.msg);
                             }
                         }
                     });
@@ -339,7 +338,7 @@ jQuery(document).ready(function($) {
 
     // Show light box with a form to either create a new course or link an unlinked Moodle course
     // to the clicked Turnitin class, then subsequently create a Moodle assignment using the selected
-    // existing assignments on Turnitin as parts
+    // existing assignments on Turnitin as parts.
     function initialiseCourseRecreation() {
 
         var windowWidth = $(window).width();
@@ -373,7 +372,7 @@ jQuery(document).ready(function($) {
         });
     }
 
-    // Make the buttons on the course creation/link forms clickable and configure the relevant triggered event
+    // Make the buttons on the course creation/link forms clickable and configure the relevant triggered event.
     function initialiseCourseBrowserButtons(oTable) {
         $('#id_create_course').click(function() {
             $.ajax({
@@ -381,9 +380,9 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": "ajax.php",
                 "data": {action: "create_course", tii_course_id: $("#tii_course_id").html(),
-                        tii_course_name: encodeURIComponent($("#tii_course_name").html()),
-                        course_name: encodeURIComponent($("#id_coursename").val()),
-                        course_category: $("#id_coursecategory").val(), sesskey: M.cfg.sesskey},
+                    tii_course_name: encodeURIComponent($("#tii_course_name").html()),
+                    course_name: encodeURIComponent($("#id_coursename").val()),
+                    course_category: $("#id_coursecategory").val(), sesskey: M.cfg.sesskey},
                 success: function(data) {
                     var obj = jQuery.parseJSON(data);
                     hideCourseCreationOptions(obj, oTable);
@@ -397,8 +396,8 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": "ajax.php",
                 "data": {action: "link_course", tii_course_id: $("#tii_course_id").html(),
-                        tii_course_name: $("#tii_course_name").html(), course_to_link: $("#id_coursetolink").val(),
-                        sesskey: M.cfg.sesskey},
+                    tii_course_name: $("#tii_course_name").html(), course_to_link: $("#id_coursetolink").val(),
+                    sesskey: M.cfg.sesskey},
                 success: function(data) {
                     var obj = jQuery.parseJSON(data);
                     hideCourseCreationOptions(obj, oTable);
@@ -408,14 +407,14 @@ jQuery(document).ready(function($) {
     }
 
     // Hide the course creation/linking form once the selected Turnitin
-    // course has been created/linked locally and initialise the create assignment button
+    // course has been created/linked locally and initialise the create assignment button.
     function hideCourseCreationOptions(obj, oTable) {
         if (obj != 0) {
             $("#course_id").html(obj.courseid);
 
-            var cb_element = 'input[name="check_'+$('#tii_course_id').html()+'"]';
+            var cb_element = 'input[name="check_' + $('#tii_course_id').html() + '"]';
             parent.$(cb_element).hide();
-            var tick_element = '#tick_'+$('#tii_course_id').html();
+            var tick_element = '#tick_' + $('#tii_course_id').html();
             parent.$(tick_element).show();
 
             $('fieldset[id$="create_course_fieldset"]').parent().slideToggle();
@@ -444,14 +443,14 @@ jQuery(document).ready(function($) {
         }
     }
 
-    // Bind the event to create an assignment from the selected parts
+    // Bind the event to create an assignment from the selected parts.
     function initialiseCreateAssignmentButton(oTable) {
         $('#id_create_assignment').unbind("click");
         $('#id_create_assignment').click(function() {
 
             var parts = "";
             $('.assignmentids_check:checked').each(function(i){
-                parts += $(this).val()+",";
+                parts += $(this).val() + ",";
             });
             if (parts.charAt(parts.length - 1) == ',') {
                 parts.substring(0, parts.length - 1);
@@ -464,7 +463,7 @@ jQuery(document).ready(function($) {
                 "type": "POST",
                 "url": "ajax.php",
                 "data": {action: "create_assignment", course_id: $("#course_id").html(),
-                        assignment_name: $("#id_assignmentname").val(), parts: parts, sesskey: M.cfg.sesskey},
+                    assignment_name: $("#id_assignmentname").val(), parts: parts, sesskey: M.cfg.sesskey},
                 success: function(data) {
                     oTable.fnReloadAjax();
                     oTable.fnStandingRedraw();

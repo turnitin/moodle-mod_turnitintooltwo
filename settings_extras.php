@@ -49,6 +49,7 @@ $config = turnitintooltwo_admin_config();
 switch ($cmd) {
     case "viewreport":
     case "savereport":
+        raise_memory_limit(MEMORY_EXTRA);
 
         if ($cmd == 'viewreport') {
 
@@ -67,13 +68,19 @@ switch ($cmd) {
         $tables = array('turnitintooltwo_users', 'turnitintooltwo_courses', 'turnitintooltwo',
                         'turnitintooltwo_parts', 'turnitintooltwo_submissions');
 
+        // Get Moodle users.
+        $moodleusers = $DB->get_records_sql('SELECT id, firstname, lastname
+                                                   FROM {user}
+                                                   WHERE id IN
+                                                         (SELECT userid FROM {turnitintooltwo_users})');
+
         foreach ($tables as $table) {
 
             $output .= "== ".$table." ==\r\n\r\n";
 
             if ($data = $DB->get_records($table)) {
 
-                $headers = array_keys(get_object_vars(current($data)));
+                $headers = array_keys($DB->get_columns($table));
                 $columnwidth = 25;
                 if ($table == 'turnitintooltwo') {
                     $columnwidth = 20;
@@ -106,9 +113,10 @@ switch ($cmd) {
                     foreach ($datarow as $datacell) {
                         $output .= ' '.htmlspecialchars(str_pad(substr($datacell, 0, $columnwidth), $columnwidth, " ", 1)).'|';
                     }
-                    if ($table == 'turnitintooltwo_users' &&
-                            $moodleuser = $DB->get_record('user', array('id' => $datarow['userid']))) {
-                        $output .= ' '.str_pad(substr(format_string($moodleuser->firstname).' '.format_string($moodleuser->lastname), 0, $columnwidth),
+                    if ($table == 'turnitintooltwo_users' && $moodleusers[$datarow['userid']]) {
+                        $firstname = format_string($moodleusers[$datarow['userid']]->firstname);
+                        $lastname = format_string($moodleusers[$datarow['userid']]->lastname);
+                        $output .= ' '.str_pad(substr($firstname.' '.$lastname, 0, $columnwidth),
                                                 $columnwidth, " ", 1).'|';
                     }
                     $output .= "\r\n";

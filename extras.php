@@ -39,11 +39,10 @@ $id = optional_param('id', 0, PARAM_INT);
 
 // Get course and module data that we've linked to here from and set context accordingly.
 if ($id != 0) {
-    //Pre 2.8 does not have the function get_course_and_cm_from_cmid.
+    // Pre 2.8 does not have the function get_course_and_cm_from_cmid.
     if ($CFG->branch >= 28) {
         list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
-    }
-    else {
+    } else {
         $cm = get_coursemodule_from_id('turnitintooltwo', $id, 0, false, MUST_EXIST);
         $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
     }
@@ -82,13 +81,13 @@ switch ($cmd) {
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitin_helpdesk', 'mod_turnitintooltwo');
         $title = get_string('turnitinhelpdesk', 'turnitintooltwo');
 
-        include "classes/helpdeskwizard/helpdeskwizard.php";
+        include("classes/helpdeskwizard/helpdeskwizard.php");
         $helpdeskwizard = new helpdeskwizard();
         $output = $helpdeskwizard->output_wizard($id);
         break;
 
     case "supportform":
-        include "classes/helpdeskwizard/helpdeskwizard.php";
+        include("classes/helpdeskwizard/helpdeskwizard.php");
         $helpdeskwizard = new helpdeskwizard();
         $title = get_string('turnitinhelpdesk', 'turnitintooltwo');
 
@@ -100,19 +99,19 @@ switch ($cmd) {
         }
 
         $category = optional_param('category', "", PARAM_ALPHAEXT);
-        $sub_category = optional_param('sub_category', "", PARAM_ALPHAEXT);
+        $subcategory = optional_param('sub_category', "", PARAM_ALPHAEXT);
 
         $config = turnitintooltwo_admin_config();
-        $plugin_version = turnitintooltwo_get_version();
+        $pluginversion = turnitintooltwo_get_version();
 
         // Parameters to pass to support form.
         $params = array(
                 'category' => $category,
-                'sub_category' => $sub_category,
+                'sub_category' => $subcategory,
                 'class_id' => $tiiclass,
                 'vle_version' => 'Moodle ('.$CFG->branch.') '.$CFG->version,
                 'integration_id' => 'MoodleDirectV2',
-                'integration_version' => $plugin_version,
+                'integration_version' => $pluginversion,
                 'account_id' => $config->accountid
             );
 
@@ -277,7 +276,7 @@ switch ($cmd) {
         $user = new turnitintooltwo_user($USER->id, "Learner");
 
         $output .= $OUTPUT->box_start('tii_eula_launch');
-        $output .= turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tii_user_id, "Learner", '');
+        $output .= turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tiiuserid, "Learner", '');
         $output .= $OUTPUT->box_end(true);
         echo $output;
 
@@ -287,8 +286,10 @@ switch ($cmd) {
         break;
 }
 
-$nav = ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") ?
-            array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => '')) : array();
+$nav = array();
+if ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_recreation") {
+    array(array('title' => get_string('restorationheader', 'turnitintooltwo'), 'url' => ''));
+}
 
 // Build page.
 $coursemodforheader = ($id != 0) ? $cm : null;

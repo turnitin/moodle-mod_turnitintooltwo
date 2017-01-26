@@ -26,10 +26,10 @@ defined('MOODLE_INTERNAL') || die();
 
 class admin_setting_configtext_int_only extends admin_setting_configtext {
 
-	/**
+    /**
      * Config text constructor
      *
-     * @param string $name unique ascii name, either 'mysetting' for settings that in config, or 'myplugin/mysetting' for ones in config_plugins.
+     * @param string $name unique ascii name, 'mysetting' for settings in config, 'myplugin/mysetting' for config_plugins.
      * @param string $visiblename localised
      * @param string $description long localised info
      * @param string $defaultsetting
@@ -78,7 +78,7 @@ class admin_setting_config_tii_secret_key extends admin_setting_configpasswordun
         }
 
         $cleaned = clean_param($data, $this->paramtype);
-        if ("$data" === "$cleaned" && strlen($data) == 8) { // implicit conversion to string is needed to do exact comparison
+        if ("$data" === "$cleaned" && strlen($data) == 8) { // Implicit conversion to string is needed to do exact comparison.
             return true;
         } else {
             return get_string('validateerror', 'admin');

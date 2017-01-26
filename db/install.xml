@@ -148,10 +148,12 @@
                 <FIELD NAME="submission_unanonreason" TYPE="text" LENGTH="medium" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_unanon" NEXT="submission_transmatch"/>
                 <FIELD NAME="submission_transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_unanonreason" NEXT="submission_acceptnothing"/>
                 <FIELD NAME="submission_acceptnothing" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_transmatch" NEXT="submission_orcapable"/>
-                <FIELD NAME="submission_orcapable" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_acceptnothing"/>
+                <FIELD NAME="submission_orcapable" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_acceptnothing" NEXT="submission_hash"/>
++               <FIELD NAME="submission_hash" TYPE="char" LENGTH="100" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_orcapable"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
+                <KEY NAME="submission_hash" TYPE="unique" FIELDS="submission_hash" />
             </KEYS>
             <INDEXES>
                 <INDEX NAME="userid" UNIQUE="false" FIELDS="userid" NEXT="turnitintooltwoid"/>

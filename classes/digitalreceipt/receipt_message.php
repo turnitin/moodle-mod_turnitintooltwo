@@ -1,4 +1,20 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+defined('MOODLE_INTERNAL') || die();
 
 class receipt_message {
 
@@ -9,13 +25,11 @@ class receipt_message {
      * @return void
      */
     public function send_message($userid, $message) {
-        global $CFG;
-
         $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
 
         $eventdata = new stdClass();
-        $eventdata->component         = 'mod_turnitintooltwo'; //your component name
-        $eventdata->name              = 'submission'; //this is the message name from messages.php
+        $eventdata->component         = 'mod_turnitintooltwo';
+        $eventdata->name              = 'submission'; // This is the message name from messages.php.
         $eventdata->userfrom          = \core_user::get_noreply_user();
         $eventdata->userto            = $userid;
         $eventdata->subject           = $subject;
@@ -23,7 +37,7 @@ class receipt_message {
         $eventdata->fullmessageformat = FORMAT_HTML;
         $eventdata->fullmessagehtml   = $message;
         $eventdata->smallmessage      = '';
-        $eventdata->notification      = 1; //this is only set to 0 for personal messages between users
+        $eventdata->notification      = 1; // This is only set to 0 for personal messages between users.
 
         message_send($eventdata);
     }

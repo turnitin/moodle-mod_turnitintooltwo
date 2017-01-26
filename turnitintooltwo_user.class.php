@@ -14,21 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+defined('MOODLE_INTERNAL') || die();
+
 class turnitintooltwo_user {
     public $id;
-    public $tii_user_id;
+    public $tiiuserid;
     private $role;
     public $firstname;
     public $lastname;
     public $fullname;
     public $email;
     public $username;
-    public $user_agreement_accepted;
+    public $useragreementaccepted;
     private $enrol;
     private $workflowcontext;
     private $usermessages;
-    private $instructor_defaults;
-    private $instructor_rubrics;
+    private $instructorrubrics;
 
     public function __construct($id, $role = "Learner", $enrol = true, $workflowcontext = "site", $finduser = true) {
         $this->id = $id;
@@ -64,7 +65,7 @@ class turnitintooltwo_user {
 
         foreach ($tiiusers as $tiiuser) {
             $moodleuser = $DB->get_record('user', array('id' => $tiiuser->userid));
-            // Don't return a deleted user
+            // Don't return a deleted user.
             if ($moodleuser->deleted == 0) {
                 $userid = (int)$tiiuser->userid;
                 break;
@@ -107,8 +108,11 @@ class turnitintooltwo_user {
 
         $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
 
-        $this->instructor_rubrics = (!empty($turnitintooltwouser->instructor_rubrics)) ?
-                                    (array)json_decode($turnitintooltwouser->instructor_rubrics) : array();
+        $this->instructorrubrics = array();
+        if (!empty($turnitintooltwouser->instructor_rubrics)) {
+            $this->instructorrubrics = (array)json_decode($turnitintooltwouser->instructor_rubrics);
+        }
+
         return $user;
     }
 
@@ -176,20 +180,21 @@ class turnitintooltwo_user {
      */
     private function get_tii_user_id() {
         global $DB;
-        if (!$tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid, user_agreement_accepted")) {
-            $this->tii_user_id = 0;
-            $this->user_agreement_accepted = 0;
+        $tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "turnitin_uid, user_agreement_accepted");
+        if (!$tiiuser) {
+            $this->tiiuserid = 0;
+            $this->useragreementaccepted = 0;
         } else {
-            $this->tii_user_id = (isset($tiiuser->turnitin_uid) && $tiiuser->turnitin_uid > 0 ) ? $tiiuser->turnitin_uid : 0;
-            $this->user_agreement_accepted = $tiiuser->user_agreement_accepted;
+            $this->tiiuserid = (isset($tiiuser->turnitin_uid) && $tiiuser->turnitin_uid > 0 ) ? $tiiuser->turnitin_uid : 0;
+            $this->useragreementaccepted = $tiiuser->user_agreement_accepted;
         }
 
-        if (empty($this->tii_user_id)) {
-            $this->tii_user_id = $this->find_tii_user_id();
-            if (empty($this->tii_user_id) && $this->enrol) {
-                $this->tii_user_id = $this->create_tii_user();
+        if (empty($this->tiiuserid)) {
+            $this->tiiuserid = $this->find_tii_user_id();
+            if (empty($this->tiiuserid) && $this->enrol) {
+                $this->tiiuserid = $this->create_tii_user();
             }
-            if (!empty($this->tii_user_id)) {
+            if (!empty($this->tiiuserid)) {
                 $this->save_tii_user();
             }
         }
@@ -294,7 +299,7 @@ class turnitintooltwo_user {
             $user->setFirstName($this->firstname);
             $user->setLastName($this->lastname);
 
-            $user->setUserId($this->tii_user_id);
+            $user->setUserId($this->tiiuserid);
             $user->setDefaultRole($this->role);
 
             try {
@@ -322,8 +327,7 @@ class turnitintooltwo_user {
         // Check if the deleted flag has been set. if yes delete the TII record rather than updating it.
         if ($DB->get_record("user", array('id' => $this->id, 'deleted' => 1), "deleted")) {
             $DB->delete_records('turnitintooltwo_users', array('userid' => $this->id));
-        }
-        else {
+        } else {
             $DB->update_record('turnitintooltwo_users', $tiiuser);
         }
 
@@ -340,7 +344,7 @@ class turnitintooltwo_user {
         global $DB;
         $user = new stdClass();
         $user->userid = $this->id;
-        $user->turnitin_uid = $this->tii_user_id;
+        $user->turnitin_uid = $this->tiiuserid;
         $user->turnitin_utp = 1;
         if ($this->role == "Instructor") {
             $user->turnitin_utp = 2;
@@ -355,7 +359,7 @@ class turnitintooltwo_user {
                     exit();
                 }
             }
-        } else if (!$insertid = $DB->insert_record('turnitintooltwo_users', $user)) {
+        } else if (!$DB->insert_record('turnitintooltwo_users', $user)) {
             if ($this->workflowcontext != "cron") {
                 turnitintooltwo_print_error('userupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
                 exit();
@@ -373,24 +377,24 @@ class turnitintooltwo_user {
 
         $turnitincomms = new turnitintooltwo_comms();
 
-        // We only want an API log entry for this if diagnostic mode is set to Debugging
+        // We only want an API log entry for this if diagnostic mode is set to Debugging.
         if (empty($config)) {
             $config = turnitintooltwo_admin_config();
         }
         if ($config->enablediagnostic != 2) {
-            $turnitincomms->setDiagnostic(0);
+            $turnitincomms->set_diagnostic(0);
         }
         $turnitincall = $turnitincomms->initialise_api();
 
         $membership = new TiiMembership();
         $membership->setClassId($tiicourseid);
-        $membership->setUserId($this->tii_user_id);
+        $membership->setUserId($this->tiiuserid);
         $membership->setRole($this->role);
 
         try {
             $turnitincall->createMembership($membership);
 
-            turnitintooltwo_activitylog("User ".$this->id." (".$this->tii_user_id.") joined to class (".
+            turnitintooltwo_activitylog("User ".$this->id." (".$this->tiiuserid.") joined to class (".
                                                 $tiicourseid.")", "REQUEST");
 
             return true;
@@ -437,7 +441,7 @@ class turnitintooltwo_user {
         $turnitincall = $turnitincomms->initialise_api();
 
         $user = new TiiUser();
-        $user->setUserId($this->tii_user_id);
+        $user->setUserId($this->tiiuserid);
 
         try {
             $response = $turnitincall->readUser($user);
@@ -467,7 +471,7 @@ class turnitintooltwo_user {
                 $tiiclassid = $newclass->getClassId();
                 $membership = new TiiMembership();
                 $membership->setRole($this->role);
-                $membership->setUserId($this->tii_user_id);
+                $membership->setUserId($this->tiiuserid);
                 $membership->setClassId($tiiclassid);
                 $response = $turnitincall->createMembership($membership);
                 $class->setClassId($tiiclassid);
@@ -504,7 +508,7 @@ class turnitintooltwo_user {
             $DB->update_record('turnitintooltwo_users', $turnitintooltwouser);
         }
 
-        $this->instructor_rubrics = $rubricarray;
+        $this->instructorrubrics = $rubricarray;
     }
 
     /**
@@ -540,7 +544,7 @@ class turnitintooltwo_user {
      * @return int
      */
     public function get_instructor_rubrics() {
-        return $this->instructor_rubrics;
+        return $this->instructorrubrics;
     }
 
     /**
@@ -576,9 +580,11 @@ class turnitintooltwo_user {
     public function get_instructor_defaults() {
         global $DB;
         $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
+        $instructordefaults = array();
 
-        $instructordefaults = (!empty($turnitintooltwouser->instructor_defaults)) ?
-                                    json_decode($turnitintooltwouser->instructor_defaults) : array();
+        if (!empty($turnitintooltwouser->instructor_defaults)) {
+            $instructordefaults = json_decode($turnitintooltwouser->instructor_defaults);
+        }
 
         return $instructordefaults;
     }
@@ -595,7 +601,7 @@ class turnitintooltwo_user {
         $turnitincall = $turnitincomms->initialise_api();
 
         $user = new TiiUser();
-        $user->setUserId($this->tii_user_id);
+        $user->setUserId($this->tiiuserid);
 
         try {
             $response = $turnitincall->readUser($user);
@@ -604,20 +610,19 @@ class turnitintooltwo_user {
             if ($readuser->getAcceptedUserAgreement()) {
                 $turnitintooltwouser = $DB->get_record('turnitintooltwo_users', array('userid' => $this->id));
 
-                $tii_userinfo = new stdClass();
-                $tii_userinfo->id = $turnitintooltwouser->id;
-                $tii_userinfo->user_agreement_accepted = 1;
+                $tiiuserinfo = new stdClass();
+                $tiiuserinfo->id = $turnitintooltwouser->id;
+                $tiiuserinfo->user_agreement_accepted = 1;
 
-                $DB->update_record('turnitintooltwo_users', $tii_userinfo);
+                $DB->update_record('turnitintooltwo_users', $tiiuserinfo);
                 return true;
             } else {
                 return false;
             }
         } catch (Exception $e) {
-            // User may not be joined to account so we'll join them and recall function
+            // User may not be joined to account so we'll join them and recall function.
             $this->set_user_values_from_tii();
             $this->get_accepted_user_agreement();
-            // $turnitincomms->handle_exceptions($e, 'tiiusergeterror');
         }
     }
 }

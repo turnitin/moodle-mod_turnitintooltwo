@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,9 +21,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Structure step to restore one turnitintooltwo activity
- */
+defined('MOODLE_INTERNAL') || die();
+
+// Structure step to restore one turnitintooltwo activity.
 
 require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
 
@@ -48,7 +47,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
             $paths[] = new restore_path_element('turnitintooltwo_submissions', '/activity/turnitintooltwo/submissions/submission');
         }
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
@@ -64,7 +63,6 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         }
 
         $data = (object)$data;
-        $oldid = $data->id;
         $data->course = $this->get_courseid();
 
         // Work out whether we are duplicating a module activity or course.
@@ -75,7 +73,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         }
 
         if ($data->grade < 0) {
-            // scale found, get mapping
+            // Scale found, get mapping.
             $data->grade = -($this->get_mappingid('scale', abs($data->grade)));
         }
 
@@ -83,13 +81,13 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
             $a = new stdClass();
             $a->backupid = $data->tiiaccount;
             $a->current = $config->accountid;
-            turnitintooltwo_print_error('wrongaccountid', 'turnitintooltwo', NULL, $a);
+            turnitintooltwo_print_error('wrongaccountid', 'turnitintooltwo', null, $a);
             return false;
         } else {
-            // insert the activity record
+            // Insert the activity record.
             $newitemid = $DB->insert_record('turnitintooltwo', $data);
             $_SESSION['assignment_id'] = $newitemid;
-            // immediately after inserting "activity" record, call this
+            // Immediately after inserting "activity" record, call this.
             $this->apply_activity_instance($newitemid);
         }
     }
@@ -102,7 +100,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         $data->courseid = $this->get_courseid();
         $_SESSION['course_id'] = $data->courseid;
 
-        // Deleted user's emails are hashed so we need to grab username which isin the format email.timestamp
+        // Deleted user's emails are hashed so we need to grab username which is in the format email.timestamp.
         if (empty($data->owneremail)) {
             $ownerusername = $data->ownerun;
             $ownerusername = explode(".", $ownerusername);
@@ -112,14 +110,14 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         if ($owner) {
             $data->ownerid = $owner->id;
         } else {
-            // Turnitin class owner not found so use restoring user as owner
+            // Turnitin class owner not found so use restoring user as owner.
             $data->ownerid = $USER->id;
         }
         $tiiowner = new stdClass();
         $tiiowner->userid = $data->ownerid;
         $tiiowner->turnitin_uid = $data->ownertiiuid;
-        if (!$tiiuser = $DB->get_record('turnitintooltwo_users', array('userid' => $data->ownerid))) {
-            $DB->insert_record('turnitintooltwo_users',$tiiowner);
+        if (!$DB->get_record('turnitintooltwo_users', array('userid' => $data->ownerid))) {
+            $DB->insert_record('turnitintooltwo_users', $tiiowner);
         }
         if (!$DB->get_records('turnitintooltwo_courses', array('courseid' => $data->courseid, 'course_type' => 'TT'))) {
             $data->course_type = 'TT';
@@ -147,16 +145,23 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         $data->turnitintooltwoid = $this->get_new_parentid('turnitintooltwo');
         $data->submission_part = $this->get_mappingid('turnitintooltwo_parts', $data->submission_part);
         $data->userid = $this->get_mappingid('user', $data->userid);
+        $data->submission_hash = $data->userid.'_'.$data->turnitintooltwoid.'_'.$data->submission_part;
 
-        // Create TII User Account Details
+        // Create TII User Account Details.
         if (!$tiiuser = $DB->get_record('turnitintooltwo_users', array('turnitin_uid' => $data->tiiuserid))) {
             $tiiuser->userid = $data->userid;
             $tiiuser->turnitin_uid = $data->tiiuserid;
             $DB->insert_record('turnitintooltwo_users', $tiiuser);
         }
 
+        // Check if this hash already exists.
+        if ($check_hash = $DB->get_record('turnitintooltwo_submissions', array('submission_hash' => $data->submission_hash))) {
+            $data->submission_hash = turnitintooltwo_genUuid();
+        }
+
+        // Insert the submission as we have a unique hash.
         $newitemid = $DB->insert_record('turnitintooltwo_submissions', $data);
-        $this->set_mapping('turnitintooltwo_submissions', $oldid, $newitemid, true);
+        $this->set_mapping('turnitintooltwo_submissions', $oldid, $newitemid);
     }
 
     protected function after_execute() {

@@ -19,18 +19,20 @@
  * @copyright 2012 iParadigms LLC
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 if (empty($plugin)) {
-	$plugin = new StdClass();
+    $plugin = new StdClass();
 }
 
-$plugin->version   = 2016122101;
-$plugin->release   = "2.6+";
-$plugin->requires  = 2013111800;
+$plugin->version   = 2017012501;
+$plugin->release   = "2.7+";
+$plugin->requires  = 2014051200;
 $plugin->component = 'mod_turnitintooltwo';
 $plugin->maturity  = MATURITY_STABLE;
 
 global $CFG;
 $plugin->cron = 0;
 if (!empty($CFG->version)) {
-	$plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
+    $plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
 }

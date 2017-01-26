@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once($CFG->dirroot . '/mod/turnitintooltwo/backup/moodle2/backup_turnitintooltwo_stepslib.php'); // Because it exists (must)
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/mod/turnitintooltwo/backup/moodle2/backup_turnitintooltwo_stepslib.php');
 
 /**
  * turnitintooltwo backup task that provides all the settings and steps to perform one
@@ -30,37 +31,30 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/backup/moodle2/backup_turniti
  */
 class backup_turnitintooltwo_activity_task extends backup_activity_task {
 
-    /**
-     * Define (add) particular settings this activity can have
-     */
+    // Define (add) particular settings this activity can have.
     protected function define_my_settings() {
-        // No particular settings for this activity
+        // No particular settings for this activity.
     }
 
-    /**
-     * Define (add) particular steps this activity can have
-     */
+    // Define (add) particular steps this activity can have.
     protected function define_my_steps() {
-        // Choice only has one structure step
+        // Choice only has one structure step.
         $this->add_step(new backup_turnitintooltwo_activity_structure_step('turnitintooltwo_structure', 'turnitintooltwo.xml'));
     }
 
-    /**
-     * Code the transformations to perform in the activity in
-     * order to get transportable (encoded) links
-     */
+    // Code the transformations to perform in the activity in order to get transportable (encoded) links.
     static public function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot,"/");
+        $base = preg_quote($CFG->wwwroot, "/");
 
-        // Link to the list of turnitintooltwos
-        $search="/(".$base."\/mod\/turnitintooltwo\/index.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@TURNITINTOOLINDEX*$2@$', $content);
+        // Link to the list of turnitintooltwos.
+        $search = "/(".$base."\/mod\/turnitintooltwo\/index.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@TURNITINTOOLINDEX*$2@$', $content);
 
-        // Link to turnitintooltwo view by moduleid
-        $search="/(".$base."\/mod\/turnitintooltwo\/view.php\?id\=)([0-9]+)/";
-        $content= preg_replace($search, '$@TURNITINTOOLVIEWBYID*$2@$', $content);
+        // Link to turnitintooltwo view by moduleid.
+        $search = "/(".$base."\/mod\/turnitintooltwo\/view.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@TURNITINTOOLVIEWBYID*$2@$', $content);
 
         return $content;
     }

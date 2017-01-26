@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,26 +21,22 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-/**
- * Define all the backup steps that will be used by the backup_assignment_activity_task
- */
+defined('MOODLE_INTERNAL') || die();
 
-/**
- * Define the complete assignment structure for backup, with file and id annotations
- */
+// Define all the backup steps that will be used by the backup_assignment_activity_task.
+// This is the Complete assignment structure for backup, with file and id annotations.
 
 require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
 
 class backup_turnitintooltwo_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {
-        global $DB;
         $config = turnitintooltwo_admin_config();
 
-        // To know if we are including userinfo
+        // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
 
-        // Define each element separated
+        // Define each element separated.
         $turnitintooltwo = new backup_nested_element('turnitintooltwo', array('id'), array(
             'type', 'name', 'grade', 'numparts', 'tiiaccount', 'defaultdtstart',
             'defaultdtdue', 'defaultdtpost', 'anon', 'portfolio', 'allowlate',
@@ -78,14 +73,14 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
             'submission_anonreason', 'submission_transmatch', 'submission_orcapable',
             'submission_acceptnothing', 'tiiuserid'));
 
-        // Build the tree
+        // Build the tree.
         $submissions->add_child($submission);
         $parts->add_child($part);
         $turnitintooltwo->add_child($parts);
         $turnitintooltwo->add_child($course);
         $turnitintooltwo->add_child($submissions);
 
-        // Define sources
+        // Define sources.
         $turnitintooltwo->set_source_table('turnitintooltwo', array('id' => backup::VAR_ACTIVITYID));
         $values['tiiaccount'] = $config->accountid;
         $turnitintooltwo->fill_values($values);
@@ -100,9 +95,8 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
              WHERE t.ownerid=u.id AND tu.userid=t.ownerid AND t.courseid = ? AND t.course_type = 'TT'",
             array(backup::VAR_COURSEID));
 
-        // All the rest of elements only happen if we are including user info
+        // All the rest of elements only happen if we are including user info.
         if ($userinfo) {
-            //$submission->set_source_table('turnitintooltwo_submissions', array('turnitintooltwoid' => '../../id'));
             $submission->set_source_sql('
             SELECT  s.*, tu.turnitin_uid AS tiiuserid
               FROM {turnitintooltwo_submissions} s, {turnitintooltwo_users} tu
@@ -110,14 +104,14 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
             array(backup::VAR_ACTIVITYID));
         }
 
-        // Define id annotations
+        // Define id annotations.
         $submission->annotate_ids('user', 'userid');
 
-        // Define file annotations
-        $turnitintooltwo->annotate_files('mod_turnitintooltwo', 'intro', null); // This file area hasn't itemid
+        // Define file annotations.
+        $turnitintooltwo->annotate_files('mod_turnitintooltwo', 'intro', null); // This file area hasn't itemid.
         $submission->annotate_files('mod_turnitintooltwo', 'submissions', 'id');
 
-        // Return the root element (turnitintooltwo), wrapped into standard activity structure
+        // Return the root element (turnitintooltwo), wrapped into standard activity structure.
         return $this->prepare_activity_structure($turnitintooltwo);
     }
 }

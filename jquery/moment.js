@@ -1,8 +1,8 @@
-//! moment.js
-//! version : 2.7.0
-//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
-//! license : MIT
-//! momentjs.com
+// Moment.js
+// Version : 2.7.0
+// Authors : Tim Wood, Iskren Chernev, Moment.js contributors
+// License : MIT
+// Momentjs.com
 
 (function (undefined) {
 
@@ -12,7 +12,7 @@
 
     var moment,
         VERSION = "2.7.0",
-        // the global-scope this is NOT the global object in Node.js
+        // The global-scope this is NOT the global object in Node.js.
         globalScope = typeof global !== 'undefined' ? global : this,
         oldGlobalMoment,
         round = Math.round,
@@ -26,10 +26,10 @@
         SECOND = 5,
         MILLISECOND = 6,
 
-        // internal storage for language config files
+        // Internal storage for language config files.
         languages = {},
 
-        // moment internal properties
+        // Moment internal properties.
         momentProperties = {
             _isAMomentObject: null,
             _i : null,
@@ -43,18 +43,18 @@
             _lang : null  // optional
         },
 
-        // check for nodeJS
+        // Check for nodeJS.
         hasModule = (typeof module !== 'undefined' && module.exports),
 
-        // ASP.NET json date format regex
+        // ASP.NET json date format regex.
         aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
         aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
 
-        // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+        // From http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+        // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere.
         isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
 
-        // format tokens
+        // Format tokens.
         formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|X|zz?|ZZ?|.)/g,
         localFormattingTokens = /(\[[^\[]*\])|(\\)?(LT|LL?L?L?|l{1,4})/g,
 
@@ -988,81 +988,81 @@
     function getParseRegexForToken(token, config) {
         var a, strict = config._strict;
         switch (token) {
-        case 'Q':
-            return parseTokenOneDigit;
-        case 'DDDD':
-            return parseTokenThreeDigits;
-        case 'YYYY':
-        case 'GGGG':
-        case 'gggg':
-            return strict ? parseTokenFourDigits : parseTokenOneToFourDigits;
-        case 'Y':
-        case 'G':
-        case 'g':
-            return parseTokenSignedNumber;
-        case 'YYYYYY':
-        case 'YYYYY':
-        case 'GGGGG':
-        case 'ggggg':
-            return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
-        case 'S':
-            if (strict) { return parseTokenOneDigit; }
-            /* falls through */
-        case 'SS':
-            if (strict) { return parseTokenTwoDigits; }
-            /* falls through */
-        case 'SSS':
-            if (strict) { return parseTokenThreeDigits; }
-            /* falls through */
-        case 'DDD':
-            return parseTokenOneToThreeDigits;
-        case 'MMM':
-        case 'MMMM':
-        case 'dd':
-        case 'ddd':
-        case 'dddd':
-            return parseTokenWord;
-        case 'a':
-        case 'A':
-            return getLangDefinition(config._l)._meridiemParse;
-        case 'X':
-            return parseTokenTimestampMs;
-        case 'Z':
-        case 'ZZ':
-            return parseTokenTimezone;
-        case 'T':
-            return parseTokenT;
-        case 'SSSS':
-            return parseTokenDigits;
-        case 'MM':
-        case 'DD':
-        case 'YY':
-        case 'GG':
-        case 'gg':
-        case 'HH':
-        case 'hh':
-        case 'mm':
-        case 'ss':
-        case 'ww':
-        case 'WW':
-            return strict ? parseTokenTwoDigits : parseTokenOneOrTwoDigits;
-        case 'M':
-        case 'D':
-        case 'd':
-        case 'H':
-        case 'h':
-        case 'm':
-        case 's':
-        case 'w':
-        case 'W':
-        case 'e':
-        case 'E':
-            return parseTokenOneOrTwoDigits;
-        case 'Do':
-            return parseTokenOrdinal;
-        default :
-            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), "i"));
-            return a;
+            case 'Q':
+                return parseTokenOneDigit;
+            case 'DDDD':
+                return parseTokenThreeDigits;
+            case 'YYYY':
+            case 'GGGG':
+            case 'gggg':
+                return strict ? parseTokenFourDigits : parseTokenOneToFourDigits;
+            case 'Y':
+            case 'G':
+            case 'g':
+                return parseTokenSignedNumber;
+            case 'YYYYYY':
+            case 'YYYYY':
+            case 'GGGGG':
+            case 'ggggg':
+                return strict ? parseTokenSixDigits : parseTokenOneToSixDigits;
+            case 'S':
+                if (strict) { return parseTokenOneDigit; }
+                /* falls through */
+            case 'SS':
+                if (strict) { return parseTokenTwoDigits; }
+                /* falls through */
+            case 'SSS':
+                if (strict) { return parseTokenThreeDigits; }
+                /* falls through */
+            case 'DDD':
+                return parseTokenOneToThreeDigits;
+            case 'MMM':
+            case 'MMMM':
+            case 'dd':
+            case 'ddd':
+            case 'dddd':
+                return parseTokenWord;
+            case 'a':
+            case 'A':
+                return getLangDefinition(config._l)._meridiemParse;
+            case 'X':
+                return parseTokenTimestampMs;
+            case 'Z':
+            case 'ZZ':
+                return parseTokenTimezone;
+            case 'T':
+                return parseTokenT;
+            case 'SSSS':
+                return parseTokenDigits;
+            case 'MM':
+            case 'DD':
+            case 'YY':
+            case 'GG':
+            case 'gg':
+            case 'HH':
+            case 'hh':
+            case 'mm':
+            case 'ss':
+            case 'ww':
+            case 'WW':
+                return strict ? parseTokenTwoDigits : parseTokenOneOrTwoDigits;
+            case 'M':
+            case 'D':
+            case 'd':
+            case 'H':
+            case 'h':
+            case 'm':
+            case 's':
+            case 'w':
+            case 'W':
+            case 'e':
+            case 'E':
+                return parseTokenOneOrTwoDigits;
+            case 'Do':
+                return parseTokenOrdinal;
+            default :
+                a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), "i"));
+                return a;
         }
     }
 
@@ -1081,133 +1081,133 @@
         var a, datePartArray = config._a;
 
         switch (token) {
-        // QUARTER
-        case 'Q':
-            if (input != null) {
-                datePartArray[MONTH] = (toInt(input) - 1) * 3;
-            }
-            break;
-        // MONTH
-        case 'M' : // fall through to MM
-        case 'MM' :
-            if (input != null) {
-                datePartArray[MONTH] = toInt(input) - 1;
-            }
-            break;
-        case 'MMM' : // fall through to MMMM
-        case 'MMMM' :
-            a = getLangDefinition(config._l).monthsParse(input);
-            // if we didn't find a month name, mark the date as invalid.
-            if (a != null) {
-                datePartArray[MONTH] = a;
-            } else {
-                config._pf.invalidMonth = input;
-            }
-            break;
-        // DAY OF MONTH
-        case 'D' : // fall through to DD
-        case 'DD' :
-            if (input != null) {
-                datePartArray[DATE] = toInt(input);
-            }
-            break;
-        case 'Do' :
-            if (input != null) {
-                datePartArray[DATE] = toInt(parseInt(input, 10));
-            }
-            break;
-        // DAY OF YEAR
-        case 'DDD' : // fall through to DDDD
-        case 'DDDD' :
-            if (input != null) {
-                config._dayOfYear = toInt(input);
-            }
+            // QUARTER
+            case 'Q':
+                if (input != null) {
+                    datePartArray[MONTH] = (toInt(input) - 1) * 3;
+                }
+                break;
+            // MONTH
+            case 'M' : // fall through to MM
+            case 'MM' :
+                if (input != null) {
+                    datePartArray[MONTH] = toInt(input) - 1;
+                }
+                break;
+            case 'MMM' : // fall through to MMMM
+            case 'MMMM' :
+                a = getLangDefinition(config._l).monthsParse(input);
+                // if we didn't find a month name, mark the date as invalid.
+                if (a != null) {
+                    datePartArray[MONTH] = a;
+                } else {
+                    config._pf.invalidMonth = input;
+                }
+                break;
+            // DAY OF MONTH
+            case 'D' : // fall through to DD
+            case 'DD' :
+                if (input != null) {
+                    datePartArray[DATE] = toInt(input);
+                }
+                break;
+            case 'Do' :
+                if (input != null) {
+                    datePartArray[DATE] = toInt(parseInt(input, 10));
+                }
+                break;
+            // DAY OF YEAR
+            case 'DDD' : // fall through to DDDD
+            case 'DDDD' :
+                if (input != null) {
+                    config._dayOfYear = toInt(input);
+                }
 
-            break;
-        // YEAR
-        case 'YY' :
-            datePartArray[YEAR] = moment.parseTwoDigitYear(input);
-            break;
-        case 'YYYY' :
-        case 'YYYYY' :
-        case 'YYYYYY' :
-            datePartArray[YEAR] = toInt(input);
-            break;
-        // AM / PM
-        case 'a' : // fall through to A
-        case 'A' :
-            config._isPm = getLangDefinition(config._l).isPM(input);
-            break;
-        // 24 HOUR
-        case 'H' : // fall through to hh
-        case 'HH' : // fall through to hh
-        case 'h' : // fall through to hh
-        case 'hh' :
-            datePartArray[HOUR] = toInt(input);
-            break;
-        // MINUTE
-        case 'm' : // fall through to mm
-        case 'mm' :
-            datePartArray[MINUTE] = toInt(input);
-            break;
-        // SECOND
-        case 's' : // fall through to ss
-        case 'ss' :
-            datePartArray[SECOND] = toInt(input);
-            break;
-        // MILLISECOND
-        case 'S' :
-        case 'SS' :
-        case 'SSS' :
-        case 'SSSS' :
-            datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
-            break;
-        // UNIX TIMESTAMP WITH MS
-        case 'X':
-            config._d = new Date(parseFloat(input) * 1000);
-            break;
-        // TIMEZONE
-        case 'Z' : // fall through to ZZ
-        case 'ZZ' :
-            config._useUTC = true;
-            config._tzm = timezoneMinutesFromString(input);
-            break;
-        // WEEKDAY - human
-        case 'dd':
-        case 'ddd':
-        case 'dddd':
-            a = getLangDefinition(config._l).weekdaysParse(input);
-            // if we didn't get a weekday name, mark the date as invalid
-            if (a != null) {
+                break;
+            // YEAR
+            case 'YY' :
+                datePartArray[YEAR] = moment.parseTwoDigitYear(input);
+                break;
+            case 'YYYY' :
+            case 'YYYYY' :
+            case 'YYYYYY' :
+                datePartArray[YEAR] = toInt(input);
+                break;
+            // AM / PM
+            case 'a' : // fall through to A
+            case 'A' :
+                config._isPm = getLangDefinition(config._l).isPM(input);
+                break;
+            // 24 HOUR
+            case 'H' : // fall through to hh
+            case 'HH' : // fall through to hh
+            case 'h' : // fall through to hh
+            case 'hh' :
+                datePartArray[HOUR] = toInt(input);
+                break;
+            // MINUTE
+            case 'm' : // fall through to mm
+            case 'mm' :
+                datePartArray[MINUTE] = toInt(input);
+                break;
+            // SECOND
+            case 's' : // fall through to ss
+            case 'ss' :
+                datePartArray[SECOND] = toInt(input);
+                break;
+            // MILLISECOND
+            case 'S' :
+            case 'SS' :
+            case 'SSS' :
+            case 'SSSS' :
+                datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
+                break;
+            // UNIX TIMESTAMP WITH MS
+            case 'X':
+                config._d = new Date(parseFloat(input) * 1000);
+                break;
+            // TIMEZONE
+            case 'Z' : // fall through to ZZ
+            case 'ZZ' :
+                config._useUTC = true;
+                config._tzm = timezoneMinutesFromString(input);
+                break;
+            // WEEKDAY - human
+            case 'dd':
+            case 'ddd':
+            case 'dddd':
+                a = getLangDefinition(config._l).weekdaysParse(input);
+                // If we didn't get a weekday name, mark the date as invalid.
+                if (a != null) {
+                    config._w = config._w || {};
+                    config._w['d'] = a;
+                } else {
+                    config._pf.invalidWeekday = input;
+                }
+                break;
+            // WEEK, WEEK DAY - numeric.
+            case 'w':
+            case 'ww':
+            case 'W':
+            case 'WW':
+            case 'd':
+            case 'e':
+            case 'E':
+                token = token.substr(0, 1);
+                /* falls through */
+            case 'gggg':
+            case 'GGGG':
+            case 'GGGGG':
+                token = token.substr(0, 2);
+                if (input) {
+                    config._w = config._w || {};
+                    config._w[token] = toInt(input);
+                }
+                break;
+            case 'gg':
+            case 'GG':
                 config._w = config._w || {};
-                config._w['d'] = a;
-            } else {
-                config._pf.invalidWeekday = input;
-            }
-            break;
-        // WEEK, WEEK DAY - numeric
-        case 'w':
-        case 'ww':
-        case 'W':
-        case 'WW':
-        case 'd':
-        case 'e':
-        case 'E':
-            token = token.substr(0, 1);
-            /* falls through */
-        case 'gggg':
-        case 'GGGG':
-        case 'GGGGG':
-            token = token.substr(0, 2);
-            if (input) {
-                config._w = config._w || {};
-                config._w[token] = toInt(input);
-            }
-            break;
-        case 'gg':
-        case 'GG':
-            config._w = config._w || {};
-            config._w[token] = moment.parseTwoDigitYear(input);
+                config._w[token] = moment.parseTwoDigitYear(input);
         }
     }
 
@@ -1254,7 +1254,7 @@
         config._dayOfYear = temp.dayOfYear;
     }
 
-    // convert an array to a date.
+    // Convert an array to a date.
     // the array should mirror the parameters below
     // note: all values past the year are optional and will default to the lowest possible value.
     // [year, month, day , hour, minute, second, millisecond]
@@ -1272,7 +1272,7 @@
             dayOfYearFromWeekInfo(config);
         }
 
-        //if the day of the year is set, figure out what it is
+        // If the day of the year is set, figure out what it is.
         if (config._dayOfYear) {
             yearToUse = dfl(config._a[YEAR], currentDate[YEAR]);
 
@@ -2118,27 +2118,27 @@
             // the following switch intentionally omits break keywords
             // to utilize falling through the cases.
             switch (units) {
-            case 'year':
-                this.month(0);
-                /* falls through */
-            case 'quarter':
-            case 'month':
-                this.date(1);
-                /* falls through */
-            case 'week':
-            case 'isoWeek':
-            case 'day':
-                this.hours(0);
-                /* falls through */
-            case 'hour':
-                this.minutes(0);
-                /* falls through */
-            case 'minute':
-                this.seconds(0);
-                /* falls through */
-            case 'second':
-                this.milliseconds(0);
-                /* falls through */
+                case 'year':
+                    this.month(0);
+                    /* falls through */
+                case 'quarter':
+                case 'month':
+                    this.date(1);
+                    /* falls through */
+                case 'week':
+                case 'isoWeek':
+                case 'day':
+                    this.hours(0);
+                    /* falls through */
+                case 'hour':
+                    this.minutes(0);
+                    /* falls through */
+                case 'minute':
+                    this.seconds(0);
+                    /* falls through */
+                case 'second':
+                    this.milliseconds(0);
+                    /* falls through */
             }
 
             // weeks are a special case
@@ -2177,11 +2177,11 @@
         },
 
         min: deprecate(
-                 "moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548",
-                 function (other) {
-                     other = moment.apply(null, arguments);
-                     return other < this ? this : other;
-                 }
+                "moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548",
+                function (other) {
+                    other = moment.apply(null, arguments);
+                    return other < this ? this : other;
+                }
          ),
 
         max: deprecate(
@@ -2407,7 +2407,6 @@
         Duration Prototype
     ************************************/
 
-
     extend(moment.duration.fn = Duration.prototype, {
 
         _bubble : function () {
@@ -2550,11 +2549,9 @@
         return (+this - this.years() * 31536e6) / 2592e6 + this.years() * 12;
     };
 
-
     /************************************
         Default Lang
     ************************************/
-
 
     // Set default language, other languages will inherit from English.
     moment.lang('en', {

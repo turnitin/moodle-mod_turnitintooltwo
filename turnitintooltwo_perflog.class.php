@@ -1,4 +1,20 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__.'/sdk/perflog.class.php');
 require_once(__DIR__.'/lib.php');
@@ -9,9 +25,9 @@ class turnitintooltwo_performancelog extends PerformanceLog {
      * Log networking performance details of an individual request
      *
      * @param resource $ch The cURL handle corresponding to the request to log
-     * @param float $total_response_time Total time taken for the request in seconds
+     * @param float $totalresponsetime Total time taken for the request in seconds
      */
-    protected function log($ch, $total_response_time) {
+    protected function log($ch, $totalresponsetime) {
         global $CFG, $USER, $action;
 
         static $config;
@@ -49,24 +65,24 @@ class turnitintooltwo_performancelog extends PerformanceLog {
                     $str .= " - {$do}";
                 }
             }
-            $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $str .= " - HTTP:" . $http_status;
-            if ($http_status === 0 && curl_getinfo($ch, CURLINFO_SIZE_UPLOAD) === 0) {
+            $httpstatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $str .= " - HTTP:" . $httpstatus;
+            if ($httpstatus === 0 && curl_getinfo($ch, CURLINFO_SIZE_UPLOAD) === 0) {
                 // CURLINFO_CONNECT_TIME is not reliable when the request fails to connect.
-                $connect_time = $total_response_time;
+                $connecttime = $totalresponsetime;
             } else {
-                $connect_time = curl_getinfo($ch, CURLINFO_CONNECT_TIME);
+                $connecttime = curl_getinfo($ch, CURLINFO_CONNECT_TIME);
             }
-            $str .= " - connect:" . sprintf('%0.3f', $connect_time);
-            $str .= " - total:" . sprintf('%0.3f', $total_response_time);
+            $str .= " - connect:" . sprintf('%0.3f', $connecttime);
+            $str .= " - total:" . sprintf('%0.3f', $totalresponsetime);
             $str .= " - up:" . curl_getinfo($ch, CURLINFO_SIZE_UPLOAD);
             $str .= " - down:" . curl_getinfo($ch, CURLINFO_SIZE_DOWNLOAD);
             $str .= " - userid:" . $USER->id;
-            if (array_key_exists('REQUEST_URI', $_SERVER)){
+            if (array_key_exists('REQUEST_URI', $_SERVER)) {
                 $str .= " - " . $_SERVER['REQUEST_URI'];
             }
 
-            if ($http_status === 0) {
+            if ($httpstatus === 0) {
                 $str .= " - " . curl_error($ch);
             }
 

@@ -19,6 +19,8 @@
  * and open the template in the editor.
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once(__DIR__.'/sdk/api.class.php');
 require_once(__DIR__.'/turnitintooltwo_perflog.class.php');
 
@@ -64,7 +66,7 @@ class turnitintooltwo_comms {
             $api->setLogPath($CFG->tempdir.'/turnitintooltwo/logs/');
         }
 
-        // Use Moodle's proxy settings if specified
+        // Use Moodle's proxy settings if specified.
         if (!empty($CFG->proxyhost)) {
             $api->setProxyHost($CFG->proxyhost);
         }
@@ -89,16 +91,16 @@ class turnitintooltwo_comms {
             $api->setProxyBypass($CFG->proxybypass);
         }
 
-        $plugin_version = turnitintooltwo_get_version();
+        $pluginversion = turnitintooltwo_get_version();
         $api->setIntegrationVersion($CFG->version);
-        $api->setPluginVersion($plugin_version);
+        $api->setPluginVersion($pluginversion);
 
         if (is_readable("$CFG->dataroot/moodleorgca.crt")) {
             $certificate = realpath("$CFG->dataroot/moodleorgca.crt");
             $api->setSSLCertificate($certificate);
         }
 
-        // Offline mode provided by Androgogic
+        // Offline mode provided by Androgogic.
         if (!empty($CFG->tiioffline) && !$istestingconnection && empty($tiipp->in_use)) {
             turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
         }
@@ -187,9 +189,9 @@ class turnitintooltwo_comms {
     }
 
     /**
-    * @param int $diagnostic Set diagnostic setting.
-    */
-    public function setDiagnostic($diagnostic) {
+     * @param int $diagnostic Set diagnostic setting.
+     */
+    public function set_diagnostic($diagnostic) {
         $this->diagnostic = $diagnostic;
     }
 }
