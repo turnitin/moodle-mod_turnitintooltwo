@@ -946,7 +946,7 @@ class turnitintooltwo_view {
                                                     html_writer::tag('span', $count, array('class' => 'peermark_count')).
                                                     html_writer::tag('span', $OUTPUT->pix_icon('loading',
                                                         get_string('turnitinloading', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                                    array('class' => 'peermark_loading peermark_loading_span')).')',
+                                                    array('class' => 'peermark-loading peermark-loading-span')).')',
                                                     array('class' => 'peermark_header')).$peermarkreviewslink.$peermarkmanagerlink);
                 $cells[0]->attributes['class'] = 'peermarks';
                 $cells[0]->colspan = ($config->usegrademark) ? '7' : '6';

@@ -635,6 +635,8 @@ switch ($do) {
         $ula = "";
 
         if (!$istutor) {
+            echo html_writer::start_tag("div", array("class" => "inbox inbox-student"));
+
             $eulaaccepted = false;
             $user = new turnitintooltwo_user($USER->id, $userrole);
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
@@ -666,6 +668,8 @@ switch ($do) {
                                             array('class' => 'warning turnitin_ula_noscript'));
                 echo $ula.$noscriptula;
             }
+        } else {
+            echo html_writer::start_tag("div", array("class" => "inbox inbox-instructor"));
         }
 
         $listsubmissionsdesc = ($istutor) ? "listsubmissionsdesc" : "listsubmissionsdesc_student";
@@ -728,6 +732,7 @@ switch ($do) {
             // Put the html for unanonymising a submission below the form for including in lightbox.
             echo $turnitintooltwoview->show_unanonymise_form();
         }
+        echo html_writer::end_tag("div");
         break;
 
     case "students":
@@ -736,16 +741,32 @@ switch ($do) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
             exit();
         }
-        $string = ($do == "tutors") ? 'turnitintutors_desc' : 'turnitinstudents_desc';
-        $introtext = get_string($string, 'turnitintooltwo');
-        echo $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');
 
-        $memberrole = ($do == "tutors") ? 'Instructor' : 'Learner';
+        if ($do == "tutors") {
+            // wrapper element for strong CSS selectors
+            echo html_writer::start_tag("div", array("class" => "members members-instructors"));
+            // values dependent on what role we are viewing
+            $introtextnkey = 'turnitintutors_desc';
+            $memberrole = 'Instructor';
+        } else {
+            // wrapper element for strong CSS selectors
+            echo html_writer::start_tag("div", array("class" => "members members-students"));
+            // values dependent on what role we are viewing
+            $introtextnkey = 'turnitinstudents_desc';
+            $memberrole = 'Learner';
+        }
+
+        $introtext = get_string($introtextnkey, 'turnitintooltwo');
+
+        echo $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');
         echo $turnitintooltwoview->init_tii_member_by_role_table($cm, $turnitintooltwoassignment, $memberrole);
+
         if ($do == "tutors") {
             $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor", "mdl");
             echo $turnitintooltwoview->show_add_tii_tutors_form($cm, $tutors);
         }
+
+        echo html_writer::end_tag("div");
         break;
 
     case "emailnonsubmittersform":

@@ -190,7 +190,7 @@ jQuery(document).ready(function($) {
     // Configure datatables language settings.
     if (typeof M.str.turnitintooltwo !== 'undefined') {
         var dataTablesLang = {
-            "sProcessing": M.str.turnitintooltwo.sprocessing,
+            "sProcessing": '<span class="loading-message">' + M.str.turnitintooltwo.sprocessing + '</span>',
             "sZeroRecords": M.str.turnitintooltwo.szerorecords,
             "sInfo": M.str.turnitintooltwo.sinfo,
             "sSearch": M.str.turnitintooltwo.ssearch,
@@ -900,7 +900,7 @@ jQuery(document).ready(function($) {
     function resetPeermarkSection(part_id) {
         $('#tabs-' + part_id + ' .toggle_peermarks').hide();
         $('#tabs-' + part_id + ' .peermark_count').html('');
-        $('#tabs-' + part_id + ' .peermark_loading').show();
+        $('#tabs-' + part_id + ' .peermark-loading').show();
         $('#tabs-' + part_id + ' .peermark_assignments_container').hide();
     }
 
@@ -923,7 +923,7 @@ jQuery(document).ready(function($) {
                     eval(data);
                     $('#tabs-' + part_id + ' .peermark_assignments_container').html(data.peermark_table);
 
-                    $('#tabs-' + part_id + ' .peermark_loading').hide();
+                    $('#tabs-' + part_id + ' .peermark-loading').hide();
                     $('#tabs-' + part_id + ' .peermark_count').html(data.no_of_peermarks);
 
                     if (data.no_of_peermarks > 0) {

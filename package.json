@@ -12,6 +12,7 @@
     "gulp-less": "^3.0.3"
   },
   "dependencies": {
+    "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.4.2"
   }
