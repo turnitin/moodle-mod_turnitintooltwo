@@ -33,26 +33,12 @@ class turnitintooltwo_view {
      * @param string $title Appears at the top of the window
      * @param string $heading Appears at the top of the page
      * @param string $navigation Array of $navlinks arrays (keys: name, link, type) for use as breadcrumbs links
-     * @param string $focus Indicates form element to get cursor focus on load eg  inputform.password
-     * @param string $meta Meta tags to be added to the header
-     * @param boolean $cache Should this page be cacheable?
-     * @param string $button HTML code for a button (usually for module editing)
-     * @param string $menu HTML code for a popup menu
-     * @param boolean $usexml use XML for this page
-     * @param string $bodytags This text will be included verbatim in the <body> tag (useful for onload() etc)
-     * @param bool $return If true, return the visible elements of the header instead of echoing them.
      * @return mixed If return=true then string else void
      */
-    public function output_header($cm, $course, $url, $title = '', $heading = '', $navigation = array(),
-                            $focus = '', $meta = '', $cache = true, $button = '',
-            $menu = null, $usexml = false, $bodytags = '', $return = false) {
+    public function output_header($cm, $course, $url, $title = '', $heading = '', $navigation = array()) {
         global $PAGE, $OUTPUT;
 
         $cmid = ($cm != null) ? $cm->id : null;
-
-        if (!is_null($cmid) && $button != '') {
-            $PAGE->set_button($OUTPUT->update_module_button($cm->id, "turnitintooltwo"));
-        }
 
         $PAGE->set_url($url);
         $PAGE->set_title($title);

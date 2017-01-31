@@ -299,12 +299,7 @@ echo $turnitintooltwoview->output_header($coursemodforheader,
             $url,
             $title,
             $title,
-            $nav,
-            "",
-            "",
-            true,
-            '',
-            '');
+            $nav);
 
 echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));

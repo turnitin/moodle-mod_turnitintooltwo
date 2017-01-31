@@ -99,7 +99,7 @@ $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
 // Set the page layout to base.
-$PAGE->set_pagelayout('base');
+$PAGE->set_pagelayout('standard');
 
 // Settings for page navigation.
 if ($viewcontext == "window") {
@@ -425,24 +425,14 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
             $url,
             '',
             '',
-            array(),
-            "",
-            "",
-            true,
-            '',
-            '');
+            array());
 } else {
     $turnitintooltwoview->output_header($cm,
             $course,
             $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
             $SITE->fullname,
-            array(),
-            "",
-            "",
-            true,
-            $OUTPUT->update_module_button($cm->id, "turnitintooltwo"),
-            '');
+            array());
 
     // Dropdown to filter by groups.
     $groupmode = groups_get_activity_groupmode($cm);
