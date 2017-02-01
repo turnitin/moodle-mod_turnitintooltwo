@@ -16,6 +16,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Members view class deals with generating the HTM for the members table. It
+ * can generate members table for either tutors or students in a course by
+ * calling the "build_members_view" method. Defaults to rendering the students
+ * members table if no display role is given.
+ */
 class members_view {
     public $course;
     public $coursemodule;
@@ -30,7 +36,9 @@ class members_view {
     }
 
     /**
-     *
+     * Method that generates the members view HTML. Depending on the displayrole
+     * passed will generate the HTML for the users with that role.
+     * @return string Members HTML for a role
      */
     public function build_members_view($displayrole = "students") {
         $output  = "";
@@ -58,14 +66,34 @@ class members_view {
         return $output;
     }
 
+    /**
+     * Util method to check if the current user is an instructor by checking if
+     * they can grade.
+     * @return boolean Bool if the current user is an instructor
+     */
     public function is_tutor () {
         return has_capability('mod/turnitintooltwo:grade', context_module::instance($this->coursemodule->id));
     }
 
+    /**
+     * Returns the turnitin role for the display role passed in the query param
+     * "do" (tutors or  students) to view.php.
+     * @param  string $displayrole The do action passed to view.php when
+     *                             displaying members
+     * @return string              Turnitin role that maps to the display role
+     */
     public function get_role_for_display_role ($displayrole) {
         return $displayrole == "tutors" ? 'Instructor' : 'Learner';
     }
 
+    /**
+     * Generates HTM for the message that is displayed above the members table.
+     * This differs depending on if we're showing the student members or
+     * instructor members.
+     * @param  string $displayrole Role of the members we want to display for
+     * @return string              HTML message to display before the members
+     *                             table
+     */
     public function build_intro_message ($displayrole = "students") {
         global $OUTPUT;
 
@@ -82,6 +110,12 @@ class members_view {
         return $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');;
     }
 
+    /**
+     * Generates the HTML for the members table given a role will generate for
+     * either the course students or instructors.
+     * @param  string $role Members with this role to display
+     * @return string       HTML of the members table
+     */
     public function build_members_table ($role="Learner") {
         $turnitintooltwoassignment = $this->turnitintooltwoassignment;
         $turnitintooltwoview = $this->turnitintooltwoview;
@@ -90,6 +124,13 @@ class members_view {
         return $turnitintooltwoview->init_tii_member_by_role_table($coursemodule, $turnitintooltwoassignment, $role);
     }
 
+    /**
+     * Generates the HTML for the add tutors form that is displayed under the
+     * members table. Only generates the form for the display role "tutors"
+     * otherwise will return an empty string (i.e. display nothing).
+     * @param  string $displayrole Which members table is being shown
+     * @return string              HTML for add tutors form to display
+     */
     public function build_add_tutors_form ($displayrole) {
         // early escape only show the add tutors in the tutors members list
         if ($displayrole != "tutors") {
