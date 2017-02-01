@@ -25,7 +25,15 @@ class nonsubmitters_message {
      * @return void
      */
     public function send_message($userid, $subject, $message) {
-        $eventdata = new stdClass();
+        global $CFG;
+
+        // Pre 2.9 does not have \core\message\message()
+        if ($CFG->branch >= 29) {
+            $eventdata = new \core\message\message();
+        } else {
+            $eventdata = new stdClass();
+        }
+
         $eventdata->component         = 'mod_turnitintooltwo';
         $eventdata->name              = 'nonsubmitters'; // This is the message name from messages.php.
         $eventdata->userfrom          = \core_user::get_noreply_user();

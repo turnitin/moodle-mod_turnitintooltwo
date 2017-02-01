@@ -29,6 +29,9 @@ require_once($CFG->libdir."/form/button.php");
 require_once($CFG->libdir."/form/submit.php");
 require_once($CFG->libdir."/uploadlib.php");
 
+// views
+require_once(__DIR__.'/classes/view/members.php');
+
 // Offline mode provided by Androgogic. Set tiioffline in config.php.
 if (!empty($CFG->tiioffline)) {
     turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
@@ -737,36 +740,10 @@ switch ($do) {
 
     case "students":
     case "tutors":
-        if (!$istutor) {
-            turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
-            exit();
-        }
+        $membersview = new members_view($course, $cm, $turnitintooltwoview, $turnitintooltwoassignment);
+        $membershtml = $membersview->build_members_view($do);
 
-        if ($do == "tutors") {
-            // wrapper element for strong CSS selectors
-            echo html_writer::start_tag("div", array("class" => "members members-instructors"));
-            // values dependent on what role we are viewing
-            $introtextnkey = 'turnitintutors_desc';
-            $memberrole = 'Instructor';
-        } else {
-            // wrapper element for strong CSS selectors
-            echo html_writer::start_tag("div", array("class" => "members members-students"));
-            // values dependent on what role we are viewing
-            $introtextnkey = 'turnitinstudents_desc';
-            $memberrole = 'Learner';
-        }
-
-        $introtext = get_string($introtextnkey, 'turnitintooltwo');
-
-        echo $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');
-        echo $turnitintooltwoview->init_tii_member_by_role_table($cm, $turnitintooltwoassignment, $memberrole);
-
-        if ($do == "tutors") {
-            $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor", "mdl");
-            echo $turnitintooltwoview->show_add_tii_tutors_form($cm, $tutors);
-        }
-
-        echo html_writer::end_tag("div");
+        echo $membershtml;
         break;
 
     case "emailnonsubmittersform":
