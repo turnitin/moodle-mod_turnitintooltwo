@@ -76,7 +76,7 @@ class members_view {
     }
 
     /**
-     * Returns the turnitin role for the display role passed in the query param
+     * Returns the Turnitin role for the display role passed in the query param
      * "do" (tutors or  students) to view.php.
      * @param  string $displayrole The do action passed to view.php when
      *                             displaying members
