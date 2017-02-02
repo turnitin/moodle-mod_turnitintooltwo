@@ -24,7 +24,7 @@ class receipt_message {
      * @param string $message
      * @return void
      */
-    public function send_message($userid, $message) {
+    public function send_message($userid, $message, $courseid) {
         global $CFG;
 
         $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
@@ -46,6 +46,7 @@ class receipt_message {
         $eventdata->fullmessagehtml   = $message;
         $eventdata->smallmessage      = '';
         $eventdata->notification      = 1; // This is only set to 0 for personal messages between users.
+        $eventdata->courseid          = $courseid;
 
         message_send($eventdata);
     }

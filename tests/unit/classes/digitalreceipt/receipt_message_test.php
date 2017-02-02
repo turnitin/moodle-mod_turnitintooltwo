@@ -23,7 +23,7 @@ class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
 
         $receipt_message = new receipt_message();
 
-        $receipt_message->send_message($userOne, "Test message for email");
+        $receipt_message->send_message($userOne, "Test message for email", 123);
 
         $this->assertEquals(1, $sink->count()); // One email sent
 
