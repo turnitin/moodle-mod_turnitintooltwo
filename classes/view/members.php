@@ -102,7 +102,7 @@ class members_view {
 
         $introtext = get_string($introtextkey, 'turnitintooltwo');
 
-        return $OUTPUT->box($introtext, 'message message-members-into');
+        return $OUTPUT->box($introtext, 'message message-members-intro');
     }
 
     /**
