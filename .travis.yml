@@ -22,6 +22,9 @@ env:
   - DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE
   - DB=pgsql MOODLE_BRANCH=MOODLE_30_STABLE
   - DB=mysqli MOODLE_BRANCH=MOODLE_30_STABLE
+  exclude:
+  - MOODLE_BRANCH: MOODLE_32_STABLE
+    php: 5.5
 
 before_install:
   - phpenv config-rm xdebug.ini
