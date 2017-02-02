@@ -14,7 +14,7 @@ require_once($CFG->dirroot . '/mod/lti/lib.php');
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_view_members_testcase extends externallib_advanced_testcase {
+class mod_turnitintooltwo_view_members_testcase extends advanced_testcase {
     /**
      * Test display role given returns as the expected Turnitin role
      */
@@ -29,6 +29,9 @@ class mod_turnitintooltwo_view_members_testcase extends externallib_advanced_tes
 
         $role = $members->get_role_for_display_role("students");
         $this->assertEquals('Learner', $role);
+
+        $role = $members->get_role_for_display_role("foobar");
+        $this->assertEquals('Learner', $role);
     }
 
     /**
@@ -38,14 +41,25 @@ class mod_turnitintooltwo_view_members_testcase extends externallib_advanced_tes
     public function test_build_intro_message() {
         $members = new members_view();
 
-        $message = $members->build_intro_message();
-        $this->assertEquals('<div id="general" class="box generalbox boxaligncenter">The selected Users below are enrolled on this Turnitin Class. Enrolled students can gain access to this class by logging in to the Turnitin web site.</div>', $message);
+        $actualmessage       = $members->build_intro_message();
+        $expectedmessagetext = get_string('turnitinstudents_desc', 'turnitintooltwo');
 
-        $message = $members->build_intro_message("students");
-        $this->assertEquals('<div id="general" class="box generalbox boxaligncenter">The selected Users below are enrolled on this Turnitin Class. Enrolled students can gain access to this class by logging in to the Turnitin web site.</div>', $message);
+        $this->assertContains($expectedmessagetext, $actualmessage);
 
-        $message = $members->build_intro_message("tutors");
-        $this->assertEquals('<div id="general" class="box generalbox boxaligncenter">The selected Tutors below are enrolled as tutors on this Turnitin Class. Enrolled tutors can gain access to this class by logging in to the Turnitin web site.</div>', $message);
+        $actualmessage       = $members->build_intro_message("students");
+        $expectedmessagetext = get_string("turnitinstudents_desc", "turnitintooltwo");
+
+        $this->assertContains($expectedmessagetext, $actualmessage);
+
+        $actualmessage       = $members->build_intro_message("foobar");
+        $expectedmessagetext = get_string("turnitinstudents_desc", "turnitintooltwo");
+
+        $this->assertContains($expectedmessagetext, $actualmessage);
+
+        $actualmessage       = $members->build_intro_message("tutors");
+        $expectedmessagetext = get_string("turnitintutors_desc", "turnitintooltwo");
+
+        $this->assertContains($expectedmessagetext, $actualmessage);
     }
 
     /**
@@ -60,12 +74,13 @@ class mod_turnitintooltwo_view_members_testcase extends externallib_advanced_tes
 
         // add assertions to the turnitin two view class method that renders the
         // members table is called with the expected arguments
-        $observer->expects($this->exactly(3))
+        $observer->expects($this->exactly(4))
             ->method('init_tii_member_by_role_table')
             ->willReturn('<table>fake table!</table>')
             ->withConsecutive(
                 [$this->equalTo('fakemodule'), $this->equalTo('faketiiassignment'), $this->equalTo('Learner')],
                 [$this->equalTo('fakemodule'), $this->equalTo('faketiiassignment'), $this->equalTo('Instructor')],
+                [$this->equalTo('fakemodule'), $this->equalTo('faketiiassignment'), $this->equalTo('Learner')],
                 [$this->equalTo('fakemodule'), $this->equalTo('faketiiassignment'), $this->equalTo('Learner')]
             );
 
@@ -74,15 +89,19 @@ class mod_turnitintooltwo_view_members_testcase extends externallib_advanced_tes
         $members = new members_view('fakecourse', 'fakemodule', $observer, 'faketiiassignment');
 
         // check with valid Learner role
-        $table = $members->build_members_table('Learner');
+        $table = $members->build_members_table('students');
         $this->assertEquals('<table>fake table!</table>', $table);
 
         // check with valid Instructor role
-        $table = $members->build_members_table('Instructor');
+        $table = $members->build_members_table('tutors');
         $this->assertEquals('<table>fake table!</table>', $table);
 
         // check no role falls back to Learner
         $table = $members->build_members_table();
+        $this->assertEquals('<table>fake table!</table>', $table);
+
+        // check invalid role falls back to Learner
+        $table = $members->build_members_table('foobar');
         $this->assertEquals('<table>fake table!</table>', $table);
     }
 

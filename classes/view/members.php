@@ -43,22 +43,19 @@ class members_view {
     public function build_members_view($displayrole = "students") {
         $output  = "";
         $istutor = $this->is_tutor();
-        $memberrole = $this->get_role_for_display_role($displayrole);
 
         if (!$istutor) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
             exit();
         }
 
+        $wrapperclass = $displayrole == "tutors" ? "members members-instructors" : "members members-students";
+
         // wrapper element for strong CSS selectors
-        if ($displayrole == "tutors") {
-            $output .= html_writer::start_tag("div", array("class" => "members members-instructors"));
-        } else {
-            $output .= html_writer::start_tag("div", array("class" => "members members-students"));
-        }
+        $output .= html_writer::start_tag("div", array("class" => $wrapperclass));
 
         $output .= $this->build_intro_message($displayrole);
-        $output .= $this->build_members_table($memberrole);
+        $output .= $this->build_members_table($displayrole);
         $output .= $this->build_add_tutors_form($displayrole);
 
         $output .= html_writer::end_tag("div");
@@ -97,17 +94,15 @@ class members_view {
     public function build_intro_message ($displayrole = "students") {
         global $OUTPUT;
 
-        $message = "";
-
         if ($displayrole == "tutors") {
-            $introtextnkey = 'turnitintutors_desc';
+            $introtextkey = 'turnitintutors_desc';
         } else {
-            $introtextnkey = 'turnitinstudents_desc';
+            $introtextkey = 'turnitinstudents_desc';
         }
 
-        $introtext = get_string($introtextnkey, 'turnitintooltwo');
+        $introtext = get_string($introtextkey, 'turnitintooltwo');
 
-        return $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');;
+        return $OUTPUT->box($introtext, 'message message-members-into');
     }
 
     /**
@@ -116,12 +111,14 @@ class members_view {
      * @param  string $role Members with this role to display
      * @return string       HTML of the members table
      */
-    public function build_members_table ($role="Learner") {
+    public function build_members_table ($displayrole="students") {
         $turnitintooltwoassignment = $this->turnitintooltwoassignment;
         $turnitintooltwoview = $this->turnitintooltwoview;
         $coursemodule = $this->coursemodule;
+        $role = $this->get_role_for_display_role($displayrole);
 
-        return $turnitintooltwoview->init_tii_member_by_role_table($coursemodule, $turnitintooltwoassignment, $role);
+        return $turnitintooltwoview
+            ->init_tii_member_by_role_table($coursemodule, $turnitintooltwoassignment, $role);
     }
 
     /**
