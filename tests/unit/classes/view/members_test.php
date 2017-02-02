@@ -106,12 +106,16 @@ class mod_turnitintooltwo_view_members_testcase extends externallib_advanced_tes
             );
 
         // fake/stub a fake tii assignment
-        $faketiiassignment = $this->createMock(turnitintooltwo_assignment::class);
+        $faketiiassignment = $this->getMockBuilder(turnitintooltwo_assignment::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['get_tii_users_by_role'])
+            ->getMock();
 
         // make assignment get users by role to always return something, we
         // check that our tii two view stub gets called with the result of this
         // stub.
-        $faketiiassignment->method('get_tii_users_by_role')
+        $faketiiassignment->expects($this->once())
+            ->method('get_tii_users_by_role')
             ->willReturn('faketutors');
 
         // create our members view class instance with the fake tii view and
