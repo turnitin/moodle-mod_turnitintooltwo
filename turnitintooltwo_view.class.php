@@ -44,11 +44,7 @@ class turnitintooltwo_view {
         $PAGE->set_title($title);
         $PAGE->set_heading($heading);
 
-        if ($return) {
-            return $OUTPUT->header();
-        } else {
-            echo $OUTPUT->header();
-        }
+        echo $OUTPUT->header();
     }
 
     /**
