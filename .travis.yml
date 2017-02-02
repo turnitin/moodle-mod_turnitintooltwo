@@ -16,14 +16,12 @@ env:
   - IGNORE_PATHS=sdk/,fonts/,pix/
   - IGNORE_NAMES=jquery*,moment.js,colorbox.css,tooltipster.css,*.min.css,*.min.js,tii-icon-webfont.css,styles.css,styles.css.map,gulpfile.js
  matrix:
+  - DB=pgsql MOODLE_BRANCH=MOODLE_32_STABLE
+  - DB=mysqli MOODLE_BRANCH=MOODLE_32_STABLE
   - DB=pgsql MOODLE_BRANCH=MOODLE_31_STABLE
   - DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE
   - DB=pgsql MOODLE_BRANCH=MOODLE_30_STABLE
   - DB=mysqli MOODLE_BRANCH=MOODLE_30_STABLE
-  - DB=pgsql MOODLE_BRANCH=MOODLE_29_STABLE
-  - DB=mysqli MOODLE_BRANCH=MOODLE_29_STABLE
-  - DB=pgsql MOODLE_BRANCH=MOODLE_28_STABLE
-  - DB=mysqli MOODLE_BRANCH=MOODLE_28_STABLE
 
 before_install:
   - phpenv config-rm xdebug.ini
