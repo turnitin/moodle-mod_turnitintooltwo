@@ -455,7 +455,7 @@ class turnitintooltwo_submission {
             );
 
             $message = $this->receipt->build_message($input);
-            $this->receipt->send_message($userid, $message);
+            $this->receipt->send_message($userid, $message, $course->id);
 
             // Add entry to log.
             turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "add submission",
@@ -628,13 +628,13 @@ class turnitintooltwo_submission {
 
                 // Student digital receipt.
                 $message = $this->receipt->build_message($input);
-                $this->receipt->send_message($this->userid, $message);
+                $this->receipt->send_message($this->userid, $message, $course->id);
 
                 // Instructor digital receipt.
                 $this->submission_instructors = get_enrolled_users($context, 'mod/turnitintooltwo:grade', 0, 'u.id');
                 if (!empty($this->submission_instructors)) {
                     $message = $this->instructor_receipt->build_instructor_message($input);
-                    $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message);
+                    $this->instructor_receipt->send_instructor_message($this->submission_instructors, $message, $course->id);
                 }
 
                 // Create a log entry for submission going to Turnitin.

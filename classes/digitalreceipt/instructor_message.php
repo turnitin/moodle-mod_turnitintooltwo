@@ -48,7 +48,7 @@ class instructor_message {
      * @param string $message
      * @return void
      */
-    public function send_instructor_message($instructors, $message) {
+    public function send_instructor_message($instructors, $message, $courseid) {
         global $CFG;
 
         $subject = get_string('receipt_instructor_copy_subject', 'turnitintooltwo');
@@ -69,6 +69,10 @@ class instructor_message {
         $eventdata->fullmessagehtml   = $message;
         $eventdata->smallmessage      = '';
         $eventdata->notification      = 1; // This is only set to 0 for personal messages between users.
+
+        if ($CFG->branch >= 32) {
+            $eventdata->courseid = $courseid;
+        }
 
         foreach ($instructors as $instructor) {
 

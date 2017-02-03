@@ -76,7 +76,7 @@ class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase 
         ];
 
         // Send message to both instructors.
-        $instructor_message->send_instructor_message($instructors, 'Instructor Message');
+        $instructor_message->send_instructor_message($instructors, 'Instructor Message', 123);
 
         $messages = $sink->get_messages();
 
