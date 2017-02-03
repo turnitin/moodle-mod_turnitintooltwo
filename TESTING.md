@@ -15,9 +15,9 @@ Grab an installer for the latest stable version from here:
 You will need PHP and [Composer](https://getcomposer.org/) installed. 
 
 ## Install the plugin
-Grab a copy of the plugin. Currently the unit test branch is only available internally on GHE:
+Grab a copy of the plugin.
 
-[https://ghe.iparadigms.com/Integrations/turnitintooltwo](https://ghe.iparadigms.com/Integrations/turnitintooltwo)
+[https://github.com/turnitin/moodle-mod_turnitintooltwo](https://github.com/turnitin/moodle-mod_turnitintooltwo)
 
 Put the plugin in the `mod` folder inside your Moodle installation.
 
