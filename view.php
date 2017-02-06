@@ -98,7 +98,7 @@ require_login($course->id, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
-// Set the page layout to base.
+// Set the page layout to standard.
 $PAGE->set_pagelayout('standard');
 
 // Settings for page navigation.
@@ -420,19 +420,12 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     $PAGE->set_pagelayout('embedded');
 
-    $turnitintooltwoview->output_header($cm,
-            $course,
-            $url,
-            '',
-            '',
-            array());
+    $turnitintooltwoview->output_header($url);
 } else {
-    $turnitintooltwoview->output_header($cm,
-            $course,
+    $turnitintooltwoview->output_header(
             $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
-            $SITE->fullname,
-            array());
+            $SITE->fullname);
 
     // Dropdown to filter by groups.
     $groupmode = groups_get_activity_groupmode($cm);

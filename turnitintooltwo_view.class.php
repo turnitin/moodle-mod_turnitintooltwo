@@ -28,23 +28,24 @@ class turnitintooltwo_view {
     /**
      * Abstracted version of print_header() / header()
      *
-     * @param object $cm The moodle course module object for this instance
-     * @param object $course The course object for this activity
+     * @param string $url The URL of the page
      * @param string $title Appears at the top of the window
      * @param string $heading Appears at the top of the page
-     * @param string $navigation Array of $navlinks arrays (keys: name, link, type) for use as breadcrumbs links
+     * @param bool $return If true, return the visible elements of the header instead of echoing them.
      * @return mixed If return=true then string else void
      */
-    public function output_header($cm, $course, $url, $title = '', $heading = '', $navigation = array()) {
+    public function output_header($url, $title = '', $heading = '', $return = false) {
         global $PAGE, $OUTPUT;
-
-        $cmid = ($cm != null) ? $cm->id : null;
 
         $PAGE->set_url($url);
         $PAGE->set_title($title);
         $PAGE->set_heading($heading);
 
-        echo $OUTPUT->header();
+        if ($return) {
+            return $OUTPUT->header();
+        } else {
+            echo $OUTPUT->header();
+        }
     }
 
     /**
