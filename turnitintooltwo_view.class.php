@@ -28,31 +28,14 @@ class turnitintooltwo_view {
     /**
      * Abstracted version of print_header() / header()
      *
-     * @param object $cm The moodle course module object for this instance
-     * @param object $course The course object for this activity
+     * @param string $url The URL of the page
      * @param string $title Appears at the top of the window
      * @param string $heading Appears at the top of the page
-     * @param string $navigation Array of $navlinks arrays (keys: name, link, type) for use as breadcrumbs links
-     * @param string $focus Indicates form element to get cursor focus on load eg  inputform.password
-     * @param string $meta Meta tags to be added to the header
-     * @param boolean $cache Should this page be cacheable?
-     * @param string $button HTML code for a button (usually for module editing)
-     * @param string $menu HTML code for a popup menu
-     * @param boolean $usexml use XML for this page
-     * @param string $bodytags This text will be included verbatim in the <body> tag (useful for onload() etc)
      * @param bool $return If true, return the visible elements of the header instead of echoing them.
      * @return mixed If return=true then string else void
      */
-    public function output_header($cm, $course, $url, $title = '', $heading = '', $navigation = array(),
-                            $focus = '', $meta = '', $cache = true, $button = '',
-            $menu = null, $usexml = false, $bodytags = '', $return = false) {
+    public function output_header($url, $title = '', $heading = '', $return = false) {
         global $PAGE, $OUTPUT;
-
-        $cmid = ($cm != null) ? $cm->id : null;
-
-        if (!is_null($cmid) && $button != '') {
-            $PAGE->set_button($OUTPUT->update_module_button($cm->id, "turnitintooltwo"));
-        }
 
         $PAGE->set_url($url);
         $PAGE->set_title($title);
@@ -730,7 +713,7 @@ class turnitintooltwo_view {
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
         }
-        $cells[0] = new html_table_cell($links.$turnitintooltwoassignment->turnitintooltwo->name." (".$textfield.") ");
+        $cells[0] = new html_table_cell($links.$turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
 
         // Allow start date field to be editable if a tutor is logged in.
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';

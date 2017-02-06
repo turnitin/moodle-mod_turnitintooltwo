@@ -42,9 +42,7 @@ if (!$course = $DB->get_record("course", array("id" => $id))) {
 require_login($course->id);
 
 // Print the header.
-$extranavigation = array(array('title' => get_string("modulenameplural", "turnitintooltwo"), 'url' => null));
-$turnitintooltwoview->output_header(null, $course, $url, get_string("modulenameplural", "turnitintooltwo"),
-                                        $SITE->fullname, $extranavigation, '', '', true);
+$turnitintooltwoview->output_header($url, get_string("modulenameplural", "turnitintooltwo"), $SITE->fullname);
 
 echo $turnitintooltwoview->show_assignments($course);
 
