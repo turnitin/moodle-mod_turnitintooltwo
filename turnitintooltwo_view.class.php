@@ -518,10 +518,12 @@ class turnitintooltwo_view {
                     }
 
                     // Output icon to download zip file of selected submissions in original format.
-                    $exportorigfileszip = $OUTPUT->box(html_writer::tag('i', '', array('class' => 'fa fa-file-o',
+                    $exportorigfileszip = html_writer::tag('div',
+                                                            html_writer::tag('i', '', array('class' => 'fa fa-file-o',
                                                     'title' => get_string($origfilesziplang, 'turnitintooltwo'))).' '.
                                                     get_string($origfilesziplang, 'turnitintooltwo'),
-                                                'zip_open origchecked_zip_open', 'origchecked_zip_'.$partobject->id);
+                                                            array('class' => 'zip_open origchecked_zip_open',
+                                                                    'id' => 'origchecked_zip_'.$partobject->id));
                     // Put in div placeholder for launch form.
                     $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->id);
 
@@ -541,16 +543,16 @@ class turnitintooltwo_view {
                                                         html_writer::tag('li', $exportgrademarkzip),
                                                     array('class' => 'dropdown-menu'));
                         $downloadlinks = html_writer::tag('div',
-                                            html_writer::link('#', get_string('download', 'turnitintooltwo'),
+                                            html_writer::tag('button', get_string('download', 'turnitintooltwo'),
                                                 $linkstyles).$linkdropdown,
-                                                array('id' => 'download_links', 'class' => 'btn-group'));
+                                                array('id' => 'download_links', 'class' => 'btn-group' ));
                     } else {
                         $downloadlinks = $exportorigfileszip.$exportgrademarkzip;
                     }
                 }
 
                 // Include download links and info table.
-                $tables .= $OUTPUT->box($downloadlinks, 'zip_downloads', 'part_' . $partobject->id);
+                $tables .= html_writer::tag('div', $downloadlinks, array('id' => 'part_' . $partobject->id, 'class' => 'zip_downloads'));
                 $tables .= $this->get_submission_inbox_part_details($cm, $turnitintooltwoassignment, $partdetails, $partid);
 
                 // Construct submissions table.
