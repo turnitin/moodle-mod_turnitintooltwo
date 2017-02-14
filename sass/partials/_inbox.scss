@@ -83,7 +83,13 @@
 
 .dropdown-menu {
     white-space: nowrap;
-    padding-right: 10px;
+    padding-right: 10px !important;
+    margin-top: 2px !important;
+}
+
+.dropdown-menu li {
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 #rubric_view_form {

@@ -518,10 +518,12 @@ class turnitintooltwo_view {
                     }
 
                     // Output icon to download zip file of selected submissions in original format.
-                    $exportorigfileszip = $OUTPUT->box(html_writer::tag('i', '', array('class' => 'fa fa-file-o',
+                    $exportorigfileszip = html_writer::tag('div',
+                                                            html_writer::tag('i', '', array('class' => 'fa fa-file-o',
                                                     'title' => get_string($origfilesziplang, 'turnitintooltwo'))).' '.
                                                     get_string($origfilesziplang, 'turnitintooltwo'),
-                                                'zip_open origchecked_zip_open', 'origchecked_zip_'.$partobject->id);
+                                                            array('class' => 'zip_open origchecked_zip_open',
+                                                                    'id' => 'origchecked_zip_'.$partobject->id));
                     // Put in div placeholder for launch form.
                     $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->id);
 
