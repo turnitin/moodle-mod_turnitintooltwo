@@ -541,16 +541,16 @@ class turnitintooltwo_view {
                                                         html_writer::tag('li', $exportgrademarkzip),
                                                     array('class' => 'dropdown-menu'));
                         $downloadlinks = html_writer::tag('div',
-                                            html_writer::link('#', get_string('download', 'turnitintooltwo'),
+                                            html_writer::tag('button', get_string('download', 'turnitintooltwo'),
                                                 $linkstyles).$linkdropdown,
-                                                array('id' => 'download_links', 'class' => 'btn-group'));
+                                                array('id' => 'download_links', 'class' => 'btn-group' ));
                     } else {
                         $downloadlinks = $exportorigfileszip.$exportgrademarkzip;
                     }
                 }
 
                 // Include download links and info table.
-                $tables .= $OUTPUT->box($downloadlinks, 'zip_downloads', 'part_' . $partobject->id);
+                $tables .= html_writer::tag('div', $downloadlinks, array('id' => 'part_' . $partobject->id, 'class' => 'zip_downloads'));
                 $tables .= $this->get_submission_inbox_part_details($cm, $turnitintooltwoassignment, $partdetails, $partid);
 
                 // Construct submissions table.
