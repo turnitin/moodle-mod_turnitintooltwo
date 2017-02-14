@@ -74,7 +74,7 @@
 }
 
 .dropdown-menu .origchecked_zip_open:hover {
-    background-color: #00699e;
+    background-color: $hover-blue;
     display: block;
     line-height: 20px;
     color: #fff;
@@ -83,13 +83,7 @@
 
 .dropdown-menu {
     white-space: nowrap;
-    padding-right: 10px !important;
     margin-top: 2px !important;
-}
-
-.dropdown-menu li {
-    padding-top: 3px;
-    padding-bottom: 3px;
 }
 
 #rubric_view_form {
