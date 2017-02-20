@@ -75,13 +75,10 @@ class turnitintooltwo_submission {
     /**
      * Create new submission object in database
      *
-     * @global type $DB
      * @param mixed $data to use for object
      * @return object
      */
     public function create_submission($data) {
-        global $DB;
-
         $this->userid = $data['studentsname'];
         $this->submission_part = $data['submissionpart'];
         $this->submission_title = $data['submissiontitle'];
@@ -100,13 +97,33 @@ class turnitintooltwo_submission {
         $submission->submission_gmimaged = 0;
         $submission->submission_hash = $submission->userid.'_'.$submission->turnitintooltwoid.'_'.$submission->submission_part;
 
-        if (!$this->id = $DB->insert_record('turnitintooltwo_submissions', $submission)) {
-            return false;
+        $response = $this->insert_submission($submission);
+
+        if ($response) {
+            $this->reset_submission($data);
+
+            return true;
         }
 
-        $this->reset_submission($data);
+        return false;
+    }
 
-        return true;
+    /**
+     * Reset submission data when resubmitting
+     *
+     * @global type $DB
+     * @param object $submission data to insert.
+     * @return boolean
+     */
+    public function insert_submission($submission) {
+        global $DB;
+
+        try {
+            $this->id = $DB->insert_record('turnitintooltwo_submissions', $submission);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**
