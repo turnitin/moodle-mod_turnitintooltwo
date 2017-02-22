@@ -5,7 +5,7 @@ var minifyCss = require('gulp-minify-css');
 var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
 var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
+var rename = require('gulp-rename');
 
 gulp.task('sass', function() {
     return gulp.src('./sass/styles.scss')
@@ -20,13 +20,12 @@ gulp.task('sass', function() {
 gulp.task('jsmin', function() {
     return gulp.src(['./jquery/turnitintooltwo*.js', '!./jquery/turnitintooltwo*.min.js'])
     .pipe(sourcemaps.init())
-    .pipe(concat('turnitintooltwo.min.js'))
     .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./jquery/'))
     .pipe(notify('js minified'));
 });
-
 
 gulp.task('watch', function() {
     gulp.watch('./sass/**/*.scss', ['sass']);
