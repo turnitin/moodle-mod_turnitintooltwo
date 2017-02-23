@@ -78,12 +78,15 @@
             left:-2px;
         }
 
+        div.origchecked_zip_open,
         a.gmpdfzip_box {
-            padding-left:16px;
+            padding:3px 16px;
+            display: block;
         }
 
-        div.origchecked_zip_open {
-            padding-left:16px;
+        a.gmpdfzip_box:hover {
+            background: $hover-blue;
+            color: $white;
         }
 
         .zip_open {

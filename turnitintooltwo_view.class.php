@@ -28,31 +28,14 @@ class turnitintooltwo_view {
     /**
      * Abstracted version of print_header() / header()
      *
-     * @param object $cm The moodle course module object for this instance
-     * @param object $course The course object for this activity
+     * @param string $url The URL of the page
      * @param string $title Appears at the top of the window
      * @param string $heading Appears at the top of the page
-     * @param string $navigation Array of $navlinks arrays (keys: name, link, type) for use as breadcrumbs links
-     * @param string $focus Indicates form element to get cursor focus on load eg  inputform.password
-     * @param string $meta Meta tags to be added to the header
-     * @param boolean $cache Should this page be cacheable?
-     * @param string $button HTML code for a button (usually for module editing)
-     * @param string $menu HTML code for a popup menu
-     * @param boolean $usexml use XML for this page
-     * @param string $bodytags This text will be included verbatim in the <body> tag (useful for onload() etc)
      * @param bool $return If true, return the visible elements of the header instead of echoing them.
      * @return mixed If return=true then string else void
      */
-    public function output_header($cm, $course, $url, $title = '', $heading = '', $navigation = array(),
-                            $focus = '', $meta = '', $cache = true, $button = '',
-            $menu = null, $usexml = false, $bodytags = '', $return = false) {
+    public function output_header($url, $title = '', $heading = '', $return = false) {
         global $PAGE, $OUTPUT;
-
-        $cmid = ($cm != null) ? $cm->id : null;
-
-        if (!is_null($cmid) && $button != '') {
-            $PAGE->set_button($OUTPUT->update_module_button($cm->id, "turnitintooltwo"));
-        }
 
         $PAGE->set_url($url);
         $PAGE->set_title($title);
@@ -535,10 +518,12 @@ class turnitintooltwo_view {
                     }
 
                     // Output icon to download zip file of selected submissions in original format.
-                    $exportorigfileszip = $OUTPUT->box(html_writer::tag('i', '', array('class' => 'fa fa-file-o',
+                    $exportorigfileszip = html_writer::tag('div',
+                                                            html_writer::tag('i', '', array('class' => 'fa fa-file-o',
                                                     'title' => get_string($origfilesziplang, 'turnitintooltwo'))).' '.
                                                     get_string($origfilesziplang, 'turnitintooltwo'),
-                                                'zip_open origchecked_zip_open', 'origchecked_zip_'.$partobject->id);
+                                                            array('class' => 'zip_open origchecked_zip_open',
+                                                                    'id' => 'origchecked_zip_'.$partobject->id));
                     // Put in div placeholder for launch form.
                     $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->id);
 
@@ -558,16 +543,16 @@ class turnitintooltwo_view {
                                                         html_writer::tag('li', $exportgrademarkzip),
                                                     array('class' => 'dropdown-menu'));
                         $downloadlinks = html_writer::tag('div',
-                                            html_writer::link('#', get_string('download', 'turnitintooltwo'),
+                                            html_writer::tag('button', get_string('download', 'turnitintooltwo'),
                                                 $linkstyles).$linkdropdown,
-                                                array('id' => 'download_links', 'class' => 'btn-group'));
+                                                array('id' => 'download_links', 'class' => 'btn-group' ));
                     } else {
                         $downloadlinks = $exportorigfileszip.$exportgrademarkzip;
                     }
                 }
 
                 // Include download links and info table.
-                $tables .= $OUTPUT->box($downloadlinks, 'zip_downloads', 'part_' . $partobject->id);
+                $tables .= html_writer::tag('div', $downloadlinks, array('id' => 'part_' . $partobject->id, 'class' => 'zip_downloads'));
                 $tables .= $this->get_submission_inbox_part_details($cm, $turnitintooltwoassignment, $partdetails, $partid);
 
                 // Construct submissions table.
@@ -730,7 +715,7 @@ class turnitintooltwo_view {
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
         }
-        $cells[0] = new html_table_cell($links.$turnitintooltwoassignment->turnitintooltwo->name." (".$textfield.") ");
+        $cells[0] = new html_table_cell($links.$turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
 
         // Allow start date field to be editable if a tutor is logged in.
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';
@@ -946,7 +931,7 @@ class turnitintooltwo_view {
                                                     html_writer::tag('span', $count, array('class' => 'peermark_count')).
                                                     html_writer::tag('span', $OUTPUT->pix_icon('loading',
                                                         get_string('turnitinloading', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                                    array('class' => 'peermark_loading peermark_loading_span')).')',
+                                                    array('class' => 'peermark-loading peermark-loading-span')).')',
                                                     array('class' => 'peermark_header')).$peermarkreviewslink.$peermarkmanagerlink);
                 $cells[0]->attributes['class'] = 'peermarks';
                 $cells[0]->colspan = ($config->usegrademark) ? '7' : '6';

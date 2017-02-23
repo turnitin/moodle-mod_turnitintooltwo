@@ -19,6 +19,7 @@ jQuery(document).ready(function($) {
 
     // Configure the unlink and relink users datatable in the plugin settings area.
     $('#unlinkUserTable').dataTable({
+        "bDestroy": true,
         "bProcessing": true,
         "bServerSide": true,
         "oLanguage": dataTablesLang,
@@ -42,6 +43,7 @@ jQuery(document).ready(function($) {
 
     // Configure the files datatable in the plugin settings area, group the files by assignment.
     $('#filesTable').dataTable( {
+        "bDestroy": true,
         "bProcessing": true,
         "bServerSide": true,
         "oLanguage": dataTablesLang,

@@ -292,19 +292,10 @@ if ($cmd == "courses" || $cmd == "multiple_class_recreation" || $cmd == "class_r
 }
 
 // Build page.
-$coursemodforheader = ($id != 0) ? $cm : null;
-$courseforheader = ($id != 0) ? $course : null;
-echo $turnitintooltwoview->output_header($coursemodforheader,
-            $courseforheader,
+echo $turnitintooltwoview->output_header(
             $url,
             $title,
-            $title,
-            $nav,
-            "",
-            "",
-            true,
-            '',
-            '');
+            $title);
 
 echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));

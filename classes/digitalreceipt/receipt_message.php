@@ -24,10 +24,18 @@ class receipt_message {
      * @param string $message
      * @return void
      */
-    public function send_message($userid, $message) {
+    public function send_message($userid, $message, $courseid) {
+        global $CFG;
+
         $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
 
-        $eventdata = new stdClass();
+        // Pre 2.9 does not have \core\message\message()
+        if ($CFG->branch >= 29) {
+            $eventdata = new \core\message\message();
+        } else {
+            $eventdata = new stdClass();
+        }
+
         $eventdata->component         = 'mod_turnitintooltwo';
         $eventdata->name              = 'submission'; // This is the message name from messages.php.
         $eventdata->userfrom          = \core_user::get_noreply_user();
@@ -38,6 +46,10 @@ class receipt_message {
         $eventdata->fullmessagehtml   = $message;
         $eventdata->smallmessage      = '';
         $eventdata->notification      = 1; // This is only set to 0 for personal messages between users.
+
+        if ($CFG->branch >= 32) {
+            $eventdata->courseid = $courseid;
+        }
 
         message_send($eventdata);
     }

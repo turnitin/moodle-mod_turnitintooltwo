@@ -29,6 +29,9 @@ require_once($CFG->libdir."/form/button.php");
 require_once($CFG->libdir."/form/submit.php");
 require_once($CFG->libdir."/uploadlib.php");
 
+// views
+require_once(__DIR__.'/classes/view/members.php');
+
 // Offline mode provided by Androgogic. Set tiioffline in config.php.
 if (!empty($CFG->tiioffline)) {
     turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
@@ -95,8 +98,8 @@ require_login($course->id, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
-// Set the page layout to base.
-$PAGE->set_pagelayout('base');
+// Set the page layout to standard.
+$PAGE->set_pagelayout('standard');
 
 // Settings for page navigation.
 if ($viewcontext == "window") {
@@ -417,29 +420,12 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     $PAGE->set_pagelayout('embedded');
 
-    $turnitintooltwoview->output_header($cm,
-            $course,
-            $url,
-            '',
-            '',
-            array(),
-            "",
-            "",
-            true,
-            '',
-            '');
+    $turnitintooltwoview->output_header($url);
 } else {
-    $turnitintooltwoview->output_header($cm,
-            $course,
+    $turnitintooltwoview->output_header(
             $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
-            $SITE->fullname,
-            array(),
-            "",
-            "",
-            true,
-            $OUTPUT->update_module_button($cm->id, "turnitintooltwo"),
-            '');
+            $SITE->fullname);
 
     // Dropdown to filter by groups.
     $groupmode = groups_get_activity_groupmode($cm);
@@ -635,6 +621,8 @@ switch ($do) {
         $ula = "";
 
         if (!$istutor) {
+            echo html_writer::start_tag("div", array("class" => "inbox inbox-student"));
+
             $eulaaccepted = false;
             $user = new turnitintooltwo_user($USER->id, $userrole);
             $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
@@ -666,6 +654,8 @@ switch ($do) {
                                             array('class' => 'warning turnitin_ula_noscript'));
                 echo $ula.$noscriptula;
             }
+        } else {
+            echo html_writer::start_tag("div", array("class" => "inbox inbox-instructor"));
         }
 
         $listsubmissionsdesc = ($istutor) ? "listsubmissionsdesc" : "listsubmissionsdesc_student";
@@ -728,24 +718,15 @@ switch ($do) {
             // Put the html for unanonymising a submission below the form for including in lightbox.
             echo $turnitintooltwoview->show_unanonymise_form();
         }
+        echo html_writer::end_tag("div");
         break;
 
     case "students":
     case "tutors":
-        if (!$istutor) {
-            turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
-            exit();
-        }
-        $string = ($do == "tutors") ? 'turnitintutors_desc' : 'turnitinstudents_desc';
-        $introtext = get_string($string, 'turnitintooltwo');
-        echo $OUTPUT->box($introtext, 'generalbox boxaligncenter', 'general');
+        $membersview = new members_view($course, $cm, $turnitintooltwoview, $turnitintooltwoassignment);
+        $membershtml = $membersview->build_members_view($do);
 
-        $memberrole = ($do == "tutors") ? 'Instructor' : 'Learner';
-        echo $turnitintooltwoview->init_tii_member_by_role_table($cm, $turnitintooltwoassignment, $memberrole);
-        if ($do == "tutors") {
-            $tutors = $turnitintooltwoassignment->get_tii_users_by_role("Instructor", "mdl");
-            echo $turnitintooltwoview->show_add_tii_tutors_form($cm, $tutors);
-        }
+        echo $membershtml;
         break;
 
     case "emailnonsubmittersform":

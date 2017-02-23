@@ -1,3 +1,12 @@
+### Date:		2017-February-22
+### Release:	v2017022201
+
+- Verified against Moodle 3.2.
+- UI modified for compatibility with Boost theme.
+- First unit tests added to plugin.
+
+---
+
 ### Date:		2017-January-25
 ### Release:	v2017012501
 
