@@ -1,11 +1,3 @@
-### Date:		2017-March-XX
-### Release:	v201703XXXX
-
-- Fixes:
-	- Send revealing user rather than submitted user when revealing anonymous submissions.
-
----
-
 ### Date:		2017-February-22
 ### Release:	v2017022201
 
