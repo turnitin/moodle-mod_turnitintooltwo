@@ -867,10 +867,12 @@ class turnitintooltwo_submission {
      * @return boolean
      */
     public function unanonymise_submission($reason) {
+        global $USER;
+
         // Get user and part details.
         $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
         $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part);
-        $user = new turnitintooltwo_user($this->userid);
+        $user = new turnitintooltwo_user($USER->id);
 
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
