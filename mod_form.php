@@ -49,7 +49,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $course->turnitin_cid = $tiicoursedata->turnitin_cid;
             $course->turnitin_ctl = $tiicoursedata->turnitin_ctl;
         } else {
-            turnitintooltwo_assignment::edit_tii_course($course);
+            $tempassignment = new turnitintooltwo_assignment(0, '', '');
+            $tempassignment->edit_tii_course($course);
             $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
         }
 
@@ -204,10 +205,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addRule('name', null, 'required', null, 'client');
 
         $input = new stdClass();
-        $input->length = 40;
+        $input->length = 255;
         $input->field = get_string('turnitintooltwoname', 'turnitintooltwo');
-        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'client');
-        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'server');
+        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
+        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
         if ($CFG->branch >= 29) {
             $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));

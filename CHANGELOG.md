@@ -2,6 +2,7 @@
 ### Release:	v201703XXXX
 
 - Minor update Gradebook method refactor so it can be called from other contexts.
+- Allow class and assignment titles to be up to 256 characters in length.
 - Fixes:
 	- Send revealing user rather than submitted user when revealing anonymous submissions.
 	- Stop enrolling unenrolled Moodle students when downloading submissions from Turnitin.
