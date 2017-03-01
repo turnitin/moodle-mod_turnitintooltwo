@@ -884,6 +884,7 @@ class turnitintooltwo_submission {
         $submission = new TiiSubmission();
         $submission->setSubmissionId($this->submission_objectid);
         $submission->setAssignmentId($partdetails->tiiassignid);
+        $reason = urldecode($reason);
         if (strlen($reason) < 5) {
             $reason = "No specified reason: ".$reason;
         }
