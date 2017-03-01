@@ -831,32 +831,46 @@ class turnitintooltwo_submission {
                 $sub->id = $DB->insert_record("turnitintooltwo_submissions", $sub, true, $bulk);
             }
 
-            // Update gradebook.
-            @include_once($CFG->libdir."/gradelib.php");
-            if ($sub->userid > 0 && $sub->submission_unanon) {
-                $user = new turnitintooltwo_user($sub->userid, "Learner");
+            //Update the Moodle gradebook.
+            $this->update_gradebook($sub, $turnitintooltwoassignment);
+        }
+    }
 
-                $grades = new stdClass();
+    /**
+     * Update the Moodle gradebook.
+     *
+     * @param type $sub
+     * @return type $turnitintooltwoassignment
+     */
+    public function update_gradebook($sub, $turnitintooltwoassignment) {
+        global $DB, $CFG;
 
-                // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking.
-                if ($submissions = $DB->get_records('turnitintooltwo_submissions',
-                                                array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
-                                                            'userid' => $user->id, 'submission_unanon' => 1))) {
-                    $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
-                    if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
-                        // Using a scale.
-                        $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
-                    } else {
-                        $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
-                    }
+        // Update gradebook.
+        @include_once($CFG->libdir."/gradelib.php");
+        if ($sub->userid > 0 && $sub->submission_unanon) {
+            $user = new turnitintooltwo_user($sub->userid, "Learner");
+            $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
+                                                            $turnitintooltwoassignment->turnitintooltwo->course);
+            $grades = new stdClass();
 
+            // Only add to gradebook if author has been unanonymised or assignment doesn't have anonymous marking.
+            if ($submissions = $DB->get_records('turnitintooltwo_submissions',
+                                            array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,
+                                                        'userid' => $user->id, 'submission_unanon' => 1))) {
+                $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions);
+                if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
+                    // Using a scale.
+                    $grades->rawgrade = ($overallgrade == '--') ? null : $overallgrade;
+                } else {
+                    $grades->rawgrade = ($overallgrade == '--') ? null : number_format($overallgrade, 2);
                 }
-                $grades->userid = $user->id;
-                $params['idnumber'] = $cm->idnumber;
 
-                grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
-                                'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
             }
+            $grades->userid = $user->id;
+            $params['idnumber'] = $cm->idnumber;
+
+            grade_update('mod/turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->course, 'mod',
+                            'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id, 0, $grades, $params);
         }
     }
 
