@@ -1,8 +1,10 @@
 ### Date:		2017-March-XX
 ### Release:	v201703XXXX
 
+- Minor update Gradebook method refactor so it can be called from other contexts.
 - Fixes:
 	- Send revealing user rather than submitted user when revealing anonymous submissions.
+	- Stop enrolling unenrolled Moodle students when downloading submissions from Turnitin.
 
 ---
 

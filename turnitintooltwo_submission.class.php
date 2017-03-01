@@ -797,17 +797,6 @@ class turnitintooltwo_submission {
                 }
             }
 
-            // Check if the user is enrolled.
-            if ($sub->userid != 0) {
-                $context = context_module::instance($cm->id);
-                if (!is_enrolled($context, $sub->userid)) {
-                    // Enroll the user as a student.
-                    $enrol = enrol_get_plugin('manual');
-                    $instance = $DB->get_record("enrol", array('courseid' => $cm->course, 'enrol' => 'manual'));
-                    $enrol->enrol_user($instance, $sub->userid, 5);
-                }
-            }
-
             if ($sub->userid == 0 && empty($this->id)) {
                 if ($tiisubmissiondata->getAuthorUserId() > 0) {
                     $sub->submission_nmuserid = $tiisubmissiondata->getAuthorUserId();
@@ -895,6 +884,7 @@ class turnitintooltwo_submission {
         $submission = new TiiSubmission();
         $submission->setSubmissionId($this->submission_objectid);
         $submission->setAssignmentId($partdetails->tiiassignid);
+        $reason = urldecode($reason);
         if (strlen($reason) < 5) {
             $reason = "No specified reason: ".$reason;
         }
