@@ -39,11 +39,11 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 	 */
 	public function test_truncate_title() {
 		$turnitintooltwo = new stdClass();
-        $turnitintooltwo->id = 1;
+		$turnitintooltwo->id = 1;
 
-        $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
+		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
 
-        // Test that a string under the limit is returned with a suffix added.
+		// Test that a string under the limit is returned with a suffix added.
 		$originaltitle = 'Test String';
 		$expectedtitle = 'Test String (Moodle TT)';
 		$limit = 100;

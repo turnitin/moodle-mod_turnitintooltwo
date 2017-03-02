@@ -1147,8 +1147,8 @@ class turnitintooltwo_assignment {
                     $names[] = strtolower($part->partname);
                 }
 
-                $tiititle = $this->turnitintooltwo->name." ".$fieldvalue;
-                $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+                $origtiititle = $this->turnitintooltwo->name." ".$fieldvalue;
+                $tiititle = $this->truncate_title( $origtiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
 
                 if (empty($fieldvalue) || ctype_space($fieldvalue)) {
                     $return['success'] = false;
@@ -1156,7 +1156,7 @@ class turnitintooltwo_assignment {
                 } else if (in_array(trim(strtolower($fieldvalue)), $names)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('uniquepartname', 'turnitintooltwo');
-                } else if (strpos($tiititle, '...') !== false) {
+                } else if (strpos($tiititle, $origtiititle) === false) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnametoolarge', 'turnitintooltwo');
                 } else {
