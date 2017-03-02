@@ -345,14 +345,9 @@ class turnitintooltwo_assignment {
         $turnitincall = $turnitincomms->initialise_api();
 
         $class = new TiiClass();
-        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100).
-        $title = "";
-        if ( mb_strlen( $course->fullname, 'UTF-8' ) > 80 ) {
-            $title .= mb_substr( $course->fullname, 0, 80, 'UTF-8' ) . "...";
-        } else {
-            $title .= $course->fullname;
-        }
-        $title .= " (Moodle " . $coursetype . ")";
+        $tiititle = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
+        $assignment->setTitle( $tiititle );
+
         $class->setTitle( $title );
 
         try {
@@ -403,7 +398,7 @@ class turnitintooltwo_assignment {
      * @param var $course The course object
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      */
-    public static function edit_tii_course($course, $coursetype = "TT") {
+    public function edit_tii_course($course, $coursetype = "TT") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -411,14 +406,7 @@ class turnitintooltwo_assignment {
 
         $class = new TiiClass();
         $class->setClassId($course->turnitin_cid);
-        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100).
-        $title = "";
-        if ( mb_strlen( $course->fullname, 'UTF-8' ) > 80 ) {
-            $title .= mb_substr( $course->fullname, 0, 80, 'UTF-8' ) . "...";
-        } else {
-            $title .= $course->fullname;
-        }
-        $title .= " (Moodle " . $coursetype . ")";
+        $title = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
         $class->setTitle( $title );
 
         try {
@@ -446,6 +434,28 @@ class turnitintooltwo_assignment {
             $toscreen = ($coursetype == "PP") ? false : true;
             $turnitincomms->handle_exceptions($e, 'classupdateerror', $toscreen);
         }
+    }
+
+    /**
+     * Truncate the course and assignment titles to match Turnitin requirements and add a coursetype suffix on the end.
+     *
+     * @param string $title The course id on Turnitin
+     * @param int $limit The course title on Turnitin
+     * @param string $coursetype whether the course is TT (Turnitintooltwo) or PP (Plagiarism Plugin)
+     */
+    public static function truncate_title($title, $limit, $coursetype) {
+        $suffix = " (Moodle " . $coursetype . ")";
+        $limit = $limit - strlen($suffix);
+        $truncatedtitle = "";
+
+        if ( mb_strlen( $title, 'UTF-8' ) > $limit ) {
+            $truncatedtitle .= mb_substr( $title, 0, $limit - 3, 'UTF-8' ) . "...";
+        } else {
+            $truncatedtitle .= $title;
+        }
+        $truncatedtitle .= $suffix;
+
+        return $truncatedtitle;
     }
 
     /**
@@ -698,7 +708,9 @@ class turnitintooltwo_assignment {
             $assignment->setClassId($course->turnitin_cid);
 
             $attribute = "partname".$i;
-            $assignment->setTitle($this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute." (Moodle TT)");
+            $tiititle = $this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute;
+            $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+            $assignment->setTitle( $tiititle );
 
             $attribute = "dtstart".$i;
             $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
@@ -1135,17 +1147,20 @@ class turnitintooltwo_assignment {
                     $names[] = strtolower($part->partname);
                 }
 
+                $origtiititle = $this->turnitintooltwo->name." ".$fieldvalue;
+                $tiititle = $this->truncate_title( $origtiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+
                 if (empty($fieldvalue) || ctype_space($fieldvalue)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnameerror', 'turnitintooltwo');
                 } else if (in_array(trim(strtolower($fieldvalue)), $names)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('uniquepartname', 'turnitintooltwo');
-                } else if (strlen($fieldvalue) > 40) {
+                } else if (strpos($tiititle, $origtiititle) === false) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnametoolarge', 'turnitintooltwo');
                 } else {
-                    $assignment->setTitle($this->turnitintooltwo->name.' - '.$fieldvalue);
+                    $assignment->setTitle( $tiititle );
                 }
                 break;
 
@@ -1411,7 +1426,9 @@ class turnitintooltwo_assignment {
             }
 
             $attribute = "partname".$i;
-            $assignment->setTitle($this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute." (Moodle TT)");
+            $tiititle = $this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute;
+            $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+            $assignment->setTitle( $tiititle );
 
             // Initialise part.
             $part = new stdClass();
