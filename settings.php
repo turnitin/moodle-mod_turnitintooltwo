@@ -44,6 +44,10 @@ if ($ADMIN->fulltree) {
         $librarywarning .= html_writer::tag('div', get_string('nofinfolibrary', 'turnitintooltwo'),
                                                 array('class' => 'tii_library_not_present_warning'));
     }
+    if (!extension_loaded('soap')) {
+        $librarywarning .= html_writer::tag('div', get_string('nosoaplibrary', 'turnitintooltwo'),
+                                                array('class' => 'tii_library_not_present_warning'));
+    }
 
     $tabmenu = $turnitintooltwoview->draw_settings_menu($module, 'settings').
                 html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$librarywarning.

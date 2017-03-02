@@ -46,6 +46,12 @@ In order for the module to work correctly you must enable the following PHP exte
 
 >For further information see http://php.net/manual/en/fileinfo.installation.php.
 
+**SOAP**
+
+>To enable SOAP support, configure PHP with --enable-soap.
+
+>For futher information see http://php.net/manual/en/intro.soap.php.
+
 ##cURL Connectivity
 
 If you encounter connectivity issues (error: Turnitin API Base URL incorrect or unavailable) this could be related to a CA certificate being unavailable to cURL.
