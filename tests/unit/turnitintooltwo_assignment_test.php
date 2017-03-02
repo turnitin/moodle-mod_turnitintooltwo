@@ -43,16 +43,22 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 
         $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
 
+        // Test that a string under the limit is returned with a suffix added.
 		$originaltitle = 'Test String';
 		$expectedtitle = 'Test String (Moodle TT)';
-		$title = $turnitintooltwoassignment->truncate_title($originaltitle, 100, 'TT');
+		$limit = 100;
+		$title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
 		$this->assertEquals($expectedtitle, $title);
+		$this->assertLessThan($limit, strlen($title));
 
+		// Test that a string over the limit is returned truncated with a suffix added and is equal to the limit in length.
 		$originaltitle = 'Test String is truncated and has a suffix added on the end with brackets showing the moodle coursetype';
-		$title = $turnitintooltwoassignment->truncate_title($originaltitle, 30, 'TT');
+		$limit = 30;
+		$title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
 		$this->assertContains('Test String', $title);
 		$this->assertNotContains('added on the end', $title);
 		$this->assertContains('... (Moodle TT)', $title);
+		$this->assertEquals($limit, strlen($title));
 	}
 
 }
