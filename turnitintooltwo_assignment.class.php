@@ -338,7 +338,7 @@ class turnitintooltwo_assignment {
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      * @return object the turnitin course if created
      */
-    public static function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
+    public function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -346,9 +346,7 @@ class turnitintooltwo_assignment {
 
         $class = new TiiClass();
         $tiititle = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
-        $assignment->setTitle( $tiititle );
-
-        $class->setTitle( $title );
+        $class->setTitle( $tiititle );
 
         try {
             $response = $turnitincall->createClass($class);

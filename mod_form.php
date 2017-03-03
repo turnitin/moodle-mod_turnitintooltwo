@@ -45,7 +45,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         // Create or edit the class in Turnitin.
         if ($course->turnitin_cid == 0) {
-            $tiicoursedata = turnitintooltwo_assignment::create_tii_course($course, $USER->id);
+            $tempassignment = new turnitintooltwo_assignment(0, '', '');
+            $tiicoursedata = $tempassignment->create_tii_course($course, $USER->id);
             $course->turnitin_cid = $tiicoursedata->turnitin_cid;
             $course->turnitin_ctl = $tiicoursedata->turnitin_ctl;
         } else {
