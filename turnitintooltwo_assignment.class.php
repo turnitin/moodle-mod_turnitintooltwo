@@ -1602,7 +1602,7 @@ class turnitintooltwo_assignment {
      * @param object $start position in submissions array to get details from
      */
     private function update_submissions_from_tii($cm, $part, $start = 0) {
-        global $USER;
+        global $USER, $DB;
 
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
