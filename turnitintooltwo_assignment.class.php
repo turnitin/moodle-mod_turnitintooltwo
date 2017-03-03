@@ -1601,10 +1601,18 @@ class turnitintooltwo_assignment {
      * @param object $part
      * @param object $start position in submissions array to get details from
      */
-    private function update_submissions_from_tii($part, $start = 0) {
+    private function update_submissions_from_tii($cm, $part, $start = 0) {
+        global $USER;
+
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
+
+        // Only save data if the user is an instructor.
+        $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
+        // Or if a submission belongs to the logged in user.
+        $tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $USER->id), "turnitin_uid");
+        $tiiuserid = (isset($tiiuser->turnitin_uid)) ? $tiiuser->turnitin_uid : 0;
 
         try {
             $submission = new TiiSubmission();
@@ -1615,7 +1623,7 @@ class turnitintooltwo_assignment {
             $readsubmissions = $response->getSubmissions();
 
             foreach ($readsubmissions as $readsubmission) {
-                if ($readsubmission->getAuthorUserId() != "-1") {
+                if ($readsubmission->getAuthorUserId() != "-1" && ($istutor || $tiiuserid == $readsubmission->getAuthorUserId())) {
                     $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
                                                                                 "turnitin", $this, $part->id);
                     $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
@@ -1661,13 +1669,13 @@ class turnitintooltwo_assignment {
      *
      * @param int $start array of assignment ids, if 0 then array is created inside
      */
-    public function refresh_submissions($part, $start = 0) {
+    public function refresh_submissions($cm, $part, $start = 0) {
         if (empty($_SESSION["TiiSubmissions"][$part->id])) {
             $_SESSION["TiiSubmissions"][$part->id] = array();
         }
 
         if ($start < count($_SESSION["TiiSubmissions"][$part->id])) {
-            $this->update_submissions_from_tii($part, $start);
+            $this->update_submissions_from_tii($cm, $part, $start);
         }
     }
 

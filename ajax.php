@@ -237,14 +237,15 @@ switch ($action) {
             $total = required_param('total', PARAM_INT);
             $parts = $turnitintooltwoassignment->get_parts();
             $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
+            $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
-                $total = $_SESSION["TiiSubmissions"][$partid];
+                $total = count($_SESSION["TiiSubmissions"][$partid]);
             }
 
             if ($start < $total && $updatefromtii) {
-                $turnitintooltwoassignment->refresh_submissions($parts[$partid], $start);
+                $turnitintooltwoassignment->refresh_submissions($cm, $parts[$partid], $start);
             }
 
             $PAGE->set_context(context_module::instance($cm->id));
@@ -263,11 +264,14 @@ switch ($action) {
             if ($return["end"] >= $return["total"]) {
                 unset($_SESSION["submissions"][$partid]);
 
-                $updatepart = new stdClass();
-                $updatepart->id = $partid;
-                // Set timestamp to 10 minutes ago to account for time taken to complete (somewhat exagerrated).
-                $updatepart->gradesupdated = time() - (60 * 10);
-                $DB->update_record('turnitintooltwo_parts', $updatepart);
+                // Only update the timestamp if an instructor has refreshed.
+                if ( $istutor ) {
+                    $updatepart = new stdClass();
+                    $updatepart->id = $partid;
+                    // Set timestamp to 10 minutes ago to account for time taken to complete (somewhat exagerrated).
+                    $updatepart->gradesupdated = time() - (60 * 10);
+                    $DB->update_record('turnitintooltwo_parts', $updatepart);
+                }
             }
         } else {
             $return["aaData"] = '';

@@ -602,9 +602,10 @@ function turnitintooltwo_cron() {
         $updatedassignments = array();
         foreach ($migratedemptyparts as $part) {
             if (!array_search($part->id, $updatedassignments)) {
+                $cm = get_coursemodule_from_instance("turnitintooltwo", $part->turnitintooltwoid);
                 $turnitintooltwoassignment = new turnitintooltwo_assignment($part->turnitintooltwoid);
                 $turnitintooltwoassignment->get_submission_ids_from_tii($part);
-                $turnitintooltwoassignment->refresh_submissions($part);
+                $turnitintooltwoassignment->refresh_submissions($cm, $part);
                 $updatedassignments[] = $part->id;
 
                 turnitintooltwo_activitylog('Turnitintool submissions downloaded for assignment '.$part->id, 'REQUEST');
