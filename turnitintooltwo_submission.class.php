@@ -773,19 +773,13 @@ class turnitintooltwo_submission {
         if ($this->submission_grade != $sub->submission_grade || $this->submission_score != $sub->submission_score ||
             $this->submission_modified != $sub->submission_modified || $this->submission_attempts != $sub->submission_attempts ||
             $this->submission_unanon != $sub->submission_unanon || $this->submission_part != $sub->submission_part ||
-            $this->submission_gmimaged != $sub->submission_gmimaged) {
+            $this->submission_gmimaged != $sub->submission_gmimaged || $this->submission_objectid != $sub->submission_objectid) {
             $save = true;
         }
-
-        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id,
-                                                                $turnitintooltwoassignment->turnitintooltwo->course);
 
         if ($save) {
             // If the user is not a moodle user then get their name from Tii - only do this on initial save.
             $sub->userid = turnitintooltwo_user::get_moodle_user_id($tiisubmissiondata->getAuthorUserId());
-
-            // Create our submission hash to prevent duplication.
-            $sub->submission_hash = $sub->userid.'_'.$sub->turnitintooltwoid.'_'.$sub->submission_part;
 
             // If we have no user ID get it from the Moodle database by using their Turnitin e-mail address.
             if ($sub->userid == 0) {
@@ -811,6 +805,16 @@ class turnitintooltwo_submission {
                     $sub->submission_nmfirstname = '';
                     $sub->submission_nmlastname = get_string('nonmoodleuser', 'turnitintooltwo');
                 }
+            }
+
+            // Create our submission hash to prevent duplication.
+            $sub->submission_hash = $sub->userid.'_'.$sub->turnitintooltwoid.'_'.$sub->submission_part;
+            // Check submission hash doesn't exist already
+            $checksub = $DB->get_record('turnitintooltwo_submissions',
+                                            array("submission_hash" => $sub->submission_hash), 'id', IGNORE_MULTIPLE);
+
+            if ($checksub) {
+                $this->id = $checksub->id;
             }
 
             if (!empty($this->id)) {
