@@ -1457,6 +1457,9 @@ class turnitintooltwo_assignment {
 
                 $this->edit_tii_assignment($assignment);
             } else {
+                // Set anonymous marking if it is supposed to be enabled.
+                $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+
                 $parttiiassignid = $this->create_tii_assignment($assignment, $this->id, $i);
                 $part->submitted = 0;
             }
