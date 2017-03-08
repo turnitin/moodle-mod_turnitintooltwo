@@ -1599,7 +1599,7 @@ class turnitintooltwo_assignment {
      * @param object $part
      * @param object $start position in submissions array to get details from
      */
-    private function update_submissions_from_tii($cm, $part, $start = 0) {
+    private function update_submissions_from_tii($cm, $part, $start = 0, $save = false) {
         global $USER, $DB;
 
         // Initialise Comms Object.
@@ -1624,7 +1624,7 @@ class turnitintooltwo_assignment {
                 if ($readsubmission->getAuthorUserId() != "-1" && ($istutor || $tiiuserid == $readsubmission->getAuthorUserId())) {
                     $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
                                                                                 "turnitin", $this, $part->id);
-                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
+                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true, $save);
                 }
             }
 
@@ -1667,13 +1667,13 @@ class turnitintooltwo_assignment {
      *
      * @param int $start array of assignment ids, if 0 then array is created inside
      */
-    public function refresh_submissions($cm, $part, $start = 0) {
+    public function refresh_submissions($cm, $part, $start = 0, $save = false) {
         if (empty($_SESSION["TiiSubmissions"][$part->id])) {
             $_SESSION["TiiSubmissions"][$part->id] = array();
         }
 
         if ($start < count($_SESSION["TiiSubmissions"][$part->id])) {
-            $this->update_submissions_from_tii($cm, $part, $start);
+            $this->update_submissions_from_tii($cm, $part, $start, $save);
         }
     }
 

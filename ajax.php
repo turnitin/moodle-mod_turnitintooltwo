@@ -236,7 +236,7 @@ switch ($action) {
             $total = count($_SESSION["TiiSubmissions"][$part->id]);
 
             while ($i < $total) {
-                $turnitintooltwoassignment->refresh_submissions($cm, $part, $i);
+                $turnitintooltwoassignment->refresh_submissions($cm, $part, $i, true);
                 $i += TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
             }
 
