@@ -1604,7 +1604,7 @@ class turnitintooltwo_assignment {
      * @param object $part
      * @param object $start position in submissions array to get details from
      */
-    private function update_submissions_from_tii($cm, $part, $start = 0) {
+    private function update_submissions_from_tii($cm, $part, $start = 0, $save = false) {
         global $USER, $DB;
 
         // Initialise Comms Object.
@@ -1629,7 +1629,7 @@ class turnitintooltwo_assignment {
                 if ($readsubmission->getAuthorUserId() != "-1" && ($istutor || $tiiuserid == $readsubmission->getAuthorUserId())) {
                     $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
                                                                                 "turnitin", $this, $part->id);
-                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
+                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true, $save);
                 }
             }
 
@@ -1643,7 +1643,7 @@ class turnitintooltwo_assignment {
      *
      * @param object $part the part to get submissions for
      */
-    public function get_submission_ids_from_tii($part) {
+    public function get_submission_ids_from_tii($part, $usetimestamp = true) {
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -1653,7 +1653,7 @@ class turnitintooltwo_assignment {
             $submission->setAssignmentId($part->tiiassignid);
 
             // Only update submissions that have been modified since an hour before last update.
-            if (!empty($part->gradesupdated)) {
+            if (!empty($part->gradesupdated) && $usetimestamp) {
                 $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $part->gradesupdated - (60 * 60)));
             }
 
@@ -1672,13 +1672,13 @@ class turnitintooltwo_assignment {
      *
      * @param int $start array of assignment ids, if 0 then array is created inside
      */
-    public function refresh_submissions($cm, $part, $start = 0) {
+    public function refresh_submissions($cm, $part, $start = 0, $save = false) {
         if (empty($_SESSION["TiiSubmissions"][$part->id])) {
             $_SESSION["TiiSubmissions"][$part->id] = array();
         }
 
         if ($start < count($_SESSION["TiiSubmissions"][$part->id])) {
-            $this->update_submissions_from_tii($cm, $part, $start);
+            $this->update_submissions_from_tii($cm, $part, $start, $save);
         }
     }
 

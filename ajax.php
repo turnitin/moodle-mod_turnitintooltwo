@@ -218,6 +218,34 @@ switch ($action) {
         echo json_encode($return);
         break;
 
+    case "sync_all_submissions":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+        raise_memory_limit(MEMORY_EXTRA);
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $parts = $turnitintooltwoassignment->get_parts();
+
+        foreach ($parts as $part) {
+            $i = 0;
+            $turnitintooltwoassignment->get_submission_ids_from_tii($part, false);
+            $total = count($_SESSION["TiiSubmissions"][$part->id]);
+
+            while ($i < $total) {
+                $turnitintooltwoassignment->refresh_submissions($cm, $part, $i, true);
+                $i += TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
+            }
+
+            unset($_SESSION["TiiSubmissions"][$part->id]);
+        }
+
+        return true;
+        break;
+
     case "get_submissions":
 
         if (!confirm_sesskey()) {

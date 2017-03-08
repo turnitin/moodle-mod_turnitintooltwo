@@ -397,6 +397,26 @@ jQuery(document).ready(function($) {
         return false;
     });
 
+    // Sync all grades link in settings page.
+    if ($('#turnitin_sync_all_grades').length > 0) {
+        $('.turnitin_sync_grades').click(function() {
+
+            $('.turnitin_sync_grades').hide();
+            $('.turnitin_syncing_grades').show();
+
+            $.ajax({
+                type: "POST",
+                url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
+                dataType: "json",
+                data: {action: "sync_all_submissions", assignment: $('#syncallgrades').data('turnitintooltwoid'), sesskey: M.cfg.sesskey},
+                success: function(data) {
+                    $('.turnitin_sync_grades').show();
+                    $('.turnitin_syncing_grades').hide();
+                }
+            });
+        });
+    }
+
     // Resize window if submission has failed.
     if ($('.submission_failure_msg').length > 0) {
         window.parent.$('.upload_box').colorbox.resize({
