@@ -1638,7 +1638,7 @@ class turnitintooltwo_assignment {
      *
      * @param object $part the part to get submissions for
      */
-    public function get_submission_ids_from_tii($part) {
+    public function get_submission_ids_from_tii($part, $usetimestamp = true) {
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -1648,7 +1648,7 @@ class turnitintooltwo_assignment {
             $submission->setAssignmentId($part->tiiassignid);
 
             // Only update submissions that have been modified since an hour before last update.
-            if (!empty($part->gradesupdated)) {
+            if (!empty($part->gradesupdated) && $usetimestamp) {
                 $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $part->gradesupdated - (60 * 60)));
             }
 
