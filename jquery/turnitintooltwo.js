@@ -408,7 +408,7 @@ jQuery(document).ready(function($) {
                 type: "POST",
                 url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
                 dataType: "json",
-                data: {action: "sync_all_submissions", assignment: $('#syncallgrades').data('turnitintooltwoid'), sesskey: M.cfg.sesskey},
+                data: {action: "sync_all_submissions", assignment: $('#turnitin_sync_all_grades').data('turnitintooltwoid'), sesskey: M.cfg.sesskey},
                 success: function(data) {
                     $('.turnitin_sync_grades').show();
                     $('.turnitin_syncing_grades').hide();
