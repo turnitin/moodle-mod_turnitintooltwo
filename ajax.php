@@ -243,7 +243,7 @@ switch ($action) {
             unset($_SESSION["TiiSubmissions"][$part->id]);
         }
 
-        return json_encode( array('success' => true) );
+        echo json_encode( array('success' => true) );
         break;
 
     case "get_submissions":
