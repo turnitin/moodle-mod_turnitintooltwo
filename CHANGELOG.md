@@ -1,5 +1,5 @@
-### Date:		2017-March-XX
-### Release:	v201703XXXX
+### Date:		2017-March-13
+### Release:	v2017031301
 
 - Minor update Gradebook method refactor so it can be called from other contexts.
 - Allow class and assignment titles to be up to 256 characters in length.
