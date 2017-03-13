@@ -34,6 +34,8 @@ define('TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME', get_string('defaultcoursestud
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
 define('TURNITIN_SUPPORT_FORM', 'http://turnitin.com/self-service/support-form.html');
+define('TURNITIN_COURSE_TITLE_LIMIT', 300);
+define('TURNITIN_ASSIGNMENT_TITLE_LIMIT', 300);
 
 // For use in course migration.
 $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
@@ -461,8 +463,9 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
 
             $attribute = "partname".$i;
-            $assignment->setTitle($turnitintooltwoassignment->turnitintooltwo->name." ".
-                            $turnitintooltwoassignment->turnitintooltwo->$attribute." (Moodle TT)");
+            $tiititle = $turnitintooltwoassignment->turnitintooltwo->name." ".$turnitintooltwoassignment->turnitintooltwo->$attribute;
+            $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+            $assignment->setTitle( $tiititle );
 
             $partassignid = $turnitintooltwoassignment->create_tii_assignment($assignment,
                                 $turnitintooltwoassignment->turnitintooltwo->id, $i);
@@ -599,9 +602,10 @@ function turnitintooltwo_cron() {
         $updatedassignments = array();
         foreach ($migratedemptyparts as $part) {
             if (!array_search($part->id, $updatedassignments)) {
+                $cm = get_coursemodule_from_instance("turnitintooltwo", $part->turnitintooltwoid);
                 $turnitintooltwoassignment = new turnitintooltwo_assignment($part->turnitintooltwoid);
                 $turnitintooltwoassignment->get_submission_ids_from_tii($part);
-                $turnitintooltwoassignment->refresh_submissions($part);
+                $turnitintooltwoassignment->refresh_submissions($cm, $part);
                 $updatedassignments[] = $part->id;
 
                 turnitintooltwo_activitylog('Turnitintool submissions downloaded for assignment '.$part->id, 'REQUEST');

@@ -338,22 +338,15 @@ class turnitintooltwo_assignment {
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      * @return object the turnitin course if created
      */
-    public static function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
+    public function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
         $class = new TiiClass();
-        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100).
-        $title = "";
-        if ( mb_strlen( $course->fullname, 'UTF-8' ) > 80 ) {
-            $title .= mb_substr( $course->fullname, 0, 80, 'UTF-8' ) . "...";
-        } else {
-            $title .= $course->fullname;
-        }
-        $title .= " (Moodle " . $coursetype . ")";
-        $class->setTitle( $title );
+        $tiititle = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
+        $class->setTitle( $tiititle );
 
         try {
             $response = $turnitincall->createClass($class);
@@ -403,7 +396,7 @@ class turnitintooltwo_assignment {
      * @param var $course The course object
      * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      */
-    public static function edit_tii_course($course, $coursetype = "TT") {
+    public function edit_tii_course($course, $coursetype = "TT") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -411,14 +404,7 @@ class turnitintooltwo_assignment {
 
         $class = new TiiClass();
         $class->setClassId($course->turnitin_cid);
-        // Need to truncate the moodle class title to be compatible with a Turnitin class (max length 100).
-        $title = "";
-        if ( mb_strlen( $course->fullname, 'UTF-8' ) > 80 ) {
-            $title .= mb_substr( $course->fullname, 0, 80, 'UTF-8' ) . "...";
-        } else {
-            $title .= $course->fullname;
-        }
-        $title .= " (Moodle " . $coursetype . ")";
+        $title = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
         $class->setTitle( $title );
 
         try {
@@ -446,6 +432,28 @@ class turnitintooltwo_assignment {
             $toscreen = ($coursetype == "PP") ? false : true;
             $turnitincomms->handle_exceptions($e, 'classupdateerror', $toscreen);
         }
+    }
+
+    /**
+     * Truncate the course and assignment titles to match Turnitin requirements and add a coursetype suffix on the end.
+     *
+     * @param string $title The course id on Turnitin
+     * @param int $limit The course title on Turnitin
+     * @param string $coursetype whether the course is TT (Turnitintooltwo) or PP (Plagiarism Plugin)
+     */
+    public static function truncate_title($title, $limit, $coursetype) {
+        $suffix = " (Moodle " . $coursetype . ")";
+        $limit = $limit - strlen($suffix);
+        $truncatedtitle = "";
+
+        if ( mb_strlen( $title, 'UTF-8' ) > $limit ) {
+            $truncatedtitle .= mb_substr( $title, 0, $limit - 3, 'UTF-8' ) . "...";
+        } else {
+            $truncatedtitle .= $title;
+        }
+        $truncatedtitle .= $suffix;
+
+        return $truncatedtitle;
     }
 
     /**
@@ -698,7 +706,9 @@ class turnitintooltwo_assignment {
             $assignment->setClassId($course->turnitin_cid);
 
             $attribute = "partname".$i;
-            $assignment->setTitle($this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute." (Moodle TT)");
+            $tiititle = $this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute;
+            $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+            $assignment->setTitle( $tiititle );
 
             $attribute = "dtstart".$i;
             $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $this->turnitintooltwo->$attribute));
@@ -1135,17 +1145,20 @@ class turnitintooltwo_assignment {
                     $names[] = strtolower($part->partname);
                 }
 
+                $origtiititle = $this->turnitintooltwo->name." ".$fieldvalue;
+                $tiititle = $this->truncate_title( $origtiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+
                 if (empty($fieldvalue) || ctype_space($fieldvalue)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnameerror', 'turnitintooltwo');
                 } else if (in_array(trim(strtolower($fieldvalue)), $names)) {
                     $return['success'] = false;
                     $return['msg'] = get_string('uniquepartname', 'turnitintooltwo');
-                } else if (strlen($fieldvalue) > 40) {
+                } else if (strpos($tiititle, $origtiititle) === false) {
                     $return['success'] = false;
                     $return['msg'] = get_string('partnametoolarge', 'turnitintooltwo');
                 } else {
-                    $assignment->setTitle($this->turnitintooltwo->name.' - '.$fieldvalue);
+                    $assignment->setTitle( $tiititle );
                 }
                 break;
 
@@ -1411,7 +1424,9 @@ class turnitintooltwo_assignment {
             }
 
             $attribute = "partname".$i;
-            $assignment->setTitle($this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute." (Moodle TT)");
+            $tiititle = $this->turnitintooltwo->name." ".$this->turnitintooltwo->$attribute;
+            $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+            $assignment->setTitle( $tiititle );
 
             // Initialise part.
             $part = new stdClass();
@@ -1442,6 +1457,11 @@ class turnitintooltwo_assignment {
 
                 $this->edit_tii_assignment($assignment);
             } else {
+                // Set anonymous marking if it is supposed to be enabled.
+                if ($config->useanon) {
+                    $assignment->setAnonymousMarking($this->turnitintooltwo->anon);
+                }
+
                 $parttiiassignid = $this->create_tii_assignment($assignment, $this->id, $i);
                 $part->submitted = 0;
             }
@@ -1584,10 +1604,18 @@ class turnitintooltwo_assignment {
      * @param object $part
      * @param object $start position in submissions array to get details from
      */
-    private function update_submissions_from_tii($part, $start = 0) {
+    private function update_submissions_from_tii($cm, $part, $start = 0, $save = false) {
+        global $USER, $DB;
+
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
+
+        // Only save data if the user is an instructor.
+        $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
+        // Or if a submission belongs to the logged in user.
+        $tiiuser = $DB->get_record("turnitintooltwo_users", array("userid" => $USER->id), "turnitin_uid");
+        $tiiuserid = (isset($tiiuser->turnitin_uid)) ? $tiiuser->turnitin_uid : 0;
 
         try {
             $submission = new TiiSubmission();
@@ -1598,10 +1626,10 @@ class turnitintooltwo_assignment {
             $readsubmissions = $response->getSubmissions();
 
             foreach ($readsubmissions as $readsubmission) {
-                if ($readsubmission->getAuthorUserId() != "-1") {
+                if ($readsubmission->getAuthorUserId() != "-1" && ($istutor || $tiiuserid == $readsubmission->getAuthorUserId())) {
                     $turnitintooltwosubmission = new turnitintooltwo_submission($readsubmission->getSubmissionId(),
                                                                                 "turnitin", $this, $part->id);
-                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true);
+                    $turnitintooltwosubmission->save_updated_submission_data($readsubmission, true, $save);
                 }
             }
 
@@ -1615,7 +1643,7 @@ class turnitintooltwo_assignment {
      *
      * @param object $part the part to get submissions for
      */
-    public function get_submission_ids_from_tii($part) {
+    public function get_submission_ids_from_tii($part, $usetimestamp = true) {
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
@@ -1625,7 +1653,7 @@ class turnitintooltwo_assignment {
             $submission->setAssignmentId($part->tiiassignid);
 
             // Only update submissions that have been modified since an hour before last update.
-            if (!empty($part->gradesupdated)) {
+            if (!empty($part->gradesupdated) && $usetimestamp) {
                 $submission->setDateFrom(gmdate("Y-m-d\TH:i:s\Z", $part->gradesupdated - (60 * 60)));
             }
 
@@ -1644,13 +1672,13 @@ class turnitintooltwo_assignment {
      *
      * @param int $start array of assignment ids, if 0 then array is created inside
      */
-    public function refresh_submissions($part, $start = 0) {
+    public function refresh_submissions($cm, $part, $start = 0, $save = false) {
         if (empty($_SESSION["TiiSubmissions"][$part->id])) {
             $_SESSION["TiiSubmissions"][$part->id] = array();
         }
 
         if ($start < count($_SESSION["TiiSubmissions"][$part->id])) {
-            $this->update_submissions_from_tii($part, $start);
+            $this->update_submissions_from_tii($cm, $part, $start, $save);
         }
     }
 

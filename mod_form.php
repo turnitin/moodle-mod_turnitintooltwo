@@ -45,11 +45,13 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         // Create or edit the class in Turnitin.
         if ($course->turnitin_cid == 0) {
-            $tiicoursedata = turnitintooltwo_assignment::create_tii_course($course, $USER->id);
+            $tempassignment = new turnitintooltwo_assignment(0, '', '');
+            $tiicoursedata = $tempassignment->create_tii_course($course, $USER->id);
             $course->turnitin_cid = $tiicoursedata->turnitin_cid;
             $course->turnitin_ctl = $tiicoursedata->turnitin_ctl;
         } else {
-            turnitintooltwo_assignment::edit_tii_course($course);
+            $tempassignment = new turnitintooltwo_assignment(0, '', '');
+            $tempassignment->edit_tii_course($course);
             $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
         }
 
@@ -127,7 +129,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     }
 
     public function show_form($instructorrubrics, $modulestring = '', $tiicourseid) {
-        global $CFG, $OUTPUT, $COURSE, $PAGE;
+        global $CFG, $OUTPUT, $COURSE, $PAGE, $DB;
         $PAGE->requires->string_for_js('changerubricwarning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
 
@@ -199,15 +201,34 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         }
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
+
+        // Sync all grades from Turnitin.
+        if (isset($this->_cm->id)) {
+            // If assignment has submissions then show a sync grades button.
+            $numsubs = $DB->count_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $this->_cm->instance));
+            if ($numsubs > 0) {
+                $refreshgrades = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh fa-lg icon_margin')).
+                                                        html_writer::tag('span', get_string('refreshallgrades', 'turnitintooltwo')),
+                                                            array('class' => 'turnitin_sync_grades'));
+
+                $refreshgrades .= html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh fa-spin fa-lg icon_margin')).
+                                                        html_writer::tag('span', get_string('refreshingallgrades', 'turnitintooltwo')),
+                                                            array('class' => 'turnitin_syncing_grades'));
+
+                $refreshgrades = html_writer::tag('div', $refreshgrades, array('id' => 'turnitin_sync_all_grades', 'data-turnitintooltwoid' => $this->_cm->instance));
+                $mform->addElement('static', 'static', '', $refreshgrades);
+            }
+        }
+
         $mform->addElement('text', 'name', get_string('turnitintooltwoname', 'turnitintooltwo'), array('size' => '64'));
         $mform->setType('name', PARAM_RAW);
         $mform->addRule('name', null, 'required', null, 'client');
 
         $input = new stdClass();
-        $input->length = 40;
+        $input->length = 255;
         $input->field = get_string('turnitintooltwoname', 'turnitintooltwo');
-        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'client');
-        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 40, 'server');
+        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
+        $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
         if ($CFG->branch >= 29) {
             $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));

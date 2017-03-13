@@ -1,3 +1,18 @@
+### Date:		2017-March-13
+### Release:	v2017031301
+
+- Minor update Gradebook method refactor so it can be called from other contexts.
+- Allow class and assignment titles to be up to 256 characters in length.
+- Add warning if PHP SOAP extension not installed.
+- Force refresh button added to assignment settings page to sync all submission.
+- Fixes:
+	- Send revealing user rather than submitted user when revealing anonymous submissions.
+	- Stop enrolling unenrolled Moodle students when downloading submissions from Turnitin.
+	- Enforce anonymity on newly created assignment parts.
+	- Only save one submission record per student per assignment part when refreshing submissions from Turnitin.
+
+---
+
 ### Date:		2017-February-22
 ### Release:	v2017022201
 

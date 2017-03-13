@@ -218,6 +218,34 @@ switch ($action) {
         echo json_encode($return);
         break;
 
+    case "sync_all_submissions":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+        raise_memory_limit(MEMORY_EXTRA);
+
+        $assignmentid = required_param('assignment', PARAM_INT);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($assignmentid);
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $assignmentid);
+        $parts = $turnitintooltwoassignment->get_parts();
+
+        foreach ($parts as $part) {
+            $i = 0;
+            $turnitintooltwoassignment->get_submission_ids_from_tii($part, false);
+            $total = count($_SESSION["TiiSubmissions"][$part->id]);
+
+            while ($i < $total) {
+                $turnitintooltwoassignment->refresh_submissions($cm, $part, $i, true);
+                $i += TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
+            }
+
+            unset($_SESSION["TiiSubmissions"][$part->id]);
+        }
+
+        echo json_encode( array('success' => true) );
+        break;
+
     case "get_submissions":
 
         if (!confirm_sesskey()) {
@@ -237,14 +265,15 @@ switch ($action) {
             $total = required_param('total', PARAM_INT);
             $parts = $turnitintooltwoassignment->get_parts();
             $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
+            $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
-                $total = $_SESSION["TiiSubmissions"][$partid];
+                $total = count($_SESSION["TiiSubmissions"][$partid]);
             }
 
             if ($start < $total && $updatefromtii) {
-                $turnitintooltwoassignment->refresh_submissions($parts[$partid], $start);
+                $turnitintooltwoassignment->refresh_submissions($cm, $parts[$partid], $start);
             }
 
             $PAGE->set_context(context_module::instance($cm->id));
@@ -263,11 +292,14 @@ switch ($action) {
             if ($return["end"] >= $return["total"]) {
                 unset($_SESSION["submissions"][$partid]);
 
-                $updatepart = new stdClass();
-                $updatepart->id = $partid;
-                // Set timestamp to 10 minutes ago to account for time taken to complete (somewhat exagerrated).
-                $updatepart->gradesupdated = time() - (60 * 10);
-                $DB->update_record('turnitintooltwo_parts', $updatepart);
+                // Only update the timestamp if an instructor has refreshed.
+                if ( $istutor ) {
+                    $updatepart = new stdClass();
+                    $updatepart->id = $partid;
+                    // Set timestamp to 10 minutes ago to account for time taken to complete (somewhat exagerrated).
+                    $updatepart->gradesupdated = time() - (60 * 10);
+                    $DB->update_record('turnitintooltwo_parts', $updatepart);
+                }
             }
         } else {
             $return["aaData"] = '';
@@ -368,6 +400,10 @@ switch ($action) {
                 $submission->lastname = $user->lastname;
                 $submission->fullname = $user->fullname;
                 $submission->userid = $user->id;
+            }
+            // Check if student is actually enrolled in the Moodle course.
+            if ( !is_enrolled(context_module::instance($cm->id), $submission->userid, '', true) ) {
+                $submission->nmoodle = 1;
             }
 
             $useroverallgrades = array();

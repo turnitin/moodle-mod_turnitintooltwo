@@ -565,3 +565,6 @@ $string['diagnosticoptions_0'] = 'Off';
 $string['diagnosticoptions_1'] = 'Standard';
 $string['diagnosticoptions_2'] = 'Debugging';
 $string['nofinfolibrary'] = 'To use this plugin you will need to have the PHP Fileinfo extension installed on your server.';
+$string['nosoaplibrary'] = 'To use this plugin you will need to have the PHP SOAP extension installed on your server.';
+$string['refreshallgrades'] = 'Refresh all Grades from Turnitin';
+$string['refreshingallgrades'] = 'Refreshing Grades from Turnitin';

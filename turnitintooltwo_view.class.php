@@ -566,7 +566,7 @@ class turnitintooltwo_view {
                     $submission = current($this->get_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $partid));
 
                     // If not logged in as a tutor then refresh submissions.
-                    $turnitintooltwoassignment->refresh_submissions($partobject);
+                    $turnitintooltwoassignment->refresh_submissions($cm, $partobject);
 
                     $j = 0;
                     $cells = array();
