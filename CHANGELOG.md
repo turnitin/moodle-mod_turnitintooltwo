@@ -2,14 +2,29 @@
 ### Release:	v2017031301
 
 - Minor update Gradebook method refactor so it can be called from other contexts.
-- Allow class and assignment titles to be up to 256 characters in length.
-- Add warning if PHP SOAP extension not installed.
-- Force refresh button added to assignment settings page to sync all submission.
-- Fixes:
-	- Send revealing user rather than submitted user when revealing anonymous submissions.
-	- Stop enrolling unenrolled Moodle students when downloading submissions from Turnitin.
-	- Enforce anonymity on newly created assignment parts.
-	- Only save one submission record per student per assignment part when refreshing submissions from Turnitin.
+- Extended the character limit for class and assignment titles.
+- Added a warning if PHP SOAP extension is not installed.
+- Implemented a 'force refresh button' to assignment settings page.
+- Resolved an issue affecting revealer's name in anonymous submissions.
+- Stopped re-enrolling previously un-enrolled Moodle students.
+- Fixed a bug with anonymity on newly created assignment parts.
+- Resolved bug affecting assignment inbox access.
+
+
+**Extended the character limit for class and assignment titles** - Some users found the character limit for class and assignment titles restrictive; we've extended the title limits to 256 characters, allowing more freedom when setting up classes and assignments.
+
+**Added a warning if PHP SOAP extension is not installed** - We found that installation would fail without PHP SOAP (PHP5-SOAP, PHP7-SOAP) being installed, and although it's a required package, this wasn't listed as being so. We've added a warning in settings if the extension is not installed, saving you from a failed installation. 
+
+**Implemented a 'force refresh button' to assignment settings page** - Some users informed us that grades were failing to appear in the grade book after their insertion in the document viewer, as well as submission updates not transferring to the assignment inbox. To fix this, we've added a button allowing you to force refresh this data, syncing all submission changes to the grade book and inbox.
+
+**Resolved an issue affecting revealer's name in anonymous submissions** - Reports revealed that the student's name appeared as the revealer of an anonymous submission, rather than the name of the instructor. This resulted in Turnitin administrators having no record of the instructor who requested the reveal. This has now been rectified.
+
+**Stopped re-enrolling previously unenrolled Moodle students** - It appeared that unenrolled students would be re-enrolled when instructors downloaded submissions from Turnitin. We've fixed this! Now, when a student who has submitted is removed from a Moodle course, they will not be re-enrolled when the submission is refreshed.
+
+**Fixed a bug with anonymity on newly created assignment parts** - We received reports that when a second (or more parts) were added to a single-part anonymous assignment, the anonymity setting was not passed across. Our engineers have fixed this problem and our testers have ensured that new parts of an anonymous assignment are anonymous. Thanks for your patience with this one!
+
+**Resolved bug affecting assignment inbox access** - If a student had two submissions for one assignment part in Turnitin, the Moodle assignment inbox would continue to load and hang with the error message: Loading data from Turnitin. We resolved this by ensuring that the system only saves one submission record per student per assignment when refreshing submissions from Turnitin.
+
 
 ---
 
