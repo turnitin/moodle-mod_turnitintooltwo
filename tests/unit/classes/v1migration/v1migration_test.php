@@ -33,7 +33,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         global $DB;
 
         if ($this->v1installed()) {
-            return true;
+            return false;
         }
 
         $v1migration = new v1migration();
