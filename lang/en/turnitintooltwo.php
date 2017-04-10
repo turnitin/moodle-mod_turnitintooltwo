@@ -575,3 +575,7 @@ $string['edit'] = 'Edit';
 $string['exportexcel'] = 'Export to Excel';
 $string['exportoriginal'] = 'Export to original format';
 $string['exportpdf'] = 'Export to PDF';
+$string['migrationtooltitle'] = 'Would you like to migrate this assignment to Moodle Direct V2?';
+$string['migrationtoolinfo'] = 'Blurb here about the migration tool etc. This needs to be written by the technical author team';
+$string['migrateassignment'] = 'Migrate Assignment';
+$string['dontmigrateassignment'] = 'Continue Without Migrating';

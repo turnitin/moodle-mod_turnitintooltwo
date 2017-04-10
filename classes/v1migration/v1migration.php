@@ -30,6 +30,42 @@ class v1migration {
 		$this->v1assignment = $v1assignment;
 	}
 
+    /**
+     * Return the true if the user proceeds with the migration.
+     */
+    function asktomigrate($courseid, $turnitintoolid) {
+        global $PAGE;
+        $cssurl = new moodle_url('/mod/turnitintooltwo/jquery/colorbox.css');
+        $PAGE->requires->css($cssurl);
+        $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
+        $PAGE->requires->css($cssurl);
+        $PAGE->requires->jquery_plugin('turnitintooltwo-migration_tool', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
+
+        $output = '<div id="migration_alert" class="hide" style="padding:10px; background:#fff;">
+        <p><strong>';
+        $output .= get_string('migrationtooltitle', 'turnitintooltwo');
+        $output .= '</strong></p><p>';
+        $output .= get_string('migrationtoolinfo', 'turnitintooltwo');
+        $output .= '</p>';
+
+        $migratelink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-forward fa-lg',
+                                                    'title' => get_string('migrateassignment', 'turnitintooltwo')))." ".
+                                                    get_string('migrateassignment', 'turnitintooltwo'),
+                                                    array('class' => 'migrate_link', 'id' => 'migrate_link',
+                                                    'data-courseid' => $courseid, 'data-turnitintoolid' => $turnitintoolid));
+        $dontmigratelink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-pause fa-lg',
+                                                    'title' => get_string('dontmigrateassignment', 'turnitintooltwo')))." ".
+                                                    get_string('dontmigrateassignment', 'turnitintooltwo'),
+                                                        array('class' => 'dontmigrate_link', 'id' => 'dontmigrate_link'));
+
+        $output .= $migratelink .'<br>'. $dontmigratelink;
+        $output .= '</div>';
+        echo $output;
+
+        //migrationtoolinfo, migrateassignment, dontmigrateassignment
+    }
 	/**
 	 * Return the $id of the turnitintooltwo assignment or false.
 	 */
@@ -46,6 +82,7 @@ class v1migration {
          */
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
         $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $v1course->courseid, 'course_type' => 'TT'));
+
         if (!$v2course) {
             // Insert the course to the Turnitintooltwo courses table.
             $turnitincourse = new stdClass();
@@ -58,13 +95,15 @@ class v1migration {
 
             $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
         } else {
-            $update = new stdClass();
-            $update->id = $v1course->id;
-            $update->turnitin_cid = $v2course->turnitin_cid;
-            $DB->update_record('turnitintool_courses', $update);
-            $update->id = $v2course->id;
-            $update->migrated = 1;
-            $DB->update_record('turnitintooltwo_courses', $update);
+            // This code is commented out and is buggy in this version of the migration tool. The code will be removed with the tickets for 2 class support.
+            
+            // $update = new stdClass();
+            // $update->id = $v1course->id;
+            // $update->turnitin_cid = $v2course->turnitin_cid;
+            // $DB->update_record('turnitintool_courses', $update);
+            // $update->id = $v2course->id;
+            // $update->migrated = 1;
+            // $DB->update_record('turnitintooltwo_courses', $update);
         }
 
         // For old assignments we may encounter null values in fields where they can't be null, check all values.
@@ -94,6 +133,8 @@ class v1migration {
 
         // Hide the V1 assignment.
         $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
+
+        require_once($CFG->dirroot."/course/lib.php");
         set_coursemodule_visible($cm->id, 0);
 
         // Set up a V2 course module.
