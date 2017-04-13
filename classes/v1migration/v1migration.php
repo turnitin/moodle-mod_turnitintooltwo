@@ -43,7 +43,9 @@ class v1migration {
         $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
 
-        $output = '<div id="migration_alert" class="hide" style="padding:10px; background:#fff;">
+        $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
+
+        $output = '<div id="migration_alert" class="hide">
         <p><strong>';
         $output .= get_string('migrationtooltitle', 'turnitintooltwo');
         $output .= '</strong></p><p>';

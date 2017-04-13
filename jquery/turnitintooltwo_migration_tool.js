@@ -1,5 +1,11 @@
 $(document).ready(function(){
-    $.colorbox({width: 500, height: 500, inline:true, href:"#migration_alert"});
+    $.colorbox({width: 500, height: 500, inline:true, opacity: "0.7", href:"#migration_alert",
+    onLoad: function() {
+        lightBoxCloseButton();
+    },
+    onCleanup:function() {
+        $('#tii_close_bar').remove();
+    }});
     $('#migration_alert').show();
 }); 
 
@@ -22,3 +28,6 @@ $('.dontmigrate_link').click(function () {
     $('#migration_alert').hide();
 });
 
+function lightBoxCloseButton() {
+    $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">' + M.str.turnitintooltwo.closebutton + '</a></div>');
+}
