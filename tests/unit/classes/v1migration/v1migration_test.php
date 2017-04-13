@@ -32,11 +32,11 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     public function test_migrate_users() {
         global $DB;
 
-        if ($this->v1installed()) {
+        if (!$this->v1installed()) {
             return false;
         }
 
-        $v1migration = new v1migration();
+        $v1migration = new v1migration(1, 1);
 
         $this->resetAfterTest();
 
@@ -66,5 +66,30 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
         return boolval($module);
+    }
+
+
+    /**
+     * Test that users get migrated from the v1 to the v2 user table.
+     */
+    public function test_asktomigrate() {
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        $v1migration = new v1migration(1, 1);
+
+        $this->resetAfterTest();
+
+        // Test migration modal.
+        $courseid = 1;
+        $turnitintoolid = 1;
+        $test = $v1migration->asktomigrate($courseid, $turnitintoolid);
+
+        $this->assertContains('data-courseid="'.$courseid.'"', $test);
+        $this->assertContains('data-turnitintoolid="'.$turnitintoolid.'"', $test);
+
     }
 }
