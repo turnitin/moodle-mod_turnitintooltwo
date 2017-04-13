@@ -64,7 +64,7 @@ class v1migration {
 
         $output .= $migratelink .'<br>'. $dontmigratelink;
         $output .= '</div>';
-        echo $output;
+        return $output;
     }
 	/**
 	 * Return the $id of the turnitintooltwo assignment or false.
