@@ -45,13 +45,6 @@ class v1migration {
 
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
 
-        $output = '<div id="migration_alert" class="hide">
-        <p><strong>';
-        $output .= get_string('migrationtooltitle', 'turnitintooltwo');
-        $output .= '</strong></p><p>';
-        $output .= get_string('migrationtoolinfo', 'turnitintooltwo');
-        $output .= '</p>';
-
         $migratelink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-forward fa-lg',
                                                     'title' => get_string('migrateassignment', 'turnitintooltwo')))." ".
                                                     get_string('migrateassignment', 'turnitintooltwo'),
@@ -61,9 +54,11 @@ class v1migration {
                                                     'title' => get_string('dontmigrateassignment', 'turnitintooltwo')))." ".
                                                     get_string('dontmigrateassignment', 'turnitintooltwo'),
                                                         array('class' => 'dontmigrate_link', 'id' => 'dontmigrate_link'));
-
-        $output .= $migratelink .'<br>'. $dontmigratelink;
-        $output .= '</div>';
+                                                        
+        $output = html_writer::tag('div', html_writer::tag('p', get_string('migrationtooltitle', 'turnitintooltwo')
+                                        . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'))
+                                        . $migratelink . $dontmigratelink
+                                        , array('class' => 'migrationtitle')), array('class' => 'hide', 'id' => 'migration_alert'));
         return $output;
     }
 	/**
