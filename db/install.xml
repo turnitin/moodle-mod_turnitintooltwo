@@ -57,7 +57,8 @@
                 <FIELD NAME="allownonor" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="rubric" NEXT="needs_updating"/>
                 <FIELD NAME="needs_updating" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="allownonor" NEXT="syncreport"/>
                 <FIELD NAME="syncreport" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="needs_updating" NEXT="anongradebook"/>
-                <FIELD NAME="anongradebook" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="syncreport"/>
+                <FIELD NAME="anongradebook" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="syncreport" NEXT="legacy"/>
+                <FIELD NAME="legacy" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="anongradebook"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />
