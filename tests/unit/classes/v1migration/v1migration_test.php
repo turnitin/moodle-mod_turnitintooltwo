@@ -70,7 +70,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
 
     /**
-     * Test that users get migrated from the v1 to the v2 user table.
+     * Test the modal that appears when asked to migrate.
      */
     public function test_asktomigrate() {
         global $DB;

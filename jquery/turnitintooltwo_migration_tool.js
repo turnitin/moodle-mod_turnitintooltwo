@@ -5,6 +5,7 @@ $(document).ready(function(){
     },
     onCleanup:function() {
         $('#tii_close_bar').remove();
+        $('#migration_alert').hide();
     }});
     $('#migration_alert').show();
 }); 
