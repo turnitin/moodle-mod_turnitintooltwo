@@ -568,3 +568,7 @@ $string['nofinfolibrary'] = 'To use this plugin you will need to have the PHP Fi
 $string['nosoaplibrary'] = 'To use this plugin you will need to have the PHP SOAP extension installed on your server.';
 $string['refreshallgrades'] = 'Refresh all Grades from Turnitin';
 $string['refreshingallgrades'] = 'Refreshing Grades from Turnitin';
+$string['migrationtooltitle'] = 'Would you like to migrate this assignment to Moodle Direct V2?';
+$string['migrationtoolinfo'] = 'Blurb here about the migration tool etc. This needs to be written by the technical author team';
+$string['migrateassignment'] = 'Migrate Assignment';
+$string['dontmigrateassignment'] = 'Continue Without Migrating';
