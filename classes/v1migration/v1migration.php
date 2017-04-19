@@ -70,36 +70,9 @@ class v1migration {
 		// Migrate Users.
 		$this->migrate_users();
 
-		/**
-         * Handle situation where a V2 course already exists.
-         * THIS WILL DIFFER IN THE ACTUAL MIGRATION TOOL.
-         * In the actual version we will insert a new course and handle the situation of two Turnitin class IDs in v2.
-         */
+        // Migrate course.
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
-        $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $v1course->courseid, 'course_type' => 'TT'));
-
-        if (!$v2course) {
-            // Insert the course to the Turnitintooltwo courses table.
-            $v2course = new stdClass();
-            $v2course->courseid = $v1course->courseid;
-            $v2course->ownerid = $v1course->ownerid;
-            $v2course->turnitin_ctl = $v1course->turnitin_ctl;
-            $v2course->turnitin_cid = $v1course->turnitin_cid;
-            $v2course->course_type = 'TT';
-            $v2course->migrated = 1;
-
-            $DB->insert_record('turnitintooltwo_courses', $v2course);
-        } else {
-            // This code is commented out and is buggy in this version of the migration tool. The code will be removed with the tickets for 2 class support.
-            
-            // $update = new stdClass();
-            // $update->id = $v1course->id;
-            // $update->turnitin_cid = $v2course->turnitin_cid;
-            // $DB->update_record('turnitintool_courses', $update);
-            // $update->id = $v2course->id;
-            // $update->migrated = 1;
-            // $DB->update_record('turnitintooltwo_courses', $update);
-        }
+        $this->migrate_course($v1course);
 
         // Initialise any null values that are now not allowed. 
         $this->set_default_values();
@@ -275,4 +248,47 @@ class v1migration {
             }
         }
 	}
+
+    /**
+     *  Migrate the users from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
+     */
+    function migrate_course() {
+        global $DB;
+
+        // We may have more than one course if the course contained V2 assignments prior to the first V1 migration.
+        $v2courses = $DB->get_records('turnitintool_courses', array('courseid' => $this->courseid));
+
+        // Check each course to see if we can use an existing course for this migration.
+        foreach ($v2courses as $v2course) {
+            $v1part->turnitintooltwoid = $turnitintooltwoid;
+
+            if ($v2course->turnitin_cid == $v1course->turnitin_cid) {
+                return;
+            } elseif ($v2course->course_type == "V1") {
+                return;
+            }
+        }
+
+        // If there are V2 courses and we did not return during the above checks, we are migrating the first assignment on a course with pre-existing V2 assignments.
+        if (count($v2courses) > 0) {
+            $coursetype = "V1";
+
+            // This flag is used to call the correct course from turnitintooltwo_courses table in cases where we have a second course.
+            $this->v1assignment->legacy = 1;
+        } else {
+            $coursetype = "TT";
+        }
+
+        // As we didn't return during the above checks, we need to insert a new course.
+        $turnitincourse = new stdClass();
+        $turnitincourse->courseid = $v1course->courseid;
+        $turnitincourse->ownerid = $v1course->ownerid;
+        $turnitincourse->turnitin_ctl = $v1course->turnitin_ctl;
+        $turnitincourse->turnitin_cid = $v1course->turnitin_cid;
+        $turnitincourse->course_type = $coursetype;
+        $turnitincourse->migrated = 1;
+
+        // Insert the course to the turnitintooltwo courses table.
+        $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+    }
 }
