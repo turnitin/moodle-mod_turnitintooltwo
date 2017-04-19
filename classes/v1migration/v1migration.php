@@ -265,6 +265,9 @@ class v1migration {
             if ($v2course->turnitin_cid == $v1course->turnitin_cid) {
                 return;
             } elseif ($v2course->course_type == "V1") {
+                // This flag is used to call the correct course from turnitintooltwo_courses table in cases where we have a second course.
+                $this->v1assignment->legacy = 1;
+
                 return;
             }
         }
