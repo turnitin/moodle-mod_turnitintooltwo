@@ -470,7 +470,12 @@ $class = ($istutor) ? "js_required" : "";
 echo html_writer::start_tag("div", array("class" => $class));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 
-$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+$coursetype = "TT";
+if ($turnitintooltwoassignment->turnitintooltwo->legacy) {
+    $coursetype = "V1";
+}
+
+$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
 
 switch ($do) {
     case "submission_success":
