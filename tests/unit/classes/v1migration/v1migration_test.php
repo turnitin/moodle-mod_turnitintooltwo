@@ -76,6 +76,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     public function make_test_module($courseid, $modname) {
         global $DB;
 
+        if (!$this->v1installed()) {
+            return false;
+        }
+
         $this->resetAfterTest();
 
         $assignment = new stdClass();
@@ -176,6 +180,11 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
      */
     public function test_hide_v1_assignment() {
         global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
         $this->resetAfterTest();
 
         // Generate a new course.
@@ -199,6 +208,11 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
     public function test_setup_v2_module() {
         global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
         $this->resetAfterTest();
 
         // Generate a new course.
