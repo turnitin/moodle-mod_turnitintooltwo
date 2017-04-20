@@ -1667,7 +1667,7 @@ function turnitintooltwo_genUuid() {
  * @return string The course type for this assignment.
  */
 function turnitintooltwo_get_course_type($legacy) {
-    if ($legacy) {
+    if ($legacy == 1) {
         return "V1";
     } else {
         return "TT";
