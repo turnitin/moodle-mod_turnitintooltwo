@@ -266,8 +266,6 @@ class v1migration {
 
         // Check each course to see if we can use an existing course for this migration.
         foreach ($v2courses as $v2course) {
-            $v1part->turnitintooltwoid = $turnitintooltwoid;
-
             if (($v2course->course_type == "TT") && ($v2course->turnitin_cid == $v1course->turnitin_cid)) {
                 return;
             } elseif ($v2course->course_type == "V1") {
@@ -289,16 +287,16 @@ class v1migration {
         }
 
         // As we didn't return during the above checks, we need to insert a new course.
-        $turnitincourse = new stdClass();
-        $turnitincourse->courseid = $v1course->courseid;
-        $turnitincourse->ownerid = $v1course->ownerid;
-        $turnitincourse->turnitin_ctl = $v1course->turnitin_ctl;
-        $turnitincourse->turnitin_cid = $v1course->turnitin_cid;
-        $turnitincourse->course_type = $coursetype;
-        $turnitincourse->migrated = 1;
+        $v2course = new stdClass();
+        $v2course->courseid = $v1course->courseid;
+        $v2course->ownerid = $v1course->ownerid;
+        $v2course->turnitin_ctl = $v1course->turnitin_ctl;
+        $v2course->turnitin_cid = $v1course->turnitin_cid;
+        $v2course->course_type = $coursetype;
+        $v2course->migrated = 1;
 
         // Insert the course to the turnitintooltwo courses table.
-        $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+        $DB->insert_record('turnitintooltwo_courses', $v2course);
     }
 }
 
