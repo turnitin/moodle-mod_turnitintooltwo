@@ -21,6 +21,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once(__DIR__."/lib.php");
 require_once(__DIR__.'/turnitintooltwo_form.class.php');
 
 class turnitintooltwo_view {
@@ -273,7 +274,8 @@ class turnitintooltwo_view {
         $eulaaccepted = false;
         if ($userid == $USER->id) {
             $user = new turnitintooltwo_user($userid, "Learner");
-            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
             $user->join_user_to_class($coursedata->turnitin_cid);
             $eulaaccepted = ($user->useragreementaccepted != 1) ? $user->get_accepted_user_agreement() : $user->useragreementaccepted;
         }
@@ -862,7 +864,8 @@ class turnitintooltwo_view {
             // Show feature links (rubric and quickmark).
             if ($config->usegrademark) {
                 // Rubric Manager.
-                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+                $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
                 $rubricmanagerlink = $OUTPUT->box_start('row_rubric_manager', '');
                 $rubricmanagerlink .= html_writer::link($CFG->wwwroot.
                                         '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&tiicourseid='.
@@ -1359,10 +1362,16 @@ class turnitintooltwo_view {
             $eulaaccepted = 0;
             if ($submission->userid == $USER->id) {
                 $submissionuser = new turnitintooltwo_user($submission->userid, "Learner");
+
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
                 if (empty($_SESSION["unit_test"])) {
                     $submissionuser->join_user_to_class($coursedata->turnitin_cid);
                 }
+
+                $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+                $submissionuser->join_user_to_class($coursedata->turnitin_cid);
+
                 // Has the student accepted the EULA?
                 $eulaaccepted = $submissionuser->useragreementaccepted;
                 if ($submissionuser->useragreementaccepted == 0 && !$_SESSION["unit_test"]) {

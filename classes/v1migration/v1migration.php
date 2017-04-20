@@ -32,6 +32,10 @@ class v1migration {
 
     /**
      * Return the true if the user proceeds with the migration.
+     *
+     * @param int $courseid - The course ID.
+     * @param int $turnitintooltwoid - The turnitintooltwoid.
+     * @return string $output The HTML for the modal.
      */
     function asktomigrate($courseid, $turnitintoolid) {
         global $PAGE;
@@ -251,18 +255,20 @@ class v1migration {
 
     /**
      *  Migrate the users from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
+     *
+     * @param Object $v1course - The course object for the V1 assignment we are migrating.
      */
-    function migrate_course() {
+    function migrate_course($v1course) {
         global $DB;
 
         // We may have more than one course if the course contained V2 assignments prior to the first V1 migration.
-        $v2courses = $DB->get_records('turnitintool_courses', array('courseid' => $this->courseid));
+        $v2courses = $DB->get_records('turnitintooltwo_courses', array('courseid' => $this->courseid));
 
         // Check each course to see if we can use an existing course for this migration.
         foreach ($v2courses as $v2course) {
             $v1part->turnitintooltwoid = $turnitintooltwoid;
 
-            if ($v2course->turnitin_cid == $v1course->turnitin_cid) {
+            if (($v2course->course_type == "TT") && ($v2course->turnitin_cid == $v1course->turnitin_cid)) {
                 return;
             } elseif ($v2course->course_type == "V1") {
                 // This flag is used to call the correct course from turnitintooltwo_courses table in cases where we have a second course.
@@ -295,3 +301,15 @@ class v1migration {
         $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
     }
 }
+
+
+
+/* Tests
+    1. V1 migration with no V2 assignments. Should create entry in turnitintooltwo_courses table, course type TT. Legacy field = 0.
+    2. Second V1 migration with no V2 assignments other than above migrated assignment. Should NOT create entry in turnitintooltwo_courses table. Legacy field = 0.
+
+    Create a new course and add a V2 assignment.
+
+    3. V1 migration with V2 assignment. Should create entry in turnitintooltwo_courses table, course type V1. Legacy field = 1.
+    4. Second V1 migration with V2 assignment. Should NOT create entry in turnitintooltwo_courses table. Legacy field = 1.
+*/
