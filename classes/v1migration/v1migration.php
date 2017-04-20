@@ -168,6 +168,9 @@ class v1migration {
 
     /**
      * Update module titles after migration has completed.
+     * @param int $v1courseid Moodle course ID for v1 assignment.
+     * @param int $v2courseid Moodle course ID for v2 assignment.
+     * @param int $v2assignmentid V2 Module id
      */
     function update_titles_post_migration($v1courseid, $v2courseid, $v2assignmentid) {
         global $DB;
