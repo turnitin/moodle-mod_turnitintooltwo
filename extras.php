@@ -83,7 +83,8 @@ switch ($cmd) {
 
         include("classes/helpdeskwizard/helpdeskwizard.php");
         $helpdeskwizard = new helpdeskwizard();
-        $output = $helpdeskwizard->output_wizard($id);
+        $legacy = required_param('legacy', PARAM_INT);
+        $output = $helpdeskwizard->output_wizard($id, $legacy);
         break;
 
     case "supportform":
@@ -94,7 +95,10 @@ switch ($cmd) {
         // Get the Turnitin class id if we are in a class context.
         $tiiclass = 0;
         if ($id != 0) {
-            $course = turnitintooltwo_assignment::get_course_data($course->id);
+            $legacy = required_param('legacy', PARAM_INT);
+            $coursetype = $legacy ? "V1" : "TT";
+
+            $course = turnitintooltwo_assignment::get_course_data($course->id, $coursetype);
             $tiiclass = (isset($course->turnitin_cid)) ? $course->turnitin_cid : 0;
         }
 
