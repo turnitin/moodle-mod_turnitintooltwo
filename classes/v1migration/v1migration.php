@@ -80,15 +80,15 @@ class v1migration {
 
         if (!$v2course) {
             // Insert the course to the Turnitintooltwo courses table.
-            $turnitincourse = new stdClass();
-            $turnitincourse->courseid = $v1course->courseid;
-            $turnitincourse->ownerid = $v1course->ownerid;
-            $turnitincourse->turnitin_ctl = $v1course->turnitin_ctl;
-            $turnitincourse->turnitin_cid = $v1course->turnitin_cid;
-            $turnitincourse->course_type = 'TT';
-            $turnitincourse->migrated = 1;
+            $v2course = new stdClass();
+            $v2course->courseid = $v1course->courseid;
+            $v2course->ownerid = $v1course->ownerid;
+            $v2course->turnitin_ctl = $v1course->turnitin_ctl;
+            $v2course->turnitin_cid = $v1course->turnitin_cid;
+            $v2course->course_type = 'TT';
+            $v2course->migrated = 1;
 
-            $DB->insert_record('turnitintooltwo_courses', $turnitincourse);
+            $DB->insert_record('turnitintooltwo_courses', $v2course);
         } else {
             // This code is commented out and is buggy in this version of the migration tool. The code will be removed with the tickets for 2 class support.
             
@@ -101,17 +101,8 @@ class v1migration {
             // $DB->update_record('turnitintooltwo_courses', $update);
         }
 
-        // For old assignments we may encounter null values in fields where they can't be null, check all values.
-        $nullchecks = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
-        					'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
-        					'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook',
-        					'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch');
-
-        foreach ($nullchecks as $k => $v) {
-            $this->v1assignment->$v = (is_null($this->v1assignment->$v)) ? 0 : $this->v1assignment->$v;
-        }
-        $this->v1assignment->excludetype = (is_null($this->v1assignment->excludetype)) ? 1 : $this->v1assignment->excludetype;
-        $this->v1assignment->perpage = (is_null($this->v1assignment->perpage)) ? 25 : $this->v1assignment->perpage;
+        // Initialise any null values that are now not allowed. 
+        $this->set_default_values();
 
         // Begin transaction. If this doesn't complete then nothing is migrated.
         $transaction = $DB->start_delegated_transaction();
@@ -119,39 +110,11 @@ class v1migration {
         // Insert V1 assignment into V2 table.
         $turnitintooltwoid = $DB->insert_record("turnitintooltwo", $this->v1assignment);
 
-        // Set the title to append migration in process status for V1 assignment.
-        $updatetitle = new stdClass();
-        $updatetitle->id = $this->v1assignment->id;
-        $updatetitle->name = $this->v1assignment->name . ' (Migration in process...)';
-        $updatetitle->migrated = 1;
-        $DB->update_record('turnitintool', $updatetitle);
-
-        // Hide the V1 assignment.
-        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
-
-        require_once($CFG->dirroot."/course/lib.php");
-        set_coursemodule_visible($cm->id, 0);
+        // Hide the v1 assignment.
+        $this->hide_v1_assignment();
 
         // Set up a V2 course module.
-        $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
-        $coursemodule = new stdClass();
-        $coursemodule->course = $v1course->courseid;
-        $coursemodule->module = $module->id;
-        $coursemodule->added = time();
-        $coursemodule->instance = $turnitintooltwoid;
-        $coursemodule->section = 0;
-
-        // Add Course module and get course section.
-        $coursemodule->coursemodule = add_course_module($coursemodule);
-
-        if (is_callable('course_add_cm_to_section')) {
-            $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
-        } else {
-            $sectionid = add_mod_to_section($coursemodule);
-        }
-
-        $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
-        rebuild_course_cache($coursemodule->coursemodule);
+        $this->setup_v2_module($this->courseid, $turnitintooltwoid);
 
         // Create new Turnitintooltwo object.
         require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
@@ -195,25 +158,104 @@ class v1migration {
             }
         }
 
-        // Update the assignment title with new status.
-        $updatetitle->name = $this->v1assignment->name . ' (Migrated)';
-        $DB->update_record('turnitintool', $updatetitle);
-
-        // Update the V1 assignment title in the gradebook.
-        @include_once($CFG->dirroot."/lib/gradelib.php");
-        $params = array();
-        $params['itemname'] = $updatetitle->name;
-        grade_update('mod/turnitintool', $v1course->courseid, 'mod', 'turnitintool', $this->v1assignment->id, 0, NULL, $params);
-
-        // Update the V2 assignment title in the gradebook.
-        $params['itemname'] = $this->v1assignment->name;
-        grade_update('mod/turnitintooltwo', $coursemodule->course, 'mod', 'turnitintooltwo', $turnitintooltwoid, 0, NULL, $params);
-
+        $this->update_titles_post_migration($v1course->courseid, $v2course->courseid, $turnitintooltwoid);
+        
         // Commit transaction.
         $transaction->allow_commit();
 
         return (is_int($turnitintooltwoid)) ? $turnitintooltwoid : false;
 	}
+
+    /**
+     * Update module titles after migration has completed.
+     */
+    function update_titles_post_migration($v1courseid, $v2courseid, $v2assignmentid) {
+        global $DB;
+
+        // Update the assignment title with new status.
+        $updatetitle = new stdClass();
+        $updatetitle->id = $this->v1assignment->id;
+        $updatetitle->name = $this->v1assignment->name . ' (Migrated)';
+        $DB->update_record('turnitintool', $updatetitle);
+
+        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
+        rebuild_course_cache($cm->id);
+
+        // Update the V1 assignment title in the gradebook.
+        @include_once($CFG->dirroot."/lib/gradelib.php");
+        $params = array();
+        $params['itemname'] = $updatetitle->name;
+        grade_update('mod/turnitintool', $v1courseid, 'mod', 'turnitintool', $this->v1assignment->id, 0, NULL, $params);
+
+        // Update the V2 assignment title in the gradebook.
+        $params['itemname'] = $this->v1assignment->name;
+        grade_update('mod/turnitintooltwo', $v2courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
+    }
+
+    /** 
+     * Hide the V1 assignment and rename the title to show "Migration in progress".
+     */
+    function hide_v1_assignment() {
+        global $CFG, $DB;
+
+        // Edit the V1 assignment title.
+        $updatetitle = new stdClass();
+        $updatetitle->id = $this->v1assignment->id;
+        $updatetitle->name = $this->v1assignment->name . ' (Migration in progress...)';
+        $updatetitle->migrated = 1;
+        $DB->update_record('turnitintool', $updatetitle);
+
+        // Hide the V1 assignment.
+        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
+
+        require_once($CFG->dirroot."/course/lib.php");
+        set_coursemodule_visible($cm->id, 0);
+    }
+
+    /**
+     * Set up a V2 module.
+     * @param int $courseid Moodle course ID
+     * @param string $modname Module name (turnitintool or turnitintooltwo)
+     */
+    function setup_v2_module($courseid, $turnitintooltwoid) {
+        global $DB;
+
+        $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
+        $coursemodule = new stdClass();
+        $coursemodule->course = $courseid;
+        $coursemodule->module = $module->id;
+        $coursemodule->added = time();
+        $coursemodule->instance = $turnitintooltwoid;
+        $coursemodule->section = 0;
+
+        // Add Course module and get course section.
+        $coursemodule->coursemodule = add_course_module($coursemodule);
+
+        if (is_callable('course_add_cm_to_section')) {
+            $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
+        } else {
+            $sectionid = add_mod_to_section($coursemodule);
+        }
+
+        $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
+        rebuild_course_cache($coursemodule->coursemodule);
+    }
+
+    /**
+     * Initialise any values from old assignments that can not now be null but have been when the assignment was created. 
+     */
+    function set_default_values() {
+        $nullcheckfields = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
+                            'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
+                            'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook',
+                            'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch');
+
+        foreach ($nullcheckfields as $field) {
+            $this->v1assignment->$field = (is_null($this->v1assignment->$field)) ? 0 : $this->v1assignment->$field;
+        }
+        $this->v1assignment->excludetype = (is_null($this->v1assignment->excludetype)) ? 1 : $this->v1assignment->excludetype;
+        $this->v1assignment->perpage = (is_null($this->v1assignment->perpage)) ? 25 : $this->v1assignment->perpage;
+    }
 
 	/**
 	 *  Migrate the users from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
