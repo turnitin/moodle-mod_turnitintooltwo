@@ -255,6 +255,7 @@ jQuery(document).ready(function($) {
     var submissionsDataTableColumns = [];
     var visibleCols = [];
     var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
+    var notStudentView = ($('table.submissionsDataTable th.sorting_name').length > 0) ? true : false; 
     var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
     var useGradeMark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
     var multipleParts = ($('table.submissionsDataTable th.coverallgrade').length > 0) ? true : false;
@@ -283,6 +284,12 @@ jQuery(document).ready(function($) {
             submissionsDataTableColumns.push({"bVisible": false});
             visibleCols.push(false);
         }
+    }
+    if (notStudentView) {
+        submissionsDataTableColumns.splice(2, 0, {"iDataSort": i - 1, "sType": "string"});
+        visibleCols.push(false);
+        submissionsDataTableColumns.splice(2, 0, {"iDataSort": i - 1, "sType": "string"});
+        visibleCols.push(false);
     }
 
     var partTables = [];

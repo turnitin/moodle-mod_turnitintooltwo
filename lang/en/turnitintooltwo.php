@@ -568,3 +568,5 @@ $string['nofinfolibrary'] = 'To use this plugin you will need to have the PHP Fi
 $string['nosoaplibrary'] = 'To use this plugin you will need to have the PHP SOAP extension installed on your server.';
 $string['refreshallgrades'] = 'Refresh all Grades from Turnitin';
 $string['refreshingallgrades'] = 'Refreshing Grades from Turnitin';
+$string['studentfirstname'] = 'First Name';
+$string['studentlastname'] = 'Last Name';
