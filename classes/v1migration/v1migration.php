@@ -296,8 +296,8 @@ class v1migration {
         $v2course->migrated = 1;
 
         // Insert the course to the turnitintooltwo courses table.
-        $DB->insert_record('turnitintooltwo_courses', $v2course);
-        $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $v2course->courseid, 'course_type' => $coursetype));
+        $id = $DB->insert_record('turnitintooltwo_courses', $v2course);
+        $v2course->id = $id;
 
         return $v2course;
     }
