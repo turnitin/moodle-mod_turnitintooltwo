@@ -438,7 +438,8 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     // Show Helpdesk link for tutors if enabled.
     if ($istutor && $config->helpdeskwizard) {
-        $helpdesklink = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?id='.$id.'&cmd=supportwizard',
+        $helpdesklink = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/extras.php?id='.$id.'&legacy='
+                                            .$turnitintooltwoassignment->turnitintooltwo->legacy.'&cmd=supportwizard',
                                             get_string('helpdesklink', 'turnitintooltwo'));
 
         echo html_writer::tag('p', $helpdesklink);
@@ -468,7 +469,10 @@ $class = ($istutor) ? "js_required" : "";
 echo html_writer::start_tag("div", array("class" => $class));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 
-$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+// Get the course type for this assignment.
+$coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+
+$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
 
 switch ($do) {
     case "submission_success":
@@ -569,7 +573,7 @@ switch ($do) {
     case "rubricview":
         if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
-            $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
             $user->join_user_to_class($course->turnitin_cid);
 
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('rubric_view', 'Learner',
@@ -625,7 +629,7 @@ switch ($do) {
 
             $eulaaccepted = false;
             $user = new turnitintooltwo_user($USER->id, $userrole);
-            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
             $user->join_user_to_class($coursedata->turnitin_cid);
             // Has the student accepted the EULA?
             $eulaaccepted = $user->useragreementaccepted;
@@ -671,7 +675,7 @@ switch ($do) {
 
         // Get course data.
         if ($istutor) {
-            $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
         }
 
         // Update Assignment from Turnitin on first visit.
@@ -786,4 +790,5 @@ foreach ($parts as $part) {
 }
 $partsstring .= ")";
 $courseid = $course->turnitin_cid;
+
 echo '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - course ID: '.$courseid.' - '.$partsstring.' -->';

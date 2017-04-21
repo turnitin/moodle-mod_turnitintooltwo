@@ -572,3 +572,4 @@ $string['migrationtooltitle'] = 'Would you like to migrate this assignment to Mo
 $string['migrationtoolinfo'] = 'Blurb here about the migration tool etc. This needs to be written by the technical author team';
 $string['migrateassignment'] = 'Migrate Assignment';
 $string['dontmigrateassignment'] = 'Continue Without Migrating';
+$string['tii2updateerror'] = 'There was a problem updating the Turnitin Assignment 2 in the database.<br />';

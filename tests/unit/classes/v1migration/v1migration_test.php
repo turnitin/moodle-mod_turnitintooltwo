@@ -328,4 +328,100 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $v2parts = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
         $this->assertEquals(1, count($v2parts));
     }
+
+    /**
+     * Test the modal that appears when asked to migrate.
+     */
+    public function test_migrate_course() {
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        $assignment = new stdClass();
+        $v1migration = new v1migration(1, $assignment);
+
+        $this->resetAfterTest();
+
+        // Values for our TII course.
+        $v1tiicourse = 9;
+        $v2tiicourse = 12;
+
+        // Create a V1 course and get it.
+        $course = new stdClass();
+        $course->courseid = 1;
+        $course->ownerid = 1;
+        $course->turnitin_ctl = "Test Course";
+        $course->turnitin_cid = $v1tiicourse;
+        $course->course_type = "TT";
+
+        // Insert the course to the turnitintooltwo courses table.
+        $DB->insert_record('turnitintool_courses', $course);
+        $v1course = $DB->get_record('turnitintool_courses', array('courseid' => 1));
+
+        /* Test 1. V1 migration with no existing V2 courses.
+           Should create a new course entry in turnitintooltwo_courses table with the same turnitin_cid as above, course type TT.*/
+        $response = $v1migration->migrate_course($v1course);
+        $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
+        $this->assertEquals(1, count($v2courses));
+        $this->assertEquals($course->courseid, $response->courseid);
+        $this->assertEquals($course->course_type, $response->course_type);
+
+        // If we attempt to migrate this course again (IE migrating a second assignment on this course), there should still only be one entry.
+        $response = $v1migration->migrate_course($v1course);
+        $v2course = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
+        $this->assertEquals(1, count($v2course));
+        $this->assertEquals($course->courseid, $response->courseid);
+        $this->assertEquals($course->course_type, $response->course_type);
+
+        // Clear our table.
+        $DB->delete_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse));
+
+        /* Test 2. V1 migration with an existing V2 course.
+           Should create a new course entry in turnitintooltwo_courses table with the same turnitin_cid as above, course type V1. 
+           Legacy field should be set to 1 on these tests. */
+
+        // Create our initial V2 course.
+        $v1iicourse = 9;
+
+        $course = new stdClass();
+        $course->courseid = 1;
+        $course->ownerid = 1;
+        $course->turnitin_ctl = "Test Course";
+        $course->turnitin_cid = $v2tiicourse;
+        $course->course_type = "TT";
+
+        // Insert the course to the turnitintooltwo courses table.
+        $DB->insert_record('turnitintooltwo_courses', $course);
+
+        $response = $v1migration->migrate_course($v1course);
+        $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "V1"));
+        $this->assertEquals(1, count($v2courses));
+        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals($course->courseid, $response->courseid);
+        $this->assertEquals("V1", $response->course_type);
+
+        // We expect 0 results here since we inserted a course type of TT.
+        $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
+        $this->assertEquals(0, count($v2courses));
+        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals($course->courseid, $response->courseid);
+        $this->assertEquals("V1", $response->course_type);
+
+        // If we attempt to migrate this course again (IE migrating a second assignment on this course), there should still only be one entry.
+        $response = $v1migration->migrate_course($v1course);
+        $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "V1"));
+        $this->assertEquals(1, count($v2courses));
+        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals($course->courseid, $response->courseid);
+        $this->assertEquals("V1", $response->course_type);
+
+        // And still 0 results for this one.
+        $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
+        $this->assertEquals(0, count($v2courses));
+        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals($course->courseid, $response->courseid);
+        $this->assertEquals("V1", $response->course_type);
+    }
 }
