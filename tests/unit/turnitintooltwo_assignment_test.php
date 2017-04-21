@@ -61,4 +61,43 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 		$this->assertEquals($limit, strlen($title));
 	}
 
+	/**
+	 * Test that the checkbox fields are set to the correct values.
+	 */
+	public function test_set_checkbox_fields() {
+		$turnitintooltwo = new stdClass();
+		$turnitintooltwo->id = 1;
+
+		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);		
+		$turnitintooltwoassignment->set_checkbox_fields();
+
+		// Verify that checkbox fields are set.
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_spelling);
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_grammar);
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_usage);
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_mechanics);
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_style);
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->transmatch);
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->institution_check);
+
+		// Set checkbox fields.
+		$turnitintooltwoassignment->turnitintooltwo->erater_spelling = 1;
+		$turnitintooltwoassignment->turnitintooltwo->erater_grammar = 1;
+		$turnitintooltwoassignment->turnitintooltwo->erater_usage = 1;
+		$turnitintooltwoassignment->turnitintooltwo->erater_mechanics = 1;
+		$turnitintooltwoassignment->turnitintooltwo->erater_style = 1;
+		$turnitintooltwoassignment->turnitintooltwo->transmatch = 1;
+		$turnitintooltwoassignment->turnitintooltwo->institution_check = 1;
+
+		// Verify that checkbox fields aren't changed as they are already set.
+		$turnitintooltwoassignment->set_checkbox_fields();
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_spelling);
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_grammar);
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_usage);
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_mechanics);
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_style);
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->transmatch);
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->institution_check);
+	}
+
 }

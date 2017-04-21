@@ -1330,40 +1330,7 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
         // Set the checkbox settings for updates.
-        $this->turnitintooltwo->erater_spelling = 0;
-        if (isset($this->turnitintooltwo->erater_spelling)) {
-            $this->turnitintooltwo->erater_spelling = $this->turnitintooltwo->erater_spelling;
-        }
-
-        $this->turnitintooltwo->erater_grammar = 0;
-        if (isset($this->turnitintooltwo->erater_grammar)) {
-            $this->turnitintooltwo->erater_grammar = $this->turnitintooltwo->erater_grammar;
-        }
-
-        $this->turnitintooltwo->erater_usage = 0;
-        if (isset($this->turnitintooltwo->erater_usage)) {
-            $this->turnitintooltwo->erater_usage = $this->turnitintooltwo->erater_usage;
-        }
-
-        $this->turnitintooltwo->erater_mechanics = 0;
-        if (isset($this->turnitintooltwo->erater_mechanics)) {
-            $this->turnitintooltwo->erater_mechanics = $this->turnitintooltwo->erater_mechanics;
-        }
-
-        $this->turnitintooltwo->erater_style = 0;
-        if (isset($this->turnitintooltwo->erater_style)) {
-            $this->turnitintooltwo->erater_style = $this->turnitintooltwo->erater_style;
-        }
-
-        $this->turnitintooltwo->transmatch = 0;
-        if (isset($this->turnitintooltwo->transmatch)) {
-            $this->turnitintooltwo->transmatch = $this->turnitintooltwo->transmatch;
-        }
-
-        $this->turnitintooltwo->institution_check = 0;
-        if (isset($this->turnitintooltwo->institution_check)) {
-            $this->turnitintooltwo->institution_check = $this->turnitintooltwo->institution_check;
-        }
+        $this->set_checkbox_fields();
 
         // Update each individual part.
         for ($i = 1; $i <= $this->turnitintooltwo->numparts; $i++) {
@@ -1534,6 +1501,47 @@ class turnitintooltwo_assignment {
             turnitintooltwo_grade_item_update($this->turnitintooltwo);
         }
         return $update;
+    }
+
+    /**
+     * Set checkbox fields (erater, transmatch and institution_check) when editing an assignment.
+     */
+    public function set_checkbox_fields() {
+
+        $eraterspelling = 0;
+        if (!isset($this->turnitintooltwo->erater_spelling)) {
+            $this->turnitintooltwo->erater_spelling = $eraterspelling;
+        }
+
+        $eratergrammar = 0;
+        if (!isset($this->turnitintooltwo->erater_grammar)) {
+            $this->turnitintooltwo->erater_grammar = $eratergrammar;
+        }
+
+        $eraterusage = 0;
+        if (!isset($this->turnitintooltwo->erater_usage)) {
+            $this->turnitintooltwo->erater_usage = $eraterusage;
+        }
+
+        $eratermechanics = 0;
+        if (!isset($this->turnitintooltwo->erater_mechanics)) {
+            $this->turnitintooltwo->erater_mechanics = $eratermechanics;
+        }
+
+        $eraterstyle = 0;
+        if (!isset($this->turnitintooltwo->erater_style)) {
+            $this->turnitintooltwo->erater_style = $eraterstyle;
+        }
+
+        $transmatch = 0;
+        if (!isset($this->turnitintooltwo->transmatch)) {
+            $this->turnitintooltwo->transmatch = $transmatch;
+        }
+
+        $institutioncheck = 0;
+        if (!isset($this->turnitintooltwo->institution_check)) {
+            $this->turnitintooltwo->institution_check = $institutioncheck;
+        }
     }
 
     /**
