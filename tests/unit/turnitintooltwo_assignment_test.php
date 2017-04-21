@@ -95,10 +95,10 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 
         $this->resetAfterTest();
 
-		$turnitintooltwo = new stdClass();
-		$turnitintooltwo->id = 1;
+        $turnitintooltwo = new stdClass();
+        $turnitintooltwo->id = 1;
 
-		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
 
         // Create a V2 course.
         $course = new stdClass();
@@ -113,17 +113,17 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 
         // Test that we return the correct course when calling get_course_data with course type TT.
         $response = $turnitintooltwoassignment->get_course_data(1, "TT");
-		$this->assertEquals(10, $response->turnitin_cid);
-		$this->assertEquals("TT", $response->course_type);
+        $this->assertEquals(10, $response->turnitin_cid);
+        $this->assertEquals("TT", $response->course_type);
 
-		// Insert a new V2 course.
+        // Insert a new V2 course.
         $course->turnitin_cid = 20;
         $course->course_type = "V1";
         $DB->insert_record('turnitintooltwo_courses', $course);
 
         // Test course type V1
         $response = $turnitintooltwoassignment->get_course_data(1, "V1");
-		$this->assertEquals(20, $response->turnitin_cid);
-		$this->assertEquals("V1", $response->course_type);
+        $this->assertEquals(20, $response->turnitin_cid);
+        $this->assertEquals("V1", $response->course_type);
     }
 }
