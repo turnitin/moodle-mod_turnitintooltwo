@@ -153,7 +153,7 @@ class turnitintooltwo_comms {
         } else {
             // Only show message if full debugging is not on.
             if (is_callable(array($e, 'getMessage'))) {
-                $errorstr .= get_string('message', 'turnitintooltwo').": ".$e->getMessage()." | ";
+                $errorstr .= get_string('message', 'turnitintooltwo').": ".$e->getMessage();
             }
         }
 
