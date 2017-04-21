@@ -62,42 +62,29 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 	}
 
 	/**
-	 * Test that the checkbox fields are set to the correct values.
+	 * Test that a checkbox field is initialised and not overwritten if already set.
 	 */
-	public function test_set_checkbox_fields() {
+	public function test_set_checkbox_field() {
 		$turnitintooltwo = new stdClass();
 		$turnitintooltwo->id = 1;
 
 		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);		
-		$turnitintooltwoassignment->set_checkbox_fields();
+		$turnitintooltwoassignment->set_checkbox_field('testvar1');
 
-		// Verify that checkbox fields are set.
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_spelling);
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_grammar);
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_usage);
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_mechanics);
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->erater_style);
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->transmatch);
-		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->institution_check);
+		// Verify that checkbox fields are set to 0 by default.
+		$this->assertEquals(0, $turnitintooltwoassignment->turnitintooltwo->testvar1);
+
+		// Verify that checkbox fields are set to passed in value.
+		$value = 20;
+		$turnitintooltwoassignment->set_checkbox_field('testvar2', $value);
+		$this->assertEquals($value, $turnitintooltwoassignment->turnitintooltwo->testvar2);
 
 		// Set checkbox fields.
-		$turnitintooltwoassignment->turnitintooltwo->erater_spelling = 1;
-		$turnitintooltwoassignment->turnitintooltwo->erater_grammar = 1;
-		$turnitintooltwoassignment->turnitintooltwo->erater_usage = 1;
-		$turnitintooltwoassignment->turnitintooltwo->erater_mechanics = 1;
-		$turnitintooltwoassignment->turnitintooltwo->erater_style = 1;
-		$turnitintooltwoassignment->turnitintooltwo->transmatch = 1;
-		$turnitintooltwoassignment->turnitintooltwo->institution_check = 1;
+		$turnitintooltwoassignment->turnitintooltwo->testvar1 = 1;
 
 		// Verify that checkbox fields aren't changed as they are already set.
-		$turnitintooltwoassignment->set_checkbox_fields();
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_spelling);
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_grammar);
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_usage);
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_mechanics);
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->erater_style);
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->transmatch);
-		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->institution_check);
+		$turnitintooltwoassignment->set_checkbox_field('testvar1');
+		$this->assertEquals(1, $turnitintooltwoassignment->turnitintooltwo->testvar1);
 	}
 
 }

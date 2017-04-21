@@ -1329,8 +1329,11 @@ class turnitintooltwo_assignment {
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
-        // Set the checkbox settings for updates.
-        $this->set_checkbox_fields();
+        // Set the checkbox fields.
+        $chkboxfields = array('erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'institution_check');
+        foreach ($chkboxfields as $field) {
+            $this->set_checkbox_field($field, 0);
+        }
 
         // Update each individual part.
         for ($i = 1; $i <= $this->turnitintooltwo->numparts; $i++) {
@@ -1504,43 +1507,11 @@ class turnitintooltwo_assignment {
     }
 
     /**
-     * Set checkbox fields (erater, transmatch and institution_check) when editing an assignment.
+     * Initialise a checkbox value that may not have been set in the edit module form.
      */
-    public function set_checkbox_fields() {
-
-        $eraterspelling = 0;
-        if (!isset($this->turnitintooltwo->erater_spelling)) {
-            $this->turnitintooltwo->erater_spelling = $eraterspelling;
-        }
-
-        $eratergrammar = 0;
-        if (!isset($this->turnitintooltwo->erater_grammar)) {
-            $this->turnitintooltwo->erater_grammar = $eratergrammar;
-        }
-
-        $eraterusage = 0;
-        if (!isset($this->turnitintooltwo->erater_usage)) {
-            $this->turnitintooltwo->erater_usage = $eraterusage;
-        }
-
-        $eratermechanics = 0;
-        if (!isset($this->turnitintooltwo->erater_mechanics)) {
-            $this->turnitintooltwo->erater_mechanics = $eratermechanics;
-        }
-
-        $eraterstyle = 0;
-        if (!isset($this->turnitintooltwo->erater_style)) {
-            $this->turnitintooltwo->erater_style = $eraterstyle;
-        }
-
-        $transmatch = 0;
-        if (!isset($this->turnitintooltwo->transmatch)) {
-            $this->turnitintooltwo->transmatch = $transmatch;
-        }
-
-        $institutioncheck = 0;
-        if (!isset($this->turnitintooltwo->institution_check)) {
-            $this->turnitintooltwo->institution_check = $institutioncheck;
+    public function set_checkbox_field($field, $value = 0) {
+        if (!isset($this->turnitintooltwo->$field)) {
+            $this->turnitintooltwo->$field = $value;
         }
     }
 
