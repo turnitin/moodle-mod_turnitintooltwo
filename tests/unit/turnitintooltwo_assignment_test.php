@@ -34,45 +34,45 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.cl
  */
 class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 
-	/**
-	 * Test that the title is truncated to the passed in limit.
-	 */
-	public function test_truncate_title() {
-		$turnitintooltwo = new stdClass();
-		$turnitintooltwo->id = 1;
+    /**
+     * Test that the title is truncated to the passed in limit.
+     */
+    public function test_truncate_title() {
+        $turnitintooltwo = new stdClass();
+        $turnitintooltwo->id = 1;
 
-		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
 
-		// Test that a string under the limit is returned with a suffix added.
-		$originaltitle = 'Test String';
-		$expectedtitle = 'Test String (Moodle TT)';
-		$limit = 100;
-		$title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
-		$this->assertEquals($expectedtitle, $title);
-		$this->assertLessThan($limit, strlen($title));
+        // Test that a string under the limit is returned with a suffix added.
+        $originaltitle = 'Test String';
+        $expectedtitle = 'Test String (Moodle TT)';
+        $limit = 100;
+        $title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
+        $this->assertEquals($expectedtitle, $title);
+        $this->assertLessThan($limit, strlen($title));
 
-		// Test that a string over the limit is returned truncated with a suffix added and is equal to the limit in length.
-		$originaltitle = 'Test String is truncated and has a suffix added on the end with brackets showing the moodle coursetype';
-		$limit = 30;
-		$title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
-		$this->assertContains('Test String', $title);
-		$this->assertNotContains('added on the end', $title);
-		$this->assertContains('... (Moodle TT)', $title);
-		$this->assertEquals($limit, strlen($title));
-	}
+        // Test that a string over the limit is returned truncated with a suffix added and is equal to the limit in length.
+        $originaltitle = 'Test String is truncated and has a suffix added on the end with brackets showing the moodle coursetype';
+        $limit = 30;
+        $title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
+        $this->assertContains('Test String', $title);
+        $this->assertNotContains('added on the end', $title);
+        $this->assertContains('... (Moodle TT)', $title);
+        $this->assertEquals($limit, strlen($title));
+    }
 
-	/**
-	 * Test that the course returned is the one we expect.
-	 */
-	public function test_course_data() {
+    /**
+     * Test that the course returned is the one we expect.
+     */
+    public function test_course_data() {
         global $DB;
 
         $this->resetAfterTest();
 
-		$turnitintooltwo = new stdClass();
-		$turnitintooltwo->id = 1;
+        $turnitintooltwo = new stdClass();
+        $turnitintooltwo->id = 1;
 
-		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
 
         // Create a V2 course.
         $course = new stdClass();
@@ -87,17 +87,17 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 
         // Test that we return the correct course when calling get_course_data with course type TT.
         $response = $turnitintooltwoassignment->get_course_data(1, "TT");
-		$this->assertEquals(10, $response->turnitin_cid);
-		$this->assertEquals("TT", $response->course_type);
+        $this->assertEquals(10, $response->turnitin_cid);
+        $this->assertEquals("TT", $response->course_type);
 
-		// Insert a new V2 course.
+        // Insert a new V2 course.
         $course->turnitin_cid = 20;
         $course->course_type = "V1";
         $DB->insert_record('turnitintooltwo_courses', $course);
 
         // Test course type V1
         $response = $turnitintooltwoassignment->get_course_data(1, "V1");
-		$this->assertEquals(20, $response->turnitin_cid);
-		$this->assertEquals("V1", $response->course_type);
+        $this->assertEquals(20, $response->turnitin_cid);
+        $this->assertEquals("V1", $response->course_type);
     }
 }
