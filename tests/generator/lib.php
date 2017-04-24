@@ -34,7 +34,7 @@ abstract class test_lib {
      * 
      * @return array $parts_created - list of part ids that have been added to the assignment
      */    
-    public function make_test_parts($modname, $assignmentid, $number_of_parts) {
+    public static function make_test_parts($modname, $assignmentid, $number_of_parts) {
         global $DB;
         $modulevar = $modname.'id';
         $part = new stdClass();
@@ -54,6 +54,50 @@ abstract class test_lib {
         }
 
         return $parts_created;
+    }
+
+    /**
+     * Make a test Turnitin assignment module for use in various test cases.
+     * @param int $courseid Moodle course ID
+     * @param string $modname Module name (turnitintool or turnitintooltwo)
+     * @param string $assignmentname Name of the assignment
+     */
+    public static function make_test_module($courseid, $modname, $assignmentname = "") {
+        global $DB;
+        if (!$this->v1installed()) {
+            return false;
+        }
+        $this->resetAfterTest();
+        $assignment = new stdClass();
+        $assignment->name = ($assignmentname == "") ? "Test Turnitin Assignment" : $assignmentname;
+        $assignment->course = $courseid;
+        // Initialise fields.
+        $nullcheckfields = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
+                            'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
+                            'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook',
+                            'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'excludetype', 'perpage');
+        // Set all fields to null.
+        foreach ($nullcheckfields as $field) {
+            $assignment->$field = null;
+        }
+        
+        $assignment->id = $DB->insert_record($modname, $assignment);
+        // Create Assignment Part.
+        $partid = $this->make_test_part($modname, $assignment->id);
+        // Set up a course module.
+        $module = $DB->get_record("modules", array("name" => $modname));
+        $coursemodule = new stdClass();
+        $coursemodule->course = $courseid;
+        $coursemodule->module = $module->id;
+        $coursemodule->added = time();
+        $coursemodule->instance = $assignment->id;
+        $coursemodule->section = 0;
+        // Add Course module if a v1 module.
+        if ($modname == 'turnitintool') {
+            add_course_module($coursemodule);    
+        }
+        
+        return $assignment;
     }
 }
 

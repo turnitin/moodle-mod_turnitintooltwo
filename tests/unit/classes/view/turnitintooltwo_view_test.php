@@ -79,34 +79,15 @@ class mod_turnitintooltwo_view_testcase extends advanced_testcase {
             add_course_module($coursemodule);    
         }
 
-		$cm;
 		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
-		$partdetails;
 		$turnitintooltwouser = new turnitintooltwo_user();
+		$cm;
+		$partdetails = test_lib::make_test_parts('turnitintooltwo',$turnitintooltwoassignment, 1);
+		
 		$turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
 
 	}
 
-	/**
-     * Create a test part on the specified assignment.
-     * @param string $modname Module name (turnitintool or turnitintooltwo)
-     * @param int $assignmentid Assignment Module ID
-     */    
-    public function make_test_part($modname, $assignmentid) {
-        global $DB;
-        $modulevar = $modname.'id';
-        $part = new stdClass();
-        $part->$modulevar = $assignmentid;
-        $part->partname = 'Part 1';
-        $part->tiiassignid = 0;
-        $part->dtstart = 0;
-        $part->dtdue = 0;
-        $part->dtpost = 0;
-        $part->maxmarks = 0;
-        $part->deleted = 0;
-        
-        $partid = $DB->insert_record($modname.'_parts', $part);
-        return $partid;
-    }
+
 
 }
