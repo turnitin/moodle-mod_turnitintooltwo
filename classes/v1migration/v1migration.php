@@ -262,7 +262,8 @@ class v1migration {
         global $DB;
 
         // We may have more than one course if the course contained V2 assignments prior to the first V1 migration.
-        $v2courses = $DB->get_records('turnitintooltwo_courses', array('courseid' => $this->courseid));
+        $select = "courseid = " . $this->courseid . " AND course_type != 'PP'";
+        $v2courses = $DB->get_records_select('turnitintooltwo_courses', $select);
 
         // Check each course to see if we can use an existing course for this migration.
         foreach ($v2courses as $v2course) {
