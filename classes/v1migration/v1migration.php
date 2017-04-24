@@ -93,10 +93,6 @@ class v1migration {
         // Set up a V2 course module.
         $this->setup_v2_module($this->courseid, $turnitintooltwoid);
 
-        // Create new Turnitintooltwo object.
-        require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
-        $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwoid);
-
         // Get the assignment parts.
         $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id));
 
@@ -112,13 +108,10 @@ class v1migration {
             // Get the submissions for this part.
             $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid));
 
-            // Create submission object.
-            require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_submission.class.php');
-            $submission = new turnitintooltwo_submission();
-
             foreach ($v1partsubmissions as $v1partsubmission) {
                 $v1partsubmission->turnitintooltwoid = $turnitintooltwoid;
                 $v1partsubmission->submission_part = $v2partid;
+                $v1partsubmission->migration_gradebook = 0;
 
                 // WILL NEED TO REJIG THIS IN FINAL VERSION.
                 // We can't leave as is, otherwise we could have a clash with existing V2 assignment hashes.
@@ -128,20 +121,56 @@ class v1migration {
                 unset($v1partsubmission->id);
 
                 $turnitintooltwosubmissionid = $DB->insert_record("turnitintooltwo_submissions", $v1partsubmission);
-
-                // Get the V2 part and update grade book.
-                $v2partsubmission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwosubmissionid));
-                $submission->update_gradebook($v2partsubmission, $turnitintooltwoassignment);
             }
         }
-
-        $this->update_titles_post_migration($v1course->courseid, $v2course->courseid, $turnitintooltwoid);
         
         // Commit transaction.
         $transaction->allow_commit();
 
+        // Update gradebook for submissions.
+        $gradeupdates = $this->migrate_gradebook($turnitintooltwoid);
+
+        // Only change the titles if we have updated the grades.
+
+        if ($gradeupdates == "migrated") {
+            $this->update_titles_post_migration($v1course->courseid, $v2course->courseid, $turnitintooltwoid);
+        }
+
         return (is_int($turnitintooltwoid)) ? $turnitintooltwoid : false;
 	}
+
+    /**
+     * Update the gradebook for a given assignment.
+     * @param int $turnitintooltwoid The turnitintooltwoid of the assignment.
+     * @return string Whether we have migrated the assignment or need to use the cron.
+     */
+    function migrate_gradebook($turnitintooltwoid) {
+        // Create new Turnitintooltwo object.
+        require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
+        require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_submission.class.php');
+
+        $assignment = new turnitintooltwo_assignment($turnitintooltwoid);
+        $submission = new turnitintooltwo_submission();
+
+        // Get the submissions for this assignment.
+        $submissions = $DB->get_records("turnitintooltwo_submissions", array("turnitintooltwoid" => $turnitintooltwoid));
+
+        /**
+         * Grade migrations are slow, roughly 27 submissions per second.
+         * As such we only migrate these during the assignment migration if there are not a lot of them. If there are a lot, we use the cron.
+         * We have set this value to 200, meaning a wait time of roughly 8 seconds.
+         */
+        if (count($submissions) > 2) {
+            return "cron";
+        } else {
+            foreach ($submissions as $submission) {
+                $submission->update_gradebook($submission, $assignment);
+            }
+
+            return "migrated";
+        }
+
+    }
 
     /**
      * Update module titles after migration has completed.
@@ -182,6 +211,11 @@ class v1migration {
         $updatetitle = new stdClass();
         $updatetitle->id = $this->v1assignment->id;
         $updatetitle->name = $this->v1assignment->name . ' (Migration in progress...)';
+        $updatetitle->migrated = 1;
+
+        $updatetitle = new stdClass();
+        $updatetitle->id = 41;
+        $updatetitle->name = "Test 6 (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...) (Migration in progress...)";
         $updatetitle->migrated = 1;
         $DB->update_record('turnitintool', $updatetitle);
 
