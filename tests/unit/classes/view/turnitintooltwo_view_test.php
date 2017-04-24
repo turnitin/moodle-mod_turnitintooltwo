@@ -26,6 +26,9 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_view.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_user.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/generator/lib.php');
 
 /**
  * Tests for inbox
@@ -50,5 +53,60 @@ class mod_turnitintooltwo_view_testcase extends advanced_testcase {
 		$this->assertEquals($pagetitle, $PAGE->title);
 		$this->assertEquals($pageheading, $PAGE->heading);
 	}
+
+	/**
+	 * Test that the submissions table layout conforms to expectations when the user is an instructor.
+	 *
+	 * @return void
+	 */
+	public function test_inbox_table_instructor() {
+		global $PAGE;
+		$turnitintooltwoview = new turnitintooltwo_view();
+
+		// Create Assignment Part.
+        $partid = $this->make_test_part($modname, $assignment->id);
+
+		// Set up a course module.
+        $module = $DB->get_record("modules", array("name" => $modname));
+        $coursemodule = new stdClass();
+        $coursemodule->course = $courseid;
+        $coursemodule->module = $module->id;
+        $coursemodule->added = time();
+        $coursemodule->instance = $assignment->id;
+        $coursemodule->section = 0;
+        // Add Course module if a v1 module.
+        if ($modname == 'turnitintool') {
+            add_course_module($coursemodule);    
+        }
+
+		$cm;
+		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
+		$partdetails;
+		$turnitintooltwouser = new turnitintooltwo_user();
+		$turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
+
+	}
+
+	/**
+     * Create a test part on the specified assignment.
+     * @param string $modname Module name (turnitintool or turnitintooltwo)
+     * @param int $assignmentid Assignment Module ID
+     */    
+    public function make_test_part($modname, $assignmentid) {
+        global $DB;
+        $modulevar = $modname.'id';
+        $part = new stdClass();
+        $part->$modulevar = $assignmentid;
+        $part->partname = 'Part 1';
+        $part->tiiassignid = 0;
+        $part->dtstart = 0;
+        $part->dtdue = 0;
+        $part->dtpost = 0;
+        $part->maxmarks = 0;
+        $part->deleted = 0;
+        
+        $partid = $DB->insert_record($modname.'_parts', $part);
+        return $partid;
+    }
 
 }
