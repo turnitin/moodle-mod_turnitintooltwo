@@ -573,3 +573,5 @@ $string['migrationtoolinfo'] = 'Blurb here about the migration tool etc. This ne
 $string['migrateassignment'] = 'Migrate Assignment';
 $string['dontmigrateassignment'] = 'Continue Without Migrating';
 $string['tii2updateerror'] = 'There was a problem updating the Turnitin Assignment 2 in the database.<br />';
+$string['migrationinprogress'] = 'Migration in progress';
+$string['migrated'] = 'Migrated';
