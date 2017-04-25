@@ -15,14 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 defined(‘MOODLE_INTERNAL’) || die();
+global $CFG;
+require_once $CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php';
 
 /**
-* turnitintooltwo module data generator class
+* Turnitintooltwo module data generator class
 *
-* @package mod_turnitintooltwo
-* @category test
-* @copyright 2017 David Hatton
-* @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+* @category  Test
+* @package  mod_turnitintooltwo
+* @copyright  2017 David Hatton
+* @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
 abstract class test_lib {
 
@@ -58,46 +60,27 @@ abstract class test_lib {
 
     /**
      * Make a test Turnitin assignment module for use in various test cases.
-     * @param int $courseid Moodle course ID
-     * @param string $modname Module name (turnitintool or turnitintooltwo)
-     * @param string $assignmentname Name of the assignment
+     * @param int $courseid - Moodle course ID
+     * @param string $modname - Module name (turnitintool or turnitintooltwo)
+     * @param int $assignmentid - Assignment id to which the coursemodule should be added
+     * 
+     * @return  int $cm - id of the course module added
      */
-    public static function make_test_module($courseid, $modname, $assignmentname = "") {
+    public static function make_test_module($courseid, $modname, $assignmentid) {
         global $DB;
-        if (!$this->v1installed()) {
-            return false;
-        }
-        $this->resetAfterTest();
-        $assignment = new stdClass();
-        $assignment->name = ($assignmentname == "") ? "Test Turnitin Assignment" : $assignmentname;
-        $assignment->course = $courseid;
-        // Initialise fields.
-        $nullcheckfields = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
-                            'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
-                            'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook',
-                            'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'excludetype', 'perpage');
-        // Set all fields to null.
-        foreach ($nullcheckfields as $field) {
-            $assignment->$field = null;
-        }
-        
-        $assignment->id = $DB->insert_record($modname, $assignment);
-        // Create Assignment Part.
-        $partid = $this->make_test_part($modname, $assignment->id);
+
         // Set up a course module.
         $module = $DB->get_record("modules", array("name" => $modname));
         $coursemodule = new stdClass();
         $coursemodule->course = $courseid;
         $coursemodule->module = $module->id;
         $coursemodule->added = time();
-        $coursemodule->instance = $assignment->id;
+        $coursemodule->instance = $assignmentid;
         $coursemodule->section = 0;
-        // Add Course module if a v1 module.
-        if ($modname == 'turnitintool') {
-            add_course_module($coursemodule);    
-        }
         
-        return $assignment;
+        $cm = add_course_module($coursemodule);    
+        
+        return $cm;
     }
 }
 
