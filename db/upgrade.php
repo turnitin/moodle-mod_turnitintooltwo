@@ -247,7 +247,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
 
         $table = new xmldb_table('turnitintooltwo_submissions');
-        $field = new xmldb_field('migration_gradebook', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'submission_hash');
+        $field = new xmldb_field('migrate_gradebook', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'submission_hash');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
