@@ -38,7 +38,7 @@ class turnitintooltwo_assignment {
         $this->id = $id;
         $this->type = $type;
 
-        if ($type == 'TT') {
+        if (($type == 'TT') || ($type == 'V1')) {
             if (!empty($turnitintooltwo)) {
                 $this->turnitintooltwo = $turnitintooltwo;
             } else {

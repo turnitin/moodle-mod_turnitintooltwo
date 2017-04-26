@@ -628,6 +628,16 @@ function turnitintooltwo_cron() {
     }
 
     // Perform gradebook migrations for submissions that were not actioned during the migration tool.
+    turnitintooltwo_cron_migrate_gradebook();
+
+}
+
+/**
+ * Migrate the gradebook for submissions which were not migrated during the migration tool.
+ */
+function turnitintooltwo_cron_migrate_gradebook() {
+    global $DB, $CFG;
+
     // Get a list of assignments with outstanding gradebook migrations.
     require_once(__DIR__.'/classes/v1migration/v1migration.php');
     $sql = "migrate_gradebook = 1 GROUP BY turnitintooltwoid";
