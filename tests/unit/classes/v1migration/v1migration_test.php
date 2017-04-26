@@ -61,7 +61,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     /**
      * Check whether v1 is installed.
      */
-    public static function v1installed() {
+    public function v1installed() {
         global $DB;
 
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
