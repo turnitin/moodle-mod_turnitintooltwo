@@ -293,7 +293,7 @@ class v1migration {
          * As such we only migrate these during the assignment migration if there are not a lot of them. If there are a lot, we use the cron.
          * We have set this value to 200, meaning a wait time of roughly 8 seconds.
          */
-        if (($workflow == "site") && (count($submissions) > 0)) {
+        if (($workflow == "site") && (count($submissions) > 200)) {
             return "cron";
         } else {
             foreach ($submissions as $submission) {
