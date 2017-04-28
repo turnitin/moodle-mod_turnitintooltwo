@@ -282,8 +282,8 @@ class v1migration {
         require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
         require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_submission.class.php');
 
-        $assignmentClass = new turnitintooltwo_assignment($turnitintooltwoid);
-        $submissionClass = new turnitintooltwo_submission();
+        $assignmentclass = new turnitintooltwo_assignment($turnitintooltwoid);
+        $submissionclass = new turnitintooltwo_submission();
 
         // Get the submissions for this assignment, or all submissions requiring a gradebook update.
         $submissions = $DB->get_records("turnitintooltwo_submissions", array("turnitintooltwoid" => $turnitintooltwoid, "migrate_gradebook" => 1));
@@ -297,7 +297,7 @@ class v1migration {
             return "cron";
         } else {
             foreach ($submissions as $submission) {
-                $submissionClass->update_gradebook($submission, $assignmentClass);
+                $submissionclass->update_gradebook($submission, $assignmentclass);
 
                 // Update the migrate_gradebook field for this submission.
                 $updatesubmission = new stdClass();
