@@ -69,7 +69,7 @@ class v1migration {
 	 * Return the $id of the turnitintooltwo assignment or false.
 	 */
 	function migrate() {
-		global $CFG, $DB;
+		global $DB;
 
 		// Migrate Users.
 		$this->migrate_users();
@@ -93,10 +93,6 @@ class v1migration {
         // Set up a V2 course module.
         $this->setup_v2_module($this->courseid, $turnitintooltwoid);
 
-        // Create new Turnitintooltwo object.
-        require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
-        $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwoid);
-
         // Get the assignment parts.
         $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id));
 
@@ -112,13 +108,10 @@ class v1migration {
             // Get the submissions for this part.
             $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid));
 
-            // Create submission object.
-            require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_submission.class.php');
-            $submission = new turnitintooltwo_submission();
-
             foreach ($v1partsubmissions as $v1partsubmission) {
                 $v1partsubmission->turnitintooltwoid = $turnitintooltwoid;
                 $v1partsubmission->submission_part = $v2partid;
+                $v1partsubmission->migrate_gradebook = 1;
 
                 // WILL NEED TO REJIG THIS IN FINAL VERSION.
                 // We can't leave as is, otherwise we could have a clash with existing V2 assignment hashes.
@@ -128,49 +121,22 @@ class v1migration {
                 unset($v1partsubmission->id);
 
                 $turnitintooltwosubmissionid = $DB->insert_record("turnitintooltwo_submissions", $v1partsubmission);
-
-                // Get the V2 part and update grade book.
-                $v2partsubmission = $DB->get_record("turnitintooltwo_submissions", array("id" => $turnitintooltwosubmissionid));
-                $submission->update_gradebook($v2partsubmission, $turnitintooltwoassignment);
             }
         }
 
-        $this->update_titles_post_migration($v1course->courseid, $v2course->courseid, $turnitintooltwoid);
-        
         // Commit transaction.
         $transaction->allow_commit();
 
+        // Update gradebook for submissions.
+        $gradeupdates = $this->migrate_gradebook($turnitintooltwoid);
+
+        // Only change the titles if we have updated the grades.
+        if ($gradeupdates == "migrated") {
+            $this->update_titles_post_migration($turnitintooltwoid);
+        }
+
         return (is_int($turnitintooltwoid)) ? $turnitintooltwoid : false;
 	}
-
-    /**
-     * Update module titles after migration has completed.
-     * @param int $v1courseid Moodle course ID for v1 assignment.
-     * @param int $v2courseid Moodle course ID for v2 assignment.
-     * @param int $v2assignmentid V2 Module id
-     */
-    function update_titles_post_migration($v1courseid, $v2courseid, $v2assignmentid) {
-        global $DB;
-
-        // Update the assignment title with new status.
-        $updatetitle = new stdClass();
-        $updatetitle->id = $this->v1assignment->id;
-        $updatetitle->name = $this->v1assignment->name . ' (Migrated)';
-        $DB->update_record('turnitintool', $updatetitle);
-
-        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
-        rebuild_course_cache($cm->id);
-
-        // Update the V1 assignment title in the gradebook.
-        @include_once($CFG->dirroot."/lib/gradelib.php");
-        $params = array();
-        $params['itemname'] = $updatetitle->name;
-        grade_update('mod/turnitintool', $v1courseid, 'mod', 'turnitintool', $this->v1assignment->id, 0, NULL, $params);
-
-        // Update the V2 assignment title in the gradebook.
-        $params['itemname'] = $this->v1assignment->name;
-        grade_update('mod/turnitintooltwo', $v2courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
-    }
 
     /** 
      * Hide the V1 assignment and rename the title to show "Migration in progress".
@@ -181,7 +147,7 @@ class v1migration {
         // Edit the V1 assignment title.
         $updatetitle = new stdClass();
         $updatetitle->id = $this->v1assignment->id;
-        $updatetitle->name = $this->v1assignment->name . ' (Migration in progress...)';
+        $updatetitle->name = $this->v1assignment->name . " (" . get_string('migrationinprogress', 'turnitintooltwo') . "...)";
         $updatetitle->migrated = 1;
         $DB->update_record('turnitintool', $updatetitle);
 
@@ -301,5 +267,82 @@ class v1migration {
         $v2course->id = $id;
 
         return $v2course;
+    }
+
+    /**
+     * Update the gradebook for a given assignment.
+     * @param int $turnitintooltwoid The turnitintooltwoid of the assignment.
+     * @param string $workflow Whether the function is called from the site or the cron.
+     * @return string Whether we have migrated the assignment or need to use the cron.
+     */
+    public static function migrate_gradebook($turnitintooltwoid, $workflow = "site") {
+        global $CFG, $DB;
+
+        // Create new Turnitintooltwo object.
+        require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
+        require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_submission.class.php');
+
+        $assignmentclass = new turnitintooltwo_assignment($turnitintooltwoid);
+        $submissionclass = new turnitintooltwo_submission();
+
+        // Get the submissions for this assignment, or all submissions requiring a gradebook update.
+        $submissions = $DB->get_records("turnitintooltwo_submissions", array("turnitintooltwoid" => $turnitintooltwoid, "migrate_gradebook" => 1));
+
+        /**
+         * Grade migrations are slow, roughly 27 submissions per second.
+         * As such we only migrate these during the assignment migration if there are not a lot of them. If there are a lot, we use the cron.
+         * We have set this value to 200, meaning a wait time of roughly 8 seconds.
+         */
+        if (($workflow == "site") && (count($submissions) > 200)) {
+            return "cron";
+        } else {
+            foreach ($submissions as $submission) {
+                $submissionclass->update_gradebook($submission, $assignmentclass);
+
+                // Update the migrate_gradebook field for this submission.
+                $updatesubmission = new stdClass();
+                $updatesubmission->id = $submission->id;
+                $updatesubmission->migrate_gradebook = 0;
+
+                $DB->update_record('turnitintooltwo_submissions', $updatesubmission);
+            }
+
+            return "migrated";
+        }
+    }
+
+    /**
+     * Update module titles after migration has completed.
+     * @param int $v2assignmentid V2 Module id
+     */
+    function update_titles_post_migration($v2assignmentid) {
+        global $CFG, $DB;
+
+        // Remove the migration in progress text.
+        $this->v1assignment->name = str_replace(" (" . get_string('migrationinprogress', 'turnitintooltwo') . "...)", "", $this->v1assignment->name);
+
+        // Update the assignment title with new status.
+        $updatetitle = new stdClass();
+        $updatetitle->id = $this->v1assignment->id;
+        $updatetitle->name = $this->v1assignment->name . ' ('. get_string('migrated', 'turnitintooltwo') . ')';
+
+        $DB->update_record('turnitintool', $updatetitle);
+
+        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
+
+        // Temporarily set the assignment to visible so that the cron can rebuild the course cache for this assignment,
+        set_coursemodule_visible($cm->id, 1);
+        rebuild_course_cache($cm->id);
+        set_coursemodule_visible($cm->id, 0);
+
+        // Update the V1 assignment title in the gradebook.
+        @include_once($CFG->dirroot."/lib/gradelib.php");
+        $params = array();
+        $params['itemname'] = $updatetitle->name;
+        grade_update('mod/turnitintool', $this->courseid, 'mod', 'turnitintool', $this->v1assignment->id, 0, NULL, $params);
+
+        // Update the V2 assignment title in the gradebook.
+        $params['itemname'] = $this->v1assignment->name;
+        grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
     }
 }

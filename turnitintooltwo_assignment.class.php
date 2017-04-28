@@ -38,7 +38,7 @@ class turnitintooltwo_assignment {
         $this->id = $id;
         $this->type = $type;
 
-        if ($type == 'TT') {
+        if (($type == 'TT') || ($type == 'V1')) {
             if (!empty($turnitintooltwo)) {
                 $this->turnitintooltwo = $turnitintooltwo;
             } else {
@@ -667,8 +667,7 @@ class turnitintooltwo_assignment {
         $config = turnitintooltwo_admin_config();
 
         // Get Moodle Course Object.
-        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
-        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
+        $course = $this->get_course_data($this->turnitintooltwo->course);
 
         // Get the Turnitin owner of this this Course or make user the owner if none.
         $ownerid = $this->get_tii_owner($course->id);
