@@ -291,7 +291,8 @@ jQuery(document).ready(function($) {
         submissionsDataTableColumns.splice(2, 0, {"iDataSort": i - 1, "sType": "string"});
         visibleCols.push(false);
     }
-
+    console.log(submissionsDataTableColumns.length);
+    
     var partTables = [];
     var refreshRequested = [];
     $('table.submissionsDataTable').each(function() {
@@ -352,6 +353,7 @@ jQuery(document).ready(function($) {
             }
         });
     });
+    
 
     $('table.submissionsDataTable').each(function() {
         var part_id = $(this).attr("id");

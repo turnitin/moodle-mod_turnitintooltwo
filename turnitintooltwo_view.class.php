@@ -491,6 +491,7 @@ class turnitintooltwo_view {
 
         $cells["download"] = new html_table_cell('&nbsp;');
         $cells["delete"] = new html_table_cell('&nbsp;');
+        echo sizeof($cells);
         $tableheaders = $cells;
 
         $tables = "";
@@ -1103,8 +1104,8 @@ class turnitintooltwo_view {
                     $studentname = html_writer::link('.unanonymise_form',
                                         get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "unanonymise", "id" => "submission_".$submission->submission_objectid));
-                    $studentfirstname = get_string('anonenabled', 'turnitintooltwo');
-                    $studentlastname = get_string('anonenabled', 'turnitintooltwo');
+                    // $studentfirstname = get_string('anonenabled', 'turnitintooltwo');
+                    // $studentlastname = get_string('anonenabled', 'turnitintooltwo');
 
                 } else if (($parts[$partid]->dtpost <= time() OR !empty($submission->submission_unanon)) AND
                         empty($submission->nmoodle)) {
@@ -1112,22 +1113,22 @@ class turnitintooltwo_view {
                     $studentname = html_writer::link(
                                     $CFG->wwwroot."/user/view.php?id=".$submission->userid."&course="
                                         .$turnitintooltwoassignment->turnitintooltwo->course, $submission->fullname);
-                    $studentfirstname = $submission->firstname;
-                    $studentlastname = $submission->lastname;
+                    // $studentfirstname = $submission->firstname;
+                    // $studentlastname = $submission->lastname;
                 } else if (($parts[$partid]->dtpost <= time() OR
                                 !empty($submission->submission_unanon)) AND !empty($submission->nmoodle)) {
                     // Post date has passed or anonymous marking disabled for user and user is a NON moodle user.
                     $studentname = html_writer::tag("span",
                                         $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                         array("class" => "italic"));
-                    $studentfirstname = $submission->firstname;
-                    $studentlastname = $submission->lastname;
+                    // $studentfirstname = $submission->firstname;
+                    // $studentlastname = $submission->lastname;
                 } else {
                     // User has not made a submission.
                     $studentname = html_writer::tag("span", get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "italic"));
-                    $studentfirstname = $studentname;
-                    $studentlastname = $studentname;
+                    // $studentfirstname = $studentname;
+                    // $studentlastname = $studentname;
                 }
             } else {
                 if (empty($submission->nmoodle)) {
@@ -1135,23 +1136,23 @@ class turnitintooltwo_view {
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
                                                 $turnitintooltwoassignment->turnitintooltwo->course,
                                                 $submission->fullname);
-                    $studentfirstname = $submission->firstname;
-                    $studentlastname = $submission->lastname;
+                    // $studentfirstname = $submission->firstname;
+                    // $studentlastname = $submission->lastname;
                 } else if (!empty($submission->nmoodle) && substr($submission->userid, 0, 3) != 'nm-') {
                     // Moodle User not enrolled on this course as a student.
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
                                             $turnitintooltwoassignment->turnitintooltwo->course,
                                             $submission->fullname." (".get_string('nonenrolledstudent', 'turnitintooltwo').")",
                                                 array("class" => "italic"));
-                    $studentfirstname = $submission->firstname;
-                    $studentlastname = $submission->lastname;
+                    // $studentfirstname = $submission->firstname;
+                    // $studentlastname = $submission->lastname;
                 } else {
                     // Non Moodle user.
                     $studentname = html_writer::tag("span",
                                                 $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                                 array("class" => "italic"));
-                    $studentfirstname = $submission->firstname;
-                    $studentlastname = $submission->lastname;
+                    // $studentfirstname = $submission->firstname;
+                    // $studentlastname = $submission->lastname;
                 }
             }
         }
@@ -1430,7 +1431,8 @@ class turnitintooltwo_view {
         }
 
         // The studentfirstname and studentlastname fields are for soting only, and thus should not be present if the user is a student.
-        if ($turnitintooltwouser->get_user_role() == 'Learner') {
+        // die(var_dump($turnitintooltwouser));
+        if (!$istutor) {
             $data = array($partid, $checkbox, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         } else {
             $data = array($partid, $checkbox, $studentfirstname, $studentlastname, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
@@ -1491,7 +1493,6 @@ class turnitintooltwo_view {
                 $parts[$part]->unanon = 1;
             }
         }
-
         foreach ($_SESSION["submissions"][$partid] as $submission) {
             $data = $this->get_submission_inbox_row($cm, $turnitintooltwoassignment, $parts, $partid, $submission,
                                                         $useroverallgrades, $istutor);

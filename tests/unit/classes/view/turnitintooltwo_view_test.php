@@ -28,6 +28,7 @@ global $CFG;
 require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_view.class.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_user.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_comms.class.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/generator/lib.php');
 require_once($CFG->dirroot . '/webservice/tests/helpers.php');
 require_once($CFG->dirroot . '/course/lib.php');
@@ -46,7 +47,6 @@ class mod_turnitintooltwo_view_testcase extends advanced_testcase {
 	 */
 	public function test_output_header() {
 		global $PAGE;
-
 		$this->resetAfterTest();
 
 		$turnitintooltwoview = new turnitintooltwo_view();
@@ -67,39 +67,45 @@ class mod_turnitintooltwo_view_testcase extends advanced_testcase {
 	 * @return  void
 	 */
 	public function test_inbox_table_instructor() {
+		global $DB;
 		$this->resetAfterTest();
-
-		$turnitintooltwoview = new turnitintooltwo_view();
-
 		$course = $this->getDataGenerator()->create_course();
-		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
-		$cm = test_lib::make_test_module($course,'turnitintooltwo', $turnitintooltwoassignment);
 
-		$turnitintooltwouser = new turnitintooltwo_user(1, 'instructor', true);
-		$partdetails = test_lib::make_test_parts('turnitintooltwo',$turnitintooltwoassignment, 1);
+		$turnitintooltwoassignment = test_lib::make_test_tii_assignment();
+
+		$cmid = test_lib::make_test_module($turnitintooltwoassignment->turnitintooltwo->course,'turnitintooltwo', $turnitintooltwoassignment->get_id());
+		$cm = $DB->get_record("course_modules", array('id' => $cmid));
+
+		$turnitintooltwouser = new turnitintooltwo_user(1, 'instructor', false, 'site', false);
 		
-		$turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
+		$partdetails = test_lib::make_test_parts('turnitintooltwo',$turnitintooltwoassignment->turnitintooltwo->id, 1);
+		
+		$turnitintooltwoview = new turnitintooltwo_view();
+		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
 
-		$this->assertContains(get_string('studentlastname', 'turnitintooltwo'), $turnitintooltwoview, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
-		$this->assertContains(get_string('studentfirstname', 'turnitintooltwo'), $turnitintooltwoview, 'submission table did not contain expected text "'.get_string('studentfirstname','turnitintooltwo').'"');
+		$this->assertContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertContains(get_string('studentfirstname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentfirstname','turnitintooltwo').'"');
 	}
 
 	public function test_inbox_table_student() {
+		global $DB;
 		$this->resetAfterTest();
-
-		$turnitintooltwoview = new turnitintooltwo_view();
-
 		$course = $this->getDataGenerator()->create_course();
-		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
-		$cm = test_lib::make_test_module($course, 'turnitintooltwo', $turnitintooltwoassignment);
 
-		$turnitintooltwouser = new turnitintooltwo_user(1, 'learner', true);
-		$partdetails = test_lib::make_test_parts('turnitintooltwo',$turnitintooltwoassignment);
+		$turnitintooltwoassignment = test_lib::make_test_tii_assignment();
 
-		$turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
+		$cmid = test_lib::make_test_module($turnitintooltwoassignment->turnitintooltwo->course,'turnitintooltwo', $turnitintooltwoassignment->get_id());
+		$cm = $DB->get_record("course_modules", array('id' => $cmid));
 
-		$this->assertNotContains(get_string('studentlastname', 'turnitintooltwo'), $turnitintooltwoview, 'submission table contained unexpected text "'.get_string('studentlastname','turnitintooltwo').'"');
-		$this->assertNotContains(get_string('studentfirstname', 'turnitintooltwo'), $turnitintooltwoview, 'submission table contained unexpected text "'.get_string('studentfirstname','turnitintooltwo').'"');
+		$turnitintooltwouser = new turnitintooltwo_user(1, 'learner', false, 'site', false);
+		
+		$partdetails = test_lib::make_test_parts('turnitintooltwo',$turnitintooltwoassignment->turnitintooltwo->id, 1);
+		
+		$turnitintooltwoview = new turnitintooltwo_view();
+		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
+
+		$this->assertNotContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table contained unexpected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertNotContains(get_string('studentfirstname', 'turnitintooltwo'), $table, 'submission table contained unexpected text "'.get_string('studentfirstname','turnitintooltwo').'"');
 
 	}
 }

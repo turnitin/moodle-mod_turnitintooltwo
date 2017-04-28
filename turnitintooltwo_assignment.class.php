@@ -68,6 +68,26 @@ class turnitintooltwo_assignment {
         }
     }
 
+    public function get_id() {
+        return $this->id;
+    }
+
+    public function set_id($id) {
+        $this->id = $id;
+    }
+
+    public function get_type() {
+        return $this->type;
+    }
+
+    public function set_type($type) {
+        $this->type = $type;
+    }
+
+    public function get_timecreated() {
+        return $this->timecreated;
+    }
+
     /**
      * Get all the assignments in the course
      *
