@@ -1334,40 +1334,10 @@ class turnitintooltwo_assignment {
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
-        // Set the checkbox settings for updates.
-        $this->turnitintooltwo->erater_spelling = 0;
-        if (isset($this->turnitintooltwo->erater_spelling)) {
-            $this->turnitintooltwo->erater_spelling = $this->turnitintooltwo->erater_spelling;
-        }
-
-        $this->turnitintooltwo->erater_grammar = 0;
-        if (isset($this->turnitintooltwo->erater_grammar)) {
-            $this->turnitintooltwo->erater_grammar = $this->turnitintooltwo->erater_grammar;
-        }
-
-        $this->turnitintooltwo->erater_usage = 0;
-        if (isset($this->turnitintooltwo->erater_usage)) {
-            $this->turnitintooltwo->erater_usage = $this->turnitintooltwo->erater_usage;
-        }
-
-        $this->turnitintooltwo->erater_mechanics = 0;
-        if (isset($this->turnitintooltwo->erater_mechanics)) {
-            $this->turnitintooltwo->erater_mechanics = $this->turnitintooltwo->erater_mechanics;
-        }
-
-        $this->turnitintooltwo->erater_style = 0;
-        if (isset($this->turnitintooltwo->erater_style)) {
-            $this->turnitintooltwo->erater_style = $this->turnitintooltwo->erater_style;
-        }
-
-        $this->turnitintooltwo->transmatch = 0;
-        if (isset($this->turnitintooltwo->transmatch)) {
-            $this->turnitintooltwo->transmatch = $this->turnitintooltwo->transmatch;
-        }
-
-        $this->turnitintooltwo->institution_check = 0;
-        if (isset($this->turnitintooltwo->institution_check)) {
-            $this->turnitintooltwo->institution_check = $this->turnitintooltwo->institution_check;
+        // Set the checkbox fields.
+        $chkboxfields = array('erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'institution_check');
+        foreach ($chkboxfields as $field) {
+            $this->set_checkbox_field($field, 0);
         }
 
         // Update each individual part.
@@ -1539,6 +1509,15 @@ class turnitintooltwo_assignment {
             turnitintooltwo_grade_item_update($this->turnitintooltwo);
         }
         return $update;
+    }
+
+    /**
+     * Initialise a checkbox value that may not have been set in the edit module form.
+     */
+    public function set_checkbox_field($field, $value = 0) {
+        if (!isset($this->turnitintooltwo->$field)) {
+            $this->turnitintooltwo->$field = $value;
+        }
     }
 
     /**

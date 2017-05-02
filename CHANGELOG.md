@@ -9,6 +9,7 @@
 - Stopped re-enrolling previously un-enrolled Moodle students.
 - Fixed a bug with anonymity on newly created assignment parts.
 - Resolved bug affecting assignment inbox access.
+- Fixed an issue causing all submissions to refresh upon individual student login.
 
 
 **Extended the character limit for class and assignment titles** - Some users found the character limit for class and assignment titles restrictive; we've extended the title limits to 256 characters, allowing more freedom when setting up classes and assignments.
@@ -24,6 +25,8 @@
 **Fixed a bug with anonymity on newly created assignment parts** - We received reports that when a second (or more parts) were added to a single-part anonymous assignment, the anonymity setting was not passed across. Our engineers have fixed this problem and our testers have ensured that new parts of an anonymous assignment are anonymous. Thanks for your patience with this one!
 
 **Resolved bug affecting assignment inbox access** - If a student had two submissions for one assignment part in Turnitin, the Moodle assignment inbox would continue to load and hang with the error message: Loading data from Turnitin. We resolved this by ensuring that the system only saves one submission record per student per assignment when refreshing submissions from Turnitin.
+
+**Fixed an issue causing all submissions to refresh upon individual student login** - If a student logged into the assignment inbox, all submissions were refreshed, causing students to show as having updated the grade for other graded submission(s) and subsequently appear as graders in grade reports. We've resolved this by ensuring that a student only has an effect on their own submission.
 
 
 ---
