@@ -865,4 +865,26 @@ switch ($action) {
         }
         exit();
         break;
+
+    case "begin_migration":
+
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $courseid = required_param('courseid', PARAM_INT);
+        $turnitintoolid = required_param('turnitintoolid', PARAM_INT);
+
+        include_once("classes/v1migration/v1migration.php");
+        $turnitintool = $DB->get_record("turnitintool", array("id" => $turnitintoolid));
+
+        $v1migration = new v1migration($courseid, $turnitintool);
+
+        $turnitintooltwoid = $v1migration->migrate();
+        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoid);
+
+        // The returned CMID will be used for the redirect.
+        if ((int)$turnitintooltwoid > 0) {
+            echo '{ "id": '.$cm->id.' }';
+        }
 }

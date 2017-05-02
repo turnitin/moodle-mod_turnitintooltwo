@@ -347,6 +347,19 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
         foreach ($parts as $part) {
             $partsarray[$courseid][$turnitintooltwo->id][$part->id]['tiiassignid'] = $part->tiiassignid;
         }
+
+        /* Set legacy to 0 for all TII2s so that we can have all recreated assignments on the same TII class.
+           Legacy is set to 1 only for migrated assignments that were migrated on a course where there were pre-existing V2 assignments.*/
+        if ($action == "NEWCLASS") {
+            $update->id = $turnitintooltwo->id;
+            $update->legacy = 0;
+            if (!$DB->update_record('turnitintooltwo', $update)) {
+                turnitintooltwo_print_error('tii2updateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
+                exit();
+            } else {
+                turnitintooltwo_activitylog("Assignment updated (".$turnitintooltwo->id.")", "REQUEST");
+            }
+        }
     }
 
     $currentcourse = turnitintooltwo_assignment::get_course_data($courseid);
@@ -612,6 +625,46 @@ function turnitintooltwo_cron() {
             }
         }
         echo 'Turnitintool submissions downloaded for assignments: '.implode(',', $updatedassignments).' ';
+    }
+
+    // Perform gradebook migrations for submissions that were not actioned during the migration tool.
+    turnitintooltwo_cron_migrate_gradebook();
+
+}
+
+/**
+ * Migrate the gradebook for submissions which were not migrated during the migration tool.
+ */
+function turnitintooltwo_cron_migrate_gradebook() {
+    global $DB, $CFG;
+
+    // Get a list of assignments with outstanding gradebook migrations.
+    require_once(__DIR__.'/classes/v1migration/v1migration.php');
+    $sql = "migrate_gradebook = 1 GROUP BY turnitintooltwoid";
+    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql);
+    foreach ($assignments as $assignment) {
+        $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, "cron");
+
+        if ($gradeupdates == "migrated") {
+
+            // Get the course ID.
+            $courseid = $DB->get_field('turnitintooltwo', 'course', array('id' => $assignment->turnitintooltwoid));
+
+            // Get a TII assignment ID on this assignment so we can link back to V1.
+            $sql = "turnitintooltwoid = " . $assignment->turnitintooltwoid . " LIMIT 1";
+            $tiiid = $DB->get_field_select('turnitintooltwo_parts', 'tiiassignid', $sql);
+
+            // Get a V1 part belonging to this assignment.
+            $sql = "tiiassignid = " . $tiiid . " LIMIT 1";
+            $turnitintoolid = $DB->get_field_select('turnitintool_parts', 'turnitintoolid', $sql);
+
+            // Get the V1 assignment.
+            $v1assignment = $DB->get_record('turnitintool', array("id" => $turnitintoolid));
+
+            // Set assignment title back to old title for assignments where all grades have been migrated.
+            $v1migration = new v1migration($courseid, $v1assignment);
+            $v1migration->update_titles_post_migration($assignment->turnitintooltwoid);
+        }
     }
 }
 
@@ -1647,4 +1700,16 @@ function turnitintooltwo_genUuid() {
         mt_rand( 0, 0xffff ),
         mt_rand( 0, 0xffff )
     );
+}
+
+/**
+ * @param  $legacy The flag for whether we are using a legacy assignment or not.
+ * @return string The course type for this assignment.
+ */
+function turnitintooltwo_get_course_type($legacy) {
+    if ($legacy == 1) {
+        return "V1";
+    } else {
+        return "TT";
+    }
 }
