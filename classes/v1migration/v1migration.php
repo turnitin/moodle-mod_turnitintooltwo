@@ -76,7 +76,7 @@ class v1migration {
 
         // Migrate course.
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
-        $this->migrate_course($v1course);
+        $v2course = $this->migrate_course($v1course);
 
         // Initialise any null values that are now not allowed. 
         $this->set_default_values();
@@ -267,12 +267,12 @@ class v1migration {
         // Check each course to see if we can use an existing course for this migration.
         foreach ($v2courses as $v2course) {
             if (($v2course->course_type == "TT") && ($v2course->turnitin_cid == $v1course->turnitin_cid)) {
-                return;
+                return $v2course;
             } elseif ($v2course->course_type == "V1") {
                 // This flag is used to call the correct course from turnitintooltwo_courses table in cases where we have a second course.
                 $this->v1assignment->legacy = 1;
 
-                return;
+                return $v2course;
             }
         }
 
@@ -297,17 +297,8 @@ class v1migration {
 
         // Insert the course to the turnitintooltwo courses table.
         $DB->insert_record('turnitintooltwo_courses', $v2course);
+        $v2course = $DB->get_record('turnitintooltwo_courses', array('courseid' => $v2course->courseid, 'course_type' => $coursetype));
+
+        return $v2course;
     }
 }
-
-
-
-/* Tests
-    1. V1 migration with no V2 assignments. Should create entry in turnitintooltwo_courses table, course type TT. Legacy field = 0.
-    2. Second V1 migration with no V2 assignments other than above migrated assignment. Should NOT create entry in turnitintooltwo_courses table. Legacy field = 0.
-
-    Create a new course and add a V2 assignment.
-
-    3. V1 migration with V2 assignment. Should create entry in turnitintooltwo_courses table, course type V1. Legacy field = 1.
-    4. Second V1 migration with V2 assignment. Should NOT create entry in turnitintooltwo_courses table. Legacy field = 1.
-*/
