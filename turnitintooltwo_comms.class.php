@@ -179,6 +179,7 @@ class turnitintooltwo_comms {
             'fr' => 'fr',
             'fr_ca' => 'fr',
             'es' => 'es',
+            'es_mx' => 'es',
             'de' => 'de',
             'de_du' => 'de',
             'zh_cn' => 'zh_hans',
