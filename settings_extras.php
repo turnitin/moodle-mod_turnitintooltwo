@@ -32,7 +32,7 @@ $turnitintooltwoview = new turnitintooltwo_view();
 $turnitintooltwoview->load_page_components();
 
 // Get/Set variables and work out which function to perform.
-$cmd = optional_param('cmd', "", PARAM_ALPHAEXT);
+$cmd = optional_param('cmd', "", PARAM_ALPHANUMEXT);
 $filedate = optional_param('filedate', null, PARAM_ALPHANUMEXT);
 $unlink = optional_param('unlink', null, PARAM_ALPHA);
 $relink = optional_param('relink', null, PARAM_ALPHA);
@@ -431,6 +431,9 @@ switch ($cmd) {
         }
         $output .= turnitintooltwo_init_browser_assignment_table($tiicourseid);
         break;
+
+    case "v1migration":
+        break;
 }
 
 // Build page.
@@ -440,7 +443,7 @@ echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 if ($cmd != 'class_recreation' && $cmd != 'multiple_class_recreation') {
     echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
-    echo $OUTPUT->box($turnitintooltwoview->draw_settings_menu($module, $cmd), '');
+    echo $OUTPUT->box($turnitintooltwoview->draw_settings_menu($cmd), '');
     // Show a warning if javascript is not enabled while a tutor is logged in.
     echo html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo'), array("class" => "warning"));
 }
