@@ -32,7 +32,7 @@ $turnitintooltwoview = new turnitintooltwo_view();
 $turnitintooltwoview->load_page_components();
 
 // Get/Set variables and work out which function to perform.
-$cmd = optional_param('cmd', "", PARAM_ALPHAEXT);
+$cmd = optional_param('cmd', "", PARAM_ALPHANUMEXT);
 $filedate = optional_param('filedate', null, PARAM_ALPHANUMEXT);
 $unlink = optional_param('unlink', null, PARAM_ALPHA);
 $relink = optional_param('relink', null, PARAM_ALPHA);
@@ -430,6 +430,9 @@ switch ($cmd) {
             $output .= turnitintooltwo_show_browser_link_course_form();
         }
         $output .= turnitintooltwo_init_browser_assignment_table($tiicourseid);
+        break;
+
+    case "v1migration":
         break;
 }
 

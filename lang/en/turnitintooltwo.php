@@ -582,3 +582,4 @@ $string['dontmigrateassignment'] = 'Continue Without Migrating';
 $string['tii2updateerror'] = 'There was a problem updating the Turnitin Assignment 2 in the database.<br />';
 $string['migrationinprogress'] = 'Migration in progress';
 $string['migrated'] = 'Migrated';
+$string['v1migrationtitle'] = 'v1 Migration';
