@@ -40,26 +40,69 @@ require_once($CFG->dirroot . '/course/lib.php');
  */
 class mod_turnitintooltwo_view_testcase extends test_lib {
 
-	/**
-	 * Test that the page layout is set to standard so that the header displays.
-	 * 
-	 * @return  void
-	 */
-	public function test_output_header() {
-		global $PAGE;
-		$this->resetAfterTest();
+    /**
+     * Test that the page layout is set to standard so that the header displays.
+     */
+    public function test_output_header() {
+        global $PAGE;
+        $turnitintooltwoview = new turnitintooltwo_view();
 
-		$turnitintooltwoview = new turnitintooltwo_view();
+        $pageurl = '/fake/url/';
+        $pagetitle = 'Fake Title';
+        $pageheading = 'Fake Heading';
+        $turnitintooltwoview->output_header($pageurl, $pagetitle, $pageheading, true);
 
-		$pageurl = '/fake/url/';
-		$pagetitle = 'Fake Title';
-		$pageheading = 'Fake Heading';
-		$turnitintooltwoview->output_header($pageurl, $pagetitle, $pageheading, true);
+        $this->assertContains($pageurl, (string)$PAGE->url);
+        $this->assertEquals($pagetitle, $PAGE->title);
+        $this->assertEquals($pageheading, $PAGE->heading);
+    }
 
-		$this->assertContains($pageurl, (string)$PAGE->url);
-		$this->assertEquals($pagetitle, $PAGE->title);
-		$this->assertEquals($pageheading, $PAGE->heading);
-	}
+    /**
+     * Test that the v1 migration tab is present in the settings tabs if v1 is installed.
+     */
+    public function test_draw_settings_menu_v1_installed() {
+        global $DB;
+        $this->resetAfterTest();
+        $turnitintooltwoview = new turnitintooltwo_view();
+
+        // If v1 is not installed then create a fake row to trick Moodle into thinking it's installed.
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        if (!boolval($module)) {
+            $module = new stdClass();
+            $module->plugin = 'mod_turnitintool';
+            $DB->insert_record('config_plugins', $module);
+        }
+
+        // Test that tab is present.
+        $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
+        $this->assertContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
+    }
+
+    /**
+     * Test that the v1 migration tab is not present in the settings tabs if v1 is not installed.
+     */
+    public function test_draw_settings_menu_v1_not_installed() {
+        global $DB;
+        $this->resetAfterTest();
+        $turnitintooltwoview = new turnitintooltwo_view();
+
+        // If v1 is installed then temporarily modify the plugin record to trick Moodle into thinking it's not installed.
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        if (boolval($module)) {
+            $tmpmodule = new stdClass();
+            $tmpmodule->id = $module->id;
+            $tmpmodule->plugin = 'mod_turnitintool_tmp';
+            $DB->update_record('config_plugins', $tmpmodule);
+        }
+        
+        $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
+        $this->assertNotContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
+
+        if (boolval($module)) {
+            $tmpmodule->plugin = 'mod_turnitintool';
+            $DB->update_record('config_plugins', $tmpmodule);
+        }
+    }
 
 	/**
 	 * Test that the submissions table layout conforms to expectations when the user is an instructor.

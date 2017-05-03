@@ -443,7 +443,7 @@ echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 if ($cmd != 'class_recreation' && $cmd != 'multiple_class_recreation') {
     echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
-    echo $OUTPUT->box($turnitintooltwoview->draw_settings_menu($module, $cmd), '');
+    echo $OUTPUT->box($turnitintooltwoview->draw_settings_menu($cmd), '');
     // Show a warning if javascript is not enabled while a tutor is logged in.
     echo html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo'), array("class" => "warning"));
 }

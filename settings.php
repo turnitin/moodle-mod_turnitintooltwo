@@ -49,7 +49,7 @@ if ($ADMIN->fulltree) {
                                                 array('class' => 'tii_library_not_present_warning'));
     }
 
-    $tabmenu = $turnitintooltwoview->draw_settings_menu($module, 'settings').
+    $tabmenu = $turnitintooltwoview->draw_settings_menu('settings').
                 html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$librarywarning.
                 html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                             "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
