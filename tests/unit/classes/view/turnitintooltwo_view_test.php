@@ -70,6 +70,8 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
         if (!boolval($module)) {
             $module = new stdClass();
             $module->plugin = 'mod_turnitintool';
+            $module->name = 'version';
+            $module->version = 1;
             $DB->insert_record('config_plugins', $module);
         }
 
