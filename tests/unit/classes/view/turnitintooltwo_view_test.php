@@ -65,7 +65,7 @@ class mod_turnitintooltwo_view_testcase extends advanced_testcase {
             $module = new stdClass();
             $module->plugin = 'mod_turnitintool';
             $module->name = 'version';
-            $module->version = 1;
+            $module->value = 1001;
             $DB->insert_record('config_plugins', $module);
         }
 
