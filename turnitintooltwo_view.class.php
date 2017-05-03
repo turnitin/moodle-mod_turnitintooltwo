@@ -114,10 +114,9 @@ class turnitintooltwo_view {
      * Output the Menu in the settings area as an HTML list
      *
      * @global type $CFG
-     * @param obj $module
      * @return output the menu as an HTML list
      */
-    public function draw_settings_menu($module, $cmd) {
+    public function draw_settings_menu($cmd) {
         global $CFG, $OUTPUT, $DB;
 
         $tabs = array();
