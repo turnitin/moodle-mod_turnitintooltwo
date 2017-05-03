@@ -433,6 +433,28 @@ switch ($cmd) {
         break;
 
     case "v1migration":
+
+        if ( isset($_REQUEST['enablemigrationtool'] )) {
+
+        }
+
+        $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
+
+        $options = array(
+                    0 => get_string('migration:off', 'turnitintooltwo'),
+                    1 => get_string('migration:manual', 'turnitintooltwo'),
+                    2 => get_string('migration:auto', 'turnitintooltwo')
+                    );
+
+        $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
+                            'enablemigrationtool', $options);
+        $customdata["elements"] = $elements;
+        
+        $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
+                                                    $customdata);
+
+        $output .= $optionsform->display();
+
         break;
 }
 
