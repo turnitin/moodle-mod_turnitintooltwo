@@ -93,7 +93,6 @@ class helpdeskwizard {
             // Read all issues into the array by category.
             $i = 0;
             foreach ($solutions as $solution) {
-                $solution = array();
                 $i++;
                 foreach ($solution as $k => $v) {
                     $solution[$k] = (string)$v;
