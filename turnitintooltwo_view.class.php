@@ -118,7 +118,7 @@ class turnitintooltwo_view {
      * @return output the menu as an HTML list
      */
     public function draw_settings_menu($module, $cmd) {
-        global $CFG, $OUTPUT;
+        global $CFG, $OUTPUT, $DB;
 
         $tabs = array();
 
@@ -139,6 +139,13 @@ class turnitintooltwo_view {
 
         $tabs[] = new tabobject('files', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files',
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
+
+        // Include Moodle v1 migration tab if v1 is installed.
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        if ( boolval($module) ) {
+            $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
+                        get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
+        }
 
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
                         get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
