@@ -69,6 +69,27 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     }
 
     /**
+     * Test that the v1 migration can be set to the relevant value.
+     */
+    public function test_set_settings_menu_v1_installed() {
+        global $DB;
+        $this->resetAfterTest();
+        
+        // Are values saved correctly.
+        $saved = v1migration::togglemigrationstatus( 0 );
+        $this->assertTrue($saved);
+        $saved = v1migration::togglemigrationstatus( 1 );
+        $this->assertTrue($saved);
+        $saved = v1migration::togglemigrationstatus( 2 );
+        $this->assertTrue($saved);
+
+        // If we pass in an invalid value (which should never happen) then it will be converted to 0 to prevent an unnecessary error.
+        $saved = v1migration::togglemigrationstatus( 'test' );
+        $module = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
+        $this->assertEquals(0, $module->value);
+    }
+
+    /**
      * Make a test Turnitin assignment module for use in various test cases.
      * @param int $courseid Moodle course ID
      * @param string $modname Module name (turnitintool or turnitintooltwo)

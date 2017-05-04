@@ -433,6 +433,46 @@ switch ($cmd) {
         break;
 
     case "v1migration":
+
+        // Save Migration Tool enabled status.
+        if ( isset($_REQUEST['enablemigrationtool']) ) {
+            include_once("classes/v1migration/v1migration.php");
+            $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
+
+            $string = ($saved) ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
+            $msgtype = ($saved) ? 'success' : 'error';
+
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $output .= html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'), 
+                            array('class' => 'alert alert-'.$msgtype, 'role' => 'alert'));
+        }
+
+        // Get current enabled value;
+        $migrationsettings = array();
+        $currentsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
+        if ($currentsetting) {
+            $migrationsettings = array('enablemigrationtool' => $currentsetting->value);
+        }
+
+        $output .= html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
+
+        $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
+
+        $options = array(
+                    0 => get_string('migration:off', 'turnitintooltwo'),
+                    1 => get_string('migration:manual', 'turnitintooltwo'),
+                    2 => get_string('migration:auto', 'turnitintooltwo')
+                    );
+
+        $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
+                            'enablemigrationtool', $options);
+        $customdata["elements"] = $elements;
+        
+        $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
+                                                    $customdata);
+        $migrationform->set_data( $migrationsettings );
+        $output .= $migrationform->display();
+
         break;
 }
 
