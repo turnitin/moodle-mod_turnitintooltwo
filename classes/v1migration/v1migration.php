@@ -31,6 +31,29 @@ class v1migration {
 	}
 
     /**
+     * Save the status of the migration tool
+     */
+    public static function togglemigrationstatus($value) {
+        global $DB;
+
+        $migrationsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
+        if (!$migrationsetting) {
+            $migrationsetting = new stdClass();
+            $migrationsetting->plugin = 'turnitintooltwo';
+            $migrationsetting->name = 'enablemigrationtool';
+        }
+        $migrationsetting->value = (int)$value;
+        
+        // Save migration setting to the database.
+        $method = (isset($migrationsetting->id)) ? 'update_record' : 'insert_record';
+        if ($DB->$method('config_plugins', $migrationsetting)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Return the true if the user proceeds with the migration.
      *
      * @param int $courseid - The course ID.
