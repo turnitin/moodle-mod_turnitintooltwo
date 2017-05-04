@@ -1,8 +1,9 @@
 $(document).ready(function(){
-    // only display the modal during a manual migration.
-    if (($("#migrate_type").data("migratetype") == 1) && ($("#migrate_type").data("turnitintoolid") != $("#migrate_type").data("lastasked"))) {
+    // Only display the modal during a manual migration.
+    if ($("#migrate_type").data("turnitintoolid") != $("#migrate_type").data("lastasked")) {
         $.colorbox({width: 500, height: 500, inline:true, opacity: "0.7", href:"#migration_alert",
         onLoad: function() {
+            $('#asktomigrate').show();
             lightBoxCloseButton();
         },
         onCleanup:function() {
@@ -10,12 +11,19 @@ $(document).ready(function(){
             $('#migration_alert').hide();
         }});
         $('#migration_alert').show();
-    } else if ($("#migrate_type").data("migratetype") == 2) {
+    }
+
+    if ($("#migrate_type").data("migratetype") == 2) {
+        $('#asktomigrate').hide();
+        $('#migrating').show();
+
         migrate($("#migrate_type").data("courseid"), $("#migrate_type").data("turnitintoolid"));
     }
-}); 
+});
 
 $('.migrate_link').click(function() {
+    $('#asktomigrate').hide();
+    $('#migrating').show();
     migrate($(this).data("courseid"), $(this).data("turnitintoolid"));
 });
 
