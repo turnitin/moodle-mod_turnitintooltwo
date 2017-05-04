@@ -1,7 +1,6 @@
 $(document).ready(function(){
-
     // only display the modal during a manual migration.
-    if ($("#migrate_type").data("migratetype") == 1) {
+    if (($("#migrate_type").data("migratetype") == 1) && ($("#migrate_type").data("turnitintoolid") != $("#migrate_type").data("lastasked"))) {
         $.colorbox({width: 500, height: 500, inline:true, opacity: "0.7", href:"#migration_alert",
         onLoad: function() {
             lightBoxCloseButton();
@@ -11,7 +10,7 @@ $(document).ready(function(){
             $('#migration_alert').hide();
         }});
         $('#migration_alert').show();
-    } else {
+    } else if ($("#migrate_type").data("migratetype") == 2) {
         migrate($("#migrate_type").data("courseid"), $("#migrate_type").data("turnitintoolid"));
     }
 }); 
