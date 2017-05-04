@@ -592,3 +592,5 @@ $string['migration:manual'] = 'Manual';
 $string['migration:auto'] = 'Automatic';
 $string['enablemigrationtoolsuccess'] = 'V1 Migration Tool Setting has been saved';
 $string['enablemigrationtoolfail'] = 'There was a problem trying to save the V1 Migration Tool setting in the database';
+$string['migrating'] = 'This assignment is currently being migrated to a Moodle Direct V2 assignment.';
+$string['migrationredirect'] = 'You will be redirected to the Moodle Direct V2 assignment upon completion.';
