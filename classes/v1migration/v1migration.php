@@ -16,6 +16,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+define('MIGRATION_SUBMISSIONS_SITE_CUTOFF', 200);
+define('MIGRATION_MAX_SLEEP', 10);
+define('MIGRATION_PER_SECOND', 20);
+
 /**
  * Migrate assignments from turnitintool (Moodle Direct v1) to turnitintooltwo (Moodle Direct v2).
  */
@@ -60,7 +64,7 @@ class v1migration {
      * @param int $turnitintooltwoid - The turnitintooltwoid.
      * @return string $output The HTML for the modal.
      */
-    function asktomigrate($courseid, $turnitintoolid) {
+    function migrate_modal($courseid, $turnitintoolid) {
         global $PAGE;
         $cssurl = new moodle_url('/mod/turnitintooltwo/jquery/colorbox.css');
         $PAGE->requires->css($cssurl);
@@ -81,11 +85,20 @@ class v1migration {
                                                     'title' => get_string('dontmigrateassignment', 'turnitintooltwo')))." ".
                                                     get_string('dontmigrateassignment', 'turnitintooltwo'),
                                                         array('class' => 'dontmigrate_link', 'id' => 'dontmigrate_link'));
-                                                        
-        $output = html_writer::tag('div', html_writer::tag('p', get_string('migrationtooltitle', 'turnitintooltwo')
+
+        $migrating = html_writer::tag('div', html_writer::tag('p', get_string('migrating', 'turnitintooltwo'))
+                                        . html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-2x migration_spinner'))
+                                        . html_writer::tag('p', get_string('migrationredirect', 'turnitintooltwo')),
+                                        array('id' => 'migrating', 'class' => 'hide'));
+
+        $asktomigrate = html_writer::tag('div', html_writer::tag('p', get_string('migrationtooltitle', 'turnitintooltwo'), array('class' => 'migrationtitle'))
                                         . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'))
                                         . $migratelink . $dontmigratelink
-                                        , array('class' => 'migrationtitle')), array('class' => 'hide', 'id' => 'migration_alert'));
+                                        , array('id' => 'asktomigrate', 'class' => 'hide'));
+
+
+        $output = html_writer::tag('div', $asktomigrate . $migrating, array('id' => 'migration_alert', 'class' => 'hide'));
+
         return $output;
     }
 	/**
@@ -311,12 +324,17 @@ class v1migration {
         // Get the submissions for this assignment, or all submissions requiring a gradebook update.
         $submissions = $DB->get_records("turnitintooltwo_submissions", array("turnitintooltwoid" => $turnitintooltwoid, "migrate_gradebook" => 1));
 
+        // Add an artificial sleep to give the instructor time to read the migration processing modal.
+        if ($workflow == "site") {
+            sleep(round(max(MIGRATION_MAX_SLEEP - (count($submissions)/MIGRATION_PER_SECOND), 0)));
+        }
+
         /**
          * Grade migrations are slow, roughly 27 submissions per second.
          * As such we only migrate these during the assignment migration if there are not a lot of them. If there are a lot, we use the cron.
-         * We have set this value to 200, meaning a wait time of roughly 8 seconds.
+         * We have set this value to MIGRATION_SUBMISSIONS_CUTOFF, meaning a wait time of roughly 8 seconds.
          */
-        if (($workflow == "site") && (count($submissions) > 200)) {
+        if (($workflow == "site") && (count($submissions) > MIGRATION_SUBMISSIONS_SITE_CUTOFF)) {
             return "cron";
         } else {
             foreach ($submissions as $submission) {

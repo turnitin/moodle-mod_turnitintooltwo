@@ -197,9 +197,9 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     }    
 
     /**
-     * Test the modal that appears when asked to migrate.
+     * Test the migrate modal.
      */
-    public function test_asktomigrate() {
+    public function test_migrate_modal() {
         global $DB;
 
         if (!$this->v1installed()) {
@@ -213,7 +213,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         // Test migration modal.
         $courseid = 1;
         $turnitintoolid = 1;
-        $test = $v1migration->asktomigrate($courseid, $turnitintoolid);
+        $test = $v1migration->migrate_modal($courseid, $turnitintoolid);
 
         $this->assertContains('data-courseid="'.$courseid.'"', $test);
         $this->assertContains('data-turnitintoolid="'.$turnitintoolid.'"', $test);
