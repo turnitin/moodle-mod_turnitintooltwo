@@ -468,6 +468,7 @@ switch ($cmd) {
         $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
                             'enablemigrationtool', $options);
         $customdata["elements"] = $elements;
+        $customdata["show_cancel"] = false;
         
         $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                                                     $customdata);
