@@ -90,6 +90,37 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     }
 
     /**
+     * Test that the progress bar displays the values we expect it to.
+     */
+    public function test_progress_bar() {
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+
+        // Create some V1 assignments.
+        $v1assignment1 = $this->make_test_module($course->id, 'turnitintool');
+        $v1assignment2 = $this->make_test_module($course->id, 'turnitintool');
+
+        $v1assignments = $DB->get_records('turnitintool');
+
+        // Set one of the assignments to migrated.
+        $update = new stdClass();
+        $update->id = $v1assignment2->id;
+        $update->migrated = 1;
+        $DB->update_record('turnitintool', $update, false);
+
+
+        $progressbar = v1migration::output_progress_bar();
+        $this->assertContains('50% Complete (1/2)', $progressbar);
+        $this->assertContains('width: 50%', $progressbar);
+    }
+
+    /**
      * Make a test Turnitin assignment module for use in various test cases.
      * @param int $courseid Moodle course ID
      * @param string $modname Module name (turnitintool or turnitintooltwo)

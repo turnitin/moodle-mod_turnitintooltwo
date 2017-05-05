@@ -434,9 +434,10 @@ switch ($cmd) {
 
     case "v1migration":
 
+        include_once("classes/v1migration/v1migration.php");
+
         // Save Migration Tool enabled status.
         if ( isset($_REQUEST['enablemigrationtool']) ) {
-            include_once("classes/v1migration/v1migration.php");
             $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
 
             $string = ($saved) ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
@@ -472,6 +473,9 @@ switch ($cmd) {
                                                     $customdata);
         $migrationform->set_data( $migrationsettings );
         $output .= $migrationform->display();
+
+        // Display our progress bar.
+        $output .= v1migration::output_progress_bar();
 
         break;
 }
