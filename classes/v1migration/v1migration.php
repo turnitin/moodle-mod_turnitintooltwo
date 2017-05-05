@@ -61,6 +61,30 @@ class v1migration {
     }
 
     /**
+     * Return the HTML for the progress bar.
+     */
+    public static function output_progress_bar() {
+        global $DB;
+
+        // Begin progress bar.
+        $output = html_writer::tag('p', get_string('migrationtoolprogress', 'turnitintooltwo'));
+
+        // Counts for use in the progress bar.
+        $totalv1 = $DB->count_records('turnitintool');
+        $totalmigrated = $DB->count_records('turnitintool', array('migrated' => 1));
+        $complete = floor(($totalmigrated/$totalv1)*100);
+
+        // Output our progress bar.
+        $output .= html_writer::tag('div',
+                    html_writer::tag('div',
+                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.')', array('class' => 'bar-complete'))
+                    , array('class' => 'bar', 'style' => 'width: '.$complete.'%'))
+                  , array('id' => 'progress-bar', 'class' => 'progress active'));
+
+        return $output;
+    }
+
+    /**
      * Return the true if the user proceeds with the migration.
      *
      * @param int $courseid - The course ID.

@@ -434,9 +434,10 @@ switch ($cmd) {
 
     case "v1migration":
 
+        include_once("classes/v1migration/v1migration.php");
+
         // Save Migration Tool enabled status.
         if ( isset($_REQUEST['enablemigrationtool']) ) {
-            include_once("classes/v1migration/v1migration.php");
             $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
 
             $string = ($saved) ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
@@ -473,20 +474,8 @@ switch ($cmd) {
         $migrationform->set_data( $migrationsettings );
         $output .= $migrationform->display();
 
-        // Begin progress bar.
-        $output .= html_writer::tag('p', get_string('migrationtoolprogress', 'turnitintooltwo'));
-
-        // Counts for use in the progress bar.
-        $totalv1 = $DB->count_records('turnitintool');
-        $totalmigrated = $DB->count_records('turnitintool', array('migrated' => 1));
-        $complete = floor(($totalmigrated/$totalv1)*100);
-
-        // Output our progress bar.
-        $output .= html_writer::tag('div',
-                    html_writer::tag('div',
-                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.')', array('class' => 'bar-complete'))
-                    , array('class' => 'bar', 'style' => 'width: '.$complete.'%'))
-                  , array('id' => 'progress-bar', 'class' => 'progress active'));
+        // Display our progress bar.
+        $output .= v1migration::output_progress_bar();
 
         break;
 }
