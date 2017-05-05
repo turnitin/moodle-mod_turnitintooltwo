@@ -588,4 +588,4 @@ $string['enablemigrationtoolfail'] = 'There was a problem trying to save the V1 
 $string['migrating'] = 'This assignment is currently being migrated to a Moodle Direct V2 assignment.';
 $string['migrationredirect'] = 'You will be redirected to the Moodle Direct V2 assignment upon completion.';
 $string['migration_event_name'] = 'Migrate V1 Assignment To V2';
-$string['migration_event_desc'] = 'Turnitin Tool V1 Course: {$a->v1_name} ({$a->v1_cm_id}) has been migrated to Turnitin V2 ({$a->v2_cm_id})';
+$string['migration_event_desc'] = 'Turnitin Tool V1 Course: {$a->v1_name} ({$a->v1_cm_id}) has been migrated to Turnitin V2 ({$a->v2_cm_id}).';
