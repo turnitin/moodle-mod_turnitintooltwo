@@ -34,7 +34,7 @@ class v1migration {
 	public function __construct($courseid, $v1assignment) {
 		$this->courseid = $courseid;
 		$this->v1assignment = $v1assignment;
-        $this->cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
+		$this->cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
 	}
 
     /**
