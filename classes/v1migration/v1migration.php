@@ -29,9 +29,12 @@ class v1migration {
 	public $courseid;
 	public $v1assignment;
 
+	private $cm;
+
 	public function __construct($courseid, $v1assignment) {
 		$this->courseid = $courseid;
 		$this->v1assignment = $v1assignment;
+		$this->cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
 	}
 
     /**
@@ -47,7 +50,7 @@ class v1migration {
             $migrationsetting->name = 'enablemigrationtool';
         }
         $migrationsetting->value = (int)$value;
-        
+
         // Save migration setting to the database.
         $method = (isset($migrationsetting->id)) ? 'update_record' : 'insert_record';
         if ($DB->$method('config_plugins', $migrationsetting)) {
@@ -64,8 +67,8 @@ class v1migration {
      * @param int $turnitintooltwoid - The turnitintooltwoid.
      * @return string $output The HTML for the modal.
      */
-    function migrate_modal($courseid, $turnitintoolid) {
-        global $PAGE;
+    public function migrate_modal($courseid, $turnitintoolid) {
+		global $PAGE;
         $cssurl = new moodle_url('/mod/turnitintooltwo/jquery/colorbox.css');
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
@@ -96,15 +99,15 @@ class v1migration {
                                         . $migratelink . $dontmigratelink
                                         , array('id' => 'asktomigrate', 'class' => 'hide'));
 
-
         $output = html_writer::tag('div', $asktomigrate . $migrating, array('id' => 'migration_alert', 'class' => 'hide'));
 
         return $output;
     }
+
 	/**
 	 * Return the $id of the turnitintooltwo assignment or false.
 	 */
-	function migrate() {
+	public function migrate() {
 		global $DB;
 
 		// Migrate Users.
@@ -112,9 +115,10 @@ class v1migration {
 
         // Migrate course.
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
+
         $v2course = $this->migrate_course($v1course);
 
-        // Initialise any null values that are now not allowed. 
+        // Initialise any null values that are now not allowed.
         $this->set_default_values();
 
         // Begin transaction. If this doesn't complete then nothing is migrated.
@@ -163,6 +167,9 @@ class v1migration {
         // Commit transaction.
         $transaction->allow_commit();
 
+        // Logs the successful migration event to the Moodle Log
+        $this->log_success_migration_event($turnitintooltwoid, $this->courseid, $this->cm);
+
         // Update gradebook for submissions.
         $gradeupdates = $this->migrate_gradebook($turnitintooltwoid);
 
@@ -174,10 +181,10 @@ class v1migration {
         return (is_int($turnitintooltwoid)) ? $turnitintooltwoid : false;
 	}
 
-    /** 
+    /**
      * Hide the V1 assignment and rename the title to show "Migration in progress".
      */
-    function hide_v1_assignment() {
+    private function hide_v1_assignment() {
         global $CFG, $DB;
 
         // Edit the V1 assignment title.
@@ -188,10 +195,8 @@ class v1migration {
         $DB->update_record('turnitintool', $updatetitle);
 
         // Hide the V1 assignment.
-        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
-
         require_once($CFG->dirroot."/course/lib.php");
-        set_coursemodule_visible($cm->id, 0);
+        set_coursemodule_visible($this->cm->id, 0);
     }
 
     /**
@@ -199,7 +204,7 @@ class v1migration {
      * @param int $courseid Moodle course ID
      * @param string $modname Module name (turnitintool or turnitintooltwo)
      */
-    function setup_v2_module($courseid, $turnitintooltwoid) {
+    private function setup_v2_module($courseid, $turnitintooltwoid) {
         global $DB;
 
         $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
@@ -224,9 +229,9 @@ class v1migration {
     }
 
     /**
-     * Initialise any values from old assignments that can not now be null but have been when the assignment was created. 
+     * Initialise any values from old assignments that can not now be null but have been when the assignment was created.
      */
-    function set_default_values() {
+    private function set_default_values() {
         $nullcheckfields = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
                             'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
                             'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook',
@@ -242,7 +247,7 @@ class v1migration {
 	/**
 	 *  Migrate the users from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
 	 */
-	function migrate_users() {
+	private function migrate_users() {
 		global $DB;
 
         $turnitintoolusers = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
@@ -260,7 +265,7 @@ class v1migration {
      *
      * @param Object $v1course - The course object for the V1 assignment we are migrating.
      */
-    function migrate_course($v1course) {
+    private function migrate_course($v1course) {
         global $DB;
 
         // We may have more than one course if the course contained V2 assignments prior to the first V1 migration.
@@ -356,7 +361,7 @@ class v1migration {
      * Update module titles after migration has completed.
      * @param int $v2assignmentid V2 Module id
      */
-    function update_titles_post_migration($v2assignmentid) {
+    private function update_titles_post_migration($v2assignmentid) {
         global $CFG, $DB;
 
         // Remove the migration in progress text.
@@ -369,12 +374,10 @@ class v1migration {
 
         $DB->update_record('turnitintool', $updatetitle);
 
-        $cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
-
         // Temporarily set the assignment to visible so that the cron can rebuild the course cache for this assignment,
-        set_coursemodule_visible($cm->id, 1);
-        rebuild_course_cache($cm->id);
-        set_coursemodule_visible($cm->id, 0);
+        set_coursemodule_visible($this->cm->id, 1);
+        rebuild_course_cache($this->cm->id);
+        set_coursemodule_visible($this->cm->id, 0);
 
         // Update the V1 assignment title in the gradebook.
         @include_once($CFG->dirroot."/lib/gradelib.php");
@@ -385,5 +388,27 @@ class v1migration {
         // Update the V2 assignment title in the gradebook.
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
+    }
+
+    /**
+     * Logs the successful migration event to the Moodle log.
+     */
+    private function log_success_migration_event($turnitintooltwoid, $course_id, $v1cm) {
+        // Get the Course Module for the new  V2 assignment.
+        $v2cm = get_coursemodule_from_instance('turnitintooltwo', $turnitintooltwoid);
+
+        $success = new stdClass();
+        $success->v1_name = $v1cm->name;
+        $success->v1_cm_id = $v1cm->id;
+        $success->v2_cm_id = $v2cm->id;
+
+        // Add to log.
+        turnitintooltwo_add_to_log(
+            $course_id,
+            "migrate assignment",
+            'view.php?id=' . $v2cm->id,
+            get_string('migration_event_desc', 'turnitintooltwo', $success),
+            $v2cm->id
+        );
     }
 }
