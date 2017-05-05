@@ -190,8 +190,23 @@ class v1migration {
         // Edit the V1 assignment title.
         $updatetitle = new stdClass();
         $updatetitle->id = $this->v1assignment->id;
-        $updatetitle->name = $this->v1assignment->name . " (" . get_string('migrationinprogress', 'turnitintooltwo') . "...)";
         $updatetitle->migrated = 1;
+
+        // Create the postfix for the title "(Migration in progress...)"
+        $postfix = sprintf('(%s...)', get_string('migrationinprogress', 'turnitintooltwo'));
+
+        // Create the full title with the postfix. E.g. "title 101 (Migration in progress...)"
+        $fulltitle = sprintf('%s %s', $this->v1assignment->name, $postfix);
+
+        // If the full title, with postfix is over 255 (the moodle DB limit for this field)
+        // then we need to truncate the title and add the postfix title.
+        if (strlen($fulltitle) > 255) {
+	        // Truncate the title and account for the space by deducting 1.
+	        $fulltitle = sprintf('%s %s', substr($this->v1assignment->name, 0, 254 - strlen($postfix)), $postfix);
+        }
+
+        $updatetitle->name = $fulltitle;
+
         $DB->update_record('turnitintool', $updatetitle);
 
         // Hide the V1 assignment.
