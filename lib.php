@@ -649,7 +649,7 @@ function turnitintooltwo_cron_migrate_gradebook() {
 
         // We will break out unless the number of submissions migrated + to be migrated is MIGRATION_SUBMISSIONS_CUTOFF or less.
         if (($numsubmissions <= MIGRATION_SUBMISSIONS_CUTOFF) || ($numsubmissions == 0) && ($assignment->numsubmissions > MIGRATION_SUBMISSIONS_CUTOFF)) {
-            
+
             $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, "cron");
 
             // If we have migrated, update the titles.
