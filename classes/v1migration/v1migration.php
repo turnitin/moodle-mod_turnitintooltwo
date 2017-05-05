@@ -103,6 +103,7 @@ class v1migration {
 
         return $output;
     }
+
 	/**
 	 * Return the $id of the turnitintooltwo assignment or false.
 	 */
@@ -114,6 +115,7 @@ class v1migration {
 
         // Migrate course.
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
+
         $v2course = $this->migrate_course($v1course);
 
         // Initialise any null values that are now not allowed.
@@ -164,6 +166,9 @@ class v1migration {
 
         // Commit transaction.
         $transaction->allow_commit();
+
+        // Logs the successful migration event to the Moodle Log
+        $this->log_success_migration_event($turnitintooltwoid, $this->courseid, $this->cm);
 
         // Update gradebook for submissions.
         $gradeupdates = $this->migrate_gradebook($turnitintooltwoid);
@@ -383,5 +388,27 @@ class v1migration {
         // Update the V2 assignment title in the gradebook.
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
+    }
+
+    /**
+     * Logs the successful migration event to the Moodle log.
+     */
+    private function log_success_migration_event($turnitintooltwoid, $course_id, $v1cm) {
+        // Get the Course Module for the new  V2 assignment.
+        $v2cm = get_coursemodule_from_instance('turnitintooltwo', $turnitintooltwoid);
+
+        $success = new stdClass();
+        $success->v1_name = $v1cm->name;
+        $success->v1_cm_id = $v1cm->id;
+        $success->v2_cm_id = $v2cm->id;
+
+        // Add to log.
+        turnitintooltwo_add_to_log(
+            $course_id,
+            "migrate assignment",
+            'view.php?id=' . $v2cm->id,
+            get_string('migration_event_desc', 'turnitintooltwo', $success),
+            $v2cm->id
+        );
     }
 }
