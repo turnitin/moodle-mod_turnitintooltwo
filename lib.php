@@ -352,6 +352,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
         /* Set legacy to 0 for all TII2s so that we can have all recreated assignments on the same TII class.
            Legacy is set to 1 only for migrated assignments that were migrated on a course where there were pre-existing V2 assignments.*/
         if ($action == "NEWCLASS") {
+            $update = new stdClass();
             $update->id = $turnitintooltwo->id;
             $update->legacy = 0;
             if (!$DB->update_record('turnitintooltwo', $update)) {
