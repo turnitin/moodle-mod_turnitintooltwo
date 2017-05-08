@@ -208,7 +208,7 @@ class v1migration {
     /**
      * Hide the V1 assignment and rename the title to show "Migration in progress".
      */
-    private function hide_v1_assignment() {
+    public function hide_v1_assignment() {
         global $CFG, $DB;
 
         // Edit the V1 assignment title.
@@ -243,7 +243,7 @@ class v1migration {
      * @param int $courseid Moodle course ID
      * @param string $modname Module name (turnitintool or turnitintooltwo)
      */
-    private function setup_v2_module($courseid, $turnitintooltwoid) {
+    public function setup_v2_module($courseid, $turnitintooltwoid) {
         global $DB;
 
         $module = $DB->get_record("modules", array("name" => "turnitintooltwo"));
@@ -270,7 +270,7 @@ class v1migration {
     /**
      * Initialise any values from old assignments that can not now be null but have been when the assignment was created.
      */
-    private function set_default_values() {
+    public function set_default_values() {
         $nullcheckfields = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
                             'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
                             'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'erater', 'erater_handbook',
@@ -286,7 +286,7 @@ class v1migration {
 	/**
 	 *  Migrate the users from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
 	 */
-	private function migrate_users() {
+	public function migrate_users() {
 		global $DB;
 
         $turnitintoolusers = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
@@ -304,7 +304,7 @@ class v1migration {
      *
      * @param Object $v1course - The course object for the V1 assignment we are migrating.
      */
-    private function migrate_course($v1course) {
+    public function migrate_course($v1course) {
         global $DB;
 
         // We may have more than one course if the course contained V2 assignments prior to the first V1 migration.
@@ -400,7 +400,7 @@ class v1migration {
      * Update module titles after migration has completed.
      * @param int $v2assignmentid V2 Module id
      */
-    private function update_titles_post_migration($v2assignmentid) {
+    public function update_titles_post_migration($v2assignmentid) {
         global $CFG, $DB;
 
         // Remove the migration in progress text.
