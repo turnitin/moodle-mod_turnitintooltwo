@@ -36,7 +36,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             return false;
         }
 
-        $v1migration = new v1migration(1, 1);
+        $v1assignment = new stdClass();
+        $v1assignment->id = 1;
+
+        $v1migration = new v1migration(1, $v1assignment);
 
         $this->resetAfterTest();
 
@@ -74,7 +77,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     public function test_set_settings_menu_v1_installed() {
         global $DB;
         $this->resetAfterTest();
-        
+
         // Are values saved correctly.
         $saved = v1migration::togglemigrationstatus( 0 );
         $this->assertTrue($saved);
@@ -137,6 +140,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $this->resetAfterTest();
 
         $assignment = new stdClass();
+        $assignment->id = 1;
         $assignment->name = ($assignmentname == "") ? "Test Turnitin Assignment" : $assignmentname;
         $assignment->course = $courseid;
 
@@ -154,7 +158,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         // Set default values and save module.
         $v1migration = new v1migration($courseid, $assignment);
         $v1migration->set_default_values();
-        
+
         $assignment->id = $DB->insert_record($modname, $assignment);
 
         // Create Assignment Part.
@@ -174,9 +178,9 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
         // Add Course module if a v1 module.
         if ($modname == 'turnitintool') {
-            add_course_module($coursemodule);    
+            add_course_module($coursemodule);
         }
-        
+
         return $assignment;
     }
 
@@ -184,7 +188,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
      * Create a test part on the specified assignment.
      * @param string $modname Module name (turnitintool or turnitintooltwo)
      * @param int $assignmentid Assignment Module ID
-     */    
+     */
     public function make_test_part($modname, $assignmentid) {
         global $DB;
 
@@ -199,7 +203,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $part->dtpost = 0;
         $part->maxmarks = 0;
         $part->deleted = 0;
-        
+
         $partid = $DB->insert_record($modname.'_parts', $part);
         return $partid;
     }
@@ -210,7 +214,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
      * @param int $partid Part ID
      * @param int $assignmentid Assignment Module ID
      * @param int $amount Number of submissions to make.
-     */    
+     */
     public function make_test_submission($modname, $partid, $assignmentid, $amount = 1) {
         global $DB;
 
@@ -225,7 +229,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
             $DB->insert_record($modname.'_submissions', $submission);
         }
-    }    
+    }
 
     /**
      * Test the migrate modal.
@@ -237,7 +241,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             return false;
         }
 
-        $v1migration = new v1migration(1, 1);
+        $v1assignment = new stdClass();
+        $v1assignment->id = 1;
+
+        $v1migration = new v1migration(1, $v1assignment);
 
         $this->resetAfterTest();
 
@@ -266,7 +273,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
                             'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'excludetype', 'perpage');
 
         // Create Migration Assignment object.
-        $v1migration = new v1migration(1, new stdClass());
+        $v1assignment = new stdClass();
+        $v1assignment->id = 1;
+
+        $v1migration = new v1migration(1, $v1assignment);
 
         // Set all fields to check to null.
         foreach ($nullcheckfields as $field) {
@@ -274,11 +284,11 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         }
 
         $v1migration->set_default_values();
-      
+
         // Assert that all fields are no longer null.
         foreach ($nullcheckfields as $field) {
             $this->assertNotNull($v1migration->v1assignment->$field);
-        }        
+        }
     }
 
     /**
@@ -305,7 +315,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         // Test that assignment has been renamed.
         $updatedassignment = $DB->get_record('turnitintool', array('id' => $v1assignment->id));
         $this->assertContains("(Migration in progress...)", $updatedassignment->name);
-        
+
         // Test that assignment has been hidden.
         $cm = get_coursemodule_from_instance('turnitintool', $v1assignment->id);
         $this->assertEquals(0, $cm->visible);
@@ -396,8 +406,9 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             return false;
         }
 
-        $assignment = new stdClass();
-        $v1migration = new v1migration(1, $assignment);
+        $v1assignment = new stdClass();
+        $v1assignment->id = 1;
+        $v1migration = new v1migration(1, $v1assignment);
 
         $this->resetAfterTest();
 
@@ -436,7 +447,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $DB->delete_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse));
 
         /* Test 2. V1 migration with an existing V2 course.
-           Should create a new course entry in turnitintooltwo_courses table with the same turnitin_cid as above, course type V1. 
+           Should create a new course entry in turnitintooltwo_courses table with the same turnitin_cid as above, course type V1.
            Legacy field should be set to 1 on these tests. */
 
         // Create our initial V2 course.
