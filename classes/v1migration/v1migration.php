@@ -17,8 +17,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 define('MIGRATION_SUBMISSIONS_SITE_CUTOFF', 200);
-define('MIGRATION_MAX_SLEEP', 10);
-define('MIGRATION_PER_SECOND', 20);
+define('MIGRATION_MAX_SLEEP', 5);
 
 /**
  * Migrate assignments from turnitintool (Moodle Direct v1) to turnitintooltwo (Moodle Direct v2).
@@ -370,7 +369,8 @@ class v1migration {
 
         // Add an artificial sleep to give the instructor time to read the migration processing modal.
         if ($workflow == "site") {
-            sleep(round(max(MIGRATION_MAX_SLEEP - (count($submissions)/MIGRATION_PER_SECOND), 0)));
+            $migrationspersleepsecond = floor(MIGRATION_SUBMISSIONS_SITE_CUTOFF/MIGRATION_MAX_SLEEP);
+            sleep(round(max(MIGRATION_MAX_SLEEP - (count($submissions)/$migrationspersleepsecond), 0)));
         }
 
         /**
