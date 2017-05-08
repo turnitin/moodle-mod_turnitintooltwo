@@ -279,10 +279,8 @@ switch ($action) {
 
             $PAGE->set_context(context_module::instance($cm->id));
             $turnitintooltwoview = new turnitintooltwo_view();
-            // die(var_dump($turnitintooltwoview));
             
             $view = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
-            die(var_dump($view));
             $return["aaData"] = $view;
             $totalsubmitters = $DB->count_records('turnitintooltwo_submissions',
                                                     array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id,

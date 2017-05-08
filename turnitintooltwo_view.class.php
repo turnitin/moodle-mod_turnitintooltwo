@@ -444,12 +444,18 @@ class turnitintooltwo_view {
         $selectallcb = html_writer::checkbox(false, false, false, '', array("class" => "select_all_checkbox"));
         $cells["checkbox"] = new html_table_cell( ($istutor) ? $selectallcb : '&nbsp;' );
         if ($turnitintooltwouser->get_user_role() != 'Learner') {
-            $cells["studentfirstname"] = new html_table_cell( get_string('studentfirstname', 'turnitintooltwo'));
-            $cells["studentfirstname"]->attributes["class"] = 'hidden_class sorting_name';
+            // These columns are used for sorting, and should retain their hidden_class class.
             $cells["studentlastname"] = new html_table_cell( get_string('studentlastname', 'turnitintooltwo'));
-            $cells["studentlastname"]->attributes["class"] = 'hidden_class sorting_name';
+            $cells["studentlastname"]->attributes["class"] = 'sorting_name sorting_name_last';
         }
-        $cells["student"] = ($istutor) ? new html_table_cell(get_string('student', 'turnitintooltwo')) : new html_table_cell();
+        if ($istutor){
+            $cells["student"] = new html_table_cell(
+                html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 3 )).
+                html_writer::tag('div', ' / '.get_string('studentlastname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-lastname sorting', 'data-col' => 2))
+            );
+        } else {
+            $cells["student"] = new html_table_cell();
+        }
         $cells["student"]->attributes['class'] = 'left';
         $cells["title_raw"] = new html_table_cell('&nbsp;');
         $cells["title_raw"]->attributes['class'] = 'raw_data';
@@ -491,7 +497,6 @@ class turnitintooltwo_view {
 
         $cells["download"] = new html_table_cell('&nbsp;');
         $cells["delete"] = new html_table_cell('&nbsp;');
-        echo sizeof($cells);
         $tableheaders = $cells;
 
         $tables = "";
@@ -1105,7 +1110,7 @@ class turnitintooltwo_view {
                                         get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "unanonymise", "id" => "submission_".$submission->submission_objectid));
                     // $studentfirstname = get_string('anonenabled', 'turnitintooltwo');
-                    // $studentlastname = get_string('anonenabled', 'turnitintooltwo');
+                    $studentlastname = get_string('anonenabled', 'turnitintooltwo');
 
                 } else if (($parts[$partid]->dtpost <= time() OR !empty($submission->submission_unanon)) AND
                         empty($submission->nmoodle)) {
@@ -1114,7 +1119,7 @@ class turnitintooltwo_view {
                                     $CFG->wwwroot."/user/view.php?id=".$submission->userid."&course="
                                         .$turnitintooltwoassignment->turnitintooltwo->course, $submission->fullname);
                     // $studentfirstname = $submission->firstname;
-                    // $studentlastname = $submission->lastname;
+                    $studentlastname = $submission->lastname;
                 } else if (($parts[$partid]->dtpost <= time() OR
                                 !empty($submission->submission_unanon)) AND !empty($submission->nmoodle)) {
                     // Post date has passed or anonymous marking disabled for user and user is a NON moodle user.
@@ -1122,13 +1127,13 @@ class turnitintooltwo_view {
                                         $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                         array("class" => "italic"));
                     // $studentfirstname = $submission->firstname;
-                    // $studentlastname = $submission->lastname;
+                    $studentlastname = $submission->lastname;
                 } else {
                     // User has not made a submission.
                     $studentname = html_writer::tag("span", get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "italic"));
                     // $studentfirstname = $studentname;
-                    // $studentlastname = $studentname;
+                    $studentlastname = $studentname;
                 }
             } else {
                 if (empty($submission->nmoodle)) {
@@ -1137,7 +1142,7 @@ class turnitintooltwo_view {
                                                 $turnitintooltwoassignment->turnitintooltwo->course,
                                                 $submission->fullname);
                     // $studentfirstname = $submission->firstname;
-                    // $studentlastname = $submission->lastname;
+                    $studentlastname = $submission->lastname;
                 } else if (!empty($submission->nmoodle) && substr($submission->userid, 0, 3) != 'nm-') {
                     // Moodle User not enrolled on this course as a student.
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
@@ -1145,14 +1150,14 @@ class turnitintooltwo_view {
                                             $submission->fullname." (".get_string('nonenrolledstudent', 'turnitintooltwo').")",
                                                 array("class" => "italic"));
                     // $studentfirstname = $submission->firstname;
-                    // $studentlastname = $submission->lastname;
+                    $studentlastname = $submission->lastname;
                 } else {
                     // Non Moodle user.
                     $studentname = html_writer::tag("span",
                                                 $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                                 array("class" => "italic"));
                     // $studentfirstname = $submission->firstname;
-                    // $studentlastname = $submission->lastname;
+                    $studentlastname = $submission->lastname;
                 }
             }
         }
@@ -1435,7 +1440,7 @@ class turnitintooltwo_view {
         if (!$istutor) {
             $data = array($partid, $checkbox, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         } else {
-            $data = array($partid, $checkbox, $studentfirstname, $studentlastname, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
+            $data = array($partid, $checkbox, $studentlastname, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         }
         
         if (($istutor) || (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
