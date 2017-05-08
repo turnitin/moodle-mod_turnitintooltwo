@@ -433,6 +433,9 @@ class v1migration {
      * Logs the successful migration event to the Moodle log.
      */
     private function log_success_migration_event($turnitintooltwoid, $course_id, $v1cm) {
+        global $CFG;
+        require_once($CFG->dirroot . '/mod/turnitintooltwo/lib.php');
+
         // Get the Course Module for the new  V2 assignment.
         $v2cm = get_coursemodule_from_instance('turnitintooltwo', $turnitintooltwoid);
 

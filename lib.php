@@ -643,7 +643,7 @@ function turnitintooltwo_cron_migrate_gradebook() {
     // Get a list of assignments with outstanding gradebook migrations.
     require_once(__DIR__.'/classes/v1migration/v1migration.php');
     $sql = "migrate_gradebook = 1 GROUP BY turnitintooltwoid";
-    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql, NULL, '', "id, turnitintooltwoid, count(id) AS numsubmissions");
+    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql, NULL, '', "turnitintooltwoid, count(turnitintooltwoid) AS numsubmissions");
     $numsubmissions = 0;
     foreach ($assignments as $assignment) {
         $numsubmissions += $assignment->numsubmissions;
