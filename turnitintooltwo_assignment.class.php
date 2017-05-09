@@ -817,7 +817,9 @@ class turnitintooltwo_assignment {
 
         $properties = new stdClass();
         $properties->name = $this->turnitintooltwo->name . ' - ' . $partname;
-        $properties->description = ($this->turnitintooltwo->intro == null) ? '' : $this->turnitintooltwo->intro;
+        $intro = strip_pluginfile_content($this->turnitintooltwo->intro);
+        $intro = preg_replace("/<img[^>]+\>/i", "", $intro);
+        $properties->description = ($intro == null) ? '' : $intro;
         $properties->courseid = $this->turnitintooltwo->course;
         $properties->groupid = 0;
         $properties->userid = 0;
@@ -1443,18 +1445,6 @@ class turnitintooltwo_assignment {
                 $part->unanon = 1;
             }
 
-            $properties = new stdClass();
-            $properties->name = $this->turnitintooltwo->name.' - '.$part->partname;
-            $properties->description = $this->turnitintooltwo->intro;
-            $properties->courseid = $this->turnitintooltwo->course;
-            $properties->groupid = 0;
-            $properties->userid = 0;
-            $properties->modulename = 'turnitintooltwo';
-            $properties->instance = $this->id;
-            $properties->eventtype = 'due';
-            $properties->timestart = $part->dtdue;
-            $properties->timeduration = 0;
-
             if ($i <= count($partids) && !empty($partdetails->id)) {
                 $part->id = $partids[$i - 1];
                 // Get Current Moodle part data.
@@ -1489,9 +1479,7 @@ class turnitintooltwo_assignment {
             }
 
             if ($createevent == true) {
-                require_once($CFG->dirroot.'/calendar/lib.php');
-                $event = new calendar_event($properties);
-                $event->update($properties, false);
+                $this->create_event($this->id, $part->partname, $part->dtdue);
             }
         }
 
