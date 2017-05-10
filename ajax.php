@@ -880,11 +880,22 @@ switch ($action) {
 
         $v1migration = new v1migration($courseid, $turnitintool);
 
-        $turnitintooltwoid = $v1migration->migrate();
-        $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoid);
+        try {
+            $turnitintooltwoid = $v1migration->migrate();
+            $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoid);
 
-        // The returned CMID will be used for the redirect.
-        if ((int)$turnitintooltwoid > 0) {
-            echo '{ "id": '.$cm->id.' }';
+            // The returned CMID will be used for the redirect.
+            if ((int)$turnitintooltwoid > 0) {
+                echo '{ "id": '.$cm->id.' }';
+                exit();
+            }
+        } catch(Exception $e) {
+            header("HTTP/1.0 400 Bad Request");
+            echo json_encode(array(
+                'error' => get_string('migrationtoolerror', 'turnitintooltwo'),
+                'exception' => $e,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ));
         }
 }

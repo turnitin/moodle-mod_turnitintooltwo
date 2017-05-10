@@ -44,6 +44,15 @@ function migrate(courseid, turnitintoolid) {
             }
             $('#migration_alert').hide();
             window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id;
+        },
+        error: function(error) {
+            var data = error.responseJSON;
+            if ($.colorbox) {
+                $.colorbox.close();
+            }
+            $('#migration_alert').hide();
+            $('#turnitintool_style')
+                .prepend('<div id="full-error" class="box generalbox noticebox">' + data.error + ' ' + data.message + '</div>');
         }
     });
 }
