@@ -598,3 +598,4 @@ $string['migration_event_name'] = 'Migrate V1 Assignment To V2';
 $string['migration_event_desc'] = 'Turnitin Tool V1 Course: {$a->v1_name} ({$a->v1_cm_id}) has been migrated to Turnitin V2 ({$a->v2_cm_id}).';
 $string['migrationtoolprogress'] = 'The current status of your V1 migration is shown below:';
 $string['complete'] = 'Complete';
+$string['migrationtoolerror'] = 'The V1 to V2 migration looks to have failed.';
