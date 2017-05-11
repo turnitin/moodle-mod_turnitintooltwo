@@ -128,7 +128,7 @@ abstract class test_lib extends advanced_testcase
         for ($i=0; $i < $number_of_users; $i++) {
             $new_user = new turnitintooltwo_user( $i+1, ($roles[$i] || 'instructor'), false, 'site', false );
             array_push($return->turnitintooltwo_users, $new_user);
-            $joinid = self::join_test_user($new_user);
+            $joinid = $this->join_test_user($new_user);
             array_push($return->joins, $joinid);
         }
 
