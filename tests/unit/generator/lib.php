@@ -37,6 +37,7 @@ abstract class test_lib extends advanced_testcase
      *
      * @param string $modname Module name (turnitintool or turnitintooltwo)
      * @param int $assignmentid Assignment Module ID
+     * @param int $number_of_parts - The number of parts to create
      *
      * @return array $parts_created - list of part ids that have been added to the assignment
      */
@@ -122,10 +123,7 @@ abstract class test_lib extends advanced_testcase
         for ($i=0; $i < $number_of_users; $i++) {
             $new_user = new turnitintooltwo_user( $i+1, ($roles[$i] || 'instructor'), false, 'site', false );
             array_push($return->turnitintooltwo_users, $new_user);
-        }
-
-        foreach ($turnitintooltwo_users as $turnitintooltwo_user) {
-            $joinid = self::join_test_user($turnitintooltwo_user);
+            $joinid = self::join_test_user($new_user);
             array_push($return->joins, $joinid);
         }
 
