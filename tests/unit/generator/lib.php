@@ -22,12 +22,17 @@ require_once $CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_assignment.clas
 require_once $CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_user.class.php';
 include_once $CFG->dirroot.'/course/lib.php';
 require_once $CFG->dirroot.'/webservice/tests/helpers.php';
+
 /**
 * Turnitintooltwo module data generator class
+* Usage:
+*   - Test class must extend this class.
+*   - Create a test function and call one of these functions from within it using (for example):
+*     <code>$this->make_test_users(5,"learner");</code>
 *
 * @category  Test
 * @package  mod_turnitintooltwo
-* @copyright  2017 David Hatton
+* @copyright  2017 Turnitin
 * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
 abstract class test_lib extends advanced_testcase
@@ -41,7 +46,7 @@ abstract class test_lib extends advanced_testcase
      *
      * @return array $parts_created - list of part ids that have been added to the assignment
      */
-    public static function make_test_parts($modname, $assignmentid, $number_of_parts)
+    public function make_test_parts($modname, $assignmentid, $number_of_parts)
     {
         global $DB;
         $modulevar = $modname.'id';
@@ -72,7 +77,7 @@ abstract class test_lib extends advanced_testcase
      *
      * @return  int $cm - id of the course module added
      */
-    public static function make_test_module($courseid, $modname, $assignmentid)
+    public function make_test_module($courseid, $modname, $assignmentid)
     {
         global $DB;
         // Set up a course module.
@@ -95,7 +100,7 @@ abstract class test_lib extends advanced_testcase
      *
      * @return  int $turnitintooltwo_user_id id of turnitintool user join (for use in get_record queries on turnitintooltwo_users table)
      */
-    public static function join_test_user($turnitintooltwo_user)
+    public function join_test_user($turnitintooltwo_user)
     {
         $mdl_user = advanced_testcase::getDataGenerator()->create_user();
         $tiiUserRecord = new stdClass();
@@ -136,7 +141,7 @@ abstract class test_lib extends advanced_testcase
      *
      * @return turnitintooltwo $turnitintooltwoassignment - an instance of a turnitintooltwoassignment class.
      */
-    public static function make_test_tii_assignment()
+    public function make_test_tii_assignment()
     {
         global $DB;
         $course = advanced_testcase::getDataGenerator()->create_course();
