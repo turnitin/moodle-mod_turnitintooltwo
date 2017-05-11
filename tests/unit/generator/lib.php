@@ -102,7 +102,7 @@ abstract class test_lib extends advanced_testcase
      */
     public function join_test_user($turnitintooltwo_user)
     {
-        $mdl_user = advanced_testcase::getDataGenerator()->create_user();
+        $mdl_user = $this->getDataGenerator()->create_user();
         $tiiUserRecord = new stdClass();
         $tiiUserRecord->userid = $mdl_user->id;
         $tiiUserRecord->turnitin_uid = $turnitintooltwo_user->id;
@@ -144,7 +144,7 @@ abstract class test_lib extends advanced_testcase
     public function make_test_tii_assignment()
     {
         global $DB;
-        $course = advanced_testcase::getDataGenerator()->create_course();
+        $course = $this->getDataGenerator()->create_course();
         $turnitintooltwo = new stdClass();
         $turnitintooltwo->course = $course->id;
         $turnitintooltwo->name = "test V2";
