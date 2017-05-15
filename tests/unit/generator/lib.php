@@ -102,6 +102,7 @@ abstract class test_lib extends advanced_testcase
      */
     public function join_test_user($turnitintooltwo_user)
     {
+        global $DB;
         $mdl_user = $this->getDataGenerator()->create_user();
         $tiiUserRecord = new stdClass();
         $tiiUserRecord->userid = $mdl_user->id;
@@ -121,15 +122,14 @@ abstract class test_lib extends advanced_testcase
      */
     public function make_test_users($number_of_users, $roles)
     {
-        $return = new stdClass();
-        $return->turnitintooltwo_users = array();
-        $return->joins = array();
+        $return['turnitintooltwo_users'] = array();
+        $return['joins'] = array();
 
         for ($i=0; $i < $number_of_users; $i++) {
-            $new_user = new turnitintooltwo_user( $i+1, ($roles[$i] || 'instructor'), false, 'site', false );
-            array_push($return->turnitintooltwo_users, $new_user);
+            $new_user = new turnitintooltwo_user( $i+1, ($roles[$i] || 'Instructor'), false, 'site', false );
+            array_push($return['turnitintooltwo_users'], $new_user);
             $joinid = $this->join_test_user($new_user);
-            array_push($return->joins, $joinid);
+            array_push($return['joins'], $joinid);
         }
 
         return $return;
