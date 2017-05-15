@@ -892,11 +892,19 @@ switch ($action) {
             }
         } catch(Exception $e) {
             header("HTTP/1.0 400 Bad Request");
-            echo json_encode(array(
+
+            $errorresponse = array(
                 'error' => get_string('migrationtoolerror', 'turnitintooltwo'),
-                'exception' => $e,
-                'message' => $e->getMessage(),
-                'trace' => $e->getTrace()
-            ));
+                'message' => $e->getMessage()
+            );
+
+            if ($CFG->debug == DEBUG_DEVELOPER) {
+                $errorresponse = array_merge($errorresponse, array(
+                    'exception' => $e,
+                    'trace' => $e->getTrace()
+                ));
+            }
+
+            echo json_encode($errorresponse);
         }
 }
