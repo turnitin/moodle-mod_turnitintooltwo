@@ -137,7 +137,7 @@ class v1migration {
 		$this->migrate_users();
 
         // Migrate course.
-        $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
+        $v1course = $DB->get_record('turnitintool_courseslol', array('courseid' => $this->courseid));
 
         $v2course = $this->migrate_course($v1course);
 
