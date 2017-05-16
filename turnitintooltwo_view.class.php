@@ -1357,10 +1357,12 @@ class turnitintooltwo_view {
             if ($submission->userid == $USER->id) {
                 $submissionuser = new turnitintooltwo_user($submission->userid, "Learner");
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
-                $submissionuser->join_user_to_class($coursedata->turnitin_cid);
+                if (!$_SESSION["unit_test"]) {
+                    $submissionuser->join_user_to_class($coursedata->turnitin_cid);
+                }
                 // Has the student accepted the EULA?
                 $eulaaccepted = $submissionuser->useragreementaccepted;
-                if ($submissionuser->useragreementaccepted == 0) {
+                if ($submissionuser->useragreementaccepted == 0 && !$_SESSION["unit_test"]) {
                     $eulaaccepted = $submissionuser->get_accepted_user_agreement();
                 }
             }

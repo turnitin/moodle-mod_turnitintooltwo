@@ -163,9 +163,33 @@ abstract class test_lib extends advanced_testcase
         $turnitintooltwo->studentreports = 1;
         $turnitintooltwo->grade = 0;
         $turnitintooltwo->numparts = 1;
+        $turnitintooltwo->anon = 0;
+        $turnitintooltwo->allowlate = 0;
         $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
         
         return $turnitintooltwoassignment;
+    }
+
+    public function enrol_test_user($moodle_user, $course, $role) {
+        global $DB;
+        $roleid = $role == "Instructor";
+        $enrol = enrol_get_plugin('manual');
+        $instance = $DB->get_record("enrol", array('courseid' => $course, 'enrol' => 'manual'));
+        $enrol->enrol_user($instance, $moodle_user, $roleid);
+    }
+
+    public function fake_api_url() {
+        $updatev2 = $DB->get_record("config_plugins", array("plugin" => "turnitintooltwo", "name" => "accountid"));
+        if (!$updatev2) {
+            $updatev2 = new stdClass();
+            $updatev2->plugin = "turnitintooltwo";
+            $updatev2->name = "apiurl";
+            $updatev2->value = "http://www.example.com";
+            $DB->insert_record("config_plugins", $updatev2);
+        } else {
+            $updatev2->value = "http://www.example.com";
+            $DB->update_record("config_plugins", $updatev2);
+        }
     }
 }
