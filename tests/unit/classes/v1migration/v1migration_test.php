@@ -394,6 +394,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         // Verify submission has migrated.
         $v2parts = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
         $this->assertEquals(1, count($v2parts));
+
+        // Verify Session value has been set correctly after migration.
+        $cm = get_coursemodule_from_instance('turnitintooltwo', $_SESSION['migrationtool'][$v1assignment->id]);
+        $this->assertEquals($v2assignmentid, $_SESSION['migrationtool'][$v1assignment->id]);
     }
 
     /**
