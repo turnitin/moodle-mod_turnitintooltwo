@@ -63,7 +63,7 @@ jQuery(document).ready(function($) {
                         {"bSearchable": false},
                         {"bSearchable": false},
                         {"bSearchable": true},
-                        {"bSearchable": true}
+                        {"bSearchable": false}
                     ],
         "fnDrawCallback": function () {
             $('input[name="selectallcb"]').attr('checked', false);
