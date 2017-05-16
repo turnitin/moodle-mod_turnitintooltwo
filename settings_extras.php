@@ -436,6 +436,8 @@ switch ($cmd) {
 
         include_once("classes/v1migration/v1migration.php");
 
+        $output = "";
+
         // Save Migration Tool enabled status.
         $alert = "";
         if ( isset($_REQUEST['enablemigrationtool']) ) {
@@ -449,51 +451,11 @@ switch ($cmd) {
                             array('class' => 'alert alert-'.$msgtype, 'role' => 'alert'));
         }
 
-        // Check that v1 and v2 Account Ids are the same.
-        $v1accountid = $CFG->turnitin_account_id;
-        $v2config = turnitintooltwo_admin_config();
+        // If v1 and v2 accounts are different then diable form elements.
+        $enabled = v1migration::check_account_ids();
 
-        // If they are different then disable the form and show user a warning.
-        $enabled = (int)(boolval($v1accountid == $v2config->accountid));
-        if (!$enabled) {
-
-            // Turn the Migration Tool off if account IDs are different.
-            v1migration::togglemigrationstatus(0);            
-
-            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-            $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'), 
-                            array('class' => 'alert alert-error', 'role' => 'alert'));
-        }
-        
-        // Add hidden value to form so we can auto disable the select box if necessary.
-        $elements[] = array('hidden', 'sameaccount', (int)($enabled));
-        
-        // Get current enabled value.
-        $migrationsettings = array();
-        $currentsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
-        if ($currentsetting) {
-            $migrationsettings = array('enablemigrationtool' => $currentsetting->value);
-        }
-
-        $html = html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
-
-        $html .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
-
-        $options = array(
-                    0 => get_string('migration:off', 'turnitintooltwo'),
-                    1 => get_string('migration:manual', 'turnitintooltwo'),
-                    2 => get_string('migration:auto', 'turnitintooltwo')
-                    );
-
-        $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
-                            'enablemigrationtool', $options, '', '', array('sameaccount', 'eq', '0'));
-        $customdata["elements"] = $elements;
-        $customdata["show_cancel"] = false;
-        
-        $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
-                                                    $customdata);
-        $migrationform->set_data( $migrationsettings );
-        $output .= $migrationform->display();
+        // Output the form to enable the v1 migration.
+        $output .= v1migration::output_settings_form($enabled);
 
         // Display our progress bar.
         $html .= v1migration::output_progress_bar();
