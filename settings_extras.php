@@ -458,11 +458,7 @@ switch ($cmd) {
         if (!$enabled) {
 
             // Turn the Migration Tool off if account IDs are different.
-            $currentsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
-            if ($currentsetting) {
-                $currentsetting->value = 0;
-                $migrationsettings = $DB->update_record('config_plugins', $currentsetting);
-            }
+            v1migration::togglemigrationstatus(0);            
 
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'), 
