@@ -907,4 +907,30 @@ switch ($action) {
 
             echo json_encode($errorresponse);
         }
+
+    case "check_migrated":
+        if (!confirm_sesskey()) {
+            throw new moodle_exception('invalidsesskey', 'error');
+        }
+
+        $turnitintoolid = required_param('turnitintoolid', PARAM_INT);
+        
+
+        // Check if v1 id is linked to a v2 id in the session
+        $turnitintooltwoid = 0;
+        if ( isset( $_SESSION["migrationtool"][$turnitintoolid] ) && is_numeric( $_SESSION["migrationtool"][$turnitintoolid] ) ) {
+            $turnitintooltwoid = intval( $_SESSION["migrationtool"][$turnitintoolid] );
+        }
+        
+        if ( $turnitintooltwoid != 0 ) {
+            $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoid);
+            echo json_encode(array(
+                    'migrated' => true,
+                    'v2id' => $cm->id
+            ));
+        } else {
+            echo json_encode(array(
+                    'migrated' => false
+            ));
+        }
 }
