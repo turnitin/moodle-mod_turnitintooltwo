@@ -486,15 +486,11 @@ switch ($cmd) {
 
         // Delete assignments if the form has been submitted.
         if (isset($assignmentids) && count($assignmentids) > 0) {
-            foreach ($assignmentids as $assignmentid) {
-                $DB->delete_records('turnitintool', array('id' => $assignmentid));
-                $DB->delete_records('turnitintool_parts', array('turnitintoolid' => $assignmentid));
-                $DB->delete_records('turnitintool_submissions', array('turnitintoolid' => $assignmentid));
+            v1migration::turnitintooltwo_delete_assignments($assignmentids);
 
-                $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-                $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
-                                array('class' => 'alert alert-success', 'role' => 'alert'));
-            }
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
+                            array('class' => 'alert alert-success', 'role' => 'alert'));
         }
 
         $html .= html_writer::tag('h2', get_string('migrated_assignment_deletion', 'turnitintooltwo'));
