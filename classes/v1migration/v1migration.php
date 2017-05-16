@@ -467,9 +467,11 @@ class v1migration {
      * @global type $DB
      * @return array return array of assignments to display
      */
-    function turnitintooltwo_getassignments() {
+    public static function turnitintooltwo_getassignments() {
         global $DB;
-        $config = turnitintooltwo_admin_config();
+
+        $config = get_config('turnitintooltwo');
+
         $return = array();
         $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
         $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);

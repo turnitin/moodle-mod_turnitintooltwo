@@ -596,4 +596,120 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $updatedassignment = $DB->get_record('turnitintool', array('id' => $v1assignment->id));
         $this->assertEquals("Test Assignment (Migrated)", $updatedassignment->name);
     }
+
+    /**
+     * Test that the data returned is the data we expect based on the passed in parameters.
+     */
+    public function test_turnitintooltwo_getassignments() {
+        global $DB;
+        $_POST = array();
+        $_POST["sEcho"] = 1;
+        $_POST["iColumns"] = 4;
+        $_POST["sColumns"] = ",,,";
+        $_POST["iDisplayStart"] = 0;
+        $_POST["iDisplayLength"] = 10;
+        $_POST["mDataProp_0"] = 0;
+        $_POST["sSearch_0"] = "";
+        $_POST["bRegex_0"] = "false";
+        $_POST["bSearchable_0"] = "true";
+        $_POST["bSortable_0"] = "false";
+        $_POST["mDataProp_1"] = 1;
+        $_POST["sSearch_1"] = "";
+        $_POST["bRegex_1"] = "false";
+        $_POST["bSearchable_1"] = "true";
+        $_POST["bSortable_1"] = "true";
+        $_POST["mDataProp_2"] = 2;
+        $_POST["sSearch_2"] = "";
+        $_POST["bRegex_2"] = "false";
+        $_POST["bSearchable_2"] = "true";
+        $_POST["bSortable_2"] = "true";
+        $_POST["mDataProp_3"] = 3;
+        $_POST["sSearch_3"] = "";
+        $_POST["bRegex_3"] = "false";
+        $_POST["bSearchable_3"] = "true";
+        $_POST["bSortable_3"] = "true";
+        $_POST["sSearch"] = "";
+        $_POST["bRegex"] = "false";
+        $_POST["iSortCol_0"] = 2;
+        $_POST["sSortDir_0"] = "asc";
+        $_POST["iSortingCols"] = 1;
+        $_POST["_"] = 1494857276336;
+        $numAssignments = 20;
+        $shownRecords = 10;
+        if (!$this->v1installed()) {
+            return false;
+        }
+        $this->resetAfterTest();
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+        // Link course to Turnitin.
+        $courselink = new stdClass();
+        $courselink->courseid = $course->id;
+        $courselink->ownerid = 0;
+        $courselink->turnitin_ctl = "Test Course";
+        $courselink->turnitin_cid = 0;
+        $DB->insert_record('turnitintool_courses', $courselink);
+        $update = new stdClass();
+        $update->migrated = 1;
+        for ($i = 0; $i < $numAssignments; $i++) {
+            // Add variation to assignment titles for use in search test.
+            if ($i % 2 == 0) {
+                $v1assignmenttitle = "Test Assignment " . rand(1, 100);
+            } else {
+                $v1assignmenttitle = "Coursework " . rand(1, 100);
+            }
+            $v1assignment = $this->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+            // Set the first 5 to migrated.
+            if ($i < 5) {
+                $update->id = $v1assignment->id;
+                $DB->update_record('turnitintool', $update);
+            }
+        }
+        // Create our output array.
+        $assignments = $DB->get_records('turnitintool', NULL, "name ASC", "id, name, migrated", $_POST["iDisplayStart"], $_POST["iDisplayLength"]);
+        $outputrows = array();
+        foreach ($assignments as $key => $value) {
+            if ($value->migrated == 1) {
+                $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
+                $migrationValue = "Yes";
+            } else {
+                $checkbox = "";
+                $migrationValue = "No";
+            }
+            $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
+        }
+        $expectedoutput = array("aaData"               => $outputrows, 
+                            "sEcho"                => $_POST["sEcho"], 
+                            "iTotalRecords"       => $_POST["iDisplayLength"], 
+                            "iTotalDisplayRecords" => $numAssignments);
+        $this->assertEquals($_POST["iDisplayLength"], count($assignments));
+        $response = v1migration::turnitintooltwo_getassignments();
+        $this->assertEquals($expectedoutput, $response);
+        // Do a second test for the search box.
+        $_POST["sSearch"] = "coursework";
+        $query = "SELECT id, name, migrated FROM {turnitintool} 
+                  WHERE LOWER(name) LIKE LOWER(:search_term_2)
+                  ORDER BY name asc";
+        $queryparams = array("search_term_2" => "%".$_POST["sSearch"]."%");
+        $assignments = $DB->get_records_sql($query, $queryparams, $_POST["iDisplayStart"], $_POST["iDisplayLength"]);
+        $totalassignments = count($DB->get_records_sql($query, $queryparams));
+        $outputrows = array();
+        foreach ($assignments as $key => $value) {
+            if ($value->migrated == 1) {
+                $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
+                $migrationValue = "Yes";
+            } else {
+                $checkbox = "";
+                $migrationValue = "No";
+            }
+            $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
+        }
+        $expectedoutput = array("aaData"               => $outputrows, 
+                            "sEcho"                => $_POST["sEcho"], 
+                            "iTotalRecords"       => $_POST["iDisplayLength"], 
+                            "iTotalDisplayRecords" => $totalassignments);
+        $this->assertEquals($_POST["iDisplayLength"], count($assignments));
+        $response = v1migration::turnitintooltwo_getassignments();
+        $this->assertEquals($expectedoutput, $response);
+    }
 }
