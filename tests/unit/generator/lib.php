@@ -44,7 +44,7 @@ abstract class test_lib extends advanced_testcase
      * @param int $assignmentid Assignment Module ID
      * @param int $number_of_parts - The number of parts to create
      *
-     * @return array $parts_created - list of part ids that have been added to the assignment
+     * @return array $parts_created - parts added to the assignment listed as partid => partobject
      */
     public function make_test_parts($modname, $assignmentid, $number_of_parts)
     {
@@ -58,12 +58,15 @@ abstract class test_lib extends advanced_testcase
         $part->dtpost = 0;
         $part->maxmarks = 0;
         $part->deleted = 0;
+        $part->submitted = 0;
         
         $parts_created = array();
         for ($i=0; $i < $number_of_parts; $i++) {
             $part->partname = uniqid("Part - ", false);
             $partid = $DB->insert_record($modname.'_parts', $part);
-            array_push($parts_created, $partid);
+            $part->id = $partid;
+            $parts_created[$partid] = $part;
+            $parts_created[$partid]->peermark_assignments = array();
         }
 
         return $parts_created;
@@ -126,7 +129,8 @@ abstract class test_lib extends advanced_testcase
         $return['joins'] = array();
 
         for ($i=0; $i < $number_of_users; $i++) {
-            $new_user = new turnitintooltwo_user( $i+1, ($roles[$i] || 'Instructor'), false, 'site', false );
+            $role = isset($roles[$i]) ? $roles[$i] : 'Instructor';
+            $new_user = new turnitintooltwo_user( $i+1, $role, false, 'site', false );
             array_push($return['turnitintooltwo_users'], $new_user);
             $joinid = $this->join_test_user($new_user);
             array_push($return['joins'], $joinid);

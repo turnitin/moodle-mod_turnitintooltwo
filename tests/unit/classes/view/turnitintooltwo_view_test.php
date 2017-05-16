@@ -76,17 +76,17 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$cmid = $this->make_test_module($turnitintooltwoassignment->turnitintooltwo->course,'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id);
 		$cm = $DB->get_record("course_modules", array('id' => $cmid));
 
-		$testuser = $this->make_test_users(1, "Instructor");
+		$roles = array("Instructor");
+		$testuser = $this->make_test_users(1, $roles);
 		$turnitintooltwouser = $testuser['turnitintooltwo_users'][0];
-		var_dump($turnitintooltwouser->get_user_role());
 
 		$partdetails = $this->make_test_parts('turnitintooltwo',$turnitintooltwoassignment->turnitintooltwo->id, 1);
 		
 		$turnitintooltwoview = new turnitintooltwo_view();
 		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
-		echo $table;
-		// $this->assertContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
-		// $this->assertContains(get_string('studentfirstname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentfirstname','turnitintooltwo').'"');
+		
+		$this->assertContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertContains("<tbody class=\"empty\"><tr><td colspan=\"16\"></td></tr></tbody>", $table, 'datatable did not contain the expected empty tbody');
 	}
  
 	// public function test_inbox_table_student() {
