@@ -588,6 +588,8 @@ class v1migration {
         global $CFG, $DB;
         $output = "";
 
+        require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_form.class.php');
+
         if (!$enabled) {
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'),
