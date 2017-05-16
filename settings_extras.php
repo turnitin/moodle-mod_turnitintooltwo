@@ -437,6 +437,7 @@ switch ($cmd) {
         include_once("classes/v1migration/v1migration.php");
 
         // Save Migration Tool enabled status.
+        $alert = "";
         if ( isset($_REQUEST['enablemigrationtool']) ) {
             $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
 
