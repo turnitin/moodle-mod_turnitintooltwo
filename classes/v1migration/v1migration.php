@@ -590,7 +590,7 @@ class v1migration {
 
         if (!$enabled) {
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-            $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'), 
+            $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'),
                             array('class' => 'alert alert-error', 'role' => 'alert'));
         }
 
