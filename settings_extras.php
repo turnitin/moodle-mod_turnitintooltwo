@@ -449,7 +449,30 @@ switch ($cmd) {
                             array('class' => 'alert alert-'.$msgtype, 'role' => 'alert'));
         }
 
-        // Get current enabled value;
+        // Check that v1 and v2 Account Ids are the same.
+        $v1accountid = $CFG->turnitin_account_id;
+        $v2config = turnitintooltwo_admin_config();
+
+        // If they are different then disable the form and show user a warning.
+        $enabled = (int)(boolval($v1accountid == $v2config->accountid));
+        if (!$enabled) {
+
+            // Turn the Migration Tool off if account IDs are different.
+            $currentsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
+            if ($currentsetting) {
+                $currentsetting->value = 0;
+                $migrationsettings = $DB->update_record('config_plugins', $currentsetting);
+            }
+
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'), 
+                            array('class' => 'alert alert-error', 'role' => 'alert'));
+        }
+        
+        // Add hidden value to form so we can auto disable the select box if necessary.
+        $elements[] = array('hidden', 'sameaccount', (int)($enabled));
+        
+        // Get current enabled value.
         $migrationsettings = array();
         $currentsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
         if ($currentsetting) {
@@ -467,7 +490,7 @@ switch ($cmd) {
                     );
 
         $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
-                            'enablemigrationtool', $options);
+                            'enablemigrationtool', $options, '', '', array('sameaccount', 'eq', '0'));
         $customdata["elements"] = $elements;
         $customdata["show_cancel"] = false;
         
