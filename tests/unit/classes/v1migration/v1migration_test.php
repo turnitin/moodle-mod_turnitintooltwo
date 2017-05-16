@@ -603,6 +603,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     public function test_turnitintooltwo_getassignments() {
         global $DB;
 
+        if (!$this->v1installed()) {
+            return false;
+        }
+
         $_POST = array();
         $_POST["sEcho"] = 1;
         $_POST["iColumns"] = 4;
@@ -720,6 +724,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
      */
     public function test_turnitintooltwo_delete_assignments() {
         global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
 
         // Generate a new course.
         $course = $this->getDataGenerator()->create_course();
