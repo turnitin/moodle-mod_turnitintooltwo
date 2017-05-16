@@ -171,6 +171,15 @@ abstract class test_lib extends advanced_testcase
         return $turnitintooltwoassignment;
     }
 
+    /**
+     * enrols a moodle user onto a moodle course.
+     *
+     * @param int $moodle_user - the ID for the moodle user to be enrolled
+     * @param int $course - the ID for the course on which to enrol $moodle_user
+     * @param string $role - either "Instructor" or "Learner"
+     * 
+     * @return void
+     */
     public function enrol_test_user($moodle_user, $course, $role) {
         global $DB;
         $roleid = $role == "Instructor";
@@ -179,7 +188,12 @@ abstract class test_lib extends advanced_testcase
         $enrol->enrol_user($instance, $moodle_user, $roleid);
     }
 
-    public function fake_api_url() {
+    /**
+     * Creates a dummy API url in the moodle plugin config table.
+     *
+     * @return void
+     */
+    public function dummy_api_url() {
         $updatev2 = $DB->get_record("config_plugins", array("plugin" => "turnitintooltwo", "name" => "accountid"));
         if (!$updatev2) {
             $updatev2 = new stdClass();
