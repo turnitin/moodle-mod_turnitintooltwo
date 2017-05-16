@@ -549,12 +549,12 @@ class v1migration {
      * @param array $assignmentids The assignment IDs to delete.
      */
     public static function turnitintooltwo_delete_assignments($assignmentids) {
-        global $DB;
+        global $CFG, $DB;
+
+        require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
 
         foreach ($assignmentids as $assignmentid) {
-            $DB->delete_records('turnitintool', array('id' => $assignmentid));
-            $DB->delete_records('turnitintool_parts', array('turnitintoolid' => $assignmentid));
-            $DB->delete_records('turnitintool_submissions', array('turnitintoolid' => $assignmentid));
+            turnitintool_delete_instance($assignmentid);
         }
     }
 }
