@@ -211,6 +211,17 @@ switch ($action) {
         }
         break;
 
+    case "get_assignments":
+        include_once("classes/v1migration/v1migration.php");
+
+        $PAGE->set_context(context_system::instance());
+        if (is_siteadmin()) {
+            echo json_encode(v1migration::turnitintooltwo_getassignments());
+        } else {
+            throw new moodle_exception('accessdenied', 'admin');
+        }
+        break;
+
     case "initialise_redraw":
         $PAGE->set_context(context_system::instance());
         $return["aaData"] = array();
