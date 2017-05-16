@@ -460,4 +460,101 @@ class v1migration {
             $v2cm->id
         );
     }
+
+    /**
+     * Get assignments for migrated data table. Called from ajax.php via turnitintooltwo_extra.min.js.
+     *
+     * @global type $DB
+     * @return array return array of assignments to display
+     */
+    public static function turnitintooltwo_getassignments() {
+        global $DB;
+
+        $config = get_config('turnitintooltwo');
+
+        $return = array();
+        $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
+        $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
+        $secho = optional_param('sEcho', 1, PARAM_INT);
+        $displaycolumns = array('', 'id', 'name', 'migrated');
+        $queryparams = array();
+        // Add sort to query.
+        $isortcol[0] = optional_param('iSortCol_0', null, PARAM_INT);
+        $isortingcols = optional_param('iSortingCols', 0, PARAM_INT);
+        $queryorder = "";
+        if (!is_null( $isortcol[0])) {
+            $queryorder = " ORDER BY ";
+            $startorder = $queryorder;
+            for ($i = 0; $i < intval($isortingcols); $i++) {
+                $isortcol[$i] = optional_param('iSortCol_'.$i, null, PARAM_INT);
+                $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
+                $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
+                if ($bsortable[$i] == "true") {
+                    $queryorder .= $displaycolumns[$isortcol[$i]]." ".$ssortdir[$i].", ";
+                }
+            }
+            if ($queryorder == $startorder) {
+                $queryorder = "";
+            } else {
+                $queryorder = substr_replace($queryorder, "", -2);
+            }
+        }
+        // Add search to query.
+        $ssearch = optional_param('sSearch', '', PARAM_TEXT);
+        $querywhere = ' WHERE ( ';
+        for ($i = 0; $i < count($displaycolumns); $i++) {
+            $bsearchable[$i] = optional_param('bSearchable_'.$i, null, PARAM_TEXT);
+            if (!is_null($bsearchable[$i]) && $bsearchable[$i] == "true" && $ssearch != '') {
+                $include = true;
+                if ($i <= 1) {
+                    if (!is_int($ssearch) || is_null($ssearch)) {
+                        $include = false;
+                    }
+                }
+                if ($include) {
+                    $querywhere .= $DB->sql_like($displaycolumns[$i], ':search_term_'.$i, false)." OR ";
+                    $queryparams['search_term_'.$i] = '%'.$ssearch.'%';
+                }
+            }
+        }
+        if ( $querywhere == ' WHERE ( ' ) {
+            $querywhere = "";
+        } else {
+            $querywhere = substr_replace( $querywhere, "", -3 );
+            $querywhere .= " )";
+        }
+        $query = "SELECT id, name, migrated FROM {turnitintool}".$querywhere.$queryorder;
+        $assignments = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
+        $totalassignments = count($DB->get_records_sql($query, $queryparams));
+        $return["aaData"] = array();
+        foreach ($assignments as $assignment) {
+            if ($assignment->migrated == 1) {
+                $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
+                $assignment->migrated = get_string('yes', 'turnitintooltwo');
+            } else {
+                $checkbox = "";
+                $assignment->migrated = get_string('no', 'turnitintooltwo');
+            }
+            $return["aaData"][] = array($checkbox, $assignment->id, format_string($assignment->name), $assignment->migrated);
+        }
+        $return["sEcho"] = $secho;
+        $return["iTotalRecords"] = count($assignments);
+        $return["iTotalDisplayRecords"] = $totalassignments;
+        return $return;
+    }
+
+    /**
+     * Delete a list of assignments.
+     *
+     * @param array $assignmentids The assignment IDs to delete.
+     */
+    public static function turnitintooltwo_delete_assignments($assignmentids) {
+        global $CFG, $DB;
+
+        require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
+
+        foreach ($assignmentids as $assignmentid) {
+            turnitintool_delete_instance($assignmentid);
+        }
+    }
 }

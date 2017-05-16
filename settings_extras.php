@@ -437,6 +437,7 @@ switch ($cmd) {
         include_once("classes/v1migration/v1migration.php");
 
         // Save Migration Tool enabled status.
+        $alert = "";
         if ( isset($_REQUEST['enablemigrationtool']) ) {
             $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
 
@@ -444,7 +445,7 @@ switch ($cmd) {
             $msgtype = ($saved) ? 'success' : 'error';
 
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-            $output .= html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'), 
+            $alert = html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'), 
                             array('class' => 'alert alert-'.$msgtype, 'role' => 'alert'));
         }
 
@@ -455,9 +456,9 @@ switch ($cmd) {
             $migrationsettings = array('enablemigrationtool' => $currentsetting->value);
         }
 
-        $output .= html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
+        $html = html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
 
-        $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
+        $html .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
 
         $options = array(
                     0 => get_string('migration:off', 'turnitintooltwo'),
@@ -476,7 +477,48 @@ switch ($cmd) {
         $output .= $migrationform->display();
 
         // Display our progress bar.
-        $output .= v1migration::output_progress_bar();
+        $html .= v1migration::output_progress_bar();
+
+        $jsrequired = true;
+
+        $assignmentids = (isset($_REQUEST['assignmentids'])) ? $_REQUEST["assignmentids"] : array();
+        $assignmentids = clean_param_array($assignmentids, PARAM_INT);
+
+        // Delete assignments if the form has been submitted.
+        if (isset($assignmentids) && count($assignmentids) > 0) {
+            v1migration::turnitintooltwo_delete_assignments($assignmentids);
+
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
+                            array('class' => 'alert alert-success', 'role' => 'alert'));
+        }
+
+        $html .= html_writer::tag('h2', get_string('migrated_assignment_deletion', 'turnitintooltwo'));
+
+        $table = new html_table();
+        $table->id = "migrationTable";
+        $rows = array();
+
+        // Do the table headers.
+        $cells = array();
+        $cells[0] = new html_table_cell(html_writer::checkbox('selectallcb', 1, false));
+        $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
+        $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
+        $cells['title'] = new html_table_cell(get_string('title', 'turnitintooltwo'));
+        $cells['migrationstatus'] = new html_table_cell(get_string('migration_status', 'turnitintooltwo'));
+
+        $table->head = $cells;
+
+        $elements2[] = array('html', html_writer::table($table));
+        $customdata2["elements"] = $elements2;
+        $customdata2["show_cancel"] = false;
+        $customdata2["submit_label"] = get_string('delete_selected', 'turnitintooltwo');
+
+        $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration', $customdata2);
+
+        $html .= $optionsform->display();
+
+        $output .= $alert . $html;
 
         break;
 }
