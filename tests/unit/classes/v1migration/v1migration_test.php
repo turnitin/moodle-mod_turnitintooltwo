@@ -602,6 +602,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
      */
     public function test_turnitintooltwo_getassignments() {
         global $DB;
+
         $_POST = array();
         $_POST["sEcho"] = 1;
         $_POST["iColumns"] = 4;
@@ -679,9 +680,9 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
         }
         $expectedoutput = array("aaData"               => $outputrows, 
-                            "sEcho"                => $_POST["sEcho"], 
-                            "iTotalRecords"       => $_POST["iDisplayLength"], 
-                            "iTotalDisplayRecords" => $numAssignments);
+                                "sEcho"                => $_POST["sEcho"], 
+                                "iTotalRecords"        => $_POST["iDisplayLength"], 
+                                "iTotalDisplayRecords" => $numAssignments);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
         $this->assertEquals($expectedoutput, $response);
@@ -705,11 +706,46 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
         }
         $expectedoutput = array("aaData"               => $outputrows, 
-                            "sEcho"                => $_POST["sEcho"], 
-                            "iTotalRecords"       => $_POST["iDisplayLength"], 
-                            "iTotalDisplayRecords" => $totalassignments);
+                                "sEcho"                => $_POST["sEcho"], 
+                                "iTotalRecords"        => $_POST["iDisplayLength"], 
+                                "iTotalDisplayRecords" => $totalassignments);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
         $this->assertEquals($expectedoutput, $response);
+    }
+
+
+    /**
+     * Test that assignments are deleted when given a list of assignments.
+     */
+    public function test_turnitintooltwo_delete_assignments() {
+        global $DB;
+
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+
+        // Create some V1 assignments.
+        $v1assignment1 = $this->make_test_module($course->id, 'turnitintool', "Assignment 1", 5);
+        $v1assignment2 = $this->make_test_module($course->id, 'turnitintool', "Assignment 2", 5);
+        $v1assignment3 = $this->make_test_module($course->id, 'turnitintool', "Assignment 3", 5);
+
+        // Check that the assignments have been created correctly.
+        $v1assignments = $DB->get_records('turnitintool');
+        $v1parts = $DB->get_records('turnitintool_parts');
+        $v1submissions = $DB->get_records('turnitintool_submissions');
+        $this->assertEquals(3, count($v1assignments));
+        $this->assertEquals(3, count($v1parts));
+        $this->assertEquals(15, count($v1submissions));
+
+        // Delete the assignments.
+        $response = v1migration::turnitintooltwo_delete_assignments(array($v1assignment1->id, $v1assignment2->id, $v1assignment3->id));
+
+        // Verify that they have been deleted.
+        $v1assignments = $DB->get_records('turnitintool');
+        $v1parts = $DB->get_records('turnitintool_parts');
+        $v1submissions = $DB->get_records('turnitintool_submissions');
+        $this->assertEquals(0, count($v1assignments));
+        $this->assertEquals(0, count($v1parts));
+        $this->assertEquals(0, count($v1submissions));
     }
 }

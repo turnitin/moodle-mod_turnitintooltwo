@@ -925,7 +925,6 @@ switch ($action) {
         }
 
         $turnitintoolid = required_param('turnitintoolid', PARAM_INT);
-        
 
         // Check if v1 id is linked to a v2 id in the session
         $turnitintooltwoid = 0;

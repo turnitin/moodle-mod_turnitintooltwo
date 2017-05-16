@@ -542,4 +542,19 @@ class v1migration {
         $return["iTotalDisplayRecords"] = $totalassignments;
         return $return;
     }
+
+    /**
+     * Delete a list of assignments.
+     *
+     * @param array $assignmentids The assignment IDs to delete.
+     */
+    public static function turnitintooltwo_delete_assignments($assignmentids) {
+        global $DB;
+
+        foreach ($assignmentids as $assignmentid) {
+            $DB->delete_records('turnitintool', array('id' => $assignmentid));
+            $DB->delete_records('turnitintool_parts', array('turnitintoolid' => $assignmentid));
+            $DB->delete_records('turnitintool_submissions', array('turnitintoolid' => $assignmentid));
+        }
+    }
 }
