@@ -201,7 +201,14 @@ class v1migration {
             $this->update_titles_post_migration($turnitintooltwoid);
         }
 
-        return (is_int($turnitintooltwoid)) ? $turnitintooltwoid : false;
+        // Link the v2 id to the v1 id in the session.
+        if (is_int($turnitintooltwoid)) {
+            $_SESSION["migrationtool"][$this->v1assignment->id] = $turnitintooltwoid;
+
+            return $turnitintooltwoid;
+        } else {
+            return false;
+        }
 	}
 
     /**
