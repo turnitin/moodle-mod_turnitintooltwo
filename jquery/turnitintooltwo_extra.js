@@ -41,6 +41,35 @@ jQuery(document).ready(function($) {
         }
     });
 
+    // Configure the unlink and relink users datatable in the plugin settings area.
+    $('#migrationTable').dataTable({
+        "bDestroy": true,
+        "bProcessing": true,
+        "bServerSide": true,
+        "oLanguage": dataTablesLang,
+        "aaSorting": [[ 2, "asc" ]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "sAjaxSource": "ajax.php?action=get_assignments",
+        "aoColumns": [
+                        {"bSortable": false,
+                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                $(nTd).addClass('centered_cell');
+                            }},
+                        {"bSortable": true, "sClass": "centered_cell"},
+                        null,
+                        {"bSortable": true, "sClass": "centered_cell"}
+                     ],
+        "aoColumnDefs": [
+                        {"bSearchable": false},
+                        {"bSearchable": false},
+                        {"bSearchable": true},
+                        {"bSearchable": true}
+                    ],
+        "fnDrawCallback": function () {
+            $('input[name="selectallcb"]').attr('checked', false);
+        }
+    });
+
     // Configure the files datatable in the plugin settings area, group the files by assignment.
     $('#filesTable').dataTable( {
         "bDestroy": true,
