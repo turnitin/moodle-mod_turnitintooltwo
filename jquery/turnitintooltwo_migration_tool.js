@@ -53,6 +53,12 @@ function migrate(courseid, turnitintoolid) {
             $('#migration_alert').hide();
             $('#turnitintool_style')
                 .prepend('<div id="full-error" class="box generalbox noticebox">' + data.error + ' ' + data.message + '</div>');
+
+            // Check if we have a stack trace included.
+            if (data.trace.length > 0) {
+                console.error(data.message);
+                console.error(JSON.stringify(data.trace, null, 4));
+            }
         }
     });
 }
