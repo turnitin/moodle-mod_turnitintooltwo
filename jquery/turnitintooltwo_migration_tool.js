@@ -34,7 +34,7 @@ $('.dontmigrate_link').click(function () {
 function displayMigrationModal() {
     // Only display the modal during a manual migration.
     if ($("#migrate_type").data("turnitintoolid") != $("#migrate_type").data("lastasked")) {
-        $.colorbox({width: 500, height: 500, inline:true, opacity: "0.7", href:"#migration_alert",
+        $.colorbox({width: 550, height: 600, inline:true, opacity: "0.7", href:"#migration_alert",
         onLoad: function() {
             $('#asktomigrate').show();
             lightBoxCloseButton();
