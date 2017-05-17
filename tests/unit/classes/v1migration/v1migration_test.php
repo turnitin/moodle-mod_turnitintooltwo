@@ -607,6 +607,8 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             return false;
         }
 
+        $this->resetAfterTest();
+
         $_POST = array();
         $_POST["sEcho"] = 1;
         $_POST["iColumns"] = 4;
@@ -631,7 +633,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $_POST["mDataProp_3"] = 3;
         $_POST["sSearch_3"] = "";
         $_POST["bRegex_3"] = "false";
-        $_POST["bSearchable_3"] = "true";
+        $_POST["bSearchable_3"] = "false";
         $_POST["bSortable_3"] = "true";
         $_POST["sSearch"] = "";
         $_POST["bRegex"] = "false";
@@ -641,10 +643,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $_POST["_"] = 1494857276336;
         $numAssignments = 20;
         $shownRecords = 10;
-        if (!$this->v1installed()) {
-            return false;
-        }
-        $this->resetAfterTest();
+        
         // Generate a new course.
         $course = $this->getDataGenerator()->create_course();
         // Link course to Turnitin.
@@ -755,5 +754,52 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $this->assertEquals(0, count($v1assignments));
         $this->assertEquals(0, count($v1parts));
         $this->assertEquals(0, count($v1submissions));
+    }
+
+    /**
+     * Test that the v1 and v2 account ids being used are the same.
+     */
+    public function test_check_account_ids() {
+        global $CFG, $DB;
+        $this->resetAfterTest();
+
+        // Set Account Id for v1.
+        set_config('turnitin_account_id', 1234);
+
+        // Set Account Id for v2.
+        $updatev2 = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'accountid'));
+        if (!$updatev2) {
+            $updatev2 = new stdClass();
+            $updatev2->plugin = "turnitintooltwo";
+            $updatev2->name = "accountid";
+            $updatev2->value = 1234;
+            $DB->insert_record('config_plugins', $updatev2);
+        } else {
+            $updatev2->value = 1234;
+            $DB->update_record('config_plugins', $updatev2);
+        }
+
+        // Account IDs should be the same.
+        $enabled = v1migration::check_account_ids();
+        $this->assertTrue($enabled);
+
+        // Set different account ID for v1.
+        set_config('turnitin_account_id', 5678);
+
+        // Account IDs should be different.
+        $enabled = v1migration::check_account_ids();
+        $this->assertFalse($enabled);
+    }
+
+    /**
+     * Test that the v1 and v2 account ids being used are the same.
+     */
+    public function test_output_settings_form() {
+        $this->resetAfterTest();
+
+        // Test that warning message is shown to user if they aren't allowed to edit migration tool status.
+        $form = v1migration::output_settings_form(false);
+
+        $this->assertContains(get_string('migrationtoolaccounterror', 'turnitintooltwo'), $form);
     }
 }

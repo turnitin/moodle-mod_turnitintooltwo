@@ -436,6 +436,8 @@ switch ($cmd) {
 
         include_once("classes/v1migration/v1migration.php");
 
+        $html = "";
+
         // Save Migration Tool enabled status.
         $alert = "";
         if ( isset($_REQUEST['enablemigrationtool']) ) {
@@ -449,32 +451,11 @@ switch ($cmd) {
                             array('class' => 'alert alert-'.$msgtype, 'role' => 'alert'));
         }
 
-        // Get current enabled value;
-        $migrationsettings = array();
-        $currentsetting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
-        if ($currentsetting) {
-            $migrationsettings = array('enablemigrationtool' => $currentsetting->value);
-        }
+        // If v1 and v2 accounts are different then diable form elements.
+        $enabled = v1migration::check_account_ids();
 
-        $html = html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
-
-        $html .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
-
-        $options = array(
-                    0 => get_string('migration:off', 'turnitintooltwo'),
-                    1 => get_string('migration:manual', 'turnitintooltwo'),
-                    2 => get_string('migration:auto', 'turnitintooltwo')
-                    );
-
-        $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
-                            'enablemigrationtool', $options);
-        $customdata["elements"] = $elements;
-        $customdata["show_cancel"] = false;
-        
-        $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
-                                                    $customdata);
-        $migrationform->set_data( $migrationsettings );
-        $output .= $migrationform->display();
+        // Output the form to enable the v1 migration.
+        $html .= v1migration::output_settings_form($enabled);
 
         // Display our progress bar.
         $html .= v1migration::output_progress_bar();
