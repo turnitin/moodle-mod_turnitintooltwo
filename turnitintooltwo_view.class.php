@@ -448,7 +448,7 @@ class turnitintooltwo_view {
             $cells["studentlastname"] = new html_table_cell( get_string('studentlastname', 'turnitintooltwo'));
             $cells["studentlastname"]->attributes["class"] = 'sorting_name sorting_name_last';
         }
-        if ($istutor){
+        if ($istutor) {
             $cells["student"] = new html_table_cell(
                 html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 3 )).
                 html_writer::tag('div', ' / '.get_string('studentlastname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-lastname sorting', 'data-col' => 2))
