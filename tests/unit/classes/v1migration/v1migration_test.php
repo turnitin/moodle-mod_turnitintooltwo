@@ -29,7 +29,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
     /**
      * Test that users get migrated from the v1 to the v2 user table.
      */
-    public function test_migrate_users() {
+    public function test_migrate_user() {
         global $DB;
 
         if (!$this->v1installed()) {
@@ -54,7 +54,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $DB->insert_record('turnitintool_users', $turnitintooluser);
 
         // Migrate users to v2 tables.
-        $v1migration->migrate_users();
+        $v1migration->migrate_user($user1->id);
 
         $turnitintooltwousers = $DB->get_records('turnitintooltwo_users', array('userid' => $user1->id));
 
