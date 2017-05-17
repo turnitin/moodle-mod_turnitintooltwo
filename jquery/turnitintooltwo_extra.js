@@ -41,6 +41,11 @@ jQuery(document).ready(function($) {
         }
     });
 
+    // Disable the submit button if Turnitin v1 and v2 account ids are different in Migration Tool.
+    if ( $('input[name="sametiiaccounts"]').val() == "0" ) {
+        $('input[name="sametiiaccounts"]').closest('form').find('input[name="submitbutton"]').addClass('disabled');
+    }
+
     // Configure the unlink and relink users datatable in the plugin settings area.
     $('#migrationTable').dataTable({
         "bDestroy": true,
