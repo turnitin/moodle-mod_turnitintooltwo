@@ -436,7 +436,7 @@ switch ($cmd) {
 
         include_once("classes/v1migration/v1migration.php");
 
-        $output = "";
+        $html = "";
 
         // Save Migration Tool enabled status.
         $alert = "";
@@ -455,7 +455,7 @@ switch ($cmd) {
         $enabled = v1migration::check_account_ids();
 
         // Output the form to enable the v1 migration.
-        $output .= v1migration::output_settings_form($enabled);
+        $html .= v1migration::output_settings_form($enabled);
 
         // Display our progress bar.
         $html .= v1migration::output_progress_bar();
