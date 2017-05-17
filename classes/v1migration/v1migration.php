@@ -114,7 +114,7 @@ class v1migration {
                                         array('id' => 'migrating', 'class' => 'hide'));
 
         $asktomigrate = html_writer::tag('div', html_writer::tag('p', get_string('migrationtooltitle', 'turnitintooltwo'), array('class' => 'migrationtitle'))
-                                        . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'))
+                                        . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'), array('class' => 'migrationtoolinfo'))
                                         . $migratelink . $dontmigratelink
                                         , array('id' => 'asktomigrate', 'class' => 'hide'));
 
