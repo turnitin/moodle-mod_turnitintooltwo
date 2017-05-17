@@ -1109,7 +1109,6 @@ class turnitintooltwo_view {
                     $studentname = html_writer::link('.unanonymise_form',
                                         get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "unanonymise", "id" => "submission_".$submission->submission_objectid));
-                    // $studentfirstname = get_string('anonenabled', 'turnitintooltwo');
                     $studentlastname = get_string('anonenabled', 'turnitintooltwo');
 
                 } else if (($parts[$partid]->dtpost <= time() OR !empty($submission->submission_unanon)) AND
@@ -1118,7 +1117,6 @@ class turnitintooltwo_view {
                     $studentname = html_writer::link(
                                     $CFG->wwwroot."/user/view.php?id=".$submission->userid."&course="
                                         .$turnitintooltwoassignment->turnitintooltwo->course, $submission->fullname);
-                    // $studentfirstname = $submission->firstname;
                     $studentlastname = $submission->lastname;
                 } else if (($parts[$partid]->dtpost <= time() OR
                                 !empty($submission->submission_unanon)) AND !empty($submission->nmoodle)) {
@@ -1126,13 +1124,11 @@ class turnitintooltwo_view {
                     $studentname = html_writer::tag("span",
                                         $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                         array("class" => "italic"));
-                    // $studentfirstname = $submission->firstname;
                     $studentlastname = $submission->lastname;
                 } else {
                     // User has not made a submission.
                     $studentname = html_writer::tag("span", get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "italic"));
-                    // $studentfirstname = $studentname;
                     $studentlastname = $studentname;
                 }
             } else {
@@ -1141,7 +1137,6 @@ class turnitintooltwo_view {
                     $studentname = html_writer::link($CFG->wwwroot."/user/view.php?id=".$submission->userid."&course=".
                                                 $turnitintooltwoassignment->turnitintooltwo->course,
                                                 $submission->fullname);
-                    // $studentfirstname = $submission->firstname;
                     $studentlastname = $submission->lastname;
                 } else if (!empty($submission->nmoodle) && substr($submission->userid, 0, 3) != 'nm-') {
                     // Moodle User not enrolled on this course as a student.
@@ -1149,14 +1144,12 @@ class turnitintooltwo_view {
                                             $turnitintooltwoassignment->turnitintooltwo->course,
                                             $submission->fullname." (".get_string('nonenrolledstudent', 'turnitintooltwo').")",
                                                 array("class" => "italic"));
-                    // $studentfirstname = $submission->firstname;
                     $studentlastname = $submission->lastname;
                 } else {
                     // Non Moodle user.
                     $studentname = html_writer::tag("span",
                                                 $submission->fullname." (".get_string('nonmoodleuser', 'turnitintooltwo').")",
                                                 array("class" => "italic"));
-                    // $studentfirstname = $submission->firstname;
                     $studentlastname = $submission->lastname;
                 }
             }
