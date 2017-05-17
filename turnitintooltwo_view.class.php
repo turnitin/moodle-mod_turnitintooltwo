@@ -1438,7 +1438,6 @@ class turnitintooltwo_view {
         }
 
         // The studentfirstname and studentlastname fields are for soting only, and thus should not be present if the user is a student.
-        // die(var_dump($turnitintooltwouser));
         if (!$istutor) {
             $data = array($partid, $checkbox, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         } else {
