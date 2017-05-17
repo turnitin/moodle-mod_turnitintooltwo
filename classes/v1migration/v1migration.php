@@ -133,9 +133,6 @@ class v1migration {
 	public function migrate() {
 		global $DB;
 
-		// Migrate Users.
-		$this->migrate_users();
-
         // Migrate course.
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
 
@@ -182,6 +179,9 @@ class v1migration {
 
                 unset($v1partsubmission->turnitintoolid);
                 unset($v1partsubmission->id);
+
+                // Migrate user to v2 if necessary.
+                $this->migrate_user($v1partsubmission->userid);
 
                 $turnitintooltwosubmissionid = $DB->insert_record("turnitintooltwo_submissions", $v1partsubmission);
             }
@@ -290,18 +290,18 @@ class v1migration {
     }
 
 	/**
-	 *  Migrate the users from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
+	 * Migrate a user from v1 to v2 - only if the user does not already exist in turnitintooltwo_users.
+     *
+     * @param int $userid - the moodle user id to migrate
 	 */
-	public function migrate_users() {
+	public function migrate_user($userid) {
 		global $DB;
 
-        $turnitintoolusers = $DB->get_records('turnitintool_users', NULL, NULL, 'userid, turnitin_uid, turnitin_utp');
-        foreach ($turnitintoolusers as $turnitintooluser) {
-            unset($turnitintooluser->id);
+        // Get user link.
+        $turnitintooluser = $DB->get_record("turnitintool_users", array('userid' => $userid), 'userid, turnitin_uid, turnitin_utp');
 
-            if (!$DB->record_exists("turnitintooltwo_users", array('userid' => $turnitintooluser->userid))) {
-                $DB->insert_record("turnitintooltwo_users", $turnitintooluser);
-            }
+        if ($turnitintooluser) {
+            $DB->insert_record("turnitintooltwo_users", $turnitintooluser);
         }
 	}
 
