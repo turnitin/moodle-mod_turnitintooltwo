@@ -582,15 +582,15 @@ class v1migration {
 
     /**
      * Output the settings form to enable v1 migration.
-     * @param $enabled - whether the settings form should be enabled.
+     * @param $enablesetting - whether the settings form should be enabled.
      */
-    public static function output_settings_form($enabled = true) {
+    public static function output_settings_form($enablesetting = true) {
         global $CFG, $DB;
         $output = "";
 
         require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_form.class.php');
 
-        if (!$enabled) {
+        if (!$enablesetting) {
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $output .= html_writer::tag('div', $close.get_string('migrationtoolaccounterror', 'turnitintooltwo'),
                             array('class' => 'alert alert-error', 'role' => 'alert'));
@@ -607,8 +607,8 @@ class v1migration {
 
         $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
 
-        // Add hidden value to form so we can auto disable the select box if necessary.
-        $elements[] = array('hidden', 'sametiiaccounts', (int)($enabled));
+        // Add hidden value to form so we can disable the select box if necessary.
+        $elements[] = array('hidden', 'sametiiaccount', (int)$enablesetting);
 
         $options = array(
                     0 => get_string('migration:off', 'turnitintooltwo'),
@@ -617,7 +617,7 @@ class v1migration {
                     );
 
         $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
-                            'enablemigrationtool', $options, '', '', array('sametiiaccounts', 'eq', '0'));
+                            'enablemigrationtool', $options);
         $customdata["elements"] = $elements;
         $customdata["show_cancel"] = false;
         
