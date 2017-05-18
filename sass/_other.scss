@@ -141,3 +141,9 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .mod_turnitintooltwo iframe {
     border: 1px solid $light-grey;
 }
+
+.data-table-splitter {
+    float: left;
+    padding-right: 20px;
+}
+.yellowtest{color: yellow;}
