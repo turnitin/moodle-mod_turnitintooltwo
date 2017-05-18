@@ -612,8 +612,9 @@ class v1migration {
 
         $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
 
-        // Add hidden value to form so we can disable the select box if necessary.
-        $elements[] = array('hidden', 'sametiiaccount', (int)$enablesetting);
+        // Add hidden value to page so we can disable the select box if necessary.
+        $output .= html_writer::tag('div', '', 
+                            array('id' => 'sametiiaccount', 'data-sametiiaccount' => (int)$enablesetting, 'class' => 'hidden'));
 
         $options = array(
                     0 => get_string('migration:off', 'turnitintooltwo'),
@@ -624,10 +625,12 @@ class v1migration {
         $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
                             'enablemigrationtool', $options);
         $customdata["elements"] = $elements;
+        $customdata["disable_form_change_checker"] = true;
         $customdata["show_cancel"] = false;
         
         $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                                                     $customdata);
+
         $migrationform->set_data( $migrationsettings );
         $output .= $migrationform->display();
 
