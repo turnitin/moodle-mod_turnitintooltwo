@@ -550,7 +550,11 @@ class v1migration {
         require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
 
         foreach ($assignmentids as $assignmentid) {
+            $cm = get_coursemodule_from_instance('turnitintool', $assignmentid);
+
             turnitintool_delete_instance($assignmentid);
+
+            rebuild_course_cache($cm->course);
         }
     }
 
