@@ -214,6 +214,8 @@ if (!empty($action)) {
                 throw new moodle_exception('invalidsesskey', 'error');
             }
 
+            $PAGE->set_url($url);
+
             $do = "submission_success";
             $error = false;
 
