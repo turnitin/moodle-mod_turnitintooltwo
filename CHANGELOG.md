@@ -1,3 +1,19 @@
+### Date:		2017-May-XX
+### Release:	v201705XXXX
+
+- Modified the name sorting on the assignment inbox to allow sorting by surname and firstname.
+- Escape any HTML or Javascript from submission extract before displaying successful submission message.
+- Strip files and images from description in calendar view.
+- Remove filepaths from error messages unless debugging is set to developer level.
+- Fix bug where checkbox settings weren't being saved.
+- Fix course reset failing due to bug introduced by extending assignment titles.
+- Fix the unpopulated drop down menus in support wizard.
+- Add further unit test infrastructure.
+- No longer send digital receipt message for empty grading template submissions.
+- Assign Mexican Spanish to Spanish in Turnitin rather than defaulting to English.
+
+---
+
 ### Date:		2017-March-13
 ### Release:	v2017031301
 
@@ -27,7 +43,6 @@
 **Resolved bug affecting assignment inbox access** - If a student had two submissions for one assignment part in Turnitin, the Moodle assignment inbox would continue to load and hang with the error message: Loading data from Turnitin. We resolved this by ensuring that the system only saves one submission record per student per assignment when refreshing submissions from Turnitin.
 
 **Fixed an issue causing all submissions to refresh upon individual student login** - If a student logged into the assignment inbox, all submissions were refreshed, causing students to show as having updated the grade for other graded submission(s) and subsequently appear as graders in grade reports. We've resolved this by ensuring that a student only has an effect on their own submission.
-
 
 ---
 
