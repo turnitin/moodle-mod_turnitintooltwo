@@ -71,7 +71,12 @@ class v1migration {
         // Counts for use in the progress bar.
         $totalv1 = $DB->count_records('turnitintool');
         $totalmigrated = $DB->count_records('turnitintool', array('migrated' => 1));
-        $complete = floor(($totalmigrated/$totalv1)*100);
+
+        if ($totalv1 == 0) {
+            $complete = 100;
+        } else {
+            $complete = floor(($totalmigrated/$totalv1)*100);
+        }
 
         // Output our progress bar.
         $output .= html_writer::tag('div',
