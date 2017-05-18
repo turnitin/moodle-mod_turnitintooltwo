@@ -102,15 +102,11 @@ class v1migration {
 
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
 
-        $migratelink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-forward fa-lg',
-                                                    'title' => get_string('migrateassignment', 'turnitintooltwo')))." ".
-                                                    get_string('migrateassignment', 'turnitintooltwo'),
-                                                    array('class' => 'migrate_link', 'id' => 'migrate_link',
+        $migratelink = html_writer::tag('button', get_string('migrateassignment', 'turnitintooltwo'),
+                                                    array('class' => 'migrate_link btn-primary', 'id' => 'migrate_link',
                                                     'data-courseid' => $courseid, 'data-turnitintoolid' => $turnitintoolid));
-        $dontmigratelink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-pause fa-lg',
-                                                    'title' => get_string('dontmigrateassignment', 'turnitintooltwo')))." ".
-                                                    get_string('dontmigrateassignment', 'turnitintooltwo'),
-                                                        array('class' => 'dontmigrate_link', 'id' => 'dontmigrate_link'));
+        $dontmigratelink = html_writer::tag('button', get_string('dontmigrateassignment', 'turnitintooltwo'),
+                                                        array('class' => 'dontmigrate_link btn-default', 'id' => 'dontmigrate_link'));
 
         $migrating = html_writer::tag('div', html_writer::tag('p', get_string('migrating', 'turnitintooltwo'))
                                         . html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-2x migration_spinner'))
@@ -118,7 +114,7 @@ class v1migration {
                                         array('id' => 'migrating', 'class' => 'hide'));
 
         $asktomigrate = html_writer::tag('div', html_writer::tag('p', get_string('migrationtooltitle', 'turnitintooltwo'), array('class' => 'migrationtitle'))
-                                        . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'))
+                                        . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'), array('class' => 'migrationtoolinfo'))
                                         . $migratelink . $dontmigratelink
                                         , array('id' => 'asktomigrate', 'class' => 'hide'));
 
