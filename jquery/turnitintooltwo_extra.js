@@ -57,20 +57,14 @@ jQuery(document).ready(function($) {
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "sAjaxSource": "ajax.php?action=get_assignments",
         "aoColumns": [
-                        {"bSortable": false,
+                        {"bSortable": false, "bSearchable": false,
                             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                                 $(nTd).addClass('centered_cell');
                             }},
-                        {"bSortable": true, "sClass": "centered_cell"},
-                        null,
-                        {"bSortable": true, "sClass": "centered_cell"}
+                        {"bSortable": true, "sClass": "centered_cell", "bSearchable": false},
+                        {"bSortable": true, "bSearchable": true},
+                        {"bSortable": true, "sClass": "centered_cell", "bSearchable": false}
                      ],
-        "aoColumnDefs": [
-                        {"bSearchable": false},
-                        {"bSearchable": false},
-                        {"bSearchable": true},
-                        {"bSearchable": false}
-                    ],
         "fnDrawCallback": function () {
             $('input[name="selectallcb"]').attr('checked', false);
         }
