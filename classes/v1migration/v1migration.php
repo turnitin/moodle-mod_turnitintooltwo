@@ -81,9 +81,9 @@ class v1migration {
         // Output our progress bar.
         $output .= html_writer::tag('div',
                     html_writer::tag('div',
-                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.')', array('class' => 'bar-complete'))
-                    , array('class' => 'bar', 'style' => 'width: '.$complete.'%'))
-                  , array('id' => 'progress-bar', 'class' => 'progress active'));
+                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.' '. get_string('complete', 'turnitintooltwo') .')', array('class' => 'migration-complete'))
+                    , array('id' => 'migration-progress', 'style' => 'width: '.$complete.'%'))
+                  , array('id' => 'migration-progress-bar', 'class' => 'active'));
 
         return $output;
     }
@@ -532,9 +532,11 @@ class v1migration {
             if ($assignment->migrated == 1) {
                 $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
                 $assignment->migrated = get_string('yes', 'turnitintooltwo');
+                $assignment->migrated = html_writer::tag('i', '', array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
                 $assignment->migrated = get_string('no', 'turnitintooltwo');
+                $assignment->migrated = html_writer::tag('i', '', array('class' => 'fa fa-times'));
             }
             $return["aaData"][] = array($checkbox, $assignment->id, format_string($assignment->name), $assignment->migrated);
         }
@@ -608,7 +610,7 @@ class v1migration {
             $migrationsettings = array('enablemigrationtool' => $currentsetting->value);
         }
 
-        $output .= html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
+        $output .= html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'), array('class' => 'migrationheader'));
 
         $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
 
@@ -632,7 +634,9 @@ class v1migration {
                                                     $customdata);
 
         $migrationform->set_data( $migrationsettings );
-        $output .= $migrationform->display();
+
+        $output .= html_writer::tag('div', $migrationform->display(), array('id' => 'migrationform'));
+        // $output .= $migrationform->display();
 
         return $output;
     }
