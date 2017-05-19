@@ -47,7 +47,17 @@ jQuery(document).ready(function($) {
         $('select[name="enablemigrationtool"]').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
     }
 
-    // Configure the unlink and relink users datatable in the plugin settings area.
+    // Disable the delete button in migration tab if there are no results selected.
+    $('input[name="selectallcb"]').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
+    $(document).on('click', '#migrationTable .browser_checkbox', function() {
+        if ($('#migrationTable .browser_checkbox:checked').length > 0) {
+            $('#migrationTable .browser_checkbox').closest('form').find('input[name="submitbutton"]').removeAttr('disabled');
+        } else {
+            $('#migrationTable .browser_checkbox').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
+        }
+    });
+
+    // Configure the migration datatable in the plugin settings area.
     $('#migrationTable').dataTable({
         "bDestroy": true,
         "bProcessing": true,
