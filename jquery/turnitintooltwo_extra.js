@@ -47,9 +47,9 @@ jQuery(document).ready(function($) {
         $('select[name="enablemigrationtool"]').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
     }
 
-    // Disable the delete button in migration tab if there are no results selected.
+    // Disable the delete button in migration tab if there are no results selected and re-enable if there are.
     $('input[name="selectallcb"]').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
-    $(document).on('click', '#migrationTable .browser_checkbox', function() {
+    $(document).on('click', '#migrationTable input[name="selectallcb"], #migrationTable .browser_checkbox', function() {
         if ($('#migrationTable .browser_checkbox:checked').length > 0) {
             $('#migrationTable .browser_checkbox').closest('form').find('input[name="submitbutton"]').removeAttr('disabled');
         } else {
