@@ -96,7 +96,7 @@ class v1migration {
      * @return string $output The HTML for the modal.
      */
     public function migrate_modal($courseid, $turnitintoolid) {
-		global $PAGE;
+        global $PAGE;
         $cssurl = new moodle_url('/mod/turnitintooltwo/jquery/colorbox.css');
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
@@ -529,11 +529,9 @@ class v1migration {
         foreach ($assignments as $assignment) {
             if ($assignment->migrated == 1) {
                 $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
-                $assignment->migrated = get_string('yes', 'turnitintooltwo');
                 $assignment->migrated = html_writer::tag('i', '', array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $assignment->migrated = get_string('no', 'turnitintooltwo');
                 $assignment->migrated = html_writer::tag('i', '', array('class' => 'fa fa-times'));
             }
             $return["aaData"][] = array($checkbox, $assignment->id, format_string($assignment->name), $assignment->migrated);

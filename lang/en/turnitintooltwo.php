@@ -600,4 +600,4 @@ $string['v1assignmentsdeleted'] = 'The assignment(s) have been successfully dele
 $string['migrationtoolaccounterror'] = 'You can not enable the migration tool as you are using different Turnitin account IDs for Turnitin V1 and V2';
 $string['studentfirstname'] = 'First Name';
 $string['studentlastname'] = 'Last Name';
-$string['migrated'] = 'Migrated?';
+$string['hasmigrated'] = 'Migrated?';
