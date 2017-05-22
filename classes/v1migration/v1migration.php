@@ -588,7 +588,7 @@ class v1migration {
      * @param $enablesetting - whether the settings form should be enabled.
      */
     public static function output_settings_form($enablesetting = true) {
-        global $CFG, $DB;
+        global $CFG, $DB, $PAGE;
         $output = "";
 
         require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_form.class.php');
@@ -625,6 +625,11 @@ class v1migration {
         $customdata["elements"] = $elements;
         $customdata["disable_form_change_checker"] = true;
         $customdata["show_cancel"] = false;
+
+        // Strings for javascript confirm deletion.
+        $PAGE->requires->string_for_js('confirmv1deletetitle', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('confirmv1deletetext', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('confirmv1deletewarning', 'turnitintooltwo');
         
         $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                                                     $customdata);
@@ -632,7 +637,6 @@ class v1migration {
         $migrationform->set_data( $migrationsettings );
 
         $output .= html_writer::tag('div', $migrationform->display(), array('id' => 'migrationform'));
-        // $output .= $migrationform->display();
 
         return $output;
     }

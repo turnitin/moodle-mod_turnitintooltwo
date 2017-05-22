@@ -487,7 +487,7 @@ switch ($cmd) {
         $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
         $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
         $cells['title'] = new html_table_cell(get_string('title', 'turnitintooltwo'));
-        $cells['migrationstatus'] = new html_table_cell(get_string('migrated', 'turnitintooltwo'));
+        $cells['migrationstatus'] = new html_table_cell(get_string('hasmigrated', 'turnitintooltwo'));
 
         $table->head = $cells;
 

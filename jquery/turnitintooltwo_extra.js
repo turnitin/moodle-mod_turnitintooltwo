@@ -72,6 +72,22 @@ jQuery(document).ready(function($) {
         }
     });
 
+    // Ask administrator for confirmation if user clicks to delete selected V1 assignments.
+    var submitbutton = $('#migrationTable').closest('form').find('input[name="submitbutton"]');
+    submitbutton.click(function(ev) {
+        ev.preventDefault();
+
+        // Construct confirm message to administrator.
+        var message = M.str.turnitintooltwo.confirmv1deletetitle+'\n\n';
+        message += M.util.get_string('confirmv1deletetext', 'turnitintooltwo', $('#migrationTable .browser_checkbox:checked').length)+'\n\n';
+        message += M.str.turnitintooltwo.confirmv1deletewarning;
+
+        if (confirm(message)) {
+            $('#migrationTable').closest('form').submit();
+        }
+
+    });
+
     // Configure the migration datatable in the plugin settings area.
     $('#migrationTable').dataTable({
         "bDestroy": true,
@@ -81,7 +97,7 @@ jQuery(document).ready(function($) {
         "aaSorting": [[ 2, "asc" ]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "sAjaxSource": "ajax.php?action=get_assignments",
-        "sDom": '<"top"f>rt<"bottom"lirp><"clear">',
+        "sDom": '<"top"lf>rt<"bottom"irp><"clear">',
         "aoColumns": [
                         {"bSortable": false, "bSearchable": false,
                             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {

@@ -601,3 +601,6 @@ $string['migrationtoolaccounterror'] = 'You can not enable the migration tool as
 $string['studentfirstname'] = 'First Name';
 $string['studentlastname'] = 'Last Name';
 $string['hasmigrated'] = 'Migrated?';
+$string['confirmv1deletetitle'] = 'Delete selected assignments?';
+$string['confirmv1deletetext'] = 'You\'ve selected {$a} migrated V1 assignments for permanent deletion.';
+$string['confirmv1deletewarning'] = 'Note: This action can not be undone.';
