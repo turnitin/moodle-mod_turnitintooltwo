@@ -606,3 +606,6 @@ $string['delete_selected'] = 'Delete Selected';
 $string['v1assignmentsdeleted'] = 'The assignment(s) have been successfully deleted.';
 $string['migrationtoolaccounterror'] = 'You can not enable the migration tool as you are using different Turnitin account IDs for Turnitin V1 and V2';
 $string['hasmigrated'] = 'Migrated?';
+$string['confirmv1deletetitle'] = 'Delete selected assignments?';
+$string['confirmv1deletetext'] = 'You\'ve selected {$a} migrated V1 assignments for permanent deletion.';
+$string['confirmv1deletewarning'] = 'Note: This action can not be undone.';
