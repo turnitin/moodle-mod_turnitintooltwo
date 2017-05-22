@@ -119,7 +119,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
 
         $progressbar = v1migration::output_progress_bar();
-        $this->assertContains('50% Complete (1/2)', $progressbar);
+        $this->assertContains('50% complete', $progressbar);
         $this->assertContains('width: 50%', $progressbar);
     }
 
@@ -675,10 +675,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
-                $migrationValue = "Yes";
+                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $migrationValue = "No";
+                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-times'));
             }
             $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
         }
@@ -688,6 +688,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
                                 "iTotalDisplayRecords" => $numAssignments);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
+
         $this->assertEquals($expectedoutput, $response);
         // Do a second test for the search box.
         $_POST["sSearch"] = "coursework";
@@ -701,10 +702,10 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
-                $migrationValue = "Yes";
+                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $migrationValue = "No";
+                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-times'));
             }
             $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
         }
