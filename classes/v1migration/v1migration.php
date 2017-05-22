@@ -174,9 +174,7 @@ class v1migration {
                 $v1partsubmission->submission_part = $v2partid;
                 $v1partsubmission->migrate_gradebook = 1;
 
-                // WILL NEED TO REJIG THIS IN FINAL VERSION.
-                // We can't leave as is, otherwise we could have a clash with existing V2 assignment hashes.
-                $v1partsubmission->submission_hash = rand(1000, 100000000);;
+                $v1partsubmission->submission_hash = $v1partsubmission->userid.'_'.$turnitintooltwoid.'_'.$v2partid;
 
                 unset($v1partsubmission->turnitintoolid);
                 unset($v1partsubmission->id);
