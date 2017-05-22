@@ -176,7 +176,7 @@ class v1migration {
 
                 // WILL NEED TO REJIG THIS IN FINAL VERSION.
                 // We can't leave as is, otherwise we could have a clash with existing V2 assignment hashes.
-                $v1partsubmission->submission_hash = rand(1000, 100000000);;
+                $v1partsubmission->submission_hash = uniqid("v1v2migration", true);
 
                 unset($v1partsubmission->turnitintoolid);
                 unset($v1partsubmission->id);
