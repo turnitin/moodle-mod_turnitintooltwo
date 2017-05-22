@@ -174,7 +174,7 @@ class v1migration {
                 $v1partsubmission->submission_part = $v2partid;
                 $v1partsubmission->migrate_gradebook = 1;
 
-                $v1partsubmission->submission_hash = $v1partsubmission->userid.‘_’.$turnitintooltwoid.‘_’.$v2partid;
+                $v1partsubmission->submission_hash = $v1partsubmission->userid.'_'.$turnitintooltwoid.'_'.$v2partid;
 
                 unset($v1partsubmission->turnitintoolid);
                 unset($v1partsubmission->id);
