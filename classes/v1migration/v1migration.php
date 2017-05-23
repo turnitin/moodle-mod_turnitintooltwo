@@ -529,10 +529,12 @@ class v1migration {
         foreach ($assignments as $assignment) {
             if ($assignment->migrated == 1) {
                 $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
-                $assignment->migrated = html_writer::tag('i', '', array('class' => 'fa fa-check'));
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $assignment->migrated = html_writer::tag('i', '', array('class' => 'fa fa-times'));
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
             }
             $return["aaData"][] = array($checkbox, $assignment->id, format_string($assignment->name), $assignment->migrated);
         }

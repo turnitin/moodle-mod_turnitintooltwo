@@ -675,10 +675,12 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
-                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-check'));
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-times'));
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
             }
             $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
         }
@@ -702,10 +704,12 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
-                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-check'));
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $migrationValue = html_writer::tag('i', '', array('class' => 'fa fa-times'));
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
             }
             $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
         }
