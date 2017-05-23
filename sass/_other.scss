@@ -219,12 +219,12 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 #migrationform #fitem_id_submitbutton, 
 #migration-delete-selected #fitem_id_submitbutton, 
 #fitem_id_enablemigrationtool {
-    width: 50%;
+    width: 75%;
     margin: 0 auto;
     background-color: #FFFFFF;
 }
-.fitemtitle {
-    width: 300px !important;
+#fitem_id_enablemigrationtool .fitemtitle {
+    width: 300px;
 }
 #migrationform {
     margin: 30px 0px;
