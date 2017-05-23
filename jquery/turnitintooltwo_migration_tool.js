@@ -77,7 +77,7 @@ function migrate(courseid, turnitintoolid) {
                 .prepend('<div id="full-error" class="box generalbox noticebox">' + data.error + ' ' + data.message + '</div>');
 
             // Check if we have a stack trace included.
-            if (data.trace.length > 0) {
+            if (data.hasOwnProperty('trace')) {
                 console.error(data.message);
                 console.error(JSON.stringify(data.trace, null, 4));
             }

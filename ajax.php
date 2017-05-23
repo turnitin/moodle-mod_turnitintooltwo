@@ -916,6 +916,7 @@ switch ($action) {
             }
 
             echo json_encode($errorresponse);
+            exit();
         }
 
     case "check_migrated":
