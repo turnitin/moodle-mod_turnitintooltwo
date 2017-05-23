@@ -1,5 +1,5 @@
-### Date:		2017-May-XX
-### Release:	v201705XXXX
+### Date:		2017-May-24
+### Release:	v2017052401
 
 - Modified the name sorting on the assignment inbox to allow sorting by surname and firstname.
 - Escape any HTML or Javascript from submission extract before displaying successful submission message.
@@ -10,7 +10,21 @@
 - Fix the unpopulated drop down menus in support wizard.
 - Add further unit test infrastructure.
 - No longer send digital receipt message for empty grading template submissions.
-- Assign Mexican Spanish to Spanish in Turnitin rather than defaulting to English.
+- Assign Mexican Spanish to Spanish in Turnitin rather than defaulting to English. (Thanks to @jobcespedes)
+
+**List order now consistent between Moodle and Turnitin assignments** - The Moodle submission inbox displays student names in the first name/last name format (e.g. John Smith) and allows instructors to order the list by last name. However, Turnitin list entries could only be ordered by first name. Turnitin is now aligned with Moodle's list ordering.
+
+**Digital receipts no longer execute script found in a paper** - If a student inserted HTML, JavaScript, or any other script tags in their paper, this was executed when the digital receipt displayed after submission. Fixed it! The digital receipt will no longer execute the script (if any script is included) for future submissions.
+
+**Rectified broken files and images in Moodle calendar** - As Moodle calendar doesn't support files or images, any files or images added to the assignment description would appear as broken in the calendar. We'll now strip all files and images from the description before its transfer into the calendar.
+
+**Removed unnecessary information from error messages** - We received feedback from users that one or two error messages included irrelevant information. Our engineers have worked their magic to ensure that any messages you see are now meaningful and help you to resolve the error you're encountering.
+
+**Course reset is now working as expected** - We had some problems with the Moodle course reset feature after the release of 2017031301, with student papers remaining in place even after opting to reset the course. With debugging enabled, an error message displayed, confirming the issue. We've thankfully managed to resolve the problem and you can now give the course reset feature another try.
+
+**Support wizard issues resolved** - We noticed that some administrators and instructors were having trouble using the Turnitin support wizard within Moodle. One of the wizard drop-down menus failed to populate, causing difficulty in raising a support ticket with us. Bug targeted and eliminated!
+
+**No more digital receipts sent for grading template submissions** - When an instructor uses a grading template to grade a student's work, this acts as a submission and delivered a digital receipt to students. Students found the receipt confusing as they hadn't personally made a submission to Turnitin, but the receipt was advising otherwise. We've stopped digital receipts from being sent to students for grading template submissions.
 
 ---
 
