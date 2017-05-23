@@ -17,6 +17,21 @@ jQuery(document).ready(function($) {
         }
     };
 
+    // Configure datatables language settings for migration tool.
+    var dataTablesLangMigration = {
+        "nointegration": M.str.turnitintooltwo.nointegration,
+        "sProcessing": M.str.turnitintooltwo.sprocessing,
+        "sZeroRecords": M.str.turnitintooltwo.szerorecords,
+        "sInfo": M.str.turnitintooltwo.sinfo,
+        "sSearch": '',
+        "sLengthMenu": M.str.turnitintooltwo.slengthmenu,
+        "sInfoEmpty": M.str.turnitintooltwo.semptytable,
+        "oPaginate": {
+            "sNext": M.str.turnitintooltwo.snext,
+            "sPrevious": M.str.turnitintooltwo.sprevious
+        }
+    };
+
     // Configure the unlink and relink users datatable in the plugin settings area.
     $('#unlinkUserTable').dataTable({
         "bDestroy": true,
@@ -62,10 +77,11 @@ jQuery(document).ready(function($) {
         "bDestroy": true,
         "bProcessing": true,
         "bServerSide": true,
-        "oLanguage": dataTablesLang,
+        "oLanguage": dataTablesLangMigration,
         "aaSorting": [[ 2, "asc" ]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "sAjaxSource": "ajax.php?action=get_assignments",
+        "sDom": '<"top"f>rt<"bottom"lirp><"clear">',
         "aoColumns": [
                         {"bSortable": false, "bSearchable": false,
                             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -79,6 +95,7 @@ jQuery(document).ready(function($) {
             $('input[name="selectallcb"]').attr('checked', false);
         }
     });
+    $('#migrationTable_filter input').attr("placeholder", 'Search');
 
     // Configure the files datatable in the plugin settings area, group the files by assignment.
     $('#filesTable').dataTable( {
