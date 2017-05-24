@@ -615,7 +615,7 @@ class turnitintooltwo_submission {
 
                 $notice["success"] = true;
                 $notice["message"] = get_string('submissionuploadsuccess', 'turnitintooltwo');
-                $notice["extract"] = $newsubmission->getTextExtract();
+                $notice["extract"] = htmlspecialchars($newsubmission->getTextExtract());
                 $notice["tii_submission_id"] = $submission->submission_objectid;
 
                 // Send a message to the user's Moodle inbox with the digital receipt.
