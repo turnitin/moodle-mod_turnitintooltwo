@@ -20,10 +20,11 @@
  */
 
 define('AJAX_SCRIPT', 1);
+global $CFG;
 
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/lib.php");
-require_once(__DIR__."/turnitintooltwo_view.class.php");
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_view.class.php');
 
 require_login();
 $action = required_param('action', PARAM_ALPHAEXT);
@@ -278,7 +279,7 @@ switch ($action) {
 
             $PAGE->set_context(context_module::instance($cm->id));
             $turnitintooltwoview = new turnitintooltwo_view();
-
+            
             $view = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
             $return["aaData"] = $view;
             $totalsubmitters = $DB->count_records('turnitintooltwo_submissions',

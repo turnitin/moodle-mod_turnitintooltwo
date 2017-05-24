@@ -116,8 +116,11 @@ class turnitintooltwo_comms {
      * @param object $e
      * @param string $tterrorstr
      * @param boolean $toscreen
+     * @param boolean $embedded
      */
     public static function handle_exceptions($e, $tterrorstr = "", $toscreen = true, $embedded = false) {
+        global $CFG;
+
         $errorstr = "";
         if (!empty($tterrorstr)) {
             $errorstr = get_string($tterrorstr, 'turnitintooltwo')."<br/><br/>";
@@ -126,24 +129,32 @@ class turnitintooltwo_comms {
             }
         }
 
-        if (is_callable(array($e, 'getFaultCode'))) {
-            $errorstr .= get_string('faultcode', 'turnitintooltwo').": ".$e->getFaultCode()." | ";
-        }
+        // Show full debugging information if developer mode is on.
+        if ($CFG->debug == DEBUG_DEVELOPER) {
+            if (is_callable(array($e, 'getFaultCode'))) {
+                $errorstr .= get_string('faultcode', 'turnitintooltwo').": ".$e->getFaultCode()." | ";
+            }
 
-        if (is_callable(array($e, 'getFile'))) {
-            $errorstr .= get_string('file').": ".$e->getFile()." | ";
-        }
+            if (is_callable(array($e, 'getFile'))) {
+                $errorstr .= get_string('file').": ".$e->getFile()." | ";
+            }
 
-        if (is_callable(array($e, 'getLine'))) {
-            $errorstr .= get_string('line', 'turnitintooltwo').": ".$e->getLine()." | ";
-        }
+            if (is_callable(array($e, 'getLine'))) {
+                $errorstr .= get_string('line', 'turnitintooltwo').": ".$e->getLine()." | ";
+            }
 
-        if (is_callable(array($e, 'getMessage'))) {
-            $errorstr .= get_string('message', 'turnitintooltwo').": ".$e->getMessage()." | ";
-        }
+            if (is_callable(array($e, 'getMessage'))) {
+                $errorstr .= get_string('message', 'turnitintooltwo').": ".$e->getMessage()." | ";
+            }
 
-        if (is_callable(array($e, 'getCode'))) {
-            $errorstr .= get_string('code', 'turnitintooltwo').": ".$e->getCode();
+            if (is_callable(array($e, 'getCode'))) {
+                $errorstr .= get_string('code', 'turnitintooltwo').": ".$e->getCode();
+            }
+        } else {
+            // Only show message if full debugging is not on.
+            if (is_callable(array($e, 'getMessage'))) {
+                $errorstr .= get_string('message', 'turnitintooltwo').": ".$e->getMessage();
+            }
         }
 
         turnitintooltwo_activitylog($errorstr, "API_ERROR");
@@ -168,6 +179,7 @@ class turnitintooltwo_comms {
             'fr' => 'fr',
             'fr_ca' => 'fr',
             'es' => 'es',
+            'es_mx' => 'es',
             'de' => 'de',
             'de_du' => 'de',
             'zh_cn' => 'zh_hans',

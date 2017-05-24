@@ -464,7 +464,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
 
             $attribute = "partname".$i;
             $tiititle = $turnitintooltwoassignment->turnitintooltwo->name." ".$turnitintooltwoassignment->turnitintooltwo->$attribute;
-            $tiititle = $this->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
+            $tiititle = $turnitintooltwoassignment->truncate_title( $tiititle, TURNITIN_ASSIGNMENT_TITLE_LIMIT, 'TT' );
             $assignment->setTitle( $tiititle );
 
             $partassignid = $turnitintooltwoassignment->create_tii_assignment($assignment,

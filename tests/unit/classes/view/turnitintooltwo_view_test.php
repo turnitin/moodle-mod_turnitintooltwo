@@ -25,20 +25,30 @@
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
+require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/generator/lib.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_view.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_user.class.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_comms.class.php');
+require_once($CFG->dirroot . '/webservice/tests/helpers.php');
+require_once($CFG->dirroot . '/course/lib.php');
 
 /**
  * Tests for inbox
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_view_testcase extends advanced_testcase {
+class mod_turnitintooltwo_view_testcase extends test_lib {
 
 	/**
 	 * Test that the page layout is set to standard so that the header displays.
+	 * 
+	 * @return  void
 	 */
 	public function test_output_header() {
 		global $PAGE;
+		$this->resetAfterTest();
+
 		$turnitintooltwoview = new turnitintooltwo_view();
 
 		$pageurl = '/fake/url/';
@@ -51,4 +61,72 @@ class mod_turnitintooltwo_view_testcase extends advanced_testcase {
 		$this->assertEquals($pageheading, $PAGE->heading);
 	}
 
+	/**
+	 * Test that the submissions table layout conforms to expectations when the user is an instructor.
+	 *
+	 * @return  void
+	 */
+	public function test_inbox_table_structure_instructor() {
+		global $DB;
+		$this->resetAfterTest();
+		$course = $this->getDataGenerator()->create_course();
+
+		$turnitintooltwoassignment = $this->make_test_tii_assignment();
+
+		$cmid = $this->make_test_module($turnitintooltwoassignment->turnitintooltwo->course,'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id);
+		$cm = $DB->get_record("course_modules", array('id' => $cmid));
+
+		$roles = array("Instructor");
+		$testuser = $this->make_test_users(1, $roles);
+		$turnitintooltwouser = $testuser['turnitintooltwo_users'][0];
+
+		$partdetails = $this->make_test_parts('turnitintooltwo',$turnitintooltwoassignment->turnitintooltwo->id, 1);
+		
+		$turnitintooltwoview = new turnitintooltwo_view();
+		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
+		
+		$this->assertContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertContains("<tbody class=\"empty\"><tr><td colspan=\"16\"></td></tr></tbody>", $table, 'datatable did not contain the expected empty tbody');
+	}
+ 
+	public function test_inbox_table_structure_student() {
+		global $DB, $USER;
+		$this->resetAfterTest();
+		$_SESSION["unit_test"] = true;
+		
+		$USER->firstname = 'unit_test_first_654984';
+		$USER->lastname = 'unit_test_last_654984';
+		$USER->language = "en_US";
+		$USER->firstnamephonetic = "";
+		$USER->lastnamephonetic = "";
+		$USER->middlename = "";
+		$USER->alternatename = "";
+
+		$course = $this->getDataGenerator()->create_course();
+
+		$turnitintooltwoassignment = $this->make_test_tii_assignment();
+
+		$cmid = $this->make_test_module($turnitintooltwoassignment->turnitintooltwo->course,'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id);
+		$cm = $DB->get_record("course_modules", array('id' => $cmid));
+
+		$roles = array("Learner");
+		$testuser = $this->make_test_users(1, $roles);
+		$turnitintooltwouser = $testuser['turnitintooltwo_users'][0];
+		$moodleuser = $DB->get_record("turnitintooltwo_users", array("id" => $testuser['joins'][0]));
+
+		$this->enrol_test_user($USER->id, $course->id, "Learner");
+		$this->enrol_test_user($moodleuser->userid, $course->id, "Learner");
+
+		$partdetails = $this->make_test_parts('turnitintooltwo',$turnitintooltwoassignment->turnitintooltwo->id, 1);
+		
+		$turnitintooltwoview = new turnitintooltwo_view();
+		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
+
+		reset($partdetails);
+		$partid = key($partdetails);
+		
+		$this->assertNotContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table contained unexpected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertContains("<table class=\"submissionsDataTable\" id=\"$partid\">", $table, 'Return did not include the expected table.');
+		$this->assertContains("<td class=\"centered_cell cell c0\" style=\"\">$partid</td>", $table, 'Return did not contain the expected student row.');
+	}
 }

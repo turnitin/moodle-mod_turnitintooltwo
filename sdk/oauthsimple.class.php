@@ -67,7 +67,7 @@ class OAuthSimple {
      * Set the parameters either from a hash or a string
      *
      * @access public
-     * @param(string, object) List of parameters for the call, this can either be a URI string (e.g. "foo=bar&gorp=banana" or an object/hash)
+     * @param parameters (string, object) List of parameters for the call, this can either be a URI string (e.g. "foo=bar&gorp=banana" or an object/hash)
      * @return OAuthSimple (Object)
      */
     public function setParameters($parameters = Array()) {
@@ -233,7 +233,7 @@ class OAuthSimple {
      * other helper functions.
      *
      * @param args (Array) hash of arguments for the call {action, path, parameters (array), method, signatures (array)} all arguments are optional.
-     * @return (Array) signed values
+     * @return Signed Values (Array) - array map of signed values
      */
     public function sign($args = array()) {
         if (!empty($args['action'])) {
@@ -272,7 +272,7 @@ class OAuthSimple {
      * ways to do that.
      *
      * @param args (Array)
-     * @return $result (String)
+     * @return result (String)
      */
     public function getHeaderString($args = array()) {
         if (empty($this->_parameters['oauth_signature'])) {
