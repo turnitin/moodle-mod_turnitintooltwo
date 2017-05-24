@@ -44,7 +44,7 @@ abstract class test_lib extends advanced_testcase
      * @param int $assignmentid Assignment Module ID
      * @param int $number_of_parts - The number of parts to create
      *
-     * @return array $parts_created - list of part ids that have been added to the assignment
+     * @return array $parts_created - parts added to the assignment listed as partid => partobject
      */
     public function make_test_parts($modname, $assignmentid, $number_of_parts)
     {
@@ -58,12 +58,15 @@ abstract class test_lib extends advanced_testcase
         $part->dtpost = 0;
         $part->maxmarks = 0;
         $part->deleted = 0;
+        $part->submitted = 0;
         
         $parts_created = array();
         for ($i=0; $i < $number_of_parts; $i++) {
             $part->partname = uniqid("Part - ", false);
             $partid = $DB->insert_record($modname.'_parts', $part);
-            array_push($parts_created, $partid);
+            $part->id = $partid;
+            $parts_created[$partid] = $part;
+            $parts_created[$partid]->peermark_assignments = array();
         }
 
         return $parts_created;
@@ -102,6 +105,7 @@ abstract class test_lib extends advanced_testcase
      */
     public function join_test_user($turnitintooltwo_user)
     {
+        global $DB;
         $mdl_user = $this->getDataGenerator()->create_user();
         $tiiUserRecord = new stdClass();
         $tiiUserRecord->userid = $mdl_user->id;
@@ -121,15 +125,15 @@ abstract class test_lib extends advanced_testcase
      */
     public function make_test_users($number_of_users, $roles)
     {
-        $return = new stdClass();
-        $return->turnitintooltwo_users = array();
-        $return->joins = array();
+        $return['turnitintooltwo_users'] = array();
+        $return['joins'] = array();
 
         for ($i=0; $i < $number_of_users; $i++) {
-            $new_user = new turnitintooltwo_user( $i+1, ($roles[$i] || 'instructor'), false, 'site', false );
-            array_push($return->turnitintooltwo_users, $new_user);
+            $role = isset($roles[$i]) ? $roles[$i] : 'Instructor';
+            $new_user = new turnitintooltwo_user( $i+1, $role, false, 'site', false );
+            array_push($return['turnitintooltwo_users'], $new_user);
             $joinid = $this->join_test_user($new_user);
-            array_push($return->joins, $joinid);
+            array_push($return['joins'], $joinid);
         }
 
         return $return;
@@ -159,9 +163,47 @@ abstract class test_lib extends advanced_testcase
         $turnitintooltwo->studentreports = 1;
         $turnitintooltwo->grade = 0;
         $turnitintooltwo->numparts = 1;
+        $turnitintooltwo->anon = 0;
+        $turnitintooltwo->allowlate = 0;
         $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
         
         return $turnitintooltwoassignment;
+    }
+
+    /**
+     * enrols a moodle user onto a moodle course.
+     *
+     * @param int $moodle_user - the ID for the moodle user to be enrolled
+     * @param int $course - the ID for the course on which to enrol $moodle_user
+     * @param string $role - either "Instructor" or "Learner"
+     * 
+     * @return void
+     */
+    public function enrol_test_user($moodle_user, $course, $role) {
+        global $DB;
+        $roleid = $role == "Instructor";
+        $enrol = enrol_get_plugin('manual');
+        $instance = $DB->get_record("enrol", array('courseid' => $course, 'enrol' => 'manual'));
+        $enrol->enrol_user($instance, $moodle_user, $roleid);
+    }
+
+    /**
+     * Creates a dummy API url in the moodle plugin config table.
+     *
+     * @return void
+     */
+    public function dummy_api_url() {
+        $updatev2 = $DB->get_record("config_plugins", array("plugin" => "turnitintooltwo", "name" => "accountid"));
+        if (!$updatev2) {
+            $updatev2 = new stdClass();
+            $updatev2->plugin = "turnitintooltwo";
+            $updatev2->name = "apiurl";
+            $updatev2->value = "http://www.example.com";
+            $DB->insert_record("config_plugins", $updatev2);
+        } else {
+            $updatev2->value = "http://www.example.com";
+            $DB->update_record("config_plugins", $updatev2);
+        }
     }
 }
