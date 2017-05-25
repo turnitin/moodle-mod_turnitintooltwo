@@ -1369,8 +1369,11 @@ class turnitintooltwo_view {
             if ($submission->userid == $USER->id) {
                 $submissionuser = new turnitintooltwo_user($submission->userid, "Learner");
 
-                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
-                if (empty($_SESSION["unit_test"])) {
+                $legacyassignment = (empty($turnitintooltwoassignment->turnitintooltwo->legacy)) ? 0 : 1;
+                $coursetype = turnitintooltwo_get_course_type($legacyassignment);
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+                
+                if (!$_SESSION["unit_test"]) {
                     $submissionuser->join_user_to_class($coursedata->turnitin_cid);
                 }
 
