@@ -457,6 +457,9 @@ switch ($cmd) {
         // Output the form to enable the v1 migration.
         $html .= v1migration::output_settings_form($enabled);
 
+        $html .= html_writer::tag('hr', '');
+        $html .= html_writer::tag('h2', get_string('migration_status', 'turnitintooltwo'), array('class' => 'migrationheader'));
+
         // Display our progress bar.
         $html .= v1migration::output_progress_bar();
 
@@ -474,8 +477,6 @@ switch ($cmd) {
                             array('class' => 'alert alert-success', 'role' => 'alert'));
         }
 
-        $html .= html_writer::tag('h2', get_string('migrated_assignment_deletion', 'turnitintooltwo'));
-
         $table = new html_table();
         $table->id = "migrationTable";
         $rows = array();
@@ -486,7 +487,7 @@ switch ($cmd) {
         $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
         $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
         $cells['title'] = new html_table_cell(get_string('title', 'turnitintooltwo'));
-        $cells['migrationstatus'] = new html_table_cell(get_string('migration_status', 'turnitintooltwo'));
+        $cells['migrationstatus'] = new html_table_cell(get_string('hasmigrated', 'turnitintooltwo'));
 
         $table->head = $cells;
 
@@ -497,7 +498,7 @@ switch ($cmd) {
 
         $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration', $customdata2);
 
-        $html .= $optionsform->display();
+        $html .= html_writer::tag('div', $optionsform->display(), array('id' => 'migration-delete-selected'));
 
         $output .= $alert . $html;
 

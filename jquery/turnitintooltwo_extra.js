@@ -17,6 +17,21 @@ jQuery(document).ready(function($) {
         }
     };
 
+    // Configure datatables language settings for migration tool.
+    var dataTablesLangMigration = {
+        "nointegration": M.str.turnitintooltwo.nointegration,
+        "sProcessing": M.str.turnitintooltwo.sprocessing,
+        "sZeroRecords": M.str.turnitintooltwo.szerorecords,
+        "sInfo": M.str.turnitintooltwo.sinfo,
+        "sSearch": '',
+        "sLengthMenu": M.str.turnitintooltwo.slengthmenu,
+        "sInfoEmpty": M.str.turnitintooltwo.semptytable,
+        "oPaginate": {
+            "sNext": M.str.turnitintooltwo.snext,
+            "sPrevious": M.str.turnitintooltwo.sprevious
+        }
+    };
+
     // Configure the unlink and relink users datatable in the plugin settings area.
     $('#unlinkUserTable').dataTable({
         "bDestroy": true,
@@ -57,15 +72,32 @@ jQuery(document).ready(function($) {
         }
     });
 
+    // Ask administrator for confirmation if user clicks to delete selected V1 assignments.
+    var submitbutton = $('#migrationTable').closest('form').find('input[name="submitbutton"]');
+    submitbutton.click(function(ev) {
+        ev.preventDefault();
+
+        // Construct confirm message to administrator.
+        var message = M.str.turnitintooltwo.confirmv1deletetitle+'\n\n';
+        message += M.util.get_string('confirmv1deletetext', 'turnitintooltwo', $('#migrationTable .browser_checkbox:checked').length)+'\n\n';
+        message += M.str.turnitintooltwo.confirmv1deletewarning;
+
+        if (confirm(message)) {
+            $('#migrationTable').closest('form').submit();
+        }
+
+    });
+
     // Configure the migration datatable in the plugin settings area.
     $('#migrationTable').dataTable({
         "bDestroy": true,
         "bProcessing": true,
         "bServerSide": true,
-        "oLanguage": dataTablesLang,
+        "oLanguage": dataTablesLangMigration,
         "aaSorting": [[ 2, "asc" ]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
         "sAjaxSource": "ajax.php?action=get_assignments",
+        "sDom": '<"top"lf>rt<"bottom"irp><"clear">',
         "aoColumns": [
                         {"bSortable": false, "bSearchable": false,
                             "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
@@ -79,6 +111,7 @@ jQuery(document).ready(function($) {
             $('input[name="selectallcb"]').attr('checked', false);
         }
     });
+    $('#migrationTable_filter input').attr("placeholder", 'Search');
 
     // Configure the files datatable in the plugin settings area, group the files by assignment.
     $('#filesTable').dataTable( {

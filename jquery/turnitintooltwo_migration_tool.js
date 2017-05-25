@@ -35,14 +35,15 @@ function displayMigrationModal() {
     // Only display the modal during a manual migration.
     if ($("#migrate_type").data("turnitintoolid") != $("#migrate_type").data("lastasked")) {
         $.colorbox({width: 550, height: 600, inline:true, opacity: "0.7", href:"#migration_alert",
-        onLoad: function() {
-            $('#asktomigrate').show();
-            lightBoxCloseButton();
-        },
-        onCleanup:function() {
-            $('#tii_close_bar').remove();
-            $('#migration_alert').hide();
-        }});
+            onLoad: function() {
+                $('#asktomigrate').show();
+                lightBoxCloseButton();
+            },
+            onCleanup:function() {
+                $('#tii_close_bar').remove();
+                $('#migration_alert').hide();
+            }
+        });
         $('#migration_alert').show();
     }
 

@@ -81,9 +81,9 @@ class v1migration {
         // Output our progress bar.
         $output .= html_writer::tag('div',
                     html_writer::tag('div',
-                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.')', array('class' => 'bar-complete'))
-                    , array('class' => 'bar', 'style' => 'width: '.$complete.'%'))
-                  , array('id' => 'progress-bar', 'class' => 'progress active'));
+                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.' '. get_string('complete', 'turnitintooltwo') .')', array('class' => 'migration-complete'))
+                    , array('id' => 'migration-progress', 'style' => 'width: '.$complete.'%'))
+                  , array('id' => 'migration-progress-bar', 'class' => 'active'));
 
         return $output;
     }
@@ -96,7 +96,7 @@ class v1migration {
      * @return string $output The HTML for the modal.
      */
     public function migrate_modal($courseid, $turnitintoolid) {
-		global $PAGE;
+        global $PAGE;
         $cssurl = new moodle_url('/mod/turnitintooltwo/jquery/colorbox.css');
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
@@ -299,7 +299,7 @@ class v1migration {
         // Get user link.
         $turnitintooluser = $DB->get_record("turnitintool_users", array('userid' => $userid), 'userid, turnitin_uid, turnitin_utp');
 
-        if ($turnitintooluser) {
+        if (!$turnitintooluser) {
             $DB->insert_record("turnitintooltwo_users", $turnitintooluser);
         }
 	}
@@ -529,10 +529,12 @@ class v1migration {
         foreach ($assignments as $assignment) {
             if ($assignment->migrated == 1) {
                 $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
-                $assignment->migrated = get_string('yes', 'turnitintooltwo');
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
-                $assignment->migrated = get_string('no', 'turnitintooltwo');
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
             }
             $return["aaData"][] = array($checkbox, $assignment->id, format_string($assignment->name), $assignment->migrated);
         }
@@ -588,7 +590,7 @@ class v1migration {
      * @param $enablesetting - whether the settings form should be enabled.
      */
     public static function output_settings_form($enablesetting = true) {
-        global $CFG, $DB;
+        global $CFG, $DB, $PAGE;
         $output = "";
 
         require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_form.class.php');
@@ -606,7 +608,7 @@ class v1migration {
             $migrationsettings = array('enablemigrationtool' => $currentsetting->value);
         }
 
-        $output .= html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'));
+        $output .= html_writer::tag('h2', get_string('v1migrationsubtitle', 'turnitintooltwo'), array('class' => 'migrationheader'));
 
         $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
 
@@ -625,12 +627,18 @@ class v1migration {
         $customdata["elements"] = $elements;
         $customdata["disable_form_change_checker"] = true;
         $customdata["show_cancel"] = false;
+
+        // Strings for javascript confirm deletion.
+        $PAGE->requires->string_for_js('confirmv1deletetitle', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('confirmv1deletetext', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('confirmv1deletewarning', 'turnitintooltwo');
         
         $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                                                     $customdata);
 
         $migrationform->set_data( $migrationsettings );
-        $output .= $migrationform->display();
+
+        $output .= html_writer::tag('div', $migrationform->display(), array('id' => 'migrationform'));
 
         return $output;
     }
