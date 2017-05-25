@@ -299,7 +299,7 @@ class v1migration {
         // Get user link.
         $turnitintooluser = $DB->get_record("turnitintool_users", array('userid' => $userid), 'userid, turnitin_uid, turnitin_utp');
 
-        if ($turnitintooluser) {
+        if (!$turnitintooluser) {
             $DB->insert_record("turnitintooltwo_users", $turnitintooluser);
         }
 	}
