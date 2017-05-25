@@ -491,7 +491,7 @@ switch ($cmd) {
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
                             array('class' => 'alert alert-success', 'role' => 'alert'));
-        }        
+        }
 
         $table = new html_table();
         $table->id = "migrationTable";
