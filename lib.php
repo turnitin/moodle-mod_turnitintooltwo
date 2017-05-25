@@ -1718,7 +1718,7 @@ function turnitintooltwo_genUuid() {
  * @param  $legacy The flag for whether we are using a legacy assignment or not.
  * @return string The course type for this assignment.
  */
-function turnitintooltwo_get_course_type($legacy) {
+function turnitintooltwo_get_course_type($legacy = 0) {
     if ($legacy == 1) {
         return "V1";
     } else {

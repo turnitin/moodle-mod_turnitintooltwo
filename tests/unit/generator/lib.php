@@ -165,6 +165,7 @@ abstract class test_lib extends advanced_testcase
         $turnitintooltwo->numparts = 1;
         $turnitintooltwo->anon = 0;
         $turnitintooltwo->allowlate = 0;
+        $turnitintooltwo->legacy = 0;
         $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
         

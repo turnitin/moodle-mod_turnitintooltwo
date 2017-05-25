@@ -1359,7 +1359,8 @@ class turnitintooltwo_view {
             if ($submission->userid == $USER->id) {
                 $submissionuser = new turnitintooltwo_user($submission->userid, "Learner");
 
-                $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+                $legacyassignment = (empty($turnitintooltwoassignment->turnitintooltwo->legacy)) ? 0 : 1;
+                $coursetype = turnitintooltwo_get_course_type($legacyassignment);
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
                 
                 if (!$_SESSION["unit_test"]) {
