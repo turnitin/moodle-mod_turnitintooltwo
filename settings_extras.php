@@ -437,18 +437,27 @@ switch ($cmd) {
         include_once("classes/v1migration/v1migration.php");
 
         $html = "";
+        $msg = optional_param('msg', "", PARAM_ALPHA);
+        $type = optional_param('type', "", PARAM_ALPHA);
 
         // Save Migration Tool enabled status.
         $alert = "";
         if ( isset($_REQUEST['enablemigrationtool']) ) {
             $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
+            $type = ($saved) ? 'success' : 'error';
 
-            $string = ($saved) ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
-            $msgtype = ($saved) ? 'success' : 'error';
+            $urlparams = array('cmd' => 'v1migration', 'msg' => 'setting', 'type' => $type);
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
+            exit;
+        }
+
+        // Show successful delete message if applicable.
+        if ($msg == 'setting') {
+            $string = ($type == "success") ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
 
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $alert = html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'), 
-                            array('class' => 'alert alert-'.$msgtype, 'role' => 'alert'));
+                            array('class' => 'alert alert-'.$type, 'role' => 'alert'));
         }
 
         // If v1 and v2 accounts are different then diable form elements.
@@ -471,11 +480,18 @@ switch ($cmd) {
         // Delete assignments if the form has been submitted.
         if (isset($assignmentids) && count($assignmentids) > 0) {
             v1migration::turnitintooltwo_delete_assignments($assignmentids);
+            
+            $urlparams = array('cmd' => 'v1migration', 'msg' => 'delete', 'type' => 'success');
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
+            exit;
+        }
 
+        // Show successful delete message if applicable.
+        if ($msg == 'delete') {
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
                             array('class' => 'alert alert-success', 'role' => 'alert'));
-        }
+        }        
 
         $table = new html_table();
         $table->id = "migrationTable";
