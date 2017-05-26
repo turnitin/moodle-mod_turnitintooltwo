@@ -499,10 +499,13 @@ switch ($cmd) {
 
         // Do the table headers.
         $cells = array();
-        $cells[0] = new html_table_cell(html_writer::checkbox('selectallcb', 1, false));
+        $checkbox = html_writer::checkbox('selectallcb', 1, false, '', array('title' => get_string('migrationselectall', 'turnitintooltwo')));
+        $cells[0] = new html_table_cell($checkbox);
+
+
         $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
         $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
-        $cells['title'] = new html_table_cell(get_string('title', 'turnitintooltwo'));
+        $cells['title'] = new html_table_cell(get_string('migrationassignmenttitle', 'turnitintooltwo'));
         $cells['migrationstatus'] = new html_table_cell(get_string('hasmigrated', 'turnitintooltwo'));
 
         $table->head = $cells;
