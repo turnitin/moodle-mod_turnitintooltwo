@@ -81,7 +81,7 @@ class v1migration {
         // Output our progress bar.
         $output .= html_writer::tag('div',
                     html_writer::tag('div',
-                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.' '. get_string('complete', 'turnitintooltwo') .')', array('class' => 'migration-complete'))
+                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.' '. get_string('assignments', 'turnitintooltwo') .')', array('class' => 'migration-complete'))
                     , array('id' => 'migration-progress', 'style' => 'width: '.$complete.'%'))
                   , array('id' => 'migration-progress-bar', 'class' => 'active'));
 
