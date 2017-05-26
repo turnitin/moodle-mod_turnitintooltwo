@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
         "sZeroRecords": M.str.turnitintooltwo.szerorecords,
         "sInfo": M.str.turnitintooltwo.sinfo,
         "sSearch": '',
-        "sLengthMenu": M.str.turnitintooltwo.slengthmenu,
+        "sLengthMenu": M.str.turnitintooltwo.slengthmigrationmenu,
         "sInfoEmpty": M.str.turnitintooltwo.semptytable,
         "oPaginate": {
             "sNext": M.str.turnitintooltwo.snext,
