@@ -513,6 +513,7 @@ switch ($cmd) {
         $elements2[] = array('html', html_writer::table($table));
         $customdata2["elements"] = $elements2;
         $customdata2["show_cancel"] = false;
+        $customdata2["disable_form_change_checker"] = true;
         $customdata2["submit_label"] = get_string('delete_selected', 'turnitintooltwo');
 
         $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration', $customdata2);
