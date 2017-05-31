@@ -557,9 +557,7 @@ class v1migration {
         foreach ($assignmentids as $assignmentid) {
             $cm = get_coursemodule_from_instance('turnitintool', $assignmentid);
 
-            turnitintool_delete_instance($assignmentid);
-
-            rebuild_course_cache($cm->course);
+            course_delete_module($cm->id);
         }
     }
 

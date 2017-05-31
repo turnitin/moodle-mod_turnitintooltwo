@@ -740,6 +740,9 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $v1assignment1 = $this->make_test_module($course->id, 'turnitintool', "Assignment 1", 5);
         $v1assignment2 = $this->make_test_module($course->id, 'turnitintool', "Assignment 2", 5);
         $v1assignment3 = $this->make_test_module($course->id, 'turnitintool', "Assignment 3", 5);
+        $cm1 = get_coursemodule_from_instance('turnitintool', $v1assignment1->id);
+        $cm2 = get_coursemodule_from_instance('turnitintool', $v1assignment2->id);
+        $cm3 = get_coursemodule_from_instance('turnitintool', $v1assignment3->id);
 
         // Check that the assignments have been created correctly.
         $v1assignments = $DB->get_records('turnitintool');
@@ -759,6 +762,14 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $this->assertEquals(0, count($v1assignments));
         $this->assertEquals(0, count($v1parts));
         $this->assertEquals(0, count($v1submissions));
+
+        // Verify that records have been removed from the course_modules table.
+        $v1cm = $DB->get_records('course_modules', array('id' => $cm1->id);
+        $this->assertEquals(0, count($v1cm));
+        $v2cm = $DB->get_records('course_modules', array('id' => $cm2->id);
+        $this->assertEquals(0, count($v2cm));
+        $v3cm = $DB->get_records('course_modules', array('id' => $cm3->id);
+        $this->assertEquals(0, count($v3cm));
     }
 
     /**
