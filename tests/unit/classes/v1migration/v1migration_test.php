@@ -371,6 +371,52 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     }
 
     /**
+     * Test that if there are multiple submissions for a user in a part that only the latest gets migrated.
+     */
+    public function test_migrate_multiple_submission() {
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        $this->resetAfterTest();
+
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+
+        // Link course to Turnitin.
+        $courselink = new stdClass();
+        $courselink->courseid = $course->id;
+        $courselink->ownerid = 0;
+        $courselink->turnitin_ctl = "Test Course";
+        $courselink->turnitin_cid = 0;
+        $DB->insert_record('turnitintool_courses', $courselink);
+
+        // Create Assignment.
+        $v1assignmenttitle = "Test ".uniqid();
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool');
+        
+        // Get part details.
+        $part = $DB->get_record('turnitintool_parts', array('turnitintoolid' => $v1assignment->id));
+
+        // Create extra submission for user 1.
+        $this->make_test_submission('turnitintool', $part->id, $v1assignment->id, 1);
+
+        // Verify there are two submissions to v1 assignment.
+        $v1submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $part->id));
+        $this->assertEquals(2, count($v1submissions));
+
+        // Migrate assignment.
+        $v1migration = new v1migration($course->id, $v1assignment);
+        $v2assignmentid = $v1migration->migrate();
+
+        // Verify only one submission has migrated.
+        $v2submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
+        $this->assertEquals(1, count($v2submissions));
+    }
+
+    /**
      * Test the modal that appears when asked to migrate.
      */
     public function test_migrate_course() {
