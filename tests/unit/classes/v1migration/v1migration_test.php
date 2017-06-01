@@ -18,13 +18,14 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/v1migration/v1migration.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/generator/lib.php');
 
 /**
  * Tests for classes/v1migration/v1migration
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
+class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
     /**
      * Test that users get migrated from the v1 to the v2 user table.
@@ -52,6 +53,8 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $turnitintooluser->turnitin_uid = 1001;
         $turnitintooluser->turnitin_utp = 1;
         $DB->insert_record('turnitintool_users', $turnitintooluser);
+
+        $turnitintooltwousers = $DB->get_records('turnitintool_users', array('userid' => $user1->id));
 
         // Migrate users to v2 tables.
         $v1migration->migrate_user($user1->id);
@@ -106,8 +109,8 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
 
         // Create some V1 assignments.
-        $v1assignment1 = $this->make_test_module($course->id, 'turnitintool');
-        $v1assignment2 = $this->make_test_module($course->id, 'turnitintool');
+        $v1assignment1 = $this->make_test_assignment($course->id, 'turnitintool');
+        $v1assignment2 = $this->make_test_assignment($course->id, 'turnitintool');
 
         $v1assignments = $DB->get_records('turnitintool');
 
@@ -130,7 +133,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
      * @param string $assignmentname The name of the assignment.
      * @param string The number of submissions to make.
      */
-    public function make_test_module($courseid, $modname, $assignmentname = "", $submissions = 1) {
+    public function make_test_assignment($courseid, $modname, $assignmentname = "", $submissions = 1) {
         global $DB;
 
         if (!$this->v1installed()) {
@@ -162,51 +165,18 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $assignment->id = $DB->insert_record($modname, $assignment);
 
         // Create Assignment Part.
-        $partid = $this->make_test_part($modname, $assignment->id);
+        $parts = $this->make_test_parts($modname, $assignment->id, 1);
+        $part = current($parts);
 
         // Create Assignment Submission.
-        $this->make_test_submission($modname, $partid, $assignment->id, $submissions);
+        $this->make_test_submission($modname, $part->id, $assignment->id, $submissions);
 
         // Set up a course module.
-        $module = $DB->get_record("modules", array("name" => $modname));
-        $coursemodule = new stdClass();
-        $coursemodule->course = $courseid;
-        $coursemodule->module = $module->id;
-        $coursemodule->added = time();
-        $coursemodule->instance = $assignment->id;
-        $coursemodule->section = 0;
-
-        // Add Course module if a v1 module.
-        if ($modname == 'turnitintool') {
-            add_course_module($coursemodule);
-        }
+        $addtocm = ($modname == 'turnitintool') ? true : false;
+        $this->make_test_module($courseid, $modname, $assignment->id, $addtocm);
 
         return $assignment;
-    }
-
-    /**
-     * Create a test part on the specified assignment.
-     * @param string $modname Module name (turnitintool or turnitintooltwo)
-     * @param int $assignmentid Assignment Module ID
-     */
-    public function make_test_part($modname, $assignmentid) {
-        global $DB;
-
-        $modulevar = $modname.'id';
-
-        $part = new stdClass();
-        $part->$modulevar = $assignmentid;
-        $part->partname = 'Part 1';
-        $part->tiiassignid = 0;
-        $part->dtstart = 0;
-        $part->dtdue = 0;
-        $part->dtpost = 0;
-        $part->maxmarks = 0;
-        $part->deleted = 0;
-
-        $partid = $DB->insert_record($modname.'_parts', $part);
-        return $partid;
-    }
+    }    
 
     /**
      * Create a test submission on the specified assignment part.
@@ -307,7 +277,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
 
         // Create Assignment.
-        $v1assignment = $this->make_test_module($course->id, 'turnitintool');
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool');
         $v1migration = new v1migration($course->id, $v1assignment);
 
         $v1migration->hide_v1_assignment();
@@ -335,7 +305,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
 
         // Create Assignment.
-        $v2assignment = $this->make_test_module($course->id, 'turnitintooltwo');
+        $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo');
         $v1migration = new v1migration($course->id, $v2assignment);
 
         $v1migration->setup_v2_module($course->id, $v2assignment->id);
@@ -370,7 +340,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
         // Create Assignment.
         $v1assignmenttitle = "Test ".uniqid();
-        $v1assignment = $this->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
         $v1migration = new v1migration($course->id, $v1assignment);
 
         // Verify there are no v2 assignments, parts or submissions.
@@ -522,12 +492,12 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
         // Create V1 Assignment.
         $v1assignmenttitle = "Test Assignment (Migrated)";
-        $v1assignment = $this->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
         $v1migration = new v1migration($course->id, $v1assignment);
 
         // Create V2 Assignment.
         $v2assignmenttitle = "Test Assignment";
-        $v2assignment = $this->make_test_module($course->id, 'turnitintooltwo', $v2assignmenttitle);
+        $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle);
 
         // Set migrate gradebook to 1 so it will get migrated when we call the function.
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
@@ -542,7 +512,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
         // Create V2 Assignment with 201 submissions.
         $v2assignmenttitle = "Test Assignment";
-        $v2assignment = $this->make_test_module($course->id, 'turnitintooltwo', $v2assignmenttitle, 201);
+        $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle, 201);
 
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
 
@@ -588,7 +558,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
 
         // Create V1 Assignment.
         $v1assignmenttitle = "Test Assignment (Migration in progress...)";
-        $v1assignment = $this->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
         $v1migration = new v1migration($course->id, $v1assignment);
 
         // Test that the title gets updated after the migration.
@@ -662,7 +632,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
             } else {
                 $v1assignmenttitle = "Coursework " . rand(1, 100);
             }
-            $v1assignment = $this->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+            $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
             // Set the first 5 to migrated.
             if ($i < 5) {
                 $update->id = $v1assignment->id;
@@ -704,7 +674,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
-                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";
@@ -737,9 +707,12 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $course = $this->getDataGenerator()->create_course();
 
         // Create some V1 assignments.
-        $v1assignment1 = $this->make_test_module($course->id, 'turnitintool', "Assignment 1", 5);
-        $v1assignment2 = $this->make_test_module($course->id, 'turnitintool', "Assignment 2", 5);
-        $v1assignment3 = $this->make_test_module($course->id, 'turnitintool', "Assignment 3", 5);
+        $v1assignment1 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 1", 5);
+        $v1assignment2 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 2", 5);
+        $v1assignment3 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 3", 5);
+        $cm1 = get_coursemodule_from_instance('turnitintool', $v1assignment1->id);
+        $cm2 = get_coursemodule_from_instance('turnitintool', $v1assignment2->id);
+        $cm3 = get_coursemodule_from_instance('turnitintool', $v1assignment3->id);
 
         // Check that the assignments have been created correctly.
         $v1assignments = $DB->get_records('turnitintool');
@@ -759,6 +732,14 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $this->assertEquals(0, count($v1assignments));
         $this->assertEquals(0, count($v1parts));
         $this->assertEquals(0, count($v1submissions));
+
+        // Verify that records have been removed from the course_modules table.
+        $v1cm = $DB->get_records('course_modules', array('id' => $cm1->id));
+        $this->assertEquals(0, count($v1cm));
+        $v2cm = $DB->get_records('course_modules', array('id' => $cm2->id));
+        $this->assertEquals(0, count($v2cm));
+        $v3cm = $DB->get_records('course_modules', array('id' => $cm3->id));
+        $this->assertEquals(0, count($v3cm));
     }
 
     /**
