@@ -169,11 +169,14 @@ class v1migration {
             // Get the submissions for this part.
             $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid));
 
+            $migratedsubs = array();
             foreach ($v1partsubmissions as $v1partsubmission) {
                 $v1partsubmission->turnitintooltwoid = $turnitintooltwoid;
                 $v1partsubmission->submission_part = $v2partid;
                 $v1partsubmission->migrate_gradebook = 1;
 
+                // Submission hash must be unique. However, there may be situations where a user erroneously has multiple submissions.
+                // If this is the case then we only want to migrate the latest submission.
                 $v1partsubmission->submission_hash = $v1partsubmission->userid.'_'.$turnitintooltwoid.'_'.$v2partid;
 
                 unset($v1partsubmission->turnitintoolid);
@@ -182,7 +185,18 @@ class v1migration {
                 // Migrate user to v2 if necessary.
                 $this->migrate_user($v1partsubmission->userid);
 
-                $turnitintooltwosubmissionid = $DB->insert_record("turnitintooltwo_submissions", $v1partsubmission);
+                // If hash has not been used then insert new record
+                if (empty($migratedsubs[$v1partsubmission->submission_hash])) {
+                    $turnitintooltwosubmissionid = $DB->insert_record("turnitintooltwo_submissions", $v1partsubmission);
+                    $migratedsubs[$v1partsubmission->submission_hash] = $turnitintooltwosubmissionid;
+                } else {
+                    // Overwrite older submission if hash has already been used.
+                    $oldersubmission = $DB->get_record('turnitintooltwo_submissions', array('submission_hash' => $v1partsubmission->submission_hash));
+                    if ($oldersubmission) {
+                        $v1partsubmission->id = $oldersubmission->id;
+                        $turnitintooltwosubmissionid = $DB->update_record("turnitintooltwo_submissions", $v1partsubmission);
+                    }
+                }
             }
         }
 
