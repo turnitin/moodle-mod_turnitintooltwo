@@ -176,15 +176,17 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     border-radius: 3px;
     margin: 15px 0px 30px 0px;
 }
-#migration-progress {
-    background-color: #0073D2;
+#migration-progress, #migration-progress-todo {
     width: 0%;
     height: 100%;
-    color: #fff;
     text-align: center;
     float: left;
     font-size: 14px;
     text-align: center;
+}
+#migration-progress {
+    background-color: #0073D2;
+    color: #fff;
 }
 
 .enablemigrationtool {
