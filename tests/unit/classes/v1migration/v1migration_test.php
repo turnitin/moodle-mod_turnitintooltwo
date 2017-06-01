@@ -18,13 +18,14 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/v1migration/v1migration.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/generator/lib.php');
 
 /**
  * Tests for classes/v1migration/v1migration
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
+class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
     /**
      * Test that users get migrated from the v1 to the v2 user table.
@@ -52,6 +53,8 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $turnitintooluser->turnitin_uid = 1001;
         $turnitintooluser->turnitin_utp = 1;
         $DB->insert_record('turnitintool_users', $turnitintooluser);
+
+        $turnitintooltwousers = $DB->get_records('turnitintool_users', array('userid' => $user1->id));
 
         // Migrate users to v2 tables.
         $v1migration->migrate_user($user1->id);
@@ -162,40 +165,18 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         $assignment->id = $DB->insert_record($modname, $assignment);
 
         // Create Assignment Part.
-        $partid = $this->make_test_part($modname, $assignment->id);
+        $parts = $this->make_test_parts($modname, $assignment->id, 1);
+        $part = current($parts);
 
         // Create Assignment Submission.
-        $this->make_test_submission($modname, $partid, $assignment->id, $submissions);
+        $this->make_test_submission($modname, $part->id, $assignment->id, $submissions);
 
         // Set up a course module.
-        $this->make_test_module($courseid, $modname, $assignment->id);
+        $addtocm = ($modname == 'turnitintool') ? true : false;
+        $this->make_test_module($courseid, $modname, $assignment->id, $addtocm);
 
         return $assignment;
-    }
-
-    /**
-     * Create a test part on the specified assignment.
-     * @param string $modname Module name (turnitintool or turnitintooltwo)
-     * @param int $assignmentid Assignment Module ID
-     */
-    public function make_test_part($modname, $assignmentid) {
-        global $DB;
-
-        $modulevar = $modname.'id';
-
-        $part = new stdClass();
-        $part->$modulevar = $assignmentid;
-        $part->partname = 'Part 1';
-        $part->tiiassignid = 0;
-        $part->dtstart = 0;
-        $part->dtdue = 0;
-        $part->dtpost = 0;
-        $part->maxmarks = 0;
-        $part->deleted = 0;
-
-        $partid = $DB->insert_record($modname.'_parts', $part);
-        return $partid;
-    }
+    }    
 
     /**
      * Create a test submission on the specified assignment part.
@@ -693,7 +674,7 @@ class mod_turnitintooltwo_v1migration_testcase extends advanced_testcase {
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
-                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
             } else {
                 $checkbox = "";

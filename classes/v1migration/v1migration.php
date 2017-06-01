@@ -296,10 +296,12 @@ class v1migration {
 	public function migrate_user($userid) {
 		global $DB;
 
-        // Get user link.
+        // Get user link from V1 table.
         $turnitintooluser = $DB->get_record("turnitintool_users", array('userid' => $userid), 'userid, turnitin_uid, turnitin_utp');
+        // Check if user link exists in V2 table.
+        $turnitintooltwouser = $DB->get_record("turnitintooltwo_users", array('userid' => $userid), 'userid');
 
-        if (!$turnitintooluser) {
+        if ($turnitintooluser && !$turnitintooltwouser) {
             $DB->insert_record("turnitintooltwo_users", $turnitintooluser);
         }
 	}
