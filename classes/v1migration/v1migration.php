@@ -78,12 +78,22 @@ class v1migration {
             $complete = floor(($totalmigrated/$totalv1)*100);
         }
 
+        // Progress bar text.
+        $percentcompletedtext = $complete.'% '. get_string('complete', 'turnitintooltwo');
+        $numassignmentstext = '('.$totalmigrated.'/'.$totalv1.' '. get_string('assignments', 'turnitintooltwo').')';
+        $completedtext = html_writer::tag('span', $percentcompletedtext.' '.$numassignmentstext);
+
+        // If migration is less than a third complete then show the text after the completed section of the progress bar.
+        if ( $complete < 33 ) {
+            $divwidth = 100 - $complete;
+            $completedtext = html_writer::tag('div', $completedtext, array('id' => 'migration-progress-todo', 'style' => 'width: '.$divwidth.'%'));
+            $progress = html_writer::tag('div', '', array('id' => 'migration-progress', 'style' => 'width: '.$complete.'%')).$completedtext;
+        } else {
+            $progress = html_writer::tag('div', $completedtext, array('id' => 'migration-progress', 'style' => 'width: '.$complete.'%'));
+        }
+
         // Output our progress bar.
-        $output .= html_writer::tag('div',
-                    html_writer::tag('div',
-                        html_writer::tag('span', $complete.'% '. get_string('complete', 'turnitintooltwo') .' ('.$totalmigrated.'/'.$totalv1.' '. get_string('assignments', 'turnitintooltwo') .')', array('class' => 'migration-complete'))
-                    , array('id' => 'migration-progress', 'style' => 'width: '.$complete.'%'))
-                  , array('id' => 'migration-progress-bar', 'class' => 'active'));
+        $output .= html_writer::tag('div', $progress, array('id' => 'migration-progress-bar', 'class' => 'active'));
 
         return $output;
     }
