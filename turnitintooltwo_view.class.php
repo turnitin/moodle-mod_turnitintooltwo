@@ -1350,7 +1350,7 @@ class turnitintooltwo_view {
             if ($submission->userid == $USER->id) {
                 $submissionuser = new turnitintooltwo_user($submission->userid, "Learner");
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
-                if (!$_SESSION["unit_test"]) {
+                if (empty($_SESSION["unit_test"])) {
                     $submissionuser->join_user_to_class($coursedata->turnitin_cid);
                 }
                 // Has the student accepted the EULA?
