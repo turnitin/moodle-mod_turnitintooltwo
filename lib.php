@@ -540,7 +540,7 @@ function turnitintooltwo_reset_course_form_defaults($course) {
  * @param object $mform The mod form object passed by reference by course reset
  */
 function turnitintooltwo_reset_course_form_definition(&$mform) {
-    $mform->addElement('header', 'turnitintooltwoheader', get_string('modulenameplural', 'turnitintooltwo'));
+    $mform->addElement('header', 'turnitintooltwoheader', get_string('modulenamewithv2plural', 'turnitintooltwo'));
     $options = array(
             '0' => get_string('turnitintooltworesetdata0', 'turnitintooltwo'),
             '1' => get_string('turnitintooltworesetdata1', 'turnitintooltwo'),

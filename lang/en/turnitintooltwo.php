@@ -70,6 +70,7 @@ $string['maxmarks'] = 'Max Marks';
 $string['pluginname'] = 'Turnitin Assignment 2';
 $string['modulename'] = 'Turnitin Assignment 2';
 $string['modulenameplural'] = 'Turnitin Assignments';
+$string['modulenamewithv2plural'] = 'Turnitin Assignments (V2)';
 $string['moduleversion'] = 'Version';
 $string['mysubmissions'] = 'My Submissions';
 $string['nolimit'] = 'No Limit';
