@@ -187,13 +187,16 @@ class v1migration {
 
                 // Submission hash must be unique. However, there may be situations where a user erroneously has multiple submissions.
                 // If this is the case then we only want to migrate the latest submission.
-                $v1partsubmission->submission_hash = $v1partsubmission->userid.'_'.$turnitintooltwoid.'_'.$v2partid;
+                $userid = (empty($v1partsubmission->userid)) ? $v1partsubmission->submission_nmuserid : $v1partsubmission->userid;
+                $v1partsubmission->submission_hash = $userid.'_'.$turnitintooltwoid.'_'.$v2partid;
 
                 unset($v1partsubmission->turnitintoolid);
                 unset($v1partsubmission->id);
 
                 // Migrate user to v2 if necessary.
-                $this->migrate_user($v1partsubmission->userid);
+                if (!empty($v1partsubmission->userid)) {
+                    $this->migrate_user($v1partsubmission->userid);
+                }
 
                 // If hash has not been used then insert new record
                 if (empty($migratedsubs[$v1partsubmission->submission_hash])) {
