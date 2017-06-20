@@ -1207,7 +1207,8 @@ function turnitintooltwo_getfiles($moduleid) {
                                                             get_string('filedeleteconfirm', 'turnitintooltwo'))."');";
             $delete = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files&file='.
                             $file->id.'&filehash='.$file->hash,
-                                html_writer::tag('i', '', array('class' => 'fa fa-trash-o fa-lg')), $attributes);
+                                html_writer::tag('i', '', array('title' => get_string('deletesubmission', 'turnitintooltwo'),
+                                    'class' => 'fa fa-trash-o fa-lg')), $attributes);
         }
 
         $return["aaData"][] = array($assignment, $file->courseshort, $file->coursetitle, $submission,
