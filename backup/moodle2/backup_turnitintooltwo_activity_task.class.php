@@ -50,11 +50,11 @@ class backup_turnitintooltwo_activity_task extends backup_activity_task {
 
         // Link to the list of turnitintooltwos.
         $search = "/(".$base."\/mod\/turnitintooltwo\/index.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@TURNITINTOOLINDEX*$2@$', $content);
+        $content = preg_replace($search, '$@TURNITINTOOLTWOINDEX*$2@$', $content);
 
         // Link to turnitintooltwo view by moduleid.
         $search = "/(".$base."\/mod\/turnitintooltwo\/view.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@TURNITINTOOLVIEWBYID*$2@$', $content);
+        $content = preg_replace($search, '$@TURNITINTOOLTWOVIEWBYID*$2@$', $content);
 
         return $content;
     }
