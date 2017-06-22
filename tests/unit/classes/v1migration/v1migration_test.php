@@ -196,6 +196,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
             $submission->$modulevar = $assignmentid;
             $submission->submission_part = $partid;
             $submission->submission_title = "Test Submission " . $i;
+            $submission->submission_hash = $i.'_'.$assignmentid.'_'.$partid;
 
             $DB->insert_record($modname.'_submissions', $submission);
         }
@@ -394,14 +395,19 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $DB->insert_record('turnitintool_courses', $courselink);
 
         // Create Assignment.
-        $v1assignmenttitle = "Test ".uniqid();
         $v1assignment = $this->make_test_assignment($course->id, 'turnitintool');
         
         // Get part details.
         $part = $DB->get_record('turnitintool_parts', array('turnitintoolid' => $v1assignment->id));
 
         // Create extra submission for user 1.
-        $this->make_test_submission('turnitintool', $part->id, $v1assignment->id, 1);
+        $submission = new stdClass();
+        $submission->userid = 1;
+        $submission->turnitintoolid = $v1assignment->id;
+        $submission->submission_part = $part->id;
+        $submission->submission_title = "Test Duplicate Submission";
+        $submission->submission_hash = uniqid();
+        $DB->insert_record('turnitintool_submissions', $submission);
 
         // Verify there are two submissions to v1 assignment.
         $v1submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $part->id));
@@ -414,6 +420,66 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         // Verify only one submission has migrated.
         $v2submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
         $this->assertEquals(1, count($v2submissions));
+    }
+
+    /**
+     * Test that if there are multiple unenrolled users then they all get migrated.
+     */
+    public function test_migrate_multiple_unenrolled_users() {
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        $this->resetAfterTest();
+
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+
+        // Link course to Turnitin.
+        $courselink = new stdClass();
+        $courselink->courseid = $course->id;
+        $courselink->ownerid = 0;
+        $courselink->turnitin_ctl = "Test Course";
+        $courselink->turnitin_cid = 0;
+        $DB->insert_record('turnitintool_courses', $courselink);
+
+        // Create Assignment.
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', '', 0);
+        
+        // Get part details.
+        $part = $DB->get_record('turnitintool_parts', array('turnitintoolid' => $v1assignment->id));
+
+        // Create two submissions.
+        $this->make_test_submission('turnitintool', $part->id, $v1assignment->id, 2);
+
+        // Verify there are two submissions to v1 assignment.
+        $v1submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $part->id));
+        $this->assertEquals(2, count($v1submissions));
+
+        // Update submissions to be from non moodle users.
+        $v1submissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $part->id));
+        foreach ($v1submissions as $v1submission) {
+            $updatesubmission = new stdClass();
+            $updatesubmission->id = $v1submission->id;
+            $updatesubmission->userid = 0;
+            $updatesubmission->submission_nmuserid = uniqid();
+            $updatesubmission->submission_nmfirstname = 'Test';
+            $updatesubmission->submission_nmlastname = 'User'.uniqid();
+
+            $DB->update_record('turnitintool_submissions', $updatesubmission);
+        }
+
+        // Migrate assignment.
+        $v1migration = new v1migration($course->id, $v1assignment);
+        $v2assignmentid = $v1migration->migrate();
+
+        // Verify both submissions have migrated.
+        $v2submissions = $DB->get_records('turnitintooltwo_submissions', 
+                                            array('turnitintooltwoid' => $v2assignmentid,
+                                                    'userid' => 0));
+        $this->assertEquals(2, count($v2submissions));
     }
 
     /**

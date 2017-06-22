@@ -416,6 +416,10 @@ switch ($action) {
             // Check if student is actually enrolled in the Moodle course.
             if ( !is_enrolled(context_module::instance($cm->id), $submission->userid, '', true) ) {
                 $submission->nmoodle = 1;
+
+                $submission->firstname = $submission->submission_nmfirstname;
+                $submission->lastname = $submission->submission_nmlastname;
+                $submission->fullname = $submission->firstname.' '.$submission->lastname;
             }
 
             $useroverallgrades = array();

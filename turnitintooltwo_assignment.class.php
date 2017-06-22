@@ -1991,6 +1991,7 @@ class turnitintooltwo_assignment {
                 $submission->userid = $submission->submission_nmuserid;
                 $submission->firstname = $submission->submission_nmfirstname;
                 $submission->lastname = $submission->submission_nmlastname;
+                $submission->fullname = $submission->firstname.' '.$submission->lastname;
 
                 $submissions[$submission->submission_part][$submission->userid] = $submission;
             }
