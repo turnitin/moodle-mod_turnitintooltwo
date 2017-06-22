@@ -571,3 +571,7 @@ $string['refreshallgrades'] = 'Refresh all Grades from Turnitin';
 $string['refreshingallgrades'] = 'Refreshing Grades from Turnitin';
 $string['studentfirstname'] = 'First Name';
 $string['studentlastname'] = 'Last Name';
+$string['edit'] = 'Edit';
+$string['exportexcel'] = 'Export to Excel';
+$string['exportoriginal'] = 'Export to original format';
+$string['exportpdf'] = 'Export to PDF';
