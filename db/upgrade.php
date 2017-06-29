@@ -238,7 +238,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $dbman->add_key($table, $key);
     }
 
-    if ($oldversion < 2017042101) {
+    if ($oldversion < 2017052402) {
         $table = new xmldb_table('turnitintooltwo');
         // Add field for flagging whether a V2 assignment is a legacy V1 assignment.
         $field = new xmldb_field('legacy', XMLDB_TYPE_INTEGER, '1', false, null, false, '0', 'anongradebook');
