@@ -352,6 +352,10 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertEquals(0, count($v2parts));
         $this->assertEquals(0, count($v2submissions));
 
+        // Set grades updated timestamp.
+        $timestamp = time();
+        $_SESSION["migrationtool"][$v1assignment->id]["gradesupdated"] = $timestamp;
+
         $v2assignmentid = $v1migration->migrate();
 
         // Verify assignment has migrated.
@@ -361,6 +365,10 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         // Verify part has migrated.
         $v2parts = $DB->get_records('turnitintooltwo_parts', array('turnitintooltwoid' => $v2assignmentid));
         $this->assertEquals(1, count($v2parts));
+
+        // Verify grade timestamp has been saved.
+        $v2part = current($v2parts);
+        $this->assertEquals($timestamp, $v2part->gradesupdated);
 
         // Verify submission has migrated.
         $v2parts = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
