@@ -948,4 +948,21 @@ switch ($action) {
                     'migrated' => false
             ));
         }
+    
+    case "activate_migration":
+
+        if ($ADMIN->full_tree) {
+            $migration_enabled_params = array(
+                'plugin' => 'turnitintooltwo',
+                'name' => 'migration_enabled'
+            );
+            $migration_enabled = $DB->get_record('config_plugins', $migration_enabled_params);
+
+            if (empty($migration_enabled)) {
+                $activation_entry->plugin = 'turnitintooltwo';
+                $activation_entry->name = 'migration_enabled';
+                $activation_entry->value  = 1;
+                $activation = $DB->insert_record('config_plugins', $migration_entry_params);
+            }
+        }
 }
