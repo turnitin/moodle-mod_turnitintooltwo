@@ -123,8 +123,11 @@ class v1migration {
         $dontmigratelink = html_writer::tag('button', get_string('dontmigrateassignment', 'turnitintooltwo'),
                                                         array('class' => 'dontmigrate_link btn-default', 'id' => 'dontmigrate_link'));
 
+        $spinner = html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-2x'));
+        $spinner = html_writer::tag('div', $spinner, array('class' => 'migration-spinner'));
+
         $migrating = html_writer::tag('div', html_writer::tag('p', get_string('migrating', 'turnitintooltwo'))
-                                        . html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-2x migration_spinner'))
+                                        . $spinner
                                         . html_writer::tag('p', get_string('migrationredirect', 'turnitintooltwo')),
                                         array('id' => 'migrating', 'class' => 'hide'));
 
@@ -171,6 +174,10 @@ class v1migration {
         foreach ($v1parts as $v1part) {
             $v1part->turnitintooltwoid = $turnitintooltwoid;
             $v1partid = $v1part->id;
+            // Save the timestamp when the grades were updated.
+            if (!empty($_SESSION["migrationtool"][$this->v1assignment->id]["gradesupdated"])) {
+                $v1part->gradesupdated = $_SESSION["migrationtool"][$this->v1assignment->id]["gradesupdated"];
+            }
             unset($v1part->turnitintoolid);
             unset($v1part->id);
 
