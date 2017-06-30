@@ -607,3 +607,4 @@ $string['confirmv1deletetitle'] = 'Delete selected assignments?';
 $string['confirmv1deletetext'] = 'You\'ve selected {$a} migrated V1 assignment(s) for permanent deletion.';
 $string['confirmv1deletewarning'] = 'This action can not be undone.';
 $string['slengthmigrationmenu'] = 'Show _MENU_ assignments';
+$string['notadmin'] = 'Moodle administrator privileges are required for the requested action.';

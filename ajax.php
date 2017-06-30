@@ -950,7 +950,6 @@ switch ($action) {
         }
     
     case "activate_migration":
-
         if ($ADMIN->full_tree) {
             $migration_enabled_params = array(
                 'plugin' => 'turnitintooltwo',
@@ -962,7 +961,21 @@ switch ($action) {
                 $activation_entry->plugin = 'turnitintooltwo';
                 $activation_entry->name = 'migration_enabled';
                 $activation_entry->value  = 1;
-                $activation = $DB->insert_record('config_plugins', $migration_entry_params);
+                $activation = $DB->insert_record('config_plugins', $activation_entry);
+            } else {
+                $activation_update->plugin = 'turnitintooltwo';
+                $activation_update->name = 'migration_enabled';
+                $activation_update->value  = 1;
+                $activation = $DB->update_record('config_plugins', $activation_update);
             }
+
+            // TODO This block will need more padding out, probably. Actually, most certainly.
+            if ($activation) {
+                echo 'Success';
+            } else {
+                echo 'Failure';
+            }
+        } else {
+            die(get_string('notadmin', 'turnitintooltwo'));
         }
 }

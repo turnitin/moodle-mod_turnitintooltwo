@@ -924,7 +924,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
     }
 
-    public function test_migration_activation_settings_changes(){
+    public function test_migration_activation_settings_changes() {
         global $CFG, $DB;
 
         $activation_entry = new stdClass();
