@@ -26,6 +26,7 @@ if ($ADMIN->fulltree) {
     require_once(__DIR__.'/settingslib.php');
     require_once(__DIR__."/turnitintooltwo_view.class.php");
 
+    $migration_activation = optional_param('activation', null, PARAM_ALPHA);
     $turnitintooltwoview = new turnitintooltwo_view();
 
     $config = turnitintooltwo_admin_config();
@@ -47,6 +48,25 @@ if ($ADMIN->fulltree) {
     if (!extension_loaded('soap')) {
         $librarywarning .= html_writer::tag('div', get_string('nosoaplibrary', 'turnitintooltwo'),
                                                 array('class' => 'tii_library_not_present_warning'));
+    }
+
+
+    $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+    $migration_message;
+
+    // If being directed here from the migration activation page, display appropriate message
+    if ($migration_activation == 'success') {
+        $migration_message = html_writer::tag(
+            'div',
+            $close.get_string('migrationactivationsuccess', 'turnitintooltwo'),
+            array('class' => 'alert alert-success', 'role' => 'alert')
+        );
+    } elseif ($migration_activation == 'failure') {
+        $migration_message = html_writer::tag(
+            'div',
+            $close.get_string(),
+            array('class' => 'alert alert-error', 'role' => 'alert')
+        );
     }
 
     $tabmenu = $turnitintooltwoview->draw_settings_menu('settings').
@@ -112,6 +132,11 @@ if ($ADMIN->fulltree) {
         $desc .= ' - '.$upgrade;
     }
 
+    $settings->add(new admin_setting_heading(
+        'turnitintooltwo_migration_status_header',
+        '',
+        $migration_message
+    ));
     $settings->add(new admin_setting_heading('turnitintooltwo_header', $desc, $tabmenu));
 
     // Turnitin account configuration.

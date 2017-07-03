@@ -19,30 +19,71 @@
  * @copyright 2012 iParadigms LLC
  */
 
-if ($ADMIN->full_tree) {
+require_once(__DIR__."/turnitintooltwo_view.class.php");
+
+function activate_migration() {
+    global $DB, $CFG;
     $migration_enabled_params = array(
         'plugin' => 'turnitintooltwo',
         'name' => 'migration_enabled'
     );
     $migration_enabled = $DB->get_record('config_plugins', $migration_enabled_params);
 
+    $activation_properties = new stdClass;
+    $activation_properties->plugin = 'turnitintooltwo';
+    $activation_properties->name = 'migration_enabled';
+    $activation_properties->value  = 1;
+
     if (empty($migration_enabled)) {
-        $activation_entry->plugin = 'turnitintooltwo';
-        $activation_entry->name = 'migration_enabled';
-        $activation_entry->value  = 1;
-        $activation = $DB->insert_record('config_plugins', $activation_entry);
+        $activation = $DB->insert_record('config_plugins', $activation_properties);
     } else {
-        $activation_update->plugin = 'turnitintooltwo';
-        $activation_update->name = 'migration_enabled';
-        $activation_update->value  = 1;
-        $activation = $DB->update_record('config_plugins', $activation_update);
+        $activation = $DB->update_record('config_plugins', $activation_properties);
     }
 
-    // TODO This block will need more padding out, probably. Actually, most certainly.
     if ($activation) {
-        # Happy path
+        $urlparams = array('activation' => 'success');
     } else {
-        # Sad Path
+        $urlparams = array('activation' => 'failure');
+    }
+    redirect(new moodle_url('/mod/turnitintooltwo/settings.php', $urlparams));
+}
+
+function display_page() {
+    $turnitintooltwoview = new turnitintooltwo_view();
+    $turnitintooltwoview->load_page_components();
+
+    $notice = html_writer::tag(
+        'div',
+        get_string('activatemigrationnotice', 'turnitintooltwo'),
+        array('class'=>'alert alert-info')
+    );
+    $warning = html_writer(
+        'div',
+        get_string('activatemigrationwarning', 'turnitintooltwo'),
+        array('class'=>'alert alert-warning')
+    );
+    $button = html_writer::link(
+        new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
+        get_string('activatemigration', 'turnitintooltwo'),
+        array('class'=>'btn btn-default', 'role' => 'button')
+    );
+
+    echo $OUTPUT->header();
+    echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
+    echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
+    echo $notice;
+    echo $warning;
+    echo $button;
+    echo html_writer::end_tag("div");
+}
+
+if ($ADMIN->full_tree) {
+    $do_migration = optional_param('do_migration', 0, PARAM_INT);
+
+    if ($do_migration) {
+        activate_migration();
+    } else {
+        display_page();
     }
 } else {
     die(get_string('notadmin', 'turnitintooltwo'));
