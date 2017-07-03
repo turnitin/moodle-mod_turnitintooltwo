@@ -19,7 +19,13 @@
  * @copyright 2012 iParadigms LLC
  */
 
+require_once(__DIR__.'/../../config.php');
+require_once($CFG->libdir.'/tablelib.php');
+require_once(__DIR__.'/lib.php');
+require_once($CFG->libdir.'/adminlib.php');
 require_once(__DIR__."/turnitintooltwo_view.class.php");
+
+admin_externalpage_setup('managemodules');
 
 function activate_migration() {
     global $DB, $CFG;
@@ -40,27 +46,22 @@ function activate_migration() {
         $activation = $DB->update_record('config_plugins', $activation_properties);
     }
 
+    $urlparams = array('section' => 'modsettingturnitintooltwo');
     if ($activation) {
-        $urlparams = array('activation' => 'success');
+        $urlparams['activation'] = 'success';
     } else {
-        $urlparams = array('activation' => 'failure');
+        $urlparams['activation'] = 'failure';
     }
-    redirect(new moodle_url('/mod/turnitintooltwo/settings.php', $urlparams));
+    redirect(new moodle_url('/admin/settings.php', $urlparams));
 }
 
 function display_page() {
-    $turnitintooltwoview = new turnitintooltwo_view();
-    $turnitintooltwoview->load_page_components();
+    global $CFG, $OUTPUT;
 
     $notice = html_writer::tag(
         'div',
         get_string('activatemigrationnotice', 'turnitintooltwo'),
         array('class'=>'alert alert-info')
-    );
-    $warning = html_writer(
-        'div',
-        get_string('activatemigrationwarning', 'turnitintooltwo'),
-        array('class'=>'alert alert-warning')
     );
     $button = html_writer::link(
         new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
@@ -72,19 +73,14 @@ function display_page() {
     echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
     echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
     echo $notice;
-    echo $warning;
     echo $button;
     echo html_writer::end_tag("div");
 }
 
-if ($ADMIN->full_tree) {
-    $do_migration = optional_param('do_migration', 0, PARAM_INT);
+$do_migration = optional_param('do_migration', 0, PARAM_INT);
 
-    if ($do_migration) {
-        activate_migration();
-    } else {
-        display_page();
-    }
+if ($do_migration) {
+    activate_migration();
 } else {
-    die(get_string('notadmin', 'turnitintooltwo'));
+    display_page();
 }
