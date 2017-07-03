@@ -139,9 +139,15 @@ class turnitintooltwo_view {
         $tabs[] = new tabobject('files', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files',
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
-        // Include Moodle v1 migration tab if v1 is installed.
+        // Include Moodle v1 migration tab if v1 is installed AND the migration tool has been activated.
+        $migration_enabled_params = array(
+            'plugin' => 'turnitintooltwo',
+            'name' => 'migration_enabled',
+            'value' => '1'
+        );
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        if ( boolval($module) ) {
+        // $enabled = $DB->get_record('config_plugins', $migration_enabled_params);
+        if ( $module ) {
             $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                         get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
         }

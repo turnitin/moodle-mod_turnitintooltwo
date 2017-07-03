@@ -52,9 +52,9 @@ if ($ADMIN->fulltree) {
 
 
     $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-    $migration_message;
 
     // If being directed here from the migration activation page, display appropriate message
+    $migration_message = '';
     if ($migration_activation == 'success') {
         $migration_message = html_writer::tag(
             'div',
@@ -132,6 +132,7 @@ if ($ADMIN->fulltree) {
         $desc .= ' - '.$upgrade;
     }
 
+    // echo $migration_message;
     $settings->add(new admin_setting_heading(
         'turnitintooltwo_migration_status_header',
         '',
