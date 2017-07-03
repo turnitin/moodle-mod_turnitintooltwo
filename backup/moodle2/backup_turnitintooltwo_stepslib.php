@@ -38,15 +38,13 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
 
         // Define each element separated.
         $turnitintooltwo = new backup_nested_element('turnitintooltwo', array('id'), array(
-            'type', 'name', 'grade', 'numparts', 'tiiaccount', 'defaultdtstart',
-            'defaultdtdue', 'defaultdtpost', 'anon', 'portfolio', 'allowlate',
-            'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck',
-            'journalcheck', 'maxfilesize', 'intro', 'introformat', 'timecreated',
-            'timemodified', 'studentreports', 'dateformat', 'usegrademark',
-            'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
-            'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted',
-            'excludevalue', 'excludetype', 'erater', 'erater_handbook', 'erater_dictionary',
-            'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch'
+            'type', 'name', 'grade', 'numparts', 'tiiaccount', 'defaultdtstart', 'defaultdtdue', 'defaultdtpost', 
+            'anon', 'portfolio', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck',
+            'journalcheck', 'institution_check', 'maxfilesize', 'intro', 'introformat', 'timecreated', 'timemodified', 
+            'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
+            'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'excludetype', 'erater', 
+            'erater_handbook', 'erater_dictionary', 'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 
+            'erater_style', 'transmatch', 'allownonor'
         ));
 
         $parts = new backup_nested_element('parts');
