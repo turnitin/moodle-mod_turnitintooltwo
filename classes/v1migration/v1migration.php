@@ -567,12 +567,18 @@ class v1migration {
                 $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
                 $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
+
+                $assignmenttitle = format_string($assignment->name);
+
             } else {
                 $checkbox = "";
                 $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
+
+                $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $assignment->id, 'id' => '0'));
+                $assignmenttitle = html_writer::link($assignmentlink, format_string($assignment->name), array('target' => '_blank' ));
             }
-            $return["aaData"][] = array($checkbox, $assignment->id, format_string($assignment->name), $assignment->migrated);
+            $return["aaData"][] = array($checkbox, $assignment->id, $assignmenttitle, $assignment->migrated);
         }
         $return["sEcho"] = $secho;
         $return["iTotalRecords"] = count($assignments);
