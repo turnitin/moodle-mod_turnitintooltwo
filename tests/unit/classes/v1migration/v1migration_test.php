@@ -920,17 +920,12 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertContains(get_string('migrationtoolaccounterror', 'turnitintooltwo'), $form);
     }
 
-    public function test_migration_activation_admin_access() {
-
+    public function test_migration_activation_entry() {
+        
     }
 
-    public function test_migration_activation_settings_changes() {
-        global $CFG, $DB;
-
-        $activation_entry = new stdClass();
-        $activation_entry->plugin = 'turnitintooltwo';
-        $activation_entry->name = 'migration_enabled';
-        $activation_entry->value = 1;
-        $DB->insert_record('config_plugins', $activation_entry);
+    public function test_migration_activation_display() {
+        
     }
+
 }

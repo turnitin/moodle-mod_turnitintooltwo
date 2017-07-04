@@ -27,6 +27,11 @@ require_once(__DIR__."/turnitintooltwo_view.class.php");
 
 admin_externalpage_setup('managemodules');
 
+/**
+ * activate_migration
+ * Updates the database to flag that the user has enabled the migration tool.
+ * @return object $activation - db record of the migration activation row inserted into config_plugins.
+ */
 function activate_migration() {
     global $DB, $CFG;
     $migration_enabled_params = array(
@@ -47,16 +52,15 @@ function activate_migration() {
         $activation = $DB->update_record('config_plugins', array('id' => $id, 'value' => 1));
     }
 
-    $urlparams = array('section' => 'modsettingturnitintooltwo');
-    if ($activation) {
-        $urlparams['activation'] = 'success';
-    } else {
-        $urlparams['activation'] = 'failure';
-    }
-    redirect(new moodle_url('/admin/settings.php', $urlparams));
+    return $activation;
 }
 
-function display_page() {
+/**
+ * build_page
+ * Builds the visual page for activate_migration
+ * @return string $output
+ */
+function build_page() {
     global $CFG, $OUTPUT;
 
     $notice = html_writer::tag(
@@ -70,18 +74,28 @@ function display_page() {
         array('class'=>'btn btn-default', 'role' => 'button')
     );
 
-    echo $OUTPUT->header();
-    echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
-    echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
-    echo $notice;
-    echo $button;
-    echo html_writer::end_tag("div");
+    $output = $OUTPUT->header();
+    $output .= html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
+    $output .= $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
+    $output .= $notice;
+    $output .= $button;
+    $output .= html_writer::end_tag("div");
+
+    return $output;
 }
 
+// Discern whether the page is displaying its visual side, or doing its back-end work.
 $do_migration = optional_param('do_migration', 0, PARAM_INT);
 
 if ($do_migration) {
-    activate_migration();
+    $activation = activate_migration();
+    $urlparams = array('section' => 'modsettingturnitintooltwo');
+    if ($activation) {
+        $urlparams['activation'] = 'success';
+    } else {
+        $urlparams['activation'] = 'failure';
+    }
+    redirect(new moodle_url('/admin/settings.php', $urlparams));
 } else {
-    display_page();
+    echo build_page();
 }
