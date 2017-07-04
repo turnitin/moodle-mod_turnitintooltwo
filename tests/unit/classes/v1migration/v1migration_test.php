@@ -767,12 +767,17 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
                 $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
+
+                $assignmenttitle = format_string($value->name);
             } else {
                 $checkbox = "";
                 $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
+
+                $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $value->id, 'id' => '0'));
+                $assignmenttitle = html_writer::link($assignmentlink, format_string($value->name), array('target' => '_blank' ));
             }
-            $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
+            $outputrows[] = array($checkbox, $value->id, $assignmenttitle, $migrationValue);
         }
         $expectedoutput = array("aaData"               => $outputrows, 
                                 "sEcho"                => $_POST["sEcho"], 
@@ -796,12 +801,17 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
                 $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
                 $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
+
+                $assignmenttitle = format_string($value->name);
             } else {
                 $checkbox = "";
                 $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
                 $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
+
+                $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $value->id, 'id' => '0'));
+                $assignmenttitle = html_writer::link($assignmentlink, format_string($value->name), array('target' => '_blank' ));
             }
-            $outputrows[] = array($checkbox, $value->id, $value->name, $migrationValue);
+            $outputrows[] = array($checkbox, $value->id, $assignmenttitle, $migrationValue);
         }
         $expectedoutput = array("aaData"               => $outputrows, 
                                 "sEcho"                => $_POST["sEcho"], 
@@ -809,6 +819,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
                                 "iTotalDisplayRecords" => $totalassignments);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
+
         $this->assertEquals($expectedoutput, $response);
     }
 
