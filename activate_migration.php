@@ -43,7 +43,8 @@ function activate_migration() {
     if (empty($migration_enabled)) {
         $activation = $DB->insert_record('config_plugins', $activation_properties);
     } else {
-        $activation = $DB->update_record('config_plugins', $activation_properties);
+        $id = $migration_enabled->id;
+        $activation = $DB->update_record('config_plugins', array('id' => $id, 'value' => 1));
     }
 
     $urlparams = array('section' => 'modsettingturnitintooltwo');

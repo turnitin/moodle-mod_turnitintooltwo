@@ -140,14 +140,20 @@ class turnitintooltwo_view {
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
         // Include Moodle v1 migration tab if v1 is installed AND the migration tool has been activated.
+        // Note - the enabled status is evaluated in a roundabout way rather than a direct query because
+        // if one uses the same method as for module, with an extra line in $migration_enabled_params for 
+        // 'value' then one encounters an error "Comparisons of text column conditions are not allowed."
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        $enabled = false;
         $migration_enabled_params = array(
             'plugin' => 'turnitintooltwo',
-            'name' => 'migration_enabled',
-            'value' => '1'
+            'name' => 'migration_enabled'
         );
-        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        // $enabled = $DB->get_record('config_plugins', $migration_enabled_params);
-        if ( $module ) {
+        $enabled_raw = $DB->get_record('config_plugins', $migration_enabled_params);
+        if ($enabled_raw->value == 1) {
+            $enabled = true;
+        }
+        if ( $module && $enabled ) {
             $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                         get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
         }

@@ -616,5 +616,5 @@ $string['notadmin'] = 'Moodle administrator privileges are required for the requ
 $string['migrationactivationsuccess'] = 'The migration tool has been successfully activated.';
 $string['migrationactivationfailure'] = 'The migration tool could not be activated.';
 $string['activatemigration'] = 'Activate Migration Tool';
-$string['activatemigrationnotice'] = 'Activating the migration tool will display the migration tool settings and configuration tab in the Turnitin Assignment 2 settings page.<br/>Once the migration tool has been activated, further administration of the tool (including disabling its use) will be managed through the plugin settings page.';
-$string['activatemigrationwarning'] = '<b><em>This action cannot be undone.</em></b>';
+$string['activatemigration'] = 'Activate Migration Tool';
+$string['activatemigrationnotice'] = 'On activation of the Moodle Migration Tool, the V1 Migration tab is displayed in the Turnitin Assignment 2 settings.<br/>Select the tab to manage the tool (including disabling its use and removing any migrated V1 assignments).';
