@@ -139,9 +139,21 @@ class turnitintooltwo_view {
         $tabs[] = new tabobject('files', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files',
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
-        // Include Moodle v1 migration tab if v1 is installed.
+        // Include Moodle v1 migration tab if v1 is installed AND the migration tool has been activated.
+        // Note - the enabled status is evaluated in a roundabout way rather than a direct query because
+        // if one uses the same method as for module, with an extra line in $migration_enabled_params for 
+        // 'value' then one encounters an error "Comparisons of text column conditions are not allowed."
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        if ( boolval($module) ) {
+        $enabled = false;
+        $migration_enabled_params = array(
+            'plugin' => 'turnitintooltwo',
+            'name' => 'migration_enabled'
+        );
+        $enabled_raw = $DB->get_record('config_plugins', $migration_enabled_params);
+        if ($enabled_raw && $enabled_raw->value == 1) {
+            $enabled = true;
+        }
+        if ( $module && $enabled ) {
             $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                         get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
         }
@@ -1953,6 +1965,35 @@ class turnitintooltwo_view {
         $form = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/view.php'.'?id='.$cm->id.'&do=tutors', $customdata);
 
         $output = $OUTPUT->box($form->display(), 'generalbox boxaligncenter', 'general');
+        return $output;
+    }
+
+    /**
+     * build_migration_activation_page
+     * Builds the visual page for activate_migration
+     * @return string $output
+     */
+    public static function build_migration_activation_page() {
+        global $CFG, $OUTPUT;
+
+        $notice = html_writer::tag(
+            'div',
+            get_string('activatemigrationnotice', 'turnitintooltwo'),
+            array('class'=>'alert alert-info')
+        );
+        $button = html_writer::link(
+            new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
+            get_string('activatemigration', 'turnitintooltwo'),
+            array('class'=>'btn btn-default', 'role' => 'button')
+        );
+
+        $output = $OUTPUT->header();
+        $output .= html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
+        $output .= $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
+        $output .= $notice;
+        $output .= $button;
+        $output .= html_writer::end_tag("div");
+
         return $output;
     }
 }

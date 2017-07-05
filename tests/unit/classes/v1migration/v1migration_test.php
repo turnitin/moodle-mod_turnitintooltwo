@@ -919,4 +919,79 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         $this->assertContains(get_string('migrationtoolaccounterror', 'turnitintooltwo'), $form);
     }
+
+    /**
+     * migration_activation_entry
+     *
+     * @param string $testname - the name of the parent test that called this utility test
+     * @return void
+     */
+    private function migration_activation_entry($testname, $insertedId = null) {
+        global $DB;
+
+        $expected = new StdClass();
+        $expected->plugin = 'turnitintooltwo';
+        $expected->name = 'migration_enabled';
+        $expected->value = 1;
+
+        $actual_id = v1migration::activate_migration();
+        
+        // This is necessary because if there was a pre-set ID inserted into the DB,
+        // the code would have done an update_record() which returns bool, instead of insert_record(), which returns an ID.
+        if (isset($insertedId)) {
+            $actual_id = $insertedId;
+        }
+        
+        $actual = $DB->get_record('config_plugins', array('id' => $actual_id));
+        
+        $this->assertEquals($expected->plugin, $actual->plugin, "Test $testname - migration tool activation db entry for field \"plugin\" does not match expectations.");
+        $this->assertEquals($expected->name, $actual->name, "Test $testname - migration tool activation db entry for field \"name\" does not match expectations.");
+        $this->assertEquals($expected->value, $actual->value, "Test $testname - migration tool activation db entry for field \"value\" does not match expectations.");
+    }
+
+
+    /**
+     * test_migration_activation_insert
+     * Calls a test on the migration activation on a DB setup that has no entry
+     * for migration_activation in config_plugins
+     * @return void
+     */
+    public function test_migration_activation_insert() {
+        $this->resetAfterTest();
+        $this->migration_activation_entry(__FUNCTION__);
+    }
+
+    /**
+     * test_migration_activation_update_positive
+     * Calls a test on the migration activation on a DB setup that an affirmative entry
+     * for migration_activation in config_plugins
+     * @return void
+     */
+    public function test_migration_activation_update_positive() {
+        $this->resetAfterTest();
+        global $DB;
+        $params = new stdClass();
+        $params->plugin = 'turnitintooltwo';
+        $params->name = 'migration_enabled';
+        $params->value = 1;
+        $insert = $DB->insert_record('config_plugins', $params);
+        $this->migration_activation_entry(__FUNCTION__, $insert);
+    }
+
+    /**
+     * test_migration_activation_update_negative
+     * Calls a test on the migration activation on a DB setup that a negative entry
+     * for migration_activation in config_plugins
+     * @return void
+     */
+    public function test_migration_activation_update_negative() {
+        $this->resetAfterTest();
+        global $DB;
+        $params = new stdClass();
+        $params->plugin = 'turnitintooltwo';
+        $params->name = 'migration_enabled';
+        $params->value = 0;
+        $insert = $DB->insert_record('config_plugins', $params);
+        $this->migration_activation_entry(__FUNCTION__, $insert);
+    }
 }
