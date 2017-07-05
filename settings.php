@@ -126,7 +126,6 @@ if ($ADMIN->fulltree) {
         $desc .= ' - '.$upgrade;
     }
 
-    // echo $migration_message;
     $settings->add(new admin_setting_heading(
         'turnitintooltwo_migration_status_header',
         '',
