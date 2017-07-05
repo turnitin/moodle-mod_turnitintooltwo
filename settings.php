@@ -55,17 +55,11 @@ if ($ADMIN->fulltree) {
 
     // If being directed here from the migration activation page, display appropriate message
     $migration_message = '';
-    if ($migration_activation == 'success') {
+    if ($migration_activation == 'failure') {
         $migration_message = html_writer::tag(
             'div',
-            $close.get_string('migrationactivationsuccess', 'turnitintooltwo'),
-            array('class' => 'alert alert-success', 'role' => 'alert')
-        );
-    } elseif ($migration_activation == 'failure') {
-        $migration_message = html_writer::tag(
-            'div',
-            $close.get_string(),
-            array('class' => 'alert alert-error', 'role' => 'alert')
+            $close.get_string('migrationactivationfailure', 'turnitintooltwo'),
+            array('class' => 'alert alert-danger', 'role' => 'alert')
         );
     }
 
