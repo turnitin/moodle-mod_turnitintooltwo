@@ -174,4 +174,24 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$this->assertContains("<table class=\"submissionsDataTable\" id=\"$partid\">", $table, 'Return did not include the expected table.');
 		$this->assertContains("<td class=\"centered_cell cell c0\" style=\"\">$partid</td>", $table, 'Return did not contain the expected student row.');
 	}
+
+    /**
+     * Tests the visual display of the migration tool activation page.
+     *
+     * @return void
+     */
+    public function test_migration_activation_display() {
+        $this->resetAfterTest();
+        $actual = turnitintooltwo_view::build_migration_activation_page();
+        
+        $expected = get_string('activatemigrationnotice', 'turnitintooltwo');
+        $this->assertContains($expected, $actual, __FUNCTION__.' - migration tool activation page did not show the notice.');
+        
+        $expected = html_writer::link(
+            new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
+            get_string('activatemigration', 'turnitintooltwo'),
+            array('class'=>'btn btn-default', 'role' => 'button')
+        );
+        $this->assertContains($expected, $actual, __FUNCTION__.'migration tool activation page did not show the button.');
+    }
 }

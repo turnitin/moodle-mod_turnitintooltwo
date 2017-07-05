@@ -694,4 +694,32 @@ class v1migration {
 
         return $output;
     }
+
+    /**
+     * activate_migration
+     * Updates the database to flag that the user has enabled the migration tool.
+     * @return object $activation - db record of the migration activation row inserted into config_plugins.
+     */
+    public static function activate_migration() {
+        global $DB, $CFG;
+        $migration_enabled_params = array(
+            'plugin' => 'turnitintooltwo',
+            'name' => 'migration_enabled'
+        );
+        $migration_enabled = $DB->get_record('config_plugins', $migration_enabled_params);
+
+        $activation_properties = new stdClass;
+        $activation_properties->plugin = 'turnitintooltwo';
+        $activation_properties->name = 'migration_enabled';
+        $activation_properties->value  = 1;
+
+        if (empty($migration_enabled)) {
+            $activation = $DB->insert_record('config_plugins', $activation_properties);
+        } else {
+            $id = $migration_enabled->id;
+            $activation = $DB->update_record('config_plugins', array('id' => $id, 'value' => 1));
+        }
+        
+        return $activation;
+    }
 }

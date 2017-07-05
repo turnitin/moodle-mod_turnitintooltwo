@@ -439,7 +439,17 @@ switch ($cmd) {
         $html = "";
         $msg = optional_param('msg', "", PARAM_ALPHA);
         $type = optional_param('type', "", PARAM_ALPHA);
+        $migration_activation = optional_param('activation', '', PARAM_ALPHA);
 
+        $migration_message = '';
+        if ($migration_activation == 'success') {
+            $migration_message = html_writer::tag(
+                'div',
+                $close.get_string('migrationactivationsuccess', 'turnitintooltwo'),
+                array('class' => 'alert alert-success', 'role' => 'alert')
+            );
+        }
+        $html .= $migration_message;
         // Save Migration Tool enabled status.
         $alert = "";
         if ( isset($_REQUEST['enablemigrationtool']) ) {

@@ -150,7 +150,7 @@ class turnitintooltwo_view {
             'name' => 'migration_enabled'
         );
         $enabled_raw = $DB->get_record('config_plugins', $migration_enabled_params);
-        if ($enabled_raw->value == 1) {
+        if ($enabled_raw && $enabled_raw->value == 1) {
             $enabled = true;
         }
         if ( $module && $enabled ) {
@@ -1981,6 +1981,35 @@ class turnitintooltwo_view {
         $form = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/view.php'.'?id='.$cm->id.'&do=tutors', $customdata);
 
         $output = $OUTPUT->box($form->display(), 'generalbox boxaligncenter', 'general');
+        return $output;
+    }
+
+    /**
+     * build_migration_activation_page
+     * Builds the visual page for activate_migration
+     * @return string $output
+     */
+    public static function build_migration_activation_page() {
+        global $CFG, $OUTPUT;
+
+        $notice = html_writer::tag(
+            'div',
+            get_string('activatemigrationnotice', 'turnitintooltwo'),
+            array('class'=>'alert alert-info')
+        );
+        $button = html_writer::link(
+            new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
+            get_string('activatemigration', 'turnitintooltwo'),
+            array('class'=>'btn btn-default', 'role' => 'button')
+        );
+
+        $output = $OUTPUT->header();
+        $output .= html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
+        $output .= $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
+        $output .= $notice;
+        $output .= $button;
+        $output .= html_writer::end_tag("div");
+
         return $output;
     }
 }
