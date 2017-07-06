@@ -1980,24 +1980,21 @@ class turnitintooltwo_view {
             'name' => 'migration_enabled'
         ));
 
-        if ($already_active->value == 1) {
-            $notice_text = get_string('activatemigrationnotice', 'turnitintooltwo') . "<br/>" . get_string('alreadyactivemigration', 'turnitintooltwo');
-            $button_attributes = array('class' => 'btn btn-default disabled', 'role' => 'button', 'aria-disabled' => 'true');
-        } else {
-            $notice_text = get_string('activatemigrationnotice', 'turnitintooltwo');
-            $button_attributes = array('class' => 'btn btn-default', 'role' => 'button');
+        if ($already_active && $already_active->value == 1) {
+            $urlparams = array('cmd' => 'v1migration');
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
         }
         
         $notice = html_writer::tag(
             'div',
-            $notice_text,
+            get_string('activatemigrationnotice', 'turnitintooltwo'),
             array('class'=>'alert alert-info')
         );
 
         $button = html_writer::link(
             new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
             get_string('activatemigration', 'turnitintooltwo'),
-            $button_attributes
+            array('class' => 'btn btn-default', 'role' => 'button')
         );
 
         $output = $OUTPUT->header();
