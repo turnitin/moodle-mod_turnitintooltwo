@@ -443,6 +443,7 @@ switch ($cmd) {
 
         $migration_message = '';
         if ($migration_activation == 'success') {
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
             $migration_message = html_writer::tag(
                 'div',
                 $close.get_string('migrationactivationsuccess', 'turnitintooltwo'),
