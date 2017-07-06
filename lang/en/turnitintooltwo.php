@@ -612,3 +612,4 @@ $string['migrationactivationsuccess'] = 'The migration tool has been successfull
 $string['migrationactivationfailure'] = 'The migration tool could not be enabled.';
 $string['activatemigration'] = 'Enable Migration Tool Settings';
 $string['activatemigrationnotice'] = 'On activation of the Moodle Migration Tool, the V1 Migration tab is displayed in the Turnitin Assignment 2 settings.<br/>Select the tab to manage the tool (including disabling its use and removing any migrated V1 assignments).';
+$string['alreadyactivemigration'] = '<strong>Be advised - The Migration Tool is already active. Please administer the tool from the Turnitin Assignment 2 settings page.';
