@@ -21,6 +21,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once(__DIR__."/lib.php");
 require_once(__DIR__.'/turnitintooltwo_form.class.php');
 
 class turnitintooltwo_view {
@@ -113,11 +114,10 @@ class turnitintooltwo_view {
      * Output the Menu in the settings area as an HTML list
      *
      * @global type $CFG
-     * @param obj $module
      * @return output the menu as an HTML list
      */
-    public function draw_settings_menu($module, $cmd) {
-        global $CFG, $OUTPUT;
+    public function draw_settings_menu($cmd) {
+        global $CFG, $OUTPUT, $DB;
 
         $tabs = array();
 
@@ -138,6 +138,25 @@ class turnitintooltwo_view {
 
         $tabs[] = new tabobject('files', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files',
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
+
+        // Include Moodle v1 migration tab if v1 is installed AND the migration tool has been activated.
+        // Note - the enabled status is evaluated in a roundabout way rather than a direct query because
+        // if one uses the same method as for module, with an extra line in $migration_enabled_params for 
+        // 'value' then one encounters an error "Comparisons of text column conditions are not allowed."
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        $enabled = false;
+        $migration_enabled_params = array(
+            'plugin' => 'turnitintooltwo',
+            'name' => 'migration_enabled'
+        );
+        $enabled_raw = $DB->get_record('config_plugins', $migration_enabled_params);
+        if ($enabled_raw && $enabled_raw->value == 1) {
+            $enabled = true;
+        }
+        if ( $module && $enabled ) {
+            $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
+                        get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
+        }
 
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
                         get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
@@ -273,7 +292,8 @@ class turnitintooltwo_view {
         $eulaaccepted = false;
         if ($userid == $USER->id) {
             $user = new turnitintooltwo_user($userid, "Learner");
-            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+            $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+            $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
             $user->join_user_to_class($coursedata->turnitin_cid);
             $eulaaccepted = ($user->useragreementaccepted != 1) ? $user->get_accepted_user_agreement() : $user->useragreementaccepted;
         }
@@ -862,7 +882,8 @@ class turnitintooltwo_view {
             // Show feature links (rubric and quickmark).
             if ($config->usegrademark) {
                 // Rubric Manager.
-                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
+                $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
                 $rubricmanagerlink = $OUTPUT->box_start('row_rubric_manager', '');
                 $rubricmanagerlink .= html_writer::link($CFG->wwwroot.
                                         '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&tiicourseid='.
@@ -1359,10 +1380,19 @@ class turnitintooltwo_view {
             $eulaaccepted = 0;
             if ($submission->userid == $USER->id) {
                 $submissionuser = new turnitintooltwo_user($submission->userid, "Learner");
-                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course);
-                if (empty($_SESSION["unit_test"])) {
+
+                $legacyassignment = (empty($turnitintooltwoassignment->turnitintooltwo->legacy)) ? 0 : 1;
+                $coursetype = turnitintooltwo_get_course_type($legacyassignment);
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+                
+                if (!$_SESSION["unit_test"]) {
                     $submissionuser->join_user_to_class($coursedata->turnitin_cid);
                 }
+
+                $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+                $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+                $submissionuser->join_user_to_class($coursedata->turnitin_cid);
+
                 // Has the student accepted the EULA?
                 $eulaaccepted = $submissionuser->useragreementaccepted;
                 if ($submissionuser->useragreementaccepted == 0 && !$_SESSION["unit_test"]) {
@@ -1951,6 +1981,45 @@ class turnitintooltwo_view {
         $form = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/view.php'.'?id='.$cm->id.'&do=tutors', $customdata);
 
         $output = $OUTPUT->box($form->display(), 'generalbox boxaligncenter', 'general');
+        return $output;
+    }
+
+    /**
+     * build_migration_activation_page
+     * Builds the visual page for activate_migration
+     * @return string $output
+     */
+    public static function build_migration_activation_page() {
+        global $DB, $CFG, $OUTPUT;
+        $already_active = $DB->get_record('config_plugins', array(
+            'plugin' => 'turnitintooltwo',
+            'name' => 'migration_enabled'
+        ));
+
+        if ($already_active && $already_active->value == 1) {
+            $urlparams = array('cmd' => 'v1migration');
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
+        }
+        
+        $notice = html_writer::tag(
+            'div',
+            get_string('activatemigrationnotice', 'turnitintooltwo'),
+            array('class'=>'alert alert-info')
+        );
+
+        $button = html_writer::link(
+            new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
+            get_string('activatemigration', 'turnitintooltwo'),
+            array('class' => 'btn btn-default', 'role' => 'button')
+        );
+
+        $output = $OUTPUT->header();
+        $output .= html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
+        $output .= $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
+        $output .= $notice;
+        $output .= $button;
+        $output .= html_writer::end_tag("div");
+
         return $output;
     }
 }
