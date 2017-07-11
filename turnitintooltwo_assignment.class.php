@@ -21,6 +21,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once(__DIR__."/lib.php");
 require_once(__DIR__.'/turnitintooltwo_comms.class.php');
 require_once(__DIR__.'/turnitintooltwo_user.class.php');
 require_once(__DIR__.'/turnitintooltwo_submission.class.php');
@@ -37,7 +38,7 @@ class turnitintooltwo_assignment {
         $this->id = $id;
         $this->type = $type;
 
-        if ($type == 'TT') {
+        if (($type == 'TT') || ($type == 'V1')) {
             if (!empty($turnitintooltwo)) {
                 $this->turnitintooltwo = $turnitintooltwo;
             } else {
@@ -90,7 +91,8 @@ class turnitintooltwo_assignment {
      */
     public function add_tii_tutor($tutorid) {
         // Get Course data.
-        $course = $this->get_course_data($this->turnitintooltwo->course);
+        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
+        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
         $user = new turnitintooltwo_user($tutorid, 'Instructor');
         $notice = array();
 
@@ -497,7 +499,8 @@ class turnitintooltwo_assignment {
 
         $users = array();
         // Get Moodle Course Object.
-        $course = $this->get_course_data($this->turnitintooltwo->course);
+        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
+        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
         $classmembers = $this->get_class_memberships($course->turnitin_cid);
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -581,7 +584,8 @@ class turnitintooltwo_assignment {
      */
     public function enrol_all_students($cm) {
         // Get Moodle Course Object.
-        $course = $this->get_course_data($this->turnitintooltwo->course);
+        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
+        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
 
         // Get local course members.
         $students = get_enrolled_users(context_module::instance($cm->id),
@@ -1291,7 +1295,8 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->timemodified = time();
 
         // Get Moodle Course Object.
-        $course = $this->get_course_data($this->turnitintooltwo->course);
+        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
+        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
 
         // Get the Turnitin owner of this this Course or make user the owner if none.
         $ownerid = $this->get_tii_owner($course->id);
@@ -1986,6 +1991,7 @@ class turnitintooltwo_assignment {
                 $submission->userid = $submission->submission_nmuserid;
                 $submission->firstname = $submission->submission_nmfirstname;
                 $submission->lastname = $submission->submission_nmlastname;
+                $submission->fullname = $submission->firstname.' '.$submission->lastname;
 
                 $submissions[$submission->submission_part][$submission->userid] = $submission;
             }

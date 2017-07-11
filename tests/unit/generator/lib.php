@@ -35,8 +35,7 @@ require_once $CFG->dirroot.'/webservice/tests/helpers.php';
 * @copyright  2017 Turnitin
 * @license  http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
 */
-abstract class test_lib extends advanced_testcase
-{
+abstract class test_lib extends advanced_testcase {
     /**
      * Create a test part on the specified assignment.
      *
@@ -46,9 +45,9 @@ abstract class test_lib extends advanced_testcase
      *
      * @return array $parts_created - parts added to the assignment listed as partid => partobject
      */
-    public function make_test_parts($modname, $assignmentid, $number_of_parts)
-    {
+    public function make_test_parts($modname, $assignmentid, $number_of_parts) {
         global $DB;
+
         $modulevar = $modname.'id';
         $part = new stdClass();
         $part->$modulevar = $assignmentid;
@@ -77,12 +76,13 @@ abstract class test_lib extends advanced_testcase
      * @param int $courseid - Moodle course ID
      * @param string $modname - Module name (turnitintool or turnitintooltwo)
      * @param int $assignmentid - Assignment id to which the coursemodule should be added
+     * @param boolean $addtocm - for certain tests we may not want the module added to the course_modules table
      *
      * @return  int $cm - id of the course module added
      */
-    public function make_test_module($courseid, $modname, $assignmentid)
-    {
+    public function make_test_module($courseid, $modname, $assignmentid, $addtocm = true) {
         global $DB;
+
         // Set up a course module.
         $module = $DB->get_record("modules", array("name" => $modname));
         $coursemodule = new stdClass();
@@ -91,9 +91,22 @@ abstract class test_lib extends advanced_testcase
         $coursemodule->added = time();
         $coursemodule->instance = $assignmentid;
         $coursemodule->section = 0;
-        $cmid = add_course_module($coursemodule);
+        if ($addtocm) {
+            // Add Course module and get course section.
+            $coursemodule->coursemodule = add_course_module($coursemodule);
+
+            if (is_callable('course_add_cm_to_section')) {
+                $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
+            } else {
+                $sectionid = add_mod_to_section($coursemodule);
+            }
+
+            $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
+
+            return $coursemodule->coursemodule;
+        }
         
-        return $cmid;
+        return 0;
     }
 
     /**
@@ -103,9 +116,9 @@ abstract class test_lib extends advanced_testcase
      *
      * @return  int $turnitintooltwo_user_id id of turnitintool user join (for use in get_record queries on turnitintooltwo_users table)
      */
-    public function join_test_user($turnitintooltwo_user)
-    {
+    public function join_test_user($turnitintooltwo_user) {
         global $DB;
+
         $mdl_user = $this->getDataGenerator()->create_user();
         $tiiUserRecord = new stdClass();
         $tiiUserRecord->userid = $mdl_user->id;
@@ -123,8 +136,7 @@ abstract class test_lib extends advanced_testcase
      * @param array $roles - an array of strings, each of which should be 'learner' or 'instructor'.
      * @return object $return - object of two arrays of equal length, one full of turnitintooltwo_user types and the other with ids for dbtable turnitintooltwo_users. The indices of these arrays DO align.
      */
-    public function make_test_users($number_of_users, $roles)
-    {
+    public function make_test_users($number_of_users, $roles) {
         $return['turnitintooltwo_users'] = array();
         $return['joins'] = array();
 
@@ -145,8 +157,7 @@ abstract class test_lib extends advanced_testcase
      *
      * @return turnitintooltwo $turnitintooltwoassignment - an instance of a turnitintooltwoassignment class.
      */
-    public function make_test_tii_assignment()
-    {
+    public function make_test_tii_assignment() {
         global $DB;
         $course = $this->getDataGenerator()->create_course();
         $turnitintooltwo = new stdClass();
@@ -165,6 +176,7 @@ abstract class test_lib extends advanced_testcase
         $turnitintooltwo->numparts = 1;
         $turnitintooltwo->anon = 0;
         $turnitintooltwo->allowlate = 0;
+        $turnitintooltwo->legacy = 0;
         $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
         $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
         

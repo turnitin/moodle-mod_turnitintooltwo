@@ -142,8 +142,150 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     border: 1px solid $light-grey;
 }
 
+#migration-progress-bar {
+    background-color: #FFFFFF;
+    height: 30px;
+    line-height: 28px;
+    border: 1px solid;
+    border-radius: 3px;
+    margin: 15px 0px 30px 0px;
+}
+#migration-progress, #migration-progress-todo {
+    width: 0%;
+    height: 100%;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    text-align: center;
+}
+#migration-progress {
+    background-color: #0073D2;
+    color: #fff;
+}
+.migration-spinner {
+    text-align: center;
+}
+
+.enablemigrationtool {
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    background-color: #0e90d2;
+    background-image: -moz-linear-gradient(top,#149bdf,#0480be);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#149bdf),to(#0480be));
+    background-image: -webkit-linear-gradient(top,#149bdf,#0480be);
+    background-image: -o-linear-gradient(top,#149bdf,#0480be);
+    background-image: linear-gradient(to bottom,#149bdf,#0480be);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf',endColorstr='#ff0480be',GradientType=0);
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: width 0.6s ease;
+    -moz-transition: width 0.6s ease;
+    -o-transition: width 0.6s ease;
+    transition: width 0.6s ease;
+}
+
+#migration-progress-bar {
+    background-color: #FFFFFF;
+    height: 30px;
+    line-height: 28px;
+    border: 1px solid;
+    border-radius: 3px;
+    margin: 15px 0px 30px 0px;
+}
+#migration-progress, #migration-progress-todo {
+    width: 0%;
+    height: 100%;
+    text-align: center;
+    float: left;
+    font-size: 14px;
+    text-align: center;
+}
+#migration-progress {
+    background-color: #0073D2;
+    color: #fff;
+}
+.migration-spinner {
+    text-align: center;
+}
+
+.enablemigrationtool {
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    background-color: #0e90d2;
+    background-image: -moz-linear-gradient(top,#149bdf,#0480be);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#149bdf),to(#0480be));
+    background-image: -webkit-linear-gradient(top,#149bdf,#0480be);
+    background-image: -o-linear-gradient(top,#149bdf,#0480be);
+    background-image: linear-gradient(to bottom,#149bdf,#0480be);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff149bdf',endColorstr='#ff0480be',GradientType=0);
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    -moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: width 0.6s ease;
+    -moz-transition: width 0.6s ease;
+    -o-transition: width 0.6s ease;
+    transition: width 0.6s ease;
+}
+
 .data-table-splitter {
     float: left;
     padding-right: 20px;
 }
 .yellowtest{color: yellow;}
+
+#migrationform #fitem_id_submitbutton, 
+#migration-delete-selected #fitem_id_submitbutton, 
+#fitem_id_enablemigrationtool {
+    width: 75%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+#fitem_id_enablemigrationtool .fitemtitle {
+    width: 300px;
+}
+#migrationform {
+    margin: 30px 0px;
+}
+
+.migrationheader {
+    color: #003A69;
+    font-weight: normal;
+    margin-bottom: 15px;
+}
+.mod_turnitintooltwo .btn-primary {
+    background: #0073D2;
+}
+.mod_turnitintooltwo .btn-primary:hover {
+    background: #00569E;
+}
+.mod_turnitintooltwo .btn-primary:active {
+    background: #003A69;
+}
+.mod_turnitintooltwo .btn-primary {
+    box-shadow: none;
+    border: none;
+    height: 35px;
+    margin-right: 11px;
+    border-radius: 3px;
+}
+
+.migrationTable_length {
+    margin-top: 20px;
+}
+
+#migrationTable .fa-times {
+    color: #FF0000;
+}
+
+#migrationTable .fa-check {
+    color: #008000;
+}

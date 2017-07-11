@@ -39,10 +39,11 @@ jQuery(document).ready(function($) {
     // Pass categories and module id to support form.
     $(document).on('click', '#btn_supportform', function() {
         var id = $('#tii_helpdesk_mod_id').html();
+        var legacy = $(this).data("legacy");
         var category = $('.tii_helpdesk_category').val();
         var sub_category = $('.tii_helpdesk_sub_category').val();
 
-        var querystr = '&id=' + id + '&category=' + category + '&sub_category=' + sub_category;
+        var querystr = '&id=' + id + '&legacy=' + legacy + '&category=' + category + '&sub_category=' + sub_category;
 
         window.location.href = M.cfg.wwwroot + '/mod/turnitintooltwo/extras.php?cmd=supportform' + querystr;
     });

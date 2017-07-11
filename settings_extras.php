@@ -32,7 +32,7 @@ $turnitintooltwoview = new turnitintooltwo_view();
 $turnitintooltwoview->load_page_components();
 
 // Get/Set variables and work out which function to perform.
-$cmd = optional_param('cmd', "", PARAM_ALPHAEXT);
+$cmd = optional_param('cmd', "", PARAM_ALPHANUMEXT);
 $filedate = optional_param('filedate', null, PARAM_ALPHANUMEXT);
 $unlink = optional_param('unlink', null, PARAM_ALPHA);
 $relink = optional_param('relink', null, PARAM_ALPHA);
@@ -431,6 +431,109 @@ switch ($cmd) {
         }
         $output .= turnitintooltwo_init_browser_assignment_table($tiicourseid);
         break;
+
+    case "v1migration":
+
+        include_once("classes/v1migration/v1migration.php");
+
+        $html = "";
+        $msg = optional_param('msg', "", PARAM_ALPHA);
+        $type = optional_param('type', "", PARAM_ALPHA);
+        $migration_activation = optional_param('activation', '', PARAM_ALPHA);
+
+        $migration_message = '';
+        if ($migration_activation == 'success') {
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $migration_message = html_writer::tag(
+                'div',
+                $close.get_string('migrationactivationsuccess', 'turnitintooltwo'),
+                array('class' => 'alert alert-success', 'role' => 'alert')
+            );
+        }
+        $html .= $migration_message;
+        // Save Migration Tool enabled status.
+        $alert = "";
+        if ( isset($_REQUEST['enablemigrationtool']) ) {
+            $saved = v1migration::togglemigrationstatus( (int)$_REQUEST['enablemigrationtool'] );
+            $type = ($saved) ? 'success' : 'error';
+
+            $urlparams = array('cmd' => 'v1migration', 'msg' => 'setting', 'type' => $type);
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
+            exit;
+        }
+
+        // Show successful delete message if applicable.
+        if ($msg == 'setting') {
+            $string = ($type == "success") ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
+
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $alert = html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'), 
+                            array('class' => 'alert alert-'.$type, 'role' => 'alert'));
+        }
+
+        // If v1 and v2 accounts are different then diable form elements.
+        $enabled = v1migration::check_account_ids();
+
+        // Output the form to enable the v1 migration.
+        $html .= v1migration::output_settings_form($enabled);
+
+        $html .= html_writer::tag('hr', '');
+        $html .= html_writer::tag('h2', get_string('migration_status', 'turnitintooltwo'), array('class' => 'migrationheader'));
+
+        // Display our progress bar.
+        $html .= v1migration::output_progress_bar();
+
+        $jsrequired = true;
+
+        $assignmentids = (isset($_REQUEST['assignmentids'])) ? $_REQUEST["assignmentids"] : array();
+        $assignmentids = clean_param_array($assignmentids, PARAM_INT);
+
+        // Delete assignments if the form has been submitted.
+        if (isset($assignmentids) && count($assignmentids) > 0) {
+            v1migration::turnitintooltwo_delete_assignments($assignmentids);
+            
+            $urlparams = array('cmd' => 'v1migration', 'msg' => 'delete', 'type' => 'success');
+            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
+            exit;
+        }
+
+        // Show successful delete message if applicable.
+        if ($msg == 'delete') {
+            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
+            $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
+                            array('class' => 'alert alert-success', 'role' => 'alert'));
+        }
+
+        $table = new html_table();
+        $table->id = "migrationTable";
+        $rows = array();
+
+        // Do the table headers.
+        $cells = array();
+        $checkbox = html_writer::checkbox('selectallcb', 1, false, '', array('title' => get_string('migrationselectall', 'turnitintooltwo')));
+        $cells[0] = new html_table_cell($checkbox);
+
+
+        $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
+        $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
+        $cells['title'] = new html_table_cell(get_string('migrationassignmenttitle', 'turnitintooltwo'));
+        $cells['migrationstatus'] = new html_table_cell(get_string('hasmigrated', 'turnitintooltwo'));
+
+        $table->head = $cells;
+
+        $elements2[] = array('html', html_writer::table($table));
+        $customdata2["elements"] = $elements2;
+        $customdata2["show_cancel"] = false;
+        $customdata2["disable_form_change_checker"] = true;
+        $customdata2["submit_label"] = get_string('delete_selected', 'turnitintooltwo');
+
+        $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration', $customdata2);
+
+        $html .= html_writer::tag('div', $optionsform->display(), array('id' => 'migration-delete-selected'));
+
+        $output .= $alert . $html;
+
+        break;
 }
 
 // Build page.
@@ -440,7 +543,7 @@ echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
 if ($cmd != 'class_recreation' && $cmd != 'multiple_class_recreation') {
     echo $OUTPUT->heading(get_string('pluginname', 'turnitintooltwo'), 2, 'main');
-    echo $OUTPUT->box($turnitintooltwoview->draw_settings_menu($module, $cmd), '');
+    echo $OUTPUT->box($turnitintooltwoview->draw_settings_menu($cmd), '');
     // Show a warning if javascript is not enabled while a tutor is logged in.
     echo html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo'), array("class" => "warning"));
 }
