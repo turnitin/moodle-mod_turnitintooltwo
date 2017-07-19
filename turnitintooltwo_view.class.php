@@ -1384,8 +1384,8 @@ class turnitintooltwo_view {
                 $legacyassignment = (empty($turnitintooltwoassignment->turnitintooltwo->legacy)) ? 0 : 1;
                 $coursetype = turnitintooltwo_get_course_type($legacyassignment);
                 $coursedata = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
-                
-                if (!$_SESSION["unit_test"]) {
+
+                if (empty($_SESSION["unit_test"])) {
                     $submissionuser->join_user_to_class($coursedata->turnitin_cid);
                 }
 
