@@ -79,7 +79,7 @@ class helpdeskwizard {
      * @param int - $id module id, 0 by default to indicate that it's not been accessed from a module.
      * @return mixed - html containing helpdesk solutions.
      */
-    public function output_wizard($id = 0) {
+    public function output_wizard($id = 0, $legacy = 0) {
         $xml = $this->read_xml_solutions_file();
         $categories = array();
         $output = "";
@@ -144,7 +144,7 @@ class helpdeskwizard {
 
         // Show link to support form.
         $formlink = html_writer::tag('h2', 'Did you find your answer?');
-        $formlink .= html_writer::tag('button', 'No, I Need More Help', array('id' => 'btn_supportform', 'class' => 'btn'));
+        $formlink .= html_writer::tag('button', 'No, I Need More Help', array('id' => 'btn_supportform', 'class' => 'btn', 'data-legacy' => $legacy));
         $formlink .= html_writer::tag('div', $id, array('id' => 'tii_helpdesk_mod_id'));
         $output .= html_writer::tag('div', $formlink, array('id' => 'btn_tiisupportform_link'));
 

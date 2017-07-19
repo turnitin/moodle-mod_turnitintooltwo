@@ -17,6 +17,21 @@ jQuery(document).ready(function($) {
         }
     };
 
+    // Configure datatables language settings for migration tool.
+    var dataTablesLangMigration = {
+        "nointegration": M.str.turnitintooltwo.nointegration,
+        "sProcessing": M.str.turnitintooltwo.sprocessing,
+        "sZeroRecords": M.str.turnitintooltwo.szerorecords,
+        "sInfo": M.str.turnitintooltwo.sinfo,
+        "sSearch": '',
+        "sLengthMenu": M.str.turnitintooltwo.slengthmigrationmenu,
+        "sInfoEmpty": M.str.turnitintooltwo.semptytable,
+        "oPaginate": {
+            "sNext": M.str.turnitintooltwo.snext,
+            "sPrevious": M.str.turnitintooltwo.sprevious
+        }
+    };
+
     // Configure the unlink and relink users datatable in the plugin settings area.
     $('#unlinkUserTable').dataTable({
         "bDestroy": true,
@@ -40,6 +55,63 @@ jQuery(document).ready(function($) {
             $('input[name="selectallcb"]').attr('checked', false);
         }
     });
+
+    // Disable the submit button if Turnitin v1 and v2 account ids are different in Migration Tool.
+    if ( $('#sametiiaccount').data('sametiiaccount') == "0" ) {
+        $('select[name="enablemigrationtool"]').attr('disabled', 'disabled');
+        $('select[name="enablemigrationtool"]').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
+    }
+
+    // Disable the delete button in migration tab if there are no results selected and re-enable if there are.
+    $('input[name="selectallcb"]').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
+    $(document).on('click', '#migrationTable input[name="selectallcb"], #migrationTable .browser_checkbox', function() {
+        if ($('#migrationTable .browser_checkbox:checked').length > 0) {
+            $('#migrationTable .browser_checkbox').closest('form').find('input[name="submitbutton"]').removeAttr('disabled');
+        } else {
+            $('#migrationTable .browser_checkbox').closest('form').find('input[name="submitbutton"]').attr('disabled', 'disabled');
+        }
+    });
+
+    // Ask administrator for confirmation if user clicks to delete selected V1 assignments.
+    var submitbutton = $('#migrationTable').closest('form').find('input[name="submitbutton"]');
+    submitbutton.click(function(ev) {
+        ev.preventDefault();
+
+        // Construct confirm message to administrator.
+        var message = M.str.turnitintooltwo.confirmv1deletetitle+'\n\n';
+        message += M.util.get_string('confirmv1deletetext', 'turnitintooltwo', $('#migrationTable .browser_checkbox:checked').length)+'\n\n';
+        message += M.str.turnitintooltwo.confirmv1deletewarning;
+
+        if (confirm(message)) {
+            $('#migrationTable').closest('form').submit();
+        }
+
+    });
+
+    // Configure the migration datatable in the plugin settings area.
+    $('#migrationTable').dataTable({
+        "bDestroy": true,
+        "bProcessing": true,
+        "bServerSide": true,
+        "oLanguage": dataTablesLangMigration,
+        "aaSorting": [[ 2, "asc" ]],
+        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "sAjaxSource": "ajax.php?action=get_assignments",
+        "sDom": '<"top"lf>rt<"bottom"irp><"clear">',
+        "aoColumns": [
+                        {"bSortable": false, "bSearchable": false,
+                            "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                                $(nTd).addClass('centered_cell');
+                            }},
+                        {"bSortable": true, "sClass": "centered_cell", "bSearchable": false},
+                        {"bSortable": true, "bSearchable": true},
+                        {"bSortable": true, "sClass": "centered_cell", "bSearchable": false}
+                     ],
+        "fnDrawCallback": function () {
+            $('input[name="selectallcb"]').attr('checked', false);
+        }
+    });
+    $('#migrationTable_filter input').attr("placeholder", 'Search');
 
     // Configure the files datatable in the plugin settings area, group the files by assignment.
     $('#filesTable').dataTable( {

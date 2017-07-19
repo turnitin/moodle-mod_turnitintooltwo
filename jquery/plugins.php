@@ -28,5 +28,6 @@ $plugins = array(
     'turnitintooltwo-uieditable' => array('files' => array('jqueryui-editable.js', 'jqueryui-editable.css')),
     'turnitintooltwo-moment' => array('files' => array('moment.js')),
     'turnitintooltwo-tooltipster' => array('files' => array('tooltipster.js', 'tooltipster.css')),
-    'turnitintooltwo-turnitin_helpdesk' => array('files' => array('turnitin_helpdesk.js'))
+    'turnitintooltwo-turnitin_helpdesk' => array('files' => array('turnitin_helpdesk.js')),
+    'turnitintooltwo-migration_tool' => array('files' => array('turnitintooltwo_migration_tool.js'))
 );

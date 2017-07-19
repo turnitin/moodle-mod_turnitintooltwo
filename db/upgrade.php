@@ -238,5 +238,20 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $dbman->add_key($table, $key);
     }
 
+    if ($oldversion < 2017071901) {
+        $table = new xmldb_table('turnitintooltwo');
+        // Add field for flagging whether a V2 assignment is a legacy V1 assignment.
+        $field = new xmldb_field('legacy', XMLDB_TYPE_INTEGER, '1', false, null, false, '0', 'anongradebook');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $table = new xmldb_table('turnitintooltwo_submissions');
+        $field = new xmldb_field('migrate_gradebook', XMLDB_TYPE_INTEGER, '1', false, true, false, '0', 'submission_hash');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
