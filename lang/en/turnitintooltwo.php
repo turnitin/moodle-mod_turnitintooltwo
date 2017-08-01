@@ -648,3 +648,5 @@ $string['migrationactivationsuccess'] = 'The migration tool has been successfull
 $string['migrationactivationfailure'] = 'The migration tool could not be enabled.';
 $string['activatemigration'] = 'Enable Migration Tool Settings';
 $string['activatemigrationnotice'] = 'On activation of the Moodle Migration Tool, the V1 Migration tab is displayed in the Turnitin Assignment 2 settings.<br/>Select the tab to manage the tool (including disabling its use and removing any migrated V1 assignments).';
+$string['renew_assignment_dates'] = 'Generate new assignment dates';
+$string['renew_assignment_dates_help'] = 'By default, Turnitin will use the original assignment dates when resetting the course. Select this option to renew the dates. The start date will be set to the current date and time, while the due date and post date will be set to be 7 days from now.<br/><br/>Please be aware that if this is not selected then assignments with anonymous marking enabled will not carry forward this setting for the new assignments and they will have to be reanonymised individually. This is because anonymous marking cannot be on after the post date has passed.';
