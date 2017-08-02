@@ -59,12 +59,12 @@ class mod_lib_testcase extends advanced_testcase {
 
         // Create V1 Assignment.
         $v1assignmenttitle = "Test Assignment (Migration in progress...)";
-        $v1assignment = $v1migrationtest->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
         $v1migration = new v1migration($course->id, $v1assignment);
 
         // Create V2 Assignment.
         $v2assignmenttitle = "Test Assignment";
-        $v2assignment = $v1migrationtest->make_test_module($course->id, 'turnitintooltwo', $v2assignmenttitle);
+        $v2assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle);
 
         // Set migrate gradebook to 1 so it will get migrated when we call the function.
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
@@ -112,13 +112,13 @@ class mod_lib_testcase extends advanced_testcase {
 
         // Create V1 Assignment.
         $v1assignmenttitle = "Test Assignment (Migration in progress...)";
-        $v1assignment = $v1migrationtest->make_test_module($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
         $v1migration = new v1migration($course->id, $v1assignment);
 
         // Create V2 Assignment.
-        $v2assignment1 = $v1migrationtest->make_test_module($course->id, 'turnitintooltwo', "Test Assignment 1", 400);
-        $v2assignment2 = $v1migrationtest->make_test_module($course->id, 'turnitintooltwo', "Test Assignment 2", 400);
-        $v2assignment3 = $v1migrationtest->make_test_module($course->id, 'turnitintooltwo', "Test Assignment 3", 400);
+        $v2assignment1 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1", 400);
+        $v2assignment2 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 2", 400);
+        $v2assignment3 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 3", 400);
 
         // Set migrate gradebook to 1 so the assignments will get migrated when we call the function.
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
