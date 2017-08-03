@@ -471,18 +471,14 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             }
             $assignment->setEraterHandbook($eraterhandbook);
 
-            if ($renewdates) {
-                $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", time()));
-                $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
-                $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week")));
-            } else {
-                $attribute = "dtstart".$i;
-                $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
-                $attribute = "dtdue".$i;
-                $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
-                $attribute = "dtpost".$i;
-                $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
-            }
+            // Generate the assignment dates depending on whether we are renewing them or not.
+            $date_start = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $date_due   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $date_post  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i);
+
+            $assignment->setStartDate($date_start);
+            $assignment->setDueDate($date_due);
+            $assignment->setFeedbackReleaseDate($date_post);
 
             $attribute = "partname".$i;
             $tiititle = $turnitintooltwoassignment->turnitintooltwo->name." ".$turnitintooltwoassignment->turnitintooltwo->$attribute;
@@ -511,12 +507,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             $part->unanon = 0;
             $part->submitted = 0;
 
-            if (!$DB->update_record('turnitintooltwo_parts', $part)) {
-                turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
-                exit();
-            } else {
-                turnitintooltwo_activitylog("Moodle Assignment part updated (".$part->id.")", "REQUEST");
-            }
+            turnitintooltwo_reset_part_update($part, $i);
 
             if (!$DB->delete_records('turnitintooltwo_submissions', array('submission_part' => $partid))) {
                 turnitintooltwo_print_error('submissiondeleteerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
@@ -530,6 +521,49 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
     $status[] = array('component' => get_string('modulenameplural', 'turnitintooltwo'), 'item' => $item, 'error' => $error);
 
     return $status;
+}
+
+/**
+ * Function called by turnitintooltwo_duplicate_recycle to generate part dates during the course reset process.
+ *
+ * @param int $renewdates Determines whether to use new dates or existing dates.
+ * @param string $date_type "start", "due" or "post" - Determines the kind of date we need to return.
+ * @param object $part The assignment in which we need dates for.
+ * @param int The counter used during the part creation.
+ * @return int A timestamp for the date we requested.
+ */
+function turnitintooltwo_generate_part_dates($renewdates, $date_type, $part, $i) {
+    if ($renewdates) {
+        switch ($date_type) {
+            case 'start':
+                return gmdate("Y-m-d\TH:i:s\Z", time());
+            case 'due':
+            case 'post':
+               return gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week"));
+            default:
+                return NULL;
+        }
+    } else {
+        $attribute = "dt".$date_type.$i;
+        return gmdate("Y-m-d\TH:i:s\Z", $part->$attribute);
+    }
+}
+
+/**
+ * Function called by turnitintooltwo_duplicate_recycle to update a part during the course reset process.
+ *
+ * @param object $part The part data that we are updating.
+ * @param int $i The counter used during the part creation.
+ */
+function turnitintooltwo_reset_part_update($part, $i) {
+    global $DB;
+
+    if (!$DB->update_record('turnitintooltwo_parts', $part)) {
+        turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
+        exit();
+    } else {
+        turnitintooltwo_activitylog("Moodle Assignment part updated (".$part->id.")", "REQUEST");
+    }
 }
 
 /**
