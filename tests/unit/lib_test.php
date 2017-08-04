@@ -6,6 +6,7 @@ global $CFG;
 
 require_once($CFG->dirroot . '/mod/turnitintooltwo/lib.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/v1migration/v1migration.php');
+require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/generator/lib.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/classes/v1migration/v1migration_test.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.class.php');
 
@@ -14,7 +15,7 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.cl
  *
  * @package turnitintooltwo
  */
-class mod_lib_testcase extends advanced_testcase {
+class mod_lib_testcase extends test_lib {
     /**
      * Test that we have the correct course type.
      */
@@ -150,30 +151,17 @@ class mod_lib_testcase extends advanced_testcase {
     public function test_turnitintooltwo_reset_part_update() {
         global $DB;
 
-        $v1migrationtest = new mod_turnitintooltwo_v1migration_testcase();
-
         $this->resetAfterTest();
 
-        // Generate a new course.
-        $course = $this->getDataGenerator()->create_course();
+        $v2assignment = $this->make_test_tii_assignment();
+        $this->make_test_parts("turnitintooltwo", $v2assignment->turnitintooltwo->id, 1);
 
-        // Link course to Turnitin.
-        $courselink = new stdClass();
-        $courselink->courseid = $course->id;
-        $courselink->ownerid = 0;
-        $courselink->turnitin_ctl = "Test Course";
-        $courselink->turnitin_cid = 0;
-        $DB->insert_record('turnitintooltwo_courses', $courselink);
-
-        // Create V2 Assignment.
-        $v2assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1");
-
-        $part = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $v2assignment->id));
+        $part = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $v2assignment->turnitintooltwo->id));
 
         $update = new stdClass();
         $update->id = $part->id;
         $update->tiiassignid = $part->tiiassignid;
-        $update->turnitintooltwoid = $v2assignment->id;
+        $update->turnitintooltwoid = $v2assignment->turnitintooltwo->id;
         $update->partname = "Part Test";
         $update->deleted = 0;
         $update->maxmarks = 100;
@@ -200,25 +188,12 @@ class mod_lib_testcase extends advanced_testcase {
     public function test_turnitintooltwo_generate_part_dates() {
         global $DB;
 
-        $v1migrationtest = new mod_turnitintooltwo_v1migration_testcase();
-
         $this->resetAfterTest();
 
-        // Generate a new course.
-        $course = $this->getDataGenerator()->create_course();
+        $turnitintooltwoassignment = $this->make_test_tii_assignment();
+        $this->make_test_parts("turnitintooltwo", $turnitintooltwoassignment->turnitintooltwo->id, 1);
 
-        // Link course to Turnitin.
-        $courselink = new stdClass();
-        $courselink->courseid = $course->id;
-        $courselink->ownerid = 0;
-        $courselink->turnitin_ctl = "Test Course";
-        $courselink->turnitin_cid = 0;
-        $DB->insert_record('turnitintooltwo_courses', $courselink);
-
-        // Create V2 Assignment.
-        $v2assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1");
-
-        $turnitintooltwoassignment = new turnitintooltwo_assignment($v2assignment->id);
+        $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwoassignment->turnitintooltwo->id);
 
         // Test functionality when we keep existing dates.
         $response_start = turnitintooltwo_generate_part_dates(0, "start", $turnitintooltwoassignment->turnitintooltwo, 1);
@@ -238,8 +213,6 @@ class mod_lib_testcase extends advanced_testcase {
         $this->assertNotEquals(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->dtstart1), $response_start);
         $this->assertNotEquals(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->dtdue1), $response_due);
         $this->assertNotEquals(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->dtpost1), $response_post);
-
-        echo strtotime($response_post) - strtotime($response_start);
 
         // We can check that the start and due dates are more than 7 days ahead of the start date by comparing the timestamps returned. 7 days in seconds = 604,800
         $this->assertGreaterThanOrEqual(604800, strtotime($response_due) - strtotime($response_start));

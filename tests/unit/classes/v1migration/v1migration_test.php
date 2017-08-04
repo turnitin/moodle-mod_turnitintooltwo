@@ -136,6 +136,10 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     public function make_test_assignment($courseid, $modname, $assignmentname = "", $submissions = 1) {
         global $DB;
 
+        if (!$this->v1installed()) {
+            return false;
+        }
+
         $this->resetAfterTest();
 
         $assignment = new stdClass();
@@ -154,11 +158,9 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
             $assignment->$field = null;
         }
 
-        if ($this->v1installed()) {
         // Set default values and save module.
-            $v1migration = new v1migration($courseid, $assignment);
-            $v1migration->set_default_values();
-        }
+        $v1migration = new v1migration($courseid, $assignment);
+        $v1migration->set_default_values();
 
         $assignment->id = $DB->insert_record($modname, $assignment);
 
