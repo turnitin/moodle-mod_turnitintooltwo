@@ -163,7 +163,7 @@ class mod_lib_testcase extends advanced_testcase {
         $courselink->ownerid = 0;
         $courselink->turnitin_ctl = "Test Course";
         $courselink->turnitin_cid = 0;
-        $DB->insert_record('turnitintool_courses', $courselink);
+        $DB->insert_record('turnitintooltwo_courses', $courselink);
 
         // Create V2 Assignment.
         $v2assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1");
@@ -213,7 +213,7 @@ class mod_lib_testcase extends advanced_testcase {
         $courselink->ownerid = 0;
         $courselink->turnitin_ctl = "Test Course";
         $courselink->turnitin_cid = 0;
-        $DB->insert_record('turnitintool_courses', $courselink);
+        $DB->insert_record('turnitintooltwo_courses', $courselink);
 
         // Create V2 Assignment.
         $v2assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1");
