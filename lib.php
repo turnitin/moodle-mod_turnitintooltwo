@@ -314,9 +314,10 @@ function turnitintooltwo_delete_instance($id) {
  * @global object
  * @param var $courseid The course ID for the course to reset
  * @param string $action The action to use OLDCLASS or NEWCLASS
+ * @param int $renewdates The action to use new assignment dates or not.
  * @return array The status array to pass to turnitintooltwo_reset_userdata
  */
-function turnitintooltwo_duplicate_recycle($courseid, $action) {
+function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = null) {
     set_time_limit(0);
     global $DB, $USER;
 
@@ -470,12 +471,14 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             }
             $assignment->setEraterHandbook($eraterhandbook);
 
-            $attribute = "dtstart".$i;
-            $assignment->setStartDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
-            $attribute = "dtdue".$i;
-            $assignment->setDueDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
-            $attribute = "dtpost".$i;
-            $assignment->setFeedbackReleaseDate(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->$attribute));
+            // Generate the assignment dates depending on whether we are renewing them or not.
+            $date_start = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $date_due   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $date_post  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i);
+
+            $assignment->setStartDate($date_start);
+            $assignment->setDueDate($date_due);
+            $assignment->setFeedbackReleaseDate($date_post);
 
             $attribute = "partname".$i;
             $tiititle = $turnitintooltwoassignment->turnitintooltwo->name." ".$turnitintooltwoassignment->turnitintooltwo->$attribute;
@@ -501,13 +504,10 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
             $part->dtstart = strtotime($assignment->getStartDate());
             $part->dtdue = strtotime($assignment->getDueDate());
             $part->dtpost = strtotime($assignment->getFeedbackReleaseDate());
+            $part->unanon = 0;
+            $part->submitted = 0;
 
-            if (!$DB->update_record('turnitintooltwo_parts', $part)) {
-                turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
-                exit();
-            } else {
-                turnitintooltwo_activitylog("Moodle Assignment part updated (".$part->id.")", "REQUEST");
-            }
+            turnitintooltwo_reset_part_update($part, $i);
 
             if (!$DB->delete_records('turnitintooltwo_submissions', array('submission_part' => $partid))) {
                 turnitintooltwo_print_error('submissiondeleteerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
@@ -524,6 +524,49 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
 }
 
 /**
+ * Function called by turnitintooltwo_duplicate_recycle to generate part dates during the course reset process.
+ *
+ * @param int $renewdates Determines whether to use new dates or existing dates.
+ * @param string $date_type "start", "due" or "post" - Determines the kind of date we need to return.
+ * @param object $part The assignment in which we need dates for.
+ * @param int The counter used during the part creation.
+ * @return int A timestamp for the date we requested.
+ */
+function turnitintooltwo_generate_part_dates($renewdates, $date_type, $part, $i) {
+    if ($renewdates) {
+        switch ($date_type) {
+            case 'start':
+                return gmdate("Y-m-d\TH:i:s\Z", time());
+            case 'due':
+            case 'post':
+               return gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week"));
+            default:
+                return NULL;
+        }
+    } else {
+        $attribute = "dt".$date_type.$i;
+        return gmdate("Y-m-d\TH:i:s\Z", $part->$attribute);
+    }
+}
+
+/**
+ * Function called by turnitintooltwo_duplicate_recycle to update a part during the course reset process.
+ *
+ * @param object $part The part data that we are updating.
+ * @param int $i The counter used during the part creation.
+ */
+function turnitintooltwo_reset_part_update($part, $i) {
+    global $DB;
+
+    if (!$DB->update_record('turnitintooltwo_parts', $part)) {
+        turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
+        exit();
+    } else {
+        turnitintooltwo_activitylog("Moodle Assignment part updated (".$part->id.")", "REQUEST");
+    }
+}
+
+/**
  * Function called by course/reset.php when resetting moodle course to actually reset / recycle the data
  *
  * @param object $data The data object passed by course reset
@@ -531,10 +574,13 @@ function turnitintooltwo_duplicate_recycle($courseid, $action) {
  */
 function turnitintooltwo_reset_userdata($data) {
     $status = array();
+
+    $renew_dates = isset($data->renew_assignment_dates) ? 1 : null;
+
     if ($data->reset_turnitintooltwo == 0) {
-        $status = turnitintooltwo_duplicate_recycle($data->courseid, 'NEWCLASS');
+        $status = turnitintooltwo_duplicate_recycle($data->courseid, 'NEWCLASS', $renew_dates);
     } else if ($data->reset_turnitintooltwo == 1) {
-        $status = turnitintooltwo_duplicate_recycle($data->courseid, 'OLDCLASS');
+        $status = turnitintooltwo_duplicate_recycle($data->courseid, 'OLDCLASS', $renew_dates);
     }
     return $status;
 }
@@ -562,6 +608,11 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
             '2' => get_string('turnitintooltworesetdata2', 'turnitintooltwo')
     );
     $mform->addElement('select', 'reset_turnitintooltwo', get_string('selectoption', 'turnitintooltwo'), $options);
+
+    // Renew dates.
+    $mform->addElement('checkbox', 'renew_assignment_dates', get_string('renew_assignment_dates', 'turnitintooltwo'));
+    $mform->addHelpButton('renew_assignment_dates', 'renew_assignment_dates', 'turnitintooltwo');
+    $mform->setDefault('renew_assignment_dates', false);
 }
 
 /**
