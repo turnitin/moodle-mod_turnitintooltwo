@@ -1,3 +1,16 @@
+### Date:		2017-August-09
+### Release:	v2017080901
+
+**Use new assignment dates during course reset** - We received a report that during a course reset, anonymous marking settings were not carried over if an assignment's due date had already passed.
+
+Now, you can opt to use new assignment dates when initiating a course reset by selecting the **Use new assignment dates** check box. The assignment start date will be set to the date and time of the course reset, while the due and post date will elapse seven days from then.
+
+If you’d rather not use new assignment dates, that’s fine; Turnitin will use the course’s original assignment dates instead. However, any anonymous marking settings will not be carried over for assignments where the post date has passed.
+
+![alt text](https://github.com/turnitin/moodle-mod_turnitintooltwo/tree/master/pix/changelog/resetcourse.png "Reset course feature")
+
+---
+
 ### Date:		2017-July-19
 ### Release:	v2017071901
 
