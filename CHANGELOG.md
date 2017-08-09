@@ -7,7 +7,7 @@ Now, you can opt to use new assignment dates when initiating a course reset by s
 
 If you’d rather not use new assignment dates, that’s fine; Turnitin will use the course’s original assignment dates instead. However, any anonymous marking settings will not be carried over for assignments where the post date has passed.
 
-![alt text](https://github.com/turnitin/moodle-mod_turnitintooltwo/tree/master/pix/changelog/resetcourse.png "Reset course feature")
+![Reset course feature](https://github.com/turnitin/moodle-mod_turnitintooltwo/blob/master/pix/changelog/resetcourse.png "Reset course feature")
 
 ---
 
