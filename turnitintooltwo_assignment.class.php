@@ -586,9 +586,10 @@ class turnitintooltwo_assignment {
         // Get Moodle Course Object.
         $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
         $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
+        $context = context_module::instance($cm->id);
 
         // Get local course members.
-        $students = get_enrolled_users(context_module::instance($cm->id),
+        $students = get_enrolled_users($context,
                                 'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
         // Get the user ids of who is already enrolled and remove them from the students array.
