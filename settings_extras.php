@@ -521,8 +521,7 @@ switch ($cmd) {
         $cells[0]->attributes['width'] = "100px";
         $cells['assignmentid']->attributes['width'] = "150px";
         $cells['migrationstatus']->attributes['width'] = "100px";
-
-
+        
         $table->head = $cells;
 
         $elements2[] = array('html', html_writer::table($table));
