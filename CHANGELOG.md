@@ -1,3 +1,8 @@
+### Date:		2017-xxxx-xx
+### Release:	v2017xxxx01
+
+- Fixed a bug with Enrol all students. All students can now be enrolled from the students tab in the assignment inbox (Thanks to @NeillM).
+
 ### Date:		2017-August-09
 ### Release:	v2017080901
 
