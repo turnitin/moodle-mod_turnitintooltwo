@@ -127,7 +127,7 @@ switch ($action) {
         $turnitinuser = $DB->get_record('turnitintooltwo_users', array('userid' => $USER->id));
 
         // Build user object for update.
-        $eulauser = new object();
+        $eulauser = new \stdClass();
         $eulauser->id = $turnitinuser->id;
         $eulauser->user_agreement_accepted = 0;
         if ($message == 'turnitin_eula_accepted') {
