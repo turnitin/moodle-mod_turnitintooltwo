@@ -125,6 +125,12 @@ $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 // Load Javascript and CSS.
 $turnitintooltwoview->load_page_components();
 
+// If we just queued a submission, we will be checking for updates via AMD.
+if ($do == "submission_queued") {
+    $submissionid = required_param('submissionid', PARAM_INT);
+    $PAGE->requires->js_call_amd('mod_turnitintooltwo/submissionqueued', 'init', array($submissionid));
+}
+
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
 // Define file upload options.
@@ -273,6 +279,7 @@ if (!empty($action)) {
                         $do = "submitpaper";
                     }
                 } else {
+                    $submission = null;
                     foreach ($prevsubmission as $prev) {
                         $submission = $prev;
                     }
@@ -297,7 +304,41 @@ if (!empty($action)) {
                         $turnitintooltwosubmission->prepare_text_submission($cm, $post);
                     }
 
-                    if ($do == "submission_success") {
+                    $adhocmethod = get_config('turnitintooltwo', 'adhocsubmit');
+
+                    if ($adhocmethod && $do == "submission_success") {
+                        // Delete any old status, we are re-queuing.
+                        $DB->delete_records('turnitintooltwo_sub_status', array(
+                            'submissionid' => $turnitintooltwosubmission->id
+                        ));
+
+                        $DB->insert_record('turnitintooltwo_sub_status', array(
+                            'submissionid' => $turnitintooltwosubmission->id,
+                            'status' => '0'
+                        ));
+
+                        $task = new \mod_turnitintooltwo\task\submit_assignment();
+                        $task->set_custom_data(array(
+                            'userid' => $USER->id,
+                            'tiiid' => $turnitintooltwoassignment->turnitintooltwo->id,
+                            'submissionid' => $turnitintooltwosubmission->id,
+                            'submissionpart' => $post['submissionpart'],
+                            'subtime' => time()
+                        ));
+                        \core\task\manager::queue_adhoc_task($task);
+
+                        turnitintooltwo_add_to_log(
+                                $turnitintooltwoassignment->turnitintooltwo->course,
+                                "queue submission",
+                                'view.php?id='.$cm->id,
+                                "Queued turnitin submission: " . " '" . $post['submissiontitle'] . "'",
+                                $cm->id, $post['studentsname'],
+                                array('submissionid' => $turnitintooltwosubmission->id)
+                        );
+
+                        $do = 'submission_queued';
+                        $extraparams['submissionid'] = $turnitintooltwosubmission->id;
+                    } else if (!$adhocmethod && $do == "submission_success") {
                         // Log successful submission to Moodle.
                         turnitintooltwo_add_to_log(
                             $turnitintooltwoassignment->turnitintooltwo->course,
@@ -477,6 +518,14 @@ $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnit
 $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
 
 switch ($do) {
+    case "submission_queued":
+        echo $OUTPUT->box_start('generalbox', 'tiisubstatus');
+        echo $OUTPUT->box($OUTPUT->pix_icon('icon', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo'),
+                'centered_div', null, array('style' => 'padding: 10px;'));
+        echo $OUTPUT->notification(get_string('adhoc_submit', 'turnitintooltwo'), 'notifysuccess');
+        echo $OUTPUT->box_end();
+        break;
+
     case "submission_success":
         $digitalreceipt = $turnitintooltwoview->show_digital_receipt($_SESSION["digital_receipt"]);
         if ($viewcontext == "box_solid") {

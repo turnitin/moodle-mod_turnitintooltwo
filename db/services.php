@@ -15,24 +15,29 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   turnitintooltwo
- * @copyright 2012 iParadigms LLC
+ * Turnitintwo services.
+ *
+ * @package mod_turnitintooltwo
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+$services = array(
+    'Turnitintwo service' => array(
+        'functions' => array(
+            'mod_turnitintooltwo_get_submission_status'
+        ),
+        'requiredcapability' => '',
+        'restrictedusers' => 0,
+        'enabled' => 1
+    )
+);
 
-if (empty($plugin)) {
-    $plugin = new StdClass();
-}
-
-$plugin->version   = 2017080902;
-$plugin->release   = "2.7+";
-$plugin->requires  = 2014051200;
-$plugin->component = 'mod_turnitintooltwo';
-$plugin->maturity  = MATURITY_STABLE;
-
-global $CFG;
-$plugin->cron = 0;
-if (!empty($CFG->version)) {
-    $plugin->cron = ($CFG->version > 2014051200) ? 0 : 1800;
-}
+$functions = array(
+    'mod_turnitintooltwo_get_submission_status' => array(
+        'classname'   => 'mod_turnitintooltwo\external',
+        'methodname'  => 'get_submission_status',
+        'description' => 'Get my submission status.',
+        'type'        => 'read',
+        'ajax'        => true
+    )
+);

@@ -1203,11 +1203,23 @@ class turnitintooltwo_view {
         // Show date of submission or link to submit if it didn't work.
         if (empty($submission->submission_objectid) AND !empty($submission->id)) {
             $rawmodified = 1;
-            $modified = html_writer::link($CFG->wwwroot."/mod/turnitintooltwo/view.php?id=".$cm->id."&action=manualsubmission".
-                                            "&sub=".$submission->id.'&sesskey='.sesskey(),
-                                                $OUTPUT->pix_icon('icon-sml', get_string('submittoturnitin', 'turnitintooltwo'),
-                                                    'mod_turnitintooltwo')." ".get_string('submittoturnitin', 'turnitintooltwo'));
 
+            // Check we aren't still in-progress.
+            $status = $DB->get_field('turnitintooltwo_sub_status', 'status', ['submissionid' => $submission->id]);
+            if ($status !== false && !$status) {
+                $modified = html_writer::tag('span', get_string('submitinprogress', 'turnitintooltwo'));
+            } else {
+                $url = new \moodle_url('/mod/turnitintooltwo/view.php', [
+                    'id' => $cm->id,
+                    'action' => 'manualsubmission',
+                    'sub' => $submission->id,
+                    'sesskey' => sesskey(),
+                ]);
+
+                $modified = html_writer::link($url,
+                        $OUTPUT->pix_icon('icon-sml', get_string('submittoturnitin', 'turnitintooltwo'),
+                                'mod_turnitintooltwo')." ".get_string('submittoturnitin', 'turnitintooltwo'));
+            }
         } else if (empty($submission->submission_objectid)) {
             $rawmodified = 0;
             $modified = "--";

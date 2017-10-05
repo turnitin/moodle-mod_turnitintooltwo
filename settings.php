@@ -255,6 +255,11 @@ if ($ADMIN->fulltree) {
                                                     0, $ynoptions
                                                 ));
 
+    $settings->add(new admin_setting_configselect('turnitintooltwo/adhocsubmit',
+            get_string("turnitinadhocsubmit", "turnitintooltwo"),
+            get_string("turnitinadhocsubmit_desc", "turnitintooltwo"),
+            0, $ynoptions));
+
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
                        get_string('studentdataprivacy_desc', 'turnitintooltwo')));
