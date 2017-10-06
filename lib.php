@@ -489,7 +489,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
                                 $turnitintooltwoassignment->turnitintooltwo->id, $i);
 
             if (empty($partassignid)) {
-                turnitintooltwo_activitylog("Moodle Assignment could not be created (".$turnitintooltwoassignment->id.") - ".
+                turnitintooltwo_activitylog("Moodle Assignment could not be created (".$tiitoolid.") - ".
                                                 $turnitintooltwoassignment->turnitintooltwo->name , "REQUEST");
                 $error = true;
             }

@@ -1249,7 +1249,7 @@ class turnitintooltwo_assignment {
         }
 
         if (!$dbpart = $DB->update_record('turnitintooltwo_parts', $partdetails)) {
-            turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
+            turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }
 
@@ -1359,6 +1359,7 @@ class turnitintooltwo_assignment {
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
             if ($config->repositoryoption == 1) {
+                $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }
 

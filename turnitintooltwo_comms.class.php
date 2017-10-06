@@ -101,7 +101,7 @@ class turnitintooltwo_comms {
         }
 
         // Offline mode provided by Androgogic.
-        if (!empty($CFG->tiioffline) && !$istestingconnection && empty($tiipp->in_use)) {
+        if (!empty($CFG->tiioffline) && !$testingconnection && empty($tiipp->in_use)) {
             turnitintooltwo_print_error('turnitintoolofflineerror', 'turnitintooltwo');
         }
         $api->setTestingConnection($testingconnection);
