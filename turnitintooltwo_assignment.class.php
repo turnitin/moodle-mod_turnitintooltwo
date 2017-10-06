@@ -1296,7 +1296,8 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->timemodified = time();
 
         // Get Moodle Course Object.
-        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
+        $legacy = (!empty($this->turnitintooltwo->legacy)) ? $this->turnitintooltwo->legacy : 0;
+        $coursetype = turnitintooltwo_get_course_type($legacy);
         $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
 
         // Get the Turnitin owner of this this Course or make user the owner if none.
