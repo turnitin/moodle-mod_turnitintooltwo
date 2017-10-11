@@ -11,8 +11,8 @@ $(document).ready(function(){
             sesskey: M.cfg.sesskey
         },
         "success": function(data) {
-            if (data.migrated == true) {
-                window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.v2id;
+            if (data.migrated === true) {
+                window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.v2id+"&migrated=1";
             } else {
                 displayMigrationModal();
             }
