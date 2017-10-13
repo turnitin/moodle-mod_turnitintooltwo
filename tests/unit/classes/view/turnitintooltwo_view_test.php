@@ -76,40 +76,9 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
             $DB->insert_record('config_plugins', $module);
         }
 
-        // add entry for migration tool activation 
-        $activate_params = new stdClass();
-        $activate_params->plugin = 'turnitintooltwo';
-        $activate_params->name = 'migration_enabled';
-        $activate_params->value = 1;
-        $activate = $DB->insert_record('config_plugins', $activate_params);
-
         // Test that tab is present.
         $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
         $this->assertContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
-    }
-
-    /**
-     * Test that the v1 migration tab is present in the settings tabs if v1 is installed
-     * AND the tool has been activated.
-     */
-    public function test_draw_settings_menu_migration_not_activated() {
-        global $DB;
-        $this->resetAfterTest();
-        $turnitintooltwoview = new turnitintooltwo_view();
-
-        // If v1 is not installed then create a fake row to trick Moodle into thinking it's installed.
-        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        if (!boolval($module)) {
-            $module = new stdClass();
-            $module->plugin = 'mod_turnitintool';
-            $module->name = 'version';
-            $module->value = 1001;
-            $DB->insert_record('config_plugins', $module);
-        }
-
-        // Test that tab is present.
-        $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
-        $this->assertNotContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs, __FUNCTION__." - Tabs should not have shown the migration option.");
     }
 
     /**
