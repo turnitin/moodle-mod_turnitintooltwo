@@ -253,5 +253,28 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2017080902) {
+        // Define table turnitintooltwo_sub_status to be created.
+        $table = new xmldb_table('turnitintooltwo_sub_status');
+
+        // Adding fields to table turnitintooltwo_sub_status.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('submissionid', XMLDB_TYPE_INTEGER, '11', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('status', XMLDB_TYPE_INTEGER, '2', null, null, null, null);
+        $table->add_field('receipt', XMLDB_TYPE_TEXT, null, null, null, null, null);
+
+        // Adding keys to table turnitintooltwo_sub_status.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+        $table->add_key('k_submissionid', XMLDB_KEY_UNIQUE, array('submissionid'));
+
+        // Conditionally launch create table for turnitintooltwo_sub_status.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Turnitintooltwo savepoint reached.
+        upgrade_mod_savepoint(true, 2017080902, 'turnitintooltwo');
+    }
+
     return true;
 }
