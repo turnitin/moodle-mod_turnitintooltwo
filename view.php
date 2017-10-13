@@ -53,6 +53,10 @@ $action = optional_param('action', "", PARAM_ALPHA);
 $viewcontext = optional_param('view_context', "window", PARAM_ALPHAEXT);
 $migrated = optional_param('view_context', "window", PARAM_INT); // Migrated
 
+// If v1 migration tool is being enabled then this will prompt user to migrate when 
+// they return to the previous v1 assignment.
+$_SESSION["migrationtool"]["lastasked"] = 0;
+
 $notice = null;
 if (isset($_SESSION["notice"])) {
     $notice = $_SESSION["notice"];
