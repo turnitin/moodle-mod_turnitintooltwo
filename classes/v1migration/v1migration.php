@@ -731,7 +731,7 @@ class v1migration {
         $tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?lang=en_us&account=".$accountid);
+        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?operation=mdl-migration&account=".$accountid);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {
