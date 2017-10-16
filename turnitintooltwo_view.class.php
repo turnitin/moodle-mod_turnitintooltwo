@@ -146,7 +146,7 @@ class turnitintooltwo_view {
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
         if ( $module ) {
             $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
-                        get_string('v1migrationtitle', 'turnitintooltwo').' - '.get_string('v1migrationearlyrelease', 'turnitintooltwo'), 
+                        get_string('v1migrationtitle', 'turnitintooltwo').' - '.get_string('v1migrationearlyaccess', 'turnitintooltwo'), 
                         get_string('v1migrationtitle', 'turnitintooltwo'), false);    
         }
 
