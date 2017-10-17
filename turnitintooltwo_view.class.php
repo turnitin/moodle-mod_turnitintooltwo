@@ -1451,7 +1451,9 @@ class turnitintooltwo_view {
             }
         } else {
             $confirmstring = 'deleteconfirm';
-            if (empty($submission->submission_objectid) && !empty($submission->id)) {
+            if ((empty($submission->submission_objectid) && !empty($submission->id) 
+                && ((time() < $parts[$partid]->dtdue) 
+                    || (time() >= $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0)))) {
                 $uselink = true;
             }
         }
