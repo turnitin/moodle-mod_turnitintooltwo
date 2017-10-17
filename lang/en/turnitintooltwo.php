@@ -649,3 +649,4 @@ $string['activatemigration'] = 'Enable Migration Tool Settings';
 $string['activatemigrationnotice'] = 'On activation of the Moodle Migration Tool, the V1 Migration tab is displayed in the Turnitin Assignment 2 settings.<br/>Select the tab to manage the tool (including disabling its use and removing any migrated V1 assignments).';
 $string['renew_assignment_dates'] = 'Use new assignment dates';
 $string['renew_assignment_dates_help'] = 'Select this option to use new assignment dates when resetting a course. The assignment start date will be set to the date and time of the course reset, while the due and post date will elapse seven days from now.<br/><br/>If you’d rather not use new assignment dates, that’s fine; Turnitin will use the course’s original assignment dates instead. However, any anonymous marking settings will not be carried over for assignments where the post date has passed.';
+$string['v1migrationearlyaccess'] = 'Early Access';

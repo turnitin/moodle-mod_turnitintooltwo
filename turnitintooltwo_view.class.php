@@ -139,27 +139,16 @@ class turnitintooltwo_view {
         $tabs[] = new tabobject('files', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files',
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
-        // Include Moodle v1 migration tab if v1 is installed AND the migration tool has been activated.
-        // Note - the enabled status is evaluated in a roundabout way rather than a direct query because
-        // if one uses the same method as for module, with an extra line in $migration_enabled_params for 
-        // 'value' then one encounters an error "Comparisons of text column conditions are not allowed."
-        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        $enabled = false;
-        $migration_enabled_params = array(
-            'plugin' => 'turnitintooltwo',
-            'name' => 'migration_enabled'
-        );
-        $enabled_raw = $DB->get_record('config_plugins', $migration_enabled_params);
-        if ($enabled_raw && $enabled_raw->value == 1) {
-            $enabled = true;
-        }
-        if ( $module && $enabled ) {
-            $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
-                        get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
-        }
-
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
                         get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
+
+        // Include Moodle v1 migration tab if v1 is installed.
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        if ( $module ) {
+            $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
+                        get_string('v1migrationtitle', 'turnitintooltwo').' - '.get_string('v1migrationearlyaccess', 'turnitintooltwo'), 
+                        get_string('v1migrationtitle', 'turnitintooltwo'), false);    
+        }
 
         $selected = ($cmd == 'activitylog') ? 'apilog' : $cmd;
 
