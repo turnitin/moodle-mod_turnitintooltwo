@@ -133,8 +133,10 @@ $turnitintooltwoview->load_page_components();
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
 // Migration tool
-include_once("classes/v1migration/v1migration.php");
-v1migration::check_account($config->accountid);
+if ($migrated) {
+    include_once("classes/v1migration/v1migration.php");
+    v1migration::check_account($config->accountid);
+}
 
 // Define file upload options.
 $maxbytessite = $CFG->maxbytes;
