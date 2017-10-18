@@ -1432,21 +1432,9 @@ class turnitintooltwo_view {
 
         // Delete Link.
         $delete = "--";
-        $uselink = "";
-        if ($istutor) {
-            if (!empty($submission->id)) {
-                $confirmstring = (empty($submission->submission_objectid)) ? 'deleteconfirm' : 'turnitindeleteconfirm';
-                $uselink = true;
-            }
-        } else {
-            $confirmstring = 'deleteconfirm';
-            if ((empty($submission->submission_objectid) && !empty($submission->id) 
-                && ((time() < $parts[$partid]->dtdue) 
-                    || (time() >= $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0)))) {
-                $uselink = true;
-            }
-        }
-        if ($uselink) {
+        if ($this->show_delete_link($istutor, $submission, $parts[$partid]->dtdue, $turnitintooltwoassignment->turnitintooltwo->allowlate)) {
+
+            $confirmstring = (!empty($submission->id) && empty($submission->submission_objectid)) ? 'deleteconfirm' : 'turnitindeleteconfirm';
             $delete = html_writer::tag('div', html_writer::tag('i', '', array('title' => get_string('deletesubmission', 'turnitintooltwo'),
                                                 'class' => 'fa fa-trash-o fa-lg')),
                                                 array('class' => 'delete_paper',
@@ -1490,10 +1478,31 @@ class turnitintooltwo_view {
     }
 
     /**
+     * Return whether the delete link should be shown.
+     * @param boolean $istutor
+     * @param object $submission
+     * @param int $dtdue
+     * @param boolean $allowlatesubmissions
+     *
+     * @return boolean
+     */
+    public function show_delete_link($istutor, $submission, $dtdue, $allowlatesubmissions) {
+
+        if ($istutor && !empty($submission->id)) {
+            return true;
+        } else {            
+            if ((empty($submission->submission_objectid) && !empty($submission->id) 
+                && ((time() < $dtdue) || (time() >= $dtdue && $allowlatesubmissions == 1)))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Return submission inbox in a JSON array
      *
-     * @global type $CFG
-     * @global type $OUTPUT
      * @param object $cm
      * @param object $turnitintooltwoassignment
      * @param int $partid
