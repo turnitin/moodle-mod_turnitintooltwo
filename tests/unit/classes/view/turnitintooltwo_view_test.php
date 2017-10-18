@@ -177,7 +177,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 	}
 
     /**
-     * Test the method used to determine whether the delte link is shown to users.
+     * Test the method used to determine whether the delete link is shown to users.
      * The delete link should only be shown to instructors if there has been a submission made to Moodle or
      * to students if they have a submission and the due date hasn't passed or late submissions are allowed.
      *
