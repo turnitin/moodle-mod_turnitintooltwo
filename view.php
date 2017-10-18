@@ -133,7 +133,7 @@ $turnitintooltwoview->load_page_components();
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
 // Migration tool
-if ($migrated) {
+if ($migrated === 1) {
     include_once("classes/v1migration/v1migration.php");
     v1migration::check_account($config->accountid);
 }
