@@ -643,13 +643,13 @@ function turnitintooltwo_cron() {
 
     // Send grades to the gradebook for anonymous marking assignments when the post date has passed.
     // Get a list of assignments that need updating.
-    if ($assignmentlist = $DB->get_records_sql("SELECT t.id FROM {turnitintooltwo} t
+    if ($assignmentlist = $DB->get_records_sql("SELECT DISTINCT(t.id) FROM {turnitintooltwo} t
                                                 LEFT JOIN {turnitintooltwo_parts} p ON (p.turnitintooltwoid = t.id)
-                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost)
-                                                    FROM {turnitintooltwo_parts}
-                                                    GROUP BY turnitintooltwoid)
-                                                AND t.anon = 1 AND t.anongradebook = 0 AND dtpost < ".time()."
-                                                GROUP BY t.id")) {
+                                                WHERE (p.turnitintooltwoid + p.dtpost IN 
+                                                    (SELECT p2.turnitintooltwoid + MAX(p2.dtpost)
+                                                        FROM {turnitintooltwo_parts} p2
+                                                        GROUP BY p2.turnitintooltwoid))
+                                                AND t.anon = 1 AND t.anongradebook = 0 AND p.dtpost < ".time())) {
 
         // Update each assignment.
         $task = "anongradebook";
