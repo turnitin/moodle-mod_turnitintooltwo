@@ -694,13 +694,14 @@ function turnitintooltwo_cron_migrate_gradebook() {
     // Get a list of assignments with outstanding gradebook migrations.
     require_once(__DIR__.'/classes/v1migration/v1migration.php');
     $sql = "migrate_gradebook = 1 GROUP BY turnitintooltwoid";
-    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql, NULL, '', "turnitintooltwoid, count(turnitintooltwoid) AS numsubmissions");
+    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql, NULL, 'turnitintooltwoid', "turnitintooltwoid, count(turnitintooltwoid) AS numsubmissions");
     $numsubmissions = 0;
     foreach ($assignments as $assignment) {
-        $numsubmissions += $assignment->numsubmissions;
-
         // We will break out unless the number of submissions migrated + to be migrated is MIGRATION_SUBMISSIONS_CUTOFF or less.
-        if (($numsubmissions <= MIGRATION_SUBMISSIONS_CUTOFF) || ($numsubmissions == 0) && ($assignment->numsubmissions > MIGRATION_SUBMISSIONS_CUTOFF)) {
+        if (($numsubmissions + $assignment->numsubmissions) <= MIGRATION_SUBMISSIONS_CUTOFF ||
+           (($numsubmissions == 0) && ($assignment->numsubmissions > MIGRATION_SUBMISSIONS_CUTOFF))) {
+
+            $numsubmissions += $assignment->numsubmissions;
 
             $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, "cron");
 
