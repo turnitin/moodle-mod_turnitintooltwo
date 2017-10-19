@@ -649,8 +649,7 @@ function turnitintooltwo_cron() {
                                                     (SELECT p2.turnitintooltwoid + MAX(p2.dtpost)
                                                         FROM {turnitintooltwo_parts} p2
                                                         GROUP BY p2.turnitintooltwoid))
-                                                AND t.anon = 1 AND t.anongradebook = 0 AND p.dtpost < ".time()."
-                                                GROUP BY t.id")) {
+                                                AND t.anon = 1 AND t.anongradebook = 0 AND p.dtpost < ".time())) {
 
         // Update each assignment.
         $task = "anongradebook";
