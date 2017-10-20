@@ -670,6 +670,34 @@ class turnitintooltwo_assignment {
         // Get Moodle Course Object.
         $course = $this->get_course_data($this->turnitintooltwo->course);
 
+        // If PHP UNIT tests are running and account/secretkey/apiurl are empty, just create basic object and return.
+        if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) &&
+            (empty($config->accountid) || empty($config->secretkey) || empty($config->apiurl))) {
+
+            $turnitintooltwo = new stdClass();
+            $turnitintooltwo->timecreated = time();
+            $turnitintooltwo->timemodified = time();
+            $turnitintooltwo->course = $course->id;
+            $turnitintooltwo->name = "test V2";
+            $turnitintooltwo->dateformat = "d/m/Y";
+            $turnitintooltwo->usegrademark = 0;
+            $turnitintooltwo->gradedisplay = 0;
+            $turnitintooltwo->autoupdates = 0;
+            $turnitintooltwo->commentedittime = 0;
+            $turnitintooltwo->commentmaxsize = 0;
+            $turnitintooltwo->autosubmission = 0;
+            $turnitintooltwo->shownonsubmission = 0;
+            $turnitintooltwo->studentreports = 1;
+            $turnitintooltwo->grade = 0;
+            $turnitintooltwo->numparts = 1;
+            $turnitintooltwo->anon = 0;
+            $turnitintooltwo->allowlate = 0;
+            $turnitintooltwo->legacy = 0;
+            $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
+            $toolid = $DB->insert_record("turnitintooltwo", $this->turnitintooltwo);
+            return $toolid;
+        }
+
         // Get the Turnitin owner of this this Course or make user the owner if none.
         $ownerid = $this->get_tii_owner($course->id);
         if (!empty($ownerid)) {
