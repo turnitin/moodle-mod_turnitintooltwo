@@ -694,8 +694,8 @@ class turnitintooltwo_assignment {
             $turnitintooltwo->allowlate = 0;
             $turnitintooltwo->legacy = 0;
             $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
-            $toolid = $DB->insert_record("turnitintooltwo", $this->turnitintooltwo);
-            return $toolid;
+
+            return $turnitintooltwo->id;
         }
 
         // Get the Turnitin owner of this this Course or make user the owner if none.
