@@ -199,23 +199,4 @@ abstract class test_lib extends advanced_testcase {
         $instance = $DB->get_record("enrol", array('courseid' => $course, 'enrol' => 'manual'));
         $enrol->enrol_user($instance, $moodle_user, $roleid);
     }
-
-    /**
-     * Creates a dummy API url in the moodle plugin config table.
-     *
-     * @return void
-     */
-    public function dummy_api_url() {
-        $updatev2 = $DB->get_record("config_plugins", array("plugin" => "turnitintooltwo", "name" => "accountid"));
-        if (!$updatev2) {
-            $updatev2 = new stdClass();
-            $updatev2->plugin = "turnitintooltwo";
-            $updatev2->name = "apiurl";
-            $updatev2->value = "http://www.example.com";
-            $DB->insert_record("config_plugins", $updatev2);
-        } else {
-            $updatev2->value = "http://www.example.com";
-            $DB->update_record("config_plugins", $updatev2);
-        }
-    }
 }
