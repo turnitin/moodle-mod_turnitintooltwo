@@ -586,9 +586,10 @@ class turnitintooltwo_assignment {
         // Get Moodle Course Object.
         $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
         $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
+        $context = context_module::instance($cm->id);
 
         // Get local course members.
-        $students = get_enrolled_users(context_module::instance($cm->id),
+        $students = get_enrolled_users($context,
                                 'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
         // Get the user ids of who is already enrolled and remove them from the students array.
@@ -668,6 +669,34 @@ class turnitintooltwo_assignment {
 
         // Get Moodle Course Object.
         $course = $this->get_course_data($this->turnitintooltwo->course);
+
+        // If PHP UNIT tests are running and account/secretkey/apiurl are empty, just create basic object and return.
+        if ((defined('PHPUNIT_TEST') && PHPUNIT_TEST) &&
+            (empty($config->accountid) || empty($config->secretkey) || empty($config->apiurl))) {
+
+            $turnitintooltwo = new stdClass();
+            $turnitintooltwo->timecreated = time();
+            $turnitintooltwo->timemodified = time();
+            $turnitintooltwo->course = $course->id;
+            $turnitintooltwo->name = "test V2";
+            $turnitintooltwo->dateformat = "d/m/Y";
+            $turnitintooltwo->usegrademark = 0;
+            $turnitintooltwo->gradedisplay = 0;
+            $turnitintooltwo->autoupdates = 0;
+            $turnitintooltwo->commentedittime = 0;
+            $turnitintooltwo->commentmaxsize = 0;
+            $turnitintooltwo->autosubmission = 0;
+            $turnitintooltwo->shownonsubmission = 0;
+            $turnitintooltwo->studentreports = 1;
+            $turnitintooltwo->grade = 0;
+            $turnitintooltwo->numparts = 1;
+            $turnitintooltwo->anon = 0;
+            $turnitintooltwo->allowlate = 0;
+            $turnitintooltwo->legacy = 0;
+            $turnitintooltwo->id = $DB->insert_record("turnitintooltwo", $turnitintooltwo);
+
+            return $turnitintooltwo->id;
+        }
 
         // Get the Turnitin owner of this this Course or make user the owner if none.
         $ownerid = $this->get_tii_owner($course->id);
@@ -1248,7 +1277,7 @@ class turnitintooltwo_assignment {
         }
 
         if (!$dbpart = $DB->update_record('turnitintooltwo_parts', $partdetails)) {
-            turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, $i, __FILE__, __LINE__);
+            turnitintooltwo_print_error('partupdateerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }
 
@@ -1295,7 +1324,8 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->timemodified = time();
 
         // Get Moodle Course Object.
-        $coursetype = turnitintooltwo_get_course_type($this->turnitintooltwo->legacy);
+        $legacy = (!empty($this->turnitintooltwo->legacy)) ? $this->turnitintooltwo->legacy : 0;
+        $coursetype = turnitintooltwo_get_course_type($legacy);
         $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
 
         // Get the Turnitin owner of this this Course or make user the owner if none.
@@ -1358,6 +1388,7 @@ class turnitintooltwo_assignment {
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
             if ($config->repositoryoption == 1) {
+                $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }
 

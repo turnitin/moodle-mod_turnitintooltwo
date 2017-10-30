@@ -51,6 +51,11 @@ $user = optional_param('user', 0, PARAM_INT); // User ID.
 $do = optional_param('do', "submissions", PARAM_ALPHAEXT);
 $action = optional_param('action', "", PARAM_ALPHA);
 $viewcontext = optional_param('view_context', "window", PARAM_ALPHAEXT);
+$migrated = optional_param('migrated', 0, PARAM_INT); // Migrated
+
+// If v1 migration tool is being enabled then this will prompt user to migrate when 
+// they return to the previous v1 assignment.
+$_SESSION["migrationtool"]["lastasked"] = 0;
 
 $notice = null;
 if (isset($_SESSION["notice"])) {
@@ -126,6 +131,12 @@ $url = new moodle_url('/mod/turnitintooltwo/view.php', $urlparams);
 $turnitintooltwoview->load_page_components();
 
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
+
+// Migration tool
+if ($migrated === 1) {
+    include_once("classes/v1migration/v1migration.php");
+    v1migration::check_account($config->accountid);
+}
 
 // Define file upload options.
 $maxbytessite = $CFG->maxbytes;

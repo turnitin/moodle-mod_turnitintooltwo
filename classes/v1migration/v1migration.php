@@ -701,7 +701,7 @@ class v1migration {
      * @return object $activation - db record of the migration activation row inserted into config_plugins.
      */
     public static function activate_migration() {
-        global $DB, $CFG;
+        global $DB;
         $migration_enabled_params = array(
             'plugin' => 'turnitintooltwo',
             'name' => 'migration_enabled'
@@ -721,5 +721,28 @@ class v1migration {
         }
         
         return $activation;
+    }
+
+    public static function check_account($accountid) {
+        global $CFG;
+
+        $config = turnitintooltwo_admin_config();
+
+        $tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?lang=en_us&operation=mdl-migration&account=".$accountid);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {
+            curl_setopt($ch, CURLOPT_PROXY, $CFG->proxyhost.':'.$CFG->proxyport);
+        }
+        if (isset($CFG->proxyuser) AND !empty($CFG->proxyuser)) {
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+            curl_setopt($ch, CURLOPT_PROXYUSERPWD, sprintf('%s:%s', $CFG->proxyuser, $CFG->proxypassword));
+        }
+
+        curl_exec($ch);
+        curl_close($ch);
     }
 }

@@ -489,7 +489,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
                                 $turnitintooltwoassignment->turnitintooltwo->id, $i);
 
             if (empty($partassignid)) {
-                turnitintooltwo_activitylog("Moodle Assignment could not be created (".$turnitintooltwoassignment->id.") - ".
+                turnitintooltwo_activitylog("Moodle Assignment could not be created (".$tiitoolid.") - ".
                                                 $turnitintooltwoassignment->turnitintooltwo->name , "REQUEST");
                 $error = true;
             }
@@ -643,13 +643,13 @@ function turnitintooltwo_cron() {
 
     // Send grades to the gradebook for anonymous marking assignments when the post date has passed.
     // Get a list of assignments that need updating.
-    if ($assignmentlist = $DB->get_records_sql("SELECT t.id FROM {turnitintooltwo} t
+    if ($assignmentlist = $DB->get_records_sql("SELECT DISTINCT(t.id) FROM {turnitintooltwo} t
                                                 LEFT JOIN {turnitintooltwo_parts} p ON (p.turnitintooltwoid = t.id)
-                                                WHERE (turnitintooltwoid, dtpost) IN (SELECT turnitintooltwoid, MAX(dtpost)
-                                                    FROM {turnitintooltwo_parts}
-                                                    GROUP BY turnitintooltwoid)
-                                                AND t.anon = 1 AND t.anongradebook = 0 AND dtpost < ".time()."
-                                                GROUP BY t.id")) {
+                                                WHERE (p.turnitintooltwoid + p.dtpost IN 
+                                                    (SELECT p2.turnitintooltwoid + MAX(p2.dtpost)
+                                                        FROM {turnitintooltwo_parts} p2
+                                                        GROUP BY p2.turnitintooltwoid))
+                                                AND t.anon = 1 AND t.anongradebook = 0 AND p.dtpost < ".time())) {
 
         // Update each assignment.
         $task = "anongradebook";
@@ -694,13 +694,14 @@ function turnitintooltwo_cron_migrate_gradebook() {
     // Get a list of assignments with outstanding gradebook migrations.
     require_once(__DIR__.'/classes/v1migration/v1migration.php');
     $sql = "migrate_gradebook = 1 GROUP BY turnitintooltwoid";
-    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql, NULL, '', "turnitintooltwoid, count(turnitintooltwoid) AS numsubmissions");
+    $assignments = $DB->get_records_select("turnitintooltwo_submissions", $sql, NULL, 'turnitintooltwoid', "turnitintooltwoid, count(turnitintooltwoid) AS numsubmissions");
     $numsubmissions = 0;
     foreach ($assignments as $assignment) {
-        $numsubmissions += $assignment->numsubmissions;
-
         // We will break out unless the number of submissions migrated + to be migrated is MIGRATION_SUBMISSIONS_CUTOFF or less.
-        if (($numsubmissions <= MIGRATION_SUBMISSIONS_CUTOFF) || ($numsubmissions == 0) && ($assignment->numsubmissions > MIGRATION_SUBMISSIONS_CUTOFF)) {
+        if (($numsubmissions + $assignment->numsubmissions) <= MIGRATION_SUBMISSIONS_CUTOFF ||
+           (($numsubmissions == 0) && ($assignment->numsubmissions > MIGRATION_SUBMISSIONS_CUTOFF))) {
+
+            $numsubmissions += $assignment->numsubmissions;
 
             $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, "cron");
 

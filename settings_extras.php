@@ -471,7 +471,7 @@ switch ($cmd) {
                             array('class' => 'alert alert-'.$type, 'role' => 'alert'));
         }
 
-        // If v1 and v2 accounts are different then diable form elements.
+        // If v1 and v2 accounts are different then disable form elements.
         $enabled = v1migration::check_account_ids();
 
         // Output the form to enable the v1 migration.
@@ -512,13 +512,16 @@ switch ($cmd) {
         $cells = array();
         $checkbox = html_writer::checkbox('selectallcb', 1, false, '', array('title' => get_string('migrationselectall', 'turnitintooltwo')));
         $cells[0] = new html_table_cell($checkbox);
-
-
         $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
         $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
         $cells['title'] = new html_table_cell(get_string('migrationassignmenttitle', 'turnitintooltwo'));
         $cells['migrationstatus'] = new html_table_cell(get_string('hasmigrated', 'turnitintooltwo'));
 
+        // Set the header widths. Title can take up the remainder.
+        $cells[0]->attributes['width'] = "100px";
+        $cells['assignmentid']->attributes['width'] = "150px";
+        $cells['migrationstatus']->attributes['width'] = "100px";
+        
         $table->head = $cells;
 
         $elements2[] = array('html', html_writer::table($table));

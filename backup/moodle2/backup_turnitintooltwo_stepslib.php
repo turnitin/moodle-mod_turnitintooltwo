@@ -31,6 +31,11 @@ require_once($CFG->dirroot."/mod/turnitintooltwo/lib.php");
 class backup_turnitintooltwo_activity_structure_step extends backup_activity_structure_step {
 
     protected function define_structure() {
+        // Required otherwise Moodle unit test core_calendar_container_testcase calendar/tests/container_test.php will fail.
+        if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+            set_config('accountid', 'NULL', 'turnitintooltwo');
+        }
+
         $config = turnitintooltwo_admin_config();
 
         // To know if we are including userinfo.

@@ -736,6 +736,14 @@
                         return response.msg;
                     } else if (response.field == "maxmarks") {
                         $('#refresh_' + response.partid).click();
+
+                        // Update the gradebook.
+                        $.ajax({
+                            type: "POST",
+                            url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
+                            dataType: "json",
+                            data: { action: "sync_all_submissions", assignment: $('#assignment_id').html(), sesskey: M.cfg.sesskey }
+                        });
                     } else if (response.field == "partname") {
                         var tabId = $(this).parentsUntil('.ui-tabs-panel').parent().attr('aria-labelledby');
                         $('#' + tabId).text(newValue);

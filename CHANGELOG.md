@@ -1,3 +1,57 @@
+### Date:		2017-October-30
+### Release:	v2017103001
+
+V1 to V2 Moodle Migration Tool
+
+**The Moodle Migration Tool is now in early access mode!** - Before making the Moodle Migration Tool available to all of our Moodle users, we asked a subset of users to test the tool and advise us of any issues or errors they may have stumbled across during their experimenting. We'd like to thank all of our testers for their useful comments; they've helped us make the tool even better!
+
+Calling all administrators! To access the Moodle migration tool and enable instructor migration, visit our guide.
+
+Below, you can find several updates we've made to the tool based on the issues raised by our testers:
+
+- Updated migration tool setting information
+- We've made improvements to the migration workflow
+- We've made some table adjustments
+- Fixed an issue causing the grade book to unsuccessfully migrate
+
+**Updated migration tool setting information** - We've updated the information behind the question mark icon connected to the 'Migration action at assignment launch' setting; this referred to old functionality in the Moodle Migration Tool. The text now reflects the current state of the tool. Apologies if you became a little confused! 
+
+**We've made improvements to the migration workflow** -  We've made the migration workflow clearer by prompting the user to migrate on all V1 assignments. Even if you navigate away from the assignment, you'll be prompted again when you return. We hope this helps make your migration a smooth and simple one. 
+
+**We've made some table adjustments** - The table of migrated V1 assignments was appearing a little unkempt, so we tidied up by setting the table width. The table now looks much more aesthetically pleasing! 
+
+**Fixed an issue causing the grade book to unsuccessfully migrate** - When migrating we found a potential issue that would cause the migration of grade book to fail which would lead to issues with the migration of assignments. We've preemptively fixed this so you will be able to migrate your assignments without issue. 
+
+We've also been working on...
+
+- Fixed a bug preventing student enrollment
+- Removed the visibility of the delete icon after submission
+- Anonymous marking grades now pass to the grade book in all databases
+- Unit tests now pass successfully
+- Fixed several incorrectly named variables
+
+**Fixed a bug preventing student enrollment** - We received an alert that the Enrol All Students button accessible via the Turnitin Students tab wasn't functioning correctly; this removed the ability for students enrolled in the same class via Turnitin.com or TurnitinUK.com to submit to their Moodle Direct V2 assignment. We identified a missing parameter causing the issue and simply reinserted it. The button now works as intended. Thanks to @neillm for his input!
+
+> A parameter is a piece of information passed to a program by a user or another program; this information can be a name, number, or a selected option. Parameters have an effect on the operation of the program receiving them.
+
+**Removed the visibility of the delete icon after submission** - We received several reports from an institution concerning the presence of the submission delete icon in the student submission inbox. For assignments with resubmissions disabled, students who'd submitted an incorrect file type managed to delete and resubmit their paper. Although this is useful for students who've made a genuine submission error, this was not intended functionality.
+
+We also heard that by allowing late submissions in an assignment, this enabled students to delete and resubmit their paper after the post date. This unintentionally allowed students to resubmit after any instructor marking or grading had taken place. The delete icon has now been removed, meaning students will only be able to submit following the permissions set by their instructor.
+
+**Anonymous marking grades now pass to the grade book** - We noticed that grades failed to populate the grade book for papers submitted to an assignment with anonymous marking enabled. The call to send these grades failed in the Microsoft SQL database and produced an error. Not to worry! All grades now send to the grade book as expected.
+
+> SQL statements are used to perform tasks, such as updating data within a database (updating the grade book with grades!), or retrieving data from a database.
+
+**Unit tests now pass successfully** - With thanks to @danmarsden for his work on fixing some of our broken unit tests. These improvements help to instill user confidence in Moodle Direct V2.
+
+> Unit tests involve testing certain functions and areas – or units – of code. This gives developers the ability to verify that software functions work as intended.
+
+**Fixed several incorrectly named variables** - We've implemented some fixes kindly provided by @sk-unikent which tidied up several variable issues.
+
+> Variables are used to store information for easy manipulation and reference in a computer program. Rather than entering data directly into a program, a variable is used to represent data. When a program is executed, a variable is replaced with actual data. For example, firstName is a variable because it can be referenced and replaced with the actual first name of an individual.
+
+---
+
 ### Date:		2017-August-09
 ### Release:	v2017080901
 

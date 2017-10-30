@@ -6,12 +6,12 @@ $(document).ready(function(){
         "type": "POST",
         "url": M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
         "data": {
-            action: "check_migrated", 
+            action: "check_migrated",
             turnitintoolid: $("#migrate_type").data("turnitintoolid"),
             sesskey: M.cfg.sesskey
         },
         "success": function(data) {
-            if (data.migrated == true) {
+            if (data.migrated === true) {
                 window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.v2id;
             } else {
                 displayMigrationModal();
@@ -66,7 +66,7 @@ function migrate(courseid, turnitintoolid) {
                 $.colorbox.close();
             }
             $('#migration_alert').hide();
-            window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id;
+            window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id+"&migrated=1";
         },
         error: function(error) {
             var data = error.responseJSON;

@@ -76,40 +76,9 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
             $DB->insert_record('config_plugins', $module);
         }
 
-        // add entry for migration tool activation 
-        $activate_params = new stdClass();
-        $activate_params->plugin = 'turnitintooltwo';
-        $activate_params->name = 'migration_enabled';
-        $activate_params->value = 1;
-        $activate = $DB->insert_record('config_plugins', $activate_params);
-
         // Test that tab is present.
         $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
         $this->assertContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
-    }
-
-    /**
-     * Test that the v1 migration tab is present in the settings tabs if v1 is installed
-     * AND the tool has been activated.
-     */
-    public function test_draw_settings_menu_migration_not_activated() {
-        global $DB;
-        $this->resetAfterTest();
-        $turnitintooltwoview = new turnitintooltwo_view();
-
-        // If v1 is not installed then create a fake row to trick Moodle into thinking it's installed.
-        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        if (!boolval($module)) {
-            $module = new stdClass();
-            $module->plugin = 'mod_turnitintool';
-            $module->name = 'version';
-            $module->value = 1001;
-            $DB->insert_record('config_plugins', $module);
-        }
-
-        // Test that tab is present.
-        $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
-        $this->assertNotContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs, __FUNCTION__." - Tabs should not have shown the migration option.");
     }
 
     /**
@@ -141,7 +110,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 	/**
 	 * Test that the submissions table layout conforms to expectations when the user is an instructor.
 	 *
-	 * @return  void
+	 * @return void
 	 */
 	public function test_inbox_table_structure_instructor() {
 		global $DB;
@@ -208,22 +177,45 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 	}
 
     /**
-     * Tests the visual display of the migration tool activation page.
+     * Test the method used to determine whether the delete link is shown to users.
+     * The delete link should only be shown to instructors if there has been a submission made to Moodle or
+     * to students if they have a submission and the due date hasn't passed or late submissions are allowed.
      *
      * @return void
      */
-    public function test_migration_activation_display() {
-        $this->resetAfterTest();
-        $actual = turnitintooltwo_view::build_migration_activation_page();
+    public function test_show_delete_link() {
+        $turnitintooltwoview = new turnitintooltwo_view();
+
+        // Show delete link to instructor if a submission has been made.
+        $submission = new stdClass();
+        $submission->id = 1;
+        $showdeletelink = $turnitintooltwoview->show_delete_link(true, $submission, time(), 1);
+        $this->assertEquals(true, $showdeletelink);
+
+        // Do not show delete link to instructor if no submission has been made.
+        $submission = new stdClass();
+        $showdeletelink = $turnitintooltwoview->show_delete_link(true, $submission, time(), 1);
+        $this->assertEquals(false, $showdeletelink);
+
+        // Show delete link to student if a submission has only been made to moodle and the due date hasn't passed.
+        $submission = new stdClass();
+        $submission->id = 1;
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()+1000, 1);
+        $this->assertEquals(true, $showdeletelink);
         
-        $expected = get_string('activatemigrationnotice', 'turnitintooltwo');
-        $this->assertContains($expected, $actual, __FUNCTION__.' - migration tool activation page did not show the notice.');
-        
-        $expected = html_writer::link(
-            new moodle_url('/mod/turnitintooltwo/activate_migration.php', array('do_migration' => 1)),
-            get_string('activatemigration', 'turnitintooltwo'),
-            array('class'=>'btn btn-default', 'role' => 'button')
-        );
-        $this->assertContains($expected, $actual, __FUNCTION__.'migration tool activation page did not show the button.');
+        // Show delete link to student if a submission has only been made to moodle,
+        // the due date has passed and late submissions are allowed.
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()-1, 1);
+        $this->assertEquals(true, $showdeletelink);
+
+        // Do not show delete link to student if a submission has only been made to moodle,
+        // the due date has passed and late submissions are not allowed.
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()-1, 0);
+        $this->assertEquals(false, $showdeletelink);
+
+        // Do not show delete link to student if a submission has been sent to Turnitin.
+        $submission->submission_objectid = 1; 
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time(), 1);
+        $this->assertEquals(false, $showdeletelink);
     }
 }

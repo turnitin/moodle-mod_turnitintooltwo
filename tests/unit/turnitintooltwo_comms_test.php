@@ -40,7 +40,7 @@ class mod_turnitintooltwo_comms_testcase extends advanced_testcase {
 		$this->resetAfterTest();
 
 		// Set Turnitin account values in config as they are used in comms.
-		set_config('apiurl', 'http://www.test.com', 'turnitintooltwo');
+		set_config('apiurl', 'http://invalid', 'turnitintooltwo');
 		set_config('accountid', '1001', 'turnitintooltwo');
 		set_config('secretkey', 'ABCDEFGH', 'turnitintooltwo');
 

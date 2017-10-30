@@ -139,27 +139,16 @@ class turnitintooltwo_view {
         $tabs[] = new tabobject('files', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=files',
                         get_string('files', 'turnitintooltwo'), get_string('files', 'turnitintooltwo'), false);
 
-        // Include Moodle v1 migration tab if v1 is installed AND the migration tool has been activated.
-        // Note - the enabled status is evaluated in a roundabout way rather than a direct query because
-        // if one uses the same method as for module, with an extra line in $migration_enabled_params for 
-        // 'value' then one encounters an error "Comparisons of text column conditions are not allowed."
-        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
-        $enabled = false;
-        $migration_enabled_params = array(
-            'plugin' => 'turnitintooltwo',
-            'name' => 'migration_enabled'
-        );
-        $enabled_raw = $DB->get_record('config_plugins', $migration_enabled_params);
-        if ($enabled_raw && $enabled_raw->value == 1) {
-            $enabled = true;
-        }
-        if ( $module && $enabled ) {
-            $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
-                        get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
-        }
-
         $tabs[] = new tabobject('courses', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=courses',
                         get_string('restorationheader', 'turnitintooltwo'), get_string('restorationheader', 'turnitintooltwo'), false);
+
+        // Include Moodle v1 migration tab if v1 is installed.
+        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
+        if ( $module ) {
+            $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
+                        get_string('v1migrationtitle', 'turnitintooltwo').' - '.get_string('v1migrationearlyaccess', 'turnitintooltwo'), 
+                        get_string('v1migrationtitle', 'turnitintooltwo'), false);    
+        }
 
         $selected = ($cmd == 'activitylog') ? 'apilog' : $cmd;
 
@@ -1443,19 +1432,9 @@ class turnitintooltwo_view {
 
         // Delete Link.
         $delete = "--";
-        $uselink = "";
-        if ($istutor) {
-            if (!empty($submission->id)) {
-                $confirmstring = (empty($submission->submission_objectid)) ? 'deleteconfirm' : 'turnitindeleteconfirm';
-                $uselink = true;
-            }
-        } else {
-            $confirmstring = 'deleteconfirm';
-            if (empty($submission->submission_objectid) && !empty($submission->id)) {
-                $uselink = true;
-            }
-        }
-        if ($uselink) {
+        if ($this->show_delete_link($istutor, $submission, $parts[$partid]->dtdue, $turnitintooltwoassignment->turnitintooltwo->allowlate)) {
+
+            $confirmstring = (!empty($submission->id) && empty($submission->submission_objectid)) ? 'deleteconfirm' : 'turnitindeleteconfirm';
             $delete = html_writer::tag('div', html_writer::tag('i', '', array('title' => get_string('deletesubmission', 'turnitintooltwo'),
                                                 'class' => 'fa fa-trash-o fa-lg')),
                                                 array('class' => 'delete_paper',
@@ -1499,10 +1478,31 @@ class turnitintooltwo_view {
     }
 
     /**
+     * Return whether the delete link should be shown.
+     * @param boolean $istutor
+     * @param object $submission
+     * @param int $dtdue
+     * @param boolean $allowlatesubmissions
+     *
+     * @return boolean
+     */
+    public function show_delete_link($istutor, $submission, $dtdue, $allowlatesubmissions) {
+
+        if ($istutor && !empty($submission->id)) {
+            return true;
+        } else {            
+            if ((empty($submission->submission_objectid) && !empty($submission->id) 
+                && ((time() < $dtdue) || (time() >= $dtdue && $allowlatesubmissions == 1)))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Return submission inbox in a JSON array
      *
-     * @global type $CFG
-     * @global type $OUTPUT
      * @param object $cm
      * @param object $turnitintooltwoassignment
      * @param int $partid
