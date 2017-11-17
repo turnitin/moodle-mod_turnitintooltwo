@@ -113,7 +113,7 @@ class v1migration {
         $PAGE->requires->css($cssurl);
         $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
-		$PAGE->requires->jquery_plugin('turnitintooltwo-migration_tool', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-migration_tool', 'mod_turnitintooltwo');
 
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
 
