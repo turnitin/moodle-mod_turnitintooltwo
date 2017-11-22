@@ -15,25 +15,27 @@ $(document).ready(function(){
                 window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.v2id;
             } else {
                 displayMigrationModal();
+
+                $('.dontmigrate_link').click($.proxy(dontmigrate, null, $.colorbox));
             }
         }
     });
 });
 
-$('.migrate_link').click(function() {
+$('.migrate_link').on('click', function() {
     $('#asktomigrate').hide();
     $('#migrating').show();
     migrate($(this).data("courseid"), $(this).data("turnitintoolid"));
 });
 
-$('.dontmigrate_link').click(function () {
-    $.colorbox.close();
+function dontmigrate(cb) {
     $('#migration_alert').hide();
-});
+    cb.close();
+}
 
 function displayMigrationModal() {
     // Only display the modal during a manual migration.
-    if ($("#migrate_type").data("turnitintoolid") != $("#migrate_type").data("lastasked")) {
+    if ($('#migrate_type').data("turnitintoolid") != $("#migrate_type").data("lastasked")) {
         $.colorbox({width: 550, height: 600, inline:true, opacity: "0.7", href:"#migration_alert",
             onLoad: function() {
                 $('#asktomigrate').show();
@@ -44,10 +46,11 @@ function displayMigrationModal() {
                 $('#migration_alert').hide();
             }
         });
+
         $('#migration_alert').show();
     }
 
-    if ($("#migrate_type").data("migratetype") == 2) {
+    if ($('#migrate_type').data("migratetype") == 2) {
         $('#asktomigrate').hide();
         $('#migrating').show();
 
