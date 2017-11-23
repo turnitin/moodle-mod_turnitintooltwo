@@ -1,5 +1,14 @@
-### Date:		2017-October-30
-### Release:	v2017103001
+### Date:       2017-November-23
+### Release:    v2017112301
+
+Support for Moodle 3.4
+
+After lots of tests against the release of Moodle 3.4, we're pleased to announce that Turnitin's Moodle Direct V2 plugin now supports it.
+
+---
+
+### Date:       2017-October-30
+### Release:    v2017103001
 
 V1 to V2 Moodle Migration Tool
 
