@@ -33,6 +33,11 @@ function dontmigrate(cb) {
     cb.close();
 }
 
+function lightBoxCloseButton(cb) {
+    $('body').append('<div id="tii_close_bar"><a class="tii_close_link" href="#">' + M.str.turnitintooltwo.closebutton + '</a></div>');
+}
+
+
 function displayMigrationModal() {
     // Only display the modal during a manual migration.
     if ($('#migrate_type').data("turnitintoolid") != $("#migrate_type").data("lastasked")) {
@@ -40,6 +45,8 @@ function displayMigrationModal() {
             onLoad: function() {
                 $('#asktomigrate').show();
                 lightBoxCloseButton();
+
+                $('.tii_close_link').click($.proxy(dontmigrate, null, $.colorbox));
             },
             onCleanup:function() {
                 $('#tii_close_bar').remove();
@@ -87,8 +94,4 @@ function migrate(courseid, turnitintoolid) {
             }
         }
     });
-}
-
-function lightBoxCloseButton() {
-    $('body').append('<div id="tii_close_bar"><a href="#" onclick="$.colorbox.close(); return false;">' + M.str.turnitintooltwo.closebutton + '</a></div>');
 }
