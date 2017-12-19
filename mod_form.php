@@ -64,9 +64,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         // Get rubrics that are shared on the account.
         $turnitinclass = new turnitintooltwo_class($course->id);
         $turnitinclass->read_class_from_tii();
-
-        // Merge the arrays, prioitising instructor owned arrays.
-        $rubrics = $instructorrubrics + $turnitinclass->sharedrubrics;
+        $sharedrubrics = $turnitinclass->sharedrubrics;
 
         $this->numsubs = 0;
         if (isset($this->_cm->id)) {
@@ -125,10 +123,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $modulestring .= ') -->';
 
-        $this->show_form($rubrics, $modulestring, $course->turnitin_cid);
+        $this->show_form($instructorrubrics, $sharedrubrics, $modulestring, $course->turnitin_cid);
     }
 
-    public function show_form($instructorrubrics, $modulestring = '', $tiicourseid) {
+    public function show_form($instructorrubrics, $sharedrubrics, $modulestring = '', $tiicourseid) {
         global $CFG, $OUTPUT, $COURSE, $PAGE, $DB;
         $PAGE->requires->string_for_js('changerubricwarning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
@@ -545,12 +543,22 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         if (!empty($config->usegrademark)) {
             $mform->addElement('header', 'advanced', get_string('turnitingmoptions', 'turnitintooltwo'));
 
+            // Add no rubric option and rubrics belonging to Instructor.
             $rubricoptions = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
-            if (!empty($this->turnitintooltwo->rubric)) {
-                if (!isset($rubricoptions[$this->turnitintooltwo->rubric])) {
-                    $rubricoptions[$this->turnitintooltwo->rubric] = get_string('otherrubric', 'turnitintooltwo');
-                }
-            }
+
+			// Show other Instructor's Rubric option if applicable.
+			if (!empty($this->turnitintooltwo->rubric)) {
+				if (!isset($rubricoptions[$this->turnitintooltwo->rubric])) {
+					$rubricoptions[$this->turnitintooltwo->rubric] = get_string('otherrubric', 'turnitintooltwo');
+				}
+			}
+
+			// Add Shared Rubrics.
+			foreach ($sharedrubrics as $group => $grouprubrics) {
+				foreach ($grouprubrics as $rubricid => $rubricname) {
+					$rubricoptions[$rubricid] = $rubricname. ' ['.$group.']';
+				}
+			}
 
             $rubricline = array();
             $rubricline[] = $mform->createElement('select', 'rubric', '', $rubricoptions);

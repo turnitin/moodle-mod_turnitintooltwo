@@ -475,7 +475,13 @@ switch ($action) {
                 $turnitinclass = new turnitin_class($courseid);
             }
             $turnitinclass->read_class_from_tii();
-            $options = $options + $turnitinclass->sharedrubrics;
+			$sharedrubrics = $turnitinclass->sharedrubrics;
+
+			foreach ($sharedrubrics as $group => $grouprubrics) {
+				foreach ($grouprubrics as $rubricid => $rubricname) {
+					$options[$group][$rubricid] = $rubricname;
+				}
+			}
 
             // Get assignment details.
             if (!empty($assignmentid)) {
@@ -513,6 +519,7 @@ switch ($action) {
         } else {
             $options = array();
         }
+
         echo json_encode($options);
         break;
 
