@@ -296,16 +296,15 @@ class turnitintooltwo_view {
             $elements[] = array('hidden', 'submissionassignment', $turnitintooltwoassignment->turnitintooltwo->id);
             $elements[] = array('hidden', 'action', 'submission');
 
-			// Get any previous submission to determine if this is a resubmission.
-			$prevsubmission = $turnitintooltwoassignment->get_user_submissions($userid,
-				$turnitintooltwoassignment->turnitintooltwo->id, $partid);
+            // Get any previous submission to determine if this is a resubmission.
+            $prevsubmission = $turnitintooltwoassignment->get_user_submissions($userid, $turnitintooltwoassignment->turnitintooltwo->id, $partid);
 
             if ($istutor || $eulaaccepted == 1) {
 
-            	if ($prevsubmission) {
-					$genparams = turnitintooltwo_get_report_gen_speed_params();
-					$elements[] = array('html', '<div class="tii_checkagainstnote">' . get_string('reportgenspeed_resubmission', 'turnitintooltwo', $genparams) . '</div>');
-				}
+                if ($prevsubmission) {
+                    $genparams = turnitintooltwo_get_report_gen_speed_params();
+                    $elements[] = array('html', '<div class="tii_checkagainstnote">' . get_string('reportgenspeed_resubmission', 'turnitintooltwo', $genparams) . '</div>');
+                }
 
                 // Upload type.
                 switch ($turnitintooltwoassignment->turnitintooltwo->type) {

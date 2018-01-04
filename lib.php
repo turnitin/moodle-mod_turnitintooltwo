@@ -1785,9 +1785,9 @@ function turnitintooltwo_get_course_type($legacy = 0) {
  * @return object The parameters for report gen speed.
  */
 function turnitintooltwo_get_report_gen_speed_params() {
-	$genparams = new stdClass();
-	$genparams->num_resubmissions = REPORT_GEN_SPEED_NUM_RESUBMISSIONS;
-	$genparams->num_hours = REPORT_GEN_SPEED_NUM_HOURS;
+    $genparams = new stdClass();
+    $genparams->num_resubmissions = REPORT_GEN_SPEED_NUM_RESUBMISSIONS;
+    $genparams->num_hours = REPORT_GEN_SPEED_NUM_HOURS;
 
-	return $genparams;
+    return $genparams;
 }

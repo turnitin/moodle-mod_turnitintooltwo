@@ -365,7 +365,7 @@ if ($ADMIN->fulltree) {
                                                     get_string('allowlate', 'turnitintooltwo'),
                                                     '', 0, $ynoptions ));
 
-	$genparams = turnitintooltwo_get_report_gen_speed_params();
+    $genparams = turnitintooltwo_get_report_gen_speed_params();
     $genoptions = array(0 => get_string('genimmediately1', 'turnitintooltwo'),
                         1 => get_string('genimmediately2', 'turnitintooltwo', $genparams),
                         2 => get_string('genduedate', 'turnitintooltwo'));

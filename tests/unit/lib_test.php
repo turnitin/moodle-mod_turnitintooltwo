@@ -217,18 +217,18 @@ class mod_lib_testcase extends test_lib {
         $this->assertGreaterThanOrEqual(604800, strtotime($response_post) - strtotime($response_start));
     }
 
-	/**
-	 * Test that the data returned from the report gen speed param function is what we expect.
-	 */
+    /**
+     * Test that the data returned from the report gen speed param function is what we expect.
+     */
 	public function test_turnitintooltwo_get_report_gen_speed_params() {
-		$this->resetAfterTest();
+	    $this->resetAfterTest();
 
-		$expected = new stdClass();
-		$expected->num_resubmissions = 3;
-		$expected->num_hours = 24;
+	    $expected = new stdClass();
+	    $expected->num_resubmissions = 3;
+	    $expected->num_hours = 24;
 
-		$result = turnitintooltwo_get_report_gen_speed_params();
+	    $result = turnitintooltwo_get_report_gen_speed_params();
 
-		$this->assertEquals($expected, $result);
+	    $this->assertEquals($expected, $result);
 	}
 }
