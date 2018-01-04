@@ -415,8 +415,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addElement('select', 'allowlate', get_string('allowlate', 'turnitintooltwo'), $ynoptions);
         $mform->setDefault('allowlate', $config->default_allowlate);
 
+		$genparams = turnitintooltwo_get_report_gen_speed_params();
         $genoptions = array(0 => get_string('genimmediately1', 'turnitintooltwo'),
-                            1 => get_string('genimmediately2', 'turnitintooltwo'),
+                            1 => get_string('genimmediately2', 'turnitintooltwo', $genparams),
                                 2 => get_string('genduedate', 'turnitintooltwo'));
         $mform->addElement('select', 'reportgenspeed', get_string('reportgenspeed', 'turnitintooltwo'), $genoptions);
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');

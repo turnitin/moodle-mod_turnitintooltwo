@@ -512,3 +512,4 @@ $string['anonalert'] = 'La teva data de publicació es anterior al teu horari ac
 $string['turnitinapiurl_desc'] = '<b>[Necessari]</b><br />Selecciona un API URL de Turnitin';
 $string['tii_submission_failure'] = 'Si us plau, consulta amb el teu tutor o administrador de Moodle per a més detalls';
 $string['turnitinrefreshingsubmissions'] = 'Actualitzar lliuraments';
+$string['reportgenspeed_resubmission'] = '';

@@ -37,6 +37,8 @@ define('TURNITIN_SUPPORT_FORM', 'http://turnitin.com/self-service/support-form.h
 define('TURNITIN_COURSE_TITLE_LIMIT', 300);
 define('TURNITIN_ASSIGNMENT_TITLE_LIMIT', 300);
 define('MIGRATION_SUBMISSIONS_CUTOFF', 1000);
+define('REPORT_GEN_SPEED_NUM_RESUBMISSIONS', 3);
+define('REPORT_GEN_SPEED_NUM_HOURS', 24);
 
 // For use in course migration.
 $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
@@ -1777,4 +1779,15 @@ function turnitintooltwo_get_course_type($legacy = 0) {
     } else {
         return "TT";
     }
+}
+
+/**
+ * @return object The parameters for report gen speed.
+ */
+function turnitintooltwo_get_report_gen_speed_params() {
+	$genparams = new stdClass();
+	$genparams->num_resubmissions = REPORT_GEN_SPEED_NUM_RESUBMISSIONS;
+	$genparams->num_hours = REPORT_GEN_SPEED_NUM_HOURS;
+
+	return $genparams;
 }
