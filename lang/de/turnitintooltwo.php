@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Notenanzeige';
 $string['displaygradesas_help'] = 'Mit dieser Option wir der Anzeigemodus für Noten festgelegt. Die Optionen sind die Anzeige als Prozentwert oder die Anzeige als Punktwert, z. B. 45/60.';
 $string['displaygradesasfraction'] = 'Noten als Punktwert anzeigen (z. B. 89/100)';
 $string['displaygradesaspercent'] = 'Noten als Prozentwert anzeigen (z. B. 89&#37;)';
-$string['genspeednote'] = 'Hinweis: Bei der Generierung eines Echtheitsberichts für erneute Übermittlungen kann eine Verzögerung von 24 Stunden auftreten.';
 $string['cronsubmittedsuccessfully'] = 'Übermittlung: {$a->title} (TII-ID: {$a->submissionid}) für die Aufgabe {$a->assignmentname} in Kurs {$a->coursename} wurde erfolgreich an Turnitin übermittelt.';
 $string['ppassignmentediterror'] = 'Modul {$a->title} (TII-ID: {$a->assignmentid}) konnte in Turnitin nicht bearbeitet werden; weitere Informationen finden Sie in Ihren API-Protokollen.';
 $string['nombstringlibrary'] = 'Zur Verwendung dieses Plug-ins muss auf Ihrem Server die PHP mbstring-Erweiterung installiert sein.';

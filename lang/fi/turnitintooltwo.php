@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Arvosananäyttö';
 $string['displaygradesas_help'] = 'Tämä asetus määrittää, miten arvosanat näytetään – prosentteina vai murtolukuna (esim. 45/60).';
 $string['displaygradesasfraction'] = 'Näytä arvosanat murtolukuna (esim. 89/100)';
 $string['displaygradesaspercent'] = 'Näytä arvosanat prosentteina (esim. 89&#37;)';
-$string['genspeednote'] = 'Huomautus: Alkuperäisyysraportin luonnissa on 24 tunnin viive uudelleenpalautusten kohdalla.';
 $string['cronsubmittedsuccessfully'] = 'Palautus: {$a->title} (TII-tunnus: {$a->submissionid}) tehtävään {$a->assignmentname} kurssilla {$a->coursename} palautettiin Turnitiniin.';
 $string['ppassignmentediterror'] = 'Moduulia {$a->title} (TII-tunnus: {$a->assignmentid}) ei voitu muokata Turnitinissä; lisätietoja on API-rajapinta-lokeissa';
 $string['nombstringlibrary'] = 'Käyttääksesi tätä plugin-laajennusta pitää PHP mbstring -moduulin olla asennettuna palvelimellasi.';

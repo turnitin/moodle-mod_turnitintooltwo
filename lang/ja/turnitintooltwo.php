@@ -538,7 +538,6 @@ $string['displaygradesas'] = '成績の表示';
 $string['displaygradesas_help'] = 'このオプションで成績の表示モードを設定します。選択肢には、パーセントでの表示と、45/60といった分数での表示があります。';
 $string['displaygradesasfraction'] = '分数で表示（89/100点など）';
 $string['displaygradesaspercent'] = 'パーセントで表示（89&#37;など）';
-$string['genspeednote'] = '注意：再提出物に対するオリジナリティ レポートの作成には、24時間ほどかかります。';
 $string['cronsubmittedsuccessfully'] = '{$a->coursename}コースの課題{$a->assignmentname}に対して、提出物：{$a->title}（TII ID：{$a->submissionid}）が正しくTurnitinに送信されました。';
 $string['ppassignmentediterror'] = 'モジュール{$a->title}（TII ID：{$a->assignmentid}）をTurnitin上で作成できませんでした。詳しい情報については、APIログをご覧ください。';
 $string['nombstringlibrary'] = 'このプラグインを使用するには、PHP mbstring拡張がサーバー上にインストールされていなければなりません。';

@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Afișarea notelor';
 $string['displaygradesas_help'] = 'Această opțiune setează modul de afișare a notelor. Opțiunile sunt: afișarea ca procent sau ca fracție (cum ar fi 45/60).';
 $string['displaygradesasfraction'] = 'Notele se afișează ca fracții (de exemplu, 89/100)';
 $string['displaygradesaspercent'] = 'Notele se afișează ca procent (de exemplu, 89&#37;)';
-$string['genspeednote'] = 'Observație: în cazul redepunerilor, Raportul privind originalitatea se generează cu o întârziere de 24 de ore.';
 $string['cronsubmittedsuccessfully'] = 'Lucrarea: {$a->title} (ID TII: {$a->submissionid}) pentru tema {$a->assignmentname} din cursul {$a->coursename} a fost depusă cu succes în Turnitin.';
 $string['ppassignmentediterror'] = 'Modulul {$a->title} (ID TII: {$a->assignmentid}) nu s-a putut edita în Turnitin, consultați jurnalele API pentru mai multe informații';
 $string['nombstringlibrary'] = 'Pentru a utiliza acest plugin, va trebui să aveți extensia PHP mbstring instalată pe server.';

@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Cijferweergave';
 $string['displaygradesas_help'] = 'Met deze optie stelt u de weergavemodus voor cijfers in. U kunt kiezen uit een percentage of een breuk (zoals 45/60).';
 $string['displaygradesasfraction'] = 'Cijfers als breuk weergeven (bijvoorbeeld 89/100)';
 $string['displaygradesaspercent'] = 'Cijfers als percentage weergeven (bijvoorbeeld 89 &#37;)';
-$string['genspeednote'] = 'Opmerking: voor het genereren van originaliteitsrapporten geldt bij opnieuw indienen een vertraging van 24 uur.';
 $string['cronsubmittedsuccessfully'] = 'Inzending: {$a->title} (TII-id: {$a->submissionid}) voor de opdracht {$a->assignmentname} op de cursus {$a->coursename} is ingediend bij Turnitin.';
 $string['ppassignmentediterror'] = 'Module {$a->title} (TII-id: {$a->assignmentid}) kan niet worden bewerkt op Turnitin. Raadpleeg uw API-registratiegegevens voor meer informatie.';
 $string['nombstringlibrary'] = 'Als u deze plugin wilt gebruiken, moet u de PHP-mbstring-extensie gebruiken die op uw server is geïnstalleerd.';

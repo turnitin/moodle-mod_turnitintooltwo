@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'عرض العلامات';
 $string['displaygradesas_help'] = 'يحدد هذا الخيار وضع العرض للعلامات. الخيارات هي عرض العلامات كنسبة مئوية أو ككسر، مثل 45/60.';
 $string['displaygradesasfraction'] = 'إظهار العلامات ككسر (مثل 89/100)';
 $string['displaygradesaspercent'] = 'إظهار العلامات كنسبة مئوية (مثل 89&#37;)';
-$string['genspeednote'] = 'ملحوظة: يستغرق إنشاء تقرير الأصالة لعمليات إعادة إرسال أربعة وعشرين ساعة.';
 $string['cronsubmittedsuccessfully'] = 'إرسال: تم إرسال{$a->title} (معرف TII: {$a->submissionid}) للمهمة {$a->assignmentname} على الدورة {$a->coursename} بنجاح إلى Turnitin.';
 $string['ppassignmentediterror'] = 'تعذر تحرير هذه الوحدة {$a->title} (معرف TII: {$a->assignmentid})، يُرجى الرجوع إلى سجلات واجهة برمجة التطبيقات (API) للحصول على مزيد من المعلومات.';
 $string['nombstringlibrary'] = 'لاستخدام هذا المكون يجب أن يكون الامتداد PHP mbstring مثبتًا في خادمك.';

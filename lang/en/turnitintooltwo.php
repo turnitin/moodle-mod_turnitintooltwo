@@ -539,7 +539,6 @@ $string['displaygradesas'] = 'Grade Display';
 $string['displaygradesas_help'] = 'This option sets the display mode for grades the options are display as a percentage or display as a fraction ie 45/60.';
 $string['displaygradesasfraction'] = 'Show grades as Fraction (e.g. 89/100)';
 $string['displaygradesaspercent'] = 'Show grades as Percentage (e.g. 89&#37;)';
-$string['genspeednote'] = 'Note: Originality Report generation for resubmissions is subject to a twenty-four hour delay.';
 $string['cronsubmittedsuccessfully'] = 'Submission: {$a->title} (TII ID: {$a->submissionid}) for the assignment {$a->assignmentname} on the course {$a->coursename} was successfully submitted to Turnitin.';
 $string['ppassignmentediterror'] = 'Module {$a->title} (TII ID: {$a->assignmentid}) could not be edited on Turnitin, please consult your API logs for further information';
 $string['nombstringlibrary'] = 'To use this plugin you will need to have the PHP mbstring extension installed on your server.';

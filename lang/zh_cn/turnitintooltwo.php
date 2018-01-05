@@ -538,7 +538,6 @@ $string['displaygradesas'] = '成绩显示';
 $string['displaygradesas_help'] = '此选项设置成绩的显示模式，选项显示为百分比或显示为分数，例如 45/60';
 $string['displaygradesasfraction'] = '将成绩显示为分数（例如 89/100）';
 $string['displaygradesaspercent'] = '将成绩显示为百分比（例如 89&#37;）';
-$string['genspeednote'] = '注意：生成原创性报告以供重新提交可能会有 24 小时的延迟。';
 $string['cronsubmittedsuccessfully'] = '提交：课程 {$a->coursename} 中分配 {$a->assignmentname} 的 {$a->title}（TII ID：{$a->submissionid}）已成功提交至 Turnitin。';
 $string['ppassignmentediterror'] = '单元 {$a->title}（TII ID：{$a->assignmentid}）无法在 Turnitin 上编辑，请查看您的 API 日志了解更多信息';
 $string['nombstringlibrary'] = '要使用此插件，您将需要在您的服务器上安装 PHP mbstring 扩展。';

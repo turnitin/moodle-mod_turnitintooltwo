@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Zobrazení hodnocení';
 $string['displaygradesas_help'] = 'Tato možnost nastaví režim zobrazení pro hodnocení. Možnosti se zobrazí jako procento nebo jako zlomek, tj. 45/60.';
 $string['displaygradesasfraction'] = 'Zobrazí známky jako zlomek (např. 89/100)';
 $string['displaygradesaspercent'] = 'Zobrazí známky jako procento (např. 89&#37;)';
-$string['genspeednote'] = 'Poznámka: Na generování zprávy originality pro opětovné odevzdání se vztahuje zpoždění dvaceti čtyř hodin.';
 $string['cronsubmittedsuccessfully'] = 'Odevzdání: {$a->title} (TII ID: {$a->submissionid}) pro přiřazení {$a->assignmentname} v kurzu {$a->coursename} bylo úspěšně odevzdáno do systému Turnitin.';
 $string['ppassignmentediterror'] = 'Modul: {$a->title} (TII ID: {$a->assignmentid}) nelze v systému Turnitin upravit. Další informace najdete v API protokolu.';
 $string['nombstringlibrary'] = 'Chcete-li použít tento plugin, budete muset mít na svém serveru nainstalované rozšíření PHP mbstring.';

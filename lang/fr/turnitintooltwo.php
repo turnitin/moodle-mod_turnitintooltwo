@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Affichage des notes';
 $string['displaygradesas_help'] = 'Cette option définit le mode d’affichage des notes. Celles-ci peuvent être affichées sous forme de pourcentage ou de fraction (par exemple, 45/60).';
 $string['displaygradesasfraction'] = 'Afficher les notes sous forme de fraction (89/100)';
 $string['displaygradesaspercent'] = 'Afficher les notes sous forme de pourcentage (89 &#37;)';
-$string['genspeednote'] = 'Remarque : le traitement de rapports d’originalité pour les renvois est soumise à un délai de vingt-quatre heures.';
 $string['cronsubmittedsuccessfully'] = 'Envoi : {$a->title} (n° TII : {$a->submissionid}) pour l’exercice {$a->assignmentname} du cours {$a->coursename} a bien été envoyé à Turnitin.';
 $string['ppassignmentediterror'] = 'Il est impossible de modifier le module {$a->title} (n° TII : {$a->assignmentid}) dans Turnitin, veuillez consulter le journal de votre API pour plus d’informations';
 $string['nombstringlibrary'] = 'Pour utiliser ce plugin, l’extension PHP XMLWriter doit être installée sur votre serveur.';

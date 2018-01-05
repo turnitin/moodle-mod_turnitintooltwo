@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Not Görüntüleme';
 $string['displaygradesas_help'] = 'Bu seçenek notların görüntülenme biçimini yüzde veya bölüm olarak ayarlar örneğin 45/60.';
 $string['displaygradesasfraction'] = 'Notları Bölme olarak göster (örneğin, 89/100)';
 $string['displaygradesaspercent'] = 'Notları Yüzde olarak göster (örneğin, &#37;89)';
-$string['genspeednote'] = 'Not: Yeniden gönderimlerdeki orijinallik raporu oluşturma süresi yirmi dört saat gecikmelidir.';
 $string['cronsubmittedsuccessfully'] = 'Gönderi: {$a->coursename} kursundaki {$a->assignmentname} ödevi için {$a->title} (TII Numarası: {$a->submissionid}) başarıyla Turnitin&#39;e gönderilmiştir.';
 $string['ppassignmentediterror'] = 'Modül {$a->title} (TII Numarası: {$a->assignmentid}) Turnitin&#39;de düzenlenemedi, daha ayrıntılı bilgi için lütfen API kayıtlarınıza bakın';
 $string['nombstringlibrary'] = 'Bu eklentiyi kullanabilmek için sunucunuzda PHP mbstring eklentisi kurulu olmalıdır.';

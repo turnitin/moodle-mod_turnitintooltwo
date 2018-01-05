@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Hiển thị Điểm';
 $string['displaygradesas_help'] = 'Tùy chọn này đặt chế độ hiểm thị cho điểm, các tùy chọn là hiển thị ở dạng phần trăm hoặc hiển thị ở dạng phân số, ví dụ: 45/60.';
 $string['displaygradesasfraction'] = 'Hiển thị điểm ở dạng Phân số (ví dụ: 89/100)';
 $string['displaygradesaspercent'] = 'Hiển thị điểm ở dạng Phần trăm (ví dụ: 89&#37;)';
-$string['genspeednote'] = 'Lưu ý: Việc tổng hợp Báo cáo Độc sáng cho các bài nộp lại sẽ bị trì hoãn 24 giờ.';
 $string['cronsubmittedsuccessfully'] = 'Bài nộp: {$a->title} (ID TII: {$a->submissionid}) cho bài tập {$a->assignmentname} trên khóa học {$a->coursename} đã được nộp thành công cho Turnitin.';
 $string['ppassignmentediterror'] = 'Không thể hiệu chỉnh Mô-đun {$a->title} (ID TII: {$a->assignmentid}) trên Turnitin, vui lòng xem bản ghi API của bạn để biết thêm thông tin';
 $string['nombstringlibrary'] = 'Để sử dụng phần bổ trợ này, bạn cần phải cài đặt tiện ích mở rộng mbstring PHP trên máy chủ.';

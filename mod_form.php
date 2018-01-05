@@ -419,12 +419,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $genoptions = array(0 => get_string('genimmediately1', 'turnitintooltwo'),
                             1 => get_string('genimmediately2', 'turnitintooltwo', $genparams),
                                 2 => get_string('genduedate', 'turnitintooltwo'));
-        $mform->addElement('select', 'reportgenspeed', get_string('reportgenspeed', 'turnitintooltwo'), $genoptions);
+        $mform->addElement('select', 'reportgenspeed', get_string('reportgenspeed', 'turnitintooltwo'), $genoptions, array('class' => 'selectlong'));
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
-
-        $mform->addElement('html', html_writer::tag('div', get_string('genspeednote', 'turnitintooltwo'),
-                                        array('class' => 'tii_genspeednote')));
 
         $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
                             1 => get_string('standardrepository', 'turnitintooltwo'));

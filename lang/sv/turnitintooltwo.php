@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Visa betyg';
 $string['displaygradesas_help'] = 'Det här alternativet anger visningsalternativen för betyg. Tillgängliga alternativ är visa som procentandel eller visa som bråktal, till exempel 45/60.';
 $string['displaygradesasfraction'] = 'Visa betyg som bråktal (till exempel 89/100)';
 $string['displaygradesaspercent'] = 'Visa betyg som procentandel (till exempel 89&#37;)';
-$string['genspeednote'] = 'Observera: Generation av rapporter för ominlämningar tar 24 timmar.';
 $string['cronsubmittedsuccessfully'] = 'Inlämning: {$a->title} (TII ID: {$a->submissionid}) för uppgift {$a->assignmentname} på kursen {$a->coursename} har lämnats in till Turnitin.';
 $string['ppassignmentediterror'] = 'Modulen {$a->title} (TII ID: {$a->assignmentid}) kunde inte redigeras i Turnitin. Mer information finns i dina API-loggar.';
 $string['nombstringlibrary'] = 'Du måste ha PHP mbstring-tillägget installerat på din server för att kunna använda detta insticksprogram.';

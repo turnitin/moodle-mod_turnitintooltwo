@@ -538,7 +538,6 @@ $string['displaygradesas'] = '성적 표시';
 $string['displaygradesas_help'] = '이 옵션은 성적 표시 모드를 설정합니다. 퍼센트로 표시하기 옵션 또는 45/60 형태의 분수로 표시하기 옵션이 있습니다.';
 $string['displaygradesasfraction'] = '분수로 성적 표시(예: 89/100)';
 $string['displaygradesaspercent'] = '퍼센트로 성적 표시(예: 89&#37;)';
-$string['genspeednote'] = '참고: 재제출 항목에 대한 독창성 보고서 생성은 24시간 지연됩니다.';
 $string['cronsubmittedsuccessfully'] = '{$a->coursename} 코스의 {$a->assignmentname} 과제에 대한 제출물: {$a->title}(TII ID: {$a->submissionid})이(가) Turnitin에 성공적으로 제출되었습니다.';
 $string['ppassignmentediterror'] = '모듈{$a->title}(TII ID: {$a->assignmentid})은 Turnitin에서 편집되지 못했습니다. 자세한 정보는 해당 API 로그를 참조하십시오.';
 $string['nombstringlibrary'] = '이 플러그인을 사용하려면 서버에 PHP mbstring 확장자가 설치되어 있어야 합니다.';

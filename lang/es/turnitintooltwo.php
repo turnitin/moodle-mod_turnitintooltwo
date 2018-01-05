@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Visualización de notas';
 $string['displaygradesas_help'] = 'Con esta opción se configura el modo de visualización de las notas. Las opciones son mostrar como porcentaje o mostrar como fracción, por ejemplo, 45/60.';
 $string['displaygradesasfraction'] = 'Mostrar notas en modo de fracción (por ejemplo 89/100)';
 $string['displaygradesaspercent'] = 'Mostrar notas en modo de porcentaje (por ejemplo 89&#37;)';
-$string['genspeednote'] = 'Nota: La generación del reporte de originalidad en el caso de segundas entregas está condicionada por un retraso de veinticuatro horas.';
 $string['cronsubmittedsuccessfully'] = 'Entrega: {$a->title} (ID de TII: {$a->submissionid}) para el trabajo {$a->assignmentname} del curso {$a->coursename} se entregó correctamente a Turnitin.';
 $string['ppassignmentediterror'] = 'El módulo {$a->title} (ID de TII: {$a->assignmentid}) no ha podido editarse en Turnitin. Consulta tu registro API para obtener más información';
 $string['nombstringlibrary'] = 'Para usar este plugin necesitas tener la extensión PHP mbstring instalada en tu servidor.';

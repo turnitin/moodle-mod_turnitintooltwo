@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Tryb wyświetlania ocen';
 $string['displaygradesas_help'] = 'Za pomocą tej opcji można ustawić tryb wyświetlania ocen. Oceny mogą być wyświetlane jako wartość procentowa albo ułamek, np. 45/60.';
 $string['displaygradesasfraction'] = 'Wyświetlaj oceny jako ułamek (np. 89/100)';
 $string['displaygradesaspercent'] = 'Wyświetlaj oceny jako wartość procentową (np. 89&#37;)';
-$string['genspeednote'] = 'Uwaga: W przypadku ponownych wysyłek raport oryginalności może zostać wygenerowany z 24-godzinnym opóźnieniem.';
 $string['cronsubmittedsuccessfully'] = 'Wysyłka: {$a->title} (Identyfikator Turnitin: {$a->submissionid}) do zadania {$a->assignmentname} w ramach kursu {$a->coursename} została pomyślnie przesłana do Turnitin.';
 $string['ppassignmentediterror'] = 'Edytowanie modułu {$a->title} (Identyfikator Turnitin: {$a->assignmentid}) w Turnitin nie powiodło się — szczegółowe informacje znajdują się w dziennikach API';
 $string['nombstringlibrary'] = 'Aby móc korzystać z tej wtyczki, na serwerze musisz mieć zainstalowane rozszerzenie PHP mbstring.';

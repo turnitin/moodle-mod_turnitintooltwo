@@ -538,7 +538,6 @@ $string['displaygradesas'] = 'Отображение оценки';
 $string['displaygradesas_help'] = 'С помощью этого параметра можно настроить вид оценок: количество процентов или дробное число, например 45/60.';
 $string['displaygradesasfraction'] = 'Отображать оценку в виде дроби (например, 89/100)';
 $string['displaygradesaspercent'] = 'Отображать оценку в виде процента (например, 89&#37;)';
-$string['genspeednote'] = 'Примечание: при повторной отправке работы отчет об оригинальности формируется с 24-часовой задержкой.';
 $string['cronsubmittedsuccessfully'] = 'Отправка работы: {$a->title} (идентификатор TII: {$a->submissionid}) файл с выполненным заданием {$a->assignmentname} по курсу {$a->coursename} успешно отправлен в Turnitin.';
 $string['ppassignmentediterror'] = 'Не удалось отредактировать модуль {$a->title} (идентификатор TII: {$a->assignmentid}) в Turnitin. Дополнительную информацию см. в записях журнала API.';
 $string['nombstringlibrary'] = 'Чтобы использовать этот модуль, необходимо установить на сервере расширение PHP mbstring.';
