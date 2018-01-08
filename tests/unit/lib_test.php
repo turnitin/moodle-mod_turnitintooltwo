@@ -220,7 +220,7 @@ class mod_lib_testcase extends test_lib {
     /**
      * Test that the data returned from the report gen speed param function is what we expect.
      */
-	public function test_turnitintooltwo_get_report_gen_speed_params() {
+    public function test_turnitintooltwo_get_report_gen_speed_params() {
 	    $this->resetAfterTest();
 
 	    $expected = new stdClass();
@@ -230,5 +230,5 @@ class mod_lib_testcase extends test_lib {
 	    $result = turnitintooltwo_get_report_gen_speed_params();
 
 	    $this->assertEquals($expected, $result);
-	}
+    }
 }
