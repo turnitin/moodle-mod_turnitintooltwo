@@ -543,7 +543,7 @@
         }
 
         // Show warning when changing the rubric linked to an assignment.
-        $('#id_rubric, #id_plagiarism_rubric').focus(function () {
+        $('#id_rubric, #id_plagiarism_rubric').mousedown(function () {
             if ($('input[name="instance"]').val() != '' && $('input[name="rubric_warning_seen"]').val() != 'Y') {
                 if (confirm(M.str.turnitintooltwo.changerubricwarning)) {
                     $('input[name="rubric_warning_seen"]').val('Y');
