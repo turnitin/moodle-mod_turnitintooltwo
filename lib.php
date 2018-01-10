@@ -1736,6 +1736,53 @@ function turnitintooltwo_show_edit_course_end_date_form() {
 }
 
 /**
+ * This function receives a calendar event and returns the action associated with it, or null if there is none.
+ *
+ * This is used by block_myoverview in order to display the event appropriately. If null is returned then the event
+ * is not displayed on the block.
+ *
+ * @param calendar_event $event
+ * @param \core_calendar\action_factory $factory
+ * @return \core_calendar\local\event\entities\action_interface|\core_calendar\local\event\value_objects\action
+ * @throws coding_exception
+ * @throws dml_exception
+ * @throws moodle_exception
+ */
+function mod_turnitintooltwo_core_calendar_provide_event_action(calendar_event $event, \core_calendar\action_factory $factory) {
+    global $DB, $USER;
+
+    $cm = get_fast_modinfo($event->courseid)->instances['turnitintooltwo'][$event->instance];
+
+    // Get the Turnitin assignment part name from the event name.
+    $partname = trim(substr($event->name, strpos($event->name, "-") + 1));
+
+    $params = ['turnitintooltwoid' => $cm->instance, 'userid' => $USER->id, 'partname' => $partname];
+
+    // Get the submission part that has not yet been graded. If it's been graded, it shouldn't display in the overview block.
+    $sql = "SELECT ts.id, ts.userid, ts.submission_grade FROM {turnitintooltwo_submissions} ts
+            JOIN {turnitintooltwo_parts} tp ON ts.submission_part = tp.id
+            WHERE ts.turnitintooltwoid = :turnitintooltwoid
+            AND ts.userid = :userid
+            AND tp.partname = :partname";
+
+    $record = $DB->get_record_sql($sql, $params);
+
+    if ($record && empty($record->submission_grade)) {
+        // There's a submission but it has not yet been graded.
+        $record = false;
+    }
+
+    if (!$record) {
+        return $factory->create_instance(
+            get_string('viewsubmission', 'mod_turnitintooltwo'),
+            new \moodle_url('/mod/turnitintooltwo/view.php', array('id' => $cm->id)),
+            1,
+            true);
+    }
+    return null;
+}
+
+/**
  * Moodle participation report hooks for views with Moodle 2.6-
  *
  * @return array Array of available log labels

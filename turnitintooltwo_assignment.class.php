@@ -848,6 +848,8 @@ class turnitintooltwo_assignment {
     public function create_event($toolid, $partname, $duedate) {
         global $CFG;
 
+        require_once($CFG->dirroot . '/calendar/lib.php');
+
         $properties = new stdClass();
         $properties->name = $this->turnitintooltwo->name . ' - ' . $partname;
         $intro = strip_pluginfile_content($this->turnitintooltwo->intro);
@@ -858,9 +860,11 @@ class turnitintooltwo_assignment {
         $properties->userid = 0;
         $properties->modulename = 'turnitintooltwo';
         $properties->instance = $toolid;
+        $properties->type = CALENDAR_EVENT_TYPE_ACTION;
         $properties->eventtype = 'due';
         $properties->timestart = $duedate;
         $properties->timeduration = 0;
+        $properties->timesort = $duedate;
 
         require_once($CFG->dirroot.'/calendar/lib.php');
         $event = new calendar_event($properties);
@@ -1296,6 +1300,7 @@ class turnitintooltwo_assignment {
 
                 $event->name = $this->turnitintooltwo->name." - ".$partdetails->partname;
                 $event->timestart = $partdetails->dtdue;
+                $event->timesort = $partdetails->dtdue;
                 $event->userid = $USER->id;
                 $DB->update_record('event', $event);
             }
