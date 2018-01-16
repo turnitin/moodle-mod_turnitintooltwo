@@ -543,7 +543,7 @@
         }
 
         // Show warning when changing the rubric linked to an assignment.
-        $('#id_rubric, #id_plagiarism_rubric').focus(function () {
+        $('#id_rubric, #id_plagiarism_rubric').mousedown(function () {
             if ($('input[name="instance"]').val() != '' && $('input[name="rubric_warning_seen"]').val() != 'Y') {
                 if (confirm(M.str.turnitintooltwo.changerubricwarning)) {
                     $('input[name="rubric_warning_seen"]').val('Y');
@@ -962,11 +962,29 @@
                     $($(rubricElementId)).empty();
                     var options = data;
                     $.each(options, function (i, val) {
-                        $($(rubricElementId)).append($('<option>', {
-                            value: i,
-                            text: val
-                        }));
+                        if (!$.isNumeric(i) && i !== "") {
+
+                            var optgroup = $('<optgroup>');
+                            optgroup.attr('label', i);
+
+                            $.each(val, function (j, rubric) {
+                                var option = $("<option></option>");
+                                option.val(j);
+                                option.text(rubric);
+
+                                optgroup.append(option);
+                            });
+
+                            $(rubricElementId).append(optgroup);
+
+                        } else {
+                            $($(rubricElementId)).append($('<option>', {
+                                value: i,
+                                text: val
+                            }));
+                        }
                     });
+
                     $(rubricElementId + ' option[value="' + currentRubric + '"]').attr("selected", "selected");
                 }
             });

@@ -186,8 +186,6 @@ class mod_lib_testcase extends test_lib {
      * Test that the data passed in from a course reset is handled the way we expect it to be.
      */
     public function test_turnitintooltwo_generate_part_dates() {
-        global $DB;
-
         $this->resetAfterTest();
 
         $turnitintooltwoassignment = $this->make_test_tii_assignment();
@@ -217,5 +215,20 @@ class mod_lib_testcase extends test_lib {
         // We can check that the start and due dates are more than 7 days ahead of the start date by comparing the timestamps returned. 7 days in seconds = 604,800
         $this->assertGreaterThanOrEqual(604800, strtotime($response_due) - strtotime($response_start));
         $this->assertGreaterThanOrEqual(604800, strtotime($response_post) - strtotime($response_start));
+    }
+
+    /**
+     * Test that the data returned from the report gen speed param function is what we expect.
+     */
+    public function test_turnitintooltwo_get_report_gen_speed_params() {
+	    $this->resetAfterTest();
+
+	    $expected = new stdClass();
+	    $expected->num_resubmissions = 3;
+	    $expected->num_hours = 24;
+
+	    $result = turnitintooltwo_get_report_gen_speed_params();
+
+	    $this->assertEquals($expected, $result);
     }
 }
