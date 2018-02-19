@@ -481,29 +481,12 @@ switch ($cmd) {
         $html .= html_writer::tag('hr', '');
         $html .= html_writer::tag('h2', get_string('migration_status', 'turnitintooltwo'), array('class' => 'migrationheader'));
 
-        // Display our progress bar.
-        $html .= v1migration::output_progress_bar();
+        $html .= html_writer::tag('p', get_string('migrationtoolprogress', 'turnitintooltwo'));
 
         $jsrequired = true;
 
         $assignmentids = (isset($_REQUEST['assignmentids'])) ? $_REQUEST["assignmentids"] : array();
         $assignmentids = clean_param_array($assignmentids, PARAM_INT);
-
-        // Delete assignments if the form has been submitted.
-        if (isset($assignmentids) && count($assignmentids) > 0) {
-            v1migration::turnitintooltwo_delete_assignments($assignmentids);
-            
-            $urlparams = array('cmd' => 'v1migration', 'msg' => 'delete', 'type' => 'success');
-            redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
-            exit;
-        }
-
-        // Show successful delete message if applicable.
-        if ($msg == 'delete') {
-            $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-            $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
-                            array('class' => 'alert alert-success', 'role' => 'alert'));
-        }
 
         $table = new html_table();
         $table->id = "migrationTable";
@@ -511,29 +494,12 @@ switch ($cmd) {
 
         // Do the table headers.
         $cells = array();
-        $checkbox = html_writer::checkbox('selectallcb', 1, false, '', array('title' => get_string('migrationselectall', 'turnitintooltwo')));
-        $cells[0] = new html_table_cell($checkbox);
-        $cells[0]->attributes['class'] = 'centered_cell centered_cb_cell';
         $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
         $cells['title'] = new html_table_cell(get_string('migrationassignmenttitle', 'turnitintooltwo'));
-        $cells['migrationstatus'] = new html_table_cell(get_string('hasmigrated', 'turnitintooltwo'));
-
-        // Set the header widths. Title can take up the remainder.
-        $cells[0]->attributes['width'] = "100px";
         $cells['assignmentid']->attributes['width'] = "150px";
-        $cells['migrationstatus']->attributes['width'] = "100px";
-        
+
         $table->head = $cells;
-
-        $elements2[] = array('html', html_writer::table($table));
-        $customdata2["elements"] = $elements2;
-        $customdata2["show_cancel"] = false;
-        $customdata2["disable_form_change_checker"] = true;
-        $customdata2["submit_label"] = get_string('delete_selected', 'turnitintooltwo');
-
-        $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration', $customdata2);
-
-        $html .= html_writer::tag('div', $optionsform->display(), array('id' => 'migration-delete-selected'));
+        $html .= $OUTPUT->box(html_writer::table($table), '');
 
         $output .= $alert . $html;
 
