@@ -481,7 +481,7 @@ switch ($cmd) {
         $html .= html_writer::tag('hr', '');
         $html .= html_writer::tag('h2', get_string('migration_status', 'turnitintooltwo'), array('class' => 'migrationheader'));
 
-        $html .= html_writer::tag('p', get_string('migrationtoolprogress', 'turnitintooltwo'));
+        $html .= html_writer::tag('p', get_string('migrationtoolv1list', 'turnitintooltwo'));
 
         $jsrequired = true;
 
@@ -496,7 +496,8 @@ switch ($cmd) {
         $cells = array();
         $cells['assignmentid'] = new html_table_cell(get_string('assignmentid', 'turnitintooltwo'));
         $cells['title'] = new html_table_cell(get_string('migrationassignmenttitle', 'turnitintooltwo'));
-        $cells['assignmentid']->attributes['width'] = "150px";
+        $cells['assignmentid']->attributes['width'] = "20%";
+        $cells['title']->attributes['width'] = "80%";
 
         $table->head = $cells;
         $html .= $OUTPUT->box(html_writer::table($table), '');
