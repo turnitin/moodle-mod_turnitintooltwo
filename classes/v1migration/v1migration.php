@@ -243,12 +243,6 @@ class v1migration {
         } else {
             return false;
         }
-
-
-        //TODO: OUTPUT THE ERROR OR SUCCESS MESSAGE WITHIN THE V2 ASSIGNMENT INBOX.
-
-
-
 	}
 
     /**
@@ -403,7 +397,7 @@ class v1migration {
      * @param string $workflow Whether the function is called from the site or the cron.
      * @return string Whether we have migrated the assignment or need to use the cron.
      */
-    public static function migrate_gradebook($turnitintooltwoid, $workflow = "site") {
+    public function migrate_gradebook($turnitintooltwoid, $workflow = "site") {
         global $CFG, $DB;
 
         // Create new Turnitintooltwo object.
@@ -422,6 +416,9 @@ class v1migration {
             sleep(round(max(MIGRATION_MAX_SLEEP - (count($submissions)/$migrationspersleepsecond), 0)));
         }
 
+        // Get the grades for the V1 assignment.
+        $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id);
+
         /**
          * Grade migrations are slow, roughly 27 submissions per second.
          * As such we only migrate these during the assignment migration if there are not a lot of them. If there are a lot, we use the cron.
@@ -431,7 +428,14 @@ class v1migration {
             return "cron";
         } else {
             foreach ($submissions as $submission) {
+
+                // Update the grade from the gradebook.
+                $submission->submission_grade = $v1_grades[$submission->userid];
+
                 $submissionclass->update_gradebook($submission, $assignmentclass);
+
+                // Handle overridden grades if necessary.
+                $this->handle_overridden_grades($v1_grades, $turnitintooltwoid, $submission->userid);
 
                 // Update the migrate_gradebook field for this submission.
                 $updatesubmission = new stdClass();
@@ -444,6 +448,28 @@ class v1migration {
             return "migrated";
         }
     }
+
+    public function handle_overridden_grades($v1_grades, $turnitintooltwoid, $userid) {
+
+        if (!$v1_grades[$userid]["overridden"]) {
+            return;
+        }
+        $grading_info = grade_get_grades($this->courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
+
+        $grades = new stdClass();
+        $grades->userid = $userid;
+        $grades->finalgrade = $v1_grades[$userid];
+
+        $grade_item = grade_item::fetch(array('id' => $grading_info->items[0]->id, 'courseid' => $this->courseid));
+        $grade_item->update_final_grade($grades->userid, $grades->finalgrade, 'editgrade');
+
+        $grade_grade = new grade_grade(array('userid' => $userid, 'itemid' => $grade_item->id), true);
+        $grade_grade->grade_item =& $grade_item; // no db fetching
+
+        $grade_grade->set_overridden(true);
+
+    }
+
 
     /**
      * Update module titles after migration has completed.
