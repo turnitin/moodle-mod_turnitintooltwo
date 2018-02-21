@@ -319,7 +319,7 @@ class turnitintooltwo_submission {
 
         // Delete Moodle submission first.
         if (!$DB->delete_records('turnitintooltwo_submissions', array('id' => $this->id))) {
-            $notice["type"] = "error";
+            $notice["type"] = "danger";
             $notice["message"] = get_string('submissiondeleteerror', 'turnitintooltwo');
             return $notice;
         }
@@ -389,7 +389,7 @@ class turnitintooltwo_submission {
                     $this->userid
                 );
 
-                $notice["type"] = "full-error";
+                $notice["type"] = "danger";
                 $notice["message"] = get_string('submissiondeleted', 'turnitintooltwo').
                                         ' ('.get_string('turnitinid', 'turnitintooltwo').
                                             ': '.$this->submission_objectid.')';

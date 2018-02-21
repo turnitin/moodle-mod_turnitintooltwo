@@ -76,7 +76,9 @@ function migrate(courseid, turnitintoolid) {
                 $.colorbox.close();
             }
             $('#migration_alert').hide();
-            window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id+"&migrated=1";
+
+            var migrated = (data.gradebook === "gradebookerror") ? 2 : 1;
+            window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id+"&migrated="+migrated;
         },
         error: function(error) {
             var data = error.responseJSON;

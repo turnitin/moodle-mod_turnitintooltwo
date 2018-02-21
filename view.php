@@ -133,9 +133,19 @@ $turnitintooltwoview->load_page_components();
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
 // Migration tool
+$notice = array();
 if ($migrated === 1) {
+    $notice["type"] = "success";
+    $notice["message"] = get_string('migrationtool:successful', 'turnitintooltwo');
+
     include_once("classes/v1migration/v1migration.php");
     v1migration::check_account($config->accountid);
+} elseif ($migrated == 2) {
+    $notice["type"] = "danger";
+    $notice["message"] = get_string('migrationtool:gradebookerror', 'turnitintooltwo');
+
+    include_once("classes/v1migration/v1migration.php");
+    v1migration::check_account($config->accountid, 1);
 }
 
 // Define file upload options.
@@ -468,7 +478,7 @@ if (!$istutor) {
     echo html_writer::tag('noscript', $noscriptcss);
 }
 
-if (!is_null($notice)) {
+if (isset($notice["message"])) {
     echo $turnitintooltwoview->show_notice($notice);
 }
 

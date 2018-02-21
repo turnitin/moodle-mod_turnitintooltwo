@@ -231,17 +231,24 @@ class v1migration {
 
         // Once grades have been updated we can run the post migration task.
         if ($gradeupdates == "migrated") {
-            $this->post_migration($turnitintooltwoid);
+            $gradebook = $this->post_migration($turnitintooltwoid);
         }
 
         // Link the v2 id to the v1 id in the session.
         if (is_int($turnitintooltwoid)) {
             $_SESSION["migrationtool"][$this->v1assignment->id] = $turnitintooltwoid;
 
-            return $turnitintooltwoid;
+            return array("turnitintooltwoid" => $turnitintooltwoid,
+                         "gradebook" => $gradebook);
         } else {
             return false;
         }
+
+
+        //TODO: OUTPUT THE ERROR OR SUCCESS MESSAGE WITHIN THE V2 ASSIGNMENT INBOX.
+
+
+
 	}
 
     /**
@@ -448,8 +455,38 @@ class v1migration {
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
 
-        // Delete the V1 assignment.
-        $this->turnitintooltwo_delete_assignment($this->v1assignment->id);
+        // Perform a grade check to double check the grades are in the gradebook.
+        $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id);
+        $v2_grades = $this->get_grades_array("turnitintooltwo", $v2assignmentid);
+
+        // We only want to delete the V1 assignment if all grades are in the gradebook.
+        if ($v1_grades === $v2_grades) {
+            $this->turnitintooltwo_delete_assignment($this->v1assignment->id);
+
+            return "success";
+        } else {
+            return "gradebookerror";
+        }
+    }
+
+    private function get_grades_array($module, $assignmentid) {
+
+        $cm = get_coursemodule_from_instance($module, $assignmentid);
+        $context = context_module::instance($cm->id);
+        $enrolled_students = get_enrolled_users($context, 'mod/'.$module.':submit', 0, 'u.id');
+
+        $userids = array();
+        foreach ($enrolled_students as $student) {
+            $userids[] = $student->id;
+        }
+
+        $grades = grade_get_grades($this->courseid, 'mod', $module, $assignmentid, $userids);
+        $response = array();
+        foreach ($grades->items[0]->grades as $student => $grade_item) {
+            $response[$student] = $grade_item->grade;
+        }
+
+        return $response;
     }
 
     /**
@@ -683,15 +720,17 @@ class v1migration {
         return $activation;
     }
 
-    public static function check_account($accountid) {
+    public static function check_account($accountid, $error = 0) {
         global $CFG;
 
         $config = turnitintooltwo_admin_config();
 
         $tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
 
+        $errorType = ($error) ? "&error=gradebook" : "";
+
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?lang=en_us&operation=mdl-migration&account=".$accountid);
+        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?lang=en_us&operation=mdl-migration&account=".$accountid.$errorType);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {

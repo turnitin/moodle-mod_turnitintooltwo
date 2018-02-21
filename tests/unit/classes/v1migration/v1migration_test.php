@@ -95,36 +95,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertEquals(0, $module->value);
     }
 
-    /**
-     * Test that the progress bar displays the values we expect it to.
-     */
-    public function test_progress_bar() {
-        global $DB;
-
-        if (!$this->v1installed()) {
-            return false;
-        }
-
-        // Generate a new course.
-        $course = $this->getDataGenerator()->create_course();
-
-        // Create some V1 assignments.
-        $v1assignment1 = $this->make_test_assignment($course->id, 'turnitintool');
-        $v1assignment2 = $this->make_test_assignment($course->id, 'turnitintool');
-
-        $v1assignments = $DB->get_records('turnitintool');
-
-        // Set one of the assignments to migrated.
-        $update = new stdClass();
-        $update->id = $v1assignment2->id;
-        $update->migrated = 1;
-        $DB->update_record('turnitintool', $update, false);
-
-
-        $progressbar = v1migration::output_progress_bar();
-        $this->assertContains('50% complete', $progressbar);
-        $this->assertContains('width: 50%', $progressbar);
-    }
 
     /**
      * Make a test Turnitin assignment module for use in various test cases.
@@ -177,7 +147,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->make_test_module($courseid, $modname, $assignment->id, $addtocm);
 
         return $assignment;
-    }    
+    }
 
     /**
      * Create a test submission on the specified assignment part.
@@ -237,6 +207,8 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         if (!$this->v1installed()) {
             return false;
         }
+
+        $this->resetAfterTest();
 
         // Fields to set to null.
         $nullcheckfields = array('grade', 'allowlate', 'reportgenspeed', 'submitpapersto', 'spapercheck', 'internetcheck', 'journalcheck', 'introformat',
@@ -405,7 +377,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Create Assignment.
         $v1assignment = $this->make_test_assignment($course->id, 'turnitintool');
-        
+
         // Get part details.
         $part = $DB->get_record('turnitintool_parts', array('turnitintoolid' => $v1assignment->id));
 
@@ -456,7 +428,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Create Assignment.
         $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', '', 0);
-        
+
         // Get part details.
         $part = $DB->get_record('turnitintool_parts', array('turnitintoolid' => $v1assignment->id));
 
@@ -485,7 +457,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $v2assignmentid = $v1migration->migrate();
 
         // Verify both submissions have migrated.
-        $v2submissions = $DB->get_records('turnitintooltwo_submissions', 
+        $v2submissions = $DB->get_records('turnitintooltwo_submissions',
                                             array('turnitintooltwoid' => $v2assignmentid,
                                                     'userid' => 0));
         $this->assertEquals(2, count($v2submissions));
@@ -724,7 +696,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $_POST["_"] = 1494857276336;
         $numAssignments = 20;
         $shownRecords = 10;
-        
+
         // Generate a new course.
         $course = $this->getDataGenerator()->create_course();
         // Link course to Turnitin.
@@ -759,8 +731,8 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
             $outputrows[] = array($value->id, $assignmenttitle);
         }
-        $expectedoutput = array("aaData"               => $outputrows, 
-                                "sEcho"                => $_POST["sEcho"], 
+        $expectedoutput = array("aaData"               => $outputrows,
+                                "sEcho"                => $_POST["sEcho"],
                                 "iTotalRecords"        => 10,
                                 "iTotalDisplayRecords" => 20);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
@@ -769,7 +741,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertEquals($expectedoutput, $response);
         // Do a second test for the search box.
         $_POST["sSearch"] = "coursework";
-        $query = "SELECT id, name, migrated FROM {turnitintool} 
+        $query = "SELECT id, name, migrated FROM {turnitintool}
                   WHERE LOWER(name) LIKE LOWER(:search_term_2)
                   ORDER BY name asc";
         $queryparams = array("search_term_2" => "%".$_POST["sSearch"]."%");
@@ -802,6 +774,8 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         if (!$this->v1installed()) {
             return false;
         }
+
+        $this->resetAfterTest();
 
         // Generate a new course.
         $course = $this->getDataGenerator()->create_course();
@@ -838,7 +812,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
      * Test that the v1 and v2 account ids being used are the same.
      */
     public function test_check_account_ids() {
-        global $CFG, $DB;
+        global $DB;
         $this->resetAfterTest();
 
         // Set Account Id for v1.
