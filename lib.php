@@ -706,21 +706,21 @@ function turnitintooltwo_cron_migrate_gradebook() {
 
             $numsubmissions += $assignment->numsubmissions;
 
-            $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, "cron");
+            // Get the course ID.
+            $courseid = $DB->get_field('turnitintooltwo', 'course', array('id' => $assignment->turnitintooltwoid));
+
+            // Get a TII assignment ID on this assignment so we can link back to V1.
+            $sql = "turnitintooltwoid = " . $assignment->turnitintooltwoid . " LIMIT 1";
+            $tiiid = $DB->get_field_select('turnitintooltwo_parts', 'tiiassignid', $sql);
+
+            // Get a V1 part belonging to this assignment.
+            $sql = "tiiassignid = " . $tiiid . " LIMIT 1";
+            $turnitintoolid = $DB->get_field_select('turnitintool_parts', 'turnitintoolid', $sql);
+
+            $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, $courseid, $turnitintoolid, "cron");
 
             // If we have migrated, update the titles.
             if ($gradeupdates == "migrated") {
-                // Get the course ID.
-                $courseid = $DB->get_field('turnitintooltwo', 'course', array('id' => $assignment->turnitintooltwoid));
-
-                // Get a TII assignment ID on this assignment so we can link back to V1.
-                $sql = "turnitintooltwoid = " . $assignment->turnitintooltwoid . " LIMIT 1";
-                $tiiid = $DB->get_field_select('turnitintooltwo_parts', 'tiiassignid', $sql);
-
-                // Get a V1 part belonging to this assignment.
-                $sql = "tiiassignid = " . $tiiid . " LIMIT 1";
-                $turnitintoolid = $DB->get_field_select('turnitintool_parts', 'turnitintoolid', $sql);
-
                 // Get the V1 assignment.
                 $v1assignment = $DB->get_record('turnitintool', array("id" => $turnitintoolid));
 

@@ -329,7 +329,8 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $timestamp = time();
         $_SESSION["migrationtool"][$v1assignment->id]["gradesupdated"] = $timestamp;
 
-        $v2assignmentid = $v1migration->migrate();
+        $response = $v1migration->migrate();
+        $v2assignmentid = $response["turnitintooltwoid"];
 
         // Verify assignment has migrated.
         $v2assignment = $DB->get_record('turnitintooltwo', array('id' => $v2assignmentid));
@@ -396,7 +397,8 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Migrate assignment.
         $v1migration = new v1migration($course->id, $v1assignment);
-        $v2assignmentid = $v1migration->migrate();
+        $response = $v1migration->migrate();
+        $v2assignmentid = $response["turnitintooltwoid"];
 
         // Verify only one submission has migrated.
         $v2submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
@@ -454,7 +456,8 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Migrate assignment.
         $v1migration = new v1migration($course->id, $v1assignment);
-        $v2assignmentid = $v1migration->migrate();
+        $response = $v1migration->migrate();
+        $v2assignmentid = $response["turnitintooltwoid"];
 
         // Verify both submissions have migrated.
         $v2submissions = $DB->get_records('turnitintooltwo_submissions',
@@ -594,7 +597,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
 
         // Test that this gradebook update was performed.
-        $response = $v1migration->migrate_gradebook($v2assignment->id);
+        $response = $v1migration->migrate_gradebook($v2assignment->id, $v1assignment->id, $course->id);
         $this->assertEquals("migrated", $response);
 
         // There should be no grades that require a migration.
@@ -608,7 +611,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
 
         // Test that we return cron when there are more than 200 submissions.
-        $response = $v1migration->migrate_gradebook($v2assignment->id);
+        $response = $v1migration->migrate_gradebook($v2assignment->id, $v1assignment->id, $course->id);
         $this->assertEquals("cron", $response);
 
         // All grades should still require migration.
@@ -616,7 +619,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertEquals(201, count($submissions));
 
         // Test that we return migrated when using the cron workflow.
-        $response = $v1migration->migrate_gradebook($v2assignment->id, "cron");
+        $response = $v1migration->migrate_gradebook($v2assignment->id, $v1assignment->id, $course->id, "cron");
         $this->assertEquals("migrated", $response);
 
         // There should be no grades that require a migration.
@@ -628,7 +631,10 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
      * Test that the post migration task works as expected.
      */
     public function test_post_migration() {
-        global $DB;
+
+        global $CFG, $DB;
+
+        @include_once($CFG->libdir . "/gradelib.php");
 
         if (!$this->v1installed()) {
             return false;
@@ -652,12 +658,53 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
         $v1migration = new v1migration($course->id, $v1assignment);
 
+        // Create V2 Assignment.
+        $v2assignmenttitle = "Test Assignment";
+        $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle);
+
         // Perform post-migration tasks - ie deletion of V1 assignment.
-        $v1migration->post_migration(1);
+        $response = $v1migration->post_migration($v2assignment->id);
 
         // Check that the V1 assignment no longer exists.
         $assignments = $DB->get_records('turnitintool', array('id' => $v1assignment->id));
         $this->assertEquals(0, count($assignments));
+
+        // Should return success.
+        $this->assertEquals("success", $response);
+    }
+
+    public function test_get_grades_array() {
+
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        $this->resetAfterTest();
+
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+
+        // Link course to Turnitin.
+        $courselink = new stdClass();
+        $courselink->courseid = $course->id;
+        $courselink->ownerid = 0;
+        $courselink->turnitin_ctl = "Test Course";
+        $courselink->turnitin_cid = 0;
+        $DB->insert_record('turnitintool_courses', $courselink);
+
+        // Create V1 Assignment.
+        $v1assignmenttitle = "Test Assignment";
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
+
+        // Perform post-migration tasks - ie deletion of V1 assignment.
+        $response = v1migration::get_grades_array("turnitintool", $v1assignment->id, $course->id);
+
+
+        // Should return an empty array as there are no grades.
+        $this->assertEquals(array(), $response);
+
     }
 
     /**

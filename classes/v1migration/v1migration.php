@@ -227,7 +227,7 @@ class v1migration {
         $this->log_success_migration_event($turnitintooltwoid, $this->courseid, $this->cm);
 
         // Update gradebook for submissions.
-        $gradeupdates = $this->migrate_gradebook($turnitintooltwoid);
+        $gradeupdates = $this->migrate_gradebook($turnitintooltwoid, $this->getV1assignment()->id, $this->getCourseid());
 
         // Once grades have been updated we can run the post migration task.
         if ($gradeupdates == "migrated") {
@@ -397,7 +397,7 @@ class v1migration {
      * @param string $workflow Whether the function is called from the site or the cron.
      * @return string Whether we have migrated the assignment or need to use the cron.
      */
-    public function migrate_gradebook($turnitintooltwoid, $workflow = "site") {
+    public static function migrate_gradebook($turnitintooltwoid, $turnitintoolid, $courseid, $workflow = "site") {
         global $CFG, $DB;
 
         // Create new Turnitintooltwo object.
@@ -417,7 +417,7 @@ class v1migration {
         }
 
         // Get the grades for the V1 assignment.
-        $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id);
+        $v1_grades = self::get_grades_array("turnitintool", $turnitintoolid, $courseid);
 
         /**
          * Grade migrations are slow, roughly 27 submissions per second.
@@ -428,14 +428,13 @@ class v1migration {
             return "cron";
         } else {
             foreach ($submissions as $submission) {
-
                 // Update the grade from the gradebook.
-                $submission->submission_grade = $v1_grades[$submission->userid];
+                $submission->submission_grade = (isset($v1_grades[$submission->userid])) ? $v1_grades[$submission->userid] : null;
 
                 $submissionclass->update_gradebook($submission, $assignmentclass);
 
                 // Handle overridden grades if necessary.
-                $this->handle_overridden_grades($v1_grades, $turnitintooltwoid, $submission->userid);
+                self::handle_overridden_grades($v1_grades, $turnitintooltwoid, $courseid, $submission->userid);
 
                 // Update the migrate_gradebook field for this submission.
                 $updatesubmission = new stdClass();
@@ -443,24 +442,26 @@ class v1migration {
                 $updatesubmission->migrate_gradebook = 0;
 
                 $DB->update_record('turnitintooltwo_submissions', $updatesubmission);
+
+                $submissions = $DB->get_records("turnitintooltwo_submissions", array("turnitintooltwoid" => $turnitintooltwoid, "migrate_gradebook" => 0));
             }
 
             return "migrated";
         }
     }
 
-    public function handle_overridden_grades($v1_grades, $turnitintooltwoid, $userid) {
+    public static function handle_overridden_grades($v1_grades, $turnitintooltwoid, $courseid, $userid) {
 
-        if (!$v1_grades[$userid]["overridden"]) {
+        if (!isset($v1_grades[$userid]["overridden"])) {
             return;
         }
-        $grading_info = grade_get_grades($this->courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
+        $grading_info = grade_get_grades($courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
 
         $grades = new stdClass();
         $grades->userid = $userid;
         $grades->finalgrade = $v1_grades[$userid];
 
-        $grade_item = grade_item::fetch(array('id' => $grading_info->items[0]->id, 'courseid' => $this->courseid));
+        $grade_item = grade_item::fetch(array('id' => $grading_info->items[0]->id, 'courseid' => $courseid));
         $grade_item->update_final_grade($grades->userid, $grades->finalgrade, 'editgrade');
 
         $grade_grade = new grade_grade(array('userid' => $userid, 'itemid' => $grade_item->id), true);
@@ -482,8 +483,8 @@ class v1migration {
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
 
         // Perform a grade check to double check the grades are in the gradebook.
-        $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id);
-        $v2_grades = $this->get_grades_array("turnitintooltwo", $v2assignmentid);
+        $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id, $this->courseid);
+        $v2_grades = $this->get_grades_array("turnitintooltwo", $v2assignmentid, $this->courseid);
 
         // We only want to delete the V1 assignment if all grades are in the gradebook.
         if ($v1_grades === $v2_grades) {
@@ -495,9 +496,13 @@ class v1migration {
         }
     }
 
-    private function get_grades_array($module, $assignmentid) {
-
+    public static function get_grades_array($module, $assignmentid, $courseid) {
         $cm = get_coursemodule_from_instance($module, $assignmentid);
+
+        if (!isset($cm->id)) {
+            return array();
+        }
+
         $context = context_module::instance($cm->id);
         $enrolled_students = get_enrolled_users($context, 'mod/'.$module.':submit', 0, 'u.id');
 
@@ -506,10 +511,13 @@ class v1migration {
             $userids[] = $student->id;
         }
 
-        $grades = grade_get_grades($this->courseid, 'mod', $module, $assignmentid, $userids);
+        $grades = grade_get_grades($courseid, 'mod', $module, $assignmentid, $userids);
+
         $response = array();
-        foreach ($grades->items[0]->grades as $student => $grade_item) {
-            $response[$student] = $grade_item->grade;
+        if (isset($grades->items[0]->grades)) {
+            foreach ($grades->items[0]->grades as $student => $grade_item) {
+                $response[$student] = $grade_item->grade;
+            }
         }
 
         return $response;
@@ -769,5 +777,26 @@ class v1migration {
 
         curl_exec($ch);
         curl_close($ch);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourseid() {
+        return $this->courseid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getV1assignment() {
+        return $this->v1assignment;
+    }
+
+    /**
+     * @return stdClass
+     */
+    public function getCm(): stdClass {
+        return $this->cm;
     }
 }
