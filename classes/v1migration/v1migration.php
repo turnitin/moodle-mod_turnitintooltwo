@@ -764,11 +764,4 @@ class v1migration {
     public function getV1assignment() {
         return $this->v1assignment;
     }
-
-    /**
-     * @return stdClass
-     */
-    public function getCm(): stdClass {
-        return $this->cm;
-    }
 }
