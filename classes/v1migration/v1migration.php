@@ -394,6 +394,8 @@ class v1migration {
     /**
      * Update the gradebook for a given assignment.
      * @param int $turnitintooltwoid The turnitintooltwoid of the assignment.
+     * @param int $turnitintoolid The turnitintoolid of the assignment.
+     * @param int courseid The course id of the assignment.
      * @param string $workflow Whether the function is called from the site or the cron.
      * @return string Whether we have migrated the assignment or need to use the cron.
      */
@@ -416,7 +418,7 @@ class v1migration {
             sleep(round(max(MIGRATION_MAX_SLEEP - (count($submissions)/$migrationspersleepsecond), 0)));
         }
 
-        // Get the grades for the V1 assignment.
+        // Get the grades for the V1 assignment from the gradebook rather than the module.
         $v1_grades = self::get_grades_array("turnitintool", $turnitintoolid, $courseid);
 
         /**
@@ -450,6 +452,15 @@ class v1migration {
         }
     }
 
+
+    /**
+     * Handle the situation where a user has overridden the grade in the gradebook.
+     *
+     * @param int $v1grade The grade from the V1 assignment.
+     * @param int $userid The userid the grade belongs to.
+     * @param int $turnitintooltwoid The turnitintooltwoid of the assignment.
+     * @param int $courseid The course id of the assignment.
+     */
     public static function handle_overridden_grade($v1grade, $userid, $turnitintooltwoid, $courseid) {
         $grading_info = grade_get_grades($courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
 
@@ -470,6 +481,8 @@ class v1migration {
     /**
      * Update module titles after migration has completed.
      * @param int $v2assignmentid V2 Module id
+     *
+     * @return String Whether the post migration task was successful or had a gradebook update error.
      */
     public function post_migration($v2assignmentid) {
         // Update the V2 assignment title in the gradebook.
@@ -491,6 +504,13 @@ class v1migration {
         }
     }
 
+
+    /**
+     * @param String $module turnitintool or turnitintooltwo
+     * @param int $assignmentid The turnitintoolid or turnitintooltwoid for the assignment.
+     * @param int $courseid The course ID for this assignment.
+     * @return array An array of grades for this assignment.
+     */
     public static function get_grades_array($module, $assignmentid, $courseid) {
         $cm = get_coursemodule_from_instance($module, $assignmentid);
 
