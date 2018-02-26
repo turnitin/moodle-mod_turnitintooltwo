@@ -691,7 +691,7 @@ function turnitintooltwo_cron() {
  * Migrate the gradebook for submissions which were not migrated during the migration tool.
  */
 function turnitintooltwo_cron_migrate_gradebook() {
-    global $DB, $CFG;
+    global $DB;
 
     // Get a list of assignments with outstanding gradebook migrations.
     require_once(__DIR__.'/classes/v1migration/v1migration.php');
@@ -717,7 +717,7 @@ function turnitintooltwo_cron_migrate_gradebook() {
             $sql = "tiiassignid = " . $tiiid . " LIMIT 1";
             $turnitintoolid = $DB->get_field_select('turnitintool_parts', 'turnitintoolid', $sql);
 
-            $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, $courseid, $turnitintoolid, "cron");
+            $gradeupdates = v1migration::migrate_gradebook($assignment->turnitintooltwoid, $turnitintoolid, $courseid, "cron");
 
             // If we have migrated, update the titles.
             if ($gradeupdates == "migrated") {

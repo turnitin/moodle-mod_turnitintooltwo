@@ -16,6 +16,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+global $CFG;
+require_once($CFG->libdir . "/gradelib.php");
+
 define('MIGRATION_SUBMISSIONS_SITE_CUTOFF', 200);
 define('MIGRATION_MAX_SLEEP', 5);
 
@@ -232,6 +235,8 @@ class v1migration {
         // Once grades have been updated we can run the post migration task.
         if ($gradeupdates == "migrated") {
             $gradebook = $this->post_migration($turnitintooltwoid);
+        } elseif ($gradeupdates == "cron") {
+            $gradebook = "cron";
         }
 
         // Link the v2 id to the v1 id in the session.
@@ -436,8 +441,10 @@ class v1migration {
                 $submissionclass->update_gradebook($submission, $assignmentclass);
 
                 // Handle overridden grades if necessary.
-                if (isset($submission->submission_grade[$submission->userid]["overridden"])) {
-                    self::handle_overridden_grade($submission->submission_grade, $submission->userid, $turnitintooltwoid, $courseid);
+                $grading_info = grade_get_grades($courseid, 'mod', 'turnitintool', $turnitintoolid, $submission->userid);
+
+                if (!empty($grading_info->items[0]->grades[$submission->userid]->overridden)) {
+                    self::handle_overridden_grade($v1_grades[$submission->userid], $submission->userid, $turnitintooltwoid, $courseid);
                 }
 
                 // Update the migrate_gradebook field for this submission.

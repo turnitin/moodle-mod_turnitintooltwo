@@ -190,8 +190,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $grades->rawgrade = $grade;
         $grades->userid = $userid;
 
-        echo 'Userid: '.$userid.'|';
-
         $params['idnumber'] = $cm->idnumber;
 
         grade_update('mod/'.$module, $courseid, 'mod', $module, $assignmentid, 0, $grades, $params);
@@ -656,9 +654,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
      */
     public function test_post_migration() {
 
-        global $CFG, $DB;
-
-        @include_once($CFG->libdir . "/gradelib.php");
+        global $DB;
 
         if (!$this->v1installed()) {
             return false;
