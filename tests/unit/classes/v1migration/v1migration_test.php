@@ -19,6 +19,7 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/v1migration/v1migration.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/generator/lib.php');
+require_once($CFG->libdir . "/gradelib.php");
 
 /**
  * Tests for classes/v1migration/v1migration
@@ -171,6 +172,29 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
             $DB->insert_record($modname.'_submissions', $submission);
         }
+    }
+
+    /**
+     * Create a grade entry for a student on an assignment.
+     *
+     * @param string $modname Module name (turnitintool or turnitintooltwo)
+     * @param int $assignmentid Assignment Module ID
+     * @param int $courseid Course ID
+     * @param int $userid The user we want to grade for.
+     * @param int $grade The grade we want to set.
+     */
+    public function make_test_grade($module, $assignmentid, $courseid, $userid, $grade) {
+        $cm = get_coursemodule_from_instance($module, $assignmentid);
+
+        $grades = new stdClass();
+        $grades->rawgrade = $grade;
+        $grades->userid = $userid;
+
+        echo 'Userid: '.$userid.'|';
+
+        $params['idnumber'] = $cm->idnumber;
+
+        grade_update('mod/'.$module, $courseid, 'mod', $module, $assignmentid, 0, $grades, $params);
     }
 
     /**
@@ -674,7 +698,37 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     }
 
     public function test_get_grades_array() {
+        global $DB;
 
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        $this->resetAfterTest();
+
+        $course = $this->getDataGenerator()->create_course();
+
+        // create a user and enrol them on the course.
+        $student = $this->getDataGenerator()->create_user();
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $this->getDataGenerator()->enrol_user($student->id, $course->id, $studentrole->id, 'manual');
+
+        // Create V2 Assignment.
+        $v2assignmenttitle = "Test Assignment";
+        $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle, 10);
+
+        $v1migration = new v1migration($course->id, $v2assignment);
+        $v1migration->setup_v2_module($course->id, $v2assignment->id);
+
+        // Set and get the grades for this assignment.
+        $this->make_test_grade("turnitintooltwo", $v2assignment->id, $course->id, $student->id, 10);
+        $response = v1migration::get_grades_array("turnitintooltwo", $v2assignment->id, $course->id);
+
+        // Should return an empty array as there are no grades.
+        $this->assertEquals(array($student->id => 10), $response);
+    }
+
+    public function test_handle_overridden_grade() {
         global $DB;
 
         if (!$this->v1installed()) {
@@ -698,13 +752,23 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $v1assignmenttitle = "Test Assignment";
         $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
 
-        // Perform post-migration tasks - ie deletion of V1 assignment.
-        $response = v1migration::get_grades_array("turnitintool", $v1assignment->id, $course->id);
+        // Create V2 Assignment.
+        $v2assignmenttitle = "Test Assignment";
+        $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle, 10);
 
+        $v1migration = new v1migration($course->id, $v2assignment);
+        $v1migration->setup_v2_module($course->id, $v2assignment->id);
+
+        $this->make_test_grade("turnitintooltwo", $v2assignment->id, $course->id, 1, 10);
+
+        // Call the overriden grades function with a different grade to the one set above.
+        v1migration::handle_overridden_grade(20, 1, $v2assignment->id, $course->id);
+
+        $grading_info = grade_get_grades($course->id, 'mod', 'turnitintooltwo', $v2assignment->id, 1);
 
         // Should return an empty array as there are no grades.
-        $this->assertEquals(array(), $response);
-
+        $this->assertEquals(20, $grading_info->items[0]->grades[1]->grade);
+        $this->assertGreaterThan(0, $grading_info->items[0]->grades[1]->overridden);
     }
 
     /**

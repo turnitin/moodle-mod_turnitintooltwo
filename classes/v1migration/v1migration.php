@@ -434,7 +434,9 @@ class v1migration {
                 $submissionclass->update_gradebook($submission, $assignmentclass);
 
                 // Handle overridden grades if necessary.
-                self::handle_overridden_grades($v1_grades, $turnitintooltwoid, $courseid, $submission->userid);
+                if (isset($submission->submission_grade[$submission->userid]["overridden"])) {
+                    self::handle_overridden_grade($submission->submission_grade, $submission->userid, $turnitintooltwoid, $courseid);
+                }
 
                 // Update the migrate_gradebook field for this submission.
                 $updatesubmission = new stdClass();
@@ -442,24 +444,18 @@ class v1migration {
                 $updatesubmission->migrate_gradebook = 0;
 
                 $DB->update_record('turnitintooltwo_submissions', $updatesubmission);
-
-                $submissions = $DB->get_records("turnitintooltwo_submissions", array("turnitintooltwoid" => $turnitintooltwoid, "migrate_gradebook" => 0));
             }
 
             return "migrated";
         }
     }
 
-    public static function handle_overridden_grades($v1_grades, $turnitintooltwoid, $courseid, $userid) {
-
-        if (!isset($v1_grades[$userid]["overridden"])) {
-            return;
-        }
+    public static function handle_overridden_grade($v1grade, $userid, $turnitintooltwoid, $courseid) {
         $grading_info = grade_get_grades($courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
 
         $grades = new stdClass();
         $grades->userid = $userid;
-        $grades->finalgrade = $v1_grades[$userid];
+        $grades->finalgrade = $v1grade;
 
         $grade_item = grade_item::fetch(array('id' => $grading_info->items[0]->id, 'courseid' => $courseid));
         $grade_item->update_final_grade($grades->userid, $grades->finalgrade, 'editgrade');
@@ -468,7 +464,6 @@ class v1migration {
         $grade_grade->grade_item =& $grade_item; // no db fetching
 
         $grade_grade->set_overridden(true);
-
     }
 
 
@@ -504,6 +499,7 @@ class v1migration {
         }
 
         $context = context_module::instance($cm->id);
+
         $enrolled_students = get_enrolled_users($context, 'mod/'.$module.':submit', 0, 'u.id');
 
         $userids = array();
