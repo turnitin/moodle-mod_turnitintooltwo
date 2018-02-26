@@ -900,7 +900,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertEquals(5, count($v1submissions));
 
         // Delete the assignment.
-        v1migration::turnitintooltwo_delete_assignment($v1assignment->id);
+        v1migration::delete_migrated_assignment($v1assignment->id);
 
         // Verify that they have been deleted.
         $v1assignments = $DB->get_records('turnitintool');

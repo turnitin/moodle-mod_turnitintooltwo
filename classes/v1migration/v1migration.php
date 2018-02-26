@@ -459,7 +459,6 @@ class v1migration {
         }
     }
 
-
     /**
      * Handle the situation where a user has overridden the grade in the gradebook.
      *
@@ -484,7 +483,6 @@ class v1migration {
         $grade_grade->set_overridden(true);
     }
 
-
     /**
      * Update module titles after migration has completed.
      * @param int $v2assignmentid V2 Module id
@@ -503,14 +501,13 @@ class v1migration {
 
         // We only want to delete the V1 assignment if all grades are in the gradebook.
         if ($v1_grades === $v2_grades) {
-            $this->turnitintooltwo_delete_assignment($this->v1assignment->id);
+            $this->delete_migrated_assignment($this->v1assignment->id);
 
             return "success";
         } else {
             return "gradebookerror";
         }
     }
-
 
     /**
      * @param String $module turnitintool or turnitintooltwo
@@ -631,7 +628,7 @@ class v1migration {
             $querywhere = substr_replace( $querywhere, "", -3 );
             $querywhere .= " )";
         }
-        $query = "SELECT id, name, migrated FROM {turnitintool}".$querywhere.$queryorder;
+        $query = "SELECT id, name FROM {turnitintool}".$querywhere.$queryorder;
         $assignments = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
 
         $totalassignments = count($DB->get_records_sql($query, $queryparams));
@@ -653,7 +650,7 @@ class v1migration {
      *
      * @param int $assignmentid The assignment ID to delete.
      */
-    public static function turnitintooltwo_delete_assignment($assignmentid) {
+    public static function delete_migrated_assignment($assignmentid) {
         global $CFG, $DB;
 
         require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
