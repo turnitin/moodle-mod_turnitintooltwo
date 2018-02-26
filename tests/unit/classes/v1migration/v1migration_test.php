@@ -875,7 +875,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     /**
      * Test that assignments are deleted when given an assignment.
      */
-    public function test_turnitintooltwo_delete_assignment() {
+    public function test_delete_migrated_assignment() {
         global $DB;
 
         if (!$this->v1installed()) {
