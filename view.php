@@ -134,13 +134,13 @@ $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id
 
 // Migration tool
 $notice = array();
-if ($migrated == 1 || $migrated == 2) {
+if ($migrated === 1 || $migrated === 2) {
     $notice["type"] = "success";
     $notice["message"] = get_string('migrationtool:successful'.$migrated, 'turnitintooltwo');
 
     include_once("classes/v1migration/v1migration.php");
     v1migration::check_account($config->accountid);
-} elseif ($migrated == 3) {
+} elseif ($migrated === 3) {
     $notice["type"] = "danger";
     $notice["message"] = get_string('migrationtool:gradebookerror', 'turnitintooltwo');
 
