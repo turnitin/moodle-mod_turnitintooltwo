@@ -42,16 +42,17 @@ abstract class test_lib extends advanced_testcase {
      * @param string $modname Module name (turnitintool or turnitintooltwo)
      * @param int $assignmentid Assignment Module ID
      * @param int $number_of_parts - The number of parts to create
+     * @param int $tiiassignid - Specify a Turnitin assignment ID - use when creating multiple assignments to differentiate them.
      *
      * @return array $parts_created - parts added to the assignment listed as partid => partobject
      */
-    public function make_test_parts($modname, $assignmentid, $number_of_parts) {
+    public function make_test_parts($modname, $assignmentid, $number_of_parts, $tiiassignid = null) {
         global $DB;
 
         $modulevar = $modname.'id';
         $part = new stdClass();
         $part->$modulevar = $assignmentid;
-        $part->tiiassignid = 0;
+        $part->tiiassignid = is_null($tiiassignid) ? 0 : $tiiassignid;
         $part->dtstart = 0;
         $part->dtdue = 0;
         $part->dtpost = 0;

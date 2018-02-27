@@ -187,7 +187,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         if (isset($_SESSION["notice"])) {
             $notice = $_SESSION["notice"];
             if (empty($_SESSION["notice"]["type"])) {
-                $notice["type"] = "general";
+                $notice["type"] = "info";
             }
             unset($_SESSION["notice"]);
         } else {
