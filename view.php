@@ -107,9 +107,9 @@ require_capability('mod/turnitintooltwo:view', $context);
 $PAGE->set_pagelayout('standard');
 
 // Settings for page navigation.
+$config = turnitintooltwo_admin_config();
 if ($viewcontext == "window") {
     // Show navigation if required.
-    $config = turnitintooltwo_admin_config();
     if ($config->inboxlayout == 1) {
         $PAGE->set_cm($cm);
         $PAGE->set_pagelayout('incourse');
@@ -132,20 +132,29 @@ $turnitintooltwoview->load_page_components();
 
 $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id, $turnitintooltwo);
 
-// Migration tool
-$notice = array();
-if ($migrated === 1 || $migrated === 2) {
-    $notice["type"] = "success";
-    $notice["message"] = get_string('migrationtool:successful'.$migrated, 'turnitintooltwo');
-
+if (isset($_SESSION["migrationtool"]["status"])) {
+    $notice = array();
+    switch ($_SESSION["migrationtool"]["status"]) {
+        case "success":
+            $notice["type"] = "success";
+            $notice["message"] = get_string('migrationtool:successful', 'turnitintooltwo');
+            $error = false;
+            break;
+        case "cron":
+            $notice["type"] = "success";
+            $notice["message"] = get_string('migrationtool:successfulcron', 'turnitintooltwo');
+            $error = false;
+            break;
+        case "gradebookerror":
+            $notice["type"] = "danger";
+            $notice["message"] = get_string('migrationtool:gradebookerror', 'turnitintooltwo');
+            $error = true;
+            break;
+    }
     include_once("classes/v1migration/v1migration.php");
-    v1migration::check_account($config->accountid);
-} elseif ($migrated === 3) {
-    $notice["type"] = "danger";
-    $notice["message"] = get_string('migrationtool:gradebookerror', 'turnitintooltwo');
+    v1migration::check_account($config->accountid, $error);
 
-    include_once("classes/v1migration/v1migration.php");
-    v1migration::check_account($config->accountid, 1);
+    unset($_SESSION["migrationtool"]["status"]);
 }
 
 // Define file upload options.
