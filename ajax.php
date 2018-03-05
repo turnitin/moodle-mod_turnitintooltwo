@@ -904,13 +904,12 @@ switch ($action) {
         $v1migration = new v1migration($courseid, $turnitintool);
 
         try {
-            $response = $v1migration->migrate();
-            $cm = get_coursemodule_from_instance("turnitintooltwo", $response["turnitintooltwoid"]);
+            $turnitintooltwoid = $v1migration->migrate();
+            $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoid);
 
             // The returned CMID will be used for the redirect.
-            if ((int)$response["turnitintooltwoid"] > 0) {
-                echo '{ "id": '.$cm->id.',
-                        "gradebook": "'.$response["gradebook"].'" }';
+            if ((int)$turnitintooltwoid > 0) {
+                echo '{ "id": '.$cm->id.' }';
                 exit();
             }
         } catch(Exception $e) {

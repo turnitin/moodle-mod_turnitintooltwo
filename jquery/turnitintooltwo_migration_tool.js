@@ -77,17 +77,7 @@ function migrate(courseid, turnitintoolid) {
             }
             $('#migration_alert').hide();
 
-            switch (data.gradebook) {
-                case "gradebookerror":
-                    var migrated = 3;
-                    break;
-                case "cron":
-                    var migrated = 2;
-                    break;
-                default:
-                    var migrated = 1;
-            }
-            window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id+"&migrated="+migrated;
+            window.location.href = M.cfg.wwwroot + "/mod/turnitintooltwo/view.php?id="+data.id;
         },
         error: function(error) {
             var data = error.responseJSON;

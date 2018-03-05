@@ -234,17 +234,16 @@ class v1migration {
 
         // Once grades have been updated we can run the post migration task.
         if ($gradeupdates == "migrated") {
-            $gradebook = $this->post_migration($turnitintooltwoid);
+            $_SESSION["migrationtool"]["status"] = $this->post_migration($turnitintooltwoid);
         } elseif ($gradeupdates == "cron") {
-            $gradebook = "cron";
+            $_SESSION["migrationtool"]["status"] = "cron";
         }
 
         // Link the v2 id to the v1 id in the session.
         if (is_int($turnitintooltwoid)) {
             $_SESSION["migrationtool"][$this->v1assignment->id] = $turnitintooltwoid;
 
-            return array("turnitintooltwoid" => $turnitintooltwoid,
-                         "gradebook" => $gradebook);
+            return $turnitintooltwoid;
         } else {
             return false;
         }
@@ -746,7 +745,7 @@ class v1migration {
         return $output;
     }
 
-    public static function check_account($accountid, $error = 0) {
+    public static function check_account($accountid, $error = false) {
         global $CFG;
 
         $config = turnitintooltwo_admin_config();

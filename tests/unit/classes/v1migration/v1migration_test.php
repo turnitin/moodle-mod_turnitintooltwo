@@ -351,8 +351,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $timestamp = time();
         $_SESSION["migrationtool"][$v1assignment->id]["gradesupdated"] = $timestamp;
 
-        $response = $v1migration->migrate();
-        $v2assignmentid = $response["turnitintooltwoid"];
+        $v2assignmentid = $v1migration->migrate();
 
         // Verify assignment has migrated.
         $v2assignment = $DB->get_record('turnitintooltwo', array('id' => $v2assignmentid));
@@ -419,8 +418,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Migrate assignment.
         $v1migration = new v1migration($course->id, $v1assignment);
-        $response = $v1migration->migrate();
-        $v2assignmentid = $response["turnitintooltwoid"];
+        $v2assignmentid = $v1migration->migrate();
 
         // Verify only one submission has migrated.
         $v2submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignmentid));
@@ -478,8 +476,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Migrate assignment.
         $v1migration = new v1migration($course->id, $v1assignment);
-        $response = $v1migration->migrate();
-        $v2assignmentid = $response["turnitintooltwoid"];
+        $v2assignmentid = $v1migration->migrate();
 
         // Verify both submissions have migrated.
         $v2submissions = $DB->get_records('turnitintooltwo_submissions',
