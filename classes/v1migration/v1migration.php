@@ -682,34 +682,6 @@ class v1migration {
     }
 
     /**
-     * Delete a list of assignments.
-     *
-     * @param array $assignmentids The assignment IDs to delete.
-     */
-    public static function turnitintooltwo_delete_assignments($assignmentids) {
-        global $CFG, $DB;
-
-        require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
-
-        foreach ($assignmentids as $assignmentid) {
-            $cm = get_coursemodule_from_instance('turnitintool', $assignmentid);
-
-            // We have found that backups aren't reliable on MSSQL so rather than use Moodle's
-            // function which uses the recycle tool and the backup procedure. We handle the deletion directly.
-            if ($CFG->dbtype == 'mssql' || $CFG->dbtype == 'sqlsrv') {
-                turnitintool_delete_instance($assignmentid);
-
-                // Delete course module.
-                $DB->delete_records('course_modules', array('id' => $cm->id));
-
-                rebuild_course_cache($cm->course);
-            } else {
-                course_delete_module($cm->id);
-            }
-        }
-    }
-
-    /**
      * Check that v1 and v2 account ids are the same.
      */
     public static function check_account_ids() {

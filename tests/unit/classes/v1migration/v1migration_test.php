@@ -902,56 +902,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     }
 
     /**
-     * Test that assignments are deleted when given a list of assignments.
-     */
-    public function test_turnitintooltwo_delete_assignments() {
-        global $DB;
-
-        if (!$this->v1installed()) {
-            return false;
-        }
-
-        // Generate a new course.
-        $course = $this->getDataGenerator()->create_course();
-
-        // Create some V1 assignments.
-        $v1assignment1 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 1", 5);
-        $v1assignment2 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 2", 5);
-        $v1assignment3 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 3", 5);
-
-        $cm1 = get_coursemodule_from_instance('turnitintool', $v1assignment1->id);
-        $cm2 = get_coursemodule_from_instance('turnitintool', $v1assignment2->id);
-        $cm3 = get_coursemodule_from_instance('turnitintool', $v1assignment3->id);
-
-        // Check that the assignments have been created correctly.
-        $v1assignments = $DB->get_records('turnitintool');
-        $v1parts = $DB->get_records('turnitintool_parts');
-        $v1submissions = $DB->get_records('turnitintool_submissions');
-        $this->assertEquals(3, count($v1assignments));
-        $this->assertEquals(3, count($v1parts));
-        $this->assertEquals(15, count($v1submissions));
-
-        // Delete the assignments.
-        $response = v1migration::turnitintooltwo_delete_assignments(array($v1assignment1->id, $v1assignment2->id, $v1assignment3->id));
-
-        // Verify that they have been deleted.
-        $v1assignments = $DB->get_records('turnitintool');
-        $v1parts = $DB->get_records('turnitintool_parts');
-        $v1submissions = $DB->get_records('turnitintool_submissions');
-        $this->assertEquals(0, count($v1assignments));
-        $this->assertEquals(0, count($v1parts));
-        $this->assertEquals(0, count($v1submissions));
-
-        // Verify that records have been removed from the course_modules table.
-        $v1cm = $DB->get_records('course_modules', array('id' => $cm1->id));
-        $this->assertEquals(0, count($v1cm));
-        $v2cm = $DB->get_records('course_modules', array('id' => $cm2->id));
-        $this->assertEquals(0, count($v2cm));
-        $v3cm = $DB->get_records('course_modules', array('id' => $cm3->id));
-        $this->assertEquals(0, count($v3cm));
-    }
-
-    /**
      * Test that assignments are deleted when given an assignment.
      */
     public function test_delete_migrated_assignment() {

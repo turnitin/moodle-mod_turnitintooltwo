@@ -490,7 +490,9 @@ switch ($cmd) {
 
         // Delete assignments if the form has been submitted.
         if (isset($assignmentids) && count($assignmentids) > 0) {
-            v1migration::turnitintooltwo_delete_assignments($assignmentids);
+            foreach ($assignmentids as $assignmentid) {
+                v1migration::delete_migrated_assignment($assignmentid);
+            }
 
             $urlparams = array('cmd' => 'v1migration', 'msg' => 'delete', 'type' => 'success');
             redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
