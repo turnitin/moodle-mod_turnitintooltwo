@@ -580,7 +580,7 @@ class v1migration {
         $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
         $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
         $secho = optional_param('sEcho', 1, PARAM_INT);
-        $displaycolumns = array('id', 'name');
+        $displaycolumns = array('', 'id', 'name', 'migrated');
         $queryparams = array();
         // Add sort to query.
         $isortcol[0] = optional_param('iSortCol_0', null, PARAM_INT);
@@ -627,16 +627,27 @@ class v1migration {
             $querywhere = substr_replace( $querywhere, "", -3 );
             $querywhere .= " )";
         }
-        $query = "SELECT id, name FROM {turnitintool}".$querywhere.$queryorder;
+        $query = "SELECT id, name, migrated FROM {turnitintool}".$querywhere.$queryorder;
         $assignments = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
 
         $totalassignments = count($DB->get_records_sql($query, $queryparams));
         $return["aaData"] = array();
         foreach ($assignments as $assignment) {
-            $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $assignment->id, 'id' => '0'));
-            $assignmenttitle = html_writer::link($assignmentlink, format_string($assignment->name), array('target' => '_blank' ));
+            if ($assignment->migrated == 1) {
+                $checkbox = html_writer::checkbox('assignmentids[]', $assignment->id, false, '', array("class" => "browser_checkbox"));
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
 
-            $return["aaData"][] = array($assignment->id, $assignmenttitle);
+                $assignmenttitle = format_string($assignment->name);
+            } else {
+                $checkbox = "";
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
+
+                $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $assignment->id, 'id' => '0'));
+                $assignmenttitle = html_writer::link($assignmentlink, format_string($assignment->name), array('target' => '_blank' ));
+            }
+            $return["aaData"][] = array($checkbox, $assignment->id, $assignmenttitle, $assignment->migrated);
         }
         $return["sEcho"] = $secho;
         $return["iTotalRecords"] = count($assignments);
@@ -671,6 +682,34 @@ class v1migration {
     }
 
     /**
+     * Delete a list of assignments.
+     *
+     * @param array $assignmentids The assignment IDs to delete.
+     */
+    public static function turnitintooltwo_delete_assignments($assignmentids) {
+        global $CFG, $DB;
+
+        require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
+
+        foreach ($assignmentids as $assignmentid) {
+            $cm = get_coursemodule_from_instance('turnitintool', $assignmentid);
+
+            // We have found that backups aren't reliable on MSSQL so rather than use Moodle's
+            // function which uses the recycle tool and the backup procedure. We handle the deletion directly.
+            if ($CFG->dbtype == 'mssql' || $CFG->dbtype == 'sqlsrv') {
+                turnitintool_delete_instance($assignmentid);
+
+                // Delete course module.
+                $DB->delete_records('course_modules', array('id' => $cm->id));
+
+                rebuild_course_cache($cm->course);
+            } else {
+                course_delete_module($cm->id);
+            }
+        }
+    }
+
+    /**
      * Check that v1 and v2 account ids are the same.
      */
     public static function check_account_ids() {
@@ -697,7 +736,7 @@ class v1migration {
      * @param $enablesetting - whether the settings form should be enabled.
      */
     public static function output_settings_form($enablesetting = true) {
-        global $CFG, $DB;
+        global $CFG, $DB, $PAGE;
         $output = "";
 
         require_once($CFG->dirroot.'/mod/turnitintooltwo/turnitintooltwo_form.class.php');
@@ -734,7 +773,12 @@ class v1migration {
         $customdata["elements"] = $elements;
         $customdata["disable_form_change_checker"] = true;
         $customdata["show_cancel"] = false;
-        
+
+        // Strings for javascript confirm deletion.
+        $PAGE->requires->string_for_js('confirmv1deletetitle', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('confirmv1deletetext', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('confirmv1deletewarning', 'turnitintooltwo');
+
         $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                                                     $customdata);
 

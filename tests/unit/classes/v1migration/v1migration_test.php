@@ -778,7 +778,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         $_POST = array();
         $_POST["sEcho"] = 1;
-        $_POST["iColumns"] = 2;
+        $_POST["iColumns"] = 4;
         $_POST["sColumns"] = ",,,";
         $_POST["iDisplayStart"] = 0;
         $_POST["iDisplayLength"] = 10;
@@ -786,15 +786,25 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $_POST["sSearch_0"] = "";
         $_POST["bRegex_0"] = "false";
         $_POST["bSearchable_0"] = "true";
-        $_POST["bSortable_0"] = "true";
+        $_POST["bSortable_0"] = "false";
         $_POST["mDataProp_1"] = 1;
         $_POST["sSearch_1"] = "";
         $_POST["bRegex_1"] = "false";
         $_POST["bSearchable_1"] = "true";
         $_POST["bSortable_1"] = "true";
+        $_POST["mDataProp_2"] = 2;
+        $_POST["sSearch_2"] = "";
+        $_POST["bRegex_2"] = "false";
+        $_POST["bSearchable_2"] = "true";
+        $_POST["bSortable_2"] = "true";
+        $_POST["mDataProp_3"] = 3;
+        $_POST["sSearch_3"] = "";
+        $_POST["bRegex_3"] = "false";
+        $_POST["bSearchable_3"] = "false";
+        $_POST["bSortable_3"] = "true";
         $_POST["sSearch"] = "";
         $_POST["bRegex"] = "false";
-        $_POST["iSortCol_0"] = 1;
+        $_POST["iSortCol_0"] = 2;
         $_POST["sSortDir_0"] = "asc";
         $_POST["iSortingCols"] = 1;
         $_POST["_"] = 1494857276336;
@@ -830,15 +840,26 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $assignments = $DB->get_records('turnitintool', NULL, "name ASC", "id, name, migrated", $_POST["iDisplayStart"], $_POST["iDisplayLength"]);
         $outputrows = array();
         foreach ($assignments as $key => $value) {
-            $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $value->id, 'id' => '0'));
-            $assignmenttitle = html_writer::link($assignmentlink, format_string($value->name), array('target' => '_blank' ));
+            if ($value->migrated == 1) {
+                $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
 
-            $outputrows[] = array($value->id, $assignmenttitle);
+                $assignmenttitle = format_string($value->name);
+            } else {
+                $checkbox = "";
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
+
+                $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $value->id, 'id' => '0'));
+                $assignmenttitle = html_writer::link($assignmentlink, format_string($value->name), array('target' => '_blank' ));
+            }
+            $outputrows[] = array($checkbox, $value->id, $assignmenttitle, $migrationValue);
         }
         $expectedoutput = array("aaData"               => $outputrows,
                                 "sEcho"                => $_POST["sEcho"],
-                                "iTotalRecords"        => 10,
-                                "iTotalDisplayRecords" => 20);
+                                "iTotalRecords"        => $_POST["iDisplayLength"],
+                                "iTotalDisplayRecords" => $numAssignments);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
 
@@ -850,24 +871,85 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
                   ORDER BY name asc";
         $queryparams = array("search_term_2" => "%".$_POST["sSearch"]."%");
         $assignments = $DB->get_records_sql($query, $queryparams, $_POST["iDisplayStart"], $_POST["iDisplayLength"]);
+        $totalassignments = count($DB->get_records_sql($query, $queryparams));
 
         $outputrows = array();
         foreach ($assignments as $key => $value) {
-            $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $value->id, 'id' => '0'));
-            $assignmenttitle = html_writer::link($assignmentlink, format_string($value->name), array('target' => '_blank' ));
+            if ($value->migrated == 1) {
+                $checkbox = '<input class="browser_checkbox" type="checkbox" value="'.$value->id.'" name="assignmentids[]" />';
+                $sronly = html_writer::tag('span', get_string('yes', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
 
-            $outputrows[] = array($value->id, $assignmenttitle);
+                $assignmenttitle = format_string($value->name);
+            } else {
+                $checkbox = "";
+                $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
+                $migrationValue = html_writer::tag('span', $sronly, array('class' => 'fa fa-times'));
+
+                $assignmentlink = new moodle_url('/mod/turnitintool/view.php', array('a' => $value->id, 'id' => '0'));
+                $assignmenttitle = html_writer::link($assignmentlink, format_string($value->name), array('target' => '_blank' ));
+            }
+            $outputrows[] = array($checkbox, $value->id, $assignmenttitle, $migrationValue);
         }
         $expectedoutput = array("aaData"               => $outputrows,
                                 "sEcho"                => $_POST["sEcho"],
-                                "iTotalRecords"        => 10,
-                                "iTotalDisplayRecords" => 20);
+                                "iTotalRecords"        => $_POST["iDisplayLength"],
+                                "iTotalDisplayRecords" => $totalassignments);
         $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
 
         $this->assertEquals($expectedoutput, $response);
     }
 
+    /**
+     * Test that assignments are deleted when given a list of assignments.
+     */
+    public function test_turnitintooltwo_delete_assignments() {
+        global $DB;
+
+        if (!$this->v1installed()) {
+            return false;
+        }
+
+        // Generate a new course.
+        $course = $this->getDataGenerator()->create_course();
+
+        // Create some V1 assignments.
+        $v1assignment1 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 1", 5);
+        $v1assignment2 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 2", 5);
+        $v1assignment3 = $this->make_test_assignment($course->id, 'turnitintool', "Assignment 3", 5);
+
+        $cm1 = get_coursemodule_from_instance('turnitintool', $v1assignment1->id);
+        $cm2 = get_coursemodule_from_instance('turnitintool', $v1assignment2->id);
+        $cm3 = get_coursemodule_from_instance('turnitintool', $v1assignment3->id);
+
+        // Check that the assignments have been created correctly.
+        $v1assignments = $DB->get_records('turnitintool');
+        $v1parts = $DB->get_records('turnitintool_parts');
+        $v1submissions = $DB->get_records('turnitintool_submissions');
+        $this->assertEquals(3, count($v1assignments));
+        $this->assertEquals(3, count($v1parts));
+        $this->assertEquals(15, count($v1submissions));
+
+        // Delete the assignments.
+        $response = v1migration::turnitintooltwo_delete_assignments(array($v1assignment1->id, $v1assignment2->id, $v1assignment3->id));
+
+        // Verify that they have been deleted.
+        $v1assignments = $DB->get_records('turnitintool');
+        $v1parts = $DB->get_records('turnitintool_parts');
+        $v1submissions = $DB->get_records('turnitintool_submissions');
+        $this->assertEquals(0, count($v1assignments));
+        $this->assertEquals(0, count($v1parts));
+        $this->assertEquals(0, count($v1submissions));
+
+        // Verify that records have been removed from the course_modules table.
+        $v1cm = $DB->get_records('course_modules', array('id' => $cm1->id));
+        $this->assertEquals(0, count($v1cm));
+        $v2cm = $DB->get_records('course_modules', array('id' => $cm2->id));
+        $this->assertEquals(0, count($v2cm));
+        $v3cm = $DB->get_records('course_modules', array('id' => $cm3->id));
+        $this->assertEquals(0, count($v3cm));
+    }
 
     /**
      * Test that assignments are deleted when given an assignment.
