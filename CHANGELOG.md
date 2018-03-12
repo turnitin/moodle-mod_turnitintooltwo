@@ -1,3 +1,26 @@
+### 2018-March-12
+### v2018031201
+
+### Fixes and enhancements
+
+---
+
+#### Manual adjustments to grades now stick during V1 to V2 migration
+
+>Following the migration of a Moodle Direct V1 assignment to V2, grades that had been manually adjusted in the Moodle grade book would be overwritten to match the grade originally set in Turnitin Feedback Studio. With this overwrite being completely unintentional, we've made several backend changes to ensure that future manual adjustments within the grade book always remain fixed during migration.
+
+#### V1 assignments are now removed automatically after migration
+ 	
+>If an administrator failed to delete a Moodle Direct V1 assignment after its migration to V2, the grade of the V1 assignment would remain in the Moodle grade book, causing grades to effectively double. We've now adjusted the behavior of the Moodle Migration Tool to resolve this. So that you no longer need to worry about incorrect grades in the grade book, Moodle V1 assignments are now automatically deleted after migration.
+>
+>There may be instances where you'll still be required to remove V1 assignments manually (for example, the migration has been successful but there are conflicting grades in the grade book).
+
+#### Deleting V1 assignments that were migrated in prior versions 
+
+> You can manually delete your previously migrated assignments from the usual spot in the Moodle Migration Tool; we encourage you to delete these as soon as possible in order to resolve any current issues in the grade book. Any V1 assignments migrated after this update will be automatically deleted.
+
+---
+
 ### :snowflake: Date:		2018-January-16
 ### :snowflake: Release:	v2018011601
 
