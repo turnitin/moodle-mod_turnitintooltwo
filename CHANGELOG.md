@@ -1,7 +1,7 @@
 ### 2018-March-12
 ### v2018031201
 
-#### Fixes and enhancements
+### Fixes and enhancements
 
 ---
 
@@ -19,6 +19,7 @@
 
 > You can manually delete your previously migrated assignments from the usual spot in the Moodle Migration Tool; we encourage you to delete these as soon as possible in order to resolve any current issues in the grade book. Any V1 assignments migrated after this update will be automatically deleted.
 
+---
 
 ### :snowflake: Date:		2018-January-16
 ### :snowflake: Release:	v2018011601
