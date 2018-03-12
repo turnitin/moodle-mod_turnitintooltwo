@@ -481,7 +481,7 @@ switch ($cmd) {
         $html .= html_writer::tag('hr', '');
         $html .= html_writer::tag('h2', get_string('migration_status', 'turnitintooltwo'), array('class' => 'migrationheader'));
 
-        $html .= html_writer::tag('p', get_string('migrationtoolv1list', 'turnitintooltwo'));
+        $html .= html_writer::tag('p', get_string('migrationtoolv1list', 'turnitintooltwo', '2018031201'));
 
         $jsrequired = true;
 
