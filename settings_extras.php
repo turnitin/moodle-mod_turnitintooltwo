@@ -481,8 +481,7 @@ switch ($cmd) {
         $html .= html_writer::tag('hr', '');
         $html .= html_writer::tag('h2', get_string('migration_status', 'turnitintooltwo'), array('class' => 'migrationheader'));
 
-        // Display our progress bar.
-        $html .= v1migration::output_progress_bar();
+        $html .= html_writer::tag('p', get_string('migrationtoolv1list', 'turnitintooltwo', '2018031201'));
 
         $jsrequired = true;
 
@@ -491,8 +490,10 @@ switch ($cmd) {
 
         // Delete assignments if the form has been submitted.
         if (isset($assignmentids) && count($assignmentids) > 0) {
-            v1migration::turnitintooltwo_delete_assignments($assignmentids);
-            
+            foreach ($assignmentids as $assignmentid) {
+                v1migration::delete_migrated_assignment($assignmentid);
+            }
+
             $urlparams = array('cmd' => 'v1migration', 'msg' => 'delete', 'type' => 'success');
             redirect(new moodle_url('/mod/turnitintooltwo/settings_extras.php', $urlparams));
             exit;
@@ -501,8 +502,8 @@ switch ($cmd) {
         // Show successful delete message if applicable.
         if ($msg == 'delete') {
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-            $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'), 
-                            array('class' => 'alert alert-success', 'role' => 'alert'));
+            $alert = html_writer::tag('div', $close.get_string("v1assignmentsdeleted", 'turnitintooltwo'),
+                        array('class' => 'alert alert-success', 'role' => 'alert'));
         }
 
         $table = new html_table();
@@ -522,7 +523,7 @@ switch ($cmd) {
         $cells[0]->attributes['width'] = "100px";
         $cells['assignmentid']->attributes['width'] = "150px";
         $cells['migrationstatus']->attributes['width'] = "100px";
-        
+
         $table->head = $cells;
 
         $elements2[] = array('html', html_writer::table($table));

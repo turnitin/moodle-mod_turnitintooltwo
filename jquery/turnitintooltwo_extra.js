@@ -107,7 +107,7 @@ jQuery(document).ready(function($) {
                         {"bSortable": true, "bSearchable": true},
                         {"bSortable": true, "sClass": "centered_cell", "bSearchable": false}
                      ],
-        "fnDrawCallback": function () {
+        "fnDrawCallback": function() {
             $('input[name="selectallcb"]').attr('checked', false);
         }
     });
