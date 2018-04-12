@@ -411,8 +411,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
 
-        $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
-                            1 => get_string('standardrepository', 'turnitintooltwo'));
+        $suboptions = array(
+            SUBMIT_TO_NO_REPOSITORY => get_string('norepository', 'turnitintooltwo'),
+            SUBMIT_TO_STANDARD_REPOSITORY => get_string('standardrepository', 'turnitintooltwo')
+        );
 
         switch ($config->repositoryoption) {
             case ADMIN_REPOSITORY_OPTION_STANDARD; // Standard options.
@@ -421,7 +423,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                 $mform->setDefault('submitpapersto', $config->default_submitpapersto);
                 break;
             case ADMIN_REPOSITORY_OPTION_EXPANDED; // Standard options + Allow Instituional Repository.
-                $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
+                $suboptions[SUBMIT_TO_INSTITUTIONAL_REPOSITORY] = get_string('institutionalrepository', 'turnitintooltwo');
 
                 $mform->addElement('select', 'submitpapersto', get_string('submitpapersto', 'turnitintooltwo'), $suboptions);
                 $mform->addHelpButton('submitpapersto', 'submitpapersto', 'turnitintooltwo');
@@ -429,15 +431,15 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
                 break;
             case ADMIN_REPOSITORY_OPTION_FORCE_STANDARD; // Force Standard Repository.
-                $mform->addElement('hidden', 'submitpapersto', 1);
+                $mform->addElement('hidden', 'submitpapersto', SUBMIT_TO_STANDARD_REPOSITORY);
                 $mform->setType('submitpapersto', PARAM_RAW);
                 break;
             case ADMIN_REPOSITORY_OPTION_FORCE_NO; // Force No Repository.
-                $mform->addElement('hidden', 'submitpapersto', 0);
+                $mform->addElement('hidden', 'submitpapersto', SUBMIT_TO_NO_REPOSITORY);
                 $mform->setType('submitpapersto', PARAM_RAW);
                 break;
             case ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL; // Force Individual Repository.
-                $mform->addElement('hidden', 'submitpapersto', 2);
+                $mform->addElement('hidden', 'submitpapersto', SUBMIT_TO_INSTITUTIONAL_REPOSITORY);
                 $mform->setType('submitpapersto', PARAM_RAW);
                 break;
         }
