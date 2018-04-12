@@ -811,7 +811,7 @@ class turnitintooltwo_submission {
                 $sub->id = $DB->insert_record("turnitintooltwo_submissions", $sub, true, $bulk);
             }
 
-            //Update the Moodle gradebook.
+            // Update the Moodle gradebook.
             $this->update_gradebook($sub, $turnitintooltwoassignment);
         }
     }

@@ -216,11 +216,12 @@ if ($ADMIN->fulltree) {
                                                     0, $ynoptions));
 
     $repositoryoptions = array(
-            0 => get_string('repositoryoptions_0', 'turnitintooltwo'),
-            1 => get_string('repositoryoptions_1', 'turnitintooltwo'),
-            2 => get_string('repositoryoptions_2', 'turnitintooltwo'),
-            3 => get_string('repositoryoptions_3', 'turnitintooltwo')
-        );
+        ADMIN_REPOSITORY_OPTION_STANDARD => get_string('repositoryoptions_0', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_EXPANDED => get_string('repositoryoptions_1', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_FORCE_STANDARD => get_string('repositoryoptions_2', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_FORCE_NO => get_string('repositoryoptions_3', 'turnitintooltwo'),
+        ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL => get_string('repositoryoptions_4', 'turnitintooltwo')
+    );
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/repositoryoption',
                                                     get_string('turnitinrepositoryoptions', 'turnitintooltwo'),

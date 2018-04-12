@@ -475,6 +475,7 @@ $string['repositoryoptions_0'] = 'Enable instructor standard repository options'
 $string['repositoryoptions_1'] = 'Enable instructor expanded repository options';
 $string['repositoryoptions_2'] = 'Submit all papers to the standard repository';
 $string['repositoryoptions_3'] = 'Do not submit any papers into a repository';
+$string['repositoryoptions_4'] = 'Submit all papers to the institutional repository';
 $string['turnitinula_btn'] = 'Please click here to read and accept the Agreement.';
 $string['turnitinula'] = 'You must accept the latest Turnitin User Agreement before you can make a submission.';
 $string['upgradenotavailable'] = 'No Upgrade Available';
