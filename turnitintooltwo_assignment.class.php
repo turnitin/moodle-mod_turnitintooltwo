@@ -763,7 +763,8 @@ class turnitintooltwo_assignment {
             }
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->repositoryoption == 1) {
+            if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+                $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
                 $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }
@@ -1372,7 +1373,8 @@ class turnitintooltwo_assignment {
             $assignment->setSmallMatchExclusionType($this->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->repositoryoption >= ADMIN_REPOSITORY_OPTION_EXPANDED) {
+            if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+                $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
                 $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }

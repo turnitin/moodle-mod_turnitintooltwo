@@ -43,27 +43,27 @@ class mod_lib_testcase extends test_lib {
         $submitpapersto = 6;
 
         // Test that repository is not overridden for value of 0.
-        set_config('repositoryoption', '0', 'turnitintooltwo');
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_STANDARD, 'turnitintooltwo');
         $response = turnitintooltwo_override_repository($submitpapersto);
         $this->assertEquals($response, $submitpapersto);
 
         // Test that repository is not overridden for value of 1.
-        set_config('repositoryoption', '1', 'turnitintooltwo');
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_EXPANDED, 'turnitintooltwo');
         $response = turnitintooltwo_override_repository($submitpapersto);
         $this->assertEquals($response, $submitpapersto);
 
         // Standard Repository is being forced.
-        set_config('repositoryoption', '2', 'turnitintooltwo');
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_FORCE_STANDARD, 'turnitintooltwo');
         $response = turnitintooltwo_override_repository($submitpapersto);
         $this->assertEquals($response, SUBMIT_TO_STANDARD_REPOSITORY);
 
         // No Repository is being forced.
-        set_config('repositoryoption', '3', 'turnitintooltwo');
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_FORCE_NO, 'turnitintooltwo');
         $response = turnitintooltwo_override_repository($submitpapersto);
         $this->assertEquals($response, SUBMIT_TO_NO_REPOSITORY);
 
         // Institutional Repository is being forced.
-        set_config('repositoryoption', '4', 'turnitintooltwo');
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL, 'turnitintooltwo');
         $response = turnitintooltwo_override_repository($submitpapersto);
         $this->assertEquals($response, SUBMIT_TO_INSTITUTIONAL_REPOSITORY);
     }
