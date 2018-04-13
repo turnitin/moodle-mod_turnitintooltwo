@@ -40,6 +40,18 @@ define('MIGRATION_SUBMISSIONS_CUTOFF', 1000);
 define('REPORT_GEN_SPEED_NUM_RESUBMISSIONS', 3);
 define('REPORT_GEN_SPEED_NUM_HOURS', 24);
 
+// Admin Repository constants.
+define('ADMIN_REPOSITORY_OPTION_STANDARD', 0);
+define('ADMIN_REPOSITORY_OPTION_EXPANDED', 1);
+define('ADMIN_REPOSITORY_OPTION_FORCE_STANDARD', 2);
+define('ADMIN_REPOSITORY_OPTION_FORCE_NO', 3);
+define('ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL', 4);
+
+// Submit Papers to Repository constants.
+define('SUBMIT_TO_NO_REPOSITORY', 0);
+define('SUBMIT_TO_STANDARD_REPOSITORY', 1);
+define('SUBMIT_TO_INSTITUTIONAL_REPOSITORY', 2);
+
 // For use in course migration.
 $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
                                     2 => 'WebCT', 5 => 'Angel', 6 => 'Moodle Basic', 7 => 'eCollege', 8 => 'Desire2Learn',
@@ -1790,4 +1802,27 @@ function turnitintooltwo_get_report_gen_speed_params() {
     $genparams->num_hours = REPORT_GEN_SPEED_NUM_HOURS;
 
     return $genparams;
+}
+
+/**
+ * Override the repository option if necessary depending on the configuration setting.
+ * @param $submitpapersto int - The repository to submit to.
+ * @return $submitpapersto int - The repository to submit to.
+ */
+function turnitintooltwo_override_repository($submitpapersto) {
+    $config = turnitintooltwo_admin_config();
+
+    switch ($config->repositoryoption) {
+        case ADMIN_REPOSITORY_OPTION_FORCE_STANDARD; // Force Standard Repository.
+            $submitpapersto = SUBMIT_TO_STANDARD_REPOSITORY;
+            break;
+        case ADMIN_REPOSITORY_OPTION_FORCE_NO; // Force No Repository.
+            $submitpapersto = SUBMIT_TO_NO_REPOSITORY;
+            break;
+        case ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL; // Force Individual Repository.
+            $submitpapersto = SUBMIT_TO_INSTITUTIONAL_REPOSITORY;
+            break;
+    }
+
+    return $submitpapersto;
 }

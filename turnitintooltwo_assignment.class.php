@@ -763,7 +763,8 @@ class turnitintooltwo_assignment {
             }
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->repositoryoption == 1) {
+            if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+                $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
                 $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }
@@ -1328,14 +1329,6 @@ class turnitintooltwo_assignment {
         $coursetype = turnitintooltwo_get_course_type($legacy);
         $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
 
-        // Get the Turnitin owner of this this Course or make user the owner if none.
-        $ownerid = $this->get_tii_owner($course->id);
-        if (!empty($ownerid)) {
-            $owner = new turnitintooltwo_user($ownerid, 'Instructor');
-        } else {
-            $owner = new turnitintooltwo_user($USER->id, 'Instructor');
-        }
-
         // Edit course in Turnitin.
         $this->edit_tii_course($course);
         $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
@@ -1353,15 +1346,8 @@ class turnitintooltwo_assignment {
         }
         $partids = array_keys($parts);
 
-        // Override submitpapersto if necessary when admin is forcing standard/no repository.
-        switch ($config->repositoryoption) {
-            case 2; // Standard repository being forced.
-                $this->turnitintooltwo->submitpapersto = 1;
-                break;
-            case 3; // No repository being forced.
-                $this->turnitintooltwo->submitpapersto = 0;
-                break;
-        }
+        // Override submitpapersto if necessary when admin is forcing repository setting.
+        $this->turnitintooltwo->submitpapersto = turnitintooltwo_override_repository($this->turnitintooltwo->submitpapersto);
 
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
@@ -1387,7 +1373,8 @@ class turnitintooltwo_assignment {
             $assignment->setSmallMatchExclusionType($this->turnitintooltwo->excludetype);
             $assignment->setSmallMatchExclusionThreshold((int) $this->turnitintooltwo->excludevalue);
             $assignment->setLateSubmissionsAllowed($this->turnitintooltwo->allowlate);
-            if ($config->repositoryoption == 1) {
+            if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+                $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
                 $institutioncheck = (isset($this->turnitintooltwo->institution_check)) ? $this->turnitintooltwo->institution_check : 0;
                 $assignment->setInstitutionCheck($institutioncheck);
             }
