@@ -655,3 +655,34 @@ $string['reportgenspeed_resubmission'] = 'You have already submitted a paper to 
 $string['migrationtool:gradebookerror'] = 'Your assignment has successfully migrated from Moodle Direct V1 to V2. However, some grades failed to update in the grade book during migration. The original V1 assignment is available for you to check any conflicting grades. Please remove the V1 assignment once you\'ve completed this check.<br><br><strong>Warning:</strong> Failing to remove a migrated V1 assignment may cause grades to count twice towards the grade book total.';
 $string['migrationtool:successful'] = "Your assignment has successfully migrated from Moodle Direct V1 to V2. The original V1 assignment has been removed.";
 $string['migrationtool:successfulcron'] = "Your assignment has successfully migrated from Moodle Direct V1 to V2. As this is a large assignment, please allow time for the grade book to update. The original V1 assignment will be removed automatically once the update is complete.<br><br><strong>Warning:</strong> Removing the V1 assignment manually may result in the grade book failing to update correctly.";
+
+// Privacy strings for GDPR.
+$string['privacy:metadata:core_files'] = 'Turnitin Assignment 2 stores files which have been uploaded by the user to form a submission to send to Turnitin.';
+$string['privacy:metadata:turnitintooltwo_users'] = 'Information that links a Moodle user to a Turnitin user account and any preferences specific to Turnitin. These include default assignment settings and any Turnitin rubrics owned by them.';
+$string['privacy:metadata:turnitintooltwo_users:userid'] = 'The ID of the user being linked to a Turnitin account.';
+$string['privacy:metadata:turnitintooltwo_users:turnitin_uid'] = 'The ID of the user\'s Turnitin account.';
+$string['privacy:metadata:turnitintooltwo_users:instructor_defaults'] = 'The Instructor\'s default assignment settings';
+$string['privacy:metadata:turnitintooltwo_users:instructor_rubrics'] = 'Turnitin rubrics that belong to this user';
+$string['privacy:metadata:turnitintooltwo_users:user_agreement_accepted'] = 'Whether this user has accepted the Turnitin End User Licence Agreement.';
+
+$string['privacy:metadata:turnitintooltwo_submissions'] = 'Information about a user\'s submission that has been sent to Turnitin.';
+$string['privacy:metadata:turnitintooltwo_submissions:userid'] = 'The ID of the user who has made a submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_title'] = 'The title of the user\'s submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_filename'] = 'The name of the file that the user has submitted to Turnitin.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_objectid'] = 'The ID used by Turnitin to reference the user\'s submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_score'] = 'The originality score of the user\'s submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_grade'] = 'The grade applied to the user\'s submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_attempts'] = 'Timestamp indiciating when the user viewed feedback on their submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_modified'] = 'Timestamp indiciating when the user last modified their submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_unanon'] = 'Indicates whether the submission has been unanonymised so the author\'s identity is viewable by the instructor.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_unanonreason'] = 'The reason the user\' submission was unanonymised.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_transmatch'] = 'Indicates whether Turnitin used translated matching to produce an originality report for the user\'s submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_orcapable'] = 'Indicates whether Turnitin was able to produce an originality report for the user\'s submission.';
+$string['privacy:metadata:turnitintooltwo_submissions:submission_hash'] = 'A submission specific hash which contains the user\'s ID.';
+
+$string['privacy:metadata:turnitintooltwo_client'] = 'In order to make submissions to Turnitin, certain user data needs to be exchanged.';
+$string['privacy:metadata:turnitintooltwo_client:email'] = 'The email is sent from Moodle to allow a Turnitin account to be created.';
+$string['privacy:metadata:turnitintooltwo_client:firstname'] = 'Your first name is sent to Turnitin so that you have a better user experience.';
+$string['privacy:metadata:turnitintooltwo_client:lastname'] = 'Your last name is sent to Turnitin so that you have a better user experience.';
+$string['privacy:metadata:turnitintooltwo_client:submission_title'] = 'The title of the user\'s submission is sent to Turntin so that it can be identified.';
+$string['privacy:metadata:turnitintooltwo_client:submission_filename'] = 'The name of the file that the user has submitted is sent to Turntin so that it can be identified.';

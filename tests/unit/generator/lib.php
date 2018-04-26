@@ -104,6 +104,8 @@ abstract class test_lib extends advanced_testcase {
 
             $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
 
+            rebuild_course_cache($coursemodule->coursemodule);
+
             return $coursemodule->coursemodule;
         }
         
@@ -199,5 +201,30 @@ abstract class test_lib extends advanced_testcase {
         $enrol = enrol_get_plugin('manual');
         $instance = $DB->get_record("enrol", array('courseid' => $course, 'enrol' => 'manual'));
         $enrol->enrol_user($instance, $moodle_user, $roleid);
+    }
+
+    /**
+     * Create a test submission.
+     *
+     * @param $turnitintooltwoassignment
+     * @param $author
+     * @param $partid
+     */
+    public function create_test_submission($turnitintooltwoassignment, $author, $partid) {
+        $submission = new turnitintooltwo_submission(0, "moodle", $turnitintooltwoassignment, 1);
+
+        $data = new stdClass();
+        $data->userid = $author;
+        $data->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
+        $data->submission_part = $partid;
+        $data->submission_title = "Submission title";
+        $data->submission_type = 1;
+        $data->submission_objectid = null;
+        $data->submission_unanon = 0;
+        $data->submission_grade = null;
+        $data->submission_gmimaged = 0;
+        $data->submission_hash = $author.'_'.$turnitintooltwoassignment->turnitintooltwo->id.'_'.$partid;
+
+        $submission->insert_submission($data);
     }
 }
