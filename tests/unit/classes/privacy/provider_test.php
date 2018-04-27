@@ -198,7 +198,7 @@ class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\
         $cmcontext = context_module::instance($this->cm->id);
         provider::delete_data_for_all_users_in_context($cmcontext);
 
-        // After deletion, the choice answers for that choice activity should have been deleted.
+        // After deletion, there should be no submissions for that assignment.
         $count = $DB->count_records(
             'turnitintooltwo_submissions',
             array('turnitintooltwoid' => $turnitintooltwoassignment->turnitintooltwo->id)
@@ -255,7 +255,7 @@ class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\
         );
         provider::delete_data_for_user($contextlist);
 
-        // After deletion, the choice answers for the first student should have been deleted.
+        // After deletion, the submissions for the first student should have been deleted.
         $count = $DB->count_records(
             'turnitintooltwo_submissions',
             array(
