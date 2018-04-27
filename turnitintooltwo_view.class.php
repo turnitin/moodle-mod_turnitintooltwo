@@ -1387,7 +1387,7 @@ class turnitintooltwo_view {
 
                 // Has the student accepted the EULA?
                 $eulaaccepted = $submissionuser->useragreementaccepted;
-                if ($submissionuser->useragreementaccepted == 0 && !$_SESSION["unit_test"]) {
+                if ($submissionuser->useragreementaccepted == 0 && !empty($_SESSION["unit_test"])) {
                     $eulaaccepted = $submissionuser->get_accepted_user_agreement();
                 }
             }

@@ -425,12 +425,12 @@ if (!empty($action)) {
                 $nonsubmittedusers = array_diff_key((array)$allusers, (array)$suspendedusers, (array)$submittedusers);
                 foreach ($nonsubmittedusers as $nonsubmitteduser) {
                     // Send a message to the user's Moodle inbox with the digital receipt.
-                    $nonsubmitters->send_message($nonsubmitteduser->id, $subject, $message);
+                    $nonsubmitters->send_message($nonsubmitteduser->id, $subject, $message, $cm->course);
                 }
 
                 // Send a copy of message to the instructor if appropriate.
                 if (!empty($sendtoself)) {
-                    $nonsubmitters->send_message($USER->id, $subject, $message);
+                    $nonsubmitters->send_message($USER->id, $subject, $message, $cm->course);
                 }
 
                 $do = "emailsent";
