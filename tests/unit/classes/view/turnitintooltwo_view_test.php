@@ -136,6 +136,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 	}
  
 	public function test_inbox_table_structure_student() {
+
 		global $DB, $USER;
 		$this->resetAfterTest();
 		$_SESSION["unit_test"] = true;
@@ -147,6 +148,11 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$USER->lastnamephonetic = "";
 		$USER->middlename = "";
 		$USER->alternatename = "";
+
+		// Set Turnitin account values in config as they are used in comms.
+		set_config('apiurl', 'http://invalid', 'turnitintooltwo');
+		set_config('accountid', '1001', 'turnitintooltwo');
+		set_config('secretkey', 'ABCDEFGH', 'turnitintooltwo');
 
 		$course = $this->getDataGenerator()->create_course();
 
