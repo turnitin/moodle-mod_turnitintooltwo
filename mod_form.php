@@ -580,7 +580,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->setType('rubric', PARAM_RAW);
         }
 
-        if (!empty($config->usegrademark) && !empty($config->useerater)) {
+        if (!empty($config->useerater)) {
             $handbookoptions = array(
                                         1 => get_string('erater_handbook_advanced', 'turnitintooltwo'),
                                         2 => get_string('erater_handbook_highschool', 'turnitintooltwo'),
