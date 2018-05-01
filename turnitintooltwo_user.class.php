@@ -620,7 +620,11 @@ class turnitintooltwo_user {
                 return false;
             }
         } catch (Exception $e) {
-            // User may not be joined to account so we'll join them and recall function.
+            // Avoid API calls when running unit tests.
+            if (defined('PHPUNIT_TEST') && PHPUNIT_TEST) {
+                return true;
+            }
+
             $this->set_user_values_from_tii();
             $this->get_accepted_user_agreement();
         }
