@@ -150,9 +150,9 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$USER->alternatename = "";
 
         // Set Turnitin account values in config as they are used in comms.
-        set_config('apiurl', 'http://invalid', 'turnitintooltwo');
-        set_config('accountid', '1001', 'turnitintooltwo');
-        set_config('secretkey', 'ABCDEFGH', 'turnitintooltwo');
+		set_config('apiurl', 'http://invalid', 'turnitintooltwo');
+		set_config('accountid', '1001', 'turnitintooltwo');
+		set_config('secretkey', 'ABCDEFGH', 'turnitintooltwo');
 
 		$course = $this->getDataGenerator()->create_course();
 
