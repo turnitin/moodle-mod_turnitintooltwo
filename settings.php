@@ -224,7 +224,8 @@ if ($ADMIN->fulltree) {
     );
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/repositoryoption',
-                                                    get_string('turnitinrepositoryoptions', 'turnitintooltwo'),
+                                                    get_string('turnitinrepositoryoptions', 'turnitintooltwo').
+                                                    $OUTPUT->help_icon('turnitinrepositoryoptions', 'turnitintooltwo'),
                                                     get_string('turnitinrepositoryoptions_desc', 'turnitintooltwo'),
                                                     0, $repositoryoptions));
 
@@ -384,14 +385,16 @@ if ($ADMIN->fulltree) {
     switch ($config->repositoryoption) {
         case 0; // Standard options.
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
-                                                    get_string('submitpapersto', 'turnitintooltwo'),
+                                                    get_string('submitpapersto', 'turnitintooltwo').
+                                                    $OUTPUT->help_icon('submitpapersto', 'turnitintooltwo'),
                                                     '', 1, $suboptions ));
             break;
         case 1; // Standard options + Allow Instituional Repository.
             $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
 
             $settings->add(new admin_setting_configselect('turnitintooltwo/default_submitpapersto',
-                                                    get_string('submitpapersto', 'turnitintooltwo'),
+                                                    get_string('submitpapersto', 'turnitintooltwo').
+                                                    $OUTPUT->help_icon('submitpapersto', 'turnitintooltwo'),
                                                     '', 1, $suboptions ));
             break;
     }
