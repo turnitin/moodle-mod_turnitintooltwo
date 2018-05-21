@@ -39,13 +39,16 @@ class provider implements
     // This plugin is a core_user_data_provider.
     \core_privacy\local\request\plugin\provider {
 
+    // This is the trait to be included to actually benefit from the polyfill.
+    use \core_privacy\local\legacy_polyfill;    
+
     /**
      * Return the fields which contain personal data.
      *
      * @param $collection items a reference to the collection to use to store the metadata.
      * @return $collection the updated collection of metadata items.
      */
-    public static function get_metadata(collection $collection) : collection {
+    public static function _get_metadata(collection $collection) {
 
         $collection->link_subsystem(
             'core_files',
@@ -101,7 +104,7 @@ class provider implements
      * @param int $userid the userid.
      * @return contextlist the list of contexts containing user info for the user.
      */
-    public static function get_contexts_for_userid(int $userid) : contextlist {
+    public static function _get_contexts_for_userid($userid) {
 
         // Fetch all contexts where the user has a submission.
         $sql = "SELECT c.id
@@ -129,7 +132,7 @@ class provider implements
      *
      * @param approved_contextlist $contextlist a list of contexts approved for export.
      */
-    public static function export_user_data(approved_contextlist $contextlist) {
+    public static function _export_user_data(approved_contextlist $contextlist) {
         global $DB;
 
         if (empty($contextlist->count())) {
@@ -171,7 +174,7 @@ class provider implements
         $submissions = $DB->get_records_sql($sql, $params);
         foreach ($submissions as $submission) {
             $context = \context_module::instance($submission->cmid);
-            self::export_turnitintooltwo_data_for_user((array)$submission, $context, $user);
+            self::_export_turnitintooltwo_data_for_user((array)$submission, $context, $user);
         }
     }
 
@@ -182,7 +185,7 @@ class provider implements
      * @param \context_module $context the module context.
      * @param \stdClass $user the user record
      */
-    protected static function export_turnitintooltwo_data_for_user(array $submissiondata, \context_module $context, \stdClass $user) {
+    protected static function _export_turnitintooltwo_data_for_user(array $submissiondata, \context_module $context, \stdClass $user) {
         // Fetch the generic module data.
         $contextdata = helper::get_context_data($context, $user);
 
@@ -199,7 +202,7 @@ class provider implements
      *
      * @param \context $context the context to delete in.
      */
-    public static function delete_data_for_all_users_in_context(\context $context) {
+    public static function _delete_data_for_all_users_in_context(\context $context) {
         global $DB;
 
         if (empty($context)) {
@@ -219,7 +222,7 @@ class provider implements
      *
      * @param approved_contextlist $contextlist a list of contexts approved for deletion.
      */
-    public static function delete_data_for_user(approved_contextlist $contextlist) {
+    public static function _delete_data_for_user(approved_contextlist $contextlist) {
         global $DB;
 
         if (empty($contextlist->count())) {
