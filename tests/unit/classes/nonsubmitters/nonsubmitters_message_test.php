@@ -29,7 +29,7 @@ class mod_turnitintooltwo_nonsubmitter_message_testcase extends advanced_testcas
         $user1 = $this->getDataGenerator()->create_user();
 
         // Send message to both instructors.
-        $nonsubmitters_message->send_message($user1->id, 'Nonsubmitters Subject', 'Nonsubmitters Message');
+        $nonsubmitters_message->send_message($user1->id, 'Nonsubmitters Subject', 'Nonsubmitters Message', 1);
 
         $messages = $sink->get_messages();
 

@@ -16,6 +16,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+global $CFG;
+require_once($CFG->libdir . "/gradelib.php");
+
 define('MIGRATION_SUBMISSIONS_SITE_CUTOFF', 200);
 define('MIGRATION_MAX_SLEEP', 5);
 
@@ -214,7 +217,7 @@ class v1migration {
                     $oldersubmission = $DB->get_record('turnitintooltwo_submissions', array('submission_hash' => $v1partsubmission->submission_hash));
                     if ($oldersubmission) {
                         $v1partsubmission->id = $oldersubmission->id;
-                        $turnitintooltwosubmissionid = $DB->update_record("turnitintooltwo_submissions", $v1partsubmission);
+                        $DB->update_record("turnitintooltwo_submissions", $v1partsubmission);
                     }
                 }
             }
@@ -227,11 +230,13 @@ class v1migration {
         $this->log_success_migration_event($turnitintooltwoid, $this->courseid, $this->cm);
 
         // Update gradebook for submissions.
-        $gradeupdates = $this->migrate_gradebook($turnitintooltwoid);
+        $gradeupdates = $this->migrate_gradebook($turnitintooltwoid, $this->getV1assignment()->id, $this->getCourseid());
 
-        // Only change the titles if we have updated the grades.
+        // Once grades have been updated we can run the post migration task.
         if ($gradeupdates == "migrated") {
-            $this->update_titles_post_migration($turnitintooltwoid);
+            $_SESSION["migrationtool"]["status"] = $this->post_migration($turnitintooltwoid);
+        } elseif ($gradeupdates == "cron") {
+            $_SESSION["migrationtool"]["status"] = "cron";
         }
 
         // Link the v2 id to the v1 id in the session.
@@ -393,10 +398,12 @@ class v1migration {
     /**
      * Update the gradebook for a given assignment.
      * @param int $turnitintooltwoid The turnitintooltwoid of the assignment.
+     * @param int $turnitintoolid The turnitintoolid of the assignment.
+     * @param int courseid The course id of the assignment.
      * @param string $workflow Whether the function is called from the site or the cron.
      * @return string Whether we have migrated the assignment or need to use the cron.
      */
-    public static function migrate_gradebook($turnitintooltwoid, $workflow = "site") {
+    public static function migrate_gradebook($turnitintooltwoid, $turnitintoolid, $courseid, $workflow = "site") {
         global $CFG, $DB;
 
         // Create new Turnitintooltwo object.
@@ -415,6 +422,9 @@ class v1migration {
             sleep(round(max(MIGRATION_MAX_SLEEP - (count($submissions)/$migrationspersleepsecond), 0)));
         }
 
+        // Get the grades for the V1 assignment from the gradebook rather than the module.
+        $v1_grades = self::get_grades_array("turnitintool", $turnitintoolid, $courseid);
+
         /**
          * Grade migrations are slow, roughly 27 submissions per second.
          * As such we only migrate these during the assignment migration if there are not a lot of them. If there are a lot, we use the cron.
@@ -424,7 +434,17 @@ class v1migration {
             return "cron";
         } else {
             foreach ($submissions as $submission) {
+                // Update the grade from the gradebook.
+                $submission->submission_grade = (isset($v1_grades[$submission->userid])) ? $v1_grades[$submission->userid] : null;
+
                 $submissionclass->update_gradebook($submission, $assignmentclass);
+
+                // Handle overridden grades if necessary.
+                $grading_info = grade_get_grades($courseid, 'mod', 'turnitintool', $turnitintoolid, $submission->userid);
+
+                if (!empty($grading_info->items[0]->grades[$submission->userid]->overridden)) {
+                    self::handle_overridden_grade($v1_grades[$submission->userid], $submission->userid, $turnitintooltwoid, $courseid);
+                }
 
                 // Update the migrate_gradebook field for this submission.
                 $updatesubmission = new stdClass();
@@ -439,36 +459,87 @@ class v1migration {
     }
 
     /**
+     * Handle the situation where a user has overridden the grade in the gradebook.
+     *
+     * @param int $v1grade The grade from the V1 assignment.
+     * @param int $userid The userid the grade belongs to.
+     * @param int $turnitintooltwoid The turnitintooltwoid of the assignment.
+     * @param int $courseid The course id of the assignment.
+     */
+    public static function handle_overridden_grade($v1grade, $userid, $turnitintooltwoid, $courseid) {
+        $grading_info = grade_get_grades($courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
+
+        $grades = new stdClass();
+        $grades->userid = $userid;
+        $grades->finalgrade = $v1grade;
+
+        $grade_item = grade_item::fetch(array('id' => $grading_info->items[0]->id, 'courseid' => $courseid));
+        $grade_item->update_final_grade($grades->userid, $grades->finalgrade, 'editgrade');
+
+        $grade_grade = new grade_grade(array('userid' => $userid, 'itemid' => $grade_item->id), true);
+        $grade_grade->grade_item =& $grade_item; // no db fetching
+
+        $grade_grade->set_overridden(true);
+    }
+
+    /**
      * Update module titles after migration has completed.
      * @param int $v2assignmentid V2 Module id
+     *
+     * @return String Whether the post migration task was successful or had a gradebook update error.
      */
-    public function update_titles_post_migration($v2assignmentid) {
-        global $CFG, $DB;
-
-        // Remove the migration in progress text.
-        $this->v1assignment->name = str_replace(" (" . get_string('migrationinprogress', 'turnitintooltwo') . "...)", "", $this->v1assignment->name);
-
-        // Update the assignment title with new status.
-        $updatetitle = new stdClass();
-        $updatetitle->id = $this->v1assignment->id;
-        $updatetitle->name = $this->v1assignment->name . ' ('. get_string('migrated', 'turnitintooltwo') . ')';
-
-        $DB->update_record('turnitintool', $updatetitle);
-
-        // Temporarily set the assignment to visible so that the cron can rebuild the course cache for this assignment,
-        set_coursemodule_visible($this->cm->id, 1);
-        rebuild_course_cache($this->cm->id);
-        set_coursemodule_visible($this->cm->id, 0);
-
-        // Update the V1 assignment title in the gradebook.
-        @include_once($CFG->dirroot."/lib/gradelib.php");
-        $params = array();
-        $params['itemname'] = $updatetitle->name;
-        grade_update('mod/turnitintool', $this->courseid, 'mod', 'turnitintool', $this->v1assignment->id, 0, NULL, $params);
-
+    public function post_migration($v2assignmentid) {
         // Update the V2 assignment title in the gradebook.
+        $params = array();
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
+
+        // Perform a grade check to double check the grades are in the gradebook.
+        $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id, $this->courseid);
+        $v2_grades = $this->get_grades_array("turnitintooltwo", $v2assignmentid, $this->courseid);
+
+        // We only want to delete the V1 assignment if all grades are in the gradebook.
+        if ($v1_grades === $v2_grades) {
+            $this->delete_migrated_assignment($this->v1assignment->id);
+
+            return "success";
+        } else {
+            return "gradebookerror";
+        }
+    }
+
+    /**
+     * @param String $module turnitintool or turnitintooltwo
+     * @param int $assignmentid The turnitintoolid or turnitintooltwoid for the assignment.
+     * @param int $courseid The course ID for this assignment.
+     * @return array An array of grades for this assignment.
+     */
+    public static function get_grades_array($module, $assignmentid, $courseid) {
+        $cm = get_coursemodule_from_instance($module, $assignmentid);
+
+        if (!isset($cm->id)) {
+            return array();
+        }
+
+        $context = context_module::instance($cm->id);
+
+        $enrolled_students = get_enrolled_users($context, 'mod/'.$module.':submit', 0, 'u.id');
+
+        $userids = array();
+        foreach ($enrolled_students as $student) {
+            $userids[] = $student->id;
+        }
+
+        $grades = grade_get_grades($courseid, 'mod', $module, $assignmentid, $userids);
+
+        $response = array();
+        if (isset($grades->items[0]->grades)) {
+            foreach ($grades->items[0]->grades as $student => $grade_item) {
+                $response[$student] = $grade_item->grade;
+            }
+        }
+
+        return $response;
     }
 
     /**
@@ -504,8 +575,6 @@ class v1migration {
      */
     public static function turnitintooltwo_getassignments() {
         global $DB;
-
-        $config = get_config('turnitintooltwo');
 
         $return = array();
         $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
@@ -560,6 +629,7 @@ class v1migration {
         }
         $query = "SELECT id, name, migrated FROM {turnitintool}".$querywhere.$queryorder;
         $assignments = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
+
         $totalassignments = count($DB->get_records_sql($query, $queryparams));
         $return["aaData"] = array();
         foreach ($assignments as $assignment) {
@@ -569,7 +639,6 @@ class v1migration {
                 $assignment->migrated = html_writer::tag('span', $sronly, array('class' => 'fa fa-check'));
 
                 $assignmenttitle = format_string($assignment->name);
-
             } else {
                 $checkbox = "";
                 $sronly = html_writer::tag('span', get_string('no', 'turnitintooltwo'), array('class' => 'sr-only'));
@@ -587,31 +656,28 @@ class v1migration {
     }
 
     /**
-     * Delete a list of assignments.
+     * Delete an assignment.
      *
-     * @param array $assignmentids The assignment IDs to delete.
+     * @param int $assignmentid The assignment ID to delete.
      */
-    public static function turnitintooltwo_delete_assignments($assignmentids) {
+    public static function delete_migrated_assignment($assignmentid) {
         global $CFG, $DB;
 
         require_once($CFG->dirroot . "/mod/turnitintool/lib.php");
 
-        foreach ($assignmentids as $assignmentid) {
-            $cm = get_coursemodule_from_instance('turnitintool', $assignmentid);
+        $cm = get_coursemodule_from_instance('turnitintool', $assignmentid);
 
-            // We have found that backups aren't reliable on MSSQL so rather than use Moodle's
-            // function which uses the recycle tool and the backup procedure. We handle the deletion directly.
-            if ($CFG->dbtype == 'mssql' || $CFG->dbtype == 'sqlsrv') {
-                turnitintool_delete_instance($assignmentid);
+        // We have found that backups aren't reliable on MSSQL so rather than use Moodle's
+        // function which uses the recycle tool and the backup procedure. We handle the deletion directly.
+        if ($CFG->dbtype == 'mssql' || $CFG->dbtype == 'sqlsrv') {
+            turnitintool_delete_instance($assignmentid);
 
-                // Delete course module.
-                $DB->delete_records('course_modules', array('id' => $cm->id));
+            // Delete course module.
+            $DB->delete_records('course_modules', array('id' => $cm->id));
 
-                rebuild_course_cache($cm->course);
-            } else {
-                course_delete_module($cm->id);
-            }
-            
+            rebuild_course_cache($cm->course);
+        } else {
+            course_delete_module($cm->id);
         }
     }
 
@@ -684,7 +750,7 @@ class v1migration {
         $PAGE->requires->string_for_js('confirmv1deletetitle', 'turnitintooltwo');
         $PAGE->requires->string_for_js('confirmv1deletetext', 'turnitintooltwo');
         $PAGE->requires->string_for_js('confirmv1deletewarning', 'turnitintooltwo');
-        
+
         $migrationform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
                                                     $customdata);
 
@@ -695,43 +761,17 @@ class v1migration {
         return $output;
     }
 
-    /**
-     * activate_migration
-     * Updates the database to flag that the user has enabled the migration tool.
-     * @return object $activation - db record of the migration activation row inserted into config_plugins.
-     */
-    public static function activate_migration() {
-        global $DB;
-        $migration_enabled_params = array(
-            'plugin' => 'turnitintooltwo',
-            'name' => 'migration_enabled'
-        );
-        $migration_enabled = $DB->get_record('config_plugins', $migration_enabled_params);
-
-        $activation_properties = new stdClass;
-        $activation_properties->plugin = 'turnitintooltwo';
-        $activation_properties->name = 'migration_enabled';
-        $activation_properties->value  = 1;
-
-        if (empty($migration_enabled)) {
-            $activation = $DB->insert_record('config_plugins', $activation_properties);
-        } else {
-            $id = $migration_enabled->id;
-            $activation = $DB->update_record('config_plugins', array('id' => $id, 'value' => 1));
-        }
-        
-        return $activation;
-    }
-
-    public static function check_account($accountid) {
+    public static function check_account($accountid, $error = false) {
         global $CFG;
 
         $config = turnitintooltwo_admin_config();
 
         $tiiapiurl = (substr($config->apiurl, -1) == '/') ? substr($config->apiurl, 0, -1) : $config->apiurl;
 
+        $errorType = ($error) ? "&error=gradebook" : "";
+
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?lang=en_us&operation=mdl-migration&account=".$accountid);
+        curl_setopt($ch, CURLOPT_URL, $tiiapiurl."/api/rest/check?lang=en_us&operation=mdl-migration&account=".$accountid.$errorType);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         if (isset($CFG->proxyhost) AND !empty($CFG->proxyhost)) {
@@ -744,5 +784,19 @@ class v1migration {
 
         curl_exec($ch);
         curl_close($ch);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourseid() {
+        return $this->courseid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getV1assignment() {
+        return $this->v1assignment;
     }
 }

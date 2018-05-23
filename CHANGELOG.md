@@ -1,3 +1,96 @@
+### Date:	2018-May-23
+### Release:	v2018052301
+
+#### :zap: What's new
+
+---
+
+#### We now support Moodle 3.5
+
+You can find out more about Moodle 3.5 via Moodle's [release notes](https://docs.moodle.org/dev/Moodle_3.5_release_notes).
+
+#### Turnitin's Moodle V2 plugin is GDPR compliant!
+
+To support upcoming changes to European data protection law, we’ve focused our efforts on refreshing our processes around how we use your data.
+
+##### Repository settings are more transparent
+
+We've made the Moodle V2 repository settings much clearer, by providing easy-to-understand, transparent language behind the Store student papers    help icon. During assignment setup, administrators and instructors can now be completely sure that they're selecting the correct storage options for student papers.
+
+##### We're reporting on the data we store about our users
+
+Moodle has released two plugins with privacy features to assist with GDPR compliance. While we've successfully implemented [Moodle's new privacy features](https://docs.moodle.org/dev/Privacy_API), Moodle's update is only available to those using Moodle 3.3.5+, 3.4.2+, or 3.5. Therefore, if you're using an earlier version, you must upgrade to have access to these new features.
+
+To inform you about the data we store in relation to our users, we now provide a detailed list via the Moodle Privacy and Policies page. Learn more about the data we're reporting on via our [Moodle Plugins and GDPR](https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Plugins_and_GDPR) page.
+
+#### Students can request to download their data
+
+Students have the ability to request an export of their data stored in Moodle. This request can be accepted or declined by their Moodle administrator. If accepted, the student will be able to download all the data held about them, which includes data from Turnitin.
+
+#### Students can request to remove their data
+
+Students can also request their data to be removed from Moodle. This requested can be accepted or declined by their Moodle administrator. If accepted, the administrator will remove the student data from Moodle. However, administrators must contact support@turnitin.com to request that student data be removed from Turnitin itself.
+  
+> If you're a Moodle administrator, and using version 3.3.5+, 3.4.2+, or 3.5, follow the steps on the [Moodle Plugins and GDPR](https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Plugins_and_GDPR) page to view the data we store in Moodle.
+
+
+#### You can now send all papers to your institutional repository by default!
+
+We're aligning Turnitin repository options with our Moodle V2 plugin. If an institutional repository is enabled on their Turnitin account, administrators can now opt to **Submit all papers to the institutional repository**. This submission storage option sends all student submissions to the institutional repository without instructor intervention. For this repository option to work successfully, it must firstly be enabled in Turnitin, before it can be configured in Moodle.
+
+If you're a Moodle administrator, follow the steps below to enable this repository setting in Turnitin:
+
+1. Log into Turnitin.com or TurnitinUK.com.
+2. Under **Edit**, select the cog  icon.
+3. Select **Edit account settings**.
+4. Scroll to **Paper repository options** and select **Submit all papers to the institution repository**.
+6. Select the **Submit** button at the bottom of the page.
+
+Now, it's time to move to Moodle!
+
+1. From the Moodle left-hand side panel, select **Site administration**.
+2. Select **Plugins**.
+3. Select **Activity Modules**.
+4. Then **Manage Activities**.
+5. Scroll to **Turnitin Assignment 2** and select **Settings**.
+6. Scroll to **Paper Repository Assignments** and select **Submit all papers to the institutional repository**.
+
+### :wrench: Fixes and enhancements
+
+#### Assignment titles are now visible in the grade book
+
+This was a bit of an odd one! If an instructor created an assignment with Turnitin GradeMark disabled, the assignment title displayed in the Moodle grade book as the word 'Grade'. We're sure that you'd much rather see the assignment name to be able to distinguish one assignment from the other? Now, you can! Sorry about that!
+
+#### You can now exit lightboxes using the 'Close' button
+       	
+We received a report that the Close button in the Plagiarism Plugin's lightboxes wasn't performing correctly, in that it wasn't actually closing anything! Instead, users saw the following error: 'Uncaught TypeError: Cannot read property 'close' of undefined at HTMLAnchorElement.onclick'. Thanks for the heads up, @Haietza! We've fixed this issue.
+
+> **Lightboxes** display content by filling the screen and dimming out the rest of the web page. They can be closed to find the website contents still available. Items such as the QuickMark manager and the rubric manager are contained inside a lightbox.
+
+---
+
+### 2018-March-12
+### v2018031201
+
+#### Fixes and enhancements
+
+---
+
+#### Manual adjustments to grades now stick during V1 to V2 migration
+
+>Following the migration of a Moodle Direct V1 assignment to V2, grades that had been manually adjusted in the Moodle grade book would be overwritten to match the grade originally set in Turnitin Feedback Studio. With this overwrite being completely unintentional, we've made several backend changes to ensure that future manual adjustments within the grade book always remain fixed during migration.
+
+#### V1 assignments are now removed automatically after migration
+ 	
+>If an administrator failed to delete a Moodle Direct V1 assignment after its migration to V2, the grade of the V1 assignment would remain in the Moodle grade book, causing grades to effectively double. We've now adjusted the behavior of the Moodle Migration Tool to resolve this. So that you no longer need to worry about incorrect grades in the grade book, Moodle V1 assignments are now automatically deleted after migration.
+>
+>There may be instances where you'll still be required to remove V1 assignments manually (for example, the migration has been successful but there are conflicting grades in the grade book).
+
+#### Deleting V1 assignments that were migrated in prior versions 
+
+> You can manually delete your previously migrated assignments from the usual spot in the Moodle Migration Tool; we encourage you to delete these as soon as possible in order to resolve any current issues in the grade book. Any V1 assignments migrated after this update will be automatically deleted.
+
+
 ### :snowflake: Date:		2018-January-16
 ### :snowflake: Release:	v2018011601
 

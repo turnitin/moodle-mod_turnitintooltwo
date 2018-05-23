@@ -35,7 +35,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
     public function definition() {
         global $DB, $USER, $COURSE;
-        $config = turnitintooltwo_admin_config();
 
         // Module string is useful for product support.
         $modulestring = '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - (';
@@ -112,14 +111,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         }
 
         // Overwrite instructor default repository if admin is forcing repository setting.
-        switch ($config->repositoryoption) {
-            case 2; // Force Standard Repository.
-                $this->current->submitpapersto = 1;
-                break;
-            case 3; // Force No Repository.
-                $this->current->submitpapersto = 0;
-                break;
-        }
+        $submitpapersto = (empty($this->current->submitpapersto)) ? 0 : $this->current->submitpapersto;
+        $this->current->submitpapersto = turnitintooltwo_override_repository($submitpapersto);
 
         $modulestring .= ') -->';
 
@@ -187,7 +180,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         if (isset($_SESSION["notice"])) {
             $notice = $_SESSION["notice"];
             if (empty($_SESSION["notice"]["type"])) {
-                $notice["type"] = "general";
+                $notice["type"] = "info";
             }
             unset($_SESSION["notice"]);
         } else {
@@ -329,9 +322,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $dateoptions = array('startyear' => date( 'Y', strtotime( '-6 years' )), 'stopyear' => date( 'Y', strtotime( '+6 years' )),
                     'timezone' => 99, 'applydst' => true, 'step' => 1, 'optional' => false);
 
-        if (!empty($config->usegrademark)) {
-            $this->standard_grading_coursemodule_elements();
-        }
+        $this->standard_grading_coursemodule_elements();
 
         if (isset($this->_cm->id)) {
             $turnitintooltwoassignment = new turnitintooltwo_assignment($this->_cm->instance);
@@ -421,28 +412,35 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('reportgenspeed', 'reportgenspeed', 'turnitintooltwo');
         $mform->setDefault('reportgenspeed', $config->default_reportgenspeed);
 
-        $suboptions = array(0 => get_string('norepository', 'turnitintooltwo'),
-                            1 => get_string('standardrepository', 'turnitintooltwo'));
+        $suboptions = array(
+            SUBMIT_TO_NO_REPOSITORY => get_string('norepository', 'turnitintooltwo'),
+            SUBMIT_TO_STANDARD_REPOSITORY => get_string('standardrepository', 'turnitintooltwo')
+        );
+
         switch ($config->repositoryoption) {
-            case 0; // Standard options.
+            case ADMIN_REPOSITORY_OPTION_STANDARD; // Standard options.
                 $mform->addElement('select', 'submitpapersto', get_string('submitpapersto', 'turnitintooltwo'), $suboptions);
                 $mform->addHelpButton('submitpapersto', 'submitpapersto', 'turnitintooltwo');
                 $mform->setDefault('submitpapersto', $config->default_submitpapersto);
                 break;
-            case 1; // Standard options + Allow Instituional Repository.
-                $suboptions[2] = get_string('institutionalrepository', 'turnitintooltwo');
+            case ADMIN_REPOSITORY_OPTION_EXPANDED; // Standard options + Allow Instituional Repository.
+                $suboptions[SUBMIT_TO_INSTITUTIONAL_REPOSITORY] = get_string('institutionalrepository', 'turnitintooltwo');
 
                 $mform->addElement('select', 'submitpapersto', get_string('submitpapersto', 'turnitintooltwo'), $suboptions);
                 $mform->addHelpButton('submitpapersto', 'submitpapersto', 'turnitintooltwo');
                 $mform->setDefault('submitpapersto', $config->default_submitpapersto);
 
                 break;
-            case 2; // Force Standard Repository.
-                $mform->addElement('hidden', 'submitpapersto', 1);
+            case ADMIN_REPOSITORY_OPTION_FORCE_STANDARD; // Force Standard Repository.
+                $mform->addElement('hidden', 'submitpapersto', SUBMIT_TO_STANDARD_REPOSITORY);
                 $mform->setType('submitpapersto', PARAM_RAW);
                 break;
-            case 3; // Force No Repository.
-                $mform->addElement('hidden', 'submitpapersto', 0);
+            case ADMIN_REPOSITORY_OPTION_FORCE_NO; // Force No Repository.
+                $mform->addElement('hidden', 'submitpapersto', SUBMIT_TO_NO_REPOSITORY);
+                $mform->setType('submitpapersto', PARAM_RAW);
+                break;
+            case ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL; // Force Individual Repository.
+                $mform->addElement('hidden', 'submitpapersto', SUBMIT_TO_INSTITUTIONAL_REPOSITORY);
                 $mform->setType('submitpapersto', PARAM_RAW);
                 break;
         }
@@ -462,7 +460,8 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addHelpButton('journalcheck', 'journalcheck', 'turnitintooltwo');
         $mform->setDefault('journalcheck', $config->default_journalcheck);
 
-        if ($config->repositoryoption == "1") {
+        if ($config->repositoryoption == ADMIN_REPOSITORY_OPTION_EXPANDED ||
+            $config->repositoryoption == ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL) {
             $mform->addElement('select', 'institution_check', get_string('institutionalcheck', 'turnitintooltwo'), $ynoptions);
             $mform->setDefault('institution_check', $config->default_institutioncheck);
         }
@@ -581,7 +580,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->setType('rubric', PARAM_RAW);
         }
 
-        if (!empty($config->usegrademark) && !empty($config->useerater)) {
+        if (!empty($config->useerater)) {
             $handbookoptions = array(
                                         1 => get_string('erater_handbook_advanced', 'turnitintooltwo'),
                                         2 => get_string('erater_handbook_highschool', 'turnitintooltwo'),

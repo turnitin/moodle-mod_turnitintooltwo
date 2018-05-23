@@ -33,6 +33,42 @@ class mod_lib_testcase extends test_lib {
     }
 
     /**
+     * Test that we have the correct repository depending on the config settings.
+     */
+    public function test_turnitintooltwo_override_repository() {
+        $this->resetAfterTest();
+
+        // Note that $submitpapersto would only ever be 0, 1 or 2 but this is to illustrate
+        // that it won't be overridden by the turnitintooltwo_override_repository method.
+        $submitpapersto = 6;
+
+        // Test that repository is not overridden for value of 0.
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_STANDARD, 'turnitintooltwo');
+        $response = turnitintooltwo_override_repository($submitpapersto);
+        $this->assertEquals($response, $submitpapersto);
+
+        // Test that repository is not overridden for value of 1.
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_EXPANDED, 'turnitintooltwo');
+        $response = turnitintooltwo_override_repository($submitpapersto);
+        $this->assertEquals($response, $submitpapersto);
+
+        // Standard Repository is being forced.
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_FORCE_STANDARD, 'turnitintooltwo');
+        $response = turnitintooltwo_override_repository($submitpapersto);
+        $this->assertEquals($response, SUBMIT_TO_STANDARD_REPOSITORY);
+
+        // No Repository is being forced.
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_FORCE_NO, 'turnitintooltwo');
+        $response = turnitintooltwo_override_repository($submitpapersto);
+        $this->assertEquals($response, SUBMIT_TO_NO_REPOSITORY);
+
+        // Institutional Repository is being forced.
+        set_config('repositoryoption', ADMIN_REPOSITORY_OPTION_FORCE_INSTITUTIONAL, 'turnitintooltwo');
+        $response = turnitintooltwo_override_repository($submitpapersto);
+        $this->assertEquals($response, SUBMIT_TO_INSTITUTIONAL_REPOSITORY);
+    }
+
+    /**
      * Test that the cron processes gradebook migrations.
      */
     public function test_turnitintooltwo_cron_migrate_gradebook() {
@@ -73,16 +109,16 @@ class mod_lib_testcase extends test_lib {
 
         turnitintooltwo_cron_migrate_gradebook();
 
-        /** 
+        /**
          * Test that we migrate the gradebook when using the cron workflow.
          * There should be no grades that require a migration.
          */
         $submissions = $DB->get_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $v2assignment->id, 'migrate_gradebook' => 1));
         $this->assertEquals(0, count($submissions));
 
-        // Test that the title gets updated after the migration.
+        // Test that the V1 assignment has been deleted.
         $updatedassignment = $DB->get_record('turnitintool', array('id' => $v1assignment->id));
-        $this->assertEquals("Test Assignment (Migrated)", $updatedassignment->name);
+        $this->assertFalse($updatedassignment);
     }
 
     /**
@@ -114,13 +150,15 @@ class mod_lib_testcase extends test_lib {
 
         // Create V1 Assignment.
         $v1assignmenttitle = "Test Assignment (Migration in progress...)";
-        $v1assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1assignment = $v1migrationtest->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle, 1, 1);
+        $v1migrationtest->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle, 1, 2);
+        $v1migrationtest->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle, 1, 3);
         $v1migration = new v1migration($course->id, $v1assignment);
 
         // Create V2 Assignment.
-        $v2assignment1 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1", 400);
-        $v2assignment2 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 2", 400);
-        $v2assignment3 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 3", 400);
+        $v2assignment1 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 1", 400, 1);
+        $v2assignment2 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 2", 400, 2);
+        $v2assignment3 = $v1migrationtest->make_test_assignment($course->id, 'turnitintooltwo', "Test Assignment 3", 400, 3);
 
         // Set migrate gradebook to 1 so the assignments will get migrated when we call the function.
         $DB->set_field('turnitintooltwo_submissions', "migrate_gradebook", 1);
@@ -203,7 +241,7 @@ class mod_lib_testcase extends test_lib {
         $this->assertEquals(gmdate("Y-m-d\TH:i:s\Z", $turnitintooltwoassignment->turnitintooltwo->dtpost1), $response_post);
 
         // Check functionality with new dates. We won't know what the current time will be when the function is called so we check that new dates is not equal to the assignment date.
-        
+
         $response_start = turnitintooltwo_generate_part_dates(1, "start", $turnitintooltwoassignment->turnitintooltwo, 1);
         $response_due   = turnitintooltwo_generate_part_dates(1, "due", $turnitintooltwoassignment->turnitintooltwo, 1);
         $response_post  = turnitintooltwo_generate_part_dates(1, "post", $turnitintooltwoassignment->turnitintooltwo, 1);

@@ -319,7 +319,7 @@ class turnitintooltwo_submission {
 
         // Delete Moodle submission first.
         if (!$DB->delete_records('turnitintooltwo_submissions', array('id' => $this->id))) {
-            $notice["type"] = "error";
+            $notice["type"] = "danger";
             $notice["message"] = get_string('submissiondeleteerror', 'turnitintooltwo');
             return $notice;
         }
@@ -389,7 +389,7 @@ class turnitintooltwo_submission {
                     $this->userid
                 );
 
-                $notice["type"] = "full-error";
+                $notice["type"] = "danger";
                 $notice["message"] = get_string('submissiondeleted', 'turnitintooltwo').
                                         ' ('.get_string('turnitinid', 'turnitintooltwo').
                                             ': '.$this->submission_objectid.')';
@@ -811,7 +811,7 @@ class turnitintooltwo_submission {
                 $sub->id = $DB->insert_record("turnitintooltwo_submissions", $sub, true, $bulk);
             }
 
-            //Update the Moodle gradebook.
+            // Update the Moodle gradebook.
             $this->update_gradebook($sub, $turnitintooltwoassignment);
         }
     }
@@ -861,10 +861,12 @@ class turnitintooltwo_submission {
      * @return boolean
      */
     public function unanonymise_submission($reason) {
+        global $USER;
+
         // Get user and part details.
         $turnitintooltwoassignment = new turnitintooltwo_assignment($this->turnitintooltwoid);
         $partdetails = $turnitintooltwoassignment->get_part_details($this->submission_part);
-        $user = new turnitintooltwo_user($this->userid);
+        $user = new turnitintooltwo_user($USER->id);
 
         // Initialise Comms Object.
         $turnitincomms = new turnitintooltwo_comms();

@@ -42,16 +42,17 @@ abstract class test_lib extends advanced_testcase {
      * @param string $modname Module name (turnitintool or turnitintooltwo)
      * @param int $assignmentid Assignment Module ID
      * @param int $number_of_parts - The number of parts to create
+     * @param int $tiiassignid - Specify a Turnitin assignment ID - use when creating multiple assignments to differentiate them.
      *
      * @return array $parts_created - parts added to the assignment listed as partid => partobject
      */
-    public function make_test_parts($modname, $assignmentid, $number_of_parts) {
+    public function make_test_parts($modname, $assignmentid, $number_of_parts, $tiiassignid = null) {
         global $DB;
 
         $modulevar = $modname.'id';
         $part = new stdClass();
         $part->$modulevar = $assignmentid;
-        $part->tiiassignid = 0;
+        $part->tiiassignid = is_null($tiiassignid) ? 0 : $tiiassignid;
         $part->dtstart = 0;
         $part->dtdue = 0;
         $part->dtpost = 0;
@@ -102,6 +103,8 @@ abstract class test_lib extends advanced_testcase {
             }
 
             $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
+
+            rebuild_course_cache($coursemodule->coursemodule);
 
             return $coursemodule->coursemodule;
         }
@@ -198,5 +201,30 @@ abstract class test_lib extends advanced_testcase {
         $enrol = enrol_get_plugin('manual');
         $instance = $DB->get_record("enrol", array('courseid' => $course, 'enrol' => 'manual'));
         $enrol->enrol_user($instance, $moodle_user, $roleid);
+    }
+
+    /**
+     * Create a test submission.
+     *
+     * @param $turnitintooltwoassignment
+     * @param $author
+     * @param $partid
+     */
+    public function create_test_submission($turnitintooltwoassignment, $author, $partid) {
+        $submission = new turnitintooltwo_submission(0, "moodle", $turnitintooltwoassignment, 1);
+
+        $data = new stdClass();
+        $data->userid = $author;
+        $data->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
+        $data->submission_part = $partid;
+        $data->submission_title = "Submission title";
+        $data->submission_type = 1;
+        $data->submission_objectid = null;
+        $data->submission_unanon = 0;
+        $data->submission_grade = null;
+        $data->submission_gmimaged = 0;
+        $data->submission_hash = $author.'_'.$turnitintooltwoassignment->turnitintooltwo->id.'_'.$partid;
+
+        $submission->insert_submission($data);
     }
 }
