@@ -63,7 +63,7 @@ This was a bit of an odd one! If an instructor created an assignment with Turnit
 
 #### You can now exit lightboxes using the 'Close' button
        	
-We received a report that the Close button in the Plagiarism Plugin's lightboxes wasn't performing correctly, in that it wasn't actually closing anything! Instead, users saw the following error: 'Uncaught TypeError: Cannot read property 'close' of undefined at HTMLAnchorElement.onclick'. Thanks for the heads up, @Haietza! We've fixed this issue.
+We received a report that the Close button in the Moodle V2 plugin's lightboxes wasn't performing correctly, in that it wasn't actually closing anything! Instead, users saw the following error: 'Uncaught TypeError: Cannot read property 'close' of undefined at HTMLAnchorElement.onclick'. Thanks for the heads up, @Haietza! We've fixed this issue.
 
 > **Lightboxes** display content by filling the screen and dimming out the rest of the web page. They can be closed to find the website contents still available. Items such as the QuickMark manager and the rubric manager are contained inside a lightbox.
 
