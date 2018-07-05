@@ -140,6 +140,14 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		global $DB, $USER;
 		$this->resetAfterTest();
 		$_SESSION["unit_test"] = true;
+		
+		$USER->firstname = 'unit_test_first_654984';
+		$USER->lastname = 'unit_test_last_654984';
+		$USER->language = "en_US";
+		$USER->firstnamephonetic = "";
+		$USER->lastnamephonetic = "";
+		$USER->middlename = "";
+		$USER->alternatename = "";
 
 		// Set Turnitin account values in config as they are used in comms.
 		set_config('apiurl', 'http://invalid', 'turnitintooltwo');
