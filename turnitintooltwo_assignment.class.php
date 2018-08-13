@@ -864,9 +864,21 @@ class turnitintooltwo_assignment {
         $properties->timeduration = 0;
 
         require_once($CFG->dirroot.'/calendar/lib.php');
+
+        // Required parameters to support Moodle 3.3+ course overview block.
+        if ($CFG->branch >= 33) {
+            $properties->timesort = $duedate;
+            $properties->type = CALENDAR_EVENT_TYPE_ACTION;
+        }
+
         $event = new calendar_event($properties);
+
         return $event->update($properties, false);
     }
+
+
+// Tomorrow - try sticking the below in lib.php and understand how block_myoverview works
+//
 
     /**
      * Create Assignment on Turnitin and return id, delete the instance if it fails
