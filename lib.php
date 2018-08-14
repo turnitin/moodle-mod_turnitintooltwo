@@ -1873,31 +1873,22 @@ function mod_turnitintooltwo_core_calendar_provide_event_action(calendar_event $
  */
 function mod_turnitintooltwo_get_availability_status($data, $checkcapability = false, $context = null) {
     $open = true;
-    $closed = false;
     $warnings = array();
 
     $timenow = time();
-    if (!empty($data->timeopen) and $data->timeopen > $timenow) {
+    if (!empty($data->timeopen) && $data->timeopen > $timenow) {
         $open = false;
+        $warnings['notopenyet'] = userdate($data->timeopen);
     }
-    if (!empty($data->timeclose) and $timenow > $data->timeclose) {
-        $closed = true;
+    if (!empty($data->timeclose) && $timenow > $data->timeclose) {
+        $open = false;
+        $warnings['expired'] = userdate($data->timeclose);
     }
 
-    if (!$open or $closed) {
-        if ($checkcapability and !empty($context) and has_capability('mod/turnitintooltwo:read', $context)) {
-            return array(true, $warnings);
-        }
-
-        if (!$open) {
-            $warnings['notopenyet'] = userdate($data->timeopen);
-        }
-        if ($closed) {
-            $warnings['expired'] = userdate($data->timeclose);
-        }
-        return array(false, $warnings);
+    if ($checkcapability && !empty($context) && has_capability('mod/turnitintooltwo:read', $context)) {
+        return array(true, $warnings);
     }
 
     // Activity is available.
-    return array(true, $warnings);
+    return array($open, $warnings);
 }

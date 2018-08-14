@@ -315,45 +315,48 @@ class mod_lib_testcase extends test_lib {
         $data->timeopen = time() + DAYSECS;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, false);
         $this->assertEquals(false, $status);
-        $this->assertCount(1, $warnings);
+        $this->assertArrayHasKey('notopenyet', $warnings);
 
         // Turnitintooltwo closed.
         $data->timeopen = 0;
         $data->timeclose = time() - DAYSECS;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, false);
         $this->assertEquals(false, $status);
-        $this->assertCount(1, $warnings);
+        $this->assertArrayHasKey('expired', $warnings);
 
         // Turnitintooltwo not open and closed.
         $data->timeopen = time() + DAYSECS;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, false);
         $this->assertEquals(false, $status);
-        $this->assertCount(2, $warnings);
+        $this->assertArrayHasKey('notopenyet', $warnings);
+        $this->assertArrayHasKey('expired', $warnings);
 
         // Now additional checkings with different parameters values.
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, true, $context);
         $this->assertEquals(false, $status);
-        $this->assertCount(2, $warnings);
+        $this->assertArrayHasKey('notopenyet', $warnings);
+        $this->assertArrayHasKey('expired', $warnings);
 
         // Turnitintooltwo not open.
         $data->timeopen = time() + DAYSECS;
         $data->timeclose = 0;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, true, $context);
         $this->assertEquals(false, $status);
-        $this->assertCount(1, $warnings);
+        $this->assertArrayHasKey('notopenyet', $warnings);
 
         // Turnitintooltwo closed.
         $data->timeopen = 0;
         $data->timeclose = time() - DAYSECS;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, true, $context);
         $this->assertEquals(false, $status);
-        $this->assertCount(1, $warnings);
+        $this->assertArrayHasKey('expired', $warnings);
 
         // Turnitintooltwo not open and closed.
         $data->timeopen = time() + DAYSECS;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, true, $context);
         $this->assertEquals(false, $status);
-        $this->assertCount(2, $warnings);
+        $this->assertArrayHasKey('notopenyet', $warnings);
+        $this->assertArrayHasKey('expired', $warnings);
 
         // As teacher now.
         self::setUser($teacher);
@@ -362,6 +365,7 @@ class mod_lib_testcase extends test_lib {
         $data->timeopen = time() + DAYSECS;
         list($status, $warnings) = mod_turnitintooltwo_get_availability_status($data, false);
         $this->assertEquals(false, $status);
-        $this->assertCount(2, $warnings);
+        $this->assertArrayHasKey('notopenyet', $warnings);
+        $this->assertArrayHasKey('expired', $warnings);
     }
 }
