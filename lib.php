@@ -1839,8 +1839,6 @@ function turnitintooltwo_override_repository($submitpapersto) {
  */
 function mod_turnitintooltwo_core_calendar_provide_event_action(calendar_event $event,
                                                                 \core_calendar\action_factory $factory) {
-    global $CFG;
-
     $cm = get_fast_modinfo($event->courseid)->instances['turnitintooltwo'][$event->instance];
 
     if (!empty($cm->customdata['timeclose']) && $cm->customdata['timeclose'] < time()) {
