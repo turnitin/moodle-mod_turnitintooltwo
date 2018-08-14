@@ -4,7 +4,6 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-require_once($CFG->dirroot . '/calendar/lib.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/lib.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/v1migration/v1migration.php');
 require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/generator/lib.php');

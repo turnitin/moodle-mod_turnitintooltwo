@@ -876,10 +876,6 @@ class turnitintooltwo_assignment {
         return $event->update($properties, false);
     }
 
-
-// Tomorrow - try sticking the below in lib.php and understand how block_myoverview works
-//
-
     /**
      * Create Assignment on Turnitin and return id, delete the instance if it fails
      *
