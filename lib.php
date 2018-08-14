@@ -1889,6 +1889,5 @@ function mod_turnitintooltwo_get_availability_status($data, $checkcapability = f
         return array(true, $warnings);
     }
 
-    // Activity is available.
     return array($open, $warnings);
 }
