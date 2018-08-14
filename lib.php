@@ -1825,3 +1825,68 @@ function turnitintooltwo_override_repository($submitpapersto) {
 
     return $submitpapersto;
 }
+
+/**
+ * This function receives a calendar event and returns the action associated with it, or null if there is none.
+ *
+ * This is used by block_myoverview in order to display the event appropriately. If null is returned then the event
+ * is not displayed on the block.
+ *
+ * @param calendar_event $event
+ * @param \core_calendar\action_factory $factory
+ * @return \core_calendar\local\event\entities\action_interface|null
+ */
+function mod_turnitintooltwo_core_calendar_provide_event_action(calendar_event $event,
+                                                                \core_calendar\action_factory $factory) {
+    $cm = get_fast_modinfo($event->courseid)->instances['turnitintooltwo'][$event->instance];
+
+    if (!empty($cm->customdata['timeclose']) && $cm->customdata['timeclose'] < time()) {
+        // The assignment has closed so the user can no longer submit anything.
+        return null;
+    }
+
+    // Restore object from cached values in $cm, we only need id, timeclose and timeopen.
+    $customdata = $cm->customdata ?: [];
+    $customdata['id'] = $cm->instance;
+    $data = (object)($customdata + ['timeclose' => 0, 'timeopen' => 0]);
+
+    // Check that the activity is open.
+    list($actionable, $warnings) = mod_turnitintooltwo_get_availability_status($data, true, context_module::instance($cm->id));
+
+    $identifier = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? 'allsubmissions' : 'addsubmission';
+    return $factory->create_instance(
+        get_string($identifier, 'turnitintooltwo'),
+        new \moodle_url('/mod/turnitintooltwo/view.php', array('id' => $cm->id)),
+        1,
+        $actionable
+    );
+}
+
+/**
+ * Check if an activity is available for the current user.
+ *
+ * @param  stdClass  $data             Availability data
+ * @param  boolean $checkcapability    Check the mod/turnitintooltwo:read cap
+ * @param  stdClass  $context          Module context, required if $checkcapability is set to true
+ * @return array                       status (available or not and possible warnings)
+ */
+function mod_turnitintooltwo_get_availability_status($data, $checkcapability = false, $context = null) {
+    $open = true;
+    $warnings = array();
+
+    $timenow = time();
+    if (!empty($data->timeopen) && $data->timeopen > $timenow) {
+        $open = false;
+        $warnings['notopenyet'] = userdate($data->timeopen);
+    }
+    if (!empty($data->timeclose) && $timenow > $data->timeclose) {
+        $open = false;
+        $warnings['expired'] = userdate($data->timeclose);
+    }
+
+    if ($checkcapability && !empty($context) && has_capability('mod/turnitintooltwo:read', $context)) {
+        return array(true, $warnings);
+    }
+
+    return array($open, $warnings);
+}
