@@ -33,7 +33,6 @@ define('TURNITINTOOLTWO_DEFAULT_PSEUDO_DOMAIN', '@tiimoodle.com');
 define('TURNITINTOOLTWO_DEFAULT_PSEUDO_FIRSTNAME', get_string('defaultcoursestudent'));
 define('TURNITINTOOLTWO_SUBMISSION_GET_LIMIT', 100);
 define('TURNITINTOOLTWO_MAX_FILENAME_LENGTH', 180);
-define('TURNITIN_SUPPORT_FORM', 'http://turnitin.com/self-service/support-form.html');
 define('TURNITIN_COURSE_TITLE_LIMIT', 300);
 define('TURNITIN_ASSIGNMENT_TITLE_LIMIT', 300);
 define('MIGRATION_SUBMISSIONS_CUTOFF', 1000);

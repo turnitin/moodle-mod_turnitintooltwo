@@ -77,52 +77,6 @@ $url = new moodle_url('/mod/turnitintooltwo/extras.php', $urlparams);
 $title = "";
 
 switch ($cmd) {
-    case "supportwizard":
-        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitin_helpdesk', 'mod_turnitintooltwo');
-        $title = get_string('turnitinhelpdesk', 'turnitintooltwo');
-
-        include("classes/helpdeskwizard/helpdeskwizard.php");
-        $helpdeskwizard = new helpdeskwizard();
-        $legacy = required_param('legacy', PARAM_INT);
-        $output = $helpdeskwizard->output_wizard($id, $legacy);
-        break;
-
-    case "supportform":
-        include("classes/helpdeskwizard/helpdeskwizard.php");
-        $helpdeskwizard = new helpdeskwizard();
-        $title = get_string('turnitinhelpdesk', 'turnitintooltwo');
-
-        // Get the Turnitin class id if we are in a class context.
-        $tiiclass = 0;
-        if ($id != 0) {
-            $legacy = required_param('legacy', PARAM_INT);
-            $coursetype = $legacy ? "V1" : "TT";
-
-            $course = turnitintooltwo_assignment::get_course_data($course->id, $coursetype);
-            $tiiclass = (isset($course->turnitin_cid)) ? $course->turnitin_cid : 0;
-        }
-
-        $category = optional_param('category', "", PARAM_ALPHAEXT);
-        $subcategory = optional_param('sub_category', "", PARAM_ALPHAEXT);
-
-        $config = turnitintooltwo_admin_config();
-        $pluginversion = turnitintooltwo_get_version();
-
-        // Parameters to pass to support form.
-        $params = array(
-                'category' => $category,
-                'sub_category' => $subcategory,
-                'class_id' => $tiiclass,
-                'vle_version' => 'Moodle ('.$CFG->branch.') '.$CFG->version,
-                'integration_id' => 'MoodleDirectV2',
-                'integration_version' => $pluginversion,
-                'account_id' => $config->accountid
-            );
-
-        // Output Iframe containing Turnitin Helpdesk form.
-        $output = $helpdeskwizard->output_form( $params );
-        break;
-
     case "courses":
         require_capability('moodle/course:create', context_system::instance());
 

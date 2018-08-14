@@ -251,12 +251,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitininboxlayout_desc', 'turnitintooltwo'),
                                                     0, $layoutoptions));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/helpdeskwizard',
-                                                    get_string('turnitinsettingshelpwizard', 'turnitintooltwo'),
-                                                    get_string('turnitinsettingshelpwizard_desc', 'turnitintooltwo'),
-                                                    0, $ynoptions
-                                                ));
-
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),
                        get_string('studentdataprivacy_desc', 'turnitintooltwo')));
