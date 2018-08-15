@@ -290,7 +290,7 @@ switch ($action) {
 
             $PAGE->set_context(context_module::instance($cm->id));
             $turnitintooltwoview = new turnitintooltwo_view();
-            
+
             $view = $turnitintooltwoview->get_submission_inbox($cm, $turnitintooltwoassignment, $parts, $partid, $start);
             $return["aaData"] = $view;
             $totalsubmitters = $DB->count_records('turnitintooltwo_submissions',
@@ -775,21 +775,6 @@ switch ($action) {
         echo json_encode($return);
         break;
 
-    case "check_upgrade":
-        if (!confirm_sesskey()) {
-            throw new moodle_exception('invalidsesskey', 'error');
-        }
-        $data = '';
-        $currentversion = required_param('current_version', PARAM_INT);
-
-        $PAGE->set_context(context_system::instance());
-
-        if (is_siteadmin()) {
-            $data = turnitintooltwo_updateavailable($currentversion);
-        }
-        echo json_encode($data);
-        break;
-
     case "test_connection":
         if (!confirm_sesskey()) {
             throw new moodle_exception('invalidsesskey', 'error');
@@ -943,7 +928,7 @@ switch ($action) {
         if ( isset( $_SESSION["migrationtool"][$turnitintoolid] ) && is_numeric( $_SESSION["migrationtool"][$turnitintoolid] ) ) {
             $turnitintooltwoid = intval( $_SESSION["migrationtool"][$turnitintoolid] );
         }
-        
+
         if ( $turnitintooltwoid != 0 ) {
             $cm = get_coursemodule_from_instance("turnitintooltwo", $turnitintooltwoid);
             echo json_encode(array(
