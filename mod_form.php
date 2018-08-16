@@ -110,8 +110,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             }
         }
 
+        $config = turnitintooltwo_admin_config();
+
         // Overwrite instructor default repository if admin is forcing repository setting.
-        $submitpapersto = (empty($this->current->submitpapersto)) ? 0 : $this->current->submitpapersto;
+        $submitpapersto = empty($this->current->submitpapersto) ? $config->turnitin_default_submitpapersto : $this->current->submitpapersto;
         $this->current->submitpapersto = turnitintooltwo_override_repository($submitpapersto);
 
         $modulestring .= ') -->';
