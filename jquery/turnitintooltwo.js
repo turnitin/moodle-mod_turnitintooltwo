@@ -202,7 +202,7 @@
             node.closest('.submissionsDataTable').DataTable()
                 .order( [ sortColumn, sortby ] )
                 .draw();
-            
+
             node.addClass('sorting_' + sortby).removeClass('sorting sorting_' + currentsort);
             node.parent().removeClass('sorting sorting_asc sorting_desc');
             node.siblings().removeClass('sorting_asc sorting_desc').addClass('sorting');
@@ -699,7 +699,7 @@
             }
         });
 
-        if ($("#id_rubric, #id_plagiarism_rubric").length > 0) {
+        if ($("#id_rubric").length > 0) {
             refreshRubricSelect();
         }
 
