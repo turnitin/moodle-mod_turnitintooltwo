@@ -108,11 +108,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             foreach ($instructordefaults as $k => $v) {
                 $this->current->$k = $v;
             }
-        }
 
-        // Overwrite instructor default repository if admin is forcing repository setting.
-        $submitpapersto = (empty($this->current->submitpapersto)) ? 0 : $this->current->submitpapersto;
-        $this->current->submitpapersto = turnitintooltwo_override_repository($submitpapersto);
+            $this->current = $this->populate_submitpapersto($this->current);
+        }
 
         $modulestring .= ') -->';
 
@@ -715,5 +713,24 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         }
 
         $data = $this->get_data();
+    }
+
+    /**
+     * Returns the default value for submitpapersto
+     * @param stdClass $current
+     * @return stdClass
+     */
+    public static function populate_submitpapersto(stdClass $current) {
+
+        $config = turnitintooltwo_admin_config();
+        // Overwrite instructor default repository if admin is forcing repository setting.
+        $submitpapersto = $current->submitpapersto;
+        if (is_null($submitpapersto)) {
+            $submitpapersto = $config->default_submitpapersto;
+        }
+
+        $current->submitpapersto = turnitintooltwo_override_repository($submitpapersto);
+
+        return $current;
     }
 }
