@@ -723,9 +723,11 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     public static function populate_submitpapersto(stdClass $current) {
 
         $config = turnitintooltwo_admin_config();
+
         // Overwrite instructor default repository if admin is forcing repository setting.
-        $submitpapersto = $current->submitpapersto;
-        if (is_null($submitpapersto)) {
+        if (isset($current->submitpapersto)) {
+            $submitpapersto = $current->submitpapersto;
+        } else {
             $submitpapersto = $config->default_submitpapersto;
         }
 
