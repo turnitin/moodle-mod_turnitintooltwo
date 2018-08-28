@@ -202,7 +202,7 @@
             node.closest('.submissionsDataTable').DataTable()
                 .order( [ sortColumn, sortby ] )
                 .draw();
-            
+
             node.addClass('sorting_' + sortby).removeClass('sorting sorting_' + currentsort);
             node.parent().removeClass('sorting sorting_asc sorting_desc');
             node.siblings().removeClass('sorting_asc sorting_desc').addClass('sorting');
@@ -699,7 +699,7 @@
             }
         });
 
-        if ($("#id_rubric, #id_plagiarism_rubric").length > 0) {
+        if ($("#id_rubric").length > 0) {
             refreshRubricSelect();
         }
 
@@ -845,14 +845,21 @@
                     $(window).on("message", function (ev) {
                         var message = typeof ev.data === 'undefined' ? ev.originalEvent.data : ev.data;
 
-                        $.ajax({
-                            type: "POST",
-                            url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
-                            dataType: "json",
-                            data: { action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey },
-                            success: function (data) { window.location.reload(); },
-                            error: function (data) { window.location.reload(); }
-                        });
+                        // Only make ajax request if message is one of the expected responses.
+                        if (message == 'turnitin_eula_declined' || message == 'turnitin_eula_accepted') {
+                            $.ajax({
+                                type: "POST",
+                                url: M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
+                                dataType: "json",
+                                data: {action: "acceptuseragreement", message: message, sesskey: M.cfg.sesskey},
+                                success: function (data) {
+                                    window.location.reload();
+                                },
+                                error: function (data) {
+                                    window.location.reload();
+                                }
+                            });
+                        }
                     });
                 },
                 onCleanup: function () {

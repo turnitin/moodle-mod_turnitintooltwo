@@ -76,25 +76,6 @@ if ($ADMIN->fulltree) {
         // Include javascript.
         $PAGE->requires->jquery();
         $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo_settings', 'mod_turnitintooltwo');
-        $PAGE->requires->string_for_js('upgradeavailable', 'turnitintooltwo');
-
-        if (is_siteadmin()) {
-            $data = turnitintooltwo_updateavailable($version);
-
-            if ($data['update']) {
-                $upgrade = html_writer::tag('a', get_string('upgradeavailable', 'turnitintooltwo'), array('href' => $data['file']));
-            } else {
-                $upgrade = html_writer::tag('span', get_string('upgradenotavailable', 'turnitintooltwo'),
-                                        array('class' => 'tii_no_upgrade'));
-                $upgrade .= html_writer::tag('a', $OUTPUT->pix_icon('refresh',
-                                        get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        array('href' => '#', 'class' => 'tii_upgrade_check', 'id' => 'version_'.$version));
-            }
-        }
-
-        $upgrade .= html_writer::tag('span', $OUTPUT->pix_icon('loader',
-                                        get_string('checkingupgrade', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                        array('class' => 'tii_upgrading_check'));
     }
 
     // Offline mode provided by Androgogic. Set tiioffline in config.php.
@@ -121,10 +102,6 @@ if ($ADMIN->fulltree) {
     $testconnection .= html_writer::end_tag('div');
 
     $desc = '('.get_string('moduleversion', 'turnitintooltwo').': '.$version.')';
-
-    if ($currentsection == 'modsettingturnitintooltwo') {
-        $desc .= ' - '.$upgrade;
-    }
 
     $settings->add(new admin_setting_heading(
         'turnitintooltwo_migration_status_header',
@@ -250,12 +227,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitininboxlayout', 'turnitintooltwo'),
                                                     get_string('turnitininboxlayout_desc', 'turnitintooltwo'),
                                                     0, $layoutoptions));
-
-    $settings->add(new admin_setting_configselect('turnitintooltwo/helpdeskwizard',
-                                                    get_string('turnitinsettingshelpwizard', 'turnitintooltwo'),
-                                                    get_string('turnitinsettingshelpwizard_desc', 'turnitintooltwo'),
-                                                    0, $ynoptions
-                                                ));
 
     // Following are values for student privacy settings.
     $settings->add(new admin_setting_heading('turnitintooltwo_privacy', get_string('studentdataprivacy', 'turnitintooltwo'),

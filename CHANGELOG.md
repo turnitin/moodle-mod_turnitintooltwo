@@ -1,3 +1,31 @@
+### Date:	2018-August-28
+### Release:	v2018082801
+
+### :wrench: Fixes and enhancements
+
+---
+
+#### The administrator default option for student paper storage is now visible to instructors
+
+We noticed a blip, where the administrator default option for student paper storage wasn't passed to instructors during assignment creation. We've corrected this problem so that the "Store student papers" drop-down menu now populates with the preferred administrator option.
+
+**Note:** All instructor default settings will override the global settings of an administrator.
+
+#### V2 assignments are now available on the Moodle course overview page
+
+We found that Moodle V2 assignments failed to appear on the Moodle course overview page when using Moodle 3.3+ which made it difficult to access assignments. This issue was a direct result of Moodle making a change to their course overview block. To resolve this, we've implemented Moodle's [release notesCalendar Action Events API](https://docs.moodle.org/dev/Calendar_API#Action_events). All is back to normal.
+
+#### The link to the Moodle support wizard is no longer available in Moodle
+
+Our Moodle support wizard has been broken for some time, and while we try to fix it, we're removing access to it to prevent confusion. But don't worry! You can still contact Turnitin via email at tiisupport@turnitin.com. We're currently thinking about how we can reintroduce a working version of the form in the future.
+
+#### We've removed the plugin update checker from Turnitin administrator settings
+
+Moodle has superseded this update checker with a tool that not only checks for Turnitin plugin updates but updates to all plugins within Moodle!
+
+You can find Moodle's **Check for available updates** button by visiting: Site administration > Plugins > Plugins overview.
+
+---
 ### Date:	2018-May-23
 ### Release:	v2018052301
 

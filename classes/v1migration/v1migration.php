@@ -568,7 +568,7 @@ class v1migration {
     }
 
     /**
-     * Get assignments for migrated data table. Called from ajax.php via turnitintooltwo_extra.min.js.
+     * Get assignments for migrated data table. Called from ajax.php via turnitintooltwo_extra-2018082301.min.js.
      *
      * @global type $DB
      * @return array return array of assignments to display
@@ -731,7 +731,7 @@ class v1migration {
         $output .= html_writer::tag('p', get_string('migrationtoolintro', 'turnitintooltwo'));
 
         // Add hidden value to page so we can disable the select box if necessary.
-        $output .= html_writer::tag('div', '', 
+        $output .= html_writer::tag('div', '',
                             array('id' => 'sametiiaccount', 'data-sametiiaccount' => (int)$enablesetting, 'class' => 'hidden'));
 
         $options = array(
@@ -740,7 +740,7 @@ class v1migration {
                     2 => get_string('migration:auto', 'turnitintooltwo')
                     );
 
-        $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'), 
+        $elements[] = array('select', 'enablemigrationtool', get_string('enablemigrationtool','turnitintooltwo'),
                             'enablemigrationtool', $options);
         $customdata["elements"] = $elements;
         $customdata["disable_form_change_checker"] = true;

@@ -108,11 +108,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             foreach ($instructordefaults as $k => $v) {
                 $this->current->$k = $v;
             }
-        }
 
-        // Overwrite instructor default repository if admin is forcing repository setting.
-        $submitpapersto = (empty($this->current->submitpapersto)) ? 0 : $this->current->submitpapersto;
-        $this->current->submitpapersto = turnitintooltwo_override_repository($submitpapersto);
+            $this->current = $this->populate_submitpapersto($this->current);
+        }
 
         $modulestring .= ') -->';
 
@@ -134,7 +132,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
                                                 "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js"));
             $script .= html_writer::tag('script', '', array("id" => "plugin_turnitin_script", "type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo.min.js"));
+                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo-2018082301.min.js"));
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
                                             "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-ui-1.10.4.custom.min.js"));
             $script .= html_writer::tag('script', '', array("type" => "text/javascript",
@@ -715,5 +713,26 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         }
 
         $data = $this->get_data();
+    }
+
+    /**
+     * Returns the default value for submitpapersto
+     * @param stdClass $current
+     * @return stdClass
+     */
+    public static function populate_submitpapersto(stdClass $current) {
+
+        $config = turnitintooltwo_admin_config();
+
+        // Overwrite instructor default repository if admin is forcing repository setting.
+        if (isset($current->submitpapersto)) {
+            $submitpapersto = $current->submitpapersto;
+        } else {
+            $submitpapersto = $config->default_submitpapersto;
+        }
+
+        $current->submitpapersto = turnitintooltwo_override_repository($submitpapersto);
+
+        return $current;
     }
 }

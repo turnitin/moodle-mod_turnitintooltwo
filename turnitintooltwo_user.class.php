@@ -563,7 +563,9 @@ class turnitintooltwo_user {
 
         $instructordefaults = new stdClass();
         foreach ($settingstosave as $setting) {
-            $instructordefaults->$setting = $turnitintooltwo->$setting;
+            if (isset($turnitintooltwo->$setting)) {
+                $instructordefaults->$setting = $turnitintooltwo->$setting;
+            }
         }
 
         $turnitintooltwouser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id), "id");

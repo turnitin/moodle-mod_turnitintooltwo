@@ -32,6 +32,10 @@ global $CFG;
 
 require_once($CFG->dirroot . '/mod/turnitintooltwo/tests/unit/lib_test.php');
 
+if (!class_exists('\core_privacy\tests\provider_testcase')) {
+    return;
+}
+
 class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\provider_testcase {
 
     public function setup() {
