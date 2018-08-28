@@ -9,6 +9,8 @@
 
 We noticed a blip, where the administrator default option for student paper storage wasn't passed to instructors during assignment creation. We've corrected this problem so that the "Store student papers" drop-down menu now populates with the preferred administrator option.
 
+**Note:** All instructor default settings will override the global settings of an administrator.
+
 #### V2 assignments are now available on the Moodle course overview page
 
 We found that Moodle V2 assignments failed to appear on the Moodle course overview page when using Moodle 3.3+ which made it difficult to access assignments. This issue was a direct result of Moodle making a change to their course overview block. To resolve this, we've implemented Moodle's [release notesCalendar Action Events API](https://docs.moodle.org/dev/Calendar_API#Action_events). All is back to normal.
