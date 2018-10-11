@@ -955,17 +955,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         set_config('turnitin_account_id', 1234);
 
         // Set Account Id for v2.
-        $updatev2 = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'accountid'));
-        if (!$updatev2) {
-            $updatev2 = new stdClass();
-            $updatev2->plugin = "turnitintooltwo";
-            $updatev2->name = "accountid";
-            $updatev2->value = 1234;
-            $DB->insert_record('config_plugins', $updatev2);
-        } else {
-            $updatev2->value = 1234;
-            $DB->update_record('config_plugins', $updatev2);
-        }
+        set_config('accountid', '1234', 'turnitintooltwo');
 
         // Account IDs should be the same.
         $enabled = v1migration::check_account_ids();
