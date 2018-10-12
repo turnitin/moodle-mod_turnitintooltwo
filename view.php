@@ -550,8 +550,13 @@ switch ($do) {
         break;
 
     case "submitpaper":
-        if ($istutor || (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
-                $user == $USER->id)) {
+        if (($istutor || (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
+                $user == $USER->id)
+            ) ||
+            ( $turnitintooltwoassignment->turnitintooltwo->allowresubmission && // Re-submission allowed
+                (empty($submission->submission_objectid) && empty($submission->id)) // no submission
+            )
+        ) {
             echo $turnitintooltwoview->show_submission_form($cm, $turnitintooltwoassignment, $part,
                                                             $turnitintooltwofileuploadoptions, "box_solid", $user);
             unset($_SESSION['form_data']);

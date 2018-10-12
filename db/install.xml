@@ -59,6 +59,7 @@
                 <FIELD NAME="syncreport" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="needs_updating" NEXT="anongradebook"/>
                 <FIELD NAME="anongradebook" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="syncreport" NEXT="legacy"/>
                 <FIELD NAME="legacy" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="anongradebook"/>
+                <FIELD NAME="allowresubmission" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="1" UNSIGNED="false" SEQUENCE="false" PREVIOUS="legacy"/>
             </FIELDS>
             <KEYS>
                 <KEY NAME="primary" TYPE="primary" FIELDS="id" />

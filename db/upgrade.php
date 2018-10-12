@@ -253,5 +253,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2018082803) {
+        $table = new xmldb_table('turnitintooltwo');
+        $field = new xmldb_field('allowresubmission', XMLDB_TYPE_INTEGER, '1', false, null, false, '1', 'legacy');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

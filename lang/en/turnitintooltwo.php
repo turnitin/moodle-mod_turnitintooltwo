@@ -19,6 +19,10 @@
 // Language: en.
 
 $string['addsubmission'] = 'Add Submission';
+$string['allowresubmission'] = 'Resubmission of assignment is allowed';
+$string['allowresubmission_help'] = 'This option determines if participants are allowed to replace already submitted documents with new submissions as long as it is still within the deadline.<br />Submitted document may still be either deleted or resubmitted by the course administrators.';
+$string['allowresubmission_uplade_info'] = 'Resubmissions of assignments are not allowed!
+Please contact the course administrator in cases where a resubmission of documents is necessary.';
 $string['allowlate'] = 'Allow Submissions after the Due Date';
 $string['allsubmissions'] = 'Submission Inbox';
 $string['anon'] = 'Anonymous';

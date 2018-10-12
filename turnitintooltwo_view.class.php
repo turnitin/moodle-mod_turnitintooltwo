@@ -1391,16 +1391,25 @@ class turnitintooltwo_view {
                 }
             }
 
-            $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
-                                    $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.' '.
-                                    html_writer::tag('i', '', array('class' => 'fa fa-cloud-upload fa-lg')),
-                                    array("class" => "upload_box nowrap",
-                                            "id" => "upload_".$submission->submission_objectid."_".$partid."_".$submission->userid,
-                                            'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
-
             if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
                 $upload = "&nbsp;";
+            } elseif ($turnitintooltwoassignment->turnitintooltwo->allowresubmission ||  // Re-submission allowed
+                    (empty($submission->submission_objectid) && empty($submission->id)) || // no submission
+                    $istutor // user is tutor
+            ) {
+                $upload = html_writer::link($CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id . '&part=' . $partid . '&user=' .
+                    $submission->userid . '&do=submitpaper&view_context=box_solid', $uploadtext . ' ' .
+                    html_writer::tag('i', '', array('class' => 'fa fa-cloud-upload fa-lg')),
+                    array("class" => "upload_box nowrap",
+                        "id" => "upload_" . $submission->submission_objectid . "_" . $partid . "_" . $submission->userid,
+                        'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
+            } else {
+                $upload = html_writer::start_span('fa-stack fa-lg', array('style' => 'margin-left: 25px;top: -7px;', 'title' => get_string('allowresubmission_uplade_info', 'turnitintooltwo')));
+                $upload .= html_writer::tag('i', '', array('class' => 'fa fa-cloud-upload fa-stack-1x'));
+                $upload .= html_writer::tag('i', '', array('class' => 'fa fa-ban fa-stack-2x', 'style' => 'color: #b94a48;'));
+                $upload .= html_writer::end_span();
             }
+
 
         } else {
             $upload = "&nbsp;";
