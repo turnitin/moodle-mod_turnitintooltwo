@@ -146,7 +146,7 @@ class turnitintooltwo_view {
         $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintool'));
         if ( $module ) {
             $tabs[] = new tabobject('v1migration', $CFG->wwwroot.'/mod/turnitintooltwo/settings_extras.php?cmd=v1migration',
-                        get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);    
+                        get_string('v1migrationtitle', 'turnitintooltwo'), get_string('v1migrationtitle', 'turnitintooltwo'), false);
         }
 
         $selected = ($cmd == 'activitylog') ? 'apilog' : $cmd;
@@ -286,7 +286,7 @@ class turnitintooltwo_view {
             $eulaaccepted = ($user->useragreementaccepted != 1) ? $user->get_accepted_user_agreement() : $user->useragreementaccepted;
         }
 
-        $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);
+        $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);      
         if (!empty($parts)) {
 
             $elements = array();
@@ -1458,7 +1458,7 @@ class turnitintooltwo_view {
         } else {
             $data = array($partid, $checkbox, $studentlastname, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         }
-        
+
         if (($istutor) || (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
             $data[] = $rawscore;
             $data[] = $score;
@@ -1496,8 +1496,8 @@ class turnitintooltwo_view {
 
         if ($istutor && !empty($submission->id)) {
             return true;
-        } else {            
-            if ((empty($submission->submission_objectid) && !empty($submission->id) 
+        } else {
+            if ((empty($submission->submission_objectid) && !empty($submission->id)
                 && ((time() < $dtdue) || (time() >= $dtdue && $allowlatesubmissions == 1)))) {
                 return true;
             }
