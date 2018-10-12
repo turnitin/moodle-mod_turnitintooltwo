@@ -19,6 +19,10 @@
 // Language: de.
 
 $string['addsubmission'] = 'Übermittlung hinzufügen';
+$string['allowresubmission'] = 'Erneute Abgabe zulässig';
+$string['allowresubmission_help'] = 'Die Option legt fest, ob Teilnehmer/innen die eingereichten Dokumente, innerhalb des Fälligkeitsdatums, mit einer erneuten Abgabe ersetzen dürfen.<br />Eingereichte Dokumente können weiterhin vom Kurs-Administrator gelöscht oder erneut eingereicht werden.';
+$string['allowresubmission_uplade_info'] = 'Erneute Abgaben sind nicht erlaubt!
+Kontaktieren Sie Ihren Kurs-Administrator für den Fall einer erneuten Abgabe.';
 $string['allowlate'] = 'Übermittlungen nach dem Fälligkeitsdatum zulässig';
 $string['allsubmissions'] = 'Eingangsordner für Übermittlungen';
 $string['anon'] = 'Anonym';
