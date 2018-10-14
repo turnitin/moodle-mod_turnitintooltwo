@@ -357,6 +357,12 @@ if (!empty($action)) {
                             }
 
                             $DB->update_record('turnitintooltwo_parts', $lockedpart);
+
+                            // Update completion state
+                            $completion = new completion_info($course);
+                            if($completion->is_enabled($cm) && $turnitintooltwoassignment->turnitintooltwo->completionsubmit) {
+                                $completion->update_state($cm,COMPLETION_COMPLETE, $post['studentsname']);
+                            }
                         } else {
                             $do = "submission_failure";
                         }

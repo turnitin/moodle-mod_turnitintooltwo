@@ -253,5 +253,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2018082802) {
+        $table = new xmldb_table('turnitintooltwo');
+        $field = new xmldb_field('completionsubmit', XMLDB_TYPE_INTEGER, '1', false, null, false, '0', 'portfolio');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
