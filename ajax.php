@@ -870,6 +870,13 @@ switch ($action) {
         if (($istutor && $submissionid != 0) ||
             ($USER->id == $turnitintooltwosubmission->userid && empty($turnitintooltwosubmission->submission_objectid))) {
             $_SESSION["notice"] = $turnitintooltwosubmission->delete_submission();
+
+            // Update completion state
+            $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+            $completion = new completion_info($course);
+            if($completion->is_enabled($cm) && $turnitintooltwoassignment->turnitintooltwo->completionsubmit) {
+                $completion->update_state($cm,COMPLETION_INCOMPLETE, $turnitintooltwosubmission->userid);
+            }
         }
         exit();
         break;
