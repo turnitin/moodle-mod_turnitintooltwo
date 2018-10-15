@@ -1876,9 +1876,9 @@ function mod_turnitintooltwo_get_availability_status($data, $checkcapability = f
  * @param  object  $turnitintooltwo    The turnitintooltwo assignment object.
  * @param  object  $part               The name of the part we are updating.
  * @param  boolean $courseparam        True if we wish to include the course field in our query.
- * @param  boolean $convertEvent       True if we are converting the event from assignment page load.
+ * @param  boolean $convertevent       True if we are converting the event from assignment page load.
  */
-function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = false, $convertEvent = false) {
+function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = false, $convertevent = false) {
     global $DB, $CFG, $USER;
 
     // Create the SQL depending on whether we need to check the course parameter.
@@ -1903,7 +1903,7 @@ function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = fa
                 $updatedevent->type = 1;
 
                 // No need to continue updating on this occasion if we have a new event type already.
-                if (($convertEvent) && ($event->type == 1)) {
+                if (($convertevent) && ($event->type == 1)) {
                     return;
                 }
             }
