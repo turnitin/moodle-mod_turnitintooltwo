@@ -1891,6 +1891,7 @@ function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = fa
     try {
         // Update event for assignment part.
         if ($event = $DB->get_record_select("event", $dbselect, $dbparams)) {
+            // Update the event.
             $updatedevent = new stdClass();
             $updatedevent->id = $event->id;
             $updatedevent->userid = $USER->id;
@@ -1901,14 +1902,13 @@ function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = fa
                 $updatedevent->timesort = $part->dtdue;
                 $updatedevent->type = 1;
 
-                if (($convertEvent) && ($event->type == 0)) {
-                    $DB->update_record('event', $updatedevent);
+                // No need to continue updating on this occasion if we have a new event type already.
+                if (($convertEvent) && ($event->type == 1)) {
                     return;
                 }
             }
 
             $DB->update_record('event', $updatedevent);
-            return;
         }
     } catch (Exception $e) {
         turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
