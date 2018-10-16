@@ -404,7 +404,9 @@ class mod_lib_testcase extends test_lib {
         turnitintooltwo_update_event($turnitintooltwo, $part);
         $response = $DB->get_record("event", array("id" => $event->id));
 
-        $this->assertEquals(1, $response->type);
+        if ($CFG->branch >= 33) {
+            $this->assertEquals(1, $response->type);
+        }
         $this->assertNotEquals(0, $response->timestart);
         $this->assertNotEquals(0, $response->timesort);
 
@@ -415,7 +417,9 @@ class mod_lib_testcase extends test_lib {
         turnitintooltwo_update_event($turnitintooltwo, $part, true);
         $response = $DB->get_record("event", array("id" => $event->id));
 
-        $this->assertEquals(1, $response->type);
+        if ($CFG->branch >= 33) {
+            $this->assertEquals(1, $response->type);
+        }
         $this->assertNotEquals(0, $response->timestart);
         $this->assertNotEquals(0, $response->timesort);
 
@@ -426,7 +430,9 @@ class mod_lib_testcase extends test_lib {
         turnitintooltwo_update_event($turnitintooltwo, $part, null, true);
         $response = $DB->get_record("event", array("id" => $event->id));
 
-        $this->assertEquals(1, $response->type);
+        if ($CFG->branch >= 33) {
+            $this->assertEquals(1, $response->type);
+        }
         $this->assertNotEquals(0, $response->timestart);
         $this->assertNotEquals(0, $response->timesort);
 
