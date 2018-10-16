@@ -406,9 +406,9 @@ class mod_lib_testcase extends test_lib {
 
         if ($CFG->branch >= 33) {
             $this->assertEquals(1, $response->type);
+            $this->assertNotEquals(0, $response->timesort);
         }
         $this->assertNotEquals(0, $response->timestart);
-        $this->assertNotEquals(0, $response->timesort);
 
         // Reset event values.
         $DB->update_record('event', $updatedevent);
@@ -419,9 +419,9 @@ class mod_lib_testcase extends test_lib {
 
         if ($CFG->branch >= 33) {
             $this->assertEquals(1, $response->type);
+            $this->assertNotEquals(0, $response->timesort);
         }
         $this->assertNotEquals(0, $response->timestart);
-        $this->assertNotEquals(0, $response->timesort);
 
         // Reset event values.
         $DB->update_record('event', $updatedevent);
@@ -432,9 +432,9 @@ class mod_lib_testcase extends test_lib {
 
         if ($CFG->branch >= 33) {
             $this->assertEquals(1, $response->type);
+            $this->assertNotEquals(0, $response->timesort);
         }
         $this->assertNotEquals(0, $response->timestart);
-        $this->assertNotEquals(0, $response->timesort);
 
         // We can check that a second call to convert an event will not update the event by resetting only the timestart value and checking it is not updated,
         $updatedevent = new stdClass();
