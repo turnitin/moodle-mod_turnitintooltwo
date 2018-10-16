@@ -426,26 +426,30 @@ class mod_lib_testcase extends test_lib {
         // Reset event values.
         $DB->update_record('event', $updatedevent);
 
-        // Check that we can convert an old event to a new event.
-        turnitintooltwo_update_event($turnitintooltwo, $part, null, true);
-        $response = $DB->get_record("event", array("id" => $event->id));
+        // This test is only relevant to 3.3+;
 
         if ($CFG->branch >= 33) {
-            $this->assertEquals(1, $response->type);
-            $this->assertNotEquals(0, $response->timesort);
+            // Check that we can convert an old event to a new event.
+            turnitintooltwo_update_event($turnitintooltwo, $part, null, true);
+            $response = $DB->get_record("event", array("id" => $event->id));
+
+            if ($CFG->branch >= 33) {
+                $this->assertEquals(1, $response->type);
+                $this->assertNotEquals(0, $response->timesort);
+            }
+            $this->assertNotEquals(0, $response->timestart);
+
+            // We can check that a second call to convert an event will not update the event by resetting only the timestart value and checking it is not updated,
+            $updatedevent = new stdClass();
+            $updatedevent->id = $event->id;
+            $updatedevent->timestart = 0;
+            $DB->update_record('event', $updatedevent);
+
+            // This call should not update values, so timestart should still equal 0.
+            turnitintooltwo_update_event($turnitintooltwo, $part, null, true);
+            $response = $DB->get_record("event", array("id" => $event->id));
+
+            $this->assertEquals(0, $response->timestart);
         }
-        $this->assertNotEquals(0, $response->timestart);
-
-        // We can check that a second call to convert an event will not update the event by resetting only the timestart value and checking it is not updated,
-        $updatedevent = new stdClass();
-        $updatedevent->id = $event->id;
-        $updatedevent->timestart = 0;
-        $DB->update_record('event', $updatedevent);
-
-        // This call should not update values, so timesort should still equal 0.
-        turnitintooltwo_update_event($turnitintooltwo, $part, null, true);
-        $response = $DB->get_record("event", array("id" => $event->id));
-
-        $this->assertEquals(0, $response->timestart);
     }
 }
