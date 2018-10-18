@@ -205,29 +205,7 @@ function turnitintooltwo_update_grades($turnitintooltwo, $userid = 0, $nullifnon
     $parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ",
                                         array($turnitintooltwo->id), 'id ASC');
     foreach ($parts as $part) {
-        $dbselect = " modulename = ? AND instance = ? AND courseid = ? AND name LIKE ? ";
-        // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
-        // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
-        if ($CFG->branch <= 25 && $CFG->dbtype == "sqlsrv") {
-            $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ?
-                            AND courseid = ? AND CAST(name AS nvarchar(max)) = ? ";
-        }
-
-        try {
-            // Update event for assignment part.
-            if ($event = $DB->get_record_select("event", $dbselect,
-                                        array('turnitintooltwo', $turnitintooltwo->id,
-                                                    $turnitintooltwo->course, '% - '.$part->partname))) {
-                $updatedevent = new stdClass();
-                $updatedevent->id = $event->id;
-                $updatedevent->userid = $USER->id;
-                $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
-
-                $DB->update_record('event', $updatedevent);
-            }
-        } catch (Exception $e) {
-            turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
-        }
+        turnitintooltwo_update_event($turnitintooltwo, $part, true);
     }
 }
 
@@ -521,6 +499,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             $part->submitted = 0;
 
             turnitintooltwo_reset_part_update($part, $i);
+            turnitintooltwo_update_event($turnitintooltwoassignment->turnitintooltwo, $part);
 
             if (!$DB->delete_records('turnitintooltwo_submissions', array('submission_part' => $partid))) {
                 turnitintooltwo_print_error('submissiondeleteerror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
@@ -1889,4 +1868,49 @@ function mod_turnitintooltwo_get_availability_status($data, $checkcapability = f
     }
 
     return array($open, $warnings);
+}
+
+/**
+ * Update a Moodle event based on passed in details.
+ *
+ * @param  object  $turnitintooltwo    The turnitintooltwo assignment object.
+ * @param  object  $part               The name of the part we are updating.
+ * @param  boolean $courseparam        True if we wish to include the course field in our query.
+ * @param  boolean $convertevent       True if we are converting the event from assignment page load.
+ */
+function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = false, $convertevent = false) {
+    global $DB, $CFG, $USER;
+
+    // Create the SQL depending on whether we need to check the course parameter.
+    $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
+    $dbparams = array('turnitintooltwo', $turnitintooltwo->id, '% - '.$part->partname);
+    if ($courseparam) {
+        $dbselect .= "AND courseid = ? ";
+        $dbparams[] = $turnitintooltwo->course;
+    }
+    try {
+        // Update event for assignment part.
+        if ($event = $DB->get_record_select("event", $dbselect, $dbparams)) {
+            // Update the event.
+            $updatedevent = new stdClass();
+            $updatedevent->id = $event->id;
+            $updatedevent->userid = $USER->id;
+            $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
+            $updatedevent->timestart = $part->dtdue;
+
+            if ($CFG->branch >= 33) {
+                $updatedevent->timesort = $part->dtdue;
+                $updatedevent->type = 1;
+
+                // No need to continue updating on this occasion if we have a new event type already.
+                if (($convertevent) && ($event->type == 1)) {
+                    return;
+                }
+            }
+
+            $DB->update_record('event', $updatedevent);
+        }
+    } catch (Exception $e) {
+        turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
+    }
 }
