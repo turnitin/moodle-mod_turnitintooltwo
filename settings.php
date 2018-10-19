@@ -298,17 +298,6 @@ if ($ADMIN->fulltree) {
                                                     get_string('numberofparts', 'turnitintooltwo'),
                                                     '', 1, array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5)));
 
-    $options = array();
-    $scales = get_scales_menu();
-    foreach ($scales as $value => $scale) {
-        $options[-$value] = $scale;
-    }
-    for ($i = 100; $i >= 1; $i--) {
-        $options[$i] = $i;
-    }
-    $settings->add(new admin_setting_configselect('turnitintooltwo/default_grade', get_string('overallgrade', 'turnitintooltwo'),
-                       '', 100, $options));
-
     if (!empty($config->useanon) && $currentsection == 'modsettingturnitintooltwo') {
         $settings->add(new admin_setting_configselect('turnitintooltwo/default_anon', get_string('anon', 'turnitintooltwo'),
                         '', 0, $ynoptions ));

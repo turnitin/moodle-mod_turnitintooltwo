@@ -1,3 +1,24 @@
+### Date:	2018-October-19
+### Release:	v2018101901
+
+#### Fixes and enhancements
+
+---
+
+#### Assignments now display correctly on Moodle’s timeline
+
+We’ve made three separate fixes following Moodle’s new timeline support:
+
+- When creating a V2 assignment using course reset and the “use new dates” option, your assignment now displays correctly on the timeline.
+- By changing the due date of the assignment, this now will update on the timeline.
+- Providing that the assignment’s due date hasn’t already passed, any assignments created prior to our previous fix in v2018082801 will now appear on the timeline after an instructor accesses the assignment.
+
+#### Thanks to Paul Damiani and Rossco Hellmans
+
+We've received some invaluable bug fixes, in the form of pull requests, to help us improve Moodle V2. We’re really grateful!
+
+---
+
 ### Date:	2018-August-28
 ### Release:	v2018082801
 
@@ -26,6 +47,7 @@ Moodle has superseded this update checker with a tool that not only checks for T
 You can find Moodle's **Check for available updates** button by visiting: Site administration > Plugins > Plugins overview.
 
 ---
+
 ### Date:	2018-May-23
 ### Release:	v2018052301
 

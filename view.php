@@ -732,6 +732,13 @@ switch ($do) {
             unset($_SESSION["digital_receipt"]);
         }
 
+        // Convert the course overview events to MDL33+ events if necessary.
+        if (($CFG->branch >= 33) && ($istutor)) {
+            foreach ($parts as $part) {
+                turnitintooltwo_update_event($turnitintooltwoassignment->turnitintooltwo, $part, null, true);
+            }
+        }
+
         // Initialise inbox, if a student is logged in then populate it also incase they have no javascript.
         echo $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $parts, $turnitintooltwouser);
 

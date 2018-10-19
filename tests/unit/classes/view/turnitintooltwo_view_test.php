@@ -166,7 +166,6 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$turnitintooltwouser = $testuser['turnitintooltwo_users'][0];
 		$moodleuser = $DB->get_record("turnitintooltwo_users", array("id" => $testuser['joins'][0]));
 
-		$this->enrol_test_user($USER->id, $course->id, "Learner");
 		$this->enrol_test_user($moodleuser->userid, $course->id, "Learner");
 
 		$partdetails = $this->make_test_parts('turnitintooltwo',$turnitintooltwoassignment->turnitintooltwo->id, 1);
