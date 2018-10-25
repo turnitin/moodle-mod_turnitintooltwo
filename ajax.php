@@ -212,7 +212,7 @@ switch ($action) {
         }
         break;
 
-    case "get_assignments":
+    case "get_migration_assignments":
         include_once("classes/v1migration/v1migration.php");
 
         $PAGE->set_context(context_system::instance());
