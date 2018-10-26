@@ -54,7 +54,7 @@ define('SUBMIT_TO_INSTITUTIONAL_REPOSITORY', 2);
 // For use in course migration.
 $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
                                     2 => 'WebCT', 5 => 'Angel', 6 => 'Moodle Basic', 7 => 'eCollege', 8 => 'Desire2Learn',
-                                    9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct');
+                                    9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct', 26 => 'LTI');
 
 /**
  * Function for either adding to log or triggering an event
@@ -1179,7 +1179,7 @@ function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
 }
 
 /**
- * Get files for displaying in settings. Called from ajax.php via turnitintooltwo-2018082301.min.js.
+ * Get files for displaying in settings. Called from ajax.php via turnitintooltwo-2018102601.min.js.
  *
  * @param  $moduleid the id of the module to return files for
  * @global type $DB
@@ -1362,7 +1362,7 @@ function turnitintooltwo_pluginfile($course,
 }
 
 /**
- * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo-2018082301.min.js.
+ * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo-2018102601.min.js.
  *
  * @global type $DB
  * @return array return array of users to display
