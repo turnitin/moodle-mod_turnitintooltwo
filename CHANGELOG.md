@@ -1,4 +1,17 @@
-### Date:	2018-October-19
+### Date:		2018-October-26
+### Release:	v2018102601
+
+#### Fixes and enhancements
+
+---
+
+#### The course restoration tool has now been restored for use!
+
+Were you previously using Turnitin.com or TurnitinUK.com before making the switch over to Moodle? The course restoration tool allows you to take your old classes and assignments with you by recreating them within Moodle. Previously, a bug had prevented this functionality from working as intended. Want to learn more? [Check out our guide](https://help.turnitin.com/Feedback_Studio/Moodle/Direct%20V2/Administrator/Administrator%20Category.htm#Turnitinclassrestoration).
+
+---
+
+### Date:		2018-October-19
 ### Release:	v2018101901
 
 #### Fixes and enhancements
@@ -19,7 +32,7 @@ We've received some invaluable bug fixes, in the form of pull requests, to help 
 
 ---
 
-### Date:	2018-August-28
+### Date:		2018-August-28
 ### Release:	v2018082801
 
 ### :wrench: Fixes and enhancements
