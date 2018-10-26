@@ -96,7 +96,7 @@ jQuery(document).ready(function($) {
         "oLanguage": dataTablesLangMigration,
         "aaSorting": [[ 2, "asc" ]],
         "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-        "sAjaxSource": "ajax.php?action=get_assignments",
+        "sAjaxSource": "ajax.php?action=get_migration_assignments",
         "sDom": '<"top"lf>rt<"bottom"irp><"clear">',
         "aoColumns": [
                         {"bSortable": false, "bSearchable": false,
