@@ -1198,6 +1198,7 @@ function turnitintooltwo_getfiles($moduleid) {
 
     $displaycolumns = array( 'tu.name', 'cs.shortname', 'cs.fullname', 'sb.submission_filename', 'us.firstname',
                                 'us.lastname', 'us.email', 'fl.filename', 'sb.submission_objectid' );
+    $ordertype = array('asc', 'desc', '');
     $queryparams = array();
 
     // Add Sort to Query.
@@ -1212,7 +1213,10 @@ function turnitintooltwo_getfiles($moduleid) {
             $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
             $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
             if ( $bsortable[$i] == "true" ) {
-                $queryorder .= $displaycolumns[$isortcol[$i]]." ".$ssortdir[$i].", ";
+                if (in_array(strtolower($displaycolumns[$isortcol[$i]]), $displaycolumns) &&
+                    in_array(strtolower($ssortdir[$i]), $ordertype)) {
+                    $queryorder .= $displaycolumns[$isortcol[$i]] . " " . $ssortdir[$i] . ", ";
+                }
             }
         }
         $queryorder = substr_replace($queryorder, "", -2);
@@ -1377,6 +1381,7 @@ function turnitintooltwo_getusers() {
     $secho = optional_param('sEcho', 1, PARAM_INT);
 
     $displaycolumns = array('tu.userid', 'tu.turnitin_uid', 'mu.lastname', 'mu.firstname', 'mu.email');
+    $ordertype = array('asc', 'desc', '');
     $queryparams = array();
 
     // Add sort to query.
@@ -1391,7 +1396,10 @@ function turnitintooltwo_getusers() {
             $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
             $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
             if ($bsortable[$i] == "true") {
-                $queryorder .= $displaycolumns[$isortcol[$i]]." ".$ssortdir[$i].", ";
+                if (in_array(strtolower($displaycolumns[$isortcol[$i]]), $displaycolumns) &&
+                    in_array(strtolower($ssortdir[$i]), $ordertype)) {
+                    $queryorder .= $displaycolumns[$isortcol[$i]] . " " . $ssortdir[$i] . ", ";
+                }
             }
         }
         if ($queryorder == $startorder) {

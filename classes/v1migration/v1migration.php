@@ -581,6 +581,7 @@ class v1migration {
         $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
         $secho = optional_param('sEcho', 1, PARAM_INT);
         $displaycolumns = array('', 'id', 'name', 'migrated');
+        $ordertype = array('asc', 'desc', '');
         $queryparams = array();
         // Add sort to query.
         $isortcol[0] = optional_param('iSortCol_0', null, PARAM_INT);
@@ -594,7 +595,10 @@ class v1migration {
                 $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
                 $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
                 if ($bsortable[$i] == "true") {
-                    $queryorder .= $displaycolumns[$isortcol[$i]]." ".$ssortdir[$i].", ";
+                    if (in_array(strtolower($displaycolumns[$isortcol[$i]]), $displaycolumns) &&
+                        in_array(strtolower($ssortdir[$i]), $ordertype)) {
+                        $queryorder .= $displaycolumns[$isortcol[$i]] . " " . $ssortdir[$i] . ", ";
+                    }
                 }
             }
             if ($queryorder == $startorder) {
