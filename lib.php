@@ -1190,70 +1190,12 @@ function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
 function turnitintooltwo_getfiles($moduleid) {
     global $DB, $CFG, $OUTPUT;
 
-    $return = array();
     $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
     $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
     $secho = optional_param('sEcho', 1, PARAM_INT);
     $moduleid = (int)$moduleid;
 
-    $displaycolumns = array( 'tu.name', 'cs.shortname', 'cs.fullname', 'sb.submission_filename', 'us.firstname',
-                                'us.lastname', 'us.email', 'fl.filename', 'sb.submission_objectid' );
     $queryparams = array();
-
-    // Add Sort to Query.
-    $isortcol[0] = optional_param('iSortCol_0', null, PARAM_INT);
-    $isortingcols = optional_param('iSortingCols', 0, PARAM_INT);
-    $queryorder = "";
-    if (!is_null( $isortcol[0])) {
-        $queryorder = " ORDER BY ";
-        $startorder = $queryorder;
-        for ($i = 0; $i < intval($isortingcols); $i++) {
-            $isortcol[$i] = optional_param('iSortCol_'.$i, null, PARAM_INT);
-            $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
-            $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
-            if ( $bsortable[$i] == "true" ) {
-                $queryorder .= $displaycolumns[$isortcol[$i]]." ".$ssortdir[$i].", ";
-            }
-        }
-        $queryorder = substr_replace($queryorder, "", -2);
-        if ($queryorder == $startorder) {
-            $queryorder = "";
-        }
-    }
-    $queryorder .= ", tu.id asc ";
-
-    // Add Search to Query.
-    $ssearch = optional_param('sSearch', '', PARAM_TEXT);
-    $start = true;
-    $querywhere = " AND ( ";
-    $nobracket = false;
-    for ($i = 0; $i < count($displaycolumns); $i++) {
-        $bsearchable[$i] = optional_param('bSearchable_'.$i, null, PARAM_TEXT);
-        $ssearchn[$i] = optional_param('sSearch_'.$i, null, PARAM_TEXT);
-        if (!is_null($bsearchable[$i]) && $bsearchable[$i] == "true" && ( $ssearch != '' OR $ssearchn[$i] != '')) {
-            if (!$start) {
-                $querywhere .= " OR ";
-            }
-
-            if ($displaycolumns[$i] == 'sb.submission_objectid') {
-                $querywhere = ( $querywhere == ' AND ( ' ) ? '' : substr_replace( $querywhere, "", -3 ) . ' )';
-                $querywhere .= " AND ( sb.submission_objectid IS NOT NULL OR sb.submission_filename IS NULL )";
-                $nobracket = true;
-            } else if ($displaycolumns[$i] != ' ') {
-                $namedparam = 'search_term_'.$i;
-                $querywhere .= $DB->sql_like($displaycolumns[$i], ':'.$namedparam, false);
-                $queryparams['search_term_'.$i] = '%'.$ssearch.'%';
-                $start = false;
-            }
-        }
-    }
-    if ($querywhere != ' AND ( ' AND !$nobracket) {
-        $querywhere .= " ) ";
-    } else if ($nobracket) {
-        $querywhere .= " ";
-    } else {
-        $querywhere = "";
-    }
 
     $query = "SELECT fl.id AS id, cm.id AS cmid, tu.id AS activityid, tu.name AS activity, tu.anon AS anon_enabled, ".
              "sb.submission_unanon AS unanon, sb.id AS submission_id, us.firstname AS firstname, us.lastname AS lastname, ".
@@ -1268,7 +1210,7 @@ function turnitintooltwo_getfiles($moduleid) {
              "LEFT JOIN {course_modules} cm ON cx.instanceid = cm.id ".
              "LEFT JOIN {turnitintooltwo} tu ON cm.instance = tu.id ".
              "LEFT JOIN {course} cs ON tu.course = cs.id ".
-             "WHERE fl.component = 'mod_turnitintooltwo' AND fl.filesize != 0 AND cm.module = :moduleid ".$querywhere.$queryorder;
+             "WHERE fl.component = 'mod_turnitintooltwo' AND fl.filesize != 0 AND cm.module = :moduleid ";
 
     $params = array_merge(array('moduleid' => $moduleid), $queryparams);
     $files = $DB->get_records_sql($query, $params, $idisplaystart, $idisplaylength);
@@ -1376,61 +1318,12 @@ function turnitintooltwo_getusers() {
     $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
     $secho = optional_param('sEcho', 1, PARAM_INT);
 
-    $displaycolumns = array('tu.userid', 'tu.turnitin_uid', 'mu.lastname', 'mu.firstname', 'mu.email');
     $queryparams = array();
-
-    // Add sort to query.
-    $isortcol[0] = optional_param('iSortCol_0', null, PARAM_INT);
-    $isortingcols = optional_param('iSortingCols', 0, PARAM_INT);
-    $queryorder = "";
-    if (!is_null( $isortcol[0])) {
-        $queryorder = " ORDER BY ";
-        $startorder = $queryorder;
-        for ($i = 0; $i < intval($isortingcols); $i++) {
-            $isortcol[$i] = optional_param('iSortCol_'.$i, null, PARAM_INT);
-            $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
-            $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
-            if ($bsortable[$i] == "true") {
-                $queryorder .= $displaycolumns[$isortcol[$i]]." ".$ssortdir[$i].", ";
-            }
-        }
-        if ($queryorder == $startorder) {
-            $queryorder = "";
-        } else {
-            $queryorder = substr_replace($queryorder, "", -2);
-        }
-    }
-
-    // Add search to query.
-    $ssearch = optional_param('sSearch', '', PARAM_TEXT);
-    $querywhere = ' WHERE ( ';
-    for ($i = 0; $i < count($displaycolumns); $i++) {
-        $bsearchable[$i] = optional_param('bSearchable_'.$i, null, PARAM_TEXT);
-        if (!is_null($bsearchable[$i]) && $bsearchable[$i] == "true" && $ssearch != '') {
-            $include = true;
-            if ($i <= 1) {
-                if (!is_int($ssearch) || is_null($ssearch)) {
-                    $include = false;
-                }
-            }
-
-            if ($include) {
-                $querywhere .= $DB->sql_like($displaycolumns[$i], ':search_term_'.$i, false)." OR ";
-                $queryparams['search_term_'.$i] = '%'.$ssearch.'%';
-            }
-        }
-    }
-    if ( $querywhere == ' WHERE ( ' ) {
-        $querywhere = "";
-    } else {
-        $querywhere = substr_replace( $querywhere, "", -3 );
-        $querywhere .= " )";
-    }
 
     $query = "SELECT tu.id AS id, tu.userid AS userid, tu.turnitin_uid AS turnitin_uid, tu.turnitin_utp AS turnitin_utp, ".
              "mu.firstname AS firstname, mu.lastname AS lastname, mu.email AS email ".
              "FROM {turnitintooltwo_users} tu ".
-             "LEFT JOIN {user} mu ON tu.userid = mu.id ".$querywhere.$queryorder;
+             "LEFT JOIN {user} mu ON tu.userid = mu.id ";
 
     $users = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
     $totalusers = count($DB->get_records_sql($query, $queryparams));
