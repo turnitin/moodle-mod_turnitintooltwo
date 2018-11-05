@@ -580,58 +580,10 @@ class v1migration {
         $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
         $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
         $secho = optional_param('sEcho', 1, PARAM_INT);
-        $displaycolumns = array('', 'id', 'name', 'migrated');
-        $ordertype = array('asc', 'desc', '');
+
         $queryparams = array();
-        // Add sort to query.
-        $isortcol[0] = optional_param('iSortCol_0', null, PARAM_INT);
-        $isortingcols = optional_param('iSortingCols', 0, PARAM_INT);
-        $queryorder = "";
-        if (!is_null( $isortcol[0])) {
-            $queryorder = " ORDER BY ";
-            $startorder = $queryorder;
-            for ($i = 0; $i < intval($isortingcols); $i++) {
-                $isortcol[$i] = optional_param('iSortCol_'.$i, null, PARAM_INT);
-                $bsortable[$i] = optional_param('bSortable_'.$isortcol[$i], null, PARAM_TEXT);
-                $ssortdir[$i] = optional_param('sSortDir_'.$i, null, PARAM_TEXT);
-                if ($bsortable[$i] == "true") {
-                    if (in_array(strtolower($displaycolumns[$isortcol[$i]]), $displaycolumns) &&
-                        in_array(strtolower($ssortdir[$i]), $ordertype)) {
-                        $queryorder .= $displaycolumns[$isortcol[$i]] . " " . $ssortdir[$i] . ", ";
-                    }
-                }
-            }
-            if ($queryorder == $startorder) {
-                $queryorder = "";
-            } else {
-                $queryorder = substr_replace($queryorder, "", -2);
-            }
-        }
-        // Add search to query.
-        $ssearch = optional_param('sSearch', '', PARAM_TEXT);
-        $querywhere = ' WHERE ( ';
-        for ($i = 0; $i < count($displaycolumns); $i++) {
-            $bsearchable[$i] = optional_param('bSearchable_'.$i, null, PARAM_TEXT);
-            if (!is_null($bsearchable[$i]) && $bsearchable[$i] == "true" && $ssearch != '') {
-                $include = true;
-                if ($i <= 1) {
-                    if (!is_int($ssearch) || is_null($ssearch)) {
-                        $include = false;
-                    }
-                }
-                if ($include) {
-                    $querywhere .= $DB->sql_like($displaycolumns[$i], ':search_term_'.$i, false)." OR ";
-                    $queryparams['search_term_'.$i] = '%'.$ssearch.'%';
-                }
-            }
-        }
-        if ( $querywhere == ' WHERE ( ' ) {
-            $querywhere = "";
-        } else {
-            $querywhere = substr_replace( $querywhere, "", -3 );
-            $querywhere .= " )";
-        }
-        $query = "SELECT id, name, migrated FROM {turnitintool}".$querywhere.$queryorder;
+
+        $query = "SELECT id, name, migrated FROM {turnitintool}";
         $assignments = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
 
         $totalassignments = count($DB->get_records_sql($query, $queryparams));
