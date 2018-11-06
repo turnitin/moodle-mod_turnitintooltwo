@@ -577,16 +577,12 @@ class v1migration {
         global $DB;
 
         $return = array();
-        $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
-        $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
         $secho = optional_param('sEcho', 1, PARAM_INT);
 
-        $queryparams = array();
-
         $query = "SELECT id, name, migrated FROM {turnitintool}";
-        $assignments = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
+        $assignments = $DB->get_records_sql($query);
+        $totalassignments = count($assignments);
 
-        $totalassignments = count($DB->get_records_sql($query, $queryparams));
         $return["aaData"] = array();
         foreach ($assignments as $assignment) {
             if ($assignment->migrated == 1) {

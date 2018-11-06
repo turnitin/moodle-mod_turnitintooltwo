@@ -837,7 +837,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
             }
         }
         // Create our output array.
-        $assignments = $DB->get_records('turnitintool', NULL, NULL, "id, name, migrated", $_POST["iDisplayStart"], $_POST["iDisplayLength"]);
+        $assignments = $DB->get_records('turnitintool', NULL, NULL, "id, name, migrated");
         $outputrows = array();
         foreach ($assignments as $key => $value) {
             if ($value->migrated == 1) {
@@ -858,9 +858,9 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         }
         $expectedoutput = array("aaData"               => $outputrows,
                                 "sEcho"                => $_POST["sEcho"],
-                                "iTotalRecords"        => $_POST["iDisplayLength"],
+                                "iTotalRecords"        => $numAssignments,
                                 "iTotalDisplayRecords" => $numAssignments);
-        $this->assertEquals($_POST["iDisplayLength"], count($assignments));
+//        $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
 
         $this->assertEquals($expectedoutput, $response);

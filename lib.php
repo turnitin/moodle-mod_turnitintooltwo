@@ -1190,8 +1190,6 @@ function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
 function turnitintooltwo_getfiles($moduleid) {
     global $DB, $CFG, $OUTPUT;
 
-    $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
-    $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
     $secho = optional_param('sEcho', 1, PARAM_INT);
     $moduleid = (int)$moduleid;
 
@@ -1213,8 +1211,8 @@ function turnitintooltwo_getfiles($moduleid) {
              "WHERE fl.component = 'mod_turnitintooltwo' AND fl.filesize != 0 AND cm.module = :moduleid ";
 
     $params = array_merge(array('moduleid' => $moduleid), $queryparams);
-    $files = $DB->get_records_sql($query, $params, $idisplaystart, $idisplaylength);
-    $totalfiles = count($DB->get_records_sql($query, $params));
+    $files = $DB->get_records_sql($query, $params);
+    $totalfiles = count($files);
 
     $return = array("sEcho" => $secho, "iTotalRecords" => count($files), "iTotalDisplayRecords" => $totalfiles,
                 "aaData" => array());
@@ -1314,19 +1312,15 @@ function turnitintooltwo_getusers() {
 
     $config = turnitintooltwo_admin_config();
     $return = array();
-    $idisplaystart = optional_param('iDisplayStart', 0, PARAM_INT);
-    $idisplaylength = optional_param('iDisplayLength', 10, PARAM_INT);
     $secho = optional_param('sEcho', 1, PARAM_INT);
-
-    $queryparams = array();
 
     $query = "SELECT tu.id AS id, tu.userid AS userid, tu.turnitin_uid AS turnitin_uid, tu.turnitin_utp AS turnitin_utp, ".
              "mu.firstname AS firstname, mu.lastname AS lastname, mu.email AS email ".
              "FROM {turnitintooltwo_users} tu ".
              "LEFT JOIN {user} mu ON tu.userid = mu.id ";
 
-    $users = $DB->get_records_sql($query, $queryparams, $idisplaystart, $idisplaylength);
-    $totalusers = count($DB->get_records_sql($query, $queryparams));
+    $users = $DB->get_records_sql($query);
+    $totalusers = count($users);
 
     $return["aaData"] = array();
     foreach ($users as $user) {
