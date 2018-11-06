@@ -860,7 +860,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
                                 "sEcho"                => $_POST["sEcho"],
                                 "iTotalRecords"        => $numAssignments,
                                 "iTotalDisplayRecords" => $numAssignments);
-//        $this->assertEquals($_POST["iDisplayLength"], count($assignments));
         $response = v1migration::turnitintooltwo_getassignments();
 
         $this->assertEquals($expectedoutput, $response);
