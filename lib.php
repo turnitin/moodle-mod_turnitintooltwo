@@ -270,8 +270,6 @@ function turnitintooltwo_update_instance($turnitintooltwo) {
 function turnitintooltwo_edit_instance($id, $turnitintooltwo) {
     global $USER;
 
-    $turnitintooltwo->name = htmlentities($turnitintooltwo->name);
-
     $turnitintooltwoassignment = new turnitintooltwo_assignment($id, $turnitintooltwo);
     if ($id == 0) {
         $id = $turnitintooltwoassignment->create_moodle_assignment();
