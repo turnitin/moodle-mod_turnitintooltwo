@@ -61,7 +61,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $instructorrubrics = $instructor->get_instructor_rubrics();
 
         // Decode the assignment name.
-        $this->current->name = html_entity_decode($this->current->name);
+        if (isset($this->current->name)) {
+            $this->current->name = html_entity_decode($this->current->name);
+        }
 
         // Get rubrics that are shared on the account.
         $turnitinclass = new turnitintooltwo_class($course->id);
