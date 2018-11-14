@@ -24,8 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+global $CFG;
+
 require_once(__DIR__.'/turnitintooltwo_assignment.class.php');
 require_once(__DIR__.'/turnitintooltwo_class.class.php');
+require_once($CFG->libdir . "/gradelib.php");
 
 // Constants.
 define('TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE', 41943040);
@@ -639,7 +642,7 @@ function turnitintooltwo_cron() {
     // Get a list of assignments that need updating.
     if ($assignmentlist = $DB->get_records_sql("SELECT DISTINCT(t.id) FROM {turnitintooltwo} t
                                                 LEFT JOIN {turnitintooltwo_parts} p ON (p.turnitintooltwoid = t.id)
-                                                WHERE (p.turnitintooltwoid + p.dtpost IN 
+                                                WHERE (p.turnitintooltwoid + p.dtpost IN
                                                     (SELECT p2.turnitintooltwoid + MAX(p2.dtpost)
                                                         FROM {turnitintooltwo_parts} p2
                                                         GROUP BY p2.turnitintooltwoid))
