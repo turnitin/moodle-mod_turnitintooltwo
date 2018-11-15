@@ -300,7 +300,7 @@ class turnitintooltwo_view {
 
             if ($istutor || $eulaaccepted == 1) {
 
-                if ($prevsubmission) {
+                if ($prevsubmission && ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
                     $genparams = turnitintooltwo_get_report_gen_speed_params();
                     $elements[] = array('html', '<div class="tii_checkagainstnote">' . get_string('reportgenspeed_resubmission', 'turnitintooltwo', $genparams) . '</div>');
                 }
