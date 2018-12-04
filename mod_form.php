@@ -109,7 +109,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             if (empty($instructordefaults)) {
                 $instructordefaults = array();
             }
-//looping through and setting the form fields, if this set
+
             foreach ($instructordefaults as $k => $v) {
                 $this->current->$k = $v;
             }
