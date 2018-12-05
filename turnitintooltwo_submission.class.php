@@ -891,4 +891,16 @@ class turnitintooltwo_submission {
             return false;
         }
     }
+
+    /**
+     * Checking if grade exists for assignment
+     *
+     * @param string $turnitintooltwoid
+     * @return int
+     */
+    public function count_graded_submissions($turnitintooltwoid) {
+        global $DB;
+        return $DB->count_records_select("turnitintooltwo_submissions", "turnitintooltwoid = :turnitintooltwoid AND submission_grade > 0",
+            array("turnitintooltwoid" => $turnitintooltwoid));
+    }
 }

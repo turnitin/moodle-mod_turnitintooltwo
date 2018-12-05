@@ -23,6 +23,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__."/lib.php");
 require_once(__DIR__.'/turnitintooltwo_form.class.php');
+require_once(__DIR__.'/turnitintooltwo_submission.class.php');
 
 class turnitintooltwo_view {
 
@@ -108,6 +109,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('postdate_warning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('deleteconfirm', 'turnitintooltwo');
         $PAGE->requires->string_for_js('turnitindeleteconfirm', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('max_marks_warning', 'turnitintooltwo');
     }
 
     /**
@@ -286,7 +288,7 @@ class turnitintooltwo_view {
             $eulaaccepted = ($user->useragreementaccepted != 1) ? $user->get_accepted_user_agreement() : $user->useragreementaccepted;
         }
 
-        $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);      
+        $parts = $turnitintooltwoassignment->get_parts_available_to_submit(0, $istutor);
         if (!empty($parts)) {
 
             $elements = array();
@@ -809,12 +811,18 @@ class turnitintooltwo_view {
                 $rubricviewlink .= $OUTPUT->box_end(true);
             }
 
+            // Show warning to instructor when changing maxmarks if grades exist
+            $turnitintooltwosubmission = new turnitintooltwo_submission();
+            $getgrades = $turnitintooltwosubmission->count_graded_submissions($turnitintooltwoassignment->turnitintooltwo->id);
+
+            $class = $getgrades > 0 ? 'max_marks_warning' : '';
+
             // Allow marks to be editable if a tutor is logged in.
             $textfield = $partdetails[$partid]->maxmarks.$rubricviewlink;
             if ($istutor) {
                 $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks,
                                                 array('title' => get_string('edit', 'turnitintooltwo'),
-                                                    'class' => 'editable_text editable_text_'.$partid, 'id' => 'marks_'.$partid,
+                                                    'class' => 'editable_text editable_text_'.$partid . ' ' . $class, 'id' => 'marks_'.$partid,
                                                     'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'maxmarks',
                                                     'data-params' => "{ 'assignment': ".
                                                                         $turnitintooltwoassignment->turnitintooltwo->id.", ".
