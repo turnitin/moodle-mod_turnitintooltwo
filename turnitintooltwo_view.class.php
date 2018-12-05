@@ -811,7 +811,7 @@ class turnitintooltwo_view {
                 $rubricviewlink .= $OUTPUT->box_end(true);
             }
 
-            // Show warning to instrutor when changing maxmarks if grades exist
+            // Show warning to instructor when changing maxmarks if grades exist
             $turnitintooltwosubmission = new turnitintooltwo_submission();
             $getgrades = $turnitintooltwosubmission->count_graded_submissions($turnitintooltwoassignment->turnitintooltwo->id);
 
