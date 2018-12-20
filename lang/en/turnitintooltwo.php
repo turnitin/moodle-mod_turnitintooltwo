@@ -685,3 +685,4 @@ $string['privacy:metadata:turnitintooltwo_client:firstname'] = 'The user’s fir
 $string['privacy:metadata:turnitintooltwo_client:lastname'] = 'The user’s last name is sent to Turnitin so that the user can be identified.';
 $string['privacy:metadata:turnitintooltwo_client:submission_title'] = 'The title of the submission is sent to Turntin so that it is identifiable.';
 $string['privacy:metadata:turnitintooltwo_client:submission_filename'] = 'The name of the submitted file is sent to Turntin so that it is identifiable.';
+$string['max_marks_warning'] = 'Please be aware that changing the Marks Available after grading may affect the gradebook';

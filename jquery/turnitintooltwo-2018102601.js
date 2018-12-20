@@ -716,6 +716,10 @@
             }
         });
 
+        $('.max_marks_warning').on("click", function () {
+            alert(M.str.turnitintooltwo.max_marks_warning);
+        });
+
         if ($('.editable_text').length > 0) {
             $.fn.editable.defaults.mode = 'inline';
             $.fn.editable.defaults.url = 'ajax.php';

@@ -96,4 +96,42 @@ class mod_turnitintooltwo_submission_testcase extends advanced_testcase {
         $response = $submission->insert_submission("");
         $this->assertEquals($response, false);
     }
+
+    public function test_count_graded_submissions() {
+      global $DB;
+
+      $this->resetAfterTest();
+
+      $turnitintooltwo = new stdClass();
+      $turnitintooltwo->id = 1;
+
+      $turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
+
+      $submission = new turnitintooltwo_submission(0, "moodle", $turnitintooltwoassignment, 1);
+
+      $data = new stdClass();
+      $data->userid = 1;
+      $data->turnitintooltwoid = $turnitintooltwo->id;
+      $data->submission_part = 1;
+      $data->submission_title = "Submission title";
+      $data->submission_type = 1;
+      $data->submission_objectid = null;
+      $data->submission_unanon = 0;
+      $data->submission_grade = 75;
+      $data->submission_gmimaged = 0;
+      $data->submission_hash = $data->userid.'_'.$data->turnitintooltwoid.'_'.$data->submission_part;
+
+      $response = $submission->insert_submission($data);
+      $count = $submission->count_graded_submissions($turnitintooltwo->id);
+
+      $this->assertEquals($count, 1);
+
+      // Testing when there is no grades
+      $submissionrecord = $DB->get_record('turnitintooltwo_submissions', array('turnitintooltwoid' => $turnitintooltwo->id));
+      $DB->update_record('turnitintooltwo_submissions', array('id' => $submissionrecord->id, 'submission_grade' => 0));
+
+      $count = $submission->count_graded_submissions($turnitintooltwo->id);
+
+      $this->assertEquals($count, 0);
+    }
 }
