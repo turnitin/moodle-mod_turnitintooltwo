@@ -27,6 +27,7 @@ When migrating Moodle Direct V1 assignments to V2 the assignment will now keep t
 
 #### A couple of backend security fixes.
 
+---
 
 ### Date:		2018-October-26
 ### Release:	v2018102601
