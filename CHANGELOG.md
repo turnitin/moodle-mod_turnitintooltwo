@@ -1,3 +1,33 @@
+### Date:		2018-December-18
+### Release:	v2018121801
+
+#### :zap: What's new
+
+---
+
+#### We now support Moodle 3.6
+
+Getting a head start on the new year by upgrading your Moodle instance? We’ve got you covered. Our Moodle Direct v2 plugin now supports Moodle 3.6. Check out [Check out our guide](https://www.turnitin.com/support/download-integrations) for a full list of the version of Moodle we support.
+
+#### :wrench: Fixes and enhancements
+
+---
+
+#### You can now set ETS as a default setting
+
+Are you a fan of ETS e-rater? Us too! To help you take advantage of it, you can now enable ETS e-rater as a default setting for your assignments.
+
+#### A new warning message when you try to change the Marks Available column
+
+A new warning message when you try to change the Marks Available column - We’ve added this notification just to make sure that editing this field is what you want to do. Editing this field after you’ve finished grading, can change entries in the Moodle gradebook. Don’t worry, you can still edit this field should you need to!
+
+#### Grade categories are now migrated
+
+When migrating Moodle Direct V1 assignments to V2 the assignment will now keep the grading category associated with the V1 assignment.
+
+#### A couple of backend security fixes.
+
+
 ### Date:		2018-October-26
 ### Release:	v2018102601
 
