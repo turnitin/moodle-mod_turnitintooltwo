@@ -1,3 +1,16 @@
+### Date:		2018-December-21
+### Release:	v2018122101
+
+#### :wrench: Fixes and enhancements
+
+---
+
+#### Grade categories are now migrated between V1 and V2
+
+When you migrate from Moodle Direct V1 to Moodle Direct V2, we’ll now keep the grading category associated with the V1 assignment when we perform the transition.
+
+---
+
 ### Date:		2018-December-18
 ### Release:	v2018121801
 
@@ -20,10 +33,6 @@ Are you a fan of ETS e-rater? Us too! To help you take advantage of it, you can 
 #### A new warning message when you try to change the Marks Available column
 
 A new warning message when you try to change the Marks Available column - We’ve added this notification just to make sure that editing this field is what you want to do. Editing this field after you’ve finished grading, can change entries in the Moodle gradebook. Don’t worry, you can still edit this field should you need to!
-
-#### Grade categories are now migrated
-
-When migrating Moodle Direct V1 assignments to V2 the assignment will now keep the grading category associated with the V1 assignment.
 
 #### A couple of backend security fixes.
 
