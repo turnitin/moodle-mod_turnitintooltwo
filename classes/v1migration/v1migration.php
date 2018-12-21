@@ -494,6 +494,12 @@ class v1migration {
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
 
+        // Update the grade category.
+        $gradeitemv1 = grade_item::fetch(array('itemmodule' => 'turnitintool', 'iteminstance' => $this->v1assignment->id, 'courseid' => $this->courseid));
+        $gradeitemv2 = grade_item::fetch(array('itemmodule' => 'turnitintooltwo', 'iteminstance' => $v2assignmentid, 'courseid' => $this->courseid));
+        grade_item::set_properties($gradeitemv2, array('categoryid' => $gradeitemv1->categoryid));
+        $gradeitemv2->update();
+
         // Perform a grade check to double check the grades are in the gradebook.
         $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id, $this->courseid);
         $v2_grades = $this->get_grades_array("turnitintooltwo", $v2assignmentid, $this->courseid);
