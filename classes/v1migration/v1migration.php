@@ -499,7 +499,7 @@ class v1migration {
 
         // Update the grade category, if one exists.
         if (isset($gradeitemv1->categoryid)) {
-            grade_item::set_properties($gradeitemv2, array('categoryid' => $gradeitemv1->categoryid));
+            grade_item::set_properties($gradeitemv2, array('categoryid' => $gradeitemv1->categoryid, 'gradepass' => $gradeitemv1->gradepass));
             $gradeitemv2->update();
         }
 
