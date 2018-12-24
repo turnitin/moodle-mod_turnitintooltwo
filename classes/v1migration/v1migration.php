@@ -494,10 +494,11 @@ class v1migration {
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
 
+        $gradeitemv1 = grade_item::fetch(array('itemmodule' => 'turnitintool', 'iteminstance' => $this->v1assignment->id, 'courseid' => $this->courseid));
+        $gradeitemv2 = grade_item::fetch(array('itemmodule' => 'turnitintooltwo', 'iteminstance' => $v2assignmentid, 'courseid' => $this->courseid));
+
         // Update the grade category, if one exists.
         if (isset($gradeitemv1->categoryid)) {
-            $gradeitemv1 = grade_item::fetch(array('itemmodule' => 'turnitintool', 'iteminstance' => $this->v1assignment->id, 'courseid' => $this->courseid));
-            $gradeitemv2 = grade_item::fetch(array('itemmodule' => 'turnitintooltwo', 'iteminstance' => $v2assignmentid, 'courseid' => $this->courseid));
             grade_item::set_properties($gradeitemv2, array('categoryid' => $gradeitemv1->categoryid));
             $gradeitemv2->update();
         }
