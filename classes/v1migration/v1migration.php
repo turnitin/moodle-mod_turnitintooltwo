@@ -298,16 +298,13 @@ class v1migration {
         $coursemodule->instance = $turnitintooltwoid;
         $coursemodule->section = 0;
 
-        // Add Course module and get course section.
+        // Add Course module.
         $coursemodule->coursemodule = add_course_module($coursemodule);
 
-        if (is_callable('course_add_cm_to_section')) {
-            $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
-        } else {
-            $sectionid = add_mod_to_section($coursemodule);
-        }
+        // Get the section for the V1 assignment.
+        $section = $DB->get_record('course_sections', array('course' => $courseid, 'id' => $this->cm->section), 'section');
+        course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $section->section);
 
-        $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
         rebuild_course_cache($coursemodule->coursemodule);
     }
 
