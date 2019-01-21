@@ -869,6 +869,9 @@ function turnitintooltwo_tempfile(array $filename, $suffix) {
         $extlength = $permittedstrlength;
     }
 
+    // Deal with characters which cause problems on some environments.
+    $filename = iconv('UTF-8', 'us-ascii//TRANSLIT//IGNORE', $filename);
+
     // Shorten the filename as needed, taking the extension into consideration.
     $permittedstrlength -= $extlength;
     $filename = mb_substr($filename, 0, $permittedstrlength, 'UTF-8');
