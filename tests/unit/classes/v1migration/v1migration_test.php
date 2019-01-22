@@ -28,6 +28,20 @@ require_once($CFG->libdir . "/gradelib.php");
  */
 class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
+    /** Workaround for new php.7.2 warning
+     * see http://php.net/manual/en/migration72.incompatible.php#migration72.incompatible.warn-on-non-countable-types
+     */
+    protected function countvar($count) {
+        if (is_array($count) || ($count instanceof Countable)) {
+            $count = count($count);
+        } else if (is_int($count)) {
+            $count = 1;
+        } else if (!isset($count)) {
+            $count = 0;
+        }
+        return $count;
+    }
+
     /**
      * Test that users get migrated from the v1 to the v2 user table.
      */
@@ -561,14 +575,14 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $response = $v1migration->migrate_course($v1course);
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "V1"));
         $this->assertEquals(1, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
 
         // We expect 0 results here since we inserted a course type of TT.
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
         $this->assertEquals(0, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
 
@@ -576,14 +590,14 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $response = $v1migration->migrate_course($v1course);
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "V1"));
         $this->assertEquals(1, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
 
         // And still 0 results for this one.
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
         $this->assertEquals(0, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
     }
