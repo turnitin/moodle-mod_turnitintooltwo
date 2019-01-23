@@ -252,7 +252,7 @@ if (!empty($action)) {
             // Clean posted variables.
             $post = array();
             $post['submissiontype'] = required_param('submissiontype', PARAM_INT);
-            $post['submissiontext'] = optional_param('submissiontext', '', PARAM_TEXT);
+            $post['submissiontext'] = optional_param('submissiontext', '', PARAM_RAW);
             $post['submissiontext'] = trim($post['submissiontext']);
             $post['submissiontitle'] = optional_param('submissiontitle', '', PARAM_TEXT);
             $post['submissiontitle'] = trim(filter_var($post['submissiontitle'], FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW));
