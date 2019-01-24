@@ -28,6 +28,20 @@ require_once($CFG->libdir . "/gradelib.php");
  */
 class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
+    /** Workaround for new php.7.2 warning
+     * see http://php.net/manual/en/migration72.incompatible.php#migration72.incompatible.warn-on-non-countable-types
+     */
+    protected function countvar($count) {
+        if (is_array($count) || ($count instanceof Countable)) {
+            $count = count($count);
+        } else if (is_int($count)) {
+            $count = 1;
+        } else if (!isset($count)) {
+            $count = 0;
+        }
+        return $count;
+    }
+
     /**
      * Test that users get migrated from the v1 to the v2 user table.
      */
@@ -301,14 +315,22 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $course = $this->getDataGenerator()->create_course();
 
         // Create Assignment.
+        $v1assignmenttitle = "Test ".uniqid();
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1migration = new v1migration($course->id, $v1assignment);
+
+        // Get the section for the V1 assignment.
+        $v1cm = get_coursemodule_from_instance('turnitintool', $v1assignment->id);
+
+        // Create V2 Assignment.
         $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo');
-        $v1migration = new v1migration($course->id, $v2assignment);
 
         $v1migration->setup_v2_module($course->id, $v2assignment->id);
 
         // Test that assignment has been assigned a course section.
-        $cm = get_coursemodule_from_instance('turnitintooltwo', $v2assignment->id);
-        $this->assertNotEquals(0, $cm->section);
+        $v2cm = get_coursemodule_from_instance('turnitintooltwo', $v2assignment->id);
+
+        $this->assertEquals($v1cm->section, $v2cm->section);
     }
 
     /**
@@ -553,14 +575,14 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $response = $v1migration->migrate_course($v1course);
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "V1"));
         $this->assertEquals(1, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
 
         // We expect 0 results here since we inserted a course type of TT.
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
         $this->assertEquals(0, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
 
@@ -568,14 +590,14 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $response = $v1migration->migrate_course($v1course);
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "V1"));
         $this->assertEquals(1, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
 
         // And still 0 results for this one.
         $v2courses = $DB->get_records('turnitintooltwo_courses', array('turnitin_cid' => $v1tiicourse, 'course_type' => "TT"));
         $this->assertEquals(0, count($v2courses));
-        $this->assertEquals(1, count($v1migration->v1assignment->legacy));
+        $this->assertEquals(1, $this->countvar($v1migration->v1assignment->legacy));
         $this->assertEquals($course->courseid, $response->courseid);
         $this->assertEquals("V1", $response->course_type);
     }
@@ -701,6 +723,18 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         $course = $this->getDataGenerator()->create_course();
 
+        // Link course to Turnitin.
+        $courselink = new stdClass();
+        $courselink->courseid = $course->id;
+        $courselink->ownerid = 0;
+        $courselink->turnitin_ctl = "Test Course";
+        $courselink->turnitin_cid = 0;
+        $DB->insert_record('turnitintool_courses', $courselink);
+
+        $v1assignmenttitle = "Test ".uniqid();
+        $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1migration = new v1migration($course->id, $v1assignment);
+
         // create a user and enrol them on the course.
         $student = $this->getDataGenerator()->create_user();
         $studentrole = $DB->get_record('role', array('shortname' => 'student'));
@@ -710,7 +744,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $v2assignmenttitle = "Test Assignment";
         $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle, 10);
 
-        $v1migration = new v1migration($course->id, $v2assignment);
         $v1migration->setup_v2_module($course->id, $v2assignment->id);
 
         // Set and get the grades for this assignment.
@@ -744,12 +777,12 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         // Create V1 Assignment.
         $v1assignmenttitle = "Test Assignment";
         $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', $v1assignmenttitle);
+        $v1migration = new v1migration($course->id, $v1assignment);
 
         // Create V2 Assignment.
         $v2assignmenttitle = "Test Assignment";
         $v2assignment = $this->make_test_assignment($course->id, 'turnitintooltwo', $v2assignmenttitle, 10);
 
-        $v1migration = new v1migration($course->id, $v2assignment);
         $v1migration->setup_v2_module($course->id, $v2assignment->id);
 
         $this->make_test_grade("turnitintooltwo", $v2assignment->id, $course->id, 1, 10);

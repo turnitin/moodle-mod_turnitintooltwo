@@ -298,16 +298,13 @@ class v1migration {
         $coursemodule->instance = $turnitintooltwoid;
         $coursemodule->section = 0;
 
-        // Add Course module and get course section.
+        // Add Course module.
         $coursemodule->coursemodule = add_course_module($coursemodule);
 
-        if (is_callable('course_add_cm_to_section')) {
-            $sectionid = course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $coursemodule->section);
-        } else {
-            $sectionid = add_mod_to_section($coursemodule);
-        }
+        // Get the section for the V1 assignment.
+        $section = $DB->get_record('course_sections', array('course' => $courseid, 'id' => $this->cm->section), 'section');
+        course_add_cm_to_section($coursemodule->course, $coursemodule->coursemodule, $section->section);
 
-        $DB->set_field("course_modules", "section", $sectionid, array("id" => $coursemodule->coursemodule));
         rebuild_course_cache($coursemodule->coursemodule);
     }
 
@@ -494,11 +491,14 @@ class v1migration {
         $params['itemname'] = $this->v1assignment->name;
         grade_update('mod/turnitintooltwo', $this->courseid, 'mod', 'turnitintooltwo', $v2assignmentid, 0, NULL, $params);
 
-        // Update the grade category.
         $gradeitemv1 = grade_item::fetch(array('itemmodule' => 'turnitintool', 'iteminstance' => $this->v1assignment->id, 'courseid' => $this->courseid));
         $gradeitemv2 = grade_item::fetch(array('itemmodule' => 'turnitintooltwo', 'iteminstance' => $v2assignmentid, 'courseid' => $this->courseid));
-        grade_item::set_properties($gradeitemv2, array('categoryid' => $gradeitemv1->categoryid));
-        $gradeitemv2->update();
+
+        // Update the grade category, if one exists.
+        if (isset($gradeitemv1->categoryid)) {
+            grade_item::set_properties($gradeitemv2, array('categoryid' => $gradeitemv1->categoryid, 'gradepass' => $gradeitemv1->gradepass));
+            $gradeitemv2->update();
+        }
 
         // Perform a grade check to double check the grades are in the gradebook.
         $v1_grades = $this->get_grades_array("turnitintool", $this->v1assignment->id, $this->courseid);

@@ -1,3 +1,28 @@
+### Date:		2019-January-24
+### Release:	v2019012401
+
+#### :wrench: Fixes and enhancements
+
+#### You can now use special characters in file names
+
+When using special characters, such as an umlaut or a dash, in student names or submission titles could cause an error message to show for a small number of users using Windows servers. We've improved how our system reads extended character sets and are happy to report that this error message should no longer be shown. 
+
+#### Non-submitters and Messages boxes will now close correctly
+
+A bug had prevented some users from closing the boxes that appear for the non-submitters and Messages screens.
+
+Big thanks to Rex Lorenzo for the pull request with the fix to this issue!
+
+#### Support for Moodle PHP 7.2
+
+We had received some reports that unit tests could fail when upgraded to PHP 7.2
+
+Many thanks to ilya-catalyst for the pull request and fix!
+
+#### General security fixes.
+
+---
+
 ### Date:		2018-December-21
 ### Release:	v2018122101
 

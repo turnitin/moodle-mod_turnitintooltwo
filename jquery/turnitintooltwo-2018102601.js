@@ -603,7 +603,7 @@
         // Open an iframe light box containing the turnitin message inbox.
         if ($(".messages_inbox").length > 0) {
             $(".messages_inbox").colorbox({
-                iframe: true, width: "772px", height: "772px", opacity: "0.7", className: "messages", transition: "none", closeButton: false,
+                iframe: true, width: "772px", height: "772px", opacity: "0.7", className: "messages", transition: "none", closeButton: true,
                 onLoad: function () {
                     lightBoxCloseButton();
                     getLoadingGif();
@@ -618,7 +618,7 @@
         // Open an iframe light box containing the form to message non submitters.
         if ($(".nonsubmitters_link").length > 0) {
             $(".nonsubmitters_link").colorbox({
-                iframe: true, width: "740px", height: "540px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: false,
+                iframe: true, width: "740px", height: "540px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: true,
                 onLoad: function () {
                     lightBoxCloseButton();
                     getLoadingGif();
