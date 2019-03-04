@@ -125,8 +125,7 @@ if ($ADMIN->fulltree) {
     $testoptions = array(
         'https://api.turnitin.com' => 'https://api.turnitin.com',
         'https://api.turnitinuk.com' => 'https://api.turnitinuk.com',
-        'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com',
-        'http://tii-dev01.s2prod:7850' => 'http://tii-dev01.s2prod:7850'
+        'https://sandbox.turnitin.com' => 'https://sandbox.turnitin.com'
     );
 
     // Set $CFG->turnitinqa and add URLs to $CFG->turnitinqaurls array in config.php file for testing other environments.
