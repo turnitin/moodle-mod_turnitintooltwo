@@ -110,6 +110,7 @@ class turnitintooltwo_view {
         $PAGE->requires->string_for_js('deleteconfirm', 'turnitintooltwo');
         $PAGE->requires->string_for_js('turnitindeleteconfirm', 'turnitintooltwo');
         $PAGE->requires->string_for_js('max_marks_warning', 'turnitintooltwo');
+        $PAGE->requires->string_for_js('download_button_warning', 'turnitintooltwo');
     }
 
     /**
@@ -566,7 +567,7 @@ class turnitintooltwo_view {
 
                     // Only Moodle versions 2.7+ came with bootstrap.
                     if ($CFG->branch >= 27) {
-                        $linkstyles = array('class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown');
+                        $linkstyles = array('class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo'));
                         $linkdropdown = html_writer::tag('ul',
                                                     html_writer::tag('li', $exportorigfileszip).
                                                         html_writer::tag('li', $exportgrademarkzip),
@@ -574,7 +575,7 @@ class turnitintooltwo_view {
                         $downloadlinks = html_writer::tag('div',
                                             html_writer::tag('button', get_string('download', 'turnitintooltwo'),
                                                 $linkstyles).$linkdropdown,
-                                                array('id' => 'download_links', 'class' => 'btn-group' ));
+                                                array('id' => 'download_links', 'class' => 'btn-group'));
                     } else {
                         $downloadlinks = $exportorigfileszip.$exportgrademarkzip;
                     }
