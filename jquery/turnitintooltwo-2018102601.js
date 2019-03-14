@@ -1440,7 +1440,8 @@
 
             if ($(this).is(':checked')) {
                 if ($('#' + id + ' .inbox_checkbox').length) {
-                    $('#tabs-' + id + ' .zip_downloads').slideDown();
+                    $('#tabs-' + id + ' .zip_downloads button').prop("disabled", false);
+                    $('#tabs-' + id + ' .zip_downloads button').removeAttr("title");
                 }
                 $('#' + id + ' .inbox_checkbox').each(function () {
                     $(this).prop('checked', true);
@@ -1450,7 +1451,8 @@
                     $(this).prop('checked', false);
                 });
                 if ($('#' + id + ' .inbox_checkbox').length) {
-                    $('#tabs-' + id + ' .zip_downloads').slideUp();
+                    $('#tabs-' + id + ' .zip_downloads button').prop("disabled", true);
+                    $('#tabs-' + id + ' .zip_downloads button').prop("title", M.str.turnitintooltwo.download_button_warning);
                 }
             }
         });
