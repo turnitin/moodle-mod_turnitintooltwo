@@ -171,7 +171,7 @@ class v1migration {
         $this->setup_v2_module($this->courseid, $turnitintooltwoid);
 
         // Get the assignment parts.
-        $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id));
+        $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id, 'deleted' => 0));
 
         // Migrate the parts.
         foreach ($v1parts as $v1part) {
