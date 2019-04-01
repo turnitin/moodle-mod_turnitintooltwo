@@ -4,9 +4,6 @@
  * @package   turnitintooltwo
  * @copyright Turnitin
  * @author 2019 David Winn <dwinn@turnitin.com>
- */
-
-/**
  * @module mod_turnitintooltwo/migration_tool
  */
 
