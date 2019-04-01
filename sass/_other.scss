@@ -131,7 +131,6 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     text-align: center;
     float: left;
     font-size: 14px;
-    text-align: center;
 }
 #migration-progress {
     background-color: #0073D2;
@@ -139,6 +138,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 }
 .migration-spinner {
     text-align: center;
+    padding: 30px;
 }
 
 .enablemigrationtool {
@@ -178,7 +178,6 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     text-align: center;
     float: left;
     font-size: 14px;
-    text-align: center;
 }
 #migration-progress {
     background-color: #0073D2;
@@ -215,7 +214,6 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     float: left;
     padding-right: 20px;
 }
-.yellowtest{color: yellow;}
 
 #migrationform #fitem_id_submitbutton,
 #migration-delete-selected #fitem_id_submitbutton,
@@ -233,8 +231,9 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 
 .migrationheader {
     color: #003A69;
+    font-size: 18px;
     font-weight: normal;
-    margin-bottom: 15px;
+    margin: 10px 0 10px 0;
 }
 .mod_turnitintooltwo .btn-primary {
     background: #0073D2;
