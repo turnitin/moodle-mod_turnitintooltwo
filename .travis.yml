@@ -12,6 +12,9 @@ php:
  - 7.0
  - 7.2
 
+addons:
+postgresql: "9.6"
+
 env:
  global:
   - IGNORE_PATHS=sdk/,fonts/,pix/
@@ -26,6 +29,10 @@ env:
 
 matrix:
   exclude:
+   - env: DB=pgsql MOODLE_BRANCH=MOODLE_31_STABLE
+     php: 7.2
+   - env: DB=mysqli MOODLE_BRANCH=MOODLE_31_STABLE
+     php: 7.2
    - env: DB=pgsql MOODLE_BRANCH=MOODLE_36_STABLE
      php: 5.5
    - env: DB=mysqli MOODLE_BRANCH=MOODLE_36_STABLE
