@@ -158,7 +158,7 @@ class v1migration {
             $v2partid = $DB->insert_record("turnitintooltwo_parts", $v1part);
 
             // Get the submissions for this part.
-            $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid));
+            $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid, 'deleted' => 0));
 
             $migratedsubs = array();
             foreach ($v1partsubmissions as $v1partsubmission) {
