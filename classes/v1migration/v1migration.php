@@ -142,7 +142,7 @@ class v1migration {
         $this->setup_v2_module($this->courseid, $turnitintooltwoid);
 
         // Get the assignment parts.
-        $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id));
+        $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id, 'deleted' => 0));
 
         // Migrate the parts.
         foreach ($v1parts as $v1part) {
@@ -158,7 +158,7 @@ class v1migration {
             $v2partid = $DB->insert_record("turnitintooltwo_parts", $v1part);
 
             // Get the submissions for this part.
-            $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid, 'deleted' => 0));
+            $v1partsubmissions = $DB->get_records('turnitintool_submissions', array('submission_part' => $v1partid));
 
             $migratedsubs = array();
             foreach ($v1partsubmissions as $v1partsubmission) {
