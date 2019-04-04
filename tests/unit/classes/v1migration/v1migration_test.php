@@ -210,32 +210,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     }
 
     /**
-     * Test the migrate modal.
-     */
-    public function test_migrate_modal() {
-        global $DB;
-
-        if (!$this->v1installed()) {
-            return false;
-        }
-
-        $v1assignment = new stdClass();
-        $v1assignment->id = 1;
-
-        $v1migration = new v1migration(1, $v1assignment);
-
-        $this->resetAfterTest();
-
-        // Test migration modal.
-        $courseid = 1;
-        $turnitintoolid = 1;
-        $test = $v1migration->migrate_modal($courseid, $turnitintoolid);
-
-        $this->assertContains('data-courseid="'.$courseid.'"', $test);
-        $this->assertContains('data-turnitintoolid="'.$turnitintoolid.'"', $test);
-    }
-
-    /**
      * Test that all values which can't be null get initialised.
      */
     public function test_set_default_values() {
