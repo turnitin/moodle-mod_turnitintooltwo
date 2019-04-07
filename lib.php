@@ -336,8 +336,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
     }
 
     foreach ($turnitintooltwos as $turnitintooltwo) {
-        if (!$parts = $DB->get_records('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id,
-                                                                            'deleted' => 0))) {
+        if (!$parts = $DB->get_records('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id))) {
             turnitintooltwo_print_error('partgeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }

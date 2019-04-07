@@ -78,7 +78,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
             $this->turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $this->_cm->instance));
             $parts = $DB->get_records("turnitintooltwo_parts",
-                                        array("turnitintooltwoid" => $this->_cm->instance, "deleted" => 0), 'id');
+                                        array("turnitintooltwoid" => $this->_cm->instance), 'id');
 
             $i = 0;
             foreach ($parts as $part) {
