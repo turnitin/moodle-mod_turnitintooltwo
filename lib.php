@@ -104,6 +104,7 @@ function turnitintooltwo_supports($feature) {
         case FEATURE_GRADE_OUTCOMES:
         case FEATURE_BACKUP_MOODLE2:
         case FEATURE_SHOW_DESCRIPTION:
+        case FEATURE_CONTROLS_GRADE_VISIBILITY:
             return true;
         default:
             return null;
@@ -241,9 +242,15 @@ function turnitintooltwo_grade_item_update($turnitintooltwo, $grades = null) {
         $params['gradetype'] = GRADE_TYPE_NONE;
     }
 
-    $lastpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id), 'max(dtpost)');
-    $lastpart = current($lastpart);
-    $params['hidden'] = $lastpart;
+    if ($cm->visible) {
+        // The Turnitin activity is visible so the post date should be used.
+        $lastpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id), 'max(dtpost)');
+        $lastpart = current($lastpart);
+        $params['hidden'] = $lastpart;
+    } else {
+        // The Turnitin activity is hidden so the grades should not be visibile.
+        $params['hidden'] = 1;
+    }
     $params['grademin']  = 0;
 
     return grade_update('mod/turnitintooltwo', $turnitintooltwo->course, 'mod', 'turnitintooltwo',
