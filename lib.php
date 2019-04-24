@@ -242,14 +242,17 @@ function turnitintooltwo_grade_item_update($turnitintooltwo, $grades = null) {
         $params['gradetype'] = GRADE_TYPE_NONE;
     }
 
-    if ($cm->visible) {
-        // The Turnitin activity is visible so the post date should be used.
-        $lastpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id), 'max(dtpost)');
-        $lastpart = current($lastpart);
-        $params['hidden'] = $lastpart;
-    } else {
-        // The Turnitin activity is hidden so the grades should not be visibile.
-        $params['hidden'] = 1;
+    // There should always be a $cm unless this is called on module creation.
+    if (!empty($cm)) {
+        if ($cm->visible) {
+            // The Turnitin activity is visible so the post date should be used.
+            $lastpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id), 'max(dtpost)');
+            $lastpart = current($lastpart);
+            $params['hidden'] = $lastpart;
+        } else {
+            // The Turnitin activity is hidden so the grades should not be visibile.
+            $params['hidden'] = 1;
+        }
     }
     $params['grademin']  = 0;
 
