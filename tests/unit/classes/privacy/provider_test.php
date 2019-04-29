@@ -146,6 +146,7 @@ class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\
         $this->assertArrayHasKey('lastname', $privacyfields);
         $this->assertArrayHasKey('submission_title', $privacyfields);
         $this->assertArrayHasKey('submission_filename', $privacyfields);
+        $this->assertArrayHasKey('submission_content', $privacyfields);
 
         $this->assertEquals('privacy:metadata:turnitintooltwo_client', $itemcollection[3]->get_summary());
     }
