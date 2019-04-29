@@ -1329,7 +1329,7 @@ class turnitintooltwo_assignment {
         $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
 
         // Edit course in Turnitin.
-        $this->edit_tii_course($course);
+        $this->edit_tii_course($course, $coursetype);
         $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
 
         // Get Current Moodle Turnitin Tool Parts Object.
