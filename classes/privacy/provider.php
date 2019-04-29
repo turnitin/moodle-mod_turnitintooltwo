@@ -40,7 +40,7 @@ class provider implements
     \core_privacy\local\request\plugin\provider {
 
     // This is the trait to be included to actually benefit from the polyfill.
-    use \core_privacy\local\legacy_polyfill;    
+    use \core_privacy\local\legacy_polyfill;
 
     /**
      * Return the fields which contain personal data.
@@ -93,6 +93,7 @@ class provider implements
             'lastname' => 'privacy:metadata:turnitintooltwo_client:lastname',
             'submission_title' => 'privacy:metadata:turnitintooltwo_client:submission_title',
             'submission_filename' => 'privacy:metadata:turnitintooltwo_client:submission_filename',
+            'submission_content' => 'privacy:metadata:turnitintooltwo_client:submission_content',
         ], 'privacy:metadata:turnitintooltwo_client');
 
         return $collection;

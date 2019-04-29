@@ -679,11 +679,12 @@ $string['privacy:metadata:turnitintooltwo_submissions:submission_transmatch'] = 
 $string['privacy:metadata:turnitintooltwo_submissions:submission_orcapable'] = 'Indicates whether Turnitin was able to produce a Similarity report for the submission.';
 $string['privacy:metadata:turnitintooltwo_submissions:submission_hash'] = 'A submission specific hash containing the user\'s ID.';
 
-$string['privacy:metadata:turnitintooltwo_client'] = 'To successfully make a submission to Turnitin, specific user data needs to be exchanged between Moodle and Turnitin.';
+$string['privacy:metadata:turnitintooltwo_client'] = 'To successfully make a submission to Turnitin, specific user data needs to be exchanged between Moodle and Turnitin. For more information around Moodle Plugins and GDPR, please visit: https://help.turnitin.com/feedback-studio/moodle/moodle-plugins-and-gdpr.htm';
 $string['privacy:metadata:turnitintooltwo_client:email'] = 'The user\'s email address is shared by Moodle to enable the creation of a Turnitin account.';
 $string['privacy:metadata:turnitintooltwo_client:firstname'] = 'The user’s first name is sent to Turnitin so that the user can be identified.';
 $string['privacy:metadata:turnitintooltwo_client:lastname'] = 'The user’s last name is sent to Turnitin so that the user can be identified.';
 $string['privacy:metadata:turnitintooltwo_client:submission_title'] = 'The title of the submission is sent to Turntin so that it is identifiable.';
 $string['privacy:metadata:turnitintooltwo_client:submission_filename'] = 'The name of the submitted file is sent to Turntin so that it is identifiable.';
+$string['privacy:metadata:turnitintooltwo_client:submission_content'] = 'Please be aware that the content of a file/submission is sent to Turnitin for processing.';
 $string['max_marks_warning'] = 'Please be aware that changing the Marks Available after grading may affect the gradebook';
 $string['download_button_warning'] = 'A student must be selected for this feature to be available.';
