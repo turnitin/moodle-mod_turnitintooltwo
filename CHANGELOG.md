@@ -1,3 +1,26 @@
+### Date:		2019-May-01
+### Release:	v2019050101
+
+#### :wrench: Fixes and enhancements
+
+#### Migration tool modal improvements
+
+We’ve made sure that the modal displays when using our migration tool. If you migration is successful, then a green model box will display to confirm this.
+
+#### Download student file button visibility
+We’ve been improving usability by clarifying available options to instructors. Previously, the download student files button was hidden until a student was selected. We’ve now made the button visible at all times, but it is only possible to invoke the button once a student has been selected.
+
+#### Migration bugs resolved
+There were some bugs affecting the migration process. One was causing assignment parts that had been deleted in V1 to reappear after the migration to V2. The other was placing new parts of migrated assignments in the incorrect class within Turnitin. These issues have been resolved.
+
+#### Student grades hidden until post date
+Now students will be unable to see grades in the Moodle grade book until the post date has passed. Big thanks to Neill Magill for the pull request with the fix to this issue!
+
+#### Privacy settings updates
+We now carry over privacy settings from Moodle V1 to Moodle V2 when the user migrates.
+
+---
+
 ### Date:		2019-January-24
 ### Release:	v2019012401
 
