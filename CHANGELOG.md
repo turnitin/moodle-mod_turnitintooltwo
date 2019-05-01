@@ -5,7 +5,7 @@
 
 #### Migration tool modal improvements
 
-We’ve made sure that the modal displays when using our migration tool. If you migration is successful, then a green model box will display to confirm this.
+We've made sure that the modal displays when using our migration tool. If your migration is successful, then a green notification box will be displayed to confirm this.
 
 #### Download student file button visibility
 We’ve been improving usability by clarifying available options to instructors. Previously, the download student files button was hidden until a student was selected. We’ve now made the button visible at all times, but it is only possible to invoke the button once a student has been selected.
