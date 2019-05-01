@@ -1,3 +1,26 @@
+### Date:		2019-May-01
+### Release:	v2019050101
+
+#### :wrench: Fixes and enhancements
+
+#### Migration tool modal improvements
+
+We've made sure that the modal displays when using our migration tool. If your migration is successful, then a green notification box will be displayed to confirm this.
+
+#### Download student file button visibility
+We’ve been improving usability by clarifying available options to instructors. Previously, the download student files button was hidden until a student was selected. We’ve now made the button visible at all times, but it is only possible to invoke the button once a student has been selected.
+
+#### Migration bugs resolved
+There were some bugs affecting the migration process. One was causing assignment parts that had been deleted in V1 to reappear after the migration to V2. The other was placing new parts of migrated assignments in the incorrect class within Turnitin. These issues have been resolved.
+
+#### Student grades hidden until post date
+Now students will be unable to see grades in the Moodle grade book until the post date has passed. Big thanks to Neill Magill for the pull request with the fix to this issue!
+
+#### Privacy settings updates
+We now carry over privacy settings from Moodle V1 to Moodle V2 when the user migrates.
+
+---
+
 ### Date:		2019-January-24
 ### Release:	v2019012401
 
@@ -149,7 +172,7 @@ We've made the Moodle V2 repository settings much clearer, by providing easy-to-
 
 Moodle has released two plugins with privacy features to assist with GDPR compliance. While we've successfully implemented [Moodle's new privacy features](https://docs.moodle.org/dev/Privacy_API), Moodle's update is only available to those using Moodle 3.3.5+, 3.4.2+, or 3.5. Therefore, if you're using an earlier version, you must upgrade to have access to these new features.
 
-To inform you about the data we store in relation to our users, we now provide a detailed list via the Moodle Privacy and Policies page. Learn more about the data we're reporting on via our [Moodle Plugins and GDPR](https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Plugins_and_GDPR) page.
+To inform you about the data we store in relation to our users, we now provide a detailed list via the Moodle Privacy and Policies page. Learn more about the data we're reporting on via our [Moodle Plugins and GDPR](https://help.turnitin.com/feedback-studio/moodle/moodle-plugins-and-gdpr.htm) page.
 
 #### Students can request to download their data
 
@@ -159,7 +182,7 @@ Students have the ability to request an export of their data stored in Moodle. T
 
 Students can also request their data to be removed from Moodle. This requested can be accepted or declined by their Moodle administrator. If accepted, the administrator will remove the student data from Moodle. However, administrators must contact support@turnitin.com to request that student data be removed from Turnitin itself.
   
-> If you're a Moodle administrator, and using version 3.3.5+, 3.4.2+, or 3.5, follow the steps on the [Moodle Plugins and GDPR](https://guides.turnitin.com/03_Integrations/Turnitin_Partner_Integrations/Moodle/Moodle_Plugins_and_GDPR) page to view the data we store in Moodle.
+> If you're a Moodle administrator, and using version 3.3.5+, 3.4.2+, or 3.5, follow the steps on the [Moodle Plugins and GDPR](https://help.turnitin.com/feedback-studio/moodle/moodle-plugins-and-gdpr.htm) page to view the data we store in Moodle.
 
 
 #### You can now send all papers to your institutional repository by default!

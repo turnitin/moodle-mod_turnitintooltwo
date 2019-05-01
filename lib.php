@@ -104,6 +104,7 @@ function turnitintooltwo_supports($feature) {
         case FEATURE_GRADE_OUTCOMES:
         case FEATURE_BACKUP_MOODLE2:
         case FEATURE_SHOW_DESCRIPTION:
+        case FEATURE_CONTROLS_GRADE_VISIBILITY:
             return true;
         default:
             return null;
@@ -241,9 +242,16 @@ function turnitintooltwo_grade_item_update($turnitintooltwo, $grades = null) {
         $params['gradetype'] = GRADE_TYPE_NONE;
     }
 
+    // Get the latest part, for the post date and set the default hidden value on grade item.
     $lastpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id), 'max(dtpost)');
     $lastpart = current($lastpart);
     $params['hidden'] = $lastpart;
+
+    // There should always be a $cm unless this is called on module creation.
+    if (!empty($cm)) {
+        // The value of hidden should be 1 if The Turnitin activity is visible so the post date should be used.
+        $params['hidden'] = ($cm->visible) ? $lastpart : 1;
+    }
     $params['grademin']  = 0;
 
     return grade_update('mod/turnitintooltwo', $turnitintooltwo->course, 'mod', 'turnitintooltwo',
@@ -336,8 +344,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
     }
 
     foreach ($turnitintooltwos as $turnitintooltwo) {
-        if (!$parts = $DB->get_records('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id,
-                                                                            'deleted' => 0))) {
+        if (!$parts = $DB->get_records('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id))) {
             turnitintooltwo_print_error('partgeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }

@@ -1317,20 +1317,20 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->id = $this->id;
         $this->turnitintooltwo->timemodified = time();
 
-        // Get Moodle Course Object.
-        $legacy = (!empty($this->turnitintooltwo->legacy)) ? $this->turnitintooltwo->legacy : 0;
-        $coursetype = turnitintooltwo_get_course_type($legacy);
-        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
-
-        // Edit course in Turnitin.
-        $this->edit_tii_course($course);
-        $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
-
         // Get Current Moodle Turnitin Tool data (Assignment).
         if (!$turnitintooltwonow = $DB->get_record("turnitintooltwo", array("id" => $this->id))) {
             turnitintooltwo_print_error('turnitintooltwogeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
             exit();
         }
+
+        // Get Moodle Course Object.
+        $legacy = (!empty($turnitintooltwonow->legacy)) ? $turnitintooltwonow->legacy : 0;
+        $coursetype = turnitintooltwo_get_course_type($legacy);
+        $course = $this->get_course_data($this->turnitintooltwo->course, $coursetype);
+
+        // Edit course in Turnitin.
+        $this->edit_tii_course($course, $coursetype);
+        $course->turnitin_ctl = $course->fullname . " (Moodle TT)";
 
         // Get Current Moodle Turnitin Tool Parts Object.
         if (!$parts = $DB->get_records_select("turnitintooltwo_parts", " turnitintooltwoid = ? ", array($this->id), 'id ASC')) {

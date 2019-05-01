@@ -102,46 +102,17 @@ class v1migration {
     }
 
     /**
-     * Return the true if the user proceeds with the migration.
+     * Since April 2019 the parameters taken in are not used, however we leave them in to avoid forcing a V1 release/update.
      *
      * @param int $courseid - The course ID.
      * @param int $turnitintooltwoid - The turnitintooltwoid.
-     * @return string $output The HTML for the modal.
      */
     public function migrate_modal($courseid, $turnitintoolid) {
         global $PAGE;
-        $cssurl = new moodle_url('/mod/turnitintooltwo/jquery/colorbox.css');
-        $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
         $PAGE->requires->css($cssurl);
-        $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
-        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
-        $PAGE->requires->jquery_plugin('turnitintooltwo-migration_tool', 'mod_turnitintooltwo');
 
-        $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
-
-        $migratelink = html_writer::tag('button', get_string('migrateassignment', 'turnitintooltwo'),
-                                                    array('class' => 'migrate_link btn-primary', 'id' => 'migrate_link',
-                                                    'data-courseid' => $courseid, 'data-turnitintoolid' => $turnitintoolid));
-        $dontmigratelink = html_writer::tag('button', get_string('dontmigrateassignment', 'turnitintooltwo'),
-                                                        array('class' => 'dontmigrate_link btn-default', 'id' => 'dontmigrate_link'));
-
-        $spinner = html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-2x'));
-        $spinner = html_writer::tag('div', $spinner, array('class' => 'migration-spinner'));
-
-        $migrating = html_writer::tag('div', html_writer::tag('p', get_string('migrating', 'turnitintooltwo'))
-                                        . $spinner
-                                        . html_writer::tag('p', get_string('migrationredirect', 'turnitintooltwo')),
-                                        array('id' => 'migrating', 'class' => 'hide'));
-
-        $asktomigrate = html_writer::tag('div', html_writer::tag('p', get_string('migrationtooltitle', 'turnitintooltwo'), array('class' => 'migrationtitle'))
-                                        . html_writer::tag('p', get_string('migrationtoolinfo', 'turnitintooltwo'), array('class' => 'migrationtoolinfo'))
-                                        . $migratelink . $dontmigratelink
-                                        , array('id' => 'asktomigrate', 'class' => 'hide'));
-
-        $output = html_writer::tag('div', $asktomigrate . $migrating, array('id' => 'migration_alert', 'class' => 'hide'));
-
-        return $output;
+        $PAGE->requires->js_call_amd('mod_turnitintooltwo/migration_tool_launch', 'migration_tool_launch');
     }
 
 	/**
@@ -171,7 +142,7 @@ class v1migration {
         $this->setup_v2_module($this->courseid, $turnitintooltwoid);
 
         // Get the assignment parts.
-        $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id));
+        $v1parts = $DB->get_records('turnitintool_parts', array('turnitintoolid' => $this->v1assignment->id, 'deleted' => 0));
 
         // Migrate the parts.
         foreach ($v1parts as $v1part) {

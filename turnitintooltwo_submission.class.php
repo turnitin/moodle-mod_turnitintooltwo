@@ -180,7 +180,7 @@ class turnitintooltwo_submission {
                 $this->turnitintooltwoid = $turnitintooltwoassignment->turnitintooltwo->id;
             }
 
-            if (count($turnitintooltwoassignment->get_parts() > 1)) {
+            if (count($turnitintooltwoassignment->get_parts()) > 1) {
                 if ($submission->userid != 0) {
                     $usersubmissions = $turnitintooltwoassignment->get_user_submissions($submission->userid,
                                                             $submission->turnitintooltwoid);

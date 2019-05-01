@@ -28,5 +28,5 @@ $plugins = array(
     'turnitintooltwo-uieditable' => array('files' => array('jqueryui-editable.js', 'jqueryui-editable.css')),
     'turnitintooltwo-moment' => array('files' => array('moment.js')),
     'turnitintooltwo-tooltipster' => array('files' => array('tooltipster.js', 'tooltipster.css')),
-    'turnitintooltwo-migration_tool' => array('files' => array('turnitintooltwo_migration_tool-2018102601.js'))
+    'turnitintooltwo-migration_tool' => array('files' => array()) // Required as this is called from V1.
 );

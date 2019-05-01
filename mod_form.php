@@ -78,7 +78,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
             $this->turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $this->_cm->instance));
             $parts = $DB->get_records("turnitintooltwo_parts",
-                                        array("turnitintooltwoid" => $this->_cm->instance, "deleted" => 0), 'id');
+                                        array("turnitintooltwoid" => $this->_cm->instance), 'id');
 
             $i = 0;
             foreach ($parts as $part) {
@@ -131,32 +131,16 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $mform =& $this->_form;
 
-        $script = '';
         // Add in custom Javascript and CSS.
-        if ($CFG->branch <= 25) {
-            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
-                                                "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-1.8.2.min.js"));
-            $script .= html_writer::tag('script', '', array("id" => "plugin_turnitin_script", "type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/turnitintooltwo-2018102601.min.js"));
-            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery-ui-1.10.4.custom.min.js"));
-            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery.colorbox.js"));
-            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/jquery.colorbox.js"));
-            $script .= html_writer::tag('script', '', array("type" => "text/javascript",
-                                            "src" => $CFG->wwwroot."/mod/turnitintooltwo/jquery/moment.js"));
-        } else {
-            $PAGE->requires->jquery();
-            $PAGE->requires->jquery_plugin('ui');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
-            $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
-        }
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
 
         $PAGE->requires->string_for_js('anonalert', 'turnitintooltwo');
 
-        $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
+        $script = html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                         "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                         "href" => $CFG->wwwroot."/mod/turnitintooltwo/css/colorbox.css"));
