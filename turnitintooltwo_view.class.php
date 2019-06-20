@@ -192,7 +192,7 @@ class turnitintooltwo_view {
     }
 
     /**
-     * Configure html for a notice to be shown at the top of the screen if require
+     * Configure html for a notice to be shown at the top of the screen if required
      *
      * @param type $notice
      * @return mixed html containing notice
@@ -1252,10 +1252,8 @@ class turnitintooltwo_view {
 
             $scoreinner .= html_writer::tag('div', $transmatch,
                     	array('class' => 'score_colour score_colour_'.round($submission->submission_score, -1) ));
-            // $score .= $OUTPUT->box($transmatch, 'score_colour score_colour_'.round($submission->submission_score, -1));
             $scoreinner .= html_writer::tag('div', $submission->submission_score.'%',
                     	array('class' => 'origreport_score'));
-            // $score .= $OUTPUT->box($submission->submission_score.'%', 'origreport_score');
             $rawscore = $submission->submission_score;
         	}
 
@@ -1319,10 +1317,12 @@ class turnitintooltwo_view {
                 // Show grade.
                 if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 2) { // 2 is fraction.
                     $grade .= html_writer::tag('span', $submissiongrade, array("class" => "grade"))
-                            	.html_writer::tag('span', "/".$parts[$partid]->maxmarks, array("class" => "grademark_grade"));
+                            	.html_writer::tag('span', "/".$parts[$partid]->maxmarks,
+                                    array("class" => "grademark_grade"));
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
                     $submissiongrade = round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%';
-                    $grade .= html_writer::tag('span', $submissiongrade, array("class" => "grade grademark_grade"));
+                    $grade .= html_writer::tag('span', $submissiongrade,
+                                array("class" => "grade grademark_grade"));
                 }
 
                 // Put in div placeholder for DV launch form.
@@ -1332,7 +1332,7 @@ class turnitintooltwo_view {
                 // URL for DV launcher.
                 $grade .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
                     	array('id' => 'grademark_url_'.$submission->submission_objectid,
-                        'class' => 'dv_url'));
+                                'class' => 'dv_url'));
 
                 	$rawgrade = ($submissiongrade == "--") ? null : $submissiongrade;
 
@@ -1341,8 +1341,8 @@ class turnitintooltwo_view {
                 $greysubmissiongradeicon = html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey'));
 
                 $grade = html_writer::tag('div', $greysubmissiongradeicon,
-                        	array("id" => $partid . '_' . $submission->userid,
-                                "class" =>'submit_nothing','submitnothing_0_' ));
+                        	array('id' => $partid . '_' . $submission->userid,
+                                    'class' =>'submit_nothing','submitnothing_0_' ));
                 $rawgrade = null;
             } else {
                 $rawgrade = null;
@@ -1448,15 +1448,17 @@ class turnitintooltwo_view {
         // Download submission in original format.
         if (!empty($submission->submission_objectid) && !empty($submission->id) && !$submission->submission_acceptnothing) {
 
-            $downloadicon = html_writer::tag('i', '', array('title' => get_string('downloadsubmission', 'turnitintooltwo'),
-                	'class' => 'fa fa-download fa-lg'));
+            $downloadicon = html_writer::tag('i', '',
+                                array('title' => get_string('downloadsubmission', 'turnitintooltwo'),
+                	                   'class' => 'fa fa-download fa-lg'));
 
             $download = html_writer::tag('div', $downloadicon,
-                    	array("id" => 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid,
-                            "class" => 'download_original_open'));
+                    	array('id' => 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid,
+                            'class'=> 'download_original_open'));
 
-            $download .= html_writer::tag('div', '', array("id" => 'downloadoriginal_form_'.$submission->submission_objectid,
-                        	"class" => 'launch_form'));
+            $download .= html_writer::tag('div', '',
+                            array('id' => 'downloadoriginal_form_'.$submission->submission_objectid,
+                        	       'class' => 'launch_form'));
 
             // Add in LTI launch form incase Javascript is disabled.
             if (!$istutor) {
