@@ -1193,15 +1193,15 @@ class turnitintooltwo_view {
         if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
 
             $titleinner = html_writer::tag('div', format_string($submission->submission_title),
-                 	array('class' => 'submission_title underline'));
+                 	        array('class' => 'submission_title underline'));
 
             $titleinner .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
-                 	array('id' => 'default_url_'.$submission->submission_objectid,
-                    'class' => 'dv_url'));
+                 	        array('id' => 'default_url_'.$submission->submission_objectid,
+                                    'class' => 'dv_url'));
 
             $title = html_writer::tag('div', $titleinner,
-                	array('id' => 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                    'class' => 'default_open'));
+                	        array('id' => 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                                    'class' => 'default_open'));
 
             $rawtitle = $submission->submission_title;
 
@@ -1242,43 +1242,43 @@ class turnitintooltwo_view {
             //Show score.
         	if (is_null($submission->submission_score)) {
             $scoreinner = html_writer::tag('div', '&nbsp;',
-                	array('class' => 'score_colour score_colour_'));
+                	            array('class' => 'score_colour score_colour_'));
             $scoreinner .= html_writer::tag('div', get_string('pending', 'turnitintooltwo'),
-                	array('class' => 'origreport_score'));
+                	            array('class' => 'origreport_score'));
 
         	} else {
-            // Put EN flag if translated matching is on and that is the score used.
-            $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
+                // Put EN flag if translated matching is on and that is the score used.
+                $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
 
-            $scoreinner .= html_writer::tag('div', $transmatch,
-                    	array('class' => 'score_colour score_colour_'.round($submission->submission_score, -1) ));
-            $scoreinner .= html_writer::tag('div', $submission->submission_score.'%',
-                    	array('class' => 'origreport_score'));
-            $rawscore = $submission->submission_score;
+                $scoreinner .= html_writer::tag('div', $transmatch,
+                    	        array('class' => 'score_colour score_colour_'.round($submission->submission_score, -1) ));
+                $scoreinner .= html_writer::tag('div', $submission->submission_score.'%',
+                    	        array('class' => 'origreport_score'));
+                $rawscore = $submission->submission_score;
         	}
 
         	// Put in div placeholder for DV launch form.
-        	$scoreinner .= html_writer::tag('div', '',
-                    array( 'id' => 'origreport_form_'.$submission->submission_objectid,
-                        'class' => 'launch_form'));
+        	    $scoreinner .= html_writer::tag('div', '',
+                                array('id' => 'origreport_form_'.$submission->submission_objectid,
+                                        'class' => 'launch_form'));
         	// URL for DV launcher.
-        	$scoreinner .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
-                    array('id' => 'origreport_url_'.$submission->submission_objectid,
-                        'class' => 'dv_url'));
+        	    $scoreinner .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
+                                array('id' => 'origreport_url_'.$submission->submission_objectid,
+                                        'class' => 'dv_url'));
 
         	if (is_null($submission->submission_score)) {
-            $score = html_writer::tag('div', $scoreinner,
-                array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                    'class' => 'row_score'));
+                $score = html_writer::tag('div', $scoreinner,
+                                array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                                        'class' => 'row_score'));
         	} else {
-            $score = html_writer::tag('div', $scoreinner,
-                	array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                    	'class' => 'row_score origreport_open'));
+                $score = html_writer::tag('div', $scoreinner,
+                	            array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                    	                'class' => 'row_score origreport_open'));
         	}
 
-        } else {
-            $rawscore = null;
-            $score = '--';
+            } else {
+                $rawscore = null;
+                $score = '--';
         }
 
         // Show grade and link to DV.
@@ -1304,20 +1304,20 @@ class turnitintooltwo_view {
                 $grade = '';
                 if (!is_null($submission->submission_grade) || $submission->submission_gmimaged != 0 || $istutor) {
 
-                	$submissiongradeicon = html_writer::tag('i', '',
-                	             array('title' => get_string('submissiongrade', 'turnitintooltwo'),
-                            	     'class' => 'fa fa-pencil fa-lg gm-blue'));
+                $submissiongradeicon = html_writer::tag('i', '',
+                	                        array('title' => get_string('submissiongrade', 'turnitintooltwo'),
+                            	                    'class' => 'fa fa-pencil fa-lg gm-blue'));
 
-                	$grade = html_writer::tag('div', $submissiongradeicon,
-                        array("id" => 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
-                            	"class" => 'grademark_open ' . $class,
-                            	"title" => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id));
+                $grade = html_writer::tag('div', $submissiongradeicon,
+                                            array("id" => 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
+                            	                "class" => 'grademark_open ' . $class,
+                            	                "title" => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id));
                 }
 
                 // Show grade.
                 if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 2) { // 2 is fraction.
                     $grade .= html_writer::tag('span', $submissiongrade, array("class" => "grade"))
-                            	.html_writer::tag('span', "/".$parts[$partid]->maxmarks,
+                            .html_writer::tag('span', "/".$parts[$partid]->maxmarks,
                                     array("class" => "grademark_grade"));
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
                     $submissiongrade = round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%';
@@ -1328,7 +1328,7 @@ class turnitintooltwo_view {
                 // Put in div placeholder for DV launch form.
                 $grade .= html_writer::tag('div', '',
                     	array('id' => 'grademark_form_'.$submission->submission_objectid,
-                        	'class' => 'launch_form'));
+                        	    'class' => 'launch_form'));
                 // URL for DV launcher.
                 $grade .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
                     	array('id' => 'grademark_url_'.$submission->submission_objectid,
@@ -1453,12 +1453,12 @@ class turnitintooltwo_view {
                 	                   'class' => 'fa fa-download fa-lg'));
 
             $download = html_writer::tag('div', $downloadicon,
-                    	array('id' => 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid,
-                            'class'=> 'download_original_open'));
+                    	        array('id' => 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid,
+                                        'class'=> 'download_original_open'));
 
             $download .= html_writer::tag('div', '',
-                            array('id' => 'downloadoriginal_form_'.$submission->submission_objectid,
-                        	       'class' => 'launch_form'));
+                                array('id' => 'downloadoriginal_form_'.$submission->submission_objectid,
+                        	            'class' => 'launch_form'));
 
             // Add in LTI launch form incase Javascript is disabled.
             if (!$istutor) {
