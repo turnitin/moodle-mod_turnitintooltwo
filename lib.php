@@ -1791,14 +1791,15 @@ function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = fa
         $dbparams[] = $turnitintooltwo->course;
     }
     try {
-        // Update event for assignment part.
+        // Create event data.
+        $updatedevent = new stdClass();
+        $updatedevent->userid = $USER->id;
+        $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
+        $updatedevent->timestart = $part->dtdue;
+
+        // Create/Update event for assignment part.
         if ($event = $DB->get_record_select("event", $dbselect, $dbparams)) {
-            // Update the event.
-            $updatedevent = new stdClass();
             $updatedevent->id = $event->id;
-            $updatedevent->userid = $USER->id;
-            $updatedevent->name = $turnitintooltwo->name." - ".$part->partname;
-            $updatedevent->timestart = $part->dtdue;
 
             if ($CFG->branch >= 33) {
                 $updatedevent->timesort = $part->dtdue;
@@ -1811,6 +1812,9 @@ function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = fa
             }
 
             $DB->update_record('event', $updatedevent);
+        } else {
+            $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
+            $turnitintooltwoassignment->create_event($turnitintooltwo->id, $part->partname, $part->dtdue);
         }
     } catch (Exception $e) {
         turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);

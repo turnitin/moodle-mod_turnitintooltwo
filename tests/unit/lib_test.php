@@ -281,7 +281,8 @@ class mod_lib_testcase extends test_lib {
         $course = $this->getDataGenerator()->create_course();
 
         $turnitintooltwoassignment = $this->make_test_tii_assignment();
-        $cmid = $this->make_test_module($turnitintooltwoassignment->turnitintooltwo->course,'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id);
+        $cmid = $this->make_test_module($turnitintooltwoassignment->turnitintooltwo->course,
+            'turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo->id);
         $context = context_module::instance($cmid);
         $cm = $DB->get_record("course_modules", array('id' => $cmid));
 
@@ -427,7 +428,6 @@ class mod_lib_testcase extends test_lib {
         $DB->update_record('event', $updatedevent);
 
         // This test is only relevant to 3.3+;
-
         if ($CFG->branch >= 33) {
             // Check that we can convert an old event to a new event.
             turnitintooltwo_update_event($turnitintooltwo, $part, null, true);
@@ -439,7 +439,8 @@ class mod_lib_testcase extends test_lib {
             }
             $this->assertNotEquals(0, $response->timestart);
 
-            // We can check that a second call to convert an event will not update the event by resetting only the timestart value and checking it is not updated,
+            // We can check that a second call to convert an event will not update the event by resetting only the
+            // timestart value and checking it is not updated,
             $updatedevent = new stdClass();
             $updatedevent->id = $event->id;
             $updatedevent->timestart = 0;
@@ -451,5 +452,14 @@ class mod_lib_testcase extends test_lib {
 
             $this->assertEquals(0, $response->timestart);
         }
+
+        // Remove event and check that the update event method will create one if one doesn't exist.
+        $DB->delete_records('event', array('id' => $updatedevent->id));
+        $this->assertEquals(0, $DB->count_records('event', array('id' => $updatedevent->id)));
+
+        turnitintooltwo_update_event($turnitintooltwo, $part);
+        $dbselect = " name = ? ";
+        $dbparams = array($turnitintooltwo->name." - ".$part->partname);
+        $this->assertEquals(1, $DB->count_records_select('event', $dbselect, $dbparams));
     }
 }
