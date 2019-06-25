@@ -1239,46 +1239,46 @@ class turnitintooltwo_view {
         } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
 
-            //Show score.
-        	if (is_null($submission->submission_score)) {
+        //Show score.
+        if (is_null($submission->submission_score)) {
             $scoreinner = html_writer::tag('div', '&nbsp;',
-                	            array('class' => 'score_colour score_colour_'));
+                            array('class' => 'score_colour score_colour_'));
             $scoreinner .= html_writer::tag('div', get_string('pending', 'turnitintooltwo'),
-                	            array('class' => 'origreport_score'));
+                            array('class' => 'origreport_score'));
 
-        	} else {
-                // Put EN flag if translated matching is on and that is the score used.
-                $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
+        } else {
+            // Put EN flag if translated matching is on and that is the score used.
+            $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
 
-                $scoreinner .= html_writer::tag('div', $transmatch,
-                    	        array('class' => 'score_colour score_colour_'.round($submission->submission_score, -1) ));
-                $scoreinner .= html_writer::tag('div', $submission->submission_score.'%',
-                    	        array('class' => 'origreport_score'));
-                $rawscore = $submission->submission_score;
-        	}
+            $scoreinner .= html_writer::tag('div', $transmatch,
+                            array('class' => 'score_colour score_colour_'.round($submission->submission_score, -1) ));
+            $scoreinner .= html_writer::tag('div', $submission->submission_score.'%',
+                            array('class' => 'origreport_score'));
+            $rawscore = $submission->submission_score;
+        }
 
-        	// Put in div placeholder for DV launch form.
-        	    $scoreinner .= html_writer::tag('div', '',
-                                array('id' => 'origreport_form_'.$submission->submission_objectid,
-                                        'class' => 'launch_form'));
-        	// URL for DV launcher.
-        	    $scoreinner .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
-                                array('id' => 'origreport_url_'.$submission->submission_objectid,
-                                        'class' => 'dv_url'));
+        // Put in div placeholder for DV launch form.
+            $scoreinner .= html_writer::tag('div', '',
+                            array('id' => 'origreport_form_'.$submission->submission_objectid,
+                                    'class' => 'launch_form'));
+        // URL for DV launcher.
+            $scoreinner .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
+                            array('id' => 'origreport_url_'.$submission->submission_objectid,
+                                    'class' => 'dv_url'));
 
-        	if (is_null($submission->submission_score)) {
-                $score = html_writer::tag('div', $scoreinner,
-                                array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                                        'class' => 'row_score'));
-        	} else {
-                $score = html_writer::tag('div', $scoreinner,
-                	            array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                    	                'class' => 'row_score origreport_open'));
-        	}
+        if (is_null($submission->submission_score)) {
+            $score = html_writer::tag('div', $scoreinner,
+                            array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                                    'class' => 'row_score'));
+        } else {
+            $score = html_writer::tag('div', $scoreinner,
+                            array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
+                                    'class' => 'row_score origreport_open'));
+        }
 
-            } else {
-                $rawscore = null;
-                $score = '--';
+        } else {
+            $rawscore = null;
+            $score = '--';
         }
 
         // Show grade and link to DV.
