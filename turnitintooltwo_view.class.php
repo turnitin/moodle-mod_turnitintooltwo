@@ -1301,14 +1301,14 @@ class turnitintooltwo_view {
                 $grade = '';
                 if (!is_null($submission->submission_grade) || $submission->submission_gmimaged != 0 || $istutor) {
 
-                $submissiongradeicon = html_writer::tag('i', '',
-                	                        array('title' => get_string('submissiongrade', 'turnitintooltwo'),
-                            	                    'class' => 'fa fa-pencil fa-lg gm-blue'));
+                    $submissiongradeicon = html_writer::tag('i', '',
+                                                array('title' => get_string('submissiongrade', 'turnitintooltwo'),
+                                                    'class' => 'fa fa-pencil fa-lg gm-blue'));
 
-                $grade = html_writer::tag('div', $submissiongradeicon,
-                                            array('id' => 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
-                            	                'class' => 'grademark_open ' . $class,
-                            	                'title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id));
+                    $grade = html_writer::tag('div', $submissiongradeicon,
+                                                array('id' => 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
+                                                    'class' => 'grademark_open ' . $class,
+                                                    'title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id));
                 }
 
                 // Show grade.
@@ -1319,7 +1319,7 @@ class turnitintooltwo_view {
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
                     $submissiongrade = round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%';
                     $grade .= html_writer::tag('span', $submissiongrade,
-                                array('class' => 'grade grademark_grade'));
+                                    array('class' => 'grade grademark_grade'));
                 }
 
                 // Put in div placeholder for DV launch form.
@@ -1331,7 +1331,7 @@ class turnitintooltwo_view {
                     	array('id' => 'grademark_url_'.$submission->submission_objectid,
                                 'class' => 'dv_url'));
 
-                	$rawgrade = ($submissiongrade == "--") ? null : $submissiongrade;
+                $rawgrade = ($submissiongrade == "--") ? null : $submissiongrade;
 
             } else if (!isset($submission->submission_objectid) && empty($submission->id) && $istutor ) {
                 // Allow nothing submission if no submission has been made and this is a tutor.
