@@ -69,24 +69,22 @@ $tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 
  * @param int $cmid Course module id
  */
 function turnitintooltwo_add_to_log($courseid, $eventname, $link, $desc, $cmid, $userid = 0) {
-    global $CFG, $USER;
-    if ( ( property_exists( $CFG, 'branch' ) AND ( $CFG->branch < 27 ) ) || ( !property_exists( $CFG, 'branch' ) ) ) {
-        add_to_log($courseid, "turnitintooltwo", $eventname, $link, $desc, $cmid);
-    } else {
-        $eventname = str_replace(' ', '_', $eventname);
-        $eventpath = '\mod_turnitintooltwo\event\\'.$eventname;
+    global $USER;
 
-        $data = array(
-            'objectid' => $cmid,
-            'context' => ( $cmid == 0 ) ? context_course::instance($courseid) : context_module::instance($cmid),
-            'other' => array('desc' => $desc)
-        );
-        if (!empty($userid) && ($userid != $USER->id)) {
-            $data['relateduserid'] = $userid;
-        }
-        $event = $eventpath::create($data);
-        $event->trigger();
+
+    $eventname = str_replace(' ', '_', $eventname);
+    $eventpath = '\mod_turnitintooltwo\event\\'.$eventname;
+
+    $data = array(
+        'objectid' => $cmid,
+        'context' => ( $cmid == 0 ) ? context_course::instance($courseid) : context_module::instance($cmid),
+        'other' => array('desc' => $desc)
+    );
+    if (!empty($userid) && ($userid != $USER->id)) {
+        $data['relateduserid'] = $userid;
     }
+    $event = $eventpath::create($data);
+    $event->trigger();
 }
 
 /**
@@ -115,18 +113,10 @@ function turnitintooltwo_supports($feature) {
  * @return int the plugin version for use within the plugin.
  */
 function turnitintooltwo_get_version() {
-    global $DB, $CFG;
-    $pluginversion = '';
+    global $DB;
+    $version = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintooltwo', 'name' => 'version'));
 
-    if ($CFG->branch >= 26) {
-        $module = $DB->get_record('config_plugins', array('plugin' => 'mod_turnitintooltwo', 'name' => 'version'));
-        $pluginversion = $module->value;
-    } else {
-        $module = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
-        $pluginversion = $module->version;
-    }
-
-    return $pluginversion;
+    return $version->value;
 }
 
 /**
@@ -351,6 +341,11 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
 
         foreach ($parts as $part) {
             $partsarray[$courseid][$turnitintooltwo->id][$part->id]['tiiassignid'] = $part->tiiassignid;
+
+            if ($action == "UNTOUCHED") {
+                $turnitintooltwoassignment = new turnitintooltwo_assignment($turnitintooltwo->id);
+                turnitintooltwo_update_event($turnitintooltwoassignment->turnitintooltwo, $part);
+            }
         }
 
         /* Set legacy to 0 for all TII2s so that we can have all recreated assignments on the same TII class.
@@ -366,6 +361,11 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
                 turnitintooltwo_activitylog("Assignment updated (".$turnitintooltwo->id.")", "REQUEST");
             }
         }
+    }
+
+    // We don't want to go any further if Turnitin Assignments aren't going to be touched.
+    if ($action == "UNTOUCHED") {
+        return array();
     }
 
     $currentcourse = turnitintooltwo_assignment::get_course_data($courseid);
@@ -577,15 +577,20 @@ function turnitintooltwo_reset_part_update($part, $i) {
  * @return array The Result of the turnitintooltwo_duplicate_recycle call
  */
 function turnitintooltwo_reset_userdata($data) {
-    $status = array();
-
     $renew_dates = isset($data->renew_assignment_dates) ? 1 : null;
 
-    if ($data->reset_turnitintooltwo == 0) {
-        $status = turnitintooltwo_duplicate_recycle($data->courseid, 'NEWCLASS', $renew_dates);
-    } else if ($data->reset_turnitintooltwo == 1) {
-        $status = turnitintooltwo_duplicate_recycle($data->courseid, 'OLDCLASS', $renew_dates);
+    $action = 'UNTOUCHED';
+    switch ($data->reset_turnitintooltwo) {
+        case 0:
+            $action = 'NEWCLASS';
+            break;
+        case 1:
+            $action = 'OLDCLASS';
+            break;
     }
+
+    $status = turnitintooltwo_duplicate_recycle($data->courseid, $action, $renew_dates);
+
     return $status;
 }
 
