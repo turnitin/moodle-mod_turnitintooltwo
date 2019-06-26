@@ -1191,7 +1191,6 @@ class turnitintooltwo_view {
 
         // Submission title with link to open DV.
         if ( !empty($submission->submission_objectid) AND !empty($submission->submission_objectid) ) {
-
             $titleinner = html_writer::tag('div', format_string($submission->submission_title),
                  	        array('class' => 'submission_title underline'));
 
@@ -1202,9 +1201,7 @@ class turnitintooltwo_view {
             $title = html_writer::tag('div', $titleinner,
                 	        array('id' => 'default_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
                                     'class' => 'default_open'));
-
             $rawtitle = $submission->submission_title;
-
         } else {
             $title = "--";
             $rawtitle = "--";
@@ -1309,9 +1306,9 @@ class turnitintooltwo_view {
                             	                    'class' => 'fa fa-pencil fa-lg gm-blue'));
 
                 $grade = html_writer::tag('div', $submissiongradeicon,
-                                            array("id" => 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
-                            	                "class" => 'grademark_open ' . $class,
-                            	                "title" => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id));
+                                            array('id' => 'grademark_' . $submission->submission_objectid . '_' . $partid . '_' . $moodleuserid,
+                            	                'class' => 'grademark_open ' . $class,
+                            	                'title' => $CFG->wwwroot . '/mod/turnitintooltwo/view.php?id=' . $cm->id));
                 }
 
                 // Show grade.
@@ -1322,7 +1319,7 @@ class turnitintooltwo_view {
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
                     $submissiongrade = round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%';
                     $grade .= html_writer::tag('span', $submissiongrade,
-                                array("class" => "grade grademark_grade"));
+                                array('class' => 'grade grademark_grade'));
                 }
 
                 // Put in div placeholder for DV launch form.
@@ -1450,15 +1447,15 @@ class turnitintooltwo_view {
 
             $downloadicon = html_writer::tag('i', '',
                                 array('title' => get_string('downloadsubmission', 'turnitintooltwo'),
-                	                   'class' => 'fa fa-download fa-lg'));
+                                    'class' => 'fa fa-download fa-lg'));
 
             $download = html_writer::tag('div', $downloadicon,
-                    	        array('id' => 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid,
-                                        'class'=> 'download_original_open'));
+                                array('id' => 'downloadoriginal_' . $submission->submission_objectid . "_" . $partid . "_" . $moodleuserid,
+                                    'class'=> 'download_original_open'));
 
             $download .= html_writer::tag('div', '',
                                 array('id' => 'downloadoriginal_form_'.$submission->submission_objectid,
-                        	            'class' => 'launch_form'));
+                                    'class' => 'launch_form'));
 
             // Add in LTI launch form incase Javascript is disabled.
             if (!$istutor) {
