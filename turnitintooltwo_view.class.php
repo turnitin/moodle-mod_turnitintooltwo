@@ -1254,23 +1254,23 @@ class turnitintooltwo_view {
             $rawscore = $submission->submission_score;
         }
 
-        // Put in div placeholder for DV launch form.
+            // Put in div placeholder for DV launch form.
             $scoreinner .= html_writer::tag('div', '',
                             array('id' => 'origreport_form_'.$submission->submission_objectid,
-                                    'class' => 'launch_form'));
-        // URL for DV launcher.
+                                'class' => 'launch_form'));
+            // URL for DV launcher.
             $scoreinner .= html_writer::tag('div', $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id,
                             array('id' => 'origreport_url_'.$submission->submission_objectid,
-                                    'class' => 'dv_url'));
+                                'class' => 'dv_url'));
 
         if (is_null($submission->submission_score)) {
             $score = html_writer::tag('div', $scoreinner,
                             array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                                    'class' => 'row_score'));
+                                'class' => 'row_score'));
         } else {
             $score = html_writer::tag('div', $scoreinner,
                             array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
-                                    'class' => 'row_score origreport_open'));
+                                'class' => 'row_score origreport_open'));
         }
 
         } else {
