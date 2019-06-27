@@ -1283,7 +1283,7 @@ class turnitintooltwo_view {
             if ($turnitintooltwoassignment->turnitintooltwo->grade == 0) {
                 // We set the grade column to N/A if there is no grade type set.
                 $rawgrade = null;
-                $grade = $OUTPUT->box('N/A', '');
+                $grade = html_writer::tag('div', 'N/A', array());
             } else if (isset($submission->submission_objectid) && ($istutor || (!$istutor && $parts[$partid]->dtpost < time()))) {
                 $submissiongrade = (!is_null($submission->submission_grade)) ? $submission->submission_grade : '';
 
@@ -1338,12 +1338,12 @@ class turnitintooltwo_view {
                 $greysubmissiongradeicon = html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey'));
 
                 $grade = html_writer::tag('div', $greysubmissiongradeicon,
-                        	array('id' => $partid . '_' . $submission->userid,
-                                    'class' =>'submit_nothing','submitnothing_0_' ));
+                        	array('id' => 'submitnothing_0_'.$partid . '_' . $submission->userid,
+                                    'class' =>'submit_nothing'));
                 $rawgrade = null;
             } else {
                 $rawgrade = null;
-                $grade = $OUTPUT->box('--', '');
+                $grade = html_writer::tag('div', '--', array());
             }
 
             // Show average grade if more than 1 part or using a scale.
