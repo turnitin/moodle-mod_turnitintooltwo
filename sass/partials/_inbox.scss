@@ -73,17 +73,19 @@
     top: -5px;
 }
 
-.dropdown-menu .origchecked_zip_open:hover {
-    background-color: $hover-blue;
-    display: block;
-    line-height: 20px;
-    color: #fff;
-    font-weight: normal;
-}
+.zip_downloads {
+    .dropdown-menu .origchecked_zip_open:hover {
+        background-color: $hover-blue;
+        display: block;
+        line-height: 20px;
+        color: #fff;
+        font-weight: normal;
+    }
 
-.dropdown-menu {
-    white-space: nowrap;
-    margin-top: 2px !important;
+    .dropdown-menu {
+        white-space: nowrap;
+        margin-top: 2px !important;
+    }
 }
 
 #rubric_view_form {
