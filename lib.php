@@ -1724,22 +1724,33 @@ function turnitintooltwo_override_repository($submitpapersto) {
  */
 function mod_turnitintooltwo_core_calendar_provide_event_action(calendar_event $event,
                                                                 \core_calendar\action_factory $factory) {
+    global $DB, $USER;
     $cm = get_fast_modinfo($event->courseid)->instances['turnitintooltwo'][$event->instance];
-
-    if (!empty($cm->customdata['timeclose']) && $cm->customdata['timeclose'] < time()) {
-        // The assignment has closed so the user can no longer submit anything.
-        return null;
-    }
+    $isinstructor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id)));
 
     // Restore object from cached values in $cm, we only need id, timeclose and timeopen.
     $customdata = $cm->customdata ?: [];
     $customdata['id'] = $cm->instance;
     $data = (object)($customdata + ['timeclose' => 0, 'timeopen' => 0]);
+    $assignmentpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $customdata['id']), 'max(dtpost)');
+    
+    // Check whether the logged in user has a submission, should always be false for Instructors.
+    $hassubmission = false;
+    if (!$isinstructor) { 
+        $queryparams = array('userid' => $USER->id, 'turnitintooltwoid' => $customdata['id']);
+        $hassubmission = $DB->get_records('turnitintooltwo_submissions', $queryparams);
+    }
+
+    if ((!empty($cm->customdata['timeclose']) && $cm->customdata['timeclose'] < time()) ||
+        $assignmentpart->max < time() || !empty($hassubmission))  {
+        // The assignment has closed so the user can no longer submit anything.
+        return null;
+    }
 
     // Check that the activity is open.
     list($actionable, $warnings) = mod_turnitintooltwo_get_availability_status($data, true, context_module::instance($cm->id));
 
-    $identifier = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? 'allsubmissions' : 'addsubmission';
+    $identifier = ($isinstructor) ? 'allsubmissions' : 'addsubmission';
     return $factory->create_instance(
         get_string($identifier, 'turnitintooltwo'),
         new \moodle_url('/mod/turnitintooltwo/view.php', array('id' => $cm->id)),
