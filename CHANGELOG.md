@@ -1,3 +1,30 @@
+### Date:		2019-Jul-02
+### Release:	v2019070201
+
+#### :zap: What's new
+
+---
+
+#### Moodle 3.7 support and course overview bug fixes
+
+We've been working on supporting Moodle 3.7 and improving the course overview area. 
+
+We've given the student and instructor views a refresh, and squashed some bugs that were affecting the Moodle timeline and student submissions. The details of the bug fixes are below.
+
+#### :wrench: Fixes and enhancements
+
+---
+
+#### Moodle timeline bug resolved
+
+There was a bug impacting the Moodle timeline that occurred when resetting courses with new assignment dates. As a result of this bug, after resetting, the new assignment wasn’t visible. This has now been resolved.
+
+#### Overdue messaging bug resolved
+
+Students were experiencing a bug that was causing the 'Recently Overdue' message to display even after students had submitted to the assignment. The message would only disappear once the submission has been graded. The message no longer displays once the student has submitted.
+
+---
+
 ### Date:		2019-May-01
 ### Release:	v2019050101
 
