@@ -1404,7 +1404,7 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
                 if (!isset($submissioncount[$submission->submission_part])) {
                     $submissioncount[$submission->submission_part] = array('graded' => 0, 'submitted' => 0);
                 }
-                if ($submission->submission_grade != 'NULL' and $submission->submission_gmimaged == 1) {
+                if (!is_null($submission->submission_grade) and $submission->submission_gmimaged == 1) {
                     $submissioncount[$submission->submission_part]['graded']++;
                 }
                 $submissioncount[$submission->submission_part]['submitted']++;
