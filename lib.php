@@ -639,7 +639,7 @@ function turnitintooltwo_reset_course_form_definition(&$mform) {
     // Renew dates.
     $mform->addElement('checkbox', 'renew_assignment_dates', get_string('renew_assignment_dates', 'turnitintooltwo'));
     $mform->addHelpButton('renew_assignment_dates', 'renew_assignment_dates', 'turnitintooltwo');
-    $mform->setDefault('renew_assignment_dates', false);
+    $mform->setDefault('renew_assignment_dates', true);
 }
 
 /**
