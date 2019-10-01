@@ -1247,7 +1247,7 @@ class turnitintooltwo_view {
                 // Put EN flag if translated matching is on and that is the score used.
                 $transmatch = ($submission->submission_transmatch == 1) ? 'EN' : '&nbsp;';
 
-                $scoreinner .= html_writer::tag('div', $transmatch,
+                $scoreinner = html_writer::tag('div', $transmatch,
                                 array('class' => 'score_colour score_colour_'.round($submission->submission_score, -1) ));
                 $scoreinner .= html_writer::tag('div', $submission->submission_score.'%',
                                 array('class' => 'origreport_score'));
