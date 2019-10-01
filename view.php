@@ -457,7 +457,7 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
     $turnitintooltwoview->output_header(
             $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
-            $SITE->fullname);
+            $COURSE->fullname);
 
     // Dropdown to filter by groups.
     $groupmode = groups_get_activity_groupmode($cm);
