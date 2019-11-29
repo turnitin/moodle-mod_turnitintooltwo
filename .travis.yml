@@ -16,8 +16,8 @@ services:
 
 env:
  global:
-  - IGNORE_PATHS=sdk/,pix/,vendor/
-  - IGNORE_NAMES=jquery*,styles.css,autoload_static.php
+  - IGNORE_PATHS=sdk/,fonts/,pix/
+  - IGNORE_NAMES=jquery*,moment.js,colorbox.css,tooltipster.css,*.min.css,*.min.js,tii-icon-webfont.css,styles.css,styles.css.map,gulpfile.js
  matrix:
   - DB=pgsql MOODLE_BRANCH=MOODLE_36_STABLE
   - DB=mysqli MOODLE_BRANCH=MOODLE_36_STABLE
