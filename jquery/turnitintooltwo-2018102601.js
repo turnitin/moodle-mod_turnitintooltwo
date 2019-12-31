@@ -30,6 +30,8 @@
             }
         });
 
+        $("div.mod_turnitintooltwo").parent().css("width", "100%");
+
         $(document).on('click', '.delete_paper', function () {
             // Set up the confirm window.
             var confirmstrname = $(this).data("confirm");
