@@ -421,7 +421,7 @@ if (!empty($action)) {
                 $submittedusers = $DB->get_records('turnitintooltwo_submissions', $params, '', 'userid');
 
                 // Send message to all non submitted users. Excluding suspended students.
-                $suspendedusers = get_suspended_userids($context);
+                $suspendedusers = get_suspended_userids($context, true);
                 $nonsubmittedusers = array_diff_key((array)$allusers, (array)$suspendedusers, (array)$submittedusers);
                 foreach ($nonsubmittedusers as $nonsubmitteduser) {
                     // Send a message to the user's Moodle inbox with the digital receipt.
