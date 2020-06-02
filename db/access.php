@@ -55,6 +55,16 @@ $capabilities = array(
         )
     ),
 
+    'mod/turnitintooltwo:delete' => array(
+
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'legacy' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
+        )
+    ),
+
     'mod/turnitintooltwo:grade' => array(
 
         'captype' => 'write',
