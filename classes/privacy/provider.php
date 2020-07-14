@@ -31,10 +31,15 @@ use core_privacy\local\request\contextlist;
 use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\helper;
 use core_privacy\local\request\writer;
+use \core_privacy\local\request\approved_userlist;
+use \core_privacy\local\request\userlist;
 
 class provider implements
     // This plugin does store personal user data.
     \core_privacy\local\metadata\provider,
+
+    // This plugin is capable of determining which users have data within it.
+    \core_privacy\local\request\core_userlist_provider,
 
     // This plugin is a core_user_data_provider.
     \core_privacy\local\request\plugin\provider {
@@ -242,5 +247,40 @@ class provider implements
                 ['turnitintooltwoid' => $instanceid, 'userid' => $contextlist->get_user()->id]
             );
         }
+    }
+
+    /**
+     * Get the list of users who have data within a context.
+     *
+     * @param   userlist    $userlist   The userlist containing the list of users who have data in this context/plugin combination.
+     *
+     */
+    public static function get_users_in_context(userlist $userlist) {
+        $context = $userlist->get_context();
+
+        if (!is_a($context, \context_user::class)) {
+            return;
+        }
+
+        $params = [
+            'contextlevel' => CONTEXT_USER,
+            'contextid' => $context->id,
+        ];
+
+        $sql = "SELECT instanceid AS userid
+                  FROM {context}
+                 WHERE id = :contextid
+                       AND contextlevel = :contextlevel";
+
+        $userlist->add_from_sql('userid', $sql, $params);
+    }
+
+    /**
+     * Delete multiple users within a single context.
+     *
+     * @param   approved_userlist    $userlist The approved context and user information to delete information for.
+     *
+     */
+    public static function delete_data_for_users(approved_userlist $userlist) {
     }
 }
