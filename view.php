@@ -65,13 +65,7 @@ if (isset($_SESSION["notice"])) {
 }
 
 if ($id) {
-    // Pre 2.8 does not have the function get_course_and_cm_from_cmid.
-    if ($CFG->branch >= 28) {
-        list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
-    } else {
-        $cm = get_coursemodule_from_id('turnitintooltwo', $id, 0, false, MUST_EXIST);
-        $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    }
+    list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
 
     if (!$cm) {
         turnitintooltwo_print_error('coursemodidincorrect', 'turnitintooltwo');
