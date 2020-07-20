@@ -327,15 +327,8 @@ switch ($cmd) {
 
         $output .= $OUTPUT->box($coursesearchform, 'generalbox', 'course_search_options');
 
-        $displaylist = array();
+        $displaylist = core_course_category::make_categories_list('');
         $parentlist = array();
-
-        if (file_exists($CFG->libdir.'/coursecatlib.php')) {
-            require_once($CFG->libdir.'/coursecatlib.php');
-            $displaylist = coursecat::make_categories_list('');
-        } else {
-            make_categories_list($displaylist, $parentlist, '');
-        }
 
         $categoryselectlabel = html_writer::label(get_string('selectcoursecategory', 'turnitintooltwo'),
                                                     'create_course_category');
@@ -350,7 +343,7 @@ switch ($cmd) {
         $createbutton = html_writer::tag('button', get_string('createmoodlecourses', 'turnitintooltwo'),
                                             array("id" => "create_classes_button"));
         $output .= $OUTPUT->box($categoryselectlabel." ".$categoryselect.$createassign.$createbutton,
-                                    'create_checkboxes navbar');
+                                    'create_checkboxes');
 
         $table = new html_table();
         $table->id = "courseBrowserTable";
@@ -468,7 +461,7 @@ switch ($cmd) {
             $string = ($type == "success") ? 'enablemigrationtoolsuccess' : 'enablemigrationtoolfail';
 
             $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
-            $alert = html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'), 
+            $alert = html_writer::tag('div', $close.get_string($string, 'turnitintooltwo'),
                             array('class' => 'alert alert-'.$type, 'role' => 'alert'));
         }
 

@@ -65,13 +65,7 @@ if (isset($_SESSION["notice"])) {
 }
 
 if ($id) {
-    // Pre 2.8 does not have the function get_course_and_cm_from_cmid.
-    if ($CFG->branch >= 28) {
-        list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
-    } else {
-        $cm = get_coursemodule_from_id('turnitintooltwo', $id, 0, false, MUST_EXIST);
-        $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    }
+    list($course, $cm) = get_course_and_cm_from_cmid($id, 'turnitintooltwo');
 
     if (!$cm) {
         turnitintooltwo_print_error('coursemodidincorrect', 'turnitintooltwo');
@@ -421,7 +415,7 @@ if (!empty($action)) {
                 $submittedusers = $DB->get_records('turnitintooltwo_submissions', $params, '', 'userid');
 
                 // Send message to all non submitted users. Excluding suspended students.
-                $suspendedusers = get_suspended_userids($context);
+                $suspendedusers = get_suspended_userids($context, true);
                 $nonsubmittedusers = array_diff_key((array)$allusers, (array)$suspendedusers, (array)$submittedusers);
                 foreach ($nonsubmittedusers as $nonsubmitteduser) {
                     // Send a message to the user's Moodle inbox with the digital receipt.
@@ -457,7 +451,7 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
     $turnitintooltwoview->output_header(
             $url,
             $turnitintooltwoassignment->turnitintooltwo->name,
-            $SITE->fullname);
+            $COURSE->fullname);
 
     // Dropdown to filter by groups.
     $groupmode = groups_get_activity_groupmode($cm);
@@ -822,3 +816,4 @@ $partsstring .= ")";
 $courseid = $course->turnitin_cid;
 
 echo '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - course ID: '.$courseid.' - '.$partsstring.' -->';
+

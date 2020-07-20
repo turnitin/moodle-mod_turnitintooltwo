@@ -88,7 +88,7 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
         $values['tiiaccount'] = $config->accountid;
         $turnitintooltwo->fill_values($values);
 
-        $part->set_source_table('turnitintooltwo_parts', array('turnitintooltwoid' => backup::VAR_ACTIVITYID));
+        $part->set_source_table('turnitintooltwo_parts', array('turnitintooltwoid' => backup::VAR_ACTIVITYID), 'id');
 
         $course->set_source_sql("
             SELECT  t.id, t.courseid, t.ownerid, tu.turnitin_uid AS ownertiiuid,
