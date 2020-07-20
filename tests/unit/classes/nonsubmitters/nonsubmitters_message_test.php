@@ -16,8 +16,6 @@ class mod_turnitintooltwo_nonsubmitter_message_testcase extends advanced_testcas
      * Test that non submitter messages send.
      */
     public function test_send_instructor_message() {
-        global $DB;
-
         $this->resetAfterTest();
         $this->preventResetByRollback();
 
