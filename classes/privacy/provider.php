@@ -114,6 +114,7 @@ class provider implements
                 INNER JOIN {modules} m ON m.id = cm.module AND m.name = :modname
                 INNER JOIN {turnitintooltwo} t ON t.id = cm.instance
                 LEFT JOIN {turnitintooltwo_submissions} ts ON ts.turnitintooltwoid = t.id
+                WHERE ts.userid = :userid
         ";
 
         $params = [
