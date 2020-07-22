@@ -1,3 +1,30 @@
+### Date:		2020-Jul-22
+### Release:	v2020072201
+
+#### :zap: What's new
+
+####Support for Moodle 3.9
+
+Moodle Direct V2 now supports Moodle version 3.9.
+
+---
+
+#### :wrench: Fixes and enhancements
+
+#### Paper deletion icon now appears
+
+A visual bug had caused the ‘trash can’ icon to now appear when using Moodle version 3.8 or later. The icon now appears as intended. 
+
+#### Undefined Index warnings no longer show in Apache logs
+     
+PHP warnings and notices could occasionally appear in your Apache logs from Turnitin due to a reference to an undefined variable. This issue has been fixed and these warnings will no longer appear. 
+
+#### The submission form displays better in Moodle versions 3.7 and above
+
+A visual bug had caused the submission form to be pressed into a much smaller area in Moodle versions 3.7 and above. While functionality remained the same, this bug has been fixed to give the submission form more room and make it easier to use. 
+
+---
+
 ### Date:		2019-Jul-02
 ### Release:	v2019070201
 
