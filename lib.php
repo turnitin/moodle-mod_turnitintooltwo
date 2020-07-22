@@ -1404,7 +1404,7 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
                 if (!isset($submissioncount[$submission->submission_part])) {
                     $submissioncount[$submission->submission_part] = array('graded' => 0, 'submitted' => 0);
                 }
-                if ($submission->submission_grade != 'NULL' and $submission->submission_gmimaged == 1) {
+                if (!is_null($submission->submission_grade) and $submission->submission_gmimaged == 1) {
                     $submissioncount[$submission->submission_part]['graded']++;
                 }
                 $submissioncount[$submission->submission_part]['submitted']++;
@@ -1733,16 +1733,16 @@ function mod_turnitintooltwo_core_calendar_provide_event_action(calendar_event $
     $customdata['id'] = $cm->instance;
     $data = (object)($customdata + ['timeclose' => 0, 'timeopen' => 0]);
     $assignmentpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $customdata['id']), 'max(dtpost)');
-    
+
     // Check whether the logged in user has a submission, should always be false for Instructors.
     $hassubmission = false;
-    if (!$isinstructor) { 
+    if (!$isinstructor) {
         $queryparams = array('userid' => $USER->id, 'turnitintooltwoid' => $customdata['id']);
         $hassubmission = $DB->get_records('turnitintooltwo_submissions', $queryparams);
     }
 
     if ((!empty($cm->customdata['timeclose']) && $cm->customdata['timeclose'] < time()) ||
-        $assignmentpart->max < time() || !empty($hassubmission))  {
+        (isset($assignmentpart->max) && $assignmentpart->max < time()) || !empty($hassubmission))  {
         // The assignment has closed so the user can no longer submit anything.
         return null;
     }
