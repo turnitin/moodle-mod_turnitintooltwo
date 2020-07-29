@@ -253,5 +253,45 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2020073000) {
+        $table = new xmldb_table('turnitintooltwo');
+
+        // Set institution_check default value to 0.
+        $field = new xmldb_field('institution_check', XMLDB_TYPE_INTEGER, '1', false, false, false, 0, 'journalcheck');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_default($table, $field);
+        }
+
+        // Set needs_updating length to 10 and allow NULL.
+        $field = new xmldb_field('needs_updating', XMLDB_TYPE_INTEGER, '10', false, false, false, 0, 'allownonor');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_precision($table, $field);
+            $dbman->change_field_notnull($table, $field);
+        }
+
+        $table = new xmldb_table('turnitintooltwo_parts');
+
+        // Set unanon length to 10.
+        $field = new xmldb_field('unanon', XMLDB_TYPE_INTEGER, '10', false, XMLDB_NOTNULL, false, 0, 'migrated');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_precision($table, $field);
+        }
+
+        // Set submitted length to 10.
+        $field = new xmldb_field('submitted', XMLDB_TYPE_INTEGER, '10', false, XMLDB_NOTNULL, false, 0, 'unanon');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_precision($table, $field);
+        }
+
+        $table = new xmldb_table('turnitintooltwo_users');
+
+        // The user_agreement_accepted field should allow NULL.
+        $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false, false, false, 0, 'instructor_rubrics');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_precision($table, $field);
+            $dbman->change_field_notnull($table, $field);
+        }
+    }
+
     return true;
 }
