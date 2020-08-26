@@ -253,5 +253,24 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         }
     }
 
+    if ($oldversion < 2020082600) {
+        $table = new xmldb_table('turnitintooltwo');
+
+        $field = new xmldb_field('institution_check');
+        $field->set_attributes(XMLDB_TYPE_INTEGER, '1', null, null, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        $field = new xmldb_field('needs_updating', XMLDB_TYPE_INTEGER, '10', null, null, null, 0, 'allownonor');
+        $dbman->change_field_precision($table, $field);
+        $dbman->change_field_notnull($table, $field);
+
+        $table = new xmldb_table('turnitintooltwo_parts');
+        $field = new xmldb_field('unanon', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'migrated');
+        $dbman->change_field_precision($table, $field);
+
+        $field = new xmldb_field('submitted', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, 0, 'anon');
+        $dbman->change_field_precision($table, $field);
+    }
+
     return true;
 }
