@@ -55,7 +55,7 @@
                 <FIELD NAME="transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_style" NEXT="rubric"/>
                 <FIELD NAME="rubric" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="transmatch" NEXT="allownonor"/>
                 <FIELD NAME="allownonor" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="rubric" NEXT="needs_updating"/>
-                <FIELD NAME="needs_updating" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="allownonor" NEXT="syncreport"/>
+                <FIELD NAME="needs_updating" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="allownonor" NEXT="syncreport"/>
                 <FIELD NAME="syncreport" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="needs_updating" NEXT="anongradebook"/>
                 <FIELD NAME="anongradebook" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="syncreport" NEXT="legacy"/>
                 <FIELD NAME="legacy" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="anongradebook"/>
@@ -79,8 +79,8 @@
                 <FIELD NAME="maxmarks" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="dtpost" NEXT="deleted"/>
                 <FIELD NAME="deleted" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" SEQUENCE="false" PREVIOUS="maxmarks" NEXT="migrated"/>
                 <FIELD NAME="migrated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="deleted" NEXT="unanon"/>
-                <FIELD NAME="unanon" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="migrated" NEXT="submitted"/>
-                <FIELD NAME="submitted" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="unanon" NEXT="gradesupdated"/>
+                <FIELD NAME="unanon" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="migrated" NEXT="submitted"/>
+                <FIELD NAME="submitted" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="unanon" NEXT="gradesupdated"/>
                 <FIELD NAME="gradesupdated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submitted"/>
             </FIELDS>
             <KEYS>
