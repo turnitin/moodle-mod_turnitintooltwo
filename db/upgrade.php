@@ -272,19 +272,19 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $table = new xmldb_table('turnitintooltwo_parts');
         // Ensure unanon length is 1.
         $field = new xmldb_field('unanon', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'migrated');
-        if (!$dbman->field_exists($table, $field)) {
+        if ($dbman->field_exists($table, $field)) {
             $dbman->change_field_precision($table, $field);
         }
         // Ensure submitted length is 1.
         $field = new xmldb_field('submitted', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, 0, 'unanon');
-        if (!$dbman->field_exists($table, $field)) {
+        if ($dbman->field_exists($table, $field)) {
             $dbman->change_field_precision($table, $field);
         }
 
         $table = new xmldb_table('turnitintooltwo_users');
         // Ensure user_agreement_accepted allows null.
         $field = new xmldb_field('user_agreement_accepted', XMLDB_TYPE_INTEGER, '1', false, false, null, 0, 'instructor_rubrics');
-        if (!$dbman->field_exists($table, $field)) {
+        if ($dbman->field_exists($table, $field)) {
             $dbman->change_field_notnull($table, $field);
         }
     }
