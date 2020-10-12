@@ -1930,10 +1930,10 @@ class turnitintooltwo_assignment {
         $allnamefields = get_all_user_name_fields();
         if ($istutor && $userid == 0) {
             $users = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm),
-                                        'u.id, ' . implode($allnamefields, ', '));
+                                        'u.id, ' . implode(', ', $allnamefields));
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
-            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode($allnamefields, ', '));
+            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode(', ', $allnamefields));
             $users = array($userid => $user);
             $sql .= " AND userid = ? ";
             $sqlparams[] = $userid;

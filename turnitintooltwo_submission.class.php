@@ -209,7 +209,7 @@ class turnitintooltwo_submission {
 
             if ($submission->userid > 0) {
                 $allnamefields = get_all_user_name_fields();
-                $user = $DB->get_record('user', array('id' => $submission->userid), 'id, '.implode($allnamefields, ', '));
+                $user = $DB->get_record('user', array('id' => $submission->userid), 'id, '.implode(', ', $allnamefields));
                 $this->firstname = $user->firstname;
                 $this->lastname = $user->lastname;
                 $this->fullname = fullname($user);
