@@ -1473,26 +1473,12 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
 /**
  * Show form to create a new moodle course from the existing Turnitin Course
  *
- * @global type $OUTPUT
  * @return html the form object to create a new course
  */
 function turnitintooltwo_show_browser_new_course_form() {
-    global $CFG;
-
     $elements = array();
     $elements[] = array('header', 'create_course_fieldset', get_string('createcourse', 'turnitintooltwo'));
-    $displaylist = array();
-    $parentlist = array();
-    require_once($CFG->dirroot."/course/lib.php");
-
-    if (file_exists($CFG->libdir.'/coursecatlib.php')) {
-        require_once($CFG->libdir.'/coursecatlib.php');
-        $displaylist = coursecat::make_categories_list('');
-    } else {
-        make_categories_list($displaylist, $parentlist, '');
-    }
-
-    $elements[] = array('select', 'coursecategory', get_string('category'), '', $displaylist);
+    $elements[] = array('select', 'coursecategory', get_string('category'), '', core_course_category::make_categories_list(''));
     $elements[] = array('text', 'coursename', get_string('coursetitle', 'turnitintooltwo'), '');
     $elements[] = array('button', 'create_course', get_string('createcourse', 'turnitintooltwo'));
     $customdata["elements"] = $elements;
