@@ -1140,7 +1140,7 @@ class turnitintooltwo_view {
                 if (empty($submission->submission_unanon) AND $parts[$partid]->dtpost > time() AND
                                                         !empty($submission->submission_objectid)) {
                     // Anonymous marking is on, postdate has not passed and a submission has been made.
-                    $studentname = html_writer::link('.unanonymise_form',
+                    $studentname = html_writer::link('.mod_turnitintooltwo_unanonymise_form',
                                         get_string('anonenabled', 'turnitintooltwo'),
                                         array("class" => "unanonymise", "id" => "submission_".$submission->submission_objectid));
                     $studentlastname = get_string('anonenabled', 'turnitintooltwo');
@@ -1599,7 +1599,7 @@ class turnitintooltwo_view {
      * @return output
      */
     public function show_unanonymise_form() {
-        $output = html_writer::tag("span", get_string('revealdesc', 'turnitintooltwo'), array("id" => "unanonymise_desc"));
+        $output = html_writer::tag("span", get_string('revealdesc', 'turnitintooltwo'), array("id" => "mod_turnitintooltwo_unanonymise_desc"));
 
         $elements = array();
         $elements[] = array('textarea', 'anonymous_reveal_reason', get_string('revealreason', 'turnitintooltwo'),
@@ -1613,7 +1613,7 @@ class turnitintooltwo_view {
         $customdata["disable_form_change_checker"] = true;
         $optionsform = new turnitintooltwo_form('', $customdata);
 
-        return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'unanonymise_form'));
+        return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'mod_turnitintooltwo_unanonymise_form'));
     }
 
     /**
