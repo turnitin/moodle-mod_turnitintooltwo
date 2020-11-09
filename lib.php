@@ -58,7 +58,6 @@ define('SUBMIT_TO_INSTITUTIONAL_REPOSITORY', 2);
 /**
  * Returns the integration ids and labels.
  * @return array Integration ids and labels.
- * @throws coding_exception
  */
 function turnitintooltwo_get_integration_ids() {
     static $tiiintegrationids = [];
