@@ -506,7 +506,7 @@ switch ($do) {
         $output = $OUTPUT->box($OUTPUT->pix_icon('icon', get_string('turnitin', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo'), 'centered_div');
 
-        $output .= html_writer::tag("div", $_SESSION["digital_receipt"]["message"], array("class" => "general_warning"));
+        $output .= html_writer::tag("div", $_SESSION["digital_receipt"]["message"], array("class" => "mod_turnitintooltwo_general_warning"));
         if ($viewcontext == "box_solid") {
             $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
         }
@@ -706,7 +706,7 @@ switch ($do) {
         // Show submission failure if this has been a manual submission.
         if (isset($_SESSION["digital_receipt"]["success"]) && $_SESSION["digital_receipt"]["success"] == false) {
             $output = html_writer::tag("div", $_SESSION["digital_receipt"]["message"],
-                                    array("class" => "general_warning manual_submission_failure_msg"));
+                                    array("class" => "mod_turnitintooltwo_general_warning manual_submission_failure_msg"));
             if ($viewcontext == "box_solid") {
                 $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
             }
@@ -765,7 +765,7 @@ switch ($do) {
         $output = '';
 
         if (isset($_SESSION["embeddednotice"])) {
-            $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
+            $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'mod_turnitintooltwo_general_warning'));
             unset($_SESSION["embeddednotice"]);
         }
 
@@ -791,13 +791,13 @@ switch ($do) {
 
         $optionsform = new turnitintooltwo_form('', $customdata);
 
-        echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'nonsubmittersform'));
+        echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'mod_turnitintooltwo_nonsubmittersform'));
         unset($_SESSION['form_data']);
         break;
 
     case "emailsent":
         echo html_writer::tag('div', get_string('nonsubmittersformsuccess', 'turnitintooltwo'),
-                                array('class' => 'nonsubmittersformsuccessmsg'));
+                                array('class' => 'mod_turnitintooltwo_nonsubmittersformsuccessmsg'));
         break;
 }
 

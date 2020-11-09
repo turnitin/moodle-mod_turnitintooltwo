@@ -92,6 +92,19 @@
         .zip_open {
             display: inline;
         }
+
+        .dropdown-menu .origchecked_zip_open:hover {
+            background-color: $hover-blue;
+            display: block;
+            line-height: 20px;
+            color: $white;
+            font-weight: normal;
+        }
+
+        .dropdown-menu {
+            white-space: nowrap;
+            margin-top: 2px !important;
+        }
     }
 
     /*

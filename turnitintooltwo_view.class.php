@@ -575,7 +575,7 @@ class turnitintooltwo_view {
                         $downloadlinks = html_writer::tag('div',
                                             html_writer::tag('button', get_string('download', 'turnitintooltwo'),
                                                 $linkstyles).$linkdropdown,
-                                                array('id' => 'download_links', 'class' => 'btn-group'));
+                                                array('id' => 'mod_turnitintooltwo_download_links', 'class' => 'btn-group'));
                     } else {
                         $downloadlinks = $exportorigfileszip.$exportgrademarkzip;
                     }
@@ -806,7 +806,7 @@ class turnitintooltwo_view {
                 $rubricviewlink .= html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                         '&part='.$partid.'&do=rubricview&view_context=box',
                                                     html_writer::tag('span', '',
-                                                        array('class' => 'tiiicon icon-rubric icon-lg', 'id' => 'rubric_view_form')),
+                                                        array('class' => 'tiiicon icon-rubric icon-lg', 'id' => 'mod_turnitintooltwo_rubric_view_form')),
                                                     array('class' => 'rubric_view_launch', 'id' => 'rubric_view_launch',
                                                         'title' => get_string('launchrubricview', 'turnitintooltwo')));
                 $rubricviewlink .= $OUTPUT->box_end(true);
@@ -977,7 +977,7 @@ class turnitintooltwo_view {
                                                     html_writer::tag('span', $count, array('class' => 'peermark_count')).
                                                     html_writer::tag('span', $OUTPUT->pix_icon('loading',
                                                         get_string('turnitinloading', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                                    array('class' => 'peermark-loading peermark-loading-span')).')',
+                                                    array('class' => 'peermark-loading mod_turnitintooltwo_peermark-loading-span')).')',
                                                     array('class' => 'peermark_header')).$peermarkreviewslink.$peermarkmanagerlink);
                 $cells[0]->attributes['class'] = 'peermarks';
                 $cells[0]->colspan = ($config->usegrademark) ? '7' : '6';
@@ -1894,7 +1894,7 @@ class turnitintooltwo_view {
             // Link to enrol all students on course.
             if ($role == "Learner") {
                 $output .= $OUTPUT->box(get_string('errorenrollingall', 'turnitintooltwo'),
-                                            'general_warning', 'enrolling_error');
+                                            'mod_turnitintooltwo_general_warning', 'enrolling_error');
 
                 $enrollink = $OUTPUT->box($OUTPUT->pix_icon('enrolicon',
                                                     get_string('turnitinenrolstudents', 'turnitintooltwo'),

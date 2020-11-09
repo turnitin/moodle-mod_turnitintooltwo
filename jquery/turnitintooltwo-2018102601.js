@@ -633,7 +633,7 @@
         }
 
         // Resize window when email has been sent.
-        if ($('.nonsubmittersformsuccessmsg').length > 0) {
+        if ($('.mod_turnitintooltwo_nonsubmittersformsuccessmsg').length > 0) {
             hideLoadingGif();
             window.parent.$('.nonsubmitters').colorbox.resize({
                 width: "740px",
@@ -1093,7 +1093,7 @@
                         assignment_id = $('#assignment_id').html();
                     }
                     $("#submission_id").html(submission_id);
-                    $('#cboxLoadedContent .unanonymise_form').show();
+                    $('#cboxLoadedContent .mod_turnitintooltwo_unanonymise_form').show();
                     $('#id_reveal').unbind("click");
                     $('#id_reveal').click(function () {
                         $.ajax({
@@ -1112,15 +1112,15 @@
                                     $('#submission_' + submission_id).html(data.name);
                                     $('#submission_' + submission_id).removeClass('unanonymise cboxElement');
                                 } else {
-                                    var current_msg = $('#unanonymise_desc').html;
-                                    $('#unanonymise_desc').html(current_msg + " " + data.msg);
+                                    var current_msg = $('#mod_turnitintooltwo_unanonymise_desc').html;
+                                    $('#mod_turnitintooltwo_unanonymise_desc').html(current_msg + " " + data.msg);
                                 }
                             }
                         });
                     });
                 },
                 onCleanup: function () {
-                    $('.unanonymise_form').hide();
+                    $('.mod_turnitintooltwo_unanonymise_form').hide();
                 }
             });
         }

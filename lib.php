@@ -1146,7 +1146,7 @@ function turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, 
                                                         '&view_context=box&sesskey='.sesskey(),
                                                         $readclass->getTitle(), array("class" => "course_recreate",
                                                                                 "id" => "course_".$readclass->getClassId()));
-                        $datecell = html_writer::link('.edit_course_end_date_form',
+                        $datecell = html_writer::link('.mod_turnitintooltwo_edit_course_end_date_form',
                                         html_writer::tag('span',
                                                 userdate(strtotime($readclass->getEndDate()),
                                                             get_string('strftimedate', 'langconfig')),
@@ -1633,7 +1633,7 @@ function turnitintooltwo_show_edit_course_end_date_form() {
     $customdata["disable_form_change_checker"] = true;
     $optionsform = new turnitintooltwo_form('', $customdata);
 
-    return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'edit_course_end_date_form'));
+    return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'mod_turnitintooltwo_edit_course_end_date_form'));
 }
 
 /**
