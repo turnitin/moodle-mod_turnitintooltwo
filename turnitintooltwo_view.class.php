@@ -207,7 +207,7 @@ class turnitintooltwo_view {
         global $OUTPUT;
 
         $receipt = html_writer::tag('p', get_string('submissionuploadsuccess', 'turnitintooltwo'),
-                                        array('class' => 'bold', 'id' => 'upload_success'));
+                                        array('class' => 'bold', 'id' => 'mod_turnitintooltwo_upload_success'));
 
         $receipt .= html_writer::tag('h2', get_string('digitalreceipt', 'turnitintooltwo'),
                                         array("id" => "digital_receipt"));
@@ -373,16 +373,16 @@ class turnitintooltwo_view {
             $ula = "";
             if ($userid == $USER->id) {
                 if ($eulaaccepted != 1) {
-                    $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'turnitin_ula_text'));
+                    $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'mod_turnitintooltwo_eula_text'));
                     $ula .= html_writer::tag('div', self::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
                                 "Learner", get_string('turnitinula_btn', 'turnitintooltwo'), false),
-                                    array('class' => 'turnitin_ula', 'data-userid' => $userid));
+                                    array('class' => 'mod_turnitintooltwo_eula', 'data-userid' => $userid));
 
                     $noscriptula = html_writer::tag('noscript',
                                             $this->output_dv_launch_form("useragreement", 0, $user->tiiuserid, "Learner",
                                             get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                                 get_string('noscriptula', 'turnitintooltwo'),
-                                            array('class' => 'warning turnitin_ula_noscript'));
+                                            array('class' => 'warning mod_turnitintooltwo_eula_noscript'));
                 }
             }
 
@@ -1130,7 +1130,7 @@ class turnitintooltwo_view {
                 $studentname = html_writer::link($linkurl.'?'.$querystr,
                     $OUTPUT->pix_icon('receipt', get_string('digitalreceipt', 'turnitintooltwo'), 'mod_turnitintooltwo',
                         array('id' => 'tii_digital_receipt_icon')) . get_string('viewdigitalreceipt', 'turnitintooltwo'),
-                            array('class' => 'tii_digital_receipt')
+                            array('class' => 'mod_turnitintooltwo_digital_receipt')
                 );
             } else {
                 $studentname = "--";

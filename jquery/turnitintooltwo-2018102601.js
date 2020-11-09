@@ -1212,8 +1212,8 @@
         }
 
         function initialiseDigitalReceipt() {
-            if ($('.tii_digital_receipt').length > 0) {
-                $('.tii_digital_receipt').colorbox({
+            if ($('.mod_turnitintooltwo_digital_receipt').length > 0) {
+                $('.mod_turnitintooltwo_digital_receipt').colorbox({
                     iframe: true, width: "832px", height: "482px", opacity: "0.7", className: "rubric_view", transition: "none",
                     onLoad: function () {
                         lightBoxCloseButton();
@@ -1227,7 +1227,7 @@
             }
         }
 
-        $('#tii_receipt_print').click(function () {
+        $('#mod_turnitintooltwo_receipt_print').click(function () {
             window.print();
         });
 

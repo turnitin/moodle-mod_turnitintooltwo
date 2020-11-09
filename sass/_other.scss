@@ -37,8 +37,12 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 
 
 .mod_turnitintooltwo .submission_form_container, .mod_turnitintooltwo .class_recreation,
-.mod_turnitintooltwo #digital_receipt {
+div#mod_turnitintooltwo_digital_receipt {
     padding: 0 24px;
+}
+
+div#mod_turnitintooltwo_digital_receipt {
+    margin: 0;
 }
 
 .mod_turnitintooltwo .row_score, .mod_turnitintooltwo .row_peermark_manager, .mod_turnitintooltwo .row_peermark_reviews {

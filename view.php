@@ -530,17 +530,17 @@ switch ($do) {
             );
 
             $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'),
-                                'mod_turnitintooltwo', array('class' => 'logo'));
+                                'mod_turnitintooltwo', array('class' => 'mod_turnitintooltwo_logo'));
             $digitalreceipt .= '<h2>'.get_string('digitalreceipt', 'turnitintooltwo').'</h2>';
             $digitalreceipt .= '<p>'.get_string('receiptparagraph', 'turnitintooltwo').'</p>';
             $digitalreceipt .= html_writer::table($table);
             $printericon = $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo');
-            $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $printericon . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
+            $digitalreceipt .= '<a href="#" id="mod_turnitintooltwo_receipt_print">' . $printericon . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
         } else {
             $digitalreceipt = "";
         }
 
-        echo html_writer::tag("div", $digitalreceipt, array("id" => "tii_digital_receipt_box"));
+        echo html_writer::tag("div", $digitalreceipt, array("id" => "mod_turnitintooltwo_digital_receipt_box"));
         break;
 
     case "submitpaper":
@@ -660,20 +660,19 @@ switch ($do) {
                 $eulaurl = $CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid';
                 $eulalink = html_writer::link($eulaurl,
                                         html_writer::tag('i', '',
-                                            array('class' => 'tiiicon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
+                                            array('class' => 'tiiicon icon-warn icon-2x mod_turnitintooltwo_eula_warn')) .'</br></br>'.
                                         get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
                                         array("class" => "turnitin_eula_link"));
 
-                $eulaignoredclass = ($eulaaccepted == 0) ? ' turnitin_ula_ignored' : '';
-                $ula = html_writer::tag('div', $eulalink, array('class' => 'turnitin_ula js_required'.$eulaignoredclass,
+                $eula = html_writer::tag('div', $eulalink, array('class' => 'mod_turnitintooltwo_eula js_required',
                                             'data-userid' => $user->id));
 
                 $noscriptula = html_writer::tag('noscript',
                                 turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
                                     "Learner", get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                         get_string('noscriptula', 'turnitintooltwo'),
-                                            array('class' => 'warning turnitin_ula_noscript'));
-                echo $ula.$noscriptula;
+                                            array('class' => 'warning mod_turnitintooltwo_eula_noscript'));
+                echo $eula.$noscriptula;
             }
         } else {
             echo html_writer::start_tag("div", array("class" => "inbox inbox-instructor"));
