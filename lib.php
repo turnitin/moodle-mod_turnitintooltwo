@@ -55,9 +55,28 @@ define('SUBMIT_TO_STANDARD_REPOSITORY', 1);
 define('SUBMIT_TO_INSTITUTIONAL_REPOSITORY', 2);
 
 // For use in course migration.
-$tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
-                                    2 => 'WebCT', 5 => 'Angel', 6 => 'Moodle Basic', 7 => 'eCollege', 8 => 'Desire2Learn',
-                                    9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct', 26 => 'LTI');
+/**
+ * Returns the integration ids and labels.
+ * @return array Integration ids and labels.
+ * @throws coding_exception
+ */
+function turnitintooltwo_get_integration_ids() {
+    static $tiiintegrationids = [];
+    if (empty($tiiintegrationids)) {
+        $tiiintegrationids[0] = get_string('nointegration', 'turnitintooltwo');
+        $tiiintegrationids[1] = 'Blackboard Basic';
+        $tiiintegrationids[2] = 'WebCT';
+        $tiiintegrationids[5] = 'Angel';
+        $tiiintegrationids[6] = 'Moodle Basic';
+        $tiiintegrationids[7] = 'eCollege';
+        $tiiintegrationids[8] = 'Desire2Learn';
+        $tiiintegrationids[9] = 'Sakai';
+        $tiiintegrationids[12] = 'Moodle Direct';
+        $tiiintegrationids[13] = 'Blackboard Direct';
+        $tiiintegrationids[26] = 'LTI';
+    }
+    return $tiiintegrationids;
+}
 
 /**
  * Function for either adding to log or triggering an event
