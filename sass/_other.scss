@@ -52,8 +52,8 @@ div#mod_turnitintooltwo_digital_receipt {
 .mod_turnitintooltwo .grademark_open, .mod_turnitintooltwo .origreport_open, .mod_turnitintooltwo .download_original_open,
 .mod_turnitintooltwo_zip_open, .mod_turnitintooltwo .enrol_link, .mod_turnitintooltwo_refresh_link,
 .mod_turnitintooltwo .refresh_row, .mod_turnitintooltwo_messages_inbox, .mod_turnitintooltwo span.link,
-.mod_turnitintooltwo .rubric_manager_launch, .mod_turnitintooltwo .rubric_view_launch,
-.mod_turnitintooltwo .quickmark_manager_launch, .mod_turnitintooltwo .tii_peermark_manager_launch,
+.mod_turnitintooltwo_rubric_manager_launch, .mod_turnitintooltwo_rubric_view_launch,
+.mod_turnitintooltwo_quickmark_manager_launch, .mod_turnitintooltwo .tii_peermark_manager_launch,
 .mod_turnitintooltwo .tii_peermark_reviews_launch, #page-admin-setting-modsettingturnitintooltwo #test_link {
     cursor:pointer;
 }
@@ -92,7 +92,7 @@ div#mod_turnitintooltwo_digital_receipt {
 }
 
 .submissionsDataTable .fa,
-.partDetails .fa {
+.mod_turnitintooltwo_part_details .fa {
     color: darken($dark-grey, 10%);
 }
 

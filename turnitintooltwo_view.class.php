@@ -797,7 +797,7 @@ class turnitintooltwo_view {
                                                         '&part='.$partid.'&do=rubricview&view_context=box',
                                                     html_writer::tag('span', '',
                                                         array('class' => 'tiiicon icon-rubric icon-lg', 'id' => 'mod_turnitintooltwo_rubric_view_form')),
-                                                    array('class' => 'rubric_view_launch', 'id' => 'rubric_view_launch',
+                                                    array('class' => 'mod_turnitintooltwo_rubric_view_launch', 'id' => 'rubric_view_launch',
                                                         'title' => get_string('launchrubricview', 'turnitintooltwo')));
                 $rubricviewlink .= $OUTPUT->box_end(true);
             }
@@ -883,7 +883,7 @@ class turnitintooltwo_view {
                                         '/mod/turnitintooltwo/extras.php?cmd=rubricmanager&tiicourseid='.
                                             $coursedata->turnitin_cid.'&view_context=box',
                                                 html_writer::tag('i', '', array('class' => 'tiiicon icon-rubric icon-lg')),
-                                                array('class' => 'rubric_manager_launch', 'id' => 'rubric_manager_inbox_launch',
+                                                array('class' => 'mod_turnitintooltwo_rubric_manager_launch', 'id' => 'rubric_manager_inbox_launch',
                                                     'title' => get_string('launchrubricmanager', 'turnitintooltwo')));
                 $rubricmanagerlink .= html_writer::tag('span', '', array('class' => 'launch_form', 'id' => 'rubric_manager_form'));
                 $rubricmanagerlink .= $OUTPUT->box_end(true);
@@ -893,7 +893,7 @@ class turnitintooltwo_view {
                 $quickmarkmanagerlink .= html_writer::link($CFG->wwwroot.
                                             '/mod/turnitintooltwo/extras.php?cmd=quickmarkmanager&view_context=box',
                                                 html_writer::tag('i', '', array('class' => 'tiiicon icon-quickmarks icon-lg')),
-                                                array('class' => 'quickmark_manager_launch',
+                                                array('class' => 'mod_turnitintooltwo_quickmark_manager_launch',
                                                         'title' => get_string('launchquickmarkmanager', 'turnitintooltwo')));
                 $quickmarkmanagerlink .= html_writer::tag('span', '', array('class' => 'launch_form',
                                                                             'id' => 'quickmark_manager_form'));
@@ -985,7 +985,7 @@ class turnitintooltwo_view {
             }
         }
 
-        $table->attributes['class'] = 'partDetails';
+        $table->attributes['class'] = 'mod_turnitintooltwo_part_details';
         $table->head = $partsheaders;
 
         $table->data = $rows;
@@ -1063,7 +1063,7 @@ class turnitintooltwo_view {
         }
 
         $table->data = $rows;
-        $table->attributes['class'] = 'peermarkDetails';
+        $table->attributes['class'] = 'mod_turnitintooltwo_peermark_details';
         $output = html_writer::table($table);
 
         return $output;

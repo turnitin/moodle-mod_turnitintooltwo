@@ -511,8 +511,8 @@
         });
 
         // Open an iframe light box containing the Rubric Manager.
-        if ($('.rubric_manager_launch').length > 0) {
-            $('.rubric_manager_launch').colorbox({
+        if ($('.mod_turnitintooltwo_rubric_manager_launch').length > 0) {
+            $('.mod_turnitintooltwo_rubric_manager_launch').colorbox({
                 iframe: true, width: "832px", height: "682px", opacity: "0.7", className: "rubric_manager", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -530,8 +530,8 @@
         }
 
         // Open an iframe light box containing the Rubric View.
-        if ($('.rubric_view_launch').length > 0) {
-            $('.rubric_view_launch').colorbox({
+        if ($('.mod_turnitintooltwo_rubric_view_launch').length > 0) {
+            $('.mod_turnitintooltwo_rubric_view_launch').colorbox({
                 iframe: true, width: "832px", height: "682px", opacity: "0.7", className: "rubric_view", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -554,8 +554,8 @@
         });
 
         // Open an iframe light box containing the Quickmark Manager.
-        if ($('.quickmark_manager_launch').length > 0 || $('.plagiarism_turnitin_quickmark_manager_launch').length > 0) {
-            $('.quickmark_manager_launch, .plagiarism_turnitin_quickmark_manager_launch').colorbox({
+        if ($('.mod_turnitintooltwo_quickmark_manager_launch').length > 0) {
+            $('.mod_turnitintooltwo_quickmark_manager_launch').colorbox({
                 iframe: true, width: "770px", height: "600px", opacity: "0.7", className: "quickmark_manager", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -642,8 +642,8 @@
         }
 
         // Open an iframe light box containing the Email non submitters form.
-        if ($('.rubric_view_launch').length > 0) {
-            $('.rubric_view_launch').colorbox({
+        if ($('.mod_turnitintooltwo_rubric_view_launch').length > 0) {
+            $('.mod_turnitintooltwo_rubric_view_launch').colorbox({
                 iframe: true, width: "832px", height: "682px", opacity: "0.7", className: "rubric_view", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
