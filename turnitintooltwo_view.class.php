@@ -539,20 +539,15 @@ class turnitintooltwo_view {
 
                 $downloadlinks = "";
                 if ($turnitintooltwouser->get_user_role() == 'Instructor') {
-                    if ($CFG->branch >= 27) {
-                        $origfilesziplang = "origfileszip";
-                        $grademarkziplang = "grademarkzip";
-                    } else {
-                        $origfilesziplang = "downloadorigfileszip";
-                        $grademarkziplang = "downloadgrademarkzip";
-                    }
+                    $origfilesziplang = "origfileszip";
+                    $grademarkziplang = "grademarkzip";
 
                     // Output icon to download zip file of selected submissions in original format.
                     $exportorigfileszip = html_writer::tag('div',
                                                             html_writer::tag('i', '', array('class' => 'fa fa-file-o',
                                                     'title' => get_string($origfilesziplang, 'turnitintooltwo'))).' '.
                                                     get_string($origfilesziplang, 'turnitintooltwo'),
-                                                            array('class' => 'zip_open origchecked_zip_open',
+                                                            array('class' => 'mod_turnitintooltwo_zip_open mod_turnitintooltwo_origchecked_zip_open',
                                                                     'id' => 'origchecked_zip_'.$partobject->id));
                     // Put in div placeholder for launch form.
                     $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->id);
@@ -563,26 +558,21 @@ class turnitintooltwo_view {
                                                     html_writer::tag('i', '', array('class' => 'fa fa-file-pdf-o',
                                                     'title' => get_string($grademarkziplang, 'turnitintooltwo'))).' '.
                                                     get_string($grademarkziplang, 'turnitintooltwo'),
-                                            array("class" => "gmpdfzip_box", "id" => "gmpdf_zip_".$partobject->id));
+                                            array("class" => "mod_turnitintooltwo_gmpdfzip_box", "id" => "gmpdf_zip_".$partobject->id));
 
-                    // Only Moodle versions 2.7+ came with bootstrap.
-                    if ($CFG->branch >= 27) {
-                        $linkstyles = array('class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo'));
-                        $linkdropdown = html_writer::tag('ul',
-                                                    html_writer::tag('li', $exportorigfileszip).
-                                                        html_writer::tag('li', $exportgrademarkzip),
-                                                    array('class' => 'dropdown-menu'));
-                        $downloadlinks = html_writer::tag('div',
-                                            html_writer::tag('button', get_string('download', 'turnitintooltwo'),
-                                                $linkstyles).$linkdropdown,
-                                                array('id' => 'mod_turnitintooltwo_download_links', 'class' => 'btn-group'));
-                    } else {
-                        $downloadlinks = $exportorigfileszip.$exportgrademarkzip;
-                    }
+                    $linkstyles = array('class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo'));
+                    $linkdropdown = html_writer::tag('ul',
+                                                html_writer::tag('li', $exportorigfileszip).
+                                                    html_writer::tag('li', $exportgrademarkzip),
+                                                array('class' => 'dropdown-menu mod_turnitintooltwo_dropdown-menu'));
+                    $downloadlinks = html_writer::tag('div',
+                                        html_writer::tag('button', get_string('download', 'turnitintooltwo'),
+                                            $linkstyles).$linkdropdown,
+                                            array('id' => 'mod_turnitintooltwo_download_links', 'class' => 'btn-group'));
                 }
 
                 // Include download links and info table.
-                $tables .= html_writer::tag('div', $downloadlinks, array('id' => 'part_' . $partobject->id, 'class' => 'zip_downloads'));
+                $tables .= html_writer::tag('div', $downloadlinks, array('id' => 'part_' . $partobject->id, 'class' => 'mod_turnitintooltwo_zip_downloads'));
                 $tables .= $this->get_submission_inbox_part_details($cm, $turnitintooltwoassignment, $partdetails, $partid);
 
                 // Construct submissions table.
@@ -638,8 +628,8 @@ class turnitintooltwo_view {
                                                             ' ('.html_writer::tag('span', '', array('class' => 'messages_amount')).
                                                                 html_writer::tag('span', $OUTPUT->pix_icon('loading',
                                                                 get_string('turnitinloading', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                                                array('class' => 'messages_loading messages_loading_span')).')',
-                                                array("class" => "messages_inbox"));
+                                                                array('class' => 'mod_turnitintooltwo_messages_loading')).')',
+                                                array("class" => "mod_turnitintooltwo_messages_inbox"));
                 }
 
                 // Check that nonsubmitter messages have been configured to be sent.
@@ -659,20 +649,20 @@ class turnitintooltwo_view {
                     $emailnonsubmitters = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                             '&part='.$partid.'&do=emailnonsubmittersform&view_context=box_solid',
                                                             $icon.' '.get_string('messagenonsubmitters', 'turnitintooltwo'),
-                                                            array("class" => "nonsubmitters_link", "id" => "nonsubmitters_".$partid));
+                                                            array("class" => "mod_turnitintooltwo_nonsubmitters_link", "id" => "nonsubmitters_".$partid));
                 }
 
                 // Link to refresh submissions with latest data from Turnitin.
                 $refreshlink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-refresh fa-lg',
                                                     'title' => get_string('turnitinrefreshingsubmissions', 'turnitintooltwo')))." ".
                                                     get_string('turnitinrefreshsubmissions', 'turnitintooltwo'),
-                                                        array('class' => 'refresh_link', 'id' => 'refresh_'.$partid));
+                                                        array('class' => 'mod_turnitintooltwo_refresh_link', 'id' => 'refresh_'.$partid));
 
                 // Link which appears during the refresh of submissions.
                 $refreshinglink = html_writer::tag('div', html_writer::tag('i', '', array('class' => 'fa fa-spinner fa-spin fa-lg',
                                                     'title' => get_string('turnitinrefreshingsubmissions', 'turnitintooltwo')))." ".
                                                     get_string('turnitinrefreshingsubmissions', 'turnitintooltwo'),
-                                                        array('class' => 'refreshing_link', 'id' => 'refreshing_'.$partid));
+                                                        array('class' => 'mod_turnitintooltwo_refreshing_link', 'id' => 'refreshing_'.$partid));
 
                 // Output the links.
                 $output .= $OUTPUT->box($messagesinbox.$emailnonsubmitters.$refreshlink.$refreshinglink,
@@ -839,7 +829,7 @@ class turnitintooltwo_view {
             $exportoriginalzip .= $OUTPUT->box(
                 html_writer::tag('i', '', array('title' => get_string('exportoriginal', 'turnitintooltwo'),
                                                 'class' => 'fa fa-file-o fa-lg')),
-                'zip_open orig_zip_open', 'orig_zip_'.$partdetails[$partid]->tiiassignid
+                'mod_turnitintooltwo_zip_open orig_zip_open', 'orig_zip_'.$partdetails[$partid]->tiiassignid
             );
             // Put in div placeholder for launch form.
             $exportoriginalzip .= $OUTPUT->box('', 'launch_form', 'orig_zip_form_'.$partdetails[$partid]->tiiassignid);
@@ -858,7 +848,7 @@ class turnitintooltwo_view {
             $exportxlszip .= $OUTPUT->box(
                     html_writer::tag('i', '', array('title' => get_string('exportexcel', 'turnitintooltwo'),
                         'class' => 'fa fa-file-excel-o fa-lg')),
-                    'zip_open xls_inbox_open', 'xls_inbox_'.$partdetails[$partid]->tiiassignid
+                    'mod_turnitintooltwo_zip_open xls_inbox_open', 'xls_inbox_'.$partdetails[$partid]->tiiassignid
                 );
 
             // Put in div placeholder for launch form.

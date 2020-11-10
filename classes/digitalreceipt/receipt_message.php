@@ -29,12 +29,7 @@ class receipt_message {
 
         $subject = get_string('digital_receipt_subject', 'turnitintooltwo');
 
-        // Pre 2.9 does not have \core\message\message()
-        if ($CFG->branch >= 29) {
-            $eventdata = new \core\message\message();
-        } else {
-            $eventdata = new stdClass();
-        }
+        $eventdata = new \core\message\message();
 
         $eventdata->component         = 'mod_turnitintooltwo';
         $eventdata->name              = 'submission'; // This is the message name from messages.php.
