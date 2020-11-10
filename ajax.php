@@ -603,7 +603,7 @@ switch ($action) {
 
         $modules = $DB->get_record('modules', array('name' => 'turnitintooltwo'));
 
-        $return = turnitintooltwo_get_courses_from_tii($tiiintegrationids, $title, $courseintegration, $enddate, $source);
+        $return = turnitintooltwo_get_courses_from_tii(turnitintooltwo_get_integration_ids(), $title, $courseintegration, $enddate, $source);
         echo json_encode($return);
         break;
 

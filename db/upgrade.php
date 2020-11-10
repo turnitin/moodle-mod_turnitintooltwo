@@ -45,6 +45,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field2)) {
             $dbman->add_field($table, $field2);
         }
+        upgrade_mod_savepoint(true, 2014012401, 'turnitintooltwo');
     }
 
     if ($oldversion < 2014012404) {
@@ -54,6 +55,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        upgrade_mod_savepoint(true, 2014012404, 'turnitintooltwo');
     }
 
     if ($oldversion < 2014012405) {
@@ -89,6 +91,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->index_exists($table, $index)) {
             $dbman->add_index($table, $index);
         }
+        upgrade_mod_savepoint(true, 2014012405, 'turnitintooltwo');
     }
 
     if ($oldversion < 2014012412) {
@@ -97,6 +100,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        upgrade_mod_savepoint(true, 2014012412, 'turnitintooltwo');
     }
 
     if ($oldversion < 2015040101) {
@@ -115,6 +119,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->index_exists($table, $index)) {
             $dbman->add_index($table, $index);
         }
+        upgrade_mod_savepoint(true, 2015040101, 'turnitintooltwo');
     }
 
     if ($oldversion < 2015040104) {
@@ -128,6 +133,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         } else {
             $dbman->change_field_unsigned($table, $field);
         }
+        upgrade_mod_savepoint(true, 2015040104, 'turnitintooltwo');
     }
 
     if ($oldversion < 2015040107) {
@@ -138,6 +144,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        upgrade_mod_savepoint(true, 2015040107, 'turnitintooltwo');
     }
 
     if ($oldversion < 2015040109) {
@@ -145,11 +152,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         $apiurl = get_config('turnitintooltwo', 'apiurl');
         $newurl = str_replace('submit.ac.uk', 'api.turnitinuk.com', strtolower($apiurl));
         set_config('apiurl', $newurl, 'turnitintooltwo');
+        upgrade_mod_savepoint(true, 2015040109, 'turnitintooltwo');
     }
 
     if ($oldversion < 2015040111) {
         // Update gradedisplay value to be consistent with V1 plugin.
         $DB->set_field("turnitintooltwo", "gradedisplay", 2);
+        upgrade_mod_savepoint(true, 2015040111, 'turnitintooltwo');
     }
 
     if ($oldversion < 2016011101) {
@@ -165,6 +174,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        upgrade_mod_savepoint(true, 2016011101, 'turnitintooltwo');
     }
 
     if ($oldversion < 2016011107) {
@@ -175,6 +185,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        upgrade_mod_savepoint(true, 2016011107, 'turnitintooltwo');
     }
 
     if ($oldversion < 2017011301) {
@@ -236,6 +247,8 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         // Add hash as key after update.
         $key = new xmldb_key('submission_hash', XMLDB_KEY_UNIQUE, array('submission_hash'));
         $dbman->add_key($table, $key);
+
+        upgrade_mod_savepoint(true, 2017011301, 'turnitintooltwo');
     }
 
     if ($oldversion < 2017103001) {
@@ -251,6 +264,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
+        upgrade_mod_savepoint(true, 2017103001, 'turnitintooltwo');
     }
 
     // This block is to solve a number of inconsistencies between the install and upgrade scripts
@@ -287,6 +301,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if ($dbman->field_exists($table, $field)) {
             $dbman->change_field_notnull($table, $field);
         }
+        upgrade_mod_savepoint(true, 2020081401, 'turnitintooltwo');
     }
 
     return true;
