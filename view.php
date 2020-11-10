@@ -162,7 +162,7 @@ if ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOA
     $maxbytescourse = TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE;
 }
 
-$maxfilesize = get_user_max_upload_file_size(context_module::instance($cm->id),
+$maxfilesize = get_user_max_upload_file_size($context,
                                                 $maxbytessite,
                                                 $maxbytescourse,
                                                 $turnitintooltwoassignment->turnitintooltwo->maxfilesize);
@@ -175,7 +175,8 @@ if (!$parts = $turnitintooltwoassignment->get_parts()) {
 }
 
 // Get whether user is a tutor/student.
-$istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
+$istutor = has_capability('mod/turnitintooltwo:grade', $context);
+$cansubmit = has_capability('mod/turnitintooltwo:submit', $context);
 $userrole = ($istutor) ? 'Instructor' : 'Learner';
 
 // Deal with actions here.
@@ -407,7 +408,6 @@ if (!empty($action)) {
             } else {
 
                 // Get all users enrolled in the class.
-                $context = context_module::instance($cm->id);
                 $allusers = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
                 // Get users who've submitted.
@@ -544,8 +544,7 @@ switch ($do) {
         break;
 
     case "submitpaper":
-        if ($istutor || (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
-                $user == $USER->id)) {
+        if ($istutor || ($cansubmit && $user == $USER->id)) {
             echo $turnitintooltwoview->show_submission_form($cm, $turnitintooltwoassignment, $part,
                                                             $turnitintooltwofileuploadoptions, "box_solid", $user);
             unset($_SESSION['form_data']);
@@ -588,7 +587,7 @@ switch ($do) {
         break;
 
     case "rubricview":
-        if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($cansubmit) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
             $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
             $user->join_user_to_class($course->turnitin_cid);
@@ -599,7 +598,7 @@ switch ($do) {
         break;
 
     case "loadmessages":
-        if ($istutor || has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($istutor || $cansubmit) {
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('messages_inbox', $userrole),
                                                     array("id" => "inbox_form"));
         }
@@ -613,7 +612,7 @@ switch ($do) {
         break;
 
     case "peermarkreviews":
-        if ($istutor || has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($istutor || $cansubmit) {
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('peermark_reviews', $userrole,
                                                     $parts[$part]->tiiassignid), array("class" => "launch_form"));
         }
@@ -682,7 +681,7 @@ switch ($do) {
         turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions",
                             'view.php?id='.$cm->id, get_string($listsubmissionsdesc, 'turnitintooltwo') . ": $course->id", $cm->id);
 
-        if (!$istutor && !has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if (!$istutor && !$cansubmit) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
             exit();
         }
@@ -719,7 +718,7 @@ switch ($do) {
             echo $turnitintooltwoview->show_duplicate_assignment_warning($turnitintooltwoassignment, $parts);
         }
 
-        if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
+        if ($cansubmit &&
                 !empty($_SESSION["digital_receipt"]) && !isset($_SESSION["digital_receipt"]["is_manual"])) {
             echo $turnitintooltwoview->show_digital_receipt($_SESSION["digital_receipt"]);
             unset($_SESSION["digital_receipt"]);
