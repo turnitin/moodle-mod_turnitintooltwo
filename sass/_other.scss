@@ -25,7 +25,7 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #class_ids, .mod_turnitintooltwo #create_assignments,
 .mod_turnitintooltwo .row_peermark_reviews, .mod_turnitintooltwo .peermark_instructions,
 .mod_turnitintooltwo .toggle_peermark_instructions .hide_peermark_instructions,
-.mod_turnitintooltwo #courseBrowserTable_filter, .mod_turnitintooltwo .js_required,
+.mod_turnitintooltwo_course_browser_table_filter, .mod_turnitintooltwo .js_required,
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #create_assignments,
 #page-admin-setting-modsettingturnitintooltwo .tii_upgrading_check, #page-admin-setting-modsettingturnitintooltwo #test_link,
 #page-admin-setting-modsettingturnitintooltwo #test_result, #page-admin-setting-modsettingturnitintooltwo .test_connection,
@@ -91,7 +91,7 @@ div#mod_turnitintooltwo_digital_receipt {
     margin-bottom: 16px;
 }
 
-.submissionsDataTable .fa,
+.mod_turnitintooltwo_submissions_data_table .fa,
 .mod_turnitintooltwo_part_details .fa {
     color: darken($dark-grey, 10%);
 }

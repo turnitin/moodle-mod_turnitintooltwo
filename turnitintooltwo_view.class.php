@@ -578,7 +578,7 @@ class turnitintooltwo_view {
                 // Construct submissions table.
                 $table = new html_table();
                 $table->id = $partid;
-                $table->attributes['class'] = 'submissionsDataTable';
+                $table->attributes['class'] = 'mod_turnitintooltwo_submissions_data_table';
                 $table->head = $tableheaders;
 
                 // Populate inbox if user is a student incase they do not have javascript enabled.

@@ -121,7 +121,7 @@ switch ($cmd) {
         $output .= $OUTPUT->box($categoryselectlabel." ".$categoryselect.$createassign.$createbutton, 'create_checkboxes navbar');
 
         $table = new html_table();
-        $table->id = "courseBrowserTable";
+        $table->id = "mod_turnitintooltwo_course_browser_table";
         $rows = array();
 
         // Make up json array for drop down in table.

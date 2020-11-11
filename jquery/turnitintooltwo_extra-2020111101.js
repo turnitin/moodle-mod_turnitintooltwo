@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     // Add style to header row.
-    $('.submissionsDataTable thead tr, #courseBrowserTable thead tr').toggleClass("header");
+    $('.mod_turnitintooltwo_submissions_data_table thead tr, #mod_turnitintooltwo_course_browser_table thead tr').toggleClass("header");
 
     // Configure datatables language settings.
     var dataTablesLang = {
@@ -176,7 +176,7 @@ jQuery(document).ready(function($) {
     $.datepicker.setDefaults($.datepicker.regional['']);
 
     // Configure the course browser data table and show classes from Turnitin acocunt.
-    var courseBrowserTable = $('#courseBrowserTable').dataTable({
+    var courseBrowserTable = $('#mod_turnitintooltwo_course_browser_table').dataTable({
         "bProcessing": true,
         "oLanguage": dataTablesLang,
         "aaSorting": [[ 6, 'asc']],

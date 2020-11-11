@@ -201,7 +201,7 @@
                 sortby = 'asc';
             }
 
-            node.closest('.submissionsDataTable').DataTable()
+            node.closest('.mod_turnitintooltwo_submissions_data_table').DataTable()
                 .order( [ sortColumn, sortby ] )
                 .draw();
 
@@ -282,11 +282,11 @@
         // Define column definitions as there can be different number of columns.
         var submissionsDataTableColumns = [];
         var visibleCols = [];
-        var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
-        var notStudentView = ($('table.submissionsDataTable th.sorting_name').length > 0) ? true : false;
-        var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
-        var useGradeMark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
-        var multipleParts = ($('table.submissionsDataTable th.coverallgrade').length > 0) ? true : false;
+        var noOfColumns = $('table.mod_turnitintooltwo_submissions_data_table th').length / $('table.mod_turnitintooltwo_submissions_data_table').length;
+        var notStudentView = ($('table.mod_turnitintooltwo_submissions_data_table th.sorting_name').length > 0) ? true : false;
+        var showOrigReport = ($('table.mod_turnitintooltwo_submissions_data_table th.creport').length > 0) ? true : false;
+        var useGradeMark = ($('table.mod_turnitintooltwo_submissions_data_table th.cgrade').length > 0) ? true : false;
+        var multipleParts = ($('table.mod_turnitintooltwo_submissions_data_table th.coverallgrade').length > 0) ? true : false;
 
         if (notStudentView) {
             for (var i = 0; i < noOfColumns; i++) {
@@ -350,7 +350,7 @@
 
         var partTables = [];
         var refreshRequested = [];
-        $('table.submissionsDataTable').each(function () {
+        $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
 
             var part_id = $(this).attr("id");
             refreshRequested[part_id] = 0;
@@ -410,7 +410,7 @@
         });
 
 
-        $('table.submissionsDataTable').each(function () {
+        $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
             var part_id = $(this).attr("id");
 
             // Populate Peermark Section of Part Details.
@@ -452,7 +452,7 @@
                 $(".mod_turnitintooltwo_refresh_link").hide();
                 $(".mod_turnitintooltwo_refreshing_link").show();
 
-                $('table.submissionsDataTable').each(function () {
+                $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
                     refreshRequested[$(this).attr("id")] = 1;
                     partTables[$(this).attr("id")].fnReloadAjax();
                     partTables[$(this).attr("id")].fnStandingRedraw();
