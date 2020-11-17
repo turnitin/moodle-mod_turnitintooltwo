@@ -279,6 +279,10 @@ switch ($action) {
             $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
             $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
+            if ($refreshrequested) {
+                $turnitintooltwoassignment->update_assignment_from_tii();
+            }
+
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = count($_SESSION["TiiSubmissions"][$partid]);
