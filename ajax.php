@@ -279,7 +279,7 @@ switch ($action) {
             $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
             $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
-            if ($refreshrequested) {
+            if ($refreshrequested && $start == 0) {
                 $turnitintooltwoassignment->update_assignment_from_tii();
             }
 
