@@ -1,3 +1,18 @@
+### Date:		2020-Nov-18
+### Release:	v2020111801
+
+---
+
+#### :wrench: Fixes and enhancements
+
+#### Rubrics sync back to the assignment
+A bug could cause a rubric that is attached to a multi-part assignment from within the Turnitin viewer to become detached after opening it again. Rubrics will now correctly sync to the assignment and remain attached.
+
+#### Tooltip shows correct maximum file size limit
+Turnitin updated our maximum file size limit quite some time ago, but the file size provided in the tooltip had slipped through the net! It will now accurately reflect the maximum file size.
+
+---
+
 ### Date:		2020-Jul-22
 ### Release:	v2020072201
 
