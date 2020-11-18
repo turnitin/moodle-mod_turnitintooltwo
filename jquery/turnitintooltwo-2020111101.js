@@ -201,7 +201,7 @@
                 sortby = 'asc';
             }
 
-            node.closest('.submissionsDataTable').DataTable()
+            node.closest('.mod_turnitintooltwo_submissions_data_table').DataTable()
                 .order( [ sortColumn, sortby ] )
                 .draw();
 
@@ -282,11 +282,11 @@
         // Define column definitions as there can be different number of columns.
         var submissionsDataTableColumns = [];
         var visibleCols = [];
-        var noOfColumns = $('table.submissionsDataTable th').length / $('table.submissionsDataTable').length;
-        var notStudentView = ($('table.submissionsDataTable th.sorting_name').length > 0) ? true : false;
-        var showOrigReport = ($('table.submissionsDataTable th.creport').length > 0) ? true : false;
-        var useGradeMark = ($('table.submissionsDataTable th.cgrade').length > 0) ? true : false;
-        var multipleParts = ($('table.submissionsDataTable th.coverallgrade').length > 0) ? true : false;
+        var noOfColumns = $('table.mod_turnitintooltwo_submissions_data_table th').length / $('table.mod_turnitintooltwo_submissions_data_table').length;
+        var notStudentView = ($('table.mod_turnitintooltwo_submissions_data_table th.sorting_name').length > 0) ? true : false;
+        var showOrigReport = ($('table.mod_turnitintooltwo_submissions_data_table th.creport').length > 0) ? true : false;
+        var useGradeMark = ($('table.mod_turnitintooltwo_submissions_data_table th.cgrade').length > 0) ? true : false;
+        var multipleParts = ($('table.mod_turnitintooltwo_submissions_data_table th.coverallgrade').length > 0) ? true : false;
 
         if (notStudentView) {
             for (var i = 0; i < noOfColumns; i++) {
@@ -350,7 +350,7 @@
 
         var partTables = [];
         var refreshRequested = [];
-        $('table.submissionsDataTable').each(function () {
+        $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
 
             var part_id = $(this).attr("id");
             refreshRequested[part_id] = 0;
@@ -362,7 +362,7 @@
                 "aaSorting": [[2, "asc"], [4, "asc"]],
                 "sAjaxSource": "ajax.php",
                 "oLanguage": dataTablesLang,
-                "sDom": 'r<"listbar-container"<"top listbar clearfix"lf>><"dt_pagination clearfix"pi>t<"bottom"><"dt_pagination clearfix"pi>',
+                "sDom": 'r<"mod_turnitintooltwo_listbar-container"<"top mod_turnitintooltwo_listbar clearfix"lf>><"dt_pagination clearfix"pi>t<"bottom"><"dt_pagination clearfix"pi>',
                 "fnServerData": function (sSource, aoData, fnCallback) {
                     $.ajax({
                         "dataType": 'json',
@@ -410,7 +410,7 @@
         });
 
 
-        $('table.submissionsDataTable').each(function () {
+        $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
             var part_id = $(this).attr("id");
 
             // Populate Peermark Section of Part Details.
@@ -428,13 +428,13 @@
             var tii_table_functions = $("#tii_table_functions_" + part_id).html();
             $('#tii_table_functions_' + part_id).remove();
             $('#' + part_id + '_length').after(tii_table_functions);
-            $('.messages_inbox').show();
+            $('.mod_turnitintooltwo_messages_inbox').show();
 
             $('#refresh_' + part_id).show();
             $('#refreshing_' + part_id).hide();
         });
 
-        var zip_downloads = $(".zip_downloads");
+        var zip_downloads = $(".mod_turnitintooltwo_zip_downloads");
 
         $.each(zip_downloads, function () {
             var part_id = $(this).attr('id').split('_')[1];
@@ -447,12 +447,12 @@
         }
 
         // When the refresh submissions link is clicked, the data in each datatable needs to be reloaded.
-        $(".refresh_link").click(function () {
+        $(".mod_turnitintooltwo_refresh_link").click(function () {
             if ($(this).is(":visible")) {
-                $(".refresh_link").hide();
-                $(".refreshing_link").show();
+                $(".mod_turnitintooltwo_refresh_link").hide();
+                $(".mod_turnitintooltwo_refreshing_link").show();
 
-                $('table.submissionsDataTable').each(function () {
+                $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
                     refreshRequested[$(this).attr("id")] = 1;
                     partTables[$(this).attr("id")].fnReloadAjax();
                     partTables[$(this).attr("id")].fnStandingRedraw();
@@ -511,8 +511,8 @@
         });
 
         // Open an iframe light box containing the Rubric Manager.
-        if ($('.rubric_manager_launch').length > 0) {
-            $('.rubric_manager_launch').colorbox({
+        if ($('.mod_turnitintooltwo_rubric_manager_launch').length > 0) {
+            $('.mod_turnitintooltwo_rubric_manager_launch').colorbox({
                 iframe: true, width: "832px", height: "682px", opacity: "0.7", className: "rubric_manager", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -530,8 +530,8 @@
         }
 
         // Open an iframe light box containing the Rubric View.
-        if ($('.rubric_view_launch').length > 0) {
-            $('.rubric_view_launch').colorbox({
+        if ($('.mod_turnitintooltwo_rubric_view_launch').length > 0) {
+            $('.mod_turnitintooltwo_rubric_view_launch').colorbox({
                 iframe: true, width: "832px", height: "682px", opacity: "0.7", className: "rubric_view", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -554,8 +554,8 @@
         });
 
         // Open an iframe light box containing the Quickmark Manager.
-        if ($('.quickmark_manager_launch').length > 0 || $('.plagiarism_turnitin_quickmark_manager_launch').length > 0) {
-            $('.quickmark_manager_launch, .plagiarism_turnitin_quickmark_manager_launch').colorbox({
+        if ($('.mod_turnitintooltwo_quickmark_manager_launch').length > 0) {
+            $('.mod_turnitintooltwo_quickmark_manager_launch').colorbox({
                 iframe: true, width: "770px", height: "600px", opacity: "0.7", className: "quickmark_manager", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -603,8 +603,8 @@
         }
 
         // Open an iframe light box containing the turnitin message inbox.
-        if ($(".messages_inbox").length > 0) {
-            $(".messages_inbox").colorbox({
+        if ($(".mod_turnitintooltwo_messages_inbox").length > 0) {
+            $(".mod_turnitintooltwo_messages_inbox").colorbox({
                 iframe: true, width: "772px", height: "772px", opacity: "0.7", className: "messages", transition: "none", closeButton: true,
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -618,8 +618,8 @@
         }
 
         // Open an iframe light box containing the form to message non submitters.
-        if ($(".nonsubmitters_link").length > 0) {
-            $(".nonsubmitters_link").colorbox({
+        if ($(".mod_turnitintooltwo_nonsubmitters_link").length > 0) {
+            $(".mod_turnitintooltwo_nonsubmitters_link").colorbox({
                 iframe: true, width: "740px", height: "540px", opacity: "0.7", className: "nonsubmitters", transition: "none", closeButton: true,
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -633,7 +633,7 @@
         }
 
         // Resize window when email has been sent.
-        if ($('.nonsubmittersformsuccessmsg').length > 0) {
+        if ($('.mod_turnitintooltwo_nonsubmittersformsuccessmsg').length > 0) {
             hideLoadingGif();
             window.parent.$('.nonsubmitters').colorbox.resize({
                 width: "740px",
@@ -642,8 +642,8 @@
         }
 
         // Open an iframe light box containing the Email non submitters form.
-        if ($('.rubric_view_launch').length > 0) {
-            $('.rubric_view_launch').colorbox({
+        if ($('.mod_turnitintooltwo_rubric_view_launch').length > 0) {
+            $('.mod_turnitintooltwo_rubric_view_launch').colorbox({
                 iframe: true, width: "832px", height: "682px", opacity: "0.7", className: "rubric_view", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
@@ -928,8 +928,8 @@
                         });
 
                         if (allrefreshed == 1) {
-                            $('.refreshing_link').hide();
-                            $('.refresh_link').show();
+                            $('.mod_turnitintooltwo_refreshing_link').hide();
+                            $('.mod_turnitintooltwo_refresh_link').show();
                         }
 
                         submitVisibility();
@@ -938,7 +938,7 @@
 
                         // Enable Email non submitters link if there is any non submitters.
                         if (result.nonsubmitters > 0) {
-                            $('.nonsubmitters_link').attr('style', 'display: block');
+                            $('.mod_turnitintooltwo_nonsubmitters_link').attr('style', 'display: block');
                         }
                     }
                 },
@@ -1005,7 +1005,7 @@
 
         // Refresh the number of messages in the user's Turnitin inbox.
         function refreshUserMessages() {
-            $('.messages_loading').show();
+            $('.mod_turnitintooltwo_messages_loading').show();
             $('.messages_amount').html('');
 
             $.ajax({
@@ -1014,7 +1014,7 @@
                 "url": "ajax.php",
                 "data": { action: "refresh_user_messages", assignment: $('#assignment_id').html() },
                 success: function (data) {
-                    $('.messages_loading').hide();
+                    $('.mod_turnitintooltwo_messages_loading').hide();
                     $('.messages_amount').html(data);
                 }
             });
@@ -1093,7 +1093,7 @@
                         assignment_id = $('#assignment_id').html();
                     }
                     $("#submission_id").html(submission_id);
-                    $('#cboxLoadedContent .unanonymise_form').show();
+                    $('#cboxLoadedContent .mod_turnitintooltwo_unanonymise_form').show();
                     $('#id_reveal').unbind("click");
                     $('#id_reveal').click(function () {
                         $.ajax({
@@ -1112,15 +1112,15 @@
                                     $('#submission_' + submission_id).html(data.name);
                                     $('#submission_' + submission_id).removeClass('unanonymise cboxElement');
                                 } else {
-                                    var current_msg = $('#unanonymise_desc').html;
-                                    $('#unanonymise_desc').html(current_msg + " " + data.msg);
+                                    var current_msg = $('#mod_turnitintooltwo_unanonymise_desc').html;
+                                    $('#mod_turnitintooltwo_unanonymise_desc').html(current_msg + " " + data.msg);
                                 }
                             }
                         });
                     });
                 },
                 onCleanup: function () {
-                    $('.unanonymise_form').hide();
+                    $('.mod_turnitintooltwo_unanonymise_form').hide();
                 }
             });
         }
@@ -1183,7 +1183,7 @@
             });
 
             // Open an iframe light box which requests selected submissions as pdfs from Turnitin.
-            $(document).on('click', '#tabs-' + part_id + ' .gmpdfzip_box', function (e) {
+            $(document).on('click', '#tabs-' + part_id + ' .mod_turnitintooltwo_gmpdfzip_box', function (e) {
                 $(this).colorbox({
                     open: true, iframe: true, width: "786px", height: "300px", opacity: "0.7", className: "gmpdfzip_window", transition: "none",
                     href: function () {
@@ -1212,8 +1212,8 @@
         }
 
         function initialiseDigitalReceipt() {
-            if ($('.tii_digital_receipt').length > 0) {
-                $('.tii_digital_receipt').colorbox({
+            if ($('.mod_turnitintooltwo_digital_receipt').length > 0) {
+                $('.mod_turnitintooltwo_digital_receipt').colorbox({
                     iframe: true, width: "832px", height: "482px", opacity: "0.7", className: "rubric_view", transition: "none",
                     onLoad: function () {
                         lightBoxCloseButton();
@@ -1227,15 +1227,15 @@
             }
         }
 
-        $('#tii_receipt_print').click(function () {
+        $('#mod_turnitintooltwo_receipt_print').click(function () {
             window.print();
         });
 
         function initialiseHiddenZipDownloads(part_id) {
             // Unbind the event first to stop it being binded multiple times.
-            $('#tabs-' + part_id + ' .origchecked_zip_open').unbind("click");
+            $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').unbind("click");
             // Seperate binder for hidden zip file link.
-            $('#tabs-' + part_id + ' .origchecked_zip_open').click(function () {
+            $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').click(function () {
                 var idStr = $(this).attr("id").split("_");
                 downloadZipFile(idStr[0] + "_" + idStr[1], part_id);
                 return false;
@@ -1415,13 +1415,13 @@
 
             $(document).on('click', identifier + ', .select_all_checkbox', function () {
                 if ($('#tabs-' + part_id + ' .inbox_checkbox:checked').length > 0) {
-                    $('#tabs-' + part_id + ' .zip_downloads button').prop("disabled", false);
-                    $('#tabs-' + part_id + ' .zip_downloads button').removeAttr("title");
+                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').prop("disabled", false);
+                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').removeAttr("title");
                     initialiseHiddenZipDownloads(part_id);
                 } else {
-                    $('#tabs-' + part_id + ' .origchecked_zip_open').unbind('click');
-                    $('#tabs-' + part_id + ' .zip_downloads button').prop("disabled", true);
-                    $('#tabs-' + part_id + ' .zip_downloads button').prop("title", M.str.turnitintooltwo.download_button_warning);
+                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').unbind('click');
+                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').prop("disabled", true);
+                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').prop("title", M.str.turnitintooltwo.download_button_warning);
                 }
             });
         }
@@ -1442,8 +1442,8 @@
 
             if ($(this).is(':checked')) {
                 if ($('#' + id + ' .inbox_checkbox').length) {
-                    $('#tabs-' + id + ' .zip_downloads button').prop("disabled", false);
-                    $('#tabs-' + id + ' .zip_downloads button').removeAttr("title");
+                    $('#tabs-' + id + ' .mod_turnitintooltwo_zip_downloads button').prop("disabled", false);
+                    $('#tabs-' + id + ' .mod_turnitintooltwo_zip_downloads button').removeAttr("title");
                 }
                 $('#' + id + ' .inbox_checkbox').each(function () {
                     $(this).prop('checked', true);
@@ -1453,8 +1453,8 @@
                     $(this).prop('checked', false);
                 });
                 if ($('#' + id + ' .inbox_checkbox').length) {
-                    $('#tabs-' + id + ' .zip_downloads button').prop("disabled", true);
-                    $('#tabs-' + id + ' .zip_downloads button').prop("title", M.str.turnitintooltwo.download_button_warning);
+                    $('#tabs-' + id + ' .mod_turnitintooltwo_zip_downloads button').prop("disabled", true);
+                    $('#tabs-' + id + ' .mod_turnitintooltwo_zip_downloads button').prop("title", M.str.turnitintooltwo.download_button_warning);
                 }
             }
         });

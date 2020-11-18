@@ -1,103 +1,73 @@
 /*
- * Tabs on inbox page
+ * Tabs on inbox page - this is overriding jquery datatables styles.
  */
-.ui-widget-header {
+.mod_turnitintooltwo .ui-widget-header {
     background: $light-grey !important;
     border: 0 !important;
     margin-bottom: 6px !important;
 }
 
-.ui-widget-content {
+.mod_turnitintooltwo .ui-widget-content {
     border: 0 !important;
 }
 
-.ui-tabs .ui-tabs-panel {
+.mod_turnitintooltwo .ui-tabs .ui-tabs-panel {
     padding: 0 !important;
 }
 
-.ui-tabs .ui-tabs-nav {
-  padding: 10px 10px 0 !important;
+.mod_turnitintooltwo .ui-tabs .ui-tabs-nav {
+    padding: 10px 10px 0 !important;
 }
 
 /*
  * Unanonymise form in modal
  */
-.tii_unanonymise_reveal_form .unanonymise_form,
-.mod_turnitintooltwo .edit_course_end_date_form {
+.mod_turnitintooltwo_unanonymise_form {
     background: #FFFFFF;
     padding: 12px 12px 0;
     height: 100%;
     overflow: hidden
 }
 
-.tii_unanonymise_reveal_form #unanonymise_desc {
+#mod_turnitintooltwo_unanonymise_desc {
     text-align: center;
     font-weight: bold;
     display: block;
     margin-bottom: 10px;
 }
 
-.tii_unanonymise_reveal_form .unanonymise_form textarea {
+.mod_turnitintooltwo_unanonymise_form textarea {
     height: 90px;
-    width:80%;
+    width: 80%;
 }
-
 
 /*
  * Email non submitters form
  */
-.mod_turnitintooltwo .nonsubmitters_desc {
-    padding: 10px 0;
-}
 
-.mod_turnitintooltwo .nonsubmittersform textarea {
+.mod_turnitintooltwo_nonsubmittersform textarea {
     height: 90px;
-    width:80%;
+    width: 80%;
 }
 
-.mod_turnitintooltwo #fitem_id_nonsubmitters_sendtoself .fitemtitle {
-    display: none;
+.mod_turnitintooltwo_general_warning {
+    margin-top: 8px;
 }
 
-.mod_turnitintooltwo .nonsubmittersform .general_warning {
-    margin-top:8px;
-}
-
-.mod_turnitintooltwo .nonsubmittersformsuccessmsg {
+.mod_turnitintooltwo_nonsubmittersformsuccessmsg {
     text-align: center;
     padding-top: 46px;
 }
 
-#download_links {
+#mod_turnitintooltwo_download_links {
     margin-left: 15px;
     top: -5px;
 }
 
-.zip_downloads {
-    .dropdown-menu .origchecked_zip_open:hover {
-        background-color: $hover-blue;
-        display: block;
-        line-height: 20px;
-        color: #fff;
-        font-weight: normal;
-    }
-
-    .dropdown-menu {
-        white-space: nowrap;
-        margin-top: 2px !important;
-    }
-}
-
-#rubric_view_form {
+#mod_turnitintooltwo_rubric_view_form {
     padding-left: 6px;
 }
 
-.inbox {
-    .peermark-loading-span img.icon {
-        margin-right: 0px;
-    }
-}
-
-.selectlong {
-    width: 530px;
+.mod_turnitintooltwo_peermark-loading-span img.icon {
+    margin-right: 0px;
 }

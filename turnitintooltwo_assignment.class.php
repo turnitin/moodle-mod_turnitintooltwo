@@ -988,11 +988,6 @@ class turnitintooltwo_assignment {
 
         // Delete events for this assignment / part.
         $dbselect = " modulename = ? AND instance = ? ";
-        // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
-        // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
-        if ($CFG->branch <= 25 && $CFG->dbtype == "sqlsrv") {
-            $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? ";
-        }
 
         $DB->delete_records_select('event', $dbselect, array('turnitintooltwo', $id));
         if (!$DB->delete_records("turnitintooltwo", array("id" => $id))) {
@@ -1051,11 +1046,6 @@ class turnitintooltwo_assignment {
         // Delete event.
         $turnitintooltwonow = $DB->get_record("turnitintooltwo", array("id" => $toolid));
         $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
-        // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
-        // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
-        if ($CFG->branch <= 25 && $CFG->dbtype == "sqlsrv") {
-            $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? AND CAST(name AS nvarchar(max)) = ? ";
-        }
         $DB->delete_records_select('event', $dbselect,
                         array('turnitintooltwo', $toolid, $turnitintooltwonow->name.' - '.$part->partname));
 
@@ -1480,12 +1470,6 @@ class turnitintooltwo_assignment {
                 // Delete existing events for this assignment part.
                 $eventname = $turnitintooltwonow->name." - ".$partnow->partname;
                 $dbselect = " modulename = ? AND instance = ? AND name LIKE ? ";
-                // Moodle pre 2.5 on SQL Server errors here as queries weren't allowed on ntext fields, the relevant fields
-                // are nvarchar from 2.6 onwards so we have to cast the relevant fields in pre 2.5 SQL Server setups.
-                if ($CFG->branch <= 25 && $CFG->dbtype == "sqlsrv") {
-                    $dbselect = " CAST(modulename AS nvarchar(max)) = ? AND instance = ? AND CAST(name AS nvarchar(max)) = ? ";
-                }
-
                 $DB->delete_records_select('event', $dbselect, array('turnitintooltwo', $this->id, $eventname));
             } else {
                 if (!$dbpart = $DB->insert_record('turnitintooltwo_parts', $part)) {
@@ -1930,10 +1914,10 @@ class turnitintooltwo_assignment {
         $allnamefields = get_all_user_name_fields();
         if ($istutor && $userid == 0) {
             $users = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm),
-                                        'u.id, ' . implode($allnamefields, ', '));
+                                        'u.id, ' . implode(', ', $allnamefields));
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
-            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode($allnamefields, ', '));
+            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode(', ', $allnamefields));
             $users = array($userid => $user);
             $sql .= " AND userid = ? ";
             $sqlparams[] = $userid;

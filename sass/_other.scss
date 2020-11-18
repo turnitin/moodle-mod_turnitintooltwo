@@ -21,24 +21,28 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 .mod_turnitintooltwo #useragreement_form form, .mod_turnitintooltwo #assignment_id, .mod_turnitintooltwo #course_id,
 .mod_turnitintooltwo #submission_id, .mod_turnitintooltwo #tii_course_id, .mod_turnitintooltwo #tii_course_name,
 .mod_turnitintooltwo .enrolling_container, .mod_turnitintooltwo #view_context,
-.mod_turnitintooltwo #inbox_form, .mod_turnitintooltwo .unanonymise_form, .mod_turnitintooltwo .edit_course_end_date_form,
+.mod_turnitintooltwo #inbox_form, .mod_turnitintooltwo_unanonymise_form, .mod_turnitintooltwo_edit_course_end_date_form,
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #class_ids, .mod_turnitintooltwo #create_assignments,
 .mod_turnitintooltwo .row_peermark_reviews, .mod_turnitintooltwo .peermark_instructions,
 .mod_turnitintooltwo .toggle_peermark_instructions .hide_peermark_instructions,
-.mod_turnitintooltwo #courseBrowserTable_filter, .mod_turnitintooltwo .js_required,
+.mod_turnitintooltwo_course_browser_table_filter, .mod_turnitintooltwo .js_required,
 .mod_turnitintooltwo #course_category, .mod_turnitintooltwo #create_assignments,
 #page-admin-setting-modsettingturnitintooltwo .tii_upgrading_check, #page-admin-setting-modsettingturnitintooltwo #test_link,
 #page-admin-setting-modsettingturnitintooltwo #test_result, #page-admin-setting-modsettingturnitintooltwo .test_connection,
 #page-admin-setting-modsettingturnitintooltwo #testing_container, .mod_turnitintooltwo .peermark_loading,
-.mod_turnitintooltwo .messages_loading, .mod_turnitintooltwo .tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner,
+.mod_turnitintooltwo_messages_loading, .mod_turnitintooltwo .tii_table_functions, .mod_turnitintooltwo .refresh_row .fa-spinner,
 .mod_turnitintooltwo #enrolling_error, .mod_turnitintooltwo .dv_url {
     display:none;
 }
 
 
 .mod_turnitintooltwo .submission_form_container, .mod_turnitintooltwo .class_recreation,
-.mod_turnitintooltwo #digital_receipt {
+div#mod_turnitintooltwo_digital_receipt {
     padding: 0 24px;
+}
+
+div#mod_turnitintooltwo_digital_receipt {
+    margin: 0;
 }
 
 .mod_turnitintooltwo .row_score, .mod_turnitintooltwo .row_peermark_manager, .mod_turnitintooltwo .row_peermark_reviews {
@@ -46,10 +50,10 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
 }
 
 .mod_turnitintooltwo .grademark_open, .mod_turnitintooltwo .origreport_open, .mod_turnitintooltwo .download_original_open,
-.mod_turnitintooltwo .zip_open, .mod_turnitintooltwo .enrol_link, .mod_turnitintooltwo .refresh_link,
-.mod_turnitintooltwo .refresh_row, .mod_turnitintooltwo .messages_inbox, .mod_turnitintooltwo span.link,
-.mod_turnitintooltwo .rubric_manager_launch, .mod_turnitintooltwo .rubric_view_launch,
-.mod_turnitintooltwo .quickmark_manager_launch, .mod_turnitintooltwo .tii_peermark_manager_launch,
+.mod_turnitintooltwo_zip_open, .mod_turnitintooltwo .enrol_link, .mod_turnitintooltwo_refresh_link,
+.mod_turnitintooltwo .refresh_row, .mod_turnitintooltwo_messages_inbox, .mod_turnitintooltwo span.link,
+.mod_turnitintooltwo_rubric_manager_launch, .mod_turnitintooltwo_rubric_view_launch,
+.mod_turnitintooltwo_quickmark_manager_launch, .mod_turnitintooltwo .tii_peermark_manager_launch,
 .mod_turnitintooltwo .tii_peermark_reviews_launch, #page-admin-setting-modsettingturnitintooltwo #test_link {
     cursor:pointer;
 }
@@ -87,8 +91,8 @@ body[class*='-moodle23'] .mod_turnitintooltwo  .centered_cb_cell input {
     margin-bottom: 16px;
 }
 
-.submissionsDataTable .fa,
-.partDetails .fa {
+.mod_turnitintooltwo_submissions_data_table .fa,
+.mod_turnitintooltwo_part_details .fa {
     color: darken($dark-grey, 10%);
 }
 

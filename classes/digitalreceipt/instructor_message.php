@@ -53,12 +53,7 @@ class instructor_message {
 
         $subject = get_string('receipt_instructor_copy_subject', 'turnitintooltwo');
 
-        // Pre 2.9 does not have \core\message\message()
-        if ($CFG->branch >= 29) {
-            $eventdata = new \core\message\message();
-        } else {
-            $eventdata = new stdClass();
-        }
+        $eventdata = new \core\message\message();
 
         $eventdata->component         = 'mod_turnitintooltwo';
         $eventdata->name              = 'notify_instructor_of_submission'; // This is the message name from messages.php.

@@ -55,9 +55,27 @@ define('SUBMIT_TO_STANDARD_REPOSITORY', 1);
 define('SUBMIT_TO_INSTITUTIONAL_REPOSITORY', 2);
 
 // For use in course migration.
-$tiiintegrationids = array(0 => get_string('nointegration', 'turnitintooltwo'), 1 => 'Blackboard Basic',
-                                    2 => 'WebCT', 5 => 'Angel', 6 => 'Moodle Basic', 7 => 'eCollege', 8 => 'Desire2Learn',
-                                    9 => 'Sakai', 12 => 'Moodle Direct', 13 => 'Blackboard Direct', 26 => 'LTI');
+/**
+ * Returns the integration ids and labels.
+ * @return array Integration ids and labels.
+ */
+function turnitintooltwo_get_integration_ids() {
+    static $tiiintegrationids = [];
+    if (empty($tiiintegrationids)) {
+        $tiiintegrationids[0] = get_string('nointegration', 'turnitintooltwo');
+        $tiiintegrationids[1] = 'Blackboard Basic';
+        $tiiintegrationids[2] = 'WebCT';
+        $tiiintegrationids[5] = 'Angel';
+        $tiiintegrationids[6] = 'Moodle Basic';
+        $tiiintegrationids[7] = 'eCollege';
+        $tiiintegrationids[8] = 'Desire2Learn';
+        $tiiintegrationids[9] = 'Sakai';
+        $tiiintegrationids[12] = 'Moodle Direct';
+        $tiiintegrationids[13] = 'Blackboard Direct';
+        $tiiintegrationids[26] = 'LTI';
+    }
+    return $tiiintegrationids;
+}
 
 /**
  * Function for either adding to log or triggering an event
@@ -1128,7 +1146,7 @@ function turnitintooltwo_get_courses_from_tii($tiiintegrationids, $coursetitle, 
                                                         '&view_context=box&sesskey='.sesskey(),
                                                         $readclass->getTitle(), array("class" => "course_recreate",
                                                                                 "id" => "course_".$readclass->getClassId()));
-                        $datecell = html_writer::link('.edit_course_end_date_form',
+                        $datecell = html_writer::link('.mod_turnitintooltwo_edit_course_end_date_form',
                                         html_writer::tag('span',
                                                 userdate(strtotime($readclass->getEndDate()),
                                                             get_string('strftimedate', 'langconfig')),
@@ -1199,7 +1217,7 @@ function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
 }
 
 /**
- * Get files for displaying in settings. Called from ajax.php via turnitintooltwo-2018102601.min.js.
+ * Get files for displaying in settings. Called from ajax.php via turnitintooltwo-2020111101.min.js.
  *
  * @param  $moduleid the id of the module to return files for
  * @global type $DB
@@ -1322,7 +1340,7 @@ function turnitintooltwo_pluginfile($course,
 }
 
 /**
- * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo-2018102601.min.js.
+ * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo-2020111101.min.js.
  *
  * @global type $DB
  * @return array return array of users to display
@@ -1473,26 +1491,12 @@ function turnitintooltwo_print_overview($courses, &$htmlarray) {
 /**
  * Show form to create a new moodle course from the existing Turnitin Course
  *
- * @global type $OUTPUT
  * @return html the form object to create a new course
  */
 function turnitintooltwo_show_browser_new_course_form() {
-    global $CFG;
-
     $elements = array();
     $elements[] = array('header', 'create_course_fieldset', get_string('createcourse', 'turnitintooltwo'));
-    $displaylist = array();
-    $parentlist = array();
-    require_once($CFG->dirroot."/course/lib.php");
-
-    if (file_exists($CFG->libdir.'/coursecatlib.php')) {
-        require_once($CFG->libdir.'/coursecatlib.php');
-        $displaylist = coursecat::make_categories_list('');
-    } else {
-        make_categories_list($displaylist, $parentlist, '');
-    }
-
-    $elements[] = array('select', 'coursecategory', get_string('category'), '', $displaylist);
+    $elements[] = array('select', 'coursecategory', get_string('category'), '', core_course_category::make_categories_list(''));
     $elements[] = array('text', 'coursename', get_string('coursetitle', 'turnitintooltwo'), '');
     $elements[] = array('button', 'create_course', get_string('createcourse', 'turnitintooltwo'));
     $customdata["elements"] = $elements;
@@ -1629,7 +1633,7 @@ function turnitintooltwo_show_edit_course_end_date_form() {
     $customdata["disable_form_change_checker"] = true;
     $optionsform = new turnitintooltwo_form('', $customdata);
 
-    return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'edit_course_end_date_form'));
+    return html_writer::tag('div', $output.$optionsform->display(), array('class' => 'mod_turnitintooltwo_edit_course_end_date_form'));
 }
 
 /**

@@ -49,7 +49,7 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
             'studentreports', 'dateformat', 'usegrademark', 'gradedisplay', 'autoupdates', 'commentedittime', 'commentmaxsize',
             'autosubmission', 'shownonsubmission', 'excludebiblio', 'excludequoted', 'excludevalue', 'excludetype', 'erater', 
             'erater_handbook', 'erater_dictionary', 'erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 
-            'erater_style', 'transmatch', 'allownonor'
+            'erater_style', 'transmatch', 'rubric', 'allownonor'
         ));
 
         $parts = new backup_nested_element('parts');
