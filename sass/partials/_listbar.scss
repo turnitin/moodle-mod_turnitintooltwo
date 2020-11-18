@@ -2,12 +2,12 @@
  * Listbar - Contains datatables links, dropdowns and search
  */
 
-.listbar-container {
+.mod_turnitintooltwo_listbar-container {
     display: table;
     width: 100%;
 }
 
-.listbar {
+.mod_turnitintooltwo_listbar {
     background: #fff;
     border: 1px solid $border-color;
     position: relative;
@@ -32,16 +32,16 @@
         background: #fff;
     }
 
-    .refresh_link,
-    .refreshing_link,
-    .nonsubmitters_link {
+    .mod_turnitintooltwo_refresh_link,
+    .mod_turnitintooltwo_refreshing_link,
+    .mod_turnitintooltwo_nonsubmitters_link {
         float: right;
         margin-left: 30px;
         padding: 5px 0;
         width: 195px;
     }
 
-    .nonsubmitters_link {
+    .mod_turnitintooltwo_nonsubmitters_link {
         text-decoration: none;
         display: none;
     }
@@ -49,55 +49,64 @@
     /*
      * Messages inbox link in listbar
      */
-    .messages_inbox {
+    .mod_turnitintooltwo_messages_inbox {
         float: right;
         margin-left: 30px;
         padding: 5px 0;
         text-decoration: none;
     }
 
-    .messages_loading_span {
+    .mod_turnitintooltwo_messages_loading {
         float: none !important;
         margin: 0 !important;
     }
 
-    .messages_inbox .smallicon {
-        vertical-align: middle;
-    }
-
     // Zip file download links
-    .zip_downloads {
+    .mod_turnitintooltwo_zip_downloads {
         float: left;
         position: relative;
         top: 4px;
         height: 22px;
 
         img {
-            position:relative;
-            top:4px;
-            left:-2px;
+            position: relative;
+            top: 4px;
+            left: -2px;
         }
 
-        div.origchecked_zip_open,
-        a.gmpdfzip_box {
-            padding:3px 16px;
+        div.mod_turnitintooltwo_origchecked_zip_open,
+        a.mod_turnitintooltwo_gmpdfzip_box {
+            padding: 3px 16px;
             display: block;
         }
 
-        a.gmpdfzip_box:hover {
+        a.mod_turnitintooltwo_gmpdfzip_box:hover {
             background: $hover-blue;
             color: $white;
         }
 
-        .zip_open {
+        .mod_turnitintooltwo_zip_open {
             display: inline;
+        }
+
+        .mod_turnitintooltwo_dropdown-menu .mod_turnitintooltwo_origchecked_zip_open:hover {
+            background-color: $hover-blue;
+            display: block;
+            line-height: 20px;
+            color: $white;
+            font-weight: normal;
+        }
+
+        .mod_turnitintooltwo_dropdown-menu {
+            white-space: nowrap;
+            margin-top: 2px !important;
         }
     }
 
     /*
      * DataTables filter (search bar)
      */
-     .dataTables_filter {
+    .dataTables_filter {
         float: right !important;
         text-align: left !important;
     }
@@ -105,7 +114,7 @@
     /*
      * DataTables length (how many per page)
      */
-     .dataTables_length {
+    .dataTables_length {
         float: left !important;
     }
 }

@@ -2,9 +2,11 @@
 Located at mod/turnitintooltwo/settings_extras.php?cmd=courses
 */
 
-.edit_course_end_date_form {
-    padding: 20px;
-    background: #fff;
+.mod_turnitintooltwo_edit_course_end_date_form {
+    padding: 12px 12px 0;
+    background: $white;
+    height: 100%;
+    overflow: hidden;
 
     #edit_end_date_desc {
         text-align: center;

@@ -346,7 +346,7 @@ switch ($cmd) {
                                     'create_checkboxes');
 
         $table = new html_table();
-        $table->id = "courseBrowserTable";
+        $table->id = "mod_turnitintooltwo_course_browser_table";
         $rows = array();
 
         // Make up json array for drop down in table.

@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
     // Add style to header row.
-    $('.submissionsDataTable thead tr, #courseBrowserTable thead tr').toggleClass("header");
+    $('.mod_turnitintooltwo_submissions_data_table thead tr, #mod_turnitintooltwo_course_browser_table thead tr').toggleClass("header");
 
     // Configure datatables language settings.
     var dataTablesLang = {
@@ -176,7 +176,7 @@ jQuery(document).ready(function($) {
     $.datepicker.setDefaults($.datepicker.regional['']);
 
     // Configure the course browser data table and show classes from Turnitin acocunt.
-    var courseBrowserTable = $('#courseBrowserTable').dataTable({
+    var courseBrowserTable = $('#mod_turnitintooltwo_course_browser_table').dataTable({
         "bProcessing": true,
         "oLanguage": dataTablesLang,
         "aaSorting": [[ 6, 'asc']],
@@ -372,7 +372,7 @@ jQuery(document).ready(function($) {
                 var tii_course_id = idStr[2];
                 $('input[name="tii_course_id"]').val(tii_course_id);
                 $('input[name="tii_course_title"]').val($('a#course_' + tii_course_id).html());
-                $('#cboxLoadedContent .edit_course_end_date_form').show();
+                $('#cboxLoadedContent .mod_turnitintooltwo_edit_course_end_date_form').show();
                 $('#dateselector-calendar-panel').css('z-index', '9999');
 
                 $('#id_save_end_date').click(function() {
@@ -400,7 +400,7 @@ jQuery(document).ready(function($) {
                 });
             },
             onCleanup: function() {
-                $('.edit_course_end_date_form').hide();
+                $('.mod_turnitintooltwo_edit_course_end_date_form').hide();
                 $('#tii_close_bar').remove();
             }
         });

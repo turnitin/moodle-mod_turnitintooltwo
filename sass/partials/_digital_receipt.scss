@@ -1,34 +1,26 @@
-.tii_digital_receipt {
+.mod_turnitintooltwo_digital_receipt {
     display: inline-block;
     width: 150px;
 }
 
-#tii_digital_receipt_box {
+#mod_turnitintooltwo_digital_receipt_box {
     padding: 20px;
     background: #fff;
 
-    .generaltable {
-        width: 100%;
-    }
-
-    .logo {
+    .mod_turnitintooltwo_logo {
         display: block;
         margin: 0 auto;
         width: 214px;
         height: 68px;
     }
 
-    #tii_receipt_print {
+    #mod_turnitintooltwo_receipt_print {
         text-align: right;
         display: block;
     }
 
 }
 
-#digital_receipt {
-    margin: 0;
-}
-
-.mod_turnitintooltwo #upload_success {
-    color: #CC0000;
+#mod_turnitintooltwo_upload_success {
+    color: $bright-red;
 }

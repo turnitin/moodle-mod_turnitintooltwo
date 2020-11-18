@@ -208,11 +208,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
-        if ($CFG->branch >= 29) {
-            $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));
-        } else {
-            $this->add_intro_editor(true, get_string('turnitintooltwointro', 'turnitintooltwo'));
-        }
+        $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));
 
         $typeoptions = turnitintooltwo_filetype_array(true);
 
@@ -552,7 +548,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
                                                         html_writer::tag('i', '',
                                                             array('class' => 'tiiicon icon-rubric icon-lg icon_margin')).
                                                         get_string('launchrubricmanager', 'turnitintooltwo'),
-                                                    array('class' => 'rubric_manager_launch',
+                                                    array('class' => 'mod_turnitintooltwo_rubric_manager_launch',
                                                         'title' => get_string('launchrubricmanager', 'turnitintooltwo'))).
                                             html_writer::tag('span', '',
                                                         array('class' => 'launch_form', 'id' => 'rubric_manager_form')));

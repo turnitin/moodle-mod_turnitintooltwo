@@ -162,7 +162,7 @@ if ($COURSE->maxbytes == 0 || $COURSE->maxbytes > TURNITINTOOLTWO_MAX_FILE_UPLOA
     $maxbytescourse = TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE;
 }
 
-$maxfilesize = get_user_max_upload_file_size(context_module::instance($cm->id),
+$maxfilesize = get_user_max_upload_file_size($context,
                                                 $maxbytessite,
                                                 $maxbytescourse,
                                                 $turnitintooltwoassignment->turnitintooltwo->maxfilesize);
@@ -175,7 +175,8 @@ if (!$parts = $turnitintooltwoassignment->get_parts()) {
 }
 
 // Get whether user is a tutor/student.
-$istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
+$istutor = has_capability('mod/turnitintooltwo:grade', $context);
+$cansubmit = has_capability('mod/turnitintooltwo:submit', $context);
 $userrole = ($istutor) ? 'Instructor' : 'Learner';
 
 // Deal with actions here.
@@ -407,7 +408,6 @@ if (!empty($action)) {
             } else {
 
                 // Get all users enrolled in the class.
-                $context = context_module::instance($cm->id);
                 $allusers = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm), 'u.id');
 
                 // Get users who've submitted.
@@ -506,7 +506,7 @@ switch ($do) {
         $output = $OUTPUT->box($OUTPUT->pix_icon('icon', get_string('turnitin', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo'), 'centered_div');
 
-        $output .= html_writer::tag("div", $_SESSION["digital_receipt"]["message"], array("class" => "general_warning"));
+        $output .= html_writer::tag("div", $_SESSION["digital_receipt"]["message"], array("class" => "mod_turnitintooltwo_general_warning"));
         if ($viewcontext == "box_solid") {
             $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
         }
@@ -530,22 +530,21 @@ switch ($do) {
             );
 
             $digitalreceipt = $OUTPUT->pix_icon('tii-logo', get_string('turnitin', 'turnitintooltwo'),
-                                'mod_turnitintooltwo', array('class' => 'logo'));
+                                'mod_turnitintooltwo', array('class' => 'mod_turnitintooltwo_logo'));
             $digitalreceipt .= '<h2>'.get_string('digitalreceipt', 'turnitintooltwo').'</h2>';
             $digitalreceipt .= '<p>'.get_string('receiptparagraph', 'turnitintooltwo').'</p>';
             $digitalreceipt .= html_writer::table($table);
             $printericon = $OUTPUT->pix_icon('printer', get_string('turnitin', 'turnitintooltwo'), 'mod_turnitintooltwo');
-            $digitalreceipt .= '<a href="#" id="tii_receipt_print">' . $printericon . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
+            $digitalreceipt .= '<a href="#" id="mod_turnitintooltwo_receipt_print">' . $printericon . ' ' . get_string('print', 'turnitintooltwo') .'</a>';
         } else {
             $digitalreceipt = "";
         }
 
-        echo html_writer::tag("div", $digitalreceipt, array("id" => "tii_digital_receipt_box"));
+        echo html_writer::tag("div", $digitalreceipt, array("id" => "mod_turnitintooltwo_digital_receipt_box"));
         break;
 
     case "submitpaper":
-        if ($istutor || (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
-                $user == $USER->id)) {
+        if ($istutor || ($cansubmit && $user == $USER->id)) {
             echo $turnitintooltwoview->show_submission_form($cm, $turnitintooltwoassignment, $part,
                                                             $turnitintooltwofileuploadoptions, "box_solid", $user);
             unset($_SESSION['form_data']);
@@ -588,7 +587,7 @@ switch ($do) {
         break;
 
     case "rubricview":
-        if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($cansubmit) {
             $user = new turnitintooltwo_user($USER->id, "Learner");
             $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
             $user->join_user_to_class($course->turnitin_cid);
@@ -599,7 +598,7 @@ switch ($do) {
         break;
 
     case "loadmessages":
-        if ($istutor || has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($istutor || $cansubmit) {
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('messages_inbox', $userrole),
                                                     array("id" => "inbox_form"));
         }
@@ -613,7 +612,7 @@ switch ($do) {
         break;
 
     case "peermarkreviews":
-        if ($istutor || has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if ($istutor || $cansubmit) {
             echo html_writer::tag("div", $turnitintooltwoview->output_lti_form_launch('peermark_reviews', $userrole,
                                                     $parts[$part]->tiiassignid), array("class" => "launch_form"));
         }
@@ -660,20 +659,19 @@ switch ($do) {
                 $eulaurl = $CFG->wwwroot.'/mod/turnitintooltwo/extras.php?cmid='.$cm->id.'&cmd=useragreement&view_context=box_solid';
                 $eulalink = html_writer::link($eulaurl,
                                         html_writer::tag('i', '',
-                                            array('class' => 'tiiicon icon-warn icon-2x turnitin_ula_warn')) .'</br></br>'.
+                                            array('class' => 'tiiicon icon-warn icon-2x mod_turnitintooltwo_eula_warn')) .'</br></br>'.
                                         get_string('turnitinula', 'turnitintooltwo')." ".get_string('turnitinula_btn', 'turnitintooltwo'),
                                         array("class" => "turnitin_eula_link"));
 
-                $eulaignoredclass = ($eulaaccepted == 0) ? ' turnitin_ula_ignored' : '';
-                $ula = html_writer::tag('div', $eulalink, array('class' => 'turnitin_ula js_required'.$eulaignoredclass,
+                $eula = html_writer::tag('div', $eulalink, array('class' => 'mod_turnitintooltwo_eula js_required',
                                             'data-userid' => $user->id));
 
                 $noscriptula = html_writer::tag('noscript',
                                 turnitintooltwo_view::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
                                     "Learner", get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                         get_string('noscriptula', 'turnitintooltwo'),
-                                            array('class' => 'warning turnitin_ula_noscript'));
-                echo $ula.$noscriptula;
+                                            array('class' => 'warning mod_turnitintooltwo_eula_noscript'));
+                echo $eula.$noscriptula;
             }
         } else {
             echo html_writer::start_tag("div", array("class" => "inbox inbox-instructor"));
@@ -683,7 +681,7 @@ switch ($do) {
         turnitintooltwo_add_to_log($turnitintooltwoassignment->turnitintooltwo->course, "list submissions",
                             'view.php?id='.$cm->id, get_string($listsubmissionsdesc, 'turnitintooltwo') . ": $course->id", $cm->id);
 
-        if (!$istutor && !has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id))) {
+        if (!$istutor && !$cansubmit) {
             turnitintooltwo_print_error('permissiondeniederror', 'turnitintooltwo');
             exit();
         }
@@ -707,7 +705,7 @@ switch ($do) {
         // Show submission failure if this has been a manual submission.
         if (isset($_SESSION["digital_receipt"]["success"]) && $_SESSION["digital_receipt"]["success"] == false) {
             $output = html_writer::tag("div", $_SESSION["digital_receipt"]["message"],
-                                    array("class" => "general_warning manual_submission_failure_msg"));
+                                    array("class" => "mod_turnitintooltwo_general_warning manual_submission_failure_msg"));
             if ($viewcontext == "box_solid") {
                 $output = html_writer::tag("div", $output, array("class" => "submission_failure_msg"));
             }
@@ -720,7 +718,7 @@ switch ($do) {
             echo $turnitintooltwoview->show_duplicate_assignment_warning($turnitintooltwoassignment, $parts);
         }
 
-        if (has_capability('mod/turnitintooltwo:submit', context_module::instance($cm->id)) &&
+        if ($cansubmit &&
                 !empty($_SESSION["digital_receipt"]) && !isset($_SESSION["digital_receipt"]["is_manual"])) {
             echo $turnitintooltwoview->show_digital_receipt($_SESSION["digital_receipt"]);
             unset($_SESSION["digital_receipt"]);
@@ -766,7 +764,7 @@ switch ($do) {
         $output = '';
 
         if (isset($_SESSION["embeddednotice"])) {
-            $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'general_warning'));
+            $output = html_writer::tag("div", $_SESSION["embeddednotice"]["message"], array('class' => 'mod_turnitintooltwo_general_warning'));
             unset($_SESSION["embeddednotice"]);
         }
 
@@ -792,13 +790,13 @@ switch ($do) {
 
         $optionsform = new turnitintooltwo_form('', $customdata);
 
-        echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'nonsubmittersform'));
+        echo html_writer::tag('div', $output.$optionsform->display(), array('class' => 'mod_turnitintooltwo_nonsubmittersform'));
         unset($_SESSION['form_data']);
         break;
 
     case "emailsent":
         echo html_writer::tag('div', get_string('nonsubmittersformsuccess', 'turnitintooltwo'),
-                                array('class' => 'nonsubmittersformsuccessmsg'));
+                                array('class' => 'mod_turnitintooltwo_nonsubmittersformsuccessmsg'));
         break;
 }
 

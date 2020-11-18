@@ -1,19 +1,19 @@
-.turnitin_ula_text {
+.mod_turnitintooltwo_eula_text {
     padding-top: 15px;
     text-align: center;
 }
 
-.turnitin_ula input[type="submit"] {
+.mod_turnitintooltwo_eula input[type="submit"] {
     margin: 0;
 }
 
-.turnitin_ula {
+.mod_turnitintooltwo_eula {
 	cursor:pointer;
 	text-decoration: underline;
 	text-align: center;
-	border: 1px solid #CC0000;
+	border: 1px solid $bright-red;
 	padding: 12px 12px 12px;
-	color: #FF0000;
+	color: $bright-red;
 	margin-top:12px;
 	margin-bottom:16px !important;
 	font-size: 14px;
@@ -21,16 +21,17 @@
 	display: block;
 }
 
-noscript.turnitin_ula_noscript {
-    border: 1px solid #CC0000;
+noscript.mod_turnitintooltwo_eula_noscript {
+    border: 1px solid $bright-red;
     padding: 8px;
-    background: #FFE9E8;
+    background: $white;
     width: 99%;
     text-align:center;
     display:block;
     margin:16px 6px;
     line-height: 28px;
 }
-.turnitin_ula_warn {
-	color: #FF0000;
+
+.mod_turnitintooltwo_eula_warn {
+	color: $bright-red;
 }

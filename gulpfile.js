@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 
-var minifyCss = require('gulp-minify-css');
+var minifyCss = require('gulp-clean-css');
 var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');
 var uglify = require('gulp-uglify');
@@ -30,8 +30,8 @@ gulp.task('jsmin', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./sass/**/*.scss', ['sass']);
-    gulp.watch('./jquery/turnitintooltwo*.js', ['jsmin']);
+    gulp.watch('./sass/**/*.scss', gulp.series('sass'));
+    gulp.watch('./jquery/turnitintooltwo*.js', gulp.series('jsmin'));
 });
 
-gulp.task('default', ['sass', 'jsmin', 'watch']);
+gulp.task('default', gulp.series(['sass', 'jsmin', 'watch']));

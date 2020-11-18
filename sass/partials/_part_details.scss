@@ -1,4 +1,4 @@
-.partDetails {
+.mod_turnitintooltwo_part_details {
     font-size: 13px;
     margin-bottom:0px;
     width:100%;
@@ -102,7 +102,7 @@
     .row_export_xls,
     .row_export_pdf,
     .row_export_orig,
-    .zip_open,
+    .mod_turnitintooltwo_zip_open,
     .row_rubric_manager,
     .row_quickmark_manager {
         display:inline;
@@ -142,7 +142,7 @@
     display: none;
 }
 
-.peermarkDetails {
+.mod_turnitintooltwo_peermark_details {
     width: 100%;
     border-top: 1px solid $border-color;
 
@@ -157,21 +157,17 @@
     }
 }
 
-.quickmark_manager_launch {
+.mod_turnitintooltwo_quickmark_manager_launch {
     padding: 2px 0 2px 30px;
     height: 20px;
     color: #0070A8 !important;
 }
 
-.rubric_manager_launch,
-.rubric_view_launch {
+.mod_turnitintooltwo_rubric_manager_launch,
+.mod_turnitintooltwo_rubric_view_launch {
     padding:4px 0px 4px 0px;
     line-height: 22px;
     color: #0070A8 !important;
-}
-
-.rubric_right_margin {
-    margin-right:7px;
 }
 
 .tii_peermark_manager_launch {
