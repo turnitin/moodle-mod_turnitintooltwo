@@ -975,7 +975,7 @@ class turnitintooltwo_assignment {
 
         // Get the Moodle Turnitintool (Assignment) Object.
         if (!$turnitintooltwo = $DB->get_record("turnitintooltwo", array("id" => $id))) {
-            return false;
+            return true;
         }
 
         // Get Current Moodle Turnitin Tool parts and delete them.
