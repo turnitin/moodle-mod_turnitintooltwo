@@ -1429,7 +1429,7 @@ class turnitintooltwo_view {
             $submissiondoesnotexists = !empty($submission->submission_objectid);
 
             // Show option to submit only when due date has passed, late submissions are allowed and student has not submitted.
-            if ($duedatepassed && ($latesubmissionsallowed == 0 || $latesubmissionsallowed == 1 && !$istutor && $submissiondoesnotexists)) {
+            if ($duedatepassed && ($latesubmissionsallowed == 0 || ($latesubmissionsallowed == 1 && !$istutor && $submissiondoesnotexists))) {
                 $upload = "&nbsp";
             }
 
