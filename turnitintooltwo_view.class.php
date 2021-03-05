@@ -1426,10 +1426,10 @@ class turnitintooltwo_view {
 
             $duedatepassed = time() > $parts[$partid]->dtdue;
             $latesubmissionsallowed = $turnitintooltwoassignment->turnitintooltwo->allowlate;
-            $submissiondoesnotexists = !empty($submission->submission_objectid);
+            $submissionexists = empty($submission->submission_objectid);
 
             // Show option to submit only when due date has passed, late submissions are allowed and student has not submitted.
-            if ($duedatepassed && ($latesubmissionsallowed == 0 || ($latesubmissionsallowed == 1 && !$istutor && $submissiondoesnotexists))) {
+            if ($duedatepassed && ($latesubmissionsallowed == 0 || ($latesubmissionsallowed == 1 && !$istutor && !$submissionexists))) {
                 $upload = "&nbsp";
             }
 
