@@ -1424,8 +1424,13 @@ class turnitintooltwo_view {
                                             "id" => "upload_".$submission->submission_objectid."_".$partid."_".$submission->userid,
                                             'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
 
-            if (time() > $parts[$partid]->dtdue && $turnitintooltwoassignment->turnitintooltwo->allowlate == 0 && !$istutor) {
-                $upload = "&nbsp;";
+            $duedatepassed = time() > $parts[$partid]->dtdue;
+            $latesubmissionsallowed = $turnitintooltwoassignment->turnitintooltwo->allowlate;
+            $submissionexists = empty($submission->submission_objectid);
+
+            // Show option to submit only when due date has passed, late submissions are allowed and student has not submitted.
+            if ($duedatepassed && ($latesubmissionsallowed == 0 || ($latesubmissionsallowed == 1 && !$istutor && !$submissionexists))) {
+                $upload = "&nbsp";
             }
 
         } else {
