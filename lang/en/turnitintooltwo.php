@@ -259,7 +259,6 @@ $string['migrationcoursecreated'] = 'Class from Turnitin recreated on Moodle';
 $string['migrationcoursegeterror'] = 'Unable to get any of the classes from Turnitin';
 $string['migrationassignmentgeterror'] = 'Unable to get any of the assignments from Turnitin';
 $string['getassignmenterror'] = 'Could not get migration assignments from Turnitin';
-$string['checkupdateavailableerror'] = 'Could not check for Moodle Direct version update';
 $string['maxmarkserror'] = 'Maximum Marks must be between 0 and 100';
 $string['nosubmissiondataavailable'] = 'No other submission data available';
 $string['nointegration'] = 'No Integration';

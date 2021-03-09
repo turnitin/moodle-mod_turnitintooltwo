@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Cursul din Turnitin recreat în Moodle';
 $string['migrationcoursegeterror'] = 'Nu s-a putut obține niciunul dintre cursurile din Turnitin';
 $string['migrationassignmentgeterror'] = 'Nu s-a putut obține niciuna dintre temele din Turnitin';
 $string['getassignmenterror'] = 'Nu s-au putut obține temele de migrare din Turnitin';
-$string['checkupdateavailableerror'] = 'Imposibil de căutat actualizarea de versiune Moodle Direct';
 $string['maxmarkserror'] = 'Numărul maxim al însemnărilor trebuie să fie între 0 și 100';
 $string['nosubmissiondataavailable'] = 'Nu mai sunt disponibile alte date ale depunerilor';
 $string['nointegration'] = 'Fără integrare';

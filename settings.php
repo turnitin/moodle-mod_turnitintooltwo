@@ -50,7 +50,6 @@ if ($ADMIN->fulltree) {
                                                 array('class' => 'tii_library_not_present_warning'));
     }
 
-
     $close = html_writer::tag('button', '&times;', array('class' => 'close', 'data-dismiss' => 'alert'));
 
     // If being directed here from the migration activation page, display appropriate message

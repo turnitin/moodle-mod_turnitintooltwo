@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Luokka Turnitinistä luotiin Moodella uudes
 $string['migrationcoursegeterror'] = 'Turnitinistä ei pystytty saamaan yhtään luokkaa';
 $string['migrationassignmentgeterror'] = 'Turnitinistä ei onnistuttu saamaan yhtään tehtävää';
 $string['getassignmenterror'] = 'Siirtymistehtäviä ei saatu Turnitinistä';
-$string['checkupdateavailableerror'] = 'Moodle Direkt-version päivityksen tarkistus epäonnistui';
 $string['maxmarkserror'] = 'Merkintöjen enimmäismäärän on oltava 0–100';
 $string['nosubmissiondataavailable'] = 'Mitään muita palautustietoja ei ole saatavilla';
 $string['nointegration'] = 'Ei integrointia';

@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'En kurs från Turnitin har återskapats i M
 $string['migrationcoursegeterror'] = 'Kunde inte hämta någon av klasserna från Turnitin';
 $string['migrationassignmentgeterror'] = 'Kunde inte hämta någon av uppgifterna från Turnitin';
 $string['getassignmenterror'] = 'Kunde inte hämta migration av uppgifter från Turnitin';
-$string['checkupdateavailableerror'] = 'Kunde inte söka efter en versionsuppdatering för Moodle Direct';
 $string['maxmarkserror'] = 'Maximala antalet kommentarer måste vara mellan 0 och 100';
 $string['nosubmissiondataavailable'] = 'Det finns ingen annan inlämningsinformation tillgänglig';
 $string['nointegration'] = 'Ingen Integration';

@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Kurz ze systému Turnitin byl obnoven na Mo
 $string['migrationcoursegeterror'] = 'Nepodařilo se získat žádné kurzy ze systému Turnitin';
 $string['migrationassignmentgeterror'] = 'Nepodařilo se získat žádné úkoly ze systému Turnitin';
 $string['getassignmenterror'] = 'Nelze načíst přiřazení migrace ze systému Turnitin';
-$string['checkupdateavailableerror'] = 'Nelze zkontrolovat možnost aktualizace verze Moodle Direct';
 $string['maxmarkserror'] = 'Maximální známky se musí pohybovat mezi 0 a 100';
 $string['nosubmissiondataavailable'] = 'Další údaje o odevzdání nejsou dostupné';
 $string['nointegration'] = 'Žádná integrace';

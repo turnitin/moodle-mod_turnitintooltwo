@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = '已在 Moodle 上重新建立 Turnitin 內�
 $string['migrationcoursegeterror'] = '無法取得 Turnitin 內的任何課程';
 $string['migrationassignmentgeterror'] = '無法取得 Turnitin 內的任何作業';
 $string['getassignmenterror'] = '無法從 Turnitin 取得移動作業';
-$string['checkupdateavailableerror'] = '無法檢查是否有可用的 Moodle Direct 版本更新';
 $string['maxmarkserror'] = '最高分數必須介於 0 到 100 之間。';
 $string['nosubmissiondataavailable'] = '沒有其他可用的提交物件資料';
 $string['nointegration'] = '無整合';

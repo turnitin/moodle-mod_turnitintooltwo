@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'تم اعادة خلق الدرس من Turn
 $string['migrationcoursegeterror'] = 'تعذر الحصول على أي من الدروس من Turnitin';
 $string['migrationassignmentgeterror'] = 'تعذر الحصول على أي من المهام من Turnitin';
 $string['getassignmenterror'] = 'تعذر الحصول على مهام الترحيل من Turnitin';
-$string['checkupdateavailableerror'] = 'تعذر التحقق من وجود تحديث لإصدار Moodle Direct';
 $string['maxmarkserror'] = 'الحد الأقصى للعلامات يجب أن يكون بين 0 و 100';
 $string['nosubmissiondataavailable'] = 'بيانات تسليم اخر غير متوفرة';
 $string['nointegration'] = 'لا تكامل';

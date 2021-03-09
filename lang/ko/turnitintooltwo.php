@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Turnitin의 클래스가 Moodle에서 재�
 $string['migrationcoursegeterror'] = 'Turnitin에서 클래스들을 가져올 수 없었음';
 $string['migrationassignmentgeterror'] = 'Turnitin에서 과제들을 가져올 수 없었음';
 $string['getassignmenterror'] = 'Turnitin으로부터 마이그레이션 과제를 가져올 수 없었음';
-$string['checkupdateavailableerror'] = 'Moodle 직접 버전 업데이트를 확인할 수 없었음';
 $string['maxmarkserror'] = '최고 채점 사항 수는 0와 100 사이여야 함';
 $string['nosubmissiondataavailable'] = '다른 제출물 데이타가 없음';
 $string['nointegration'] = '통합이 없음';

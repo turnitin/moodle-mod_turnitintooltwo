@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Aula do Turnitin recriada no Moodle';
 $string['migrationcoursegeterror'] = 'Não é possível obter nenhuma das aulas do Turnitin';
 $string['migrationassignmentgeterror'] = 'Não é possível obter nenhum dos trabalhos do Turnitin';
 $string['getassignmenterror'] = 'Não foi possível obter trabalhos de migração a partir do Turnitin';
-$string['checkupdateavailableerror'] = 'Não foi possível verificar a versão de atualização do Moodle Direct';
 $string['maxmarkserror'] = 'As notas máximas devem estar entre 0 e 100';
 $string['nosubmissiondataavailable'] = 'Nenhum outro dado de envio disponível';
 $string['nointegration'] = 'Nenhuma integração';

@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Cursus van Turnitin opnieuw gemaakt op Mood
 $string['migrationcoursegeterror'] = 'Kan geen cursussen ophalen bij Turnitin';
 $string['migrationassignmentgeterror'] = 'Kan geen opdrachten ophalen bij Turnitin';
 $string['getassignmenterror'] = 'Kan geen migratieopdrachten ophalen bij Turnitin';
-$string['checkupdateavailableerror'] = 'Kan niet zoeken naar versie-update voor Moodle Direct';
 $string['maxmarkserror'] = 'Maximumscore moet tussen 0 en 100 liggen';
 $string['nosubmissiondataavailable'] = 'Geen andere inzendingsgegevens beschikbaar';
 $string['nointegration'] = 'Geen integratie';
