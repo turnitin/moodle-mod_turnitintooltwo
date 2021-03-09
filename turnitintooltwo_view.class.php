@@ -369,16 +369,16 @@ class turnitintooltwo_view {
             }
 
             // Output a link for the student to accept the turnitin licence agreement.
-            $noscriptula = "";
-            $ula = "";
+            $noscripteula = "";
+            $eula = "";
             if ($userid == $USER->id) {
                 if ($eulaaccepted != 1) {
-                    $ula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'mod_turnitintooltwo_eula_text'));
-                    $ula .= html_writer::tag('div', self::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
+                    $eula = html_writer::tag('p', get_string('turnitinula', 'turnitintooltwo'), array('class' => 'mod_turnitintooltwo_eula_text'));
+                    $eula .= html_writer::tag('div', self::output_dv_launch_form("useragreement", 0, $user->tiiuserid,
                                 "Learner", get_string('turnitinula_btn', 'turnitintooltwo'), false),
                                     array('class' => 'mod_turnitintooltwo_eula', 'data-userid' => $userid));
 
-                    $noscriptula = html_writer::tag('noscript',
+                    $noscripteula = html_writer::tag('noscript',
                                             $this->output_dv_launch_form("useragreement", 0, $user->tiiuserid, "Learner",
                                             get_string('turnitinula', 'turnitintooltwo'), false)." ".
                                                 get_string('noscriptula', 'turnitintooltwo'),
@@ -396,7 +396,7 @@ class turnitintooltwo_view {
 
             $optionsform = new turnitintooltwo_form($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
                                                     '&do=submitpaper&view_context='.$viewcontext, $customdata);
-            $output .= $ula.$noscriptula;
+            $output .= $eula.$noscripteula;
             $output .= $OUTPUT->box($optionsform->display(), "submission_form_container");
 
             $turnitincomms = new turnitintooltwo_comms();
