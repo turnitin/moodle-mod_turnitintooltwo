@@ -1002,14 +1002,16 @@ class turnitintooltwo_assignment {
                 // Delete the Turnitin Classes data if the Moodle courses no longer exists.
                 if (!$DB->count_records("course", array("id" => $oldcourse->courseid)) > 0) {
                     $DB->delete_records("turnitintooltwo_courses", array("courseid" => $oldcourse->courseid));
+                    turnitintooltwo_activitylog("Old Moodle Course deleted - id (".$oldcourse->courseid." - ".
+                        $oldcourse->turnitin_cid.")", "REQUEST");
                 }
                 // Delete the Turnitin Class data if no more turnitin assignments exist in it.
                 if (!$DB->count_records("turnitintooltwo", array("course" => $oldcourse->courseid)) > 0) {
                     $DB->delete_records("turnitintooltwo_courses", array("courseid" => $oldcourse->courseid,
                                                         "course_type" => "TT"));
+                    turnitintooltwo_activitylog("Old Moodle Course deleted - id (".$oldcourse->courseid." - ".
+                        $oldcourse->turnitin_cid.")", "REQUEST");
                 }
-                turnitintooltwo_activitylog("Old Moodle Course deleted - id (".$oldcourse->courseid." - ".
-                                                        $oldcourse->turnitin_cid.")", "REQUEST");
             }
         }
 
