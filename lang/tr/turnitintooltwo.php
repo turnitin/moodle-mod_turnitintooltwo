@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Moodle&#39;da Turnitin sınıfı oluşturul
 $string['migrationcoursegeterror'] = 'Turnitin&#39;den hiçbir sınıf alınamadı';
 $string['migrationassignmentgeterror'] = 'Turnitin&#39;den ödev alınamadı';
 $string['getassignmenterror'] = 'Turnitin&#39;den geçiş ödevleri alınamadı';
-$string['checkupdateavailableerror'] = 'Moodle Direct sürüm güncellemesi aranamadı';
 $string['maxmarkserror'] = 'Maksimum İşaretleme 0 ile 100 arasında olmalıdır';
 $string['nosubmissiondataavailable'] = 'Başka gönderi verisi erişilebilir değil';
 $string['nointegration'] = 'Bütünleştirme yok';

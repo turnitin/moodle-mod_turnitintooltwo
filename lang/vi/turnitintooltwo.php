@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Lớp từ Turnitin được tạo lại tr
 $string['migrationcoursegeterror'] = 'Không thể lấy được lớp nào trong số những lớp từ Turnitin';
 $string['migrationassignmentgeterror'] = 'Không thể lấy được bài tập nào trong số những bài tập từ Turnitin';
 $string['getassignmenterror'] = 'Không thể nhận bài tập di dời từ Turnitin';
-$string['checkupdateavailableerror'] = 'Không thể tìm thấy cập nhật của phiên bản Moodle Direct';
 $string['maxmarkserror'] = 'Điểm Tối đa phải trong khoảng 0 đến 100';
 $string['nosubmissiondataavailable'] = 'Không có dữ liệu bài nộp khác nào khả dụng';
 $string['nointegration'] = 'Không có Liên kết';

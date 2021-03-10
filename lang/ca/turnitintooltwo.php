@@ -259,7 +259,6 @@ $string['migrationcoursecreated'] = 'Classe de Turnitin recreada a Moodle';
 $string['migrationcoursegeterror'] = 'No s\&#39;ha pogut recuperar cap classe de Turnitin';
 $string['migrationassignmentgeterror'] = 'No s\&#39;ha pogut recuperar cap dels exercicis de Turnitin';
 $string['getassignmenterror'] = 'No s\&#39;han pogut recuperar els exercicis de migració de Turnitin';
-$string['checkupdateavailableerror'] = 'No s\&#39;han pogut cercar actualitzacions de la versió de Moodle Direct ';
 $string['maxmarkserror'] = 'Les notes màximes han d&#39;estar entre 0 i 100';
 $string['nosubmissiondataavailable'] = 'No hi ha altres dades sobre lliuraments disponibles';
 $string['nointegration'] = 'Sense integració';

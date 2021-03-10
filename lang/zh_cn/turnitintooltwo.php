@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = '在 Moodle 上重建 Turnitin 中的课程'
 $string['migrationcoursegeterror'] = '无法取得 Turnitin 内的任何课程';
 $string['migrationassignmentgeterror'] = '无法取得 Turnitin 内的任何作业';
 $string['getassignmenterror'] = '无法从 Turnitin 获取迁移作业';
-$string['checkupdateavailableerror'] = '无法为 Moodle Direct 查询版本更新';
 $string['maxmarkserror'] = '最高分数必须在 0 和 100 之间';
 $string['nosubmissiondataavailable'] = '没有任何其他提交内容数据';
 $string['nointegration'] = '无整合';

@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Kurs aus Turnitin in Moodle neu erstellt';
 $string['migrationcoursegeterror'] = 'Kann keine Kurse von Turnitin abrufen';
 $string['migrationassignmentgeterror'] = 'Kann keine Aufgaben von Turnitin abrufen';
 $string['getassignmenterror'] = 'Migrationsaufgaben konnten nicht von Turnitin abgerufen werden.';
-$string['checkupdateavailableerror'] = 'Prüfung auf Updates der Moodle Direct-Version nicht möglich';
 $string['maxmarkserror'] = 'Die Höchstnote muss zwischen 0 und 100 liegen.';
 $string['nosubmissiondataavailable'] = 'Keine weiteren Übermittlungsdaten verfügbar';
 $string['nointegration'] = 'Keine Integration';

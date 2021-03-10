@@ -257,7 +257,6 @@ $string['migrationcoursecreated'] = 'Moodle上にTurnitinのクラスが再作�
 $string['migrationcoursegeterror'] = 'Turnitinからクラスを入手することができません';
 $string['migrationassignmentgeterror'] = 'Turnitinから課題を入手することができません';
 $string['getassignmenterror'] = 'Turnitinから移行課題を取得できませんでした';
-$string['checkupdateavailableerror'] = 'Moodle Directのバージョン更新をチェックできませんでした';
 $string['maxmarkserror'] = '最高得点は0から100までに設定してください';
 $string['nosubmissiondataavailable'] = '利用可能な提出物データは他にありません';
 $string['nointegration'] = '統合無し';
