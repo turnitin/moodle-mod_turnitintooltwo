@@ -687,3 +687,4 @@ $string['privacy:metadata:turnitintooltwo_client:submission_filename'] = 'The na
 $string['privacy:metadata:turnitintooltwo_client:submission_content'] = 'Please be aware that the content of a file/submission is sent to Turnitin for processing.';
 $string['max_marks_warning'] = 'Please be aware that changing the Marks Available after grading may affect the gradebook';
 $string['download_button_warning'] = 'A student must be selected for this feature to be available.';
+$string['noguests'] = 'Sorry, no guests are allowed to access this plugin. Please login';
