@@ -195,8 +195,13 @@ if (!empty($action)) {
                 throw new moodle_exception('nopermissions', 'error', '', 'delpart');
             }
 
-            if ($turnitintooltwoassignment->delete_moodle_assignment_part($turnitintooltwoassignment->turnitintooltwo->id, $part)) {
-                $_SESSION["notice"]['message'] = get_string('partdeleted', 'turnitintooltwo');
+            // Check we have more than one part before deleting.
+            if (count($turnitintooltwoassignment->get_parts(false)) > 1) {
+                if ($turnitintooltwoassignment->delete_moodle_assignment_part($turnitintooltwoassignment->turnitintooltwo->id, $part)) {
+                    $_SESSION["notice"]['message'] = get_string('partdeleted', 'turnitintooltwo');
+                }
+            } else {
+                $_SESSION["notice"]['message'] = get_string('partdeleteerror', 'turnitintooltwo', '');
             }
 
             redirect(new moodle_url('/course/mod.php', array('update' => $cm->id,
