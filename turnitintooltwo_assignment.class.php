@@ -1029,7 +1029,7 @@ class turnitintooltwo_assignment {
      * @return boolean
      */
     public function delete_moodle_assignment_part($toolid, $partid) {
-        global $DB, $CFG;;
+        global $DB;
 
         // Delete submissions.
         $DB->delete_records('turnitintooltwo_submissions', array('turnitintooltwoid' => $toolid, 'submission_part' => $partid));
