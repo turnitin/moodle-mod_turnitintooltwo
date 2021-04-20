@@ -165,7 +165,7 @@ class turnitintooltwo_submission {
      * @return type
      */
     private function get_submission_details($idtype = "moodle", $turnitintooltwoassignment = "") {
-        global $DB;
+        global $DB, $CFG;
 
         if ($idtype == "moodle") {
             $condition = array("id" => $this->id);
@@ -208,8 +208,13 @@ class turnitintooltwo_submission {
             }
 
             if ($submission->userid > 0) {
-                $allnamefields = get_all_user_name_fields();
-                $user = $DB->get_record('user', array('id' => $submission->userid), 'id, '.implode(', ', $allnamefields));
+                if ($CFG->branch == 311) {
+                    $allnamefields = implode(', ', \core_user\fields::get_name_fields());
+                } else {
+                    $allnamefields = implode(', ', get_all_user_name_fields());
+                }
+
+                $user = $DB->get_record('user', array('id' => $submission->userid), 'id, ' . $allnamefields);
                 $this->firstname = $user->firstname;
                 $this->lastname = $user->lastname;
                 $this->fullname = fullname($user);

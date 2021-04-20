@@ -1893,7 +1893,7 @@ class turnitintooltwo_assignment {
      * @return array of submissions by part
      */
     public function get_submissions($cm, $partid = 0, $userid = 0, $submissionsonly = 0) {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
 
         // If no part id is specified then get them all.
         $sql = " turnitintooltwoid = ? ";
@@ -1911,13 +1911,18 @@ class turnitintooltwo_assignment {
         $istutor = has_capability('mod/turnitintooltwo:grade', $context);
 
         // If logged in as instructor then get for all users.
-        $allnamefields = get_all_user_name_fields();
+        if ($CFG->branch == 311) {
+            $allnamefields = implode(', ', \core_user\fields::get_name_fields());
+        } else {
+            $allnamefields = implode(', ', get_all_user_name_fields());
+        }
+
         if ($istutor && $userid == 0) {
             $users = get_enrolled_users($context, 'mod/turnitintooltwo:submit', groups_get_activity_group($cm),
-                                        'u.id, ' . implode(', ', $allnamefields));
+                                        'u.id, ' . $allnamefields);
             $users = (!$users) ? array() : $users;
         } else if ($istutor) {
-            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . implode(', ', $allnamefields));
+            $user = $DB->get_record('user', array('id' => $userid), 'id, ' . $allnamefields);
             $users = array($userid => $user);
             $sql .= " AND userid = ? ";
             $sqlparams[] = $userid;
