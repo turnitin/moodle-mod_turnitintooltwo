@@ -461,14 +461,20 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
             $turnitintooltwoassignment->turnitintooltwo->name,
             $COURSE->fullname);
 
-    // Dropdown to filter by groups.
-    $groupmode = groups_get_activity_groupmode($cm);
-    if ($groupmode) {
-        groups_get_activity_group($cm, true);
-        groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$id.'&do='.$do);
-    }
+    // Gracefully error if the user is a guest.
+    if (isguestuser()) {
+        echo html_writer::tag("div", get_string('noguests', 'turnitintooltwo'), array("class" => "submission_failure_msg"));
+        $do = "";
+    } else {
+        // Dropdown to filter by groups.
+        $groupmode = groups_get_activity_groupmode($cm);
+        if ($groupmode) {
+            groups_get_activity_group($cm, true);
+            groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$id.'&do='.$do);
+        }
 
-    $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+        $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+    }
 }
 
 echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
