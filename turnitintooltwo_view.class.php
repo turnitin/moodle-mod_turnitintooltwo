@@ -1219,11 +1219,9 @@ class turnitintooltwo_view {
         }
 
         // Show Originality score with link to open document viewer.
-        if ( !empty($submission->id) && is_null($submission->submission_score) && $submission->submission_orcapable == 0 ) {
-            // Don't show if there is no OR score and submission is not OR capable.
-            $rawscore = null;
-            $score = '--';
-        } else if (!empty($submission->id) && !empty($submission->submission_objectid) &&
+        $rawscore = null;
+        $score = '--';
+        if (!empty($submission->id) && !empty($submission->submission_objectid) &&
                 ($istutor || $turnitintooltwoassignment->turnitintooltwo->studentreports)) {
 
             //Show score.
@@ -1262,10 +1260,6 @@ class turnitintooltwo_view {
                                 array('id' => 'origreport_'.$submission->submission_objectid.'_'.$partid.'_'.$moodleuserid,
                                     'class' => 'row_score origreport_open'));
             }
-
-        } else {
-            $rawscore = null;
-            $score = '--';
         }
 
         // Show grade and link to DV.
@@ -1488,7 +1482,7 @@ class turnitintooltwo_view {
                                                 ));
         }
 
-        // The studentfirstname and studentlastname fields are for soting only, and thus should not be present if the user is a student.
+        // The studentfirstname and studentlastname fields are for sorting only, and thus should not be present if the user is a student.
         if (!$istutor) {
             $data = array($partid, $checkbox, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         } else {

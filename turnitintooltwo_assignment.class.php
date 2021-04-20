@@ -408,6 +408,12 @@ class turnitintooltwo_assignment {
         $class->setClassId($course->turnitin_cid);
         $title = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
         $class->setTitle( $title );
+        // If a course end date is specified in Moodle then we set this in Turnitin with an additional month to
+        // account for the Turnitin viewer becoming read-only once the class end date passes.
+        if (!empty($course->enddate)) {
+            $enddate = strtotime('+1 month', $course->enddate);
+            $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+        }
 
         try {
             $turnitincall->updateClass($class);
@@ -443,7 +449,7 @@ class turnitintooltwo_assignment {
      * @param int $limit The course title on Turnitin
      * @param string $coursetype whether the course is TT (Turnitintooltwo) or PP (Plagiarism Plugin)
      */
-    public static function truncate_title($title, $limit, $coursetype) {
+    public static function truncate_title($title, $limit, $coursetype = 'TT') {
         $suffix = " (Moodle " . $coursetype . ")";
         $limit = $limit - strlen($suffix);
         $truncatedtitle = "";
@@ -467,8 +473,6 @@ class turnitintooltwo_assignment {
      * @param date $courseenddate The new course end date to be set on Turnitin
      */
     public static function edit_tii_course_end_date($tiicourseid, $tiicoursetitle, $courseenddate) {
-        global $DB;
-
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
@@ -1002,14 +1006,16 @@ class turnitintooltwo_assignment {
                 // Delete the Turnitin Classes data if the Moodle courses no longer exists.
                 if (!$DB->count_records("course", array("id" => $oldcourse->courseid)) > 0) {
                     $DB->delete_records("turnitintooltwo_courses", array("courseid" => $oldcourse->courseid));
+                    turnitintooltwo_activitylog("Old Moodle Course deleted - id (".$oldcourse->courseid." - ".
+                        $oldcourse->turnitin_cid.")", "REQUEST");
                 }
                 // Delete the Turnitin Class data if no more turnitin assignments exist in it.
                 if (!$DB->count_records("turnitintooltwo", array("course" => $oldcourse->courseid)) > 0) {
                     $DB->delete_records("turnitintooltwo_courses", array("courseid" => $oldcourse->courseid,
                                                         "course_type" => "TT"));
+                    turnitintooltwo_activitylog("Old Moodle Course deleted - id (".$oldcourse->courseid." - ".
+                        $oldcourse->turnitin_cid.")", "REQUEST");
                 }
-                turnitintooltwo_activitylog("Old Moodle Course deleted - id (".$oldcourse->courseid." - ".
-                                                        $oldcourse->turnitin_cid.")", "REQUEST");
             }
         }
 
@@ -1300,7 +1306,7 @@ class turnitintooltwo_assignment {
      * @return boolean
      */
     public function edit_moodle_assignment($createevent = true, $restore = false) {
-        global $USER, $DB, $CFG;
+        global $DB;
 
         $config = turnitintooltwo_admin_config();
 
