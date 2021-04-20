@@ -287,6 +287,9 @@ if (!empty($action)) {
                 $do = "submitpaper";
             }
 
+            // Get Moodle Course Object and update in Turnitin.
+            $turnitintooltwoassignment->edit_tii_course($course);
+
             if ($error) {
                 // Save data in session incase of error.
                 $_SESSION['form_data']->submissiontype = $post['submissiontype'];
