@@ -116,8 +116,7 @@ class members_view {
         $coursemodule = $this->coursemodule;
         $role = $this->get_role_for_display_role($displayrole);
 
-        return $turnitintooltwoview
-            ->init_tii_member_by_role_table($coursemodule, $turnitintooltwoassignment, $role);
+        return $turnitintooltwoview->init_tii_member_by_role_table($coursemodule, $turnitintooltwoassignment, $role);
     }
 
     /**

@@ -463,7 +463,14 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
 
     // Gracefully error if the user is a guest.
     if (isguestuser()) {
-        echo html_writer::tag("div", get_string('noguests', 'turnitintooltwo'), array("class" => "submission_failure_msg"));
+        // Show summary box.
+        if (!empty($turnitintooltwoassignment->turnitintooltwo->intro)) {
+            $introtext = format_module_intro('turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo, $cm->id);
+            echo html_writer::tag("div", $introtext);
+        }
+
+        echo html_writer::tag("p", get_string('noguests', 'turnitintooltwo'));
+
         $do = "";
     } else {
         // Dropdown to filter by groups.
