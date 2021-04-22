@@ -1875,8 +1875,6 @@ class turnitintooltwo_view {
         $rolestring = ($role == "Instructor") ? 'turnitintutors' : 'turnitinstudents';
         $cellheader = get_string($rolestring, 'turnitintooltwo');
         $output = "";
-        $enrollink = "";
-        $enrollingcontainer = "";
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
 
@@ -1894,8 +1892,9 @@ class turnitintooltwo_view {
                                                     get_string('enrolling', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo')." ".
                                                         get_string('enrolling', 'turnitintooltwo'), 'enrolling_container');
+
+                $output .= $OUTPUT->box($enrollingcontainer.$enrollink, '');
             }
-            $output .= $OUTPUT->box($enrollingcontainer.$enrollink, '');
 
             // Output user role to hidden var for use in jQuery calls.
             $output .= $OUTPUT->box($role, '', 'user_role');
