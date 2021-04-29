@@ -36,7 +36,6 @@ class turnitintooltwo_submission {
     public $submission_score;
     public $submission_grade;
     public $submission_gmimaged;
-    private $submission_status;
     private $submission_queued;
     public $submission_attempts;
     public $submission_modified;
@@ -141,7 +140,6 @@ class turnitintooltwo_submission {
         $this->submission_queued = null;
         $this->submission_attempts = 0;
         $this->submission_gmimaged = 0;
-        $this->submission_status = null;
         $this->submission_modified = time();
         $this->submission_title = $post['submissiontitle'];
         $this->submission_score = null;
@@ -593,7 +591,6 @@ class turnitintooltwo_submission {
                 $submission->submission_score = $this->submission_score;
                 $submission->submission_grade = $this->submission_grade;
                 $submission->submission_gmimaged = $this->submission_gmimaged;
-                $submission->submission_status = $this->submission_status;
                 $submission->submission_queued = $this->submission_queued;
                 $submission->submission_attempts = $this->submission_attempts;
                 $submission->submission_modified = time();

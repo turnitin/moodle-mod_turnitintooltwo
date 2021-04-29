@@ -304,5 +304,13 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2020081401, 'turnitintooltwo');
     }
 
+    if ($oldversion < 2020111801) {
+        $table = new xmldb_table('turnitintooltwo_submissions');
+        $field = new xmldb_field('submission_status');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+    }
+
     return true;
 }
