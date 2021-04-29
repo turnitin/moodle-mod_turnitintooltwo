@@ -345,10 +345,7 @@ class turnitintooltwo_user {
         $user = new stdClass();
         $user->userid = $this->id;
         $user->turnitin_uid = $this->tiiuserid;
-        $user->turnitin_utp = 1;
-        if ($this->role == "Instructor") {
-            $user->turnitin_utp = 2;
-        }
+        $user->turnitin_utp = ($this->role == "Instructor") ? 2 : 1;
 
         if ($turnitintooltwouser = $DB->get_record("turnitintooltwo_users", array("userid" => $this->id))) {
             $user->id = $turnitintooltwouser->id;

@@ -337,10 +337,9 @@ class turnitintooltwo_assignment {
      * @global type $DB
      * @param object $course The course object
      * @param int $ownerid The owner of the course
-     * @param string $coursetype whether the course is TT (Turnitintool) or PP (Plagiarism Plugin)
      * @return object the turnitin course if created
      */
-    public function create_tii_course($course, $ownerid, $coursetype = "TT", $workflowcontext = "site") {
+    public function create_tii_course($course, $ownerid) {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -437,8 +436,7 @@ class turnitintooltwo_assignment {
                                                 " (".$turnitincourse->id.")", "REQUEST");
             }
         } catch (Exception $e) {
-            $toscreen = ($coursetype == "PP") ? false : true;
-            $turnitincomms->handle_exceptions($e, 'classupdateerror', $toscreen);
+            $turnitincomms->handle_exceptions($e, 'classupdateerror');
         }
     }
 
@@ -1163,7 +1161,7 @@ class turnitintooltwo_assignment {
      * @return array containing a status and an error message if applicable
      */
     public function edit_part_field($partid, $fieldname, $fieldvalue) {
-        global $DB, $USER, $CFG;
+        global $DB;
         $return = array();
         $return["success"] = true;
         $partdetails = $this->get_part_details($partid);
@@ -1833,7 +1831,7 @@ class turnitintooltwo_assignment {
      * @return array
      */
     public function get_overall_grade($submissions, $cm = '') {
-        global $USER, $DB;
+        global $DB;
 
         $overallgrade = null;
         $parts = $this->get_parts();
