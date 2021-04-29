@@ -310,6 +310,11 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field)) {
             $dbman->drop_field($table, $field);
         }
+
+        $field = new xmldb_field('submission_queued');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
     }
 
     return true;

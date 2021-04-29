@@ -68,10 +68,10 @@ class backup_turnitintooltwo_activity_structure_step extends backup_activity_str
 
         $submission = new backup_nested_element('submission', array('id'), array(
             'userid', 'submission_part', 'submission_title', 'submission_type', 'submission_filename',
-            'submission_objectid', 'submission_score', 'submission_grade', 'submission_gmimaged', 'submission_queued',
-            'submission_attempts', 'submission_modified', 'submission_parent', 'submission_nmuserid',
-            'submission_nmfirstname', 'submission_nmlastname', 'submission_unanon', 'submission_anonreason',
-            'submission_transmatch', 'submission_orcapable', 'submission_acceptnothing', 'tiiuserid'));
+            'submission_objectid', 'submission_score', 'submission_grade', 'submission_gmimaged', 'submission_attempts',
+            'submission_modified', 'submission_parent', 'submission_nmuserid', 'submission_nmfirstname',
+            'submission_nmlastname', 'submission_unanon', 'submission_anonreason', 'submission_transmatch',
+            'submission_orcapable', 'submission_acceptnothing', 'tiiuserid'));
 
         // Build the tree.
         $submissions->add_child($submission);
