@@ -179,6 +179,10 @@ $istutor = has_capability('mod/turnitintooltwo:grade', $context);
 $cansubmit = has_capability('mod/turnitintooltwo:submit', $context);
 $userrole = ($istutor) ? 'Instructor' : 'Learner';
 
+// Get the course type for this assignment.
+$coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+
 // Deal with actions here.
 if (!empty($action)) {
     if ($action != "submission") {
@@ -499,11 +503,6 @@ $class = ($istutor) ? "js_required" : "";
 
 echo html_writer::start_tag("div", array("class" => $class));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
-
-// Get the course type for this assignment.
-$coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
-
-$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
 
 switch ($do) {
     case "submission_success":
