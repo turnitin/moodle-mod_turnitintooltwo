@@ -176,9 +176,9 @@ if ($ADMIN->fulltree) {
                                                     get_string('turnitinenablepeermark_desc', 'turnitintooltwo'),
                                                     1, $ynoptions));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/useerater',
-                                                    get_string('turnitinuseerater', 'turnitintooltwo'),
-                                                    get_string('turnitinuseerater_desc', 'turnitintooltwo'),
+    $settings->add(new admin_setting_configselect('turnitintooltwo/usegrammar',
+                                                    get_string('turnitinusegrammar', 'turnitintooltwo'),
+                                                    get_string('turnitinusegrammar_desc', 'turnitintooltwo'),
                                                     0, $ynoptions));
 
     $settings->add(new admin_setting_configselect('turnitintooltwo/useanon',
@@ -284,7 +284,6 @@ if ($ADMIN->fulltree) {
     }
 
     // Following are default values for new instance.
-
     $settings->add(new admin_setting_heading('turnitintooltwo/defaults',
                                                 get_string('defaults', 'turnitintooltwo'),
                                                 get_string('defaults_desc', 'turnitintooltwo')));
@@ -382,7 +381,7 @@ if ($ADMIN->fulltree) {
                                                     get_string('excludequoted', 'turnitintooltwo'),
                                                     '', 0, $ynoptions ));
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/default_erater', get_string('erater', 'turnitintooltwo'),
+    $settings->add(new admin_setting_configselect('turnitintooltwo/default_grammar', get_string('erater', 'turnitintooltwo'),
                        '', 0, $ynoptions ));
 
     $handbookoptions = array(
@@ -393,7 +392,7 @@ if ($ADMIN->fulltree) {
                                 5 => get_string('erater_handbook_learners', 'turnitintooltwo')
                             );
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/default_erater_handbook',
+    $settings->add(new admin_setting_configselect('turnitintooltwo/default_grammar_handbook',
                                                     get_string('erater_handbook', 'turnitintooltwo'),
                                                     '', 2, $handbookoptions ));
 
@@ -403,30 +402,22 @@ if ($ADMIN->fulltree) {
                                 'en' => get_string('erater_dictionary_en', 'turnitintooltwo')
                             );
 
-    $settings->add(new admin_setting_configselect('turnitintooltwo/default_erater_dictionary',
-                                                    get_string('erater_dictionary', 'turnitintooltwo'),
-                                                    '', 'en_US', $dictionaryoptions ));
+    $settings->add(new admin_setting_configselect('turnitintooltwo/default_grammar_dictionary',
+                                                        get_string('erater_dictionary', 'turnitintooltwo'),
+                                                        '', 'en_US', $dictionaryoptions ));
 
-    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_erater_spelling',
-                                                    get_string('eraternoun', 'turnitintooltwo').' '.
+    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_grammar_spelling',
                                                         get_string('erater_spelling', 'turnitintooltwo'), '', false));
 
-    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_erater_grammar',
-                                                    get_string('eraternoun', 'turnitintooltwo').' '.
+    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_grammar_grammar',
                                                         get_string('erater_grammar', 'turnitintooltwo'), '', false));
 
-    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_erater_usage',
-                                                    get_string('eraternoun', 'turnitintooltwo').' '.
-                                                        get_string('erater_usage', 'turnitintooltwo'),
-                                                        '', false));
+    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_grammar_usage',
+                                                        get_string('erater_usage', 'turnitintooltwo'), '', false));
 
-    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_erater_mechanics',
-                                                    get_string('eraternoun', 'turnitintooltwo').' '.
-                                                        get_string('erater_mechanics', 'turnitintooltwo'),
-                                                        '', false));
+    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_grammar_mechanics',
+                                                        get_string('erater_mechanics', 'turnitintooltwo'), '', false));
 
-    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_erater_style',
-                                                    get_string('eraternoun', 'turnitintooltwo').' '.
-                                                      get_string('erater_style', 'turnitintooltwo'),
-                                                    '', false));
+    $settings->add(new admin_setting_configcheckbox('turnitintooltwo/default_grammar_style',
+                                                        get_string('erater_style', 'turnitintooltwo'), '', false));
 }
