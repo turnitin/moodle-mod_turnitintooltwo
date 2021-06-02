@@ -346,7 +346,7 @@ class turnitintooltwo_assignment {
         $turnitincall = $turnitincomms->initialise_api();
 
         $class = new TiiClass();
-        $tiititle = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT, $coursetype );
+        $tiititle = $this->truncate_title( $course->fullname, TURNITIN_COURSE_TITLE_LIMIT );
         $class->setTitle( $tiititle );
 
         try {
@@ -357,8 +357,8 @@ class turnitintooltwo_assignment {
             $turnitincourse->courseid = $course->id;
             $turnitincourse->ownerid = $ownerid;
             $turnitincourse->turnitin_cid = $newclass->getClassId();
-            $turnitincourse->turnitin_ctl = $course->fullname . " (Moodle ".$coursetype.")";
-            $turnitincourse->course_type = $coursetype;
+            $turnitincourse->turnitin_ctl = $course->fullname . " (Moodle TT)";
+            $turnitincourse->course_type = "TT";
 
             if (empty($course->tii_rel_id)) {
                 $method = "insert_record";
