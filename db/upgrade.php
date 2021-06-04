@@ -318,5 +318,19 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2021042901, 'turnitintooltwo');
     }
 
+    if ($oldversion < 2021060201) {
+        set_config('useerater', null, 'turnitintooltwo');
+        set_config('default_erater', null, 'turnitintooltwo');
+        set_config('default_erater_handbook', null, 'turnitintooltwo');
+        set_config('default_erater_dictionary', null, 'turnitintooltwo');
+        set_config('default_erater_spelling', null, 'turnitintooltwo');
+        set_config('default_erater_grammar', null, 'turnitintooltwo');
+        set_config('default_erater_usage', null, 'turnitintooltwo');
+        set_config('default_erater_mechanics', null, 'turnitintooltwo');
+        set_config('default_erater_style', null, 'turnitintooltwo');
+
+        upgrade_mod_savepoint(true, 2021060201, 'turnitintooltwo');
+    }
+
     return true;
 }
