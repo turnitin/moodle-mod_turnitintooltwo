@@ -1,3 +1,17 @@
+### Date:		2021-Jun-08
+### Release:	v2021060801
+
+---
+
+####Support for Moodle 3.11
+You can now confidently use this integration with Moodle 3.11.
+
+####Submit button is no longer visible after the due date
+The submit button will no longer be shown to students who have already submitted to the assignment when the due date has passed. The current functionality will remain for users who have not already submitted.
+
+####Delete parts without errors
+The option to delete a part will now only show after there is more than one part used. When there is only one part, we’ll no longer show the deletion option to prevent the assignment from potentially breaking.
+
 ### Date:		2020-Nov-18
 ### Release:	v2020111801
 
