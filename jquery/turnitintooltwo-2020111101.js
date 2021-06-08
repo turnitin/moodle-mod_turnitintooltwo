@@ -679,7 +679,7 @@
             if (proceed) {
                 dvWindow = window.open('', '_blank');
                 var loading = '<div style="text-align:center;">';
-                loading += '<img src="' + M.cfg.wwwroot + '/mod/turnitintooltwo/pix/tiiIcon.svg" style="width:100px; height: 100px">';
+                loading += '<img src="' + M.cfg.wwwroot + '/mod/turnitintooltwo/pix/tii-icon.png" style="width:100px; height: 100px">';
                 loading += '<p style="font-family: Arial, Helvetica, sans-serif;">' + M.str.turnitintooltwo.loadingdv + '</p>';
                 loading += '</div>';
                 $(dvWindow.document.body).html(loading);

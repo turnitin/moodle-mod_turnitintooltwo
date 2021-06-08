@@ -36,8 +36,6 @@ class turnitintooltwo_submission {
     public $submission_score;
     public $submission_grade;
     public $submission_gmimaged;
-    private $submission_status;
-    private $submission_queued;
     public $submission_attempts;
     public $submission_modified;
     private $submission_parent;
@@ -138,10 +136,8 @@ class turnitintooltwo_submission {
     public function reset_submission($post) {
         $this->submission_type = $post['submissiontype'];
         $this->submission_filename = "";
-        $this->submission_queued = null;
         $this->submission_attempts = 0;
         $this->submission_gmimaged = 0;
-        $this->submission_status = null;
         $this->submission_modified = time();
         $this->submission_title = $post['submissiontitle'];
         $this->submission_score = null;
@@ -165,7 +161,7 @@ class turnitintooltwo_submission {
      * @return type
      */
     private function get_submission_details($idtype = "moodle", $turnitintooltwoassignment = "") {
-        global $DB;
+        global $DB, $CFG;
 
         if ($idtype == "moodle") {
             $condition = array("id" => $this->id);
@@ -208,8 +204,13 @@ class turnitintooltwo_submission {
             }
 
             if ($submission->userid > 0) {
-                $allnamefields = get_all_user_name_fields();
-                $user = $DB->get_record('user', array('id' => $submission->userid), 'id, '.implode(', ', $allnamefields));
+                if ($CFG->branch == 311) {
+                    $allnamefields = implode(', ', \core_user\fields::get_name_fields());
+                } else {
+                    $allnamefields = implode(', ', get_all_user_name_fields());
+                }
+
+                $user = $DB->get_record('user', array('id' => $submission->userid), 'id, ' . $allnamefields);
                 $this->firstname = $user->firstname;
                 $this->lastname = $user->lastname;
                 $this->fullname = fullname($user);
@@ -238,9 +239,6 @@ class turnitintooltwo_submission {
      * @return array result and message
      */
     public function do_file_upload($cm, $uploadoptions) {
-        global $DB;
-        $return = array();
-
         $context = context_module::instance($cm->id);
 
         // Get draft item id and save the files in the draft area.
@@ -255,6 +253,7 @@ class turnitintooltwo_submission {
         $files = $fs->get_area_files($context->id, 'mod_turnitintooltwo', 'submissions', $this->id, "timecreated", false);
 
         // This should only return 1 result.
+        $return = array();
         if (count($files) == 0) {
             $return['result'] = false;
             $return['message'] = get_string('submissionfileerror', 'turnitintooltwo');
@@ -268,7 +267,6 @@ class turnitintooltwo_submission {
     /**
      * Copy text from submission to a local temporary file for submitting to Turnitin
      *
-     * @global type $DB
      * @global type $USER
      * @param object $cm the course module object
      * @param object $post data to use for file submission
@@ -417,8 +415,6 @@ class turnitintooltwo_submission {
     public function do_tii_nothing_submission($cm, $turnitintooltwoassignment, $partid, $userid) {
         global $DB, $USER;
 
-        $context = context_module::instance($cm->id);
-
         // Check if user is a member of class, if not then join them to it.
         $coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
         $course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
@@ -501,7 +497,7 @@ class turnitintooltwo_submission {
      * @return string $message to display to user
      */
     public function do_tii_submission($cm, $turnitintooltwoassignment) {
-        global $DB, $USER, $CFG;
+        global $DB, $USER;
 
         $config = turnitintooltwo_admin_config();
         $notice = array("success" => false);
@@ -593,8 +589,6 @@ class turnitintooltwo_submission {
                 $submission->submission_score = $this->submission_score;
                 $submission->submission_grade = $this->submission_grade;
                 $submission->submission_gmimaged = $this->submission_gmimaged;
-                $submission->submission_status = $this->submission_status;
-                $submission->submission_queued = $this->submission_queued;
                 $submission->submission_attempts = $this->submission_attempts;
                 $submission->submission_modified = time();
                 $submission->submission_nmuserid = $this->submission_nmuserid;
@@ -706,7 +700,7 @@ class turnitintooltwo_submission {
      * @return type
      */
     public function save_updated_submission_data($tiisubmissiondata, $bulk = false, $save = false) {
-        global $DB, $CFG;
+        global $DB;
 
         static $part;
         static $tiiassignid;

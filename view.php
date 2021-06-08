@@ -179,6 +179,10 @@ $istutor = has_capability('mod/turnitintooltwo:grade', $context);
 $cansubmit = has_capability('mod/turnitintooltwo:submit', $context);
 $userrole = ($istutor) ? 'Instructor' : 'Learner';
 
+// Get the course type for this assignment.
+$coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
+$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
+
 // Deal with actions here.
 if (!empty($action)) {
     if ($action != "submission") {
@@ -195,8 +199,13 @@ if (!empty($action)) {
                 throw new moodle_exception('nopermissions', 'error', '', 'delpart');
             }
 
-            if ($turnitintooltwoassignment->delete_moodle_assignment_part($turnitintooltwoassignment->turnitintooltwo->id, $part)) {
-                $_SESSION["notice"]['message'] = get_string('partdeleted', 'turnitintooltwo');
+            // Check we have more than one part before deleting.
+            if (count($turnitintooltwoassignment->get_parts(false)) > 1) {
+                if ($turnitintooltwoassignment->delete_moodle_assignment_part($turnitintooltwoassignment->turnitintooltwo->id, $part)) {
+                    $_SESSION["notice"]['message'] = get_string('partdeleted', 'turnitintooltwo');
+                }
+            } else {
+                $_SESSION["notice"]['message'] = get_string('partdeleteerror', 'turnitintooltwo', '');
             }
 
             redirect(new moodle_url('/course/mod.php', array('update' => $cm->id,
@@ -281,6 +290,9 @@ if (!empty($action)) {
                 $error = true;
                 $do = "submitpaper";
             }
+
+            // Get Moodle Course Object and update in Turnitin.
+            $turnitintooltwoassignment->edit_tii_course($course);
 
             if ($error) {
                 // Save data in session incase of error.
@@ -453,14 +465,27 @@ if ($viewcontext == "box" || $viewcontext == "box_solid") {
             $turnitintooltwoassignment->turnitintooltwo->name,
             $COURSE->fullname);
 
-    // Dropdown to filter by groups.
-    $groupmode = groups_get_activity_groupmode($cm);
-    if ($groupmode) {
-        groups_get_activity_group($cm, true);
-        groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$id.'&do='.$do);
-    }
+    // Gracefully error if the user is a guest.
+    if (isguestuser()) {
+        // Show summary box.
+        if (!empty($turnitintooltwoassignment->turnitintooltwo->intro)) {
+            $introtext = format_module_intro('turnitintooltwo', $turnitintooltwoassignment->turnitintooltwo, $cm->id);
+            echo html_writer::tag("div", $introtext);
+        }
 
-    $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+        echo html_writer::tag("p", get_string('noguests', 'turnitintooltwo'));
+
+        $do = "";
+    } else {
+        // Dropdown to filter by groups.
+        $groupmode = groups_get_activity_groupmode($cm);
+        if ($groupmode) {
+            groups_get_activity_group($cm, true);
+            groups_print_activity_menu($cm, $CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$id.'&do='.$do);
+        }
+
+        $turnitintooltwoview->draw_tool_tab_menu($cm, $do);
+    }
 }
 
 echo html_writer::start_tag('div', array('class' => 'mod_turnitintooltwo'));
@@ -485,11 +510,6 @@ $class = ($istutor) ? "js_required" : "";
 
 echo html_writer::start_tag("div", array("class" => $class));
 echo html_writer::tag("div", $viewcontext, array("id" => "view_context"));
-
-// Get the course type for this assignment.
-$coursetype = turnitintooltwo_get_course_type($turnitintooltwoassignment->turnitintooltwo->legacy);
-
-$course = $turnitintooltwoassignment->get_course_data($turnitintooltwoassignment->turnitintooltwo->course, $coursetype);
 
 switch ($do) {
     case "submission_success":

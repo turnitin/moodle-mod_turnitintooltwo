@@ -304,5 +304,32 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2020081401, 'turnitintooltwo');
     }
 
+    if ($oldversion < 2021060801) {
+        // Drop unused fields
+        $table = new xmldb_table('turnitintooltwo_submissions');
+        $field = new xmldb_field('submission_status');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        $field = new xmldb_field('submission_queued');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // Remove erater settings
+        set_config('useerater', null, 'turnitintooltwo');
+        set_config('default_erater', null, 'turnitintooltwo');
+        set_config('default_erater_handbook', null, 'turnitintooltwo');
+        set_config('default_erater_dictionary', null, 'turnitintooltwo');
+        set_config('default_erater_spelling', null, 'turnitintooltwo');
+        set_config('default_erater_grammar', null, 'turnitintooltwo');
+        set_config('default_erater_usage', null, 'turnitintooltwo');
+        set_config('default_erater_mechanics', null, 'turnitintooltwo');
+        set_config('default_erater_style', null, 'turnitintooltwo');
+
+        upgrade_mod_savepoint(true, 2021060801, 'turnitintooltwo');
+    }
+
     return true;
 }

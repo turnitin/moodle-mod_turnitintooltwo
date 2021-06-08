@@ -136,10 +136,8 @@
                 <FIELD NAME="submission_objectid" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_filename" NEXT="submission_score"/>
                 <FIELD NAME="submission_score" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_objectid" NEXT="submission_grade"/>
                 <FIELD NAME="submission_grade" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_score" NEXT="submission_gmimaged"/>
-                <FIELD NAME="submission_gmimaged" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_grade" NEXT="submission_status"/>
-                <FIELD NAME="submission_status" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Turnitin Submission Status" PREVIOUS="submission_gmimaged" NEXT="submission_queued"/>
-                <FIELD NAME="submission_queued" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_status" NEXT="submission_attempts"/>
-                <FIELD NAME="submission_attempts" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_queued" NEXT="submission_modified"/>
+                <FIELD NAME="submission_gmimaged" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_grade" NEXT="submission_attempts"/>
+                <FIELD NAME="submission_attempts" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_gmimaged" NEXT="submission_modified"/>
                 <FIELD NAME="submission_modified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_attempts" NEXT="submission_parent"/>
                 <FIELD NAME="submission_parent" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_modified" NEXT="submission_nmuserid"/>
                 <FIELD NAME="submission_nmuserid" TYPE="char" LENGTH="100" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_parent" NEXT="submission_nmfirstname"/>
