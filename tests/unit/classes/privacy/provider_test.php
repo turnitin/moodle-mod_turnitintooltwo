@@ -38,7 +38,7 @@ if (!class_exists('\core_privacy\tests\provider_testcase')) {
 
 class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\provider_testcase {
 
-    public function setup() {
+    public function setUp(): void {
         global $DB;
 
         $this->resetAfterTest();
