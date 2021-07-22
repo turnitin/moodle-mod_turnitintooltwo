@@ -99,16 +99,8 @@ require_capability('mod/turnitintooltwo:view', $context);
 
 // Set the page layout to standard.
 $PAGE->set_pagelayout('standard');
-
-// Settings for page navigation.
+$PAGE->set_cm($cm);
 $config = turnitintooltwo_admin_config();
-if ($viewcontext == "window") {
-    // Show navigation if required.
-    if ($config->inboxlayout == 1) {
-        $PAGE->set_cm($cm);
-        $PAGE->set_pagelayout('incourse');
-    }
-}
 
 // Don't show messages popup if we are in submission modal.
 $forbiddenmsgscreens = array('submission_success', 'submitpaper');
