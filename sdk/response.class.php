@@ -36,9 +36,9 @@ class Response {
         $this->domobject = new DomDocument();
         $this->requestdomobject = new DomDocument();
         $logger = new TurnitinLogger( $soap->getLogPath() );
-        if ( $logger ) $logger->logInfo( $soap->getHttpHeaders() . PHP_EOL . $soap->__getLastRequest() );
-        if ( $soap->getDebug() ) $this->outputDebug( $soap->__getLastRequest(), 'Request Message', $soap->getHttpHeaders() );
-        @$this->requestdomobject->loadXML( $soap->__getLastRequest() );
+        if ( $logger ) $logger->logInfo( $soap->getHttpHeaders() . PHP_EOL . $soap->getLastRequest() );
+        if ( $soap->getDebug() ) $this->outputDebug( $soap->getLastRequest(), 'Request Message', $soap->getHttpHeaders() );
+        @$this->requestdomobject->loadXML( $soap->getLastRequest() );
         if ( $logger ) $logger->logInfo( $soap->__getLastResponse() );
         if ( $soap->getDebug() ) $this->outputDebug( $soap->__getLastResponse(), 'Response Message' );
         if ( ($load = @$this->domobject->loadXML( $soap->__getLastResponse() )) === false ) {

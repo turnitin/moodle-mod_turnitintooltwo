@@ -594,7 +594,7 @@ class LTI extends OAuthSimple {
      *
      * @return string
      */
-    public function __getLastRequest() {
+    public function getLastRequest() {
         return $this->lastrequest;
     }
 
