@@ -602,7 +602,7 @@ class LTI extends OAuthSimple {
      *
      * @param string $lastrequest
      */
-    private function __setLastRequest( $lastrequest ) {
+    private function setLastRequest( $lastrequest ) {
         $this->lastrequest = $lastrequest;
     }
 
@@ -969,7 +969,7 @@ class LTI extends OAuthSimple {
             $response = $result;
         }
 
-        $this->__setLastRequest( print_r( $params, true ) );
+        $this->setLastRequest( print_r( $params, true ) );
         $this->__setLastResponse( $result );
 
         curl_close($ch);
