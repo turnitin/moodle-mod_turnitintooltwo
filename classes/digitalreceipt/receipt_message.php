@@ -70,6 +70,6 @@ class receipt_message {
         $message->submission_date = $input['submission_date'];
         $message->submission_id = $input['submission_id'];
 
-        return get_string('digital_receipt_message', 'turnitintooltwo', $message);
+        return format_string(get_string('digital_receipt_message', 'turnitintooltwo', $message));
     }
 }
