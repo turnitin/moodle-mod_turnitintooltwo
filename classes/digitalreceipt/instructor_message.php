@@ -38,7 +38,7 @@ class instructor_message {
         $message->submission_date = $input['submission_date'];
         $message->submission_id = $input['submission_id'];
 
-        return get_string('receipt_instructor_copy', 'turnitintooltwo', $message);
+        return format_string(get_string('receipt_instructor_copy', 'turnitintooltwo', $message));
     }
 
     /**
