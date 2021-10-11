@@ -410,7 +410,7 @@ class v1migration {
                 // Handle overridden grades if necessary.
                 $grading_info = grade_get_grades($courseid, 'mod', 'turnitintool', $turnitintoolid, $submission->userid);
 
-                if (!empty($grading_info->items[0]->grades[$submission->userid]->overridden)) {
+                if ($grading_info != null && !empty($grading_info->items[0]->grades[$submission->userid]->overridden)) {
                     self::handle_overridden_grade($v1_grades[$submission->userid], $submission->userid, $turnitintooltwoid, $courseid);
                 }
 
@@ -436,6 +436,11 @@ class v1migration {
      */
     public static function handle_overridden_grade($v1grade, $userid, $turnitintooltwoid, $courseid) {
         $grading_info = grade_get_grades($courseid, 'mod', 'turnitintooltwo', $turnitintooltwoid, $userid);
+
+        // Exit if this grading info cannot be found.
+        if (!$grading_info) {
+            return;
+        }
 
         $grades = new stdClass();
         $grades->userid = $userid;
