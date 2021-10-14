@@ -331,6 +331,7 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2021060801, 'turnitintooltwo');
     }
 
+    // Need to drop these again in case they weren't in previous upgrade.
     if ($oldversion < 2021073001) {
         // Drop unused fields
         $table = new xmldb_table('turnitintooltwo_submissions');

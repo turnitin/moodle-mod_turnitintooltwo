@@ -205,17 +205,17 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
         // Show delete link to student if a submission has only been made to moodle and the due date hasn't passed.
         $submission = new stdClass();
         $submission->id = 1;
-        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()+1000, 1);
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time() + 1000, 1);
         $this->assertEquals(true, $showdeletelink);
 
         // Show delete link to student if a submission has only been made to moodle,
         // the due date has passed and late submissions are allowed.
-        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()-1, 1);
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time() - 1, 1);
         $this->assertEquals(true, $showdeletelink);
 
         // Do not show delete link to student if a submission has only been made to moodle,
         // the due date has passed and late submissions are not allowed.
-        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()-1, 0);
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time() - 1, 0);
         $this->assertEquals(false, $showdeletelink);
 
         // Do not show delete link to student if a submission has been sent to Turnitin.

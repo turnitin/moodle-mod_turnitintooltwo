@@ -85,8 +85,8 @@ switch ($cmd) {
                                                                     'name' => 'search_course_title'));
 
         $coursesearchform .= html_writer::label(get_string('integration', 'turnitintooltwo').': ', 'search_course_integration');
-        $coursesearchform .= html_writer::select(turnitintooltwo_get_integration_ids(), 'search_course_integration', '', array('' => 'choosedots'),
-                                                array('id' => 'search_course_integration'));
+        $coursesearchform .= html_writer::select(turnitintooltwo_get_integration_ids(), 'search_course_integration',
+            '', array('' => 'choosedots'), array('id' => 'search_course_integration'));
 
         $coursesearchform .= html_writer::label(get_string('ced', 'turnitintooltwo').': ', 'search_course_end_date');
         $coursesearchform .= html_writer::empty_tag('input', array('type' => 'text', 'id' => 'search_course_end_date',

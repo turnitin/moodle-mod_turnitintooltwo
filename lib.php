@@ -366,7 +366,8 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
         }
 
         /* Set legacy to 0 for all TII2s so that we can have all recreated assignments on the same TII class.
-           Legacy is set to 1 only for migrated assignments that were migrated on a course where there were pre-existing V2 assignments.*/
+           Legacy is set to 1 only for migrated assignments that were migrated on
+           a course where there were pre-existing V2 assignments.*/
         if ($action == "NEWCLASS") {
             $update = new stdClass();
             $update->id = $turnitintooltwo->id;
@@ -492,13 +493,13 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             $assignment->setEraterHandbook($eraterhandbook);
 
             // Generate the assignment dates depending on whether we are renewing them or not.
-            $date_start = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i);
-            $date_due   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i);
-            $date_post  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $datestart = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $datedue   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i);
+            $datepost  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i);
 
-            $assignment->setStartDate($date_start);
-            $assignment->setDueDate($date_due);
-            $assignment->setFeedbackReleaseDate($date_post);
+            $assignment->setStartDate($datestart);
+            $assignment->setDueDate($datedue);
+            $assignment->setFeedbackReleaseDate($datepost);
 
             $attribute = "partname".$i;
             $tiititle = $turnitintooltwoassignment->turnitintooltwo->name." ".$turnitintooltwoassignment->turnitintooltwo->$attribute;
@@ -548,14 +549,14 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
  * Function called by turnitintooltwo_duplicate_recycle to generate part dates during the course reset process.
  *
  * @param int $renewdates Determines whether to use new dates or existing dates.
- * @param string $date_type "start", "due" or "post" - Determines the kind of date we need to return.
+ * @param string $datetype "start", "due" or "post" - Determines the kind of date we need to return.
  * @param object $part The assignment in which we need dates for.
  * @param int The counter used during the part creation.
  * @return int A timestamp for the date we requested.
  */
-function turnitintooltwo_generate_part_dates($renewdates, $date_type, $part, $i) {
+function turnitintooltwo_generate_part_dates($renewdates, $datetype, $part, $i) {
     if ($renewdates) {
-        switch ($date_type) {
+        switch ($datetype) {
             case 'start':
                 return gmdate("Y-m-d\TH:i:s\Z", time());
             case 'due':
@@ -565,7 +566,7 @@ function turnitintooltwo_generate_part_dates($renewdates, $date_type, $part, $i)
                 return NULL;
         }
     } else {
-        $attribute = "dt".$date_type.$i;
+        $attribute = "dt".$datetype.$i;
         return gmdate("Y-m-d\TH:i:s\Z", $part->$attribute);
     }
 }
@@ -594,7 +595,7 @@ function turnitintooltwo_reset_part_update($part, $i) {
  * @return array The Result of the turnitintooltwo_duplicate_recycle call
  */
 function turnitintooltwo_reset_userdata($data) {
-    $renew_dates = isset($data->renew_assignment_dates) ? 1 : null;
+    $renewdates = isset($data->renew_assignment_dates) ? 1 : null;
 
     $action = 'UNTOUCHED';
     switch ($data->reset_turnitintooltwo) {
@@ -606,7 +607,7 @@ function turnitintooltwo_reset_userdata($data) {
             break;
     }
 
-    $status = turnitintooltwo_duplicate_recycle($data->courseid, $action, $renew_dates);
+    $status = turnitintooltwo_duplicate_recycle($data->courseid, $action, $renewdates);
 
     return $status;
 }
