@@ -155,7 +155,7 @@ class restore_turnitintooltwo_activity_structure_step extends restore_activity_s
         }
 
         // Check if this hash already exists.
-        if ($check_hash = $DB->get_record('turnitintooltwo_submissions', array('submission_hash' => $data->submission_hash))) {
+        if ($DB->get_record('turnitintooltwo_submissions', array('submission_hash' => $data->submission_hash))) {
             $data->submission_hash = turnitintooltwo_genUuid();
         }
 
