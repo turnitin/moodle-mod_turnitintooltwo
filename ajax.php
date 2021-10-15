@@ -302,7 +302,6 @@ switch ($action) {
                                                             'submission_part' => $partid));
             $return["end"] = $start + TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
             $return["total"] = $_SESSION["num_submissions"][$partid];
-            $return["nonsubmitters"] = $return["total"] - $totalsubmitters;
 
             // Remove any leftover submissions from session and update grade timestamp.
             if ($return["end"] >= $return["total"]) {
