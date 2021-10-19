@@ -54,10 +54,9 @@ class turnitintooltwo_view {
      * Load the Javascript and CSS components for page.
      *
      * @global type $PAGE
-     * @global type $CFG
      */
     public function load_page_components($hidebg = false) {
-        global $PAGE, $CFG;
+        global $PAGE;
 
         // Include CSS.
         if ($hidebg) {
@@ -117,10 +116,11 @@ class turnitintooltwo_view {
      * Output the Menu in the settings area as an HTML list
      *
      * @global type $CFG
+     * @global type $DB
      * @return output the menu as an HTML list
      */
     public function draw_settings_menu($cmd) {
-        global $CFG, $OUTPUT, $DB;
+        global $CFG, $DB;
 
         $tabs = array();
 
@@ -622,13 +622,14 @@ class turnitintooltwo_view {
                 $messagesinbox = '';
                 if ($turnitintooltwouser->get_user_role() == 'Instructor') {
                     $icon = html_writer::tag('i', '', array('class' => 'fa fa-envelope-o fa-lg'));
+                    $loading_icon = $OUTPUT->pix_icon('loading',
+                        get_string('turnitinloading', 'turnitintooltwo'), 'mod_turnitintooltwo');
                     $messagesinbox = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.
-                                                        '&user='.$turnitintooltwouser->id.'&do=loadmessages&view_context=box',
-                                                            $icon.' '.get_string('messagesinbox', 'turnitintooltwo').
-                                                            ' ('.html_writer::tag('span', '', array('class' => 'messages_amount')).
-                                                                html_writer::tag('span', $OUTPUT->pix_icon('loading',
-                                                                get_string('turnitinloading', 'turnitintooltwo'), 'mod_turnitintooltwo'),
-                                                                array('class' => 'mod_turnitintooltwo_messages_loading')).')',
+                                                    '&user='.$turnitintooltwouser->id.'&do=loadmessages&view_context=box',
+                                                        $icon.' '.get_string('messagesinbox', 'turnitintooltwo').
+                                                        ' ('.html_writer::tag('span', '', array('class' => 'messages_amount')).
+                                                            html_writer::tag('span', $loading_icon,
+                                                            array('class' => 'mod_turnitintooltwo_messages_loading')).')',
                                                 array("class" => "mod_turnitintooltwo_messages_inbox"));
                 }
 
