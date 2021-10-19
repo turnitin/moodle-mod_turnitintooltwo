@@ -709,7 +709,6 @@ function turnitintooltwo_cron() {
 
     // Perform gradebook migrations for submissions that were not actioned during the migration tool.
     turnitintooltwo_cron_migrate_gradebook();
-
 }
 
 /**
