@@ -54,7 +54,7 @@ class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
 
         $response = $receipt_message->build_message($message);
 
-        $message_text = "Dear %s %s,<br /><br />You have successfully submitted the file <strong>%s</strong> to the assignment <strong>%s</strong> in the class <strong>%s</strong> on <strong>%s</strong>. Your submission id is <strong>%s</strong>. Your full digital receipt can be viewed and printed from the assignment inbox or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team";
+        $message_text = format_string("Dear %s %s,<br /><br />You have successfully submitted the file <strong>%s</strong> to the assignment <strong>%s</strong> in the class <strong>%s</strong> on <strong>%s</strong>. Your submission id is <strong>%s</strong>. Your full digital receipt can be viewed and printed from the assignment inbox or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team");
 
         $this->assertEquals(sprintf($message_text, $message['firstname'], $message['lastname'], $message['submission_title'], $message['assignment_name'], $message['course_fullname'], $date, $message['submission_id']) , $response);
     }
@@ -76,7 +76,7 @@ class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
 
         $response = $receipt_message->build_message($message);
 
-        $messagetext = "Dear %s %s,<br /><br />You have successfully submitted the file <strong>%s</strong> to the assignment <strong>%s: %s</strong> in the class <strong>%s</strong> on <strong>%s</strong>. Your submission id is <strong>%s</strong>. Your full digital receipt can be viewed and printed from the assignment inbox or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team";
+        $messagetext = format_string("Dear %s %s,<br /><br />You have successfully submitted the file <strong>%s</strong> to the assignment <strong>%s: %s</strong> in the class <strong>%s</strong> on <strong>%s</strong>. Your submission id is <strong>%s</strong>. Your full digital receipt can be viewed and printed from the assignment inbox or from the print/download button in the document viewer.<br /><br />Thank you for using Turnitin,<br /><br />The Turnitin Team");
 
         $this->assertEquals(sprintf($messagetext, $message['firstname'], $message['lastname'],
             $message['submission_title'], $message['assignment_name'], $message['assignment_part'],

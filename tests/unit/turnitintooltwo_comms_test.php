@@ -48,8 +48,8 @@ class mod_turnitintooltwo_comms_testcase extends advanced_testcase {
 		try {
 			throw new Exception("Throw a fake exception for testing.");
 		} catch(Exception $e) {
-		}		
-		
+		}
+
 		$turnitintooltwocomms = new turnitintooltwo_comms();
 		// Check error string with debugging set to developer level.
 		$CFG->debug = DEBUG_DEVELOPER;
@@ -57,13 +57,13 @@ class mod_turnitintooltwo_comms_testcase extends advanced_testcase {
 
 		// Error string should contain the file, line and the message.
 		if (is_callable(array($e, 'getFile'))) {
-			$this->assertContains($e->getFile(), $errorstring);
+			$this->assertStringContainsString($e->getFile(), $errorstring);
 		}
 		if (is_callable(array($e, 'getLine'))) {
-			$this->assertContains((string)$e->getLine(), $errorstring);
+			$this->assertStringContainsString((string)$e->getLine(), $errorstring);
 		}
 		if (is_callable(array($e, 'getMessage'))) {
-			$this->assertContains($e->getMessage(), $errorstring);
+			$this->assertStringContainsString($e->getMessage(), $errorstring);
 		}
 
 		// Check error string with debugging set to normal level.
@@ -72,13 +72,13 @@ class mod_turnitintooltwo_comms_testcase extends advanced_testcase {
 
 		// Error string should not contain the file and line, only the message.
 		if (is_callable(array($e, 'getFile'))) {
-			$this->assertNotContains($e->getFile(), $errorstring);
+			$this->assertStringNotContainsString($e->getFile(), $errorstring);
 		}
 		if (is_callable(array($e, 'getLine'))) {
-			$this->assertNotContains((string)$e->getLine(), $errorstring);
+			$this->assertStringNotContainsString((string)$e->getLine(), $errorstring);
 		}
 		if (is_callable(array($e, 'getMessage'))) {
-			$this->assertContains($e->getMessage(), $errorstring);
+			$this->assertStringContainsString($e->getMessage(), $errorstring);
 		}
 	}
 
