@@ -302,7 +302,6 @@ switch ($action) {
                                                             'submission_part' => $partid));
             $return["end"] = $start + TURNITINTOOLTWO_SUBMISSION_GET_LIMIT;
             $return["total"] = $_SESSION["num_submissions"][$partid];
-            $return["nonsubmitters"] = $return["total"] - $totalsubmitters;
 
             // Remove any leftover submissions from session and update grade timestamp.
             if ($return["end"] >= $return["total"]) {
@@ -479,13 +478,13 @@ switch ($action) {
                 $turnitinclass = new turnitin_class($courseid);
             }
             $turnitinclass->read_class_from_tii();
-			$sharedrubrics = $turnitinclass->sharedrubrics;
+            $sharedrubrics = $turnitinclass->sharedrubrics;
 
-			foreach ($sharedrubrics as $group => $grouprubrics) {
-				foreach ($grouprubrics as $rubricid => $rubricname) {
-					$options[$group][$rubricid] = $rubricname;
-				}
-			}
+            foreach ($sharedrubrics as $group => $grouprubrics) {
+                foreach ($grouprubrics as $rubricid => $rubricname) {
+                    $options[$group][$rubricid] = $rubricname;
+                }
+            }
 
             // Get assignment details.
             if (!empty($assignmentid)) {
@@ -927,7 +926,7 @@ switch ($action) {
 
         $turnitintoolid = required_param('turnitintoolid', PARAM_INT);
 
-        // Check if v1 id is linked to a v2 id in the session
+        // Check if v1 id is linked to a v2 id in the session.
         $turnitintooltwoid = 0;
         if ( isset( $_SESSION["migrationtool"][$turnitintoolid] ) && is_numeric( $_SESSION["migrationtool"][$turnitintoolid] ) ) {
             $turnitintooltwoid = intval( $_SESSION["migrationtool"][$turnitintoolid] );

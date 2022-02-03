@@ -308,12 +308,12 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         // Drop unused fields
         $table = new xmldb_table('turnitintooltwo_submissions');
         $field = new xmldb_field('submission_status');
-        if (!$dbman->field_exists($table, $field)) {
+        if ($dbman->field_exists($table, $field)) {
             $dbman->drop_field($table, $field);
         }
 
         $field = new xmldb_field('submission_queued');
-        if (!$dbman->field_exists($table, $field)) {
+        if ($dbman->field_exists($table, $field)) {
             $dbman->drop_field($table, $field);
         }
 
@@ -329,6 +329,23 @@ function xmldb_turnitintooltwo_upgrade($oldversion) {
         set_config('default_erater_style', null, 'turnitintooltwo');
 
         upgrade_mod_savepoint(true, 2021060801, 'turnitintooltwo');
+    }
+
+    // Need to drop these again in case they weren't in previous upgrade.
+    if ($oldversion < 2021073001) {
+        // Drop unused fields
+        $table = new xmldb_table('turnitintooltwo_submissions');
+        $field = new xmldb_field('submission_status');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        $field = new xmldb_field('submission_queued');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        upgrade_mod_savepoint(true, 2021073001, 'turnitintooltwo');
     }
 
     return true;

@@ -52,7 +52,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
         $pageheading = 'Fake Heading';
         $turnitintooltwoview->output_header($pageurl, $pagetitle, $pageheading, true);
 
-        $this->assertContains($pageurl, (string)$PAGE->url);
+        $this->assertStringContainsString($pageurl, (string)$PAGE->url);
         $this->assertEquals($pagetitle, $PAGE->title);
         $this->assertEquals($pageheading, $PAGE->heading);
     }
@@ -78,7 +78,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 
         // Test that tab is present.
         $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
-        $this->assertContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
+        $this->assertStringContainsString(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
     }
 
     /**
@@ -99,7 +99,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
         }
 
         $tabs = $turnitintooltwoview->draw_settings_menu('v1migration');
-        $this->assertNotContains(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
+        $this->assertStringNotContainsString(get_string('v1migrationtitle', 'turnitintooltwo'), $tabs);
 
         if (boolval($module)) {
             $tmpmodule->plugin = 'mod_turnitintool';
@@ -131,8 +131,8 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$turnitintooltwoview = new turnitintooltwo_view();
 		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
 
-		$this->assertContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
-		$this->assertContains("<tbody class=\"empty\"><tr><td colspan=\"16\"></td></tr></tbody>", $table, 'datatable did not contain the expected empty tbody');
+		$this->assertStringContainsString(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertStringContainsString("<tbody class=\"empty\"><tr><td colspan=\"16\"></td></tr></tbody>", $table, 'datatable did not contain the expected empty tbody');
 	}
 
 	public function test_inbox_table_structure_student() {
@@ -176,9 +176,9 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		reset($partdetails);
 		$partid = key($partdetails);
 
-		$this->assertNotContains(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table contained unexpected text "'.get_string('studentlastname','turnitintooltwo').'"');
-		$this->assertContains("<table class=\"mod_turnitintooltwo_submissions_data_table\" id=\"$partid\">", $table, 'Return did not include the expected table.');
-		$this->assertContains("<td class=\"centered_cell cell c0\" style=\"\">$partid</td>", $table, 'Return did not contain the expected student row.');
+		$this->assertStringNotContainsString(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table contained unexpected text "'.get_string('studentlastname','turnitintooltwo').'"');
+		$this->assertStringContainsString("<table class=\"mod_turnitintooltwo_submissions_data_table\" id=\"$partid\">", $table, 'Return did not include the expected table.');
+		$this->assertStringContainsString("<td class=\"centered_cell cell c0\" style=\"\">$partid</td>", $table, 'Return did not contain the expected student row.');
 	}
 
     /**
@@ -205,17 +205,17 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
         // Show delete link to student if a submission has only been made to moodle and the due date hasn't passed.
         $submission = new stdClass();
         $submission->id = 1;
-        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()+1000, 1);
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time() + 1000, 1);
         $this->assertEquals(true, $showdeletelink);
 
         // Show delete link to student if a submission has only been made to moodle,
         // the due date has passed and late submissions are allowed.
-        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()-1, 1);
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time() - 1, 1);
         $this->assertEquals(true, $showdeletelink);
 
         // Do not show delete link to student if a submission has only been made to moodle,
         // the due date has passed and late submissions are not allowed.
-        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time()-1, 0);
+        $showdeletelink = $turnitintooltwoview->show_delete_link(false, $submission, time() - 1, 0);
         $this->assertEquals(false, $showdeletelink);
 
         // Do not show delete link to student if a submission has been sent to Turnitin.

@@ -937,7 +937,7 @@
                         enableEditingText(part_id);
 
                         // Enable Email non submitters link if there is any non submitters.
-                        if (result.nonsubmitters > 0) {
+                        if (result.total > $('.mod_turnitintooltwo_submissions_data_table .refresh_row').length) {
                             $('.mod_turnitintooltwo_nonsubmitters_link').attr('style', 'display: block');
                         }
                     }

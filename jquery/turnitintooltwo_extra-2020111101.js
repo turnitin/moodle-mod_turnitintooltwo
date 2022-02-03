@@ -354,7 +354,7 @@ jQuery(document).ready(function($) {
     // Show light box to change the end date of a course.
     function initialiseEditEndDate() {
         $("a.edit_course_end_link").colorbox({
-            inline:true, width:"60%", top: "100px", background: "#fff", height:"260px", opacity: "0.7", className: "edit_end_date_form",
+            inline:true, width:"60%", top: "100px", background: "#fff", height:"315px", opacity: "0.7", className: "edit_end_date_form",
             onLoad: function() {
                 lightBoxCloseButton();
             },

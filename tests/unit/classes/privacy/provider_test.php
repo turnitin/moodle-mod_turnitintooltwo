@@ -38,7 +38,7 @@ if (!class_exists('\core_privacy\tests\provider_testcase')) {
 
 class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\provider_testcase {
 
-    public function setup() {
+    public function setUp(): void {
         global $DB;
 
         $this->resetAfterTest();
@@ -221,7 +221,6 @@ class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\
 
         // Create a second assignment.
         $turnitintooltwoassignment2 = $this->testcase->make_test_tii_assignment();
-        // $cm2 = get_coursemodule_from_instance('turnitintooltwo', $turnitintooltwoassignment2->turnitintooltwo->id);
 
         // Set up second module.
         $cm2id = $this->testcase->make_test_module(
