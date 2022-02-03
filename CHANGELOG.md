@@ -1,21 +1,35 @@
+### Date:		2022-Feb-03
+### Release:	v2022020301
+
+---
+
+#### Setting an assignment to grade type ‘none’ will no longer create a Moodle gradebook column
+Creating an assignment with the grade type set to ‘none’ would create a column in the Moodle gradebook after the first submission to the assignment. We’ve fixed this bug, and the column will no longer be created.
+
+#### Grades will update when a grade item can’t be found
+When the automatic scheduler (cron) runs to update grades, it could fail when it tried to update a grade item that couldn’t be found. We’ve improved how grades update, and this scenario will no longer prevent the rest of the grades from updating.
+
+#### Submit on behalf of a student, even when ‘allow late submissions’ is not enabled
+The ‘allow late submissions’ setting should only prevent students from submitting to class. You, as the instructor, should always have control over the assignments you create. This change allows you to submit on behalf of a student without needing to open up late submissions for the entire class.
+
+---
+
 ### Date:		2021-Jun-08
 ### Release:	v2021060801
 
----
-
-####Support for Moodle 3.11
+#### Support for Moodle 3.11
 You can now confidently use this integration with Moodle 3.11.
 
-####Submit button is no longer visible after the due date
+#### Submit button is no longer visible after the due date
 The submit button will no longer be shown to students who have already submitted to the assignment when the due date has passed. The current functionality will remain for users who have not already submitted.
 
-####Delete parts without errors
+#### Delete parts without errors
 The option to delete a part will now only show after there is more than one part used. When there is only one part, we’ll no longer show the deletion option to prevent the assignment from potentially breaking.
+
+---
 
 ### Date:		2020-Nov-18
 ### Release:	v2020111801
-
----
 
 #### :wrench: Fixes and enhancements
 
