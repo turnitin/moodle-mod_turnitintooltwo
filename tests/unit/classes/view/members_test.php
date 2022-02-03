@@ -44,22 +44,22 @@ class mod_turnitintooltwo_view_members_testcase extends advanced_testcase {
         $actualmessage       = $members->build_intro_message();
         $expectedmessagetext = get_string('turnitinstudents_desc', 'turnitintooltwo');
 
-        $this->assertContains($expectedmessagetext, $actualmessage);
+        $this->assertStringContainsString($expectedmessagetext, $actualmessage);
 
         $actualmessage       = $members->build_intro_message("students");
         $expectedmessagetext = get_string("turnitinstudents_desc", "turnitintooltwo");
 
-        $this->assertContains($expectedmessagetext, $actualmessage);
+        $this->assertStringContainsString($expectedmessagetext, $actualmessage);
 
         $actualmessage       = $members->build_intro_message("foobar");
         $expectedmessagetext = get_string("turnitinstudents_desc", "turnitintooltwo");
 
-        $this->assertContains($expectedmessagetext, $actualmessage);
+        $this->assertStringContainsString($expectedmessagetext, $actualmessage);
 
         $actualmessage       = $members->build_intro_message("tutors");
         $expectedmessagetext = get_string("turnitintutors_desc", "turnitintooltwo");
 
-        $this->assertContains($expectedmessagetext, $actualmessage);
+        $this->assertStringContainsString($expectedmessagetext, $actualmessage);
     }
 
     /**

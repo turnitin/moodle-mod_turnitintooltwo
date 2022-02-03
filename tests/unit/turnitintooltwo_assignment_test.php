@@ -55,9 +55,9 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 		$originaltitle = 'Test String is truncated and has a suffix added on the end with brackets showing the moodle coursetype';
 		$limit = 30;
 		$title = $turnitintooltwoassignment->truncate_title($originaltitle, $limit, 'TT');
-		$this->assertContains('Test String', $title);
-		$this->assertNotContains('added on the end', $title);
-		$this->assertContains('... (Moodle TT)', $title);
+		$this->assertStringContainsString('Test String', $title);
+		$this->assertStringNotContainsString('added on the end', $title);
+		$this->assertStringContainsString('... (Moodle TT)', $title);
 		$this->assertEquals($limit, strlen($title));
 	}
 
@@ -68,7 +68,7 @@ class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
 		$turnitintooltwo = new stdClass();
 		$turnitintooltwo->id = 1;
 
-		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);		
+		$turnitintooltwoassignment = new turnitintooltwo_assignment(0, $turnitintooltwo);
 		$turnitintooltwoassignment->set_checkbox_field('testvar1');
 
 		// Verify that checkbox fields are set to 0 by default.

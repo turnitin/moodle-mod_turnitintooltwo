@@ -268,7 +268,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
 
         // Test that assignment has been renamed.
         $updatedassignment = $DB->get_record('turnitintool', array('id' => $v1assignment->id));
-        $this->assertContains("(Migration in progress...)", $updatedassignment->name);
+        $this->assertStringContainsString("(Migration in progress...)", $updatedassignment->name);
 
         // Test that assignment has been hidden.
         $cm = get_coursemodule_from_instance('turnitintool', $v1assignment->id);
@@ -949,6 +949,6 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         // Test that warning message is shown to user if they aren't allowed to edit migration tool status.
         $form = v1migration::output_settings_form(false);
 
-        $this->assertContains(get_string('migrationtoolaccounterror', 'turnitintooltwo'), $form);
+        $this->assertStringContainsString(get_string('migrationtoolaccounterror', 'turnitintooltwo'), $form);
     }
 }
