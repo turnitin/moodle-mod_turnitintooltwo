@@ -204,7 +204,7 @@ class turnitintooltwo_submission {
             }
 
             if ($submission->userid > 0) {
-                if ($CFG->branch == 311) {
+                if ($CFG->branch >= 311) {
                     $allnamefields = implode(', ', \core_user\fields::get_name_fields());
                 } else {
                     $allnamefields = implode(', ', get_all_user_name_fields());

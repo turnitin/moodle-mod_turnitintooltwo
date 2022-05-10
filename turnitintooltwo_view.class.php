@@ -636,10 +636,18 @@ class turnitintooltwo_view {
                 // Check that nonsubmitter messages have been configured to be sent.
                 $messageoutputs = get_config('message');
                 $nonsubsemailpermitted = false;
-                foreach ($messageoutputs as $k => $v) {
-                    if (strpos($k, '_mod_turnitintooltwo_nonsubmitters_loggedin') !== false ) {
+
+                if ($CFG->branch >= 400) {
+                    if (isset($messageoutputs->mod_turnitintooltwo_nonsubmitters_disable) && $messageoutputs->mod_turnitintooltwo_nonsubmitters_disable == "0") {
                         $nonsubsemailpermitted = true;
-                        break;
+                    }
+                } else {
+                    // Support for older versions.
+                    foreach ($messageoutputs as $k => $v) {
+                        if (strpos($k, '_mod_turnitintooltwo_nonsubmitters_loggedin') !== false) {
+                            $nonsubsemailpermitted = true;
+                            break;
+                        }
                     }
                 }
 
