@@ -569,7 +569,7 @@ function turnitintooltwo_generate_part_dates($renewdates, $datetype, $part, $i, 
             case 'due':
             case 'post':
                 // UCL: Changed post/due dates to use course end date, instead of current date.
-                if (!is_null($currentcourse)) {
+                if (!empty($currentcourse->enddate) && $currentcourse->enddate > time()) {
                     return gmdate("Y-m-d\TH:i:s\Z", $currentcourse->enddate);
                 } else {
                     return gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week"));
