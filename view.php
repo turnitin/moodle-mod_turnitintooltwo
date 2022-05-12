@@ -98,7 +98,7 @@ $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
 // Set the page layout to standard.
-$PAGE->set_pagelayout('base');
+$PAGE->set_pagelayout('incourse');
 $PAGE->set_cm($cm);
 $config = turnitintooltwo_admin_config();
 
