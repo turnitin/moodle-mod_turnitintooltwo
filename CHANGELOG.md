@@ -1,3 +1,15 @@
+### Date:		2022-May-12
+### Release:	v2022051201
+
+---
+
+#### UI improvements to support new 4.0 Boost theme.
+We’ve made some improvements to how our interfaces looks when using Moodle’s new 4.0 Boost Theme. Everything will still feel familiar, but there shouldn’t be any elements that squashed when making the switch to the new theme.
+
+#### Notify students who have not submitted yet
+A bug had caused our Notify Non-Submitters feature to break temporarily. We’ve fixed this issue, and you can now notify students when they have not submitted to the assignment yet.
+
+---
 ### Date:		2022-Feb-03
 ### Release:	v2022020301
 

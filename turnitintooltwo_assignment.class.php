@@ -1915,7 +1915,7 @@ class turnitintooltwo_assignment {
         $istutor = has_capability('mod/turnitintooltwo:grade', $context);
 
         // If logged in as instructor then get for all users.
-        if ($CFG->branch == 311) {
+        if ($CFG->branch >= 311) {
             $allnamefields = implode(', ', \core_user\fields::get_name_fields());
         } else {
             $allnamefields = implode(', ', get_all_user_name_fields());
