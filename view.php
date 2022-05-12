@@ -97,8 +97,8 @@ require_login($course->id, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/turnitintooltwo:view', $context);
 
-// Set the page layout to standard.
-$PAGE->set_pagelayout('standard');
+// Set the page layout to incourse - to make it full width.
+$PAGE->set_pagelayout('incourse');
 $PAGE->set_cm($cm);
 $config = turnitintooltwo_admin_config();
 

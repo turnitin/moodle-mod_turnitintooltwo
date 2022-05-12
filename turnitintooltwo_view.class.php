@@ -634,14 +634,7 @@ class turnitintooltwo_view {
                 }
 
                 // Check that nonsubmitter messages have been configured to be sent.
-                $messageoutputs = get_config('message');
-                $nonsubsemailpermitted = false;
-                foreach ($messageoutputs as $k => $v) {
-                    if (strpos($k, '_mod_turnitintooltwo_nonsubmitters_loggedin') !== false ) {
-                        $nonsubsemailpermitted = true;
-                        break;
-                    }
-                }
+                $nonsubsemailpermitted = $this->is_nonsubmitter_emails_enabled();
 
                 // Link to email nonsubmitters.
                 $emailnonsubmitters = '';
@@ -2015,5 +2008,28 @@ class turnitintooltwo_view {
 
         $output = $OUTPUT->box($form->display(), 'generalbox boxaligncenter', 'general');
         return $output;
+    }
+
+    /**
+     * Check whether email nosubmitters is enabled, and return true if so.
+     */
+    private function is_nonsubmitter_emails_enabled() {
+        global $CFG;
+
+        $messageoutputs = get_config('message');
+
+        if ($CFG->branch >= 400) {
+            if (isset($messageoutputs->mod_turnitintooltwo_nonsubmitters_disable) && $messageoutputs->mod_turnitintooltwo_nonsubmitters_disable == "0") {
+                return true;
+            }
+        } else {
+            // Support for older versions.
+            foreach ($messageoutputs as $k => $v) {
+                if (strpos($k, '_mod_turnitintooltwo_nonsubmitters_loggedin') !== false) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
