@@ -411,7 +411,9 @@ class turnitintooltwo_assignment {
         // account for the Turnitin viewer becoming read-only once the class end date passes.
         if (!empty($course->enddate)) {
             $enddate = strtotime('+1 month', $course->enddate);
-            $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            if ($enddate > time()) {
+                $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            }
         }
 
         try {
