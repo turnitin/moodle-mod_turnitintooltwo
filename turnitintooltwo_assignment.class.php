@@ -622,7 +622,7 @@ class turnitintooltwo_assignment {
         $members = array_keys($students);
         foreach ($members as $member) {
             // Don't include user if they are suspended.
-            if (isset($suspendedusers[$user->id])) {
+            if (isset($suspendedusers[$member])) {
                 continue;
             }
             $user = new turnitintooltwo_user($member, "Learner");
