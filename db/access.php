@@ -48,7 +48,7 @@ $capabilities = array(
 
     'mod/turnitintooltwo:submit' => array(
 
-        'captype' => 'write',
+        'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'legacy' => array(
             'student' => CAP_ALLOW
@@ -57,7 +57,7 @@ $capabilities = array(
 
     'mod/turnitintooltwo:grade' => array(
 
-        'captype' => 'write',
+        'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'legacy' => array(
             'teacher' => CAP_ALLOW,
