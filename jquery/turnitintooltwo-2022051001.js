@@ -571,7 +571,7 @@
         // Open an iframe light box containing the Peermark Manager.
         if ($('.tii_peermark_manager_launch').length > 0) {
             $('.tii_peermark_manager_launch').colorbox({
-                iframe: true, width: "802px", height: "772px", opacity: "0.7", className: "peermark_manager", transition: "none",
+                iframe: true, width: "915px", height: "772px", opacity: "0.7", className: "peermark_manager", transition: "none",
                 onLoad: function () {
                     lightBoxCloseButton();
                     getLoadingGif();
