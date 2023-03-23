@@ -1,3 +1,15 @@
+### Date:       2023-March-23
+### Release:    v2023032301
+
+#### UI improvements for PHP 8+ users
+There was a bug with PHP 8+ users that casued the assignment inbox to be stuck in a loading state. This happens when users select to view grades as a percentage in the
+assignment's settings. We have fixed this bug and the assignment inbox loads as normal.
+
+#### PeerMark manager modal size change
+We've updated the size of the PeerMark manager modal so that all buttons and features are more accessible without having to scroll to the left or right side of the modal.
+
+---
+
 ### Date:		2022-May-12
 ### Release:	v2022051201
 
