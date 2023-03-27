@@ -1,5 +1,5 @@
-### Date:       2023-March-23
-### Release:    v2023032301
+### Date:       2023-March-27
+### Release:    v2023032701
 
 #### UI improvements for PHP 8+ users
 There was a bug with PHP 8+ users that casued the assignment inbox to be stuck in a loading state. This happens when users select to view grades as a percentage in the
