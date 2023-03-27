@@ -1167,7 +1167,7 @@ function turnitintooltwo_sort_array(&$data, $sortcol, $sortdir) {
 }
 
 /**
- * Get files for displaying in settings. Called from ajax.php via turnitintooltwo-2022051001.min.js.
+ * Get files for displaying in settings. Called from ajax.php via turnitintooltwo-2023032701.min.js.
  *
  * @param  $moduleid the id of the module to return files for
  * @global type $DB
@@ -1290,7 +1290,7 @@ function turnitintooltwo_pluginfile($course,
 }
 
 /**
- * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo-2022051001.min.js.
+ * Get users for unlinking/relinking. Called from ajax.php via turnitintooltwo-2023032701.min.js.
  *
  * @global type $DB
  * @return array return array of users to display

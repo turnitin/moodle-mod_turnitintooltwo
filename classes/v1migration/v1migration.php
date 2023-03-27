@@ -550,7 +550,7 @@ class v1migration {
     }
 
     /**
-     * Get assignments for migrated data table. Called from ajax.php via turnitintooltwo_extra-2022051001.min.js.
+     * Get assignments for migrated data table. Called from ajax.php via turnitintooltwo_extra-2023032701.min.js.
      *
      * @global type $DB
      * @return array return array of assignments to display
