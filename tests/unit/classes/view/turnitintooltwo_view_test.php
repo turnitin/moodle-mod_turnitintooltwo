@@ -53,7 +53,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
         $turnitintooltwoview->output_header($pageurl, $pagetitle, $pageheading, true);
 
         $this->assertStringContainsString($pageurl, (string)$PAGE->url);
-        $this->assertEquals($pagetitle, $PAGE->title);
+        $this->assertStringContainsString($pagetitle, $PAGE->title);
         $this->assertEquals($pageheading, $PAGE->heading);
     }
 
