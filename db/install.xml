@@ -133,7 +133,7 @@
                 <FIELD NAME="submission_title" TYPE="text" LENGTH="medium" NOTNULL="true" SEQUENCE="false" COMMENT="Title of Submission" PREVIOUS="submission_part" NEXT="submission_type"/>
                 <FIELD NAME="submission_type" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_title" NEXT="submission_filename"/>
                 <FIELD NAME="submission_filename" TYPE="text" LENGTH="medium" NOTNULL="false" SEQUENCE="false" COMMENT="Name of Submitted File" PREVIOUS="submission_type" NEXT="submission_objectid"/>
-                <FIELD NAME="submission_objectid" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_filename" NEXT="submission_score"/>
+                <FIELD NAME="submission_objectid" TYPE="int" LENGTH="30" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_filename" NEXT="submission_score"/>
                 <FIELD NAME="submission_score" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_objectid" NEXT="submission_grade"/>
                 <FIELD NAME="submission_grade" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="submission_score" NEXT="submission_gmimaged"/>
                 <FIELD NAME="submission_gmimaged" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="false" DEFAULT="0" SEQUENCE="false" PREVIOUS="submission_grade" NEXT="submission_attempts"/>
