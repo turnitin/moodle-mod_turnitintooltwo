@@ -131,15 +131,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $mform =& $this->_form;
 
-        // Add in custom Javascript and CSS.
-        $PAGE->requires->jquery();
-        $PAGE->requires->jquery_plugin('ui');
-        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
-        $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
-        $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
-
-        $PAGE->requires->string_for_js('anonalert', 'turnitintooltwo');
-
         $script = html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                         "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
         $script .= html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
