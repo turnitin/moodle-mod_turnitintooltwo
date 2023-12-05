@@ -846,7 +846,7 @@ function turnitintooltwo_cron_update_gradbook($assignment, $task) {
 }
 
 /**
- * Abstracted version of print_error()
+ * Abstracted version of throw new moodle_exception() - formerly print_error()
  *
  * @param string $input The error string if module = null otherwise the language string called by get_string()
  * @param string $module The module string
@@ -870,7 +870,7 @@ function turnitintooltwo_print_error($input, $module = 'turnitintooltwo',
         $message .= ' ('.basename($file).' | '.$line.')';
     }
 
-    print_error($input, 'turnitintooltwo', $link, $message);
+    throw new moodle_exception($input, 'turnitintooltwo', $link, $message);
     exit();
 }
 
