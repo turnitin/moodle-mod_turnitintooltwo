@@ -708,14 +708,6 @@ class turnitintooltwo_view {
         $partsheaders = $cells;
 
         $cells = array();
-        // Link to show intro/summary.
-        $links = "";
-        if (!empty($turnitintooltwoassignment->turnitintooltwo->intro)) {
-            $hideclass = 'hide_summary_'.$turnitintooltwoassignment->turnitintooltwo->id;
-            $hidetext = html_writer::tag('i', '', array('class' => 'fa fa-minus-circle red fa-lg '.$hideclass));
-            $showclass = 'show_summary_'.$turnitintooltwoassignment->turnitintooltwo->id;
-            $showtext = html_writer::tag('i', '', array('class' => 'fa fa-plus-circle green fa-lg '.$showclass));
-        }
 
         // Allow part name to be editable if a tutor is logged in.
         $textfield = $partdetails[$partid]->partname;
