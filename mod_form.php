@@ -34,7 +34,18 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     private $turnitintooltwo;
 
     public function definition() {
-        global $DB, $USER, $COURSE;
+        global $DB, $USER, $COURSE, $PAGE;
+
+        // Don't do anything here if called from a completion page as output has already begun.
+        // This is needed because of MDL-78528.
+        $completionpagetypes = [
+            'course-defaultcompletion' => 'Edit completion default settings (Moodle >= 4.3)',
+            'course-editbulkcompletion' => 'Edit completion settings in bulk for a single course',
+            'course-editdefaultcompletion' => 'Edit completion default settings (Moodle < 4.3)',
+        ];
+        if (isset($completionpagetypes[$PAGE->pagetype])) {
+            return;
+        }
 
         // Module string is useful for product support.
         $modulestring = '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - (';
@@ -130,6 +141,15 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $config = turnitintooltwo_admin_config();
 
         $mform =& $this->_form;
+
+        // Add in custom Javascript and CSS.
+        $PAGE->requires->jquery();
+        $PAGE->requires->jquery_plugin('ui');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-turnitintooltwo', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-colorbox', 'mod_turnitintooltwo');
+        $PAGE->requires->jquery_plugin('turnitintooltwo-moment', 'mod_turnitintooltwo');
+
+        $PAGE->requires->string_for_js('anonalert', 'turnitintooltwo');
 
         $script = html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
                                                         "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
@@ -612,7 +632,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $features->groupmembersonly = true;
         $this->standard_coursemodule_elements($features);
         $this->add_action_buttons();
-
     }
 
     /**
@@ -711,4 +730,5 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         return $current;
     }
+
 }
