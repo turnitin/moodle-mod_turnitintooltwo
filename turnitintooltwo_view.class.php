@@ -721,6 +721,7 @@ class turnitintooltwo_view {
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
         }
+        $cells[0] = new html_table_cell($turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
 
         // Allow start date field to be editable if a tutor is logged in.
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';
