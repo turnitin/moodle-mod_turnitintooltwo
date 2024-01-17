@@ -708,15 +708,6 @@ class turnitintooltwo_view {
         $partsheaders = $cells;
 
         $cells = array();
-        // Link to show intro/summary.
-        $links = "";
-        if (!empty($turnitintooltwoassignment->turnitintooltwo->intro)) {
-            $hideclass = 'hide_summary_'.$turnitintooltwoassignment->turnitintooltwo->id;
-            $hidetext = html_writer::tag('i', '', array('class' => 'fa fa-minus-circle red fa-lg '.$hideclass));
-            $showclass = 'show_summary_'.$turnitintooltwoassignment->turnitintooltwo->id;
-            $showtext = html_writer::tag('i', '', array('class' => 'fa fa-plus-circle green fa-lg '.$showclass));
-            $links = html_writer::link('javascript:void(0)', $showtext.$hidetext , array('class' => 'toggle_summary'));
-        }
 
         // Allow part name to be editable if a tutor is logged in.
         $textfield = $partdetails[$partid]->partname;
@@ -730,7 +721,7 @@ class turnitintooltwo_view {
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
         }
-        $cells[0] = new html_table_cell($links.$turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
+        $cells[0] = new html_table_cell($turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
 
         // Allow start date field to be editable if a tutor is logged in.
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';
