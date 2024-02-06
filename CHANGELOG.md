@@ -1,3 +1,15 @@
+### Date:       2024-February-06
+### Release:    v2024020601
+
+#### Anonymous Marking Fixed
+An issue has been resolved with anonymous marking, where previously when an instructor made a request to reveal a student’s name prior to the feedback release date, the required reason field for the early reveal was not actually being enforced. Instructors will now be required to fill in this field when deciding to reveal a student name early.
+
+#### Removed Summary Content in Moodle Direct V2 Assignment Inbox
+In versions 4.0+ of Moodle, the assignment summary content was being displayed twice in two separate locations. This update removes the display of the summary content from the Moodle Direct V2 inbox and it is now only displayed just above the inbox.
+
+#### Resolved Deprecated Warning Messages
+This release resolves the issue with deprecated SOAP warnings displaying in PHP 8+.
+
 ### Date:       2023-March-27
 ### Release:    v2023032701
 
