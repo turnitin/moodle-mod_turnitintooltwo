@@ -1189,7 +1189,7 @@ class turnitintooltwo_view {
             $rawmodified = 1;
             $modified = html_writer::link($CFG->wwwroot."/mod/turnitintooltwo/view.php?id=".$cm->id."&action=manualsubmission".
                                             "&sub=".$submission->id.'&sesskey='.sesskey(),
-                                                $OUTPUT->pix_icon('icon-sml', get_string('submittoturnitin', 'turnitintooltwo'),
+                                                $OUTPUT->pix_icon('icon', get_string('submittoturnitin', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo')." ".get_string('submittoturnitin', 'turnitintooltwo'));
 
         } else if (empty($submission->submission_objectid)) {
