@@ -377,7 +377,7 @@ class turnitintooltwo_assignment {
             }
 
             turnitintooltwo_activitylog("Class created - ".$turnitincourse->courseid." | ".$turnitincourse->turnitin_cid.
-                                        " | ".$course->fullname . " (Moodle ".$coursetype.")" , "REQUEST");
+                                        " | ".$course->fullname . " (Moodle TT)" , "REQUEST");
 
             return $turnitincourse;
         } catch (Exception $e) {
