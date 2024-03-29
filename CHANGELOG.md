@@ -1,3 +1,10 @@
+### Date:       2024-March-29
+### Release:    v2024032901
+
+#### Export Buttons Fixed
+
+The export buttons along with the individual submission refresh and download buttons and the bulk submission download buttons are now functioning as expected.
+
 ### Date:       2024-February-06
 ### Release:    v2024020601
 
