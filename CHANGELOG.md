@@ -1,5 +1,12 @@
+### Date:       2024-March-29
+### Release:    v2024032901
+
+### Export Buttons Fixed
+
+The export buttons along with the individual submission refresh and download buttons and the bulk submission download buttons are now functioning as expected.
+
 ### Date:       2024-February-06
-### Release:    v2024032801
+### Release:    v2024020601
 
 #### Anonymous Marking Fixed
 An issue has been resolved with anonymous marking, where previously when an instructor made a request to reveal a student’s name prior to the feedback release date, the required reason field for the early reveal was not actually being enforced. Instructors will now be required to fill in this field when deciding to reveal a student name early.
