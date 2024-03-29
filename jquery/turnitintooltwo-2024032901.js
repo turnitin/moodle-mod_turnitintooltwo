@@ -1164,10 +1164,10 @@
         // ZIP containing all files in original format.
         function initialiseZipDownloads(part_id) {
             // Unbind the event first to stop it being binded multiple times.
-            $('#tabs-' + part_id + ' .orig_zip_open, #tabs-' + part_id + ' .pdf_zip_open, #tabs-' + part_id + ' .xls_inbox_open').off("click");
+            $('#tabs-' + part_id + ' .orig_zip_open, #tabs-' + part_id + ' .pdf_zip_open, #tabs-' + part_id + ' .xls_inbox_open').unbind("click");
 
             // Open a spreadsheet or a zip file containing all the relevant data.
-            $('#tabs-' + part_id + ' .orig_zip_open, #tabs-' + part_id + ' .pdf_zip_open, #tabs-' + part_id + ' .xls_inbox_open').on(function () {
+            $('#tabs-' + part_id + ' .orig_zip_open, #tabs-' + part_id + ' .pdf_zip_open, #tabs-' + part_id + ' .xls_inbox_open').click(function () {
                 var idStr = $(this).attr("id").split("_");
                 downloadZipFile(idStr[0] + "_" + idStr[1], idStr[2]);
             });
@@ -1239,9 +1239,9 @@
 
         function initialiseHiddenZipDownloads(part_id) {
             // Unbind the event first to stop it being binded multiple times.
-            $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').off("click");
+            $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').unbind("click");
             // Seperate binder for hidden zip file link.
-            $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').on(function () {
+            $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').click(function () {
                 var idStr = $(this).attr("id").split("_");
                 downloadZipFile(idStr[0] + "_" + idStr[1], part_id);
                 return false;
@@ -1255,9 +1255,9 @@
             }
 
             // Unbind the event first to stop it being binded multiple times.
-            $(identifier).off("click");
+            $(identifier).unbind("click");
 
-            $(identifier).on(function () {
+            $(identifier).click(function () {
                 $(this).hide();
                 $(this).siblings('.fa-spinner').css("display", "inline-block").addClass('fa-lg');
                 var idStr = $(this).parent().attr("id").split("_");
@@ -1273,9 +1273,9 @@
             }
 
             // Unbind the event first to stop it being binded multiple times.
-            $(identifier).off("click");
+            $(identifier).unbind("click");
 
-            $(identifier).on(function () {
+            $(identifier).click(function () {
                 var idStr = $(this).attr("id").split("_");
                 // Don't open OR DV if score is pending.
                 if (!$(this).children('.score_colour').hasClass('score_colour_')) {
@@ -1425,7 +1425,7 @@
                     $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').removeAttr("title");
                     initialiseHiddenZipDownloads(part_id);
                 } else {
-                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').off('click');
+                    $('#tabs-' + part_id + ' .mod_turnitintooltwo_origchecked_zip_open').unbind('click');
                     $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').prop("disabled", true);
                     $('#tabs-' + part_id + ' .mod_turnitintooltwo_zip_downloads button').prop("title", M.str.turnitintooltwo.download_button_warning);
                 }
