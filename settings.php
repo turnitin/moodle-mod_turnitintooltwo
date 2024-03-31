@@ -63,9 +63,10 @@ if ($ADMIN->fulltree) {
     }
 
     $tabmenu = $turnitintooltwoview->draw_settings_menu('settings').
-                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$librarywarning.
-                html_writer::tag('link', '', array("rel" => "stylesheet", "type" => "text/css",
-                                            "href" => $CFG->wwwroot."/mod/turnitintooltwo/styles.css"));
+                html_writer::tag('noscript', get_string('noscript', 'turnitintooltwo')).$librarywarning;
+
+    $cssurl = moodle_url::make_pluginfile_url(context_system::instance()->id, 'mod_turnitintooltwo', 'direct', null, '/', 'styles.css');
+    $PAGE->requires->css($cssurl);
 
     $currentsection = optional_param('section', '', PARAM_ALPHAEXT);
 
