@@ -1854,20 +1854,21 @@ class turnitintooltwo_assignment {
         }
 
         foreach ($submissions as $submission) {
-            if (!is_nan($submission->submission_grade) AND (!empty($submission->submission_gmimaged) || $istutor)
-                    AND !is_null($submission->submission_grade) AND $weightarray[$submission->submission_part] != 0) {
+            if (isset($submission->submission_grade) && !is_nan($submission->submission_grade)
+                && (!empty($submission->submission_gmimaged) || $istutor)
+                && !is_null($submission->submission_grade) && $weightarray[$submission->submission_part] != 0) {
                 $weightedgrade = $submission->submission_grade / $weightarray[$submission->submission_part];
                 $overallgrade += $weightedgrade * ($weightarray[$submission->submission_part] / $overallweight) * $maxgrade;
             }
         }
 
-        if (!is_null($overallgrade) AND $this->turnitintooltwo->grade < 0) {
+        if (!is_null($overallgrade) && $this->turnitintooltwo->grade < 0) {
             return ($overallgrade == 0) ? 1 : ceil($overallgrade);
         } else {
             if (is_null($overallgrade)) {
                 return "--";
             }
-            return (!is_nan($overallgrade) AND !is_null($overallgrade)) ? number_format($overallgrade, 2) : '--';
+            return (!is_nan($overallgrade) && !is_null($overallgrade)) ? number_format($overallgrade, 2) : '--';
         }
     }
 
