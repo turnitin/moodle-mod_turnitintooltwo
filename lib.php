@@ -251,7 +251,7 @@ function turnitintooltwo_grade_item_update($turnitintooltwo, $grades = null) {
 
     // Get the latest part, for the post date and set the default hidden value on grade item.
     $lastpart = $DB->get_record('turnitintooltwo_parts', array('turnitintooltwoid' => $turnitintooltwo->id), 'max(dtpost)');
-    $lastpart = current($lastpart);
+    $lastpart = current((array)$lastpart);
     $params['hidden'] = $lastpart;
 
     // There should always be a $cm unless this is called on module creation.
