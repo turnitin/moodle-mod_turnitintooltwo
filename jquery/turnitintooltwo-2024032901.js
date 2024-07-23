@@ -293,7 +293,9 @@
                 if (i == 3) {
                     submissionsDataTableColumns.push({ "sType": "string", "bSortable": false });
                     visibleCols.push(true);
-                } else if (i == 2) {
+                
+                    // last name as index 2 first name index 18, make it hidden
+                } else if (i == 2 || i == 18) {
                     submissionsDataTableColumns.push({ "sType": "string", "bSortable": false, "bVisible": false });
                     visibleCols.push(false);
                 } else if (i == 5) {
