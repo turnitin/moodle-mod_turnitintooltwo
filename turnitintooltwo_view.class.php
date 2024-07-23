@@ -468,10 +468,9 @@ class turnitintooltwo_view {
         }
         if ($istutor) {
             $cells["student"] = new html_table_cell(
-                html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 9 )).
+                html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 3 )).
                 html_writer::tag('div', ' / '.get_string('studentlastname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-lastname sorting', 'data-col' => 2))
             );
-            $cells["studentfirstname"] = new html_table_cell('&nbsp;');
         } else {
             $cells["student"] = new html_table_cell('&nbsp;');
         }
@@ -1473,8 +1472,7 @@ class turnitintooltwo_view {
         if (!$istutor) {
             $data = array($partid, $checkbox, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         } else {
-            $studentfirstname = $submission->firstname;
-            $data = array($partid, $checkbox, $studentlastname, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified, $studentfirstname);
+            $data = array($partid, $checkbox, $studentlastname, $studentname, $rawtitle, $title, $objectid, $rawmodified, $modified);
         }
 
         if (($istutor) || (!$istutor && $turnitintooltwoassignment->turnitintooltwo->studentreports)) {

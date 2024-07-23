@@ -202,7 +202,7 @@
             }
 
             node.closest('.mod_turnitintooltwo_submissions_data_table').DataTable()
-                .order( [ parseInt(sortColumn, 10), sortby ] )
+                .order( [ sortColumn, sortby ] )
                 .draw();
 
             node.addClass('sorting_' + sortby).removeClass('sorting sorting_' + currentsort);
@@ -293,7 +293,7 @@
                 if (i == 3) {
                     submissionsDataTableColumns.push({ "sType": "string", "bSortable": false });
                     visibleCols.push(true);
-                } else if (i == 2 || i == 9) {
+                } else if (i == 2) {
                     submissionsDataTableColumns.push({ "sType": "string", "bSortable": false, "bVisible": false });
                     visibleCols.push(false);
                 } else if (i == 5) {
@@ -302,18 +302,18 @@
                 } else if (i == 6) {
                     submissionsDataTableColumns.push({ "sClass": "right" });
                     visibleCols.push(true);
-                } else if (i == 8 || (i == 11 && showOrigReport) || ((i == 11 && !showOrigReport) || (i == 13 && useGradeMark))) {
+                } else if (i == 8 || (i == 10 && showOrigReport) || ((i == 10 && !showOrigReport) || (i == 12 && useGradeMark))) {
                     submissionsDataTableColumns.push({ "sClass": "right", "iDataSort": i - 1, "sType": "numeric" });
                     visibleCols.push(true);
-                } else if ((i == 14 && showOrigReport) || (i == 13 && !showOrigReport)) {
+                } else if ((i == 13 && showOrigReport) || (i == 12 && !showOrigReport)) {
                     submissionsDataTableColumns.push({ "sClass": "right" });
                     visibleCols.push(true);
-                } else if (i == 1 || ((i >= 10 && !showOrigReport && !useGradeMark)
-                    || (i >= 12 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark)))
-                    || (i >= 14 && showOrigReport && useGradeMark))) {
+                } else if (i == 1 || ((i >= 9 && !showOrigReport && !useGradeMark)
+                    || (i >= 11 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark)))
+                    || (i >= 13 && showOrigReport && useGradeMark))) {
                     submissionsDataTableColumns.push({ "sClass": "center", "bSortable": false });
                     visibleCols.push(true);
-                } else if ((i == 0) || (i == 4) || (i == 7) || (i == 10 && showOrigReport) || ((i == 10 && !showOrigReport) || (i == 12 && useGradeMark))) {
+                } else if ((i == 0) || (i == 4) || (i == 7) || (i == 9 && showOrigReport) || ((i == 9 && !showOrigReport) || (i == 11 && useGradeMark))) {
                     submissionsDataTableColumns.push({ "bVisible": false });
                     visibleCols.push(false);
                 }
