@@ -471,7 +471,6 @@ class turnitintooltwo_view {
                 html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 9 )).
                 html_writer::tag('div', ' / '.get_string('studentlastname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-lastname sorting', 'data-col' => 2))
             );
-            $cells["studentfirstname"] = new html_table_cell('&nbsp;');
         } else {
             $cells["student"] = new html_table_cell('&nbsp;');
         }
