@@ -1503,7 +1503,10 @@ class turnitintooltwo_view {
             $data[] = $refresh;
         }
         $data[] = $delete;
-        $data[] = $submission->firstname;
+
+        if ($istutor) {
+            $data[] = $submission->firstname;
+        }
 
         return $data;
     }
