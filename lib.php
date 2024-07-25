@@ -1523,7 +1523,7 @@ function turnitintooltwo_init_browser_assignment_table($tiicourseid) {
                         );
 
     if (!empty($turnitincourse)) {
-        $course = current($turnitincourse);
+        $course = current((array)$turnitincourse);
         $coursedetails = turnitintooltwo_assignment::get_course_data($course->courseid, $course->course_type);
         $courseid = $course->courseid;
         $coursetitle = $coursedetails->fullname;
