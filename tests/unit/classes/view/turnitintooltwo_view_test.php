@@ -133,7 +133,7 @@ class mod_turnitintooltwo_view_testcase extends test_lib {
 		$table = $turnitintooltwoview->init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser);
 
 		$this->assertStringContainsString(get_string('studentlastname', 'turnitintooltwo'), $table, 'submission table did not contain expected text "'.get_string('studentlastname','turnitintooltwo').'"');
-		$this->assertStringContainsString("<tbody class=\"empty\"><tr><td colspan=\"16\"></td></tr></tbody>", $table, 'datatable did not contain the expected empty tbody');
+		$this->assertStringContainsString("<tbody class=\"empty\"><tr><td colspan=\"17\"></td></tr></tbody>", $table, 'datatable did not contain the expected empty tbody');
 	}
 
 	public function test_inbox_table_structure_student() {
