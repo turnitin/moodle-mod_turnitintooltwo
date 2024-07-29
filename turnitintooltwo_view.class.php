@@ -58,18 +58,20 @@ class turnitintooltwo_view {
     public function load_page_components($hidebg = false) {
         global $PAGE;
 
+        $contextid = context_system::instance()->id;
+
         // Include CSS.
         if ($hidebg) {
-            $cssurl = new moodle_url('/mod/turnitintooltwo/css/hide_bg.css');
+            $cssurl = moodle_url::make_pluginfile_url($contextid, 'mod_turnitintooltwo', 'direct', null, '/css/', 'hide_bg.css');
             $PAGE->requires->css($cssurl);
         }
-        $cssurl = new moodle_url('/mod/turnitintooltwo/styles.css');
+        $cssurl = moodle_url::make_pluginfile_url($contextid, 'mod_turnitintooltwo', 'direct', null, '/', 'styles.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery-ui-1.8.4.custom.css');
+        $cssurl = moodle_url::make_pluginfile_url($contextid, 'mod_turnitintooltwo', 'direct', null, '/css/', 'jquery-ui-1.8.4.custom.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
+        $cssurl = moodle_url::make_pluginfile_url($contextid, 'mod_turnitintooltwo', 'direct', null, '/css/', 'font-awesome.min.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/tii-icon-webfont.css');
+        $cssurl = moodle_url::make_pluginfile_url($contextid, 'mod_turnitintooltwo', 'direct', null, '/css/', 'tii-icon-webfont.css');
         $PAGE->requires->css($cssurl);
 
         // Include JS.
