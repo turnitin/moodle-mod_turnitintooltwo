@@ -328,7 +328,6 @@ switch ($cmd) {
         $output .= $OUTPUT->box($coursesearchform, 'generalbox', 'course_search_options');
 
         $displaylist = core_course_category::make_categories_list('');
-        $parentlist = array();
 
         $categoryselectlabel = html_writer::label(get_string('selectcoursecategory', 'turnitintooltwo'),
                                                     'create_course_category');
