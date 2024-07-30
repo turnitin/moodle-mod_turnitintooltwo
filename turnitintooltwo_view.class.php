@@ -1294,7 +1294,7 @@ class turnitintooltwo_view {
                             .html_writer::tag('span', "/".$parts[$partid]->maxmarks,
                                     array("class" => "grademark_grade"));
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
-                    $submissiongrade = (is_numeric($submissiongrade)) ? round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%' : $submissiongrade;
+                    $submissiongrade = (is_numeric($submissiongrade) && $parts[$partid]->maxmarks > 0) ? round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%' : $submissiongrade;
                     $grade .= html_writer::tag('span', $submissiongrade,
                                     array('class' => 'grade grademark_grade'));
                 }
