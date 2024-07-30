@@ -160,7 +160,6 @@ $maxfilesize = get_user_max_upload_file_size($context,
                                                 $turnitintooltwoassignment->turnitintooltwo->maxfilesize);
 $maxfilesize = ($maxfilesize <= 0) ? TURNITINTOOLTWO_MAX_FILE_UPLOAD_SIZE : $maxfilesize;
 
-
 if ($turnitintooltwoassignment->turnitintooltwo->allownonor) {
   $acceptedtypes = ['*'];
 }
@@ -170,8 +169,7 @@ else {
                     'pptx'];
 }
 $turnitintooltwofileuploadoptions = array('maxbytes' => $maxfilesize,
-                                            'subdirs' => false, 'maxfiles' => 1,
-                                            'accepted_types' => $acceptedtypes);
+                                            'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => $acceptedtypes);
 
 if (!$parts = $turnitintooltwoassignment->get_parts()) {
     turnitintooltwo_print_error('partgeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
