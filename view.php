@@ -165,8 +165,8 @@ if ($turnitintooltwoassignment->turnitintooltwo->allownonor) {
 }
 else {
   $acceptedtypes = ['.doc', '.docx', '.ppt', '.pptx', '.pps', '.ppsx',
-                    '.pdf', '.txt', '.htm', '.html', '.hwp', '.odt',
-                    '.wpd', '.ps', '.rtf', '.xls', '.xlsx'];
+                    '.pdf', '.txt', '.htm', '.html', '.hwp', '.hwpx',
+                    '.odt', '.wpd', '.ps', '.rtf', '.xls', '.xlsx'];
 }
 $turnitintooltwofileuploadoptions = ['maxbytes' => $maxfilesize,
                                      'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => $acceptedtypes];
