@@ -168,8 +168,8 @@ else {
                     'txt', 'rtf', 'pdf', 'odt', 'hwp', 'hwpx', 
                     'pptx'];
 }
-$turnitintooltwofileuploadoptions = array('maxbytes' => $maxfilesize,
-                                            'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => $acceptedtypes);
+$turnitintooltwofileuploadoptions = ['maxbytes' => $maxfilesize,
+                                     'subdirs' => false, 'maxfiles' => 1, 'accepted_types' => $acceptedtypes];
 
 if (!$parts = $turnitintooltwoassignment->get_parts()) {
     turnitintooltwo_print_error('partgeterror', 'turnitintooltwo', null, null, __FILE__, __LINE__);
