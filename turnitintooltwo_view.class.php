@@ -468,7 +468,7 @@ class turnitintooltwo_view {
         }
         if ($istutor) {
             $cells["student"] = new html_table_cell(
-                html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 3 )).
+                html_writer::tag('div', get_string('studentfirstname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-firstname sorting', 'data-col'=> 18 )).
                 html_writer::tag('div', ' / '.get_string('studentlastname', 'turnitintooltwo'), array('class' => 'data-table-splitter splitter-lastname sorting', 'data-col' => 2))
             );
         } else {
@@ -515,6 +515,14 @@ class turnitintooltwo_view {
 
         $cells["download"] = new html_table_cell('&nbsp;');
         $cells["delete"] = new html_table_cell('&nbsp;');
+
+        if ($turnitintooltwouser->get_user_role() != 'Learner') {
+            // These columns are used for sorting, and should retain their hidden_class class.
+            // Put the user firstame in the latest hidden cell.
+            $cells["studentfirstname"] = new html_table_cell( get_string('studentfirstname', 'turnitintooltwo'));
+            $cells["studentfirstname"]->attributes["class"] = 'sorting_name sorting_first_last';
+        }
+
         $tableheaders = $cells;
 
         $tables = "";
@@ -1189,7 +1197,7 @@ class turnitintooltwo_view {
             $rawmodified = 1;
             $modified = html_writer::link($CFG->wwwroot."/mod/turnitintooltwo/view.php?id=".$cm->id."&action=manualsubmission".
                                             "&sub=".$submission->id.'&sesskey='.sesskey(),
-                                                $OUTPUT->pix_icon('icon-sml', get_string('submittoturnitin', 'turnitintooltwo'),
+                                                $OUTPUT->pix_icon('tii-icon', get_string('submittoturnitin', 'turnitintooltwo'),
                                                     'mod_turnitintooltwo')." ".get_string('submittoturnitin', 'turnitintooltwo'));
 
         } else if (empty($submission->submission_objectid)) {
@@ -1286,7 +1294,7 @@ class turnitintooltwo_view {
                             .html_writer::tag('span', "/".$parts[$partid]->maxmarks,
                                     array("class" => "grademark_grade"));
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
-                    $submissiongrade = (is_numeric($submissiongrade)) ? round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%' : $submissiongrade;
+                    $submissiongrade = (is_numeric($submissiongrade) && $parts[$partid]->maxmarks > 0) ? round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%' : $submissiongrade;
                     $grade .= html_writer::tag('span', $submissiongrade,
                                     array('class' => 'grade grademark_grade'));
                 }
@@ -1495,6 +1503,10 @@ class turnitintooltwo_view {
             $data[] = $refresh;
         }
         $data[] = $delete;
+
+        if ($istutor) {
+            $data[] = $submission->firstname;
+        }
 
         return $data;
     }

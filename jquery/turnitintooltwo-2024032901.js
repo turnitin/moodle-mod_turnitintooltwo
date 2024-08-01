@@ -293,6 +293,7 @@
                 if (i == 3) {
                     submissionsDataTableColumns.push({ "sType": "string", "bSortable": false });
                     visibleCols.push(true);
+                // last name as index 2, make it hidden
                 } else if (i == 2) {
                     submissionsDataTableColumns.push({ "sType": "string", "bSortable": false, "bVisible": false });
                     visibleCols.push(false);
@@ -308,6 +309,10 @@
                 } else if ((i == 13 && showOrigReport) || (i == 12 && !showOrigReport)) {
                     submissionsDataTableColumns.push({ "sClass": "right" });
                     visibleCols.push(true);
+                // first name index noOfColumns - 1 in ordinar and multipart assignments, make it hidden     
+                } else if (i == noOfColumns - 1) {
+                    submissionsDataTableColumns.push({ "sType": "string", "bSortable": false, "bVisible": false });
+                    visibleCols.push(false);    
                 } else if (i == 1 || ((i >= 9 && !showOrigReport && !useGradeMark)
                     || (i >= 11 && ((!showOrigReport && useGradeMark) || (showOrigReport && !useGradeMark)))
                     || (i >= 13 && showOrigReport && useGradeMark))) {

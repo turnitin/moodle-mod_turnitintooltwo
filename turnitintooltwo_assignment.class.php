@@ -376,8 +376,10 @@ class turnitintooltwo_assignment {
                 $turnitincourse->id = $insertid;
             }
 
+            $coursetype = "TT";
+            $workflowcontext = "site";
             turnitintooltwo_activitylog("Class created - ".$turnitincourse->courseid." | ".$turnitincourse->turnitin_cid.
-                                        " | ".$course->fullname . " (Moodle ".$coursetype.")" , "REQUEST");
+                                        " | ".$course->fullname . " (Moodle TT)" , "REQUEST");
 
             return $turnitincourse;
         } catch (Exception $e) {
@@ -410,6 +412,11 @@ class turnitintooltwo_assignment {
         // If a course end date is specified in Moodle then we set this in Turnitin with an additional month to
         // account for the Turnitin viewer becoming read-only once the class end date passes.
         if (!empty($course->enddate)) {
+            // The course end date must not be before the start date.
+            // Change the course end date if it is set earlier than today.
+            if ($course->enddate < strtotime('today')) {
+                $course->enddate = strtotime('today');
+            }
             $enddate = strtotime('+1 month', $course->enddate);
             $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
         }
@@ -622,10 +629,10 @@ class turnitintooltwo_assignment {
         $members = array_keys($students);
         foreach ($members as $member) {
             // Don't include user if they are suspended.
+            $user = new turnitintooltwo_user($member, "Learner");
             if (isset($suspendedusers[$user->id])) {
                 continue;
             }
-            $user = new turnitintooltwo_user($member, "Learner");
             $user->join_user_to_class($course->turnitin_cid);
         }
         return true;
@@ -1852,20 +1859,21 @@ class turnitintooltwo_assignment {
         }
 
         foreach ($submissions as $submission) {
-            if (!is_nan($submission->submission_grade) AND (!empty($submission->submission_gmimaged) || $istutor)
-                    AND !is_null($submission->submission_grade) AND $weightarray[$submission->submission_part] != 0) {
+            if (isset($submission->submission_grade) && !is_nan($submission->submission_grade)
+                && (!empty($submission->submission_gmimaged) || $istutor)
+                && !is_null($submission->submission_grade) && $weightarray[$submission->submission_part] != 0) {
                 $weightedgrade = $submission->submission_grade / $weightarray[$submission->submission_part];
                 $overallgrade += $weightedgrade * ($weightarray[$submission->submission_part] / $overallweight) * $maxgrade;
             }
         }
 
-        if (!is_null($overallgrade) AND $this->turnitintooltwo->grade < 0) {
+        if (!is_null($overallgrade) && $this->turnitintooltwo->grade < 0) {
             return ($overallgrade == 0) ? 1 : ceil($overallgrade);
         } else {
             if (is_null($overallgrade)) {
                 return "--";
             }
-            return (!is_nan($overallgrade) AND !is_null($overallgrade)) ? number_format($overallgrade, 2) : '--';
+            return (!is_nan($overallgrade) && !is_null($overallgrade)) ? number_format($overallgrade, 2) : '--';
         }
     }
 

@@ -34,7 +34,18 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
     private $turnitintooltwo;
 
     public function definition() {
-        global $DB, $USER, $COURSE;
+        global $DB, $USER, $COURSE, $PAGE;
+
+        // Don't do anything here if called from a completion page as output has already begun.
+        // This is needed because of MDL-78528.
+        $completionpagetypes = [
+            'course-defaultcompletion' => 'Edit completion default settings (Moodle >= 4.3)',
+            'course-editbulkcompletion' => 'Edit completion settings in bulk for a single course',
+            'course-editdefaultcompletion' => 'Edit completion default settings (Moodle < 4.3)',
+        ];
+        if (isset($completionpagetypes[$PAGE->pagetype])) {
+            return;
+        }
 
         // Module string is useful for product support.
         $modulestring = '<!-- Turnitin Moodle Direct Version: '.turnitintooltwo_get_version().' - (';
@@ -119,10 +130,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         $modulestring .= ') -->';
 
-        $this->show_form($instructorrubrics, $sharedrubrics, $modulestring, $course->turnitin_cid);
+        $this->show_form($instructorrubrics, $sharedrubrics, $course->turnitin_cid, $modulestring);
     }
 
-    public function show_form($instructorrubrics, $sharedrubrics, $modulestring = '', $tiicourseid) {
+    public function show_form($instructorrubrics, $sharedrubrics, $tiicourseid, $modulestring = '') {
         global $CFG, $OUTPUT, $COURSE, $PAGE, $DB;
         $PAGE->requires->string_for_js('changerubricwarning', 'turnitintooltwo');
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');

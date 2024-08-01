@@ -6,9 +6,9 @@
  * and open the template in the editor.
  */
 
-require_once( 'sdkexception.class.php' );
-require_once( 'tiilti.class.php' );
-require_once( 'response.class.php' );
+require_once( __DIR__.'/sdkexception.class.php' );
+require_once( __DIR__.'/tiilti.class.php' );
+require_once( __DIR__.'/response.class.php' );
 
 /**
  * @ignore
@@ -602,7 +602,7 @@ class LTI extends OAuthSimple {
      *
      * @param string $lastrequest
      */
-    private function __setLastRequest( $lastrequest ) {
+    private function setLastRequestPrivate( $lastrequest ) {
         $this->lastrequest = $lastrequest;
     }
 
@@ -618,7 +618,7 @@ class LTI extends OAuthSimple {
      *
      * @param string $lastresponse
      */
-    private function __setLastResponse( $lastresponse ) {
+    private function setLastResponsePrivate( $lastresponse ) {
         $this->lastresponse = $lastresponse;
     }
 
@@ -969,8 +969,8 @@ class LTI extends OAuthSimple {
             $response = $result;
         }
 
-        $this->__setLastRequest( print_r( $params, true ) );
-        $this->__setLastResponse( $result );
+        $this->setLastRequestPrivate( print_r( $params, true ) );
+        $this->setLastResponsePrivate( $result );
 
         curl_close($ch);
         return $response;

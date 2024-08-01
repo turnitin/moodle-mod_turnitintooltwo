@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 
-require_once( 'oauthsimple.class.php' );
-require_once( 'log.class.php' );
+require_once( __DIR__.'/oauthsimple.class.php' );
+require_once( __DIR__.'/log.class.php' );
 
 /**
  * @ignore
@@ -283,8 +283,7 @@ class Soap extends SoapClient {
         parent::__construct( $wsdl, $options );
     }
     
-    #[\ReturnTypeWillChange]
-    public function __doRequest($request, $location, $action, $version, $one_way = null) {
+    public function __doRequest($request, $location, $action, $version, $one_way = null): ?string {
 
         $http_headers = array(
             'Content-type: text/xml;charset="utf-8"',
