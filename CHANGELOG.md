@@ -1,8 +1,47 @@
+### Date:       2024-August-01
+### Release:    v2024080101
+
+---
+
+#### Icon Image Fixed
+Previously when a file was submitted that did not meet the requirements for processing by Turnitin, an icon image would be displayed incorrectly. This has now been fixed.
+
+#### Issue With Multiple Peermark Assignments
+Previously when a Moodle Direct V2 assignment contained 2 or more Peermark assignments, there was an issue that stopped them from successfully opening. This has now been fixed.
+
+#### Fixed Inbox Ordering On First Name
+Previously when sorting submissions in the assignment inbox by first name, the order of the sorted items would be incorrect. This has now been resolved.
+
+#### Error Logged While Creating Course
+Previously there was a bug which would sometimes cause an error to be logged while creating a course. This has now been resolved.
+
+#### PHP 8.1+ Deprecation Warnings
+We have resolved several deprecation warnings that would be displayed when running under PHP 8.1+.
+
+#### Issue With Bulk Editing of Completion Settings
+Previously there was an error when editing completion settings in bulk that would prevent the page from loading. This has now been resolved.
+
+#### Error Generating Pseudo Last Names
+Previously when generating dummy lastnames for students for data privacy purposes, the process would fail if no last name was set. This has now been resolved.
+
+#### Error when Max Grade Set To Zero
+Previously when a single part of a multi-part assignment had its max grade set to zero, the percentage grade would fail to be calculated and an error message would be shown instead. This has now been resolved and grades are shown correctly.
+
+#### Error when restoring a course
+Previously when deleting and later restoring a course, the course restoration would fail if the course end date had already passed. This was because the start date was being set to be after the end date. In cases where this would occur, we now set the end date to today, which allows the course to be restored correctly.
+
+#### Bug in student enrolment
+There was previously a bug in student enrolment that meant that sometimes suspended users were being enrolled on courses when they should have been skipped. This has now been resolved.
+
+#### Checks For Submission File Types
+Previously we were missing a check for the file types of submissions. This meant that students could always submit files of any type, which would cause their submissions to become stuck in a pending state. This has now been resolved, and if the option is enabled, students can upload only files of supported types.
+
+---
+
 ### Date:       2024-March-29
 ### Release:    v2024032901
 
 #### Export Buttons Fixed
-
 The export buttons along with the individual submission refresh and download buttons and the bulk submission download buttons are now functioning as expected.
 
 ### Date:       2024-February-06
