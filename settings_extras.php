@@ -111,7 +111,7 @@ switch ($cmd) {
                     $datarow = get_object_vars($datarow);
                     $output .= "|";
                     foreach ($datarow as $datacell) {
-                        $output .= ' '.htmlspecialchars(str_pad(substr($datacell, 0, $columnwidth), $columnwidth, " ", 1)).'|';
+                        $output .= ' '.htmlspecialchars(str_pad(substr($datacell ?? '', 0, $columnwidth), $columnwidth, " ", 1)).'|';
                     }
                     if ($table == 'turnitintooltwo_users' && $moodleusers[$datarow['userid']]) {
                         $firstname = format_string($moodleusers[$datarow['userid']]->firstname);
