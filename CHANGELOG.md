@@ -1,3 +1,16 @@
+### Date:       2024-September-11
+### Release:    v2024091101
+
+---
+
+#### Database Dumps Fixed
+Previously the Show Data Dump and Save Data Dump tabs would sometimes display an error. This is now functioning as expected.
+
+#### Anonymous Marking Fixed
+Some users encountered an issue where student first names would be shown while anonymous marking was enabled. This has now been fixed.
+
+---
+
 ### Date:       2024-August-01
 ### Release:    v2024080101
 
