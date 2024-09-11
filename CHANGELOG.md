@@ -6,7 +6,7 @@
 #### Database Dumps Fixed
 Previously the Show Data Dump and Save Data Dump tabs would sometimes display an error. This is now functioning as expected.
 
-#### Anonymous Markinng Fixed
+#### Anonymous Marking Fixed
 Some users encountered an issue where student first names would be shown while anonymous marking was enabled. This has now been fixed.
 
 ---
