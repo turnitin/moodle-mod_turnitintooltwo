@@ -118,3 +118,20 @@
         float: left !important;
     }
 }
+
+@media screen and (max-width: 1460px) {
+    .mod_turnitintooltwo_listbar {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    .mod_turnitintooltwo_listbar {
+        font-size: 12px;
+    }
+
+    .mod_turnitintooltwo_listbar .mod_turnitintooltwo_messages_inbox,
+    .mod_turnitintooltwo_listbar .mod_turnitintooltwo_refresh_link {
+        margin-left: 5px;
+    }
+}
