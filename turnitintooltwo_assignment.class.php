@@ -418,7 +418,9 @@ class turnitintooltwo_assignment {
                 $course->enddate = strtotime('today');
             }
             $enddate = strtotime('+1 month', $course->enddate);
-            $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            if ($enddate > time()) {
+                $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            }
         }
 
         try {
