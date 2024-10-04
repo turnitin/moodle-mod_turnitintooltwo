@@ -51,6 +51,7 @@ class turnitintooltwo_submission {
     public $submission_acceptnothing;
     public $overallgrade;
     private $receipt;
+    private $instructor_receipt;
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
         $this->receipt = new receipt_message();
