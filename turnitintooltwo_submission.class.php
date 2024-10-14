@@ -47,11 +47,13 @@ class turnitintooltwo_submission {
     private $submission_unanonreason;
     public $submission_transmatch;
     private $submission_instructors;
+    private $submission_hash;
     public $submission_orcapable;
     public $submission_acceptnothing;
     public $overallgrade;
     private $receipt;
     private $instructor_receipt;
+    private $migrate_gradebook;
 
     public function __construct($id = 0, $idtype = "moodle", $turnitintooltwoassignment = "", $partid = "") {
         $this->receipt = new receipt_message();
