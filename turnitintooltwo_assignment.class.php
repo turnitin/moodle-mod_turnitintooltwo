@@ -339,7 +339,7 @@ class turnitintooltwo_assignment {
      * @param int $ownerid The owner of the course
      * @return object the turnitin course if created
      */
-    public function create_tii_course($course, $ownerid) {
+    public function create_tii_course($course, $ownerid, $workflowcontext = "site") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
