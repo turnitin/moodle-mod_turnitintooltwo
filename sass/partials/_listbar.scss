@@ -130,7 +130,7 @@
 @media screen and (max-width: 1460px) {
     .mod_turnitintooltwo_listbar {
         font-size: 13px;
-    }
+    } 
 }
 
 @media screen and (max-width: 1350px) {
@@ -143,6 +143,23 @@
     .mod_turnitintooltwo_listbar .mod_turnitintooltwo_messages_inbox,
     .mod_turnitintooltwo_listbar .mod_turnitintooltwo_refresh_link {
         margin-left: 5px;
+        width: auto;
+    }
+
+    .mod_turnitintooltwo_listbar .mod_turnitintooltwo_refresh_link {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .mod_turnitintooltwo_listbar {
+        #mod_turnitintooltwo_download_links {
+            margin-left: 5px;
+
+            .btn.dropdown-toggle {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+        }
     }
 }
 
