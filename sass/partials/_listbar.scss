@@ -174,3 +174,10 @@
         }
     }
 }
+
+// do not support Firefox
+@media screen and (max-width: 1024px) and (min-resolution: 1.1dppx) {
+    .mod_turnitintooltwo_listbar {
+        font-size: 11px;
+    } 
+}
