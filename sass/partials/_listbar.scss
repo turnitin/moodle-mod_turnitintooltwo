@@ -147,8 +147,8 @@
     }
 
     .mod_turnitintooltwo_listbar .mod_turnitintooltwo_refresh_link {
-        padding-left: 10px;
-        padding-right: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .mod_turnitintooltwo_listbar {
@@ -166,11 +166,25 @@
 @media screen and (max-width: 1260px) {
     .mod_turnitintooltwo_listbar {
         font-size: 12px;
+
+        .mod_turnitintooltwo_nonsubmitters_link {
+            width: auto;
+            margin-left: 0;
+            padding: 5px 5px;
+        }
     }
 
     .dataTables_filter {
         input[type="search"] {
-            max-width: 105px;
+            max-width: 95px;
+        }
+    }
+
+    .mod_turnitintooltwo_listbar {
+        #mod_turnitintooltwo_download_links {
+            .btn.dropdown-toggle {
+                padding-right: 0;
+            }
         }
     }
 }
