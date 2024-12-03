@@ -2021,18 +2021,6 @@ class turnitintooltwo_view {
 
         $messageoutputs = get_config('message');
 
-        if ($CFG->branch >= 400) {
-            if (isset($messageoutputs->mod_turnitintooltwo_nonsubmitters_disable) && $messageoutputs->mod_turnitintooltwo_nonsubmitters_disable == "0") {
-                return true;
-            }
-        } else {
-            // Support for older versions.
-            foreach ($messageoutputs as $k => $v) {
-                if (strpos($k, '_mod_turnitintooltwo_nonsubmitters_loggedin') !== false) {
-                    return true;
-                }
-            }
-            return false;
-        }
+        return !isset($messageoutputs->mod_turnitintooltwo_nonsubmitters_disable) || $messageoutputs->mod_turnitintooltwo_nonsubmitters_disable == "0";
     }
 }
