@@ -1790,3 +1790,21 @@ function turnitintooltwo_update_event($turnitintooltwo, $part, $courseparam = fa
         turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
     }
 }
+
+
+/**
+ * Delete a Moodle event based on passed in details.
+ *
+ * @param  object  $turnitintooltwo    The turnitintooltwo assignment object.
+ * @param  object  $part               The name of the part we are deleting.
+ */
+function turnitintooltwo_delete_event($turnitintooltwo, $part) {
+  global $DB, $USER;
+
+  try {
+    $DB->delete_records_select("event", "modulename = ? AND userid = ? AND name = ?", 
+      [ "turnitintooltwo", $USER->id, $turnitintooltwo->name." - ".$part->partname ]);
+  } catch (Exception $e) {
+      turnitintooltwo_comms::handle_exceptions($e, 'turnitintooltwoupdateerror', false);
+  }
+}

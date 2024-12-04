@@ -1174,6 +1174,11 @@ class turnitintooltwo_assignment {
         $partdetails = $this->get_part_details($partid);
         $return["partid"] = $partid;
 
+        // Delete existing events for this assignment part if title or due date changed.
+        if ($fieldname == "partname" || $fieldname == "dtdue") {
+            turnitintooltwo_delete_event($this->turnitintooltwo, $partdetails);
+        }
+
         // Update Turnitin Assignment.
         $assignment = new TiiAssignment();
         $assignment->setAssignmentId($partdetails->tiiassignid);
