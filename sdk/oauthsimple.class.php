@@ -18,6 +18,10 @@ class OAuthSimple {
     protected $_default_signature_method;
     protected $_action;
     protected $_nonce_chars;
+    protected $_oauth_body_hash;
+    protected $_parameters;
+    protected $_path;
+    protected $_sbs;
 
     /**
      * Constructor
@@ -52,15 +56,15 @@ class OAuthSimple {
      */
     public function reset() {
         $this->_parameters = Array();
-        $this->path = NULL;
-        $this->sbs = NULL;
+        $this->_path = NULL;
+        $this->_sbs = NULL;
 
         return $this;
     }
 
     // Generate the body_hash
     public function genBodyHash($request) {
-        $this->oauth_body_hash = base64_encode(sha1($request, true));
+        $this->_oauth_body_hash = base64_encode(sha1($request, true));
     }
 
     /**
@@ -98,8 +102,8 @@ class OAuthSimple {
         if (empty($this->_parameters['oauth_version'])) {
             $this->_parameters['oauth_version'] = "1.0";
         }
-        if (isset($this->oauth_body_hash)) {
-            $this->_parameters['oauth_body_hash'] = $this->oauth_body_hash;
+        if (isset($this->_oauth_body_hash)) {
+            $this->_parameters['oauth_body_hash'] = $this->_oauth_body_hash;
         }
         return $this;
     }
@@ -260,7 +264,7 @@ class OAuthSimple {
             'signature' => self::_oauthEscape($this->_parameters['oauth_signature']),
             'signed_url' => $this->_path . '?' . $this->_normalizedParameters(),
             'header' => $this->getHeaderString(),
-            'sbs' => $this->sbs
+            'sbs' => $this->_sbs
         );
     }
 
@@ -450,9 +454,9 @@ class OAuthSimple {
                 return urlencode($secretKey);
                 ;
             case 'HMAC-SHA1':
-                $this->sbs = self::_oauthEscape($this->_action) . '&' . self::_oauthEscape($this->_path) . '&' . self::_oauthEscape($this->_normalizedParameters());
+                $this->_sbs = self::_oauthEscape($this->_action) . '&' . self::_oauthEscape($this->_path) . '&' . self::_oauthEscape($this->_normalizedParameters());
 
-                return base64_encode(hash_hmac('sha1', $this->sbs, $secretKey, TRUE));
+                return base64_encode(hash_hmac('sha1', $this->_sbs, $secretKey, TRUE));
             default:
                 throw new OAuthSimpleException('Unknown signature method for OAuthSimple');
                 break;
