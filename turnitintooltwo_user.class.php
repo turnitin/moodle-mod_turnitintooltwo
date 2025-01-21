@@ -88,7 +88,7 @@ class turnitintooltwo_user {
 
         $user = new TiiUser();
 
-        if ($dbUser) {
+        if (false) {
             $user = (object) $dbUser;
         } else {
             \core\notification::add(get_string('usernotfound', 'turnitintooltwo', $userid), \core\output\notification::NOTIFY_ERROR);
