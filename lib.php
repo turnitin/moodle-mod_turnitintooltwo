@@ -1261,7 +1261,7 @@ function turnitintooltwo_getfiles($moduleid) {
  * @param mixed $course course or id of the course
  * @param mixed $cm course module or id of the course module
  * @param context $context
- * @param string $filearea
+ * @param string $filearea 'direct' for serving local files, any other value otherwise
  * @param array $args
  * @param bool $forcedownload
  * @param array $options additional options affecting the file serving
@@ -1275,18 +1275,45 @@ function turnitintooltwo_pluginfile($course,
                 $forcedownload,
                 array $options=array()) {
 
-    $itemid = (int)array_shift($args);
-    $relativepath = implode('/', $args);
-    $fullpath = "/{$context->id}/mod_turnitintooltwo/$filearea/$itemid/$relativepath";
+    if ($filearea !== 'direct') {
+        $itemid = (int)array_shift($args);
+        $relativepath = implode('/', $args);
+        $fullpath = "/{$context->id}/mod_turnitintooltwo/$filearea/$itemid/$relativepath";
 
-    $fs = get_file_storage();
-    $relativepath = implode('/', $args);
+        $fs = get_file_storage();
+        $relativepath = implode('/', $args);
 
-    if (!$file = $fs->get_file_by_hash(sha1($fullpath)) or $file->is_directory()) {
-        return false;
+        if (!$file = $fs->get_file_by_hash(sha1($fullpath)) or $file->is_directory()) {
+            return false;
+        }
+
+        send_stored_file($file, 0, 0, $forcedownload, $options);
+    } else {
+        // File name can be with parameters like fontawesome-webfont.woff2?v=4.4.0,
+        // which has to be trimmed when reading the file, but sent like it is into
+        // the browser for version caching.
+        $namewithparams = end($args);
+        $fileinfo = new SplFileInfo($namewithparams);
+
+        // Only certain extensions are allowed
+        $ext = $fileinfo->getExtension();
+        if (!in_array($ext, ['css','svg', 'png', 'woff', 'woff2']) ){
+            send_file_not_found();
+        }
+
+        // Remove parameters if there are any
+        array_pop($args);
+        array_push($args, $fileinfo->getFilename());
+
+        send_file('mod/turnitintooltwo/'.implode('/', $args),
+            $namewithparams,
+            null ,
+            0,
+            false,
+            false,
+            '',
+            false, array("immutable"=>1, "cacheability"=>"public"));
     }
-
-    send_stored_file($file, 0, 0, $forcedownload, $options);
 }
 
 /**
