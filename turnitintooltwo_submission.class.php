@@ -85,7 +85,7 @@ class turnitintooltwo_submission {
         $this->submission_part = $data['submissionpart'];
         $this->submission_title = $data['submissiontitle'];
         $this->submission_objectid = null;
-        $this->submissionunanon = 0;
+        $this->submission_unanon = 0;
 
         $submission = new stdClass();
         $submission->userid = $data['studentsname'];
