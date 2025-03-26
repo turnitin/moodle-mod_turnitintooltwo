@@ -468,30 +468,6 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             $assignment->setTranslatedMatching($turnitintooltwoassignment->turnitintooltwo->transmatch);
             $assignment->setAllowNonOrSubmissions($turnitintooltwoassignment->turnitintooltwo->allownonor);
 
-            // Erater settings.
-            $erater = 0;
-            if (isset($turnitintooltwoassignment->turnitintooltwo->erater)) {
-                $erater = $turnitintooltwoassignment->turnitintooltwo->erater;
-            }
-            $assignment->setErater($erater);
-            $assignment->setEraterSpelling($turnitintooltwoassignment->turnitintooltwo->erater_spelling);
-            $assignment->setEraterGrammar($turnitintooltwoassignment->turnitintooltwo->erater_grammar);
-            $assignment->setEraterUsage($turnitintooltwoassignment->turnitintooltwo->erater_usage);
-            $assignment->setEraterMechanics($turnitintooltwoassignment->turnitintooltwo->erater_mechanics);
-            $assignment->setEraterStyle($turnitintooltwoassignment->turnitintooltwo->erater_style);
-
-            $eraterdictionary = 'en_US';
-            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_dictionary)) {
-                $eraterdictionary = $turnitintooltwoassignment->turnitintooltwo->erater_dictionary;
-            }
-            $assignment->setEraterSpellingDictionary($eraterdictionary);
-
-            $eraterhandbook = 0;
-            if (isset($turnitintooltwoassignment->turnitintooltwo->erater_handbook)) {
-                $eraterhandbook = $turnitintooltwoassignment->turnitintooltwo->erater_handbook;
-            }
-            $assignment->setEraterHandbook($eraterhandbook);
-
             // Generate the assignment dates depending on whether we are renewing them or not.
             $datestart = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i);
             $datedue   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i);
