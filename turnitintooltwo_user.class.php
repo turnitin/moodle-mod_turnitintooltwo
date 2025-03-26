@@ -84,7 +84,16 @@ class turnitintooltwo_user {
     public function get_moodle_user($userid) {
         global $DB;
 
-        $user = $DB->get_record('user', array('id' => $userid));
+        $dbUser = $DB->get_record('user', array('id' => $userid));
+
+        $user = new TiiUser();
+
+        if ($dbUser) {
+            $user = (object) $dbUser;
+        } else {
+            \core\notification::add(get_string('usernotfound', 'turnitintooltwo', $userid), \core\output\notification::NOTIFY_ERROR);
+            return false;
+        }
 
         // Moodle 2.0 replaces email with a hash on deletion, moodle 1.9 deletes the email address check both.
         if (empty($user->email) || strpos($user->email, '@') === false) {
@@ -560,8 +569,7 @@ class turnitintooltwo_user {
         $settingstosave = array("type", "numparts", "portfolio", "maxfilesize", "grade", "anon", "studentreports", "gradedisplay",
                                 "maxmarks1", "maxmarks2", "maxmarks3", "maxmarks4", "maxmarks5", "allowlate", "reportgenspeed",
                                 "submitpapersto", "spapercheck", "internetcheck", "journalcheck", "excludebiblio",
-                                "excludequoted", "excludevalue", "excludetype", "erater", "erater_handbook",
-                                "erater_dictionary", "transmatch");
+                                "excludequoted", "excludevalue", "excludetype", "transmatch");
 
         $instructordefaults = new stdClass();
         foreach ($settingstosave as $setting) {
