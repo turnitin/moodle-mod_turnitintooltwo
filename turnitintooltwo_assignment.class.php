@@ -860,7 +860,7 @@ class turnitintooltwo_assignment {
 
         $properties = new stdClass();
         $properties->name = $this->turnitintooltwo->name . ' - ' . $partname;
-        $intro = strip_pluginfile_content($this->turnitintooltwo->intro);
+        $intro = strip_pluginfile_content($this->turnitintooltwo->intro ?? '');
         $intro = preg_replace("/<img[^>]+\>/i", "", $intro);
         $properties->description = ($intro == null) ? '' : $intro;
         $properties->courseid = $this->turnitintooltwo->course;
