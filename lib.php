@@ -493,9 +493,10 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             $assignment->setEraterHandbook($eraterhandbook);
 
             // Generate the assignment dates depending on whether we are renewing them or not.
-            $datestart = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i);
-            $datedue   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i);
-            $datepost  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i);
+            // UCL: Added in $currentcourse to turnitintooltwo_generate_part_dates() method,
+            $datestart = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
+            $datedue   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
+            $datepost  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
 
             $assignment->setStartDate($datestart);
             $assignment->setDueDate($datedue);
@@ -552,16 +553,38 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
  * @param string $datetype "start", "due" or "post" - Determines the kind of date we need to return.
  * @param object $part The assignment in which we need dates for.
  * @param int The counter used during the part creation.
+ * @param stdClass|null $currentcourse - UCL - Added variable for course
  * @return int A timestamp for the date we requested.
  */
-function turnitintooltwo_generate_part_dates($renewdates, $datetype, $part, $i) {
+function turnitintooltwo_generate_part_dates($renewdates, $datetype, $part, $i, $currentcourse = null) {
     if ($renewdates) {
         switch ($datetype) {
             case 'start':
-                return gmdate("Y-m-d\TH:i:s\Z", time());
+                // UCL: Changed start date to use course start date, instead of current date.
+                if (!is_null($currentcourse)) {
+                    return gmdate("Y-m-d\TH:i:s\Z", $currentcourse->startdate);
+                } else {
+                    return gmdate("Y-m-d\TH:i:s\Z", time());
+                }
             case 'due':
             case 'post':
-               return gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week"));
+                // UCL: Changed post/due dates to use course end date, instead of current date.
+                if (!empty($currentcourse->startdate)) {
+                    if (!empty($currentcourse->enddate)) {
+                        // Using course end date
+                        $enddate = $currentcourse->enddate;
+                    } else {
+                        // Course end date is empty, add one week to start date
+                        $enddate = $currentcourse->startdate + (7 * 24 * 60 * 60);
+                    }
+                    // Make sure the end date used is in the future
+                    if ($enddate < time()) {
+                        $enddate = strtotime("+1 week");
+                    }
+                    return gmdate("Y-m-d\TH:i:s\Z", $enddate);
+                } else {
+                    return gmdate("Y-m-d\TH:i:s\Z", strtotime("+1 week"));
+                }
             default:
                 return NULL;
         }
