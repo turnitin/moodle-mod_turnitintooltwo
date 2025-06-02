@@ -88,7 +88,7 @@ class admin_setting_config_tii_secret_key extends admin_setting_configpasswordun
         }
 
         $cleaned = clean_param($data, $this->paramtype);
-        if ("$data" === "$cleaned" && strlen($data) > 0) { // Implicit conversion to string is needed to do exact comparison.
+        if ("$data" === "$cleaned") { // Implicit conversion to string is needed to do exact comparison.
             return true;
         } else {
             return get_string('validateerror', 'admin');
