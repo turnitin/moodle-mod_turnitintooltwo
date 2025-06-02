@@ -109,7 +109,7 @@ class v1migration {
      */
     public function migrate_modal($courseid, $turnitintoolid) {
         global $PAGE;
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
+        $cssurl = new moodle_url('/mod/turnitintooltwo/css/fontawesome.min.css');
         $PAGE->requires->css($cssurl);
 
         $PAGE->requires->js_call_amd('mod_turnitintooltwo/migration_tool_launch', 'migration_tool_launch');

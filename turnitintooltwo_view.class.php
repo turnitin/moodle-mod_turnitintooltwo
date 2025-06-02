@@ -67,7 +67,7 @@ class turnitintooltwo_view {
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery-ui-1.8.4.custom.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/font-awesome.min.css');
+        $cssurl = new moodle_url('/mod/turnitintooltwo/css/fontawesome.min.css');
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/tii-icon-webfont.css');
         $PAGE->requires->css($cssurl);
