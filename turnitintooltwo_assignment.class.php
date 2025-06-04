@@ -789,30 +789,6 @@ class turnitintooltwo_assignment {
             $transmatch = (isset($this->turnitintooltwo->transmatch)) ? $this->turnitintooltwo->transmatch : 0;
             $assignment->setTranslatedMatching($transmatch);
 
-            // Erater settings.
-            $assignment->setErater((isset($this->turnitintooltwo->erater)) ? $this->turnitintooltwo->erater : 0);
-
-            $eraterspelling = (isset($this->turnitintooltwo->erater_spelling)) ? $this->turnitintooltwo->erater_spelling : 0;
-            $assignment->setEraterSpelling($eraterspelling);
-
-            $eratergrammar = (isset($this->turnitintooltwo->erater_grammar)) ? $this->turnitintooltwo->erater_grammar : 0;
-            $assignment->setEraterGrammar($eratergrammar);
-
-            $eraterusage = (isset($this->turnitintooltwo->erater_usage)) ? $this->turnitintooltwo->erater_usage : 0;
-            $assignment->setEraterUsage($eraterusage);
-
-            $eratermechanics = (isset($this->turnitintooltwo->erater_mechanics)) ? $this->turnitintooltwo->erater_mechanics : 0;
-            $assignment->setEraterMechanics($eratermechanics);
-
-            $eraterstyle = (isset($this->turnitintooltwo->erater_style)) ? $this->turnitintooltwo->erater_style : 0;
-            $assignment->setEraterStyle($eraterstyle);
-
-            $eraterdictionary = (isset($this->turnitintooltwo->erater_dictionary)) ? $this->turnitintooltwo->erater_dictionary : 'en_US';
-            $assignment->setEraterSpellingDictionary($eraterdictionary);
-
-            $eraterhandbook = (isset($this->turnitintooltwo->erater_handbook)) ? $this->turnitintooltwo->erater_handbook : 0;
-            $assignment->setEraterHandbook($eraterhandbook);
-
             // Create Assignment on Turnitin.
             $newassignmentid = $this->create_tii_assignment($assignment, $toolid, $i);
 
@@ -1353,12 +1329,6 @@ class turnitintooltwo_assignment {
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
-        // Set the checkbox fields.
-        $chkboxfields = array('erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'institution_check');
-        foreach ($chkboxfields as $field) {
-            $this->set_checkbox_field($field, 0);
-        }
-
         // Update each individual part.
         for ($i = 1; $i <= $this->turnitintooltwo->numparts; $i++) {
             // Update Turnitin Assignment.
@@ -1387,24 +1357,6 @@ class turnitintooltwo_assignment {
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
             $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch);
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
-
-            // Erater settings.
-            $assignment->setErater((isset($this->turnitintooltwo->erater)) ? $this->turnitintooltwo->erater : 0);
-            $assignment->setEraterSpelling($this->turnitintooltwo->erater_spelling);
-            $assignment->setEraterGrammar($this->turnitintooltwo->erater_grammar);
-            $assignment->setEraterUsage($this->turnitintooltwo->erater_usage);
-            $assignment->setEraterMechanics($this->turnitintooltwo->erater_mechanics);
-            $assignment->setEraterStyle($this->turnitintooltwo->erater_style);
-            $eraterdictionary = 'en_US';
-            if (isset($this->turnitintooltwo->erater_dictionary)) {
-                $eraterdictionary = $this->turnitintooltwo->erater_dictionary;
-            }
-            $assignment->setEraterSpellingDictionary($eraterdictionary);
-            $eraterhandbook = 0;
-            if (isset($this->turnitintooltwo->erater_handbook)) {
-                $eraterhandbook = $this->turnitintooltwo->erater_handbook;
-            }
-            $assignment->setEraterHandbook($eraterhandbook);
 
             $attribute = "dtstart".$i;
             if (($restore) && ($this->turnitintooltwo->$attribute < strtotime("-1 year"))) {
@@ -1752,14 +1704,6 @@ class turnitintooltwo_assignment {
                     $assignmentdetails->excludequoted = $readassignment->getQuotedExcluded();
                     $assignmentdetails->excludetype = $readassignment->getSmallMatchExclusionType();
                     $assignmentdetails->excludevalue = $readassignment->getSmallMatchExclusionThreshold();
-                    $assignmentdetails->erater = $readassignment->getErater();
-                    $assignmentdetails->erater_handbook = $readassignment->getEraterHandbook();
-                    $assignmentdetails->erater_dictionary = $readassignment->getEraterSpellingDictionary();
-                    $assignmentdetails->erater_spelling = (int)$readassignment->getEraterSpelling();
-                    $assignmentdetails->erater_grammar = (int)$readassignment->getEraterGrammar();
-                    $assignmentdetails->erater_usage = (int)$readassignment->getEraterUsage();
-                    $assignmentdetails->erater_mechanics = (int)$readassignment->getEraterMechanics();
-                    $assignmentdetails->erater_style = (int)$readassignment->getEraterStyle();
                     $assignmentdetails->transmatch = (int)$readassignment->getTranslatedMatching();
                     $assignmentdetails->allownonor = (int)$readassignment->getAllowNonOrSubmissions();
                 }
