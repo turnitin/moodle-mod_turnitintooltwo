@@ -1222,7 +1222,7 @@
             // Check if the message type is 'CloseRubricsView'
             // Emits by TFS when the user closes the rubrics view.
             if (event.data.type === 'CloseRubricsView') {
-              jQuery('#cboxClose').click();      
+              $('#cboxClose').click();      
               window.removeEventListener('message', handleCloseModalMessage);
             }
           }

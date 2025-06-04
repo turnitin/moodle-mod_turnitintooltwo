@@ -43,16 +43,8 @@
                 <FIELD NAME="excludequoted" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="excludebiblio" NEXT="excludevalue"/>
                 <FIELD NAME="excludevalue" TYPE="int" LENGTH="9" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="excludequoted" NEXT="excludetype"/>
                 <FIELD NAME="excludetype" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" UNSIGNED="false" SEQUENCE="false" PREVIOUS="excludevalue" NEXT="perpage"/>
-                <FIELD NAME="perpage" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="25" UNSIGNED="false" SEQUENCE="false" PREVIOUS="excludetype" NEXT="erater"/>
-                <FIELD NAME="erater" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="perpage" NEXT="erater_handbook"/>
-                <FIELD NAME="erater_handbook" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater" NEXT="erater_dictionary"/>
-                <FIELD NAME="erater_dictionary" TYPE="char" LENGTH="10" NOTNULL="false" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_handbook" NEXT="erater_spelling"/>
-                <FIELD NAME="erater_spelling" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_dictionary" NEXT="erater_grammar"/>
-                <FIELD NAME="erater_grammar" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_spelling" NEXT="erater_usage"/>
-                <FIELD NAME="erater_usage" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_grammar" NEXT="erater_mechanics"/>
-                <FIELD NAME="erater_mechanics" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_usage" NEXT="erater_style"/>
-                <FIELD NAME="erater_style" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_mechanics" NEXT="transmatch"/>
-                <FIELD NAME="transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="erater_style" NEXT="rubric"/>
+                <FIELD NAME="perpage" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="25" UNSIGNED="false" SEQUENCE="false" PREVIOUS="excludetype" NEXT="transmatch"/>
+                <FIELD NAME="transmatch" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="perpage" NEXT="rubric"/>
                 <FIELD NAME="rubric" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="transmatch" NEXT="allownonor"/>
                 <FIELD NAME="allownonor" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="rubric" NEXT="needs_updating"/>
                 <FIELD NAME="needs_updating" TYPE="int" LENGTH="1" NOTNULL="false" DEFAULT="0" UNSIGNED="false" SEQUENCE="false" PREVIOUS="allownonor" NEXT="syncreport"/>

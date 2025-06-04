@@ -339,7 +339,7 @@ class turnitintooltwo_assignment {
      * @param int $ownerid The owner of the course
      * @return object the turnitin course if created
      */
-    public function create_tii_course($course, $ownerid) {
+    public function create_tii_course($course, $ownerid, $workflowcontext = "site") {
         global $DB;
 
         $turnitincomms = new turnitintooltwo_comms();
@@ -418,7 +418,9 @@ class turnitintooltwo_assignment {
                 $course->enddate = strtotime('today');
             }
             $enddate = strtotime('+1 month', $course->enddate);
-            $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            if ($enddate > time()) {
+                $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            }
         }
 
         try {
@@ -787,30 +789,6 @@ class turnitintooltwo_assignment {
             $transmatch = (isset($this->turnitintooltwo->transmatch)) ? $this->turnitintooltwo->transmatch : 0;
             $assignment->setTranslatedMatching($transmatch);
 
-            // Erater settings.
-            $assignment->setErater((isset($this->turnitintooltwo->erater)) ? $this->turnitintooltwo->erater : 0);
-
-            $eraterspelling = (isset($this->turnitintooltwo->erater_spelling)) ? $this->turnitintooltwo->erater_spelling : 0;
-            $assignment->setEraterSpelling($eraterspelling);
-
-            $eratergrammar = (isset($this->turnitintooltwo->erater_grammar)) ? $this->turnitintooltwo->erater_grammar : 0;
-            $assignment->setEraterGrammar($eratergrammar);
-
-            $eraterusage = (isset($this->turnitintooltwo->erater_usage)) ? $this->turnitintooltwo->erater_usage : 0;
-            $assignment->setEraterUsage($eraterusage);
-
-            $eratermechanics = (isset($this->turnitintooltwo->erater_mechanics)) ? $this->turnitintooltwo->erater_mechanics : 0;
-            $assignment->setEraterMechanics($eratermechanics);
-
-            $eraterstyle = (isset($this->turnitintooltwo->erater_style)) ? $this->turnitintooltwo->erater_style : 0;
-            $assignment->setEraterStyle($eraterstyle);
-
-            $eraterdictionary = (isset($this->turnitintooltwo->erater_dictionary)) ? $this->turnitintooltwo->erater_dictionary : 'en_US';
-            $assignment->setEraterSpellingDictionary($eraterdictionary);
-
-            $eraterhandbook = (isset($this->turnitintooltwo->erater_handbook)) ? $this->turnitintooltwo->erater_handbook : 0;
-            $assignment->setEraterHandbook($eraterhandbook);
-
             // Create Assignment on Turnitin.
             $newassignmentid = $this->create_tii_assignment($assignment, $toolid, $i);
 
@@ -860,7 +838,7 @@ class turnitintooltwo_assignment {
 
         $properties = new stdClass();
         $properties->name = $this->turnitintooltwo->name . ' - ' . $partname;
-        $intro = strip_pluginfile_content($this->turnitintooltwo->intro);
+        $intro = strip_pluginfile_content($this->turnitintooltwo->intro ?? '');
         $intro = preg_replace("/<img[^>]+\>/i", "", $intro);
         $properties->description = ($intro == null) ? '' : $intro;
         $properties->courseid = $this->turnitintooltwo->course;
@@ -1174,6 +1152,11 @@ class turnitintooltwo_assignment {
         $partdetails = $this->get_part_details($partid);
         $return["partid"] = $partid;
 
+        // Delete existing events for this assignment part if title or due date changed.
+        if ($fieldname == "partname" || $fieldname == "dtdue") {
+            turnitintooltwo_delete_event($this->turnitintooltwo, $partdetails);
+        }
+
         // Update Turnitin Assignment.
         $assignment = new TiiAssignment();
         $assignment->setAssignmentId($partdetails->tiiassignid);
@@ -1380,24 +1363,6 @@ class turnitintooltwo_assignment {
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
             $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch);
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
-
-            // Erater settings.
-            $assignment->setErater((isset($this->turnitintooltwo->erater)) ? $this->turnitintooltwo->erater : 0);
-            $assignment->setEraterSpelling($this->turnitintooltwo->erater_spelling);
-            $assignment->setEraterGrammar($this->turnitintooltwo->erater_grammar);
-            $assignment->setEraterUsage($this->turnitintooltwo->erater_usage);
-            $assignment->setEraterMechanics($this->turnitintooltwo->erater_mechanics);
-            $assignment->setEraterStyle($this->turnitintooltwo->erater_style);
-            $eraterdictionary = 'en_US';
-            if (isset($this->turnitintooltwo->erater_dictionary)) {
-                $eraterdictionary = $this->turnitintooltwo->erater_dictionary;
-            }
-            $assignment->setEraterSpellingDictionary($eraterdictionary);
-            $eraterhandbook = 0;
-            if (isset($this->turnitintooltwo->erater_handbook)) {
-                $eraterhandbook = $this->turnitintooltwo->erater_handbook;
-            }
-            $assignment->setEraterHandbook($eraterhandbook);
 
             $attribute = "dtstart".$i;
             if (($restore) && ($this->turnitintooltwo->$attribute < strtotime("-1 year"))) {
@@ -1745,14 +1710,6 @@ class turnitintooltwo_assignment {
                     $assignmentdetails->excludequoted = $readassignment->getQuotedExcluded();
                     $assignmentdetails->excludetype = $readassignment->getSmallMatchExclusionType();
                     $assignmentdetails->excludevalue = $readassignment->getSmallMatchExclusionThreshold();
-                    $assignmentdetails->erater = $readassignment->getErater();
-                    $assignmentdetails->erater_handbook = $readassignment->getEraterHandbook();
-                    $assignmentdetails->erater_dictionary = $readassignment->getEraterSpellingDictionary();
-                    $assignmentdetails->erater_spelling = (int)$readassignment->getEraterSpelling();
-                    $assignmentdetails->erater_grammar = (int)$readassignment->getEraterGrammar();
-                    $assignmentdetails->erater_usage = (int)$readassignment->getEraterUsage();
-                    $assignmentdetails->erater_mechanics = (int)$readassignment->getEraterMechanics();
-                    $assignmentdetails->erater_style = (int)$readassignment->getEraterStyle();
                     $assignmentdetails->transmatch = (int)$readassignment->getTranslatedMatching();
                     $assignmentdetails->allownonor = (int)$readassignment->getAllowNonOrSubmissions();
                 }

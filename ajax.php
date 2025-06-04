@@ -374,6 +374,10 @@ switch ($action) {
             }
             echo json_encode($peermarkdata);
         }
+        else {
+            header("HTTP/1.0 403 Forbidden");
+        }
+
         break;
 
     case "refresh_submission_row":
@@ -452,6 +456,9 @@ switch ($action) {
 
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
             echo $turnitintooltwoassignment->enrol_all_students($cm);
+        }
+        else {
+            header("HTTP/1.0 403 Forbidden");
         }
         break;
 

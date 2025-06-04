@@ -27,6 +27,8 @@ if (!defined('MOODLE_INTERNAL')) {
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once(__DIR__.'/lib.php');
 
+define('TII_INTRO_CHARACTER_LIMIT', 1000);
+
 class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
     private $updating;
@@ -219,7 +221,14 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
-        $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));
+        $mform->addElement('textarea', 'intro', get_string('turnitintooltwointro', 'turnitintooltwo'), 'wrap="virtual" rows="7" cols="50"');
+
+        // Limit max length of summary to 1000 characters
+        $input = new stdClass();
+        $input->length = TII_INTRO_CHARACTER_LIMIT;
+        $input->field = get_string('turnitintooltwointro', 'turnitintooltwo');
+        $mform->addRule('intro', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
+        $mform->addRule('intro', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
         $typeoptions = turnitintooltwo_filetype_array(true);
 
@@ -572,53 +581,6 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         } else {
             $mform->addElement('hidden', 'rubric', '');
             $mform->setType('rubric', PARAM_RAW);
-        }
-
-        if (!empty($config->usegrammar)) {
-            $handbookoptions = array(
-                                        1 => get_string('erater_handbook_advanced', 'turnitintooltwo'),
-                                        2 => get_string('erater_handbook_highschool', 'turnitintooltwo'),
-                                        3 => get_string('erater_handbook_middleschool', 'turnitintooltwo'),
-                                        4 => get_string('erater_handbook_elementary', 'turnitintooltwo'),
-                                        5 => get_string('erater_handbook_learners', 'turnitintooltwo')
-                                    );
-            $dictionaryoptions = array(
-                                        'en_US' => get_string('erater_dictionary_enus', 'turnitintooltwo'),
-                                        'en_GB' => get_string('erater_dictionary_engb', 'turnitintooltwo'),
-                                        'en' => get_string('erater_dictionary_en', 'turnitintooltwo')
-                                    );
-            $mform->addElement('select', 'erater', get_string('erater', 'turnitintooltwo'), $ynoptions);
-            $mform->setDefault('erater', $config->default_grammar);
-
-            $mform->addElement('select', 'erater_handbook', get_string('erater_handbook', 'turnitintooltwo'), $handbookoptions);
-            $mform->setDefault('erater_handbook', $config->default_grammar_handbook);
-            $mform->disabledIf('erater_handbook', 'erater', 'eq', 0);
-
-            $mform->addElement('select', 'erater_dictionary', get_string('erater_dictionary', 'turnitintooltwo'),
-                                    $dictionaryoptions);
-            $mform->setDefault('erater_dictionary', $config->default_grammar_dictionary);
-            $mform->disabledIf('erater_dictionary', 'erater', 'eq', 0);
-
-            $mform->addElement('checkbox', 'erater_spelling', get_string('erater_categories', 'turnitintooltwo'),
-                                    " ".get_string('erater_spelling', 'turnitintooltwo'));
-            $mform->setDefault('erater_spelling', $config->default_grammar_spelling);
-            $mform->disabledIf('erater_spelling', 'erater', 'eq', 0);
-
-            $mform->addElement('checkbox', 'erater_grammar', '', " ".get_string('erater_grammar', 'turnitintooltwo'));
-            $mform->setDefault('erater_grammar', $config->default_grammar_grammar);
-            $mform->disabledIf('erater_grammar', 'erater', 'eq', 0);
-
-            $mform->addElement('checkbox', 'erater_usage', '', " ".get_string('erater_usage', 'turnitintooltwo'));
-            $mform->setDefault('erater_usage', $config->default_grammar_usage);
-            $mform->disabledIf('erater_usage', 'erater', 'eq', 0);
-
-            $mform->addElement('checkbox', 'erater_mechanics', '', " ".get_string('erater_mechanics', 'turnitintooltwo'));
-            $mform->setDefault('erater_mechanics', $config->default_grammar_mechanics);
-            $mform->disabledIf('erater_mechanics', 'erater', 'eq', 0);
-
-            $mform->addElement('checkbox', 'erater_style', '', " ".get_string('erater_style', 'turnitintooltwo'));
-            $mform->setDefault('erater_style', $config->default_grammar_style);
-            $mform->disabledIf('erater_style', 'erater', 'eq', 0);
         }
 
         $mform->addElement('hidden', 'ownerid', null);
