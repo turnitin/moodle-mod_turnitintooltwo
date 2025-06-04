@@ -418,7 +418,9 @@ class turnitintooltwo_assignment {
                 $course->enddate = strtotime('today');
             }
             $enddate = strtotime('+1 month', $course->enddate);
-            $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            if ($enddate > time()) {
+                $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
+            }
         }
 
         try {
@@ -836,7 +838,7 @@ class turnitintooltwo_assignment {
 
         $properties = new stdClass();
         $properties->name = $this->turnitintooltwo->name . ' - ' . $partname;
-        $intro = strip_pluginfile_content($this->turnitintooltwo->intro);
+        $intro = strip_pluginfile_content($this->turnitintooltwo->intro ?? '');
         $intro = preg_replace("/<img[^>]+\>/i", "", $intro);
         $properties->description = ($intro == null) ? '' : $intro;
         $properties->courseid = $this->turnitintooltwo->course;
@@ -1150,6 +1152,11 @@ class turnitintooltwo_assignment {
         $partdetails = $this->get_part_details($partid);
         $return["partid"] = $partid;
 
+        // Delete existing events for this assignment part if title or due date changed.
+        if ($fieldname == "partname" || $fieldname == "dtdue") {
+            turnitintooltwo_delete_event($this->turnitintooltwo, $partdetails);
+        }
+
         // Update Turnitin Assignment.
         $assignment = new TiiAssignment();
         $assignment->setAssignmentId($partdetails->tiiassignid);
@@ -1323,7 +1330,7 @@ class turnitintooltwo_assignment {
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
         // Set the checkbox fields.
-        $chkboxfields = ['transmatch', 'institution_check'];
+        $chkboxfields = array('erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'institution_check');
         foreach ($chkboxfields as $field) {
             $this->set_checkbox_field($field, 0);
         }
