@@ -1648,7 +1648,7 @@ class turnitintooltwo_assignment {
             $_SESSION["TiiSubmissions"][$part->id] = $findsubmission->getSubmissionIds();
 
         } catch (Exception $e) {
-            $turnitincomms->handle_exceptions($e, 'tiisubmissionsgeterror', false);
+            $turnitincomms->handle_exceptions($e, 'tiisubmissionsgeterror');
         }
     }
 

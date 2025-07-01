@@ -243,8 +243,13 @@ switch ($action) {
         $parts = $turnitintooltwoassignment->get_parts();
 
         foreach ($parts as $part) {
-            $i = 0;
-            $turnitintooltwoassignment->get_submission_ids_from_tii($part, false);
+            $i = 0;            
+            try {
+                $turnitintooltwoassignment->get_submission_ids_from_tii($part, false);
+            }  catch (Exception $e) {
+                echo json_encode( array('success' => false) );
+                break 2;
+            }
             $total = count($_SESSION["TiiSubmissions"][$part->id]);
 
             while ($i < $total) {
@@ -284,7 +289,13 @@ switch ($action) {
             }
 
             if ($updatefromtii && $start == 0) {
-                $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
+                try {
+                    $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
+                }  catch (Exception $e) {
+                    $return["aaData"] = '';
+                    echo json_encode($return);
+                    break;
+                }
                 $total = count($_SESSION["TiiSubmissions"][$partid]);
             }
 
