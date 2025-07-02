@@ -1378,10 +1378,6 @@ class turnitintooltwo_view {
         if ((!isset($submission->submission_objectid) || $turnitintooltwoassignment->turnitintooltwo->reportgenspeed != 0) &&
             empty($submission->nmoodle) && time() > $parts[$partid]->dtstart) {
 
-            if (empty($submission->submission_objectid)) {
-                $submission->submission_objectid = 0;
-            }
-
             $uploadtext = (!$istutor) ? html_writer::tag('span', get_string('submitpaper', 'turnitintooltwo')) : '';
 
             $eulaaccepted = 0;
@@ -1403,17 +1399,19 @@ class turnitintooltwo_view {
                 }
             }
 
+            $uploadid = isset($submission->submission_objectid) ? $submission->submission_objectid : 0;
+
             $upload = html_writer::link($CFG->wwwroot.'/mod/turnitintooltwo/view.php?id='.$cm->id.'&part='.$partid.'&user='.
                                     $submission->userid.'&do=submitpaper&view_context=box_solid', $uploadtext.' '.
                                     html_writer::tag('i', '', array('title' => get_string('submitpaper', 'turnitintooltwo'),
                                         'class' => 'fa fa-cloud-upload fa-lg')),
                                     array("class" => "upload_box nowrap",
-                                            "id" => "upload_".$submission->submission_objectid."_".$partid."_".$submission->userid,
+                                            "id" => "upload_".$uploadid."_".$partid."_".$submission->userid,
                                             'data-eula' => $eulaaccepted, 'data-user-type' => $istutor));
 
             $duedatepassed = time() > $parts[$partid]->dtdue;
             $latesubmissionsallowed = $turnitintooltwoassignment->turnitintooltwo->allowlate;
-            $submissionexists = empty($submission->submission_objectid);
+            $submissionexists = isset($submission->submission_objectid);
 
             // Show option to submit only when due date has passed, late submissions are allowed and student has not submitted.
             // An instructor will always have the ability to make a late submission - to account for student exemptions.
