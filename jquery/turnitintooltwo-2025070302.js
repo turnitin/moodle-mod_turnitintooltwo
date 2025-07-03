@@ -971,7 +971,7 @@
             $.ajax({
                 "dataType": 'json',
                 "type": "POST",
-                "url": "../mod/turnitintooltwo/ajax.php",
+                "url": M.cfg.wwwroot + "/mod/turnitintooltwo/ajax.php",
                 "data": {
                     action: "refresh_rubric_select", assignment: $('input[name="instance"]').val(),
                     modulename: $('input[name="modulename"]').val(), course: $('input[name="course"]').val()
