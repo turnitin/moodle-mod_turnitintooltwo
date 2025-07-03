@@ -1585,6 +1585,10 @@ class turnitintooltwo_assignment {
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
+        if (empty($_SESSION["TiiSubmissions"][$part->id])) {
+            $_SESSION["TiiSubmissions"][$part->id] = [ ];
+        }
+
         try {
             $submission = new TiiSubmission();
             $submission->setAssignmentId($part->tiiassignid);
