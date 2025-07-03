@@ -1795,7 +1795,15 @@ class turnitintooltwo_assignment {
         $parts = $this->get_parts();
 
         if (empty($cm)) {
-            $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
+            try {
+                $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
+            }
+            catch (Exception $e) {
+                // If we fail to get the course module, the module or course may have been deleted.
+                mtrace('turnitintooltwo ERROR: ' . $e->getMessage() . ' - Course module for Turnitin activity with id: '
+                       . $this->id . 'and course: ' . $this->turnitintooltwo->course . ' not found.');
+                return 0;
+            }
         }
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
 
