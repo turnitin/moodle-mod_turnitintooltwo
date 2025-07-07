@@ -1355,7 +1355,7 @@ class turnitintooltwo_assignment {
             $assignment->setSubmittedDocumentsCheck($this->turnitintooltwo->spapercheck);
             $assignment->setInternetCheck($this->turnitintooltwo->internetcheck);
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
-            $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch);
+            $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch ?? 0);
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
 
             $attribute = "dtstart".$i;
