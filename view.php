@@ -296,9 +296,11 @@ if (!empty($action)) {
 
             if ($error) {
                 // Save data in session incase of error.
-                $_SESSION['form_data']->submissiontype = $post['submissiontype'];
-                $_SESSION['form_data']->submissiontitle = $post['submissiontitle'];
-                $_SESSION['form_data']->submissiontext = $post['submissiontext'];
+                if (isset($_SESSION['form_data'])) {
+                    $_SESSION['form_data']->submissiontype = $post['submissiontype'];
+                    $_SESSION['form_data']->submissiontitle = $post['submissiontitle'];
+                    $_SESSION['form_data']->submissiontext = $post['submissiontext'];
+                }
             } else {
                 // Check for previous submission to this part.
                 if (!$prevsubmission = $turnitintooltwoassignment->get_user_submissions($post['studentsname'],
