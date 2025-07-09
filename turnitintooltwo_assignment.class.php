@@ -1336,6 +1336,8 @@ class turnitintooltwo_assignment {
             $assignment->setClassId($course->turnitin_cid);
             $assignment->setAuthorOriginalityAccess($this->turnitintooltwo->studentreports);
 
+            $assignment->setInstructions(strip_tags($this->turnitintooltwo->intro));
+
             $assignment->setRubricId((!empty($this->turnitintooltwo->rubric)) ? $this->turnitintooltwo->rubric : '');
             $assignment->setSubmitPapersTo($this->turnitintooltwo->submitpapersto);
             $assignment->setResubmissionRule($this->turnitintooltwo->reportgenspeed);
