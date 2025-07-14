@@ -402,7 +402,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             }
         }
 
-        $mform->addElement('header', 'advanced', get_string('turnitinoroptions', 'turnitintooltwo'));
+        $mform->addElement('header', 'similarityoptionsheader', get_string('turnitinoroptions', 'turnitintooltwo'));
 
         $mform->addElement('select', 'allowlate', get_string('allowlate', 'turnitintooltwo'), $ynoptions);
         $mform->setDefault('allowlate', $config->default_allowlate);
@@ -541,7 +541,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         // Populate Rubric options.
         if (!empty($config->usegrademark)) {
-            $mform->addElement('header', 'advanced', get_string('turnitingmoptions', 'turnitintooltwo'));
+            $mform->addElement('header', 'grademarkoptionsheader', get_string('turnitingmoptions', 'turnitintooltwo'));
 
             // Add no rubric option and rubrics belonging to Instructor.
             $rubricoptions = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
