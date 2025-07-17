@@ -402,7 +402,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             }
         }
 
-        $mform->addElement('header', 'advanced', get_string('turnitinoroptions', 'turnitintooltwo'));
+        $mform->addElement('header', 'similarityoptionsheader', get_string('turnitinoroptions', 'turnitintooltwo'));
 
         $mform->addElement('select', 'allowlate', get_string('allowlate', 'turnitintooltwo'), $ynoptions);
         $mform->setDefault('allowlate', $config->default_allowlate);
@@ -541,7 +541,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
 
         // Populate Rubric options.
         if (!empty($config->usegrademark)) {
-            $mform->addElement('header', 'advanced', get_string('turnitingmoptions', 'turnitintooltwo'));
+            $mform->addElement('header', 'grademarkoptionsheader', get_string('turnitingmoptions', 'turnitintooltwo'));
 
             // Add no rubric option and rubrics belonging to Instructor.
             $rubricoptions = array('' => get_string('norubric', 'turnitintooltwo')) + $instructorrubrics;
@@ -608,6 +608,13 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $errors = parent::validation($data, $files);
 
         $partnames = array();
+
+        $formatparams = new stdClass();
+        $formatparams->field = get_string('turnitintooltwointro', 'turnitintooltwo');
+        $formatparams->length = TII_INTRO_CHARACTER_LIMIT;
+        if (strlen($data['introeditor']['text']) > TII_INTRO_CHARACTER_LIMIT) {
+            $errors['introeditor'] = get_string('maxlength', 'turnitintooltwo', $formatparams);
+        }
 
         foreach ($data as $name => $value) {
             // Get part names from array of data.

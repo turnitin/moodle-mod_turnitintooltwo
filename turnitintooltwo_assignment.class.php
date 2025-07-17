@@ -1342,6 +1342,8 @@ class turnitintooltwo_assignment {
             $assignment->setClassId($course->turnitin_cid);
             $assignment->setAuthorOriginalityAccess($this->turnitintooltwo->studentreports);
 
+            $assignment->setInstructions(strip_tags($this->turnitintooltwo->intro));
+
             $assignment->setRubricId((!empty($this->turnitintooltwo->rubric)) ? $this->turnitintooltwo->rubric : '');
             $assignment->setSubmitPapersTo($this->turnitintooltwo->submitpapersto);
             $assignment->setResubmissionRule($this->turnitintooltwo->reportgenspeed);
@@ -1361,7 +1363,7 @@ class turnitintooltwo_assignment {
             $assignment->setSubmittedDocumentsCheck($this->turnitintooltwo->spapercheck);
             $assignment->setInternetCheck($this->turnitintooltwo->internetcheck);
             $assignment->setPublicationsCheck($this->turnitintooltwo->journalcheck);
-            $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch);
+            $assignment->setTranslatedMatching($this->turnitintooltwo->transmatch ?? 0);
             $assignment->setAllowNonOrSubmissions($this->turnitintooltwo->allownonor);
 
             $attribute = "dtstart".$i;
@@ -1591,6 +1593,10 @@ class turnitintooltwo_assignment {
         $turnitincomms = new turnitintooltwo_comms();
         $turnitincall = $turnitincomms->initialise_api();
 
+        if (empty($_SESSION["TiiSubmissions"][$part->id])) {
+            $_SESSION["TiiSubmissions"][$part->id] = [ ];
+        }
+
         try {
             $submission = new TiiSubmission();
             $submission->setAssignmentId($part->tiiassignid);
@@ -1801,7 +1807,15 @@ class turnitintooltwo_assignment {
         $parts = $this->get_parts();
 
         if (empty($cm)) {
-            $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
+            try {
+                $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id, $this->turnitintooltwo->course);
+            }
+            catch (Exception $e) {
+                // If we fail to get the course module, the module or course may have been deleted.
+                mtrace('turnitintooltwo ERROR: ' . $e->getMessage() . ' - Course module for Turnitin activity with id: '
+                       . $this->id . 'and course: ' . $this->turnitintooltwo->course . ' not found.');
+                return 0;
+            }
         }
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
 
