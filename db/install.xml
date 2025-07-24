@@ -106,6 +106,7 @@
       </KEYS>
       <INDEXES>
         <INDEX NAME="userid" UNIQUE="true" FIELDS="userid"/>
+        <INDEX NAME="turnitin_uid" UNIQUE="false" FIELDS="turnitin_uid"/>
       </INDEXES>
     </TABLE>
     <TABLE NAME="turnitintooltwo_courses" COMMENT="Turnitin Tools Courses">
