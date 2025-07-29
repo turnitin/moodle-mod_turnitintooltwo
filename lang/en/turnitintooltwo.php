@@ -66,6 +66,7 @@ $string['journalcheck_help'] = 'Check against the Turnitin journals, periodicals
 $string['maxfilesize'] = 'Maximum File Size';
 $string['maxfilesize_help'] = 'This setting determines the maximum file size for user submissions to each assignment part. The maximum value you can set this value to is dictated by the value set in course settings, this value is further capped to a maximum file size of 100Mb which is the maximum allowed filesize for file uploads to Turnitin.';
 $string['maxlength'] = 'The maximum length for {$a->field} is {$a->length} characters';
+$string['maxlengthwithinput'] = 'The maximum length for {$a->field} is {$a->length} characters. You input {$a->inputlength} characters.';
 $string['maxmarks'] = 'Max Marks';
 $string['pluginname'] = 'Turnitin Assignment 2';
 $string['modulename'] = 'Turnitin Assignment 2';
