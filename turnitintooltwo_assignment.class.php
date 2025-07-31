@@ -1329,6 +1329,12 @@ class turnitintooltwo_assignment {
         // Update GradeMark setting depending on config setting.
         $this->turnitintooltwo->usegrademark = $config->usegrademark;
 
+        // Set the checkbox fields.
+        $chkboxfields = array('erater_spelling', 'erater_grammar', 'erater_usage', 'erater_mechanics', 'erater_style', 'transmatch', 'institution_check');
+        foreach ($chkboxfields as $field) {
+            $this->set_checkbox_field($field, 0);
+        }
+
         // Update each individual part.
         for ($i = 1; $i <= $this->turnitintooltwo->numparts; $i++) {
             // Update Turnitin Assignment.

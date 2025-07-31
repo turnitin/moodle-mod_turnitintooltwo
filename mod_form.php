@@ -221,7 +221,14 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
-        $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));
+        $mform->addElement('textarea', 'intro', get_string('turnitintooltwointro', 'turnitintooltwo'), 'wrap="virtual" rows="7" cols="50"');
+
+        // Limit max length of summary to 1000 characters
+        $input = new stdClass();
+        $input->length = TII_INTRO_CHARACTER_LIMIT;
+        $input->field = get_string('turnitintooltwointro', 'turnitintooltwo');
+        $mform->addRule('intro', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
+        $mform->addRule('intro', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
         $typeoptions = turnitintooltwo_filetype_array(true);
 
