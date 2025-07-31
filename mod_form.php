@@ -612,8 +612,10 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $formatparams = new stdClass();
         $formatparams->field = get_string('turnitintooltwointro', 'turnitintooltwo');
         $formatparams->length = TII_INTRO_CHARACTER_LIMIT;
-        if (strlen($data['introeditor']['text']) > TII_INTRO_CHARACTER_LIMIT) {
-            $errors['introeditor'] = get_string('maxlength', 'turnitintooltwo', $formatparams);
+        $formatparams->inputlength = mb_strlen(strip_tags($data['introeditor']['text']));
+
+        if ($formatparams->inputlength > TII_INTRO_CHARACTER_LIMIT) {
+            $errors['introeditor'] = get_string('maxlengthwithinput', 'turnitintooltwo', $formatparams);
         }
 
         foreach ($data as $name => $value) {
