@@ -3,6 +3,10 @@
         $(".js_required").show();
         $(".js_hide").hide();
 
+        $('.edit_part_pencil').on('click', function () {
+            $('.edit_part').click();
+        });
+
         // Configure submit paper form elements depending on what submission type is allowed.
         if ($("#id_submissiontype").val() == 1) {
             $("#id_submissiontext").parent().parent().hide();
@@ -762,6 +766,14 @@
                 }
             });
 
+            $('.editable_text').on('shown', function() {
+                $('.editor-pencil').hide();
+            });
+
+            $('.editable_text').on('hidden', function() {
+                $('.editor-pencil').show();
+            });
+
             if ($('#export_options').hasClass('tii_export_options_hide')) {
                 $('#export_options').hide();
                 $('.export_data').html('<span class="empty-dash">--</span>');
@@ -835,6 +847,7 @@
                 var current = ($(this).prop('id'));
                 $('.editable_date, .editable_text').not('#' + current).editable('disable');
                 $('.submit_nothing').addClass('disabled');
+                $('.editor-pencil').hide();
             });
 
             // Enable other editable fields & Grading template submissions when an editable form is closed.
@@ -842,6 +855,7 @@
                 var current = ($(this).prop('id'));
                 $('.editable_date, .editable_text').not('#' + current).editable('enable');
                 $('.submit_nothing').removeClass('disabled');
+                $('.editor-pencil').show();
             });
         }
 

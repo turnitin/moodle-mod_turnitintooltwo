@@ -67,8 +67,6 @@ class turnitintooltwo_view {
         $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/jquery-ui-1.8.4.custom.css');
         $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/mod/turnitintooltwo/css/fontawesome.min.css');
-        $PAGE->requires->css($cssurl);
         $cssurl = new moodle_url('/mod/turnitintooltwo/css/tii-icon-webfont.css');
         $PAGE->requires->css($cssurl);
 
@@ -728,6 +726,7 @@ class turnitintooltwo_view {
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+            $textfield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[0] = new html_table_cell($turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
 
@@ -742,6 +741,7 @@ class turnitintooltwo_view {
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+            $datefield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[1] = new html_table_cell($datefield);
         $cells[1]->attributes['class'] = 'data';
@@ -758,6 +758,7 @@ class turnitintooltwo_view {
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+            $datefield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[2] = new html_table_cell($datefield);
         $cells[2]->attributes['class'] = 'data';
@@ -776,6 +777,7 @@ class turnitintooltwo_view {
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+            $datefield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[3] = new html_table_cell($datefield);
         $cells[3]->attributes['class'] = 'data';
@@ -811,6 +813,7 @@ class turnitintooltwo_view {
                                                     'data-params' => "{ 'assignment': ".
                                                                         $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                         "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
+                $textfield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
             }
             $cells[4] = new html_table_cell($textfield);
             $cells[4]->attributes['class'] = 'data';
