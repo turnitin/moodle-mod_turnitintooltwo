@@ -3,10 +3,6 @@
         $(".js_required").show();
         $(".js_hide").hide();
 
-        $('.edit_part_pencil').on('click', function () {
-            $('.edit_part').click();
-        });
-
         // Configure submit paper form elements depending on what submission type is allowed.
         if ($("#id_submissiontype").val() == 1) {
             $("#id_submissiontext").parent().parent().hide();
