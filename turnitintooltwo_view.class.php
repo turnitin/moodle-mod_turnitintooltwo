@@ -718,15 +718,14 @@ class turnitintooltwo_view {
         // Allow part name to be editable if a tutor is logged in.
         $textfield = $partdetails[$partid]->partname;
         if ($istutor) {
-            $textfield = html_writer::link('#', $partdetails[$partid]->partname,
+            $textfield = html_writer::link('#', $partdetails[$partid]->partname.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('title' => get_string('edit', 'turnitintooltwo'),
-                                                'class' => 'editable_text editable_text_'.$partid,
+                                                'class' => 'edit_part editable_text editable_text_'.$partid,
                                                 'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'partname',
                                                 'id' => 'part_name_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
-            $textfield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[0] = new html_table_cell($turnitintooltwoassignment->turnitintooltwo->name." - ".$textfield." ");
 
@@ -734,14 +733,13 @@ class turnitintooltwo_view {
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';
         $datefield = userdate($partdetails[$partid]->dtstart, $dateformat);
         if ($istutor) {
-            $datefield = html_writer::link('#', $datefield,
+            $datefield = html_writer::link('#', $datefield.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('title' => get_string('edit', 'turnitintooltwo'),
-                                                'class' => 'editable_date editable_date_'.$partid,
+                                                'class' => 'edit_start_date editable_date editable_date_'.$partid,
                                                 'data-pk' => $partid, 'data-name' => 'dtstart', 'id' => 'date_start_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
-            $datefield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[1] = new html_table_cell($datefield);
         $cells[1]->attributes['class'] = 'data';
@@ -750,7 +748,7 @@ class turnitintooltwo_view {
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';
         $datefield = userdate($partdetails[$partid]->dtdue, $dateformat);
         if ($istutor) {
-            $datefield = html_writer::link('#', $datefield,
+            $datefield = html_writer::link('#', $datefield.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
                                                 'title' => get_string('edit', 'turnitintooltwo'),
                                                 'class' => 'editable_postdue editable_date editable_date_'.$partid,
@@ -758,7 +756,6 @@ class turnitintooltwo_view {
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
-            $datefield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[2] = new html_table_cell($datefield);
         $cells[2]->attributes['class'] = 'data';
@@ -767,7 +764,7 @@ class turnitintooltwo_view {
         $dateformat = ($CFG->ostype == 'WINDOWS') ? '%d %b %Y - %H:%M' : '%d %h %Y - %H:%M';
         $datefield = userdate($partdetails[$partid]->dtpost, $dateformat);
         if ($istutor) {
-            $datefield = html_writer::link('#', $datefield,
+            $datefield = html_writer::link('#', $datefield.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
                                                 'data-unanon' => $partdetails[$partid]->unanon,
                                                 'data-submitted' => $partdetails[$partid]->submitted,
@@ -777,7 +774,6 @@ class turnitintooltwo_view {
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                     "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
-            $datefield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
         }
         $cells[3] = new html_table_cell($datefield);
         $cells[3]->attributes['class'] = 'data';
@@ -806,14 +802,13 @@ class turnitintooltwo_view {
             // Allow marks to be editable if a tutor is logged in.
             $textfield = $partdetails[$partid]->maxmarks.$rubricviewlink;
             if ($istutor) {
-                $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks,
+                $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                                 array('title' => get_string('edit', 'turnitintooltwo'),
                                                     'class' => 'editable_text editable_text_'.$partid . ' ' . $class, 'id' => 'marks_'.$partid,
                                                     'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'maxmarks',
                                                     'data-params' => "{ 'assignment': ".
                                                                         $turnitintooltwoassignment->turnitintooltwo->id.", ".
                                                                         "'action': 'edit_field', 'sesskey': '".sesskey()."' }"));
-                $textfield .= html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil'));
             }
             $cells[4] = new html_table_cell($textfield);
             $cells[4]->attributes['class'] = 'data';
