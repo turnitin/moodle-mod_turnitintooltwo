@@ -790,9 +790,9 @@ function turnitintooltwo_cron_update_gradbook($assignment, $task) {
                 $overallgrade = $turnitintooltwoassignment->get_overall_grade($submissions, $cm);
                 if ($turnitintooltwoassignment->turnitintooltwo->grade < 0) {
                     // Using a scale.
-                    $grades->rawgrade = !is_numeric($overallgrade) ? null : (float)$overallgrade;
+                    $grades->rawgrade = is_numeric($overallgrade) ? (float)$overallgrade : null;
                 } else {
-                    $grades->rawgrade = !is_numeric($overallgrade) ? null : number_format((float)$overallgrade, 2);
+                    $grades->rawgrade = is_numeric($overallgrade) ? number_format((float)$overallgrade, 2) : null;
                 }
             }
             $grades->userid = $user->id;
