@@ -1196,6 +1196,14 @@ class turnitintooltwo_assignment {
                     $return["msg"] = get_string('maxmarkserror', 'turnitintooltwo');
                 } else {
                     $assignment->setMaxGrade($fieldvalue);
+                    // If we updated the max grade, the weighting will change, therefore update the gradebook
+                    $cm = get_coursemodule_from_instance("turnitintooltwo", $this->id,
+                        $assignment->turnitintooltwo->course);
+                    $submissions = $this->get_submissions($cm, $partid);
+                    $turnitintooltwosubmission = new turnitintooltwo_submission();
+                    foreach ($submissions[$partdetails->id] as $submission) {
+                        $turnitintooltwosubmission->update_gradebook($submission, $this);
+                    }
                 }
                 break;
 
