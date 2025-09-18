@@ -219,14 +219,7 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
         $mform->addRule('name', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
 
-        $mform->addElement('textarea', 'intro', get_string('turnitintooltwointro', 'turnitintooltwo'), 'wrap="virtual" rows="7" cols="50"');
-
-        // Limit max length of summary to 1000 characters
-        $input = new stdClass();
-        $input->length = TII_INTRO_CHARACTER_LIMIT;
-        $input->field = get_string('turnitintooltwointro', 'turnitintooltwo');
-        $mform->addRule('intro', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'client');
-        $mform->addRule('intro', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', $input->length, 'server');
+        $this->standard_intro_elements(get_string('turnitintooltwointro', 'turnitintooltwo'));
 
         $typeoptions = turnitintooltwo_filetype_array(true);
 
@@ -610,18 +603,9 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
         $formatparams = new stdClass();
         $formatparams->field = get_string('turnitintooltwointro', 'turnitintooltwo');
         $formatparams->length = TII_INTRO_CHARACTER_LIMIT;
-
-        if (!empty($data['introeditor'])) {
-          $formatparams->inputlength = mb_strlen(strip_tags($data['introeditor']['text']));
-          if ($formatparams->inputlength > TII_INTRO_CHARACTER_LIMIT) {
-            $errors['introeditor'] = get_string('maxlengthwithinput', 'turnitintooltwo', $formatparams);
-          }
-        }
-        else if (!empty($data['intro'])) {
-          $formatparams->inputlength = mb_strlen(strip_tags($data['intro']));
-          if ($formatparams->inputlength > TII_INTRO_CHARACTER_LIMIT) {
-            $errors['intro'] = get_string('maxlengthwithinput', 'turnitintooltwo', $formatparams);
-          }
+        $formatparams->inputlength = mb_strlen(strip_tags($data['introeditor']['text']));
+        if ($formatparams->inputlength > TII_INTRO_CHARACTER_LIMIT) {
+          $errors['introeditor'] = get_string('maxlengthwithinput', 'turnitintooltwo', $formatparams);
         }
 
         foreach ($data as $name => $value) {
