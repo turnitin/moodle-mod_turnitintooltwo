@@ -83,6 +83,7 @@ $string['numberofparts'] = 'Number of Parts';
 $string['numberofparts_help'] = 'Allows for the creation of a multi part assignment, individual users may submit one piece of work to each part.';
 $string['overallgrade'] = 'Overall Grade';
 $string['overallgrade_help'] = 'The overall grade determines the maximum allowed grade for the overall assignment, each part of an assignment has a maximum mark allocated which is used to proportionally distribute the grades in order to determine the overall grade.';
+$string['paperviewed'] = 'Paper viewed';
 $string['partdberror'] = 'There was a problem entering Part {$a} into the database<br />';
 $string['partupdateerror'] = 'There was a problem updating Part {$a} in the database<br />';
 $string['partdeleteerror'] = 'Could not delete assignment part {$a} data';
