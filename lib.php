@@ -621,6 +621,19 @@ function turnitintooltwo_reset_course_form_defaults($course) {
     return array('reset_turnitintooltwo' => 0);
 }
 
+function turnitintooltwo_get_course_content_items(\core_course\local\entity\content_item $defaultmodulecontentitem, \stdClass $user,
+        \stdClass $course) {
+    global $COURSE;
+    
+    // Block selecting this activity at the site home page
+    if ($COURSE->id == SITEID) {
+        return [];
+    }
+
+    // If we're in a user-created course context, allow this activity to be selected
+    return [ $defaultmodulecontentitem ];
+}
+
 /**
  * Function called by course/reset.php when resetting moodle course to build the element for the reset form
  *
