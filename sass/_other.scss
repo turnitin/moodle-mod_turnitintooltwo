@@ -267,3 +267,24 @@ div#mod_turnitintooltwo_digital_receipt {
 #migrationTable .fa-check {
     color: #008000;
 }
+
+.turnitintooltwo-dropdown-content {
+	position: absolute;
+	border: 1px solid grey;
+	background-color: white;
+	margin-left: 15px;
+	padding: 5px;
+	border-radius: 5px;
+	width: max-content;
+	display: none;
+}
+
+.turnitintooltwo-dropdown-content-item:hover {
+	color: black !important;
+	background-color: lightgrey !important;
+	text-decoration: none !important;
+}
+
+.turnitintooltwo-dropdown-toggle {
+	border: 1px solid black !important;
+}

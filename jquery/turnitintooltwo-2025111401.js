@@ -185,6 +185,21 @@
             showPartDatesBoxes();
         });
 
+        // Close the dropdown menu if the user clicks outside of it
+        $(window).on('click', function(event) {
+          if (!$(event.target).is('.dropdown-toggle')) {
+            $('.turnitintooltwo-dropdown-content').hide();
+          }
+        });
+
+        // Add event listeners to open/close the download dropdown
+        $(document).on('click', '[id^="dropdown_part_"]', function () {
+          const dropdownId = $(this).attr('id');
+          const partNumber = dropdownId.substring(dropdownId.lastIndexOf('_') + 1);
+          const contentId = '#turnitintooltwo-dropdown-content-part' + partNumber;
+          $(contentId).toggle();
+        });
+
         /**
          * Manual activation of sorting based on first or last name.
          * This borrows classes from datatables and applies them to two divs inside the student name column header.
