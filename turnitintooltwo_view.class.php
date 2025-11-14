@@ -567,7 +567,7 @@ class turnitintooltwo_view {
                                             array("class" => "mod_turnitintooltwo_gmpdfzip_box turnitintooltwo-dropdown-content-item", "id" => "gmpdf_zip_".$partobject->id));
 
 										$dropdownbuttons = html_writer::tag('div', $exportorigfileszip.$exportgrademarkzip, [ 'class' => 'turnitintooltwo-dropdown-content', 'id' => 'turnitintooltwo-dropdown-content-part'.$partid ]);
-										$linkstyles = [ 'id' => 'dropdown_part_'.$partid, 'class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo') ];
+										$linkstyles = [ 'id' => 'dropdown_part_'.$partid, 'class' => 'btn dropdown-toggle turnitintooltwo-dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo') ];
 										$downloadbutton = html_writer::tag('button', get_string('download', 'turnitintooltwo'), $linkstyles);
 										$downloadlinks = html_writer::tag('div', $downloadbutton, [ 'id' => 'mod_turnitintooltwo_download_links', 'class' => 'btn-group' ]).$dropdownbuttons;
                 }
