@@ -438,7 +438,7 @@ class turnitintooltwo_view {
      * @return type
      */
     public function init_submission_inbox($cm, $turnitintooltwoassignment, $partdetails, $turnitintooltwouser) {
-        global $CFG, $OUTPUT;
+        global $CFG, $OUTPUT, $PAGE;
         $config = turnitintooltwo_admin_config();
 
         $istutor = has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id));
@@ -553,7 +553,7 @@ class turnitintooltwo_view {
                                                             html_writer::tag('i', '', array('class' => 'fa fa-file-o',
                                                     'title' => get_string($origfilesziplang, 'turnitintooltwo'))).' '.
                                                     get_string($origfilesziplang, 'turnitintooltwo'),
-                                                            array('class' => 'mod_turnitintooltwo_zip_open mod_turnitintooltwo_origchecked_zip_open',
+                                                            array('class' => 'mod_turnitintooltwo_zip_open mod_turnitintooltwo_origchecked_zip_open turnitintooltwo-dropdown-content-item',
                                                                     'id' => 'origchecked_zip_'.$partobject->id));
                     // Put in div placeholder for launch form.
                     $exportorigfileszip .= $OUTPUT->box('', 'launch_form', 'origchecked_zip_form_'.$partobject->id);
@@ -564,17 +564,12 @@ class turnitintooltwo_view {
                                                     html_writer::tag('i', '', array('class' => 'fa fa-file-pdf-o',
                                                     'title' => get_string($grademarkziplang, 'turnitintooltwo'))).' '.
                                                     get_string($grademarkziplang, 'turnitintooltwo'),
-                                            array("class" => "mod_turnitintooltwo_gmpdfzip_box", "id" => "gmpdf_zip_".$partobject->id));
+                                            array("class" => "mod_turnitintooltwo_gmpdfzip_box turnitintooltwo-dropdown-content-item", "id" => "gmpdf_zip_".$partobject->id));
 
-                    $linkstyles = array('class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo'));
-                    $linkdropdown = html_writer::tag('ul',
-                                                html_writer::tag('li', $exportorigfileszip).
-                                                    html_writer::tag('li', $exportgrademarkzip),
-                                                array('class' => 'dropdown-menu mod_turnitintooltwo_dropdown-menu'));
-                    $downloadlinks = html_writer::tag('div',
-                                        html_writer::tag('button', get_string('download', 'turnitintooltwo'),
-                                            $linkstyles).$linkdropdown,
-                                            array('id' => 'mod_turnitintooltwo_download_links', 'class' => 'btn-group'));
+										$dropdownbuttons = html_writer::tag('div', $exportorigfileszip.$exportgrademarkzip, [ 'class' => 'turnitintooltwo-dropdown-content', 'id' => 'turnitintooltwo-dropdown-content-part'.$partid ]);
+										$linkstyles = [ 'id' => 'dropdown_part_'.$partid, 'class' => 'btn dropdown-toggle', 'data-toggle' => 'dropdown', 'disabled' => 'disabled', 'title' => get_string("download_button_warning", 'turnitintooltwo') ];
+										$downloadbutton = html_writer::tag('button', get_string('download', 'turnitintooltwo'), $linkstyles);
+										$downloadlinks = html_writer::tag('div', $downloadbutton, [ 'id' => 'mod_turnitintooltwo_download_links', 'class' => 'btn-group' ]).$dropdownbuttons;
                 }
 
                 // Include download links and info table.
