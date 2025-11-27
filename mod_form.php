@@ -460,65 +460,30 @@ class mod_turnitintooltwo_mod_form extends moodleform_mod {
             $mform->setDefault('institution_check', $config->default_institutioncheck);
         }
 
-        if ($this->numsubs > 0) {
+       
+        $mform->addElement('select', 'excludebiblio', get_string('excludebiblio', 'turnitintooltwo'), $ynoptions);
+        $mform->addHelpButton('excludebiblio', 'excludebiblio', 'turnitintooltwo');
+        $mform->setDefault('excludebiblio', $config->default_excludebiblio);
 
-            if (isset($this->turnitintooltwo->excludebiblio) && $this->turnitintooltwo->excludebiblio) {
-                $staticout = get_string('yes');
-            } else {
-                $staticout = get_string('no');
-            }
-            $mform->addElement('static', 'static', get_string('excludebiblio', 'turnitintooltwo'), $staticout);
-            $mform->addElement('hidden', 'excludebiblio', $this->turnitintooltwo->excludebiblio);
+        $mform->addElement('select', 'excludequoted', get_string('excludequoted', 'turnitintooltwo'), $ynoptions);
+        $mform->addHelpButton('excludequoted', 'excludequoted', 'turnitintooltwo');
+        $mform->setDefault('excludequoted', $config->default_excludequoted);
 
-            if (isset($this->turnitintooltwo->excludequoted) && $this->turnitintooltwo->excludequoted) {
-                $staticout = get_string('yes');
-            } else {
-                $staticout = get_string('no');
-            }
-            $mform->addElement('static', 'static', get_string('excludequoted', 'turnitintooltwo'), $staticout);
-            $mform->addElement('hidden', 'excludequoted', $this->turnitintooltwo->excludequoted);
+        $mform->addElement('text', 'excludevalue', get_string('excludevalue', 'turnitintooltwo'), array('size' => '12'));
+        $mform->addHelpButton('excludevalue', 'excludevalue', 'turnitintooltwo');
+        $input = new stdClass();
+        $input->length = 9;
+        $input->field = get_string('excludevalue', 'turnitintooltwo');
+        $mform->addRule('excludevalue', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 9, 'client');
+        $mform->addRule('excludevalue', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 9, 'server');
+        $mform->addRule('excludevalue', null, 'numeric', null, 'client');
+        $mform->addRule('excludevalue', null, 'numeric', null, 'server');
 
-            if (isset($this->turnitintooltwo->excludetype) && $this->turnitintooltwo->excludetype == 1) {
-                $staticout = get_string('excludewords', 'turnitintooltwo');
-            } else {
-                $staticout = get_string('excludepercent', 'turnitintooltwo');
-            }
+        $typeoptions = array(1 => get_string('excludewords', 'turnitintooltwo'),
+                             2 => get_string('excludepercent', 'turnitintooltwo'));
 
-            if (isset($this->turnitintooltwo->excludevalue) && empty($this->turnitintooltwo->excludevalue)) {
-                $staticval = get_string('nolimit', 'turnitintooltwo');
-            } else {
-                $staticval = $this->turnitintooltwo->excludevalue.' '.$staticout;
-            }
-
-            $mform->addElement('static', 'static', get_string('excludevalue', 'turnitintooltwo'), $staticval);
-            $mform->addElement('hidden', 'excludevalue', $this->turnitintooltwo->excludevalue);
-            $mform->addElement('hidden', 'excludetype', $this->turnitintooltwo->excludetype);
-
-        } else {
-            $mform->addElement('select', 'excludebiblio', get_string('excludebiblio', 'turnitintooltwo'), $ynoptions);
-            $mform->addHelpButton('excludebiblio', 'excludebiblio', 'turnitintooltwo');
-            $mform->setDefault('excludebiblio', $config->default_excludebiblio);
-
-            $mform->addElement('select', 'excludequoted', get_string('excludequoted', 'turnitintooltwo'), $ynoptions);
-            $mform->addHelpButton('excludequoted', 'excludequoted', 'turnitintooltwo');
-            $mform->setDefault('excludequoted', $config->default_excludequoted);
-
-            $mform->addElement('text', 'excludevalue', get_string('excludevalue', 'turnitintooltwo'), array('size' => '12'));
-            $mform->addHelpButton('excludevalue', 'excludevalue', 'turnitintooltwo');
-            $input = new stdClass();
-            $input->length = 9;
-            $input->field = get_string('excludevalue', 'turnitintooltwo');
-            $mform->addRule('excludevalue', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 9, 'client');
-            $mform->addRule('excludevalue', get_string('maxlength', 'turnitintooltwo', $input), 'maxlength', 9, 'server');
-            $mform->addRule('excludevalue', null, 'numeric', null, 'client');
-            $mform->addRule('excludevalue', null, 'numeric', null, 'server');
-
-            $typeoptions = array(1 => get_string('excludewords', 'turnitintooltwo'),
-                                    2 => get_string('excludepercent', 'turnitintooltwo'));
-
-            $mform->addElement('select', 'excludetype', '', $typeoptions);
-            $mform->setDefault('excludetype', 1);
-        }
+        $mform->addElement('select', 'excludetype', '', $typeoptions);
+        $mform->setDefault('excludetype', 1);
 
         $mform->setType('excludebiblio', PARAM_RAW);
         $mform->setType('excludequoted', PARAM_RAW);
