@@ -1,3 +1,16 @@
+### Date:       2025-December-11
+### Release:    v2025121101
+
+---
+
+#### Download Dropdown Fixed
+On Moodle 4.5+ an issue was observed which caused the download dropdown to stop working. This has been fixed.
+
+#### Bibliography/Quoted Materials Options Improvements
+Bibliography/Quoted Materials options can now be edited after submissions have been made.
+
+---
+
 ### Date:       2025-October-29
 ### Release:    v2025102901
 
