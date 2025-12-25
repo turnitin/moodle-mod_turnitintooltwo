@@ -502,7 +502,7 @@ class turnitintooltwo_view {
             }
         }
         if (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) {
-            $cells["student_read"] = new html_table_cell('&nbsp;');
+            $cells["student_read"] = new html_table_cell(get_string('paperviewed', 'turnitintooltwo'));
         }
         $cells["upload"] = new html_table_cell('&nbsp;');
         $cells["upload"]->attributes['class'] = "noscript_hide";
