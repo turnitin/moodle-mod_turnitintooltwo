@@ -1,5 +1,12 @@
 <?php
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+use members_view;
+use turnitintooltwo_assignment;
+use turnitintooltwo_view;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -14,7 +21,7 @@ require_once($CFG->dirroot . '/mod/lti/lib.php');
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_view_members_testcase extends advanced_testcase {
+class members_test extends advanced_testcase {
     /**
      * Test display role given returns as the expected Turnitin role
      */

@@ -1,5 +1,12 @@
 <?php
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+use stdClass;
+use turnitintooltwo_assignment;
+use turnitintooltwo_submission;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -16,7 +23,7 @@ require_once($CFG->dirroot . '/course/lib.php');
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_submission_testcase extends advanced_testcase {
+class submission_test extends advanced_testcase {
     /**
      * Test create submission function returns the expected bollean given a data array.
      */

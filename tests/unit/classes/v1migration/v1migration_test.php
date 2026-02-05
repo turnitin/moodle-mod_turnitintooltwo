@@ -14,6 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace mod_turnitintooltwo;
+
+use core\output\html_writer;
+use Countable;
+use moodle_url;
+use stdClass;
+use test_lib;
+use v1migration;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -26,7 +35,7 @@ require_once($CFG->libdir . "/gradelib.php");
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_v1migration_testcase extends test_lib {
+class v1migration_test extends test_lib {
 
     /** Workaround for new php.7.2 warning
      * see http://php.net/manual/en/migration72.incompatible.php#migration72.incompatible.warn-on-non-countable-types

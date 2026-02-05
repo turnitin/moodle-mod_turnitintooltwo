@@ -4,12 +4,17 @@
  * Unit tests for mod_turnitintooltwo classes/digitalreceipt/receipt_message
  */
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+use receipt_message;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/digitalreceipt/receipt_message.php');
 
-class mod_turnitintooltwo_receipt_message_testcase extends advanced_testcase {
+class receipt_message_test extends advanced_testcase {
 
     public function test_send_message() {
         global $DB;

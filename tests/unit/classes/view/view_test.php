@@ -22,6 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_turnitintooltwo;
+
+use stdClass;
+use test_lib;
+use turnitintooltwo_view;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -38,7 +44,7 @@ require_once($CFG->dirroot . '/course/lib.php');
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_view_testcase extends test_lib {
+class view_test extends test_lib {
 
     /**
      * Test that the page layout is set to standard so that the header displays.
