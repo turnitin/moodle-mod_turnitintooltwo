@@ -412,11 +412,6 @@ class turnitintooltwo_assignment {
         // If a course end date is specified in Moodle then we set this in Turnitin with an additional month to
         // account for the Turnitin viewer becoming read-only once the class end date passes.
         if (!empty($course->enddate)) {
-            // The course end date must not be before the start date.
-            // Change the course end date if it is set earlier than today.
-            if ($course->enddate < strtotime('today')) {
-                $course->enddate = strtotime('today');
-            }
             $enddate = strtotime('+1 month', $course->enddate);
             if ($enddate > time()) {
                 $class->setEndDate(gmdate("Y-m-d\TH:i:s\Z", $enddate));
