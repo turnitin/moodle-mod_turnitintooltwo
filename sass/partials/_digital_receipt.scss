@@ -21,6 +21,8 @@
         margin: 0 auto;
         width: 214px;
         height: 68px;
+        max-width: none;  /* override for boost .icon class */
+        max-height: none; /* override for boost .icon class */
     }
 
     #mod_turnitintooltwo_receipt_print {
