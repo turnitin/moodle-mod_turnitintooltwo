@@ -469,8 +469,8 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
             $assignment->setAllowNonOrSubmissions($turnitintooltwoassignment->turnitintooltwo->allownonor);
 
             // Generate the assignment dates depending on whether we are renewing them or not.
-            // UCL: Added in $currentcourse to turnitintooltwo_generate_part_dates() method,
-            $datestart = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
+            // Always use current time for copied assignments to avoid Turnitin rejecting very old start dates.
+            $datestart = gmdate("Y-m-d\TH:i:s\Z", time());
             $datedue   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
             $datepost  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
 
