@@ -470,7 +470,7 @@ function turnitintooltwo_duplicate_recycle($courseid, $action, $renewdates = nul
 
             // Generate the assignment dates depending on whether we are renewing them or not.
             // Always use current time for copied assignments to avoid Turnitin rejecting very old start dates.
-            $datestart = gmdate("Y-m-d\TH:i:s\Z", time());
+            $datestart = turnitintooltwo_generate_part_dates($renewdates, "start", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
             $datedue   = turnitintooltwo_generate_part_dates($renewdates, "due", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
             $datepost  = turnitintooltwo_generate_part_dates($renewdates, "post", $turnitintooltwoassignment->turnitintooltwo, $i, $currentcourse);
 
@@ -566,6 +566,23 @@ function turnitintooltwo_generate_part_dates($renewdates, $datetype, $part, $i, 
         }
     } else {
         $attribute = "dt".$datetype.$i;
+
+        // If the course is older than 1 year ago, but user doesn't want to renew the dates of the course, Turnitin will reject the assignment.
+        // To prevent this, set the assignment start date to now.
+        if (!empty($part->$attribute) && $part->$attribute < strtotime('-1 year')) {
+            $now = time();
+            switch ($datetype) {
+                case 'start':
+                    return gmdate("Y-m-d\TH:i:s\Z", $now);
+                case 'due':
+                    return gmdate("Y-m-d\TH:i:s\Z", strtotime('+7 days', $now));
+                case 'post':
+                    return gmdate("Y-m-d\TH:i:s\Z", strtotime('+7 days', $now));
+                default:
+                    return NULL;
+            }
+        }
+
         return gmdate("Y-m-d\TH:i:s\Z", $part->$attribute);
     }
 }
