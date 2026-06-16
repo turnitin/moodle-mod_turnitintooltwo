@@ -284,21 +284,46 @@ switch ($action) {
             $refreshrequested = required_param('refresh_requested', PARAM_INT);
             $start = required_param('start', PARAM_INT);
             $total = required_param('total', PARAM_INT);
+            $requestsource = optional_param('request_source', 'initial_load', PARAM_ALPHAEXT);
+            $validsources = array('initial_load', 'manual_button', 'dv_close_auto');
+            if (!in_array($requestsource, $validsources, true)) {
+                $requestsource = 'initial_load';
+            }
+
             $parts = $turnitintooltwoassignment->get_parts();
-            $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
+            file_put_contents("/usr/share/nginx/html/debug.txt", "Partid: $partid, Refresh: $refreshrequested, Start: $start, Total: $total\n", FILE_APPEND);
+            file_put_contents("/usr/share/nginx/html/debug.txt", "Request source: $requestsource\n", FILE_APPEND);
+            file_put_contents("/usr/share/nginx/html/debug.txt", "Auto Updates: ".$turnitintooltwoassignment->turnitintooltwo->autoupdates."\n", FILE_APPEND);
+
+            $autoupdatesenabled = ((int)$turnitintooltwoassignment->turnitintooltwo->autoupdates === 1);
+            if ($requestsource === 'manual_button') {
+                $updatefromtii = 1;
+            } else if ($requestsource === 'dv_close_auto') {
+                $updatefromtii = $autoupdatesenabled ? 1 : 0;
+            } else {
+                $updatefromtii = $autoupdatesenabled ? 1 : 0;
+            }
+
+            file_put_contents("/usr/share/nginx/html/debug.txt", "Update from tii: ".$updatefromtii."\n", FILE_APPEND);
+
             $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
-            if ($refreshrequested && $start == 0) {
+            if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->update_assignment_from_tii();
+                file_put_contents("/usr/share/nginx/html/debug.txt", "Update from tii and start\n", FILE_APPEND);
+
             }
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = count($_SESSION["TiiSubmissions"][$partid]);
+                file_put_contents("/usr/share/nginx/html/debug.txt", "updatefromtii and start\n", FILE_APPEND);
+
             }
 
             if ($start < $total && $updatefromtii) {
                 $turnitintooltwoassignment->refresh_submissions($cm, $parts[$partid], $start);
+                file_put_contents("/usr/share/nginx/html/debug.txt", "Start: $start; Total: $total; and updatefromtii: $updatefromtii\n", FILE_APPEND);
             }
 
             $PAGE->set_context(context_module::instance($cm->id));
