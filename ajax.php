@@ -291,9 +291,6 @@ switch ($action) {
             }
 
             $parts = $turnitintooltwoassignment->get_parts();
-            file_put_contents("/usr/share/nginx/html/debug.txt", "Partid: $partid, Refresh: $refreshrequested, Start: $start, Total: $total\n", FILE_APPEND);
-            file_put_contents("/usr/share/nginx/html/debug.txt", "Request source: $requestsource\n", FILE_APPEND);
-            file_put_contents("/usr/share/nginx/html/debug.txt", "Auto Updates: ".$turnitintooltwoassignment->turnitintooltwo->autoupdates."\n", FILE_APPEND);
 
             $autoupdatesenabled = ((int)$turnitintooltwoassignment->turnitintooltwo->autoupdates === 1);
             if ($requestsource === 'manual_button') {
@@ -304,26 +301,21 @@ switch ($action) {
                 $updatefromtii = $autoupdatesenabled ? 1 : 0;
             }
 
-            file_put_contents("/usr/share/nginx/html/debug.txt", "Update from tii: ".$updatefromtii."\n", FILE_APPEND);
-
             $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->update_assignment_from_tii();
-                file_put_contents("/usr/share/nginx/html/debug.txt", "Update from tii and start\n", FILE_APPEND);
 
             }
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = count($_SESSION["TiiSubmissions"][$partid]);
-                file_put_contents("/usr/share/nginx/html/debug.txt", "updatefromtii and start\n", FILE_APPEND);
 
             }
 
             if ($start < $total && $updatefromtii) {
                 $turnitintooltwoassignment->refresh_submissions($cm, $parts[$partid], $start);
-                file_put_contents("/usr/share/nginx/html/debug.txt", "Start: $start; Total: $total; and updatefromtii: $updatefromtii\n", FILE_APPEND);
             }
 
             $PAGE->set_context(context_module::instance($cm->id));
