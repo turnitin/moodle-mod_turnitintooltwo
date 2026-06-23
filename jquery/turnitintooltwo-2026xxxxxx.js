@@ -374,6 +374,9 @@
         $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
 
             var part_id = $(this).attr("id");
+            var isAnonymousMarking = $('#tabs-' + part_id + ' .editable_postdue:first').data('anon') == 1;
+            var submittedColumnIndex = notStudentView ? 8 : 7;
+            var defaultSorting = isAnonymousMarking ? [[submittedColumnIndex, 'desc']] : [[2, 'asc'], [4, 'asc']];
             refreshRequested[part_id] = 0;
             refreshSource[part_id] = 'initial_load';
 
@@ -381,7 +384,7 @@
                 "bProcessing": true,
                 "aoColumns": submissionsDataTableColumns,
                 "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                "aaSorting": [[2, "asc"], [4, "asc"]],
+                "aaSorting": defaultSorting,
                 "sAjaxSource": "ajax.php",
                 "oLanguage": dataTablesLang,
                 "sDom": 'r<"mod_turnitintooltwo_listbar-container"<"top mod_turnitintooltwo_listbar clearfix"lf>><"dt_pagination clearfix"pi>t<"bottom"><"dt_pagination clearfix"pi>',
