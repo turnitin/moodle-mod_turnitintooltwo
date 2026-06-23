@@ -370,6 +370,7 @@
 
         var partTables = [];
         var refreshRequested = [];
+        var refreshSource = [];
         $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
 
             var part_id = $(this).attr("id");
@@ -377,6 +378,7 @@
             var submittedColumnIndex = notStudentView ? 8 : 7;
             var defaultSorting = isAnonymousMarking ? [[submittedColumnIndex, 'desc']] : [[2, 'asc'], [4, 'asc']];
             refreshRequested[part_id] = 0;
+            refreshSource[part_id] = 'initial_load';
 
             partTables[part_id] = $('table#' + part_id).dataTable({
                 "bProcessing": true,
@@ -397,7 +399,7 @@
                             // We need to force showing of loading bar as if we place fnCallback after the table is populated it is wiped when refreshing.
                             fnCallback(result);
                             $('#' + part_id + "_processing").attr('style', 'visibility: visible');
-                            getSubmissions(partTables[part_id], $('#assignment_id').html(), part_id, 0, refreshRequested, 0);
+                            getSubmissions(partTables[part_id], $('#assignment_id').html(), part_id, 0, refreshRequested, refreshSource, 0);
                         }
                     });
                 },
@@ -477,6 +479,7 @@
 
                 $('table.mod_turnitintooltwo_submissions_data_table').each(function () {
                     refreshRequested[$(this).attr("id")] = 1;
+                    refreshSource[$(this).attr("id")] = 'manual_button';
                     partTables[$(this).attr("id")].fnReloadAjax();
                     partTables[$(this).attr("id")].fnStandingRedraw();
                 });
@@ -928,7 +931,7 @@
             $('.loading_gif').remove();
         }
 
-        function getSubmissions(table, assignment_id, part_id, start, refresh_requested, total) {
+        function getSubmissions(table, assignment_id, part_id, start, refresh_requested, refresh_source, total) {
             $.ajax({
                 "dataType": 'json',
                 "type": "POST",
@@ -936,7 +939,8 @@
                 "async": true,
                 "data": {
                     action: "get_submissions", assignment: assignment_id, part: part_id, start: start,
-                    refresh_requested: refresh_requested[part_id], sesskey: M.cfg.sesskey, total: total
+                    refresh_requested: refresh_requested[part_id], request_source: refresh_source[part_id],
+                    sesskey: M.cfg.sesskey, total: total
                 },
                 "success": function (result) {
                     eval(result);
@@ -947,11 +951,12 @@
                     }
 
                     if (result.end < result.total) {
-                        getSubmissions(table, assignment_id, part_id, start, refresh_requested, result.total);
+                        getSubmissions(table, assignment_id, part_id, start, refresh_requested, refresh_source, result.total);
                     } else {
                         $('#' + part_id + "_processing").attr('style', 'visibility: hidden');
 
                         refresh_requested[part_id] = 0;
+                        refresh_source[part_id] = 'initial_load';
                         var allrefreshed = 1;
 
                         $.each(refresh_requested, function (k, v) {
@@ -1372,7 +1377,15 @@
         // Check whether the DV is still open, refresh the opening window when it closes.
         function checkDVClosed(part_id) {
             if (window.dvWindow.closed) {
-                $("#refresh_" + part_id).click();
+                if ($('#refresh_' + part_id).is(':visible')) {
+                    $('.mod_turnitintooltwo_refresh_link').hide();
+                    $('.mod_turnitintooltwo_refreshing_link').show();
+
+                    refreshRequested[part_id] = 1;
+                    refreshSource[part_id] = 'dv_close_auto';
+                    partTables[part_id].fnReloadAjax();
+                    partTables[part_id].fnStandingRedraw();
+                }
             } else {
                 setTimeout(function () {
                     checkDVClosed(part_id);
