@@ -715,7 +715,7 @@ class turnitintooltwo_view {
         if ($istutor) {
             $textfield = html_writer::link('#', $partdetails[$partid]->partname.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('title' => get_string('edit', 'turnitintooltwo'),
-                                                'class' => 'edit_part editable_text editable_text_'.$partid,
+                                                'class' => 'edit_part editable_text editable_text_'.$partid.' nowrap',
                                                 'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'partname',
                                                 'id' => 'part_name_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
@@ -730,7 +730,7 @@ class turnitintooltwo_view {
         if ($istutor) {
             $datefield = html_writer::link('#', $datefield.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('title' => get_string('edit', 'turnitintooltwo'),
-                                                'class' => 'edit_start_date editable_date editable_date_'.$partid,
+                                                'class' => 'edit_start_date editable_date editable_date_'.$partid.' nowrap',
                                                 'data-pk' => $partid, 'data-name' => 'dtstart', 'id' => 'date_start_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
@@ -746,7 +746,7 @@ class turnitintooltwo_view {
             $datefield = html_writer::link('#', $datefield.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                             array('data-anon' => $turnitintooltwoassignment->turnitintooltwo->anon,
                                                 'title' => get_string('edit', 'turnitintooltwo'),
-                                                'class' => 'editable_postdue editable_date editable_date_'.$partid,
+                                                'class' => 'editable_postdue editable_date editable_date_'.$partid.' nowrap',
                                                 'data-pk' => $partid, 'data-name' => 'dtdue', 'id' => 'date_due_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
@@ -764,7 +764,7 @@ class turnitintooltwo_view {
                                                 'data-unanon' => $partdetails[$partid]->unanon,
                                                 'data-submitted' => $partdetails[$partid]->submitted,
                                                 'title' => get_string('edit', 'turnitintooltwo'),
-                                                'class' => 'editable_postdue editable_date editable_date_'.$partid,
+                                                'class' => 'editable_postdue editable_date editable_date_'.$partid.' nowrap',
                                                 'data-pk' => $partid, 'data-name' => 'dtpost', 'id' => 'date_post_'.$partid,
                                                 'data-params' => "{ 'assignment': ".
                                                                     $turnitintooltwoassignment->turnitintooltwo->id.", ".
@@ -799,7 +799,7 @@ class turnitintooltwo_view {
             if ($istutor) {
                 $textfield = html_writer::link('#', $partdetails[$partid]->maxmarks.html_writer::tag('i', '', array('class' => 'fa fa-pencil fa-lg grey editor-pencil')),
                                                 array('title' => get_string('edit', 'turnitintooltwo'),
-                                                    'class' => 'editable_text editable_text_'.$partid . ' ' . $class, 'id' => 'marks_'.$partid,
+                                                    'class' => 'editable_text editable_text_'.$partid . ' ' . $class . ' nowrap', 'id' => 'marks_'.$partid,
                                                     'data-type' => 'text', 'data-pk' => $partid, 'data-name' => 'maxmarks',
                                                     'data-params' => "{ 'assignment': ".
                                                                         $turnitintooltwoassignment->turnitintooltwo->id.", ".
