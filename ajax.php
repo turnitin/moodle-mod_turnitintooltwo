@@ -284,17 +284,34 @@ switch ($action) {
             $refreshrequested = required_param('refresh_requested', PARAM_INT);
             $start = required_param('start', PARAM_INT);
             $total = required_param('total', PARAM_INT);
+            $requestsource = optional_param('request_source', 'initial_load', PARAM_ALPHAEXT);
+            $validsources = array('initial_load', 'manual_button', 'dv_close_auto');
+            if (!in_array($requestsource, $validsources, true)) {
+                $requestsource = 'initial_load';
+            }
+
             $parts = $turnitintooltwoassignment->get_parts();
-            $updatefromtii = ($refreshrequested || $turnitintooltwoassignment->turnitintooltwo->autoupdates == 1) ? 1 : 0;
+
+            $autoupdatesenabled = ((int)$turnitintooltwoassignment->turnitintooltwo->autoupdates === 1);
+            if ($requestsource === 'manual_button') {
+                $updatefromtii = 1;
+            } else if ($requestsource === 'dv_close_auto') {
+                $updatefromtii = $autoupdatesenabled ? 1 : 0;
+            } else {
+                $updatefromtii = $autoupdatesenabled ? 1 : 0;
+            }
+
             $istutor = (has_capability('mod/turnitintooltwo:grade', context_module::instance($cm->id))) ? true : false;
 
-            if ($refreshrequested && $start == 0) {
+            if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->update_assignment_from_tii();
+
             }
 
             if ($updatefromtii && $start == 0) {
                 $turnitintooltwoassignment->get_submission_ids_from_tii($parts[$partid]);
                 $total = count($_SESSION["TiiSubmissions"][$partid]);
+
             }
 
             if ($start < $total && $updatefromtii) {
