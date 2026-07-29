@@ -1,3 +1,22 @@
+### Date:       2026-July-28
+### Release:    v2026072801
+
+---
+
+#### Submission List Ordering Update for Anonymous Assignments
+When anonymous marking is enabled, new submissions will now be ordered correctly in the submission inbox.
+
+#### Document Viewer Respects 'Do Not Refresh' Setting
+An issue was fixed where the document viewer did not respect the 'Do not refresh' setting.
+
+#### Assignment Copy Start Date Handling Improved
+When using Moodle assignment copy, the assignment start date is no longer copied to the new assignment. This prevents Turnitin from rejecting copied assignments that have very old start dates.
+
+#### UI Fixes
+Several user interface improvements and visual fixes were made.
+
+---
+
 ### Date:       2025-December-11
 ### Release:    v2025121101
 
