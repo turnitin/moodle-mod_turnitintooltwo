@@ -1,5 +1,13 @@
 <?php
 
+namespace mod_turnitintooltwo;
+
+use context_module;
+use stdClass;
+use test_lib;
+use turnitintooltwo_assignment;
+use v1migration;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -15,7 +23,7 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.cl
  *
  * @package turnitintooltwo
  */
-class mod_lib_testcase extends test_lib {
+class lib_test extends test_lib {
     /**
      * Test that we have the correct course type.
      */
@@ -76,7 +84,7 @@ class mod_lib_testcase extends test_lib {
 
         global $DB;
 
-        $v1migrationtest = new mod_turnitintooltwo_v1migration_testcase();
+        $v1migrationtest = new \mod_turnitintooltwo\v1migration_test();
 
         if (!$v1migrationtest->v1installed()) {
             return false;
@@ -129,7 +137,7 @@ class mod_lib_testcase extends test_lib {
 
         global $DB;
 
-        $v1migrationtest = new mod_turnitintooltwo_v1migration_testcase();
+        $v1migrationtest = new \mod_turnitintooltwo\v1migration_test();
 
         if (!$v1migrationtest->v1installed()) {
             return false;

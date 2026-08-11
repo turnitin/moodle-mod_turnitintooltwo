@@ -22,6 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+use Exception;
+use turnitintooltwo_comms;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -32,7 +38,7 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_comms.class.p
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_comms_testcase extends advanced_testcase {
+class comms_test extends advanced_testcase {
 
 	public function test_handle_exceptions() {
 		global $CFG;

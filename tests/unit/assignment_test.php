@@ -22,6 +22,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+use stdClass;
+use turnitintooltwo_assignment;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -32,7 +38,7 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/turnitintooltwo_assignment.cl
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_assignment_testcase extends advanced_testcase {
+class assignment_test extends advanced_testcase {
 
 	/**
 	 * Test that the title is truncated to the passed in limit.

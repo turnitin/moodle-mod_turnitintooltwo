@@ -22,7 +22,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_turnitintooltwo;
+
 global $CFG;
+
+use advanced_testcase;
+use mod_turnitintooltwo_mod_form;
+use stdClass;
 
 require_once($CFG->dirroot . '/mod/turnitintooltwo/mod_form.php');
 

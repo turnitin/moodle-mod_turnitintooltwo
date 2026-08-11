@@ -22,8 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace mod_turnitintooltwo;
+
+use context_module;
 use core_privacy\local\metadata\collection;
-use core_privacy\local\request\deletion_criteria;
 use mod_turnitintooltwo\privacy\provider;
 
 defined('MOODLE_INTERNAL') || die();
@@ -36,7 +38,7 @@ if (!class_exists('\core_privacy\tests\provider_testcase')) {
     return;
 }
 
-class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\provider_testcase {
+class provider_test extends \core_privacy\tests\provider_testcase {
 
     private $testcase;
     private $turnitintooltwoassignment;
@@ -51,7 +53,7 @@ class mod_turnitintooltwo_privacy_provider_testcase extends \core_privacy\tests\
 
         $this->resetAfterTest();
 
-        $this->testcase = new mod_lib_testcase();
+        $this->testcase = new lib_test();
         $generator = $this->getDataGenerator();
 
         // Set up test assignment.

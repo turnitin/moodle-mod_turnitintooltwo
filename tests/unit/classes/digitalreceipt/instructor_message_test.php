@@ -1,5 +1,10 @@
 <?php
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+use instructor_message;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -10,7 +15,7 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/digitalreceipt/instru
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_instructor_message_testcase extends advanced_testcase {
+class instructor_message_test extends advanced_testcase {
 
     /**
      * Test data being passed in will generate the correct output text.

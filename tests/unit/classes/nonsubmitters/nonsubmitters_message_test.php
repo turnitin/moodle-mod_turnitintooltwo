@@ -1,5 +1,9 @@
 <?php
 
+namespace mod_turnitintooltwo;
+
+use advanced_testcase;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -10,7 +14,7 @@ require_once($CFG->dirroot . '/mod/turnitintooltwo/classes/nonsubmitters/nonsubm
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_nonsubmitter_message_testcase extends advanced_testcase {
+class nonsubmitters_message_test extends advanced_testcase {
 
     /**
      * Test that non submitter messages send.
@@ -21,7 +25,7 @@ class mod_turnitintooltwo_nonsubmitter_message_testcase extends advanced_testcas
 
         $sink = $this->redirectMessages();
 
-        $nonsubmitters_message = new nonsubmitters_message();
+        $nonsubmitters_message = new \nonsubmitters_message();
 
         // Generate two new users to send messages to.
         $user1 = $this->getDataGenerator()->create_user();
