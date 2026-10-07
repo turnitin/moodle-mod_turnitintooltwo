@@ -59,6 +59,12 @@ if ($id != 0) {
     require_login();
 }
 
+// Rubric and QuickMark managers are restricted to admins and users who can manage Turnitin in at least one course.
+if ($hidebg && !is_siteadmin() &&
+        !get_user_capability_course('mod/turnitintooltwo:addinstance', $USER->id, false, 'id', 'id ASC', 1)) {
+    throw new required_capability_exception(context_system::instance(), 'mod/turnitintooltwo:addinstance', 'nopermissions', '');
+}
+
 // Load Javascript and CSS.
 $turnitintooltwoview->load_page_components($hidebg);
 
