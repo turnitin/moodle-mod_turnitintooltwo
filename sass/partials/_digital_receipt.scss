@@ -16,6 +16,11 @@
     padding: 20px;
     background: #fff;
 
+    @media screen {
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+    }
+
     .mod_turnitintooltwo_logo {
         display: block;
         margin: 0 auto;

@@ -34,8 +34,8 @@ class nonsubmitters_message {
         $eventdata->userto            = $userid;
         $eventdata->subject           = $subject;
         $eventdata->fullmessage       = $message;
-        $eventdata->fullmessageformat = FORMAT_HTML;
-        $eventdata->fullmessagehtml   = $message;
+        $eventdata->fullmessageformat = FORMAT_PLAIN;
+        $eventdata->fullmessagehtml   = nl2br(s($message));
         $eventdata->smallmessage      = '';
         $eventdata->notification      = 1; // This is only set to 0 for personal messages between users.
 
