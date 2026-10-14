@@ -78,6 +78,18 @@
         padding-right:8px;
     }
 
+    .row_grade {
+        display: inline-flex;
+        float: right;
+        align-items: center;
+        white-space: nowrap;
+
+        .grademark_open {
+            order: 1;
+            flex: none;
+        }
+    }
+
     th.narrow,
     td.narrow {
         width: 60px;

@@ -1,3 +1,7 @@
+// Keep the receipt above the sticky footer observed at z-index: 3 in Moodle 5.3.
+// Recheck the footer's stacking level after Moodle/theme upgrades if overlap returns.
+$receipt-box-zindex: 4;
+
 .mod_turnitintooltwo_digital_receipt {
     display: inline-block;
     width: 150px;
@@ -15,6 +19,13 @@
 #mod_turnitintooltwo_digital_receipt_box {
     padding: 20px;
     background: #fff;
+
+    @media screen {
+        position: relative;
+        z-index: $receipt-box-zindex;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+    }
 
     .mod_turnitintooltwo_logo {
         display: block;

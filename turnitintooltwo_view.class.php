@@ -1283,14 +1283,17 @@ class turnitintooltwo_view {
 
                 // Show grade.
                 if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 2) { // 2 is fraction.
-                    $grade .= html_writer::tag('span', $submissiongrade, array("class" => "grade"))
-                            .html_writer::tag('span', "/".$parts[$partid]->maxmarks,
+                    $grade .= html_writer::tag('span',
+                                    html_writer::tag('span', $submissiongrade, array("class" => "grade"))
+                                    ."/".$parts[$partid]->maxmarks,
                                     array("class" => "grademark_grade"));
                 } else if ($turnitintooltwoassignment->turnitintooltwo->gradedisplay == 1) { // 1 is percentage.
                     $submissiongrade = (is_numeric($submissiongrade) && $parts[$partid]->maxmarks > 0) ? round($submissiongrade / $parts[$partid]->maxmarks * 100, 1).'%' : $submissiongrade;
                     $grade .= html_writer::tag('span', $submissiongrade,
                                     array('class' => 'grade grademark_grade'));
                 }
+
+                $grade = html_writer::tag('div', $grade, array('class' => 'row_grade'));
 
                 // Put in div placeholder for DV launch form.
                 $grade .= html_writer::tag('div', '',
