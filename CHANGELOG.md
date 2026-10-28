@@ -1,3 +1,25 @@
+### Date:		2026-October-28
+### Release:	v2026102801
+
+---
+
+#### System Messages Viewable in Turnitin Messages Inbox
+Fixed an issue that prevented system messages from being viewed in the Turnitin Messages inbox.
+
+#### Capability Check for Rubric and QuickMark Managers
+Added a capability check when launching the Rubric Manager and QuickMark Manager.
+
+#### Moodle 5.3 Compatibility
+Removed the FEATURE_GROUPMEMBERSONLY variable, which was deprecated in Moodle 5.3 and prevented upgrading to Moodle 5.3 and using the plugin.
+
+#### Moodle 5.3 Display Fixes
+Fixed alignment issues in digital receipts and the display of multi-part assignments when the course index is opened.
+
+#### Notification Email Line Breaks
+Fixed missing line breaks in notification emails sent to non-submitting students.
+
+---
+
 ### Date:       2026-July-28
 ### Release:    v2026072801
 
