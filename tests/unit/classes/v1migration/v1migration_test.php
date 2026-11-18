@@ -26,7 +26,7 @@ require_once($CFG->libdir . "/gradelib.php");
  *
  * @package turnitintooltwo
  */
-class mod_turnitintooltwo_v1migration_testcase extends test_lib {
+class v1migration_test extends test_lib {
 
     /** Workaround for new php.7.2 warning
      * see http://php.net/manual/en/migration72.incompatible.php#migration72.incompatible.warn-on-non-countable-types
@@ -49,7 +49,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $v1assignment = new stdClass();
@@ -215,7 +215,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
     public function test_set_default_values() {
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -252,7 +252,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -280,7 +280,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -314,7 +314,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -347,6 +347,11 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $timestamp = time();
         $_SESSION["migrationtool"][$v1assignment->id]["gradesupdated"] = $timestamp;
 
+        $this->setAdminUser();
+        set_config('turnitin_account_id', 1234);
+        set_config('accountid', '1234', 'turnitintooltwo');
+        v1migration::togglemigrationstatus(1);
+
         $v2assignmentid = $v1migration->migrate();
 
         // Verify assignment has migrated.
@@ -377,7 +382,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -413,6 +418,11 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertEquals(2, count($v1submissions));
 
         // Migrate assignment.
+        $this->setAdminUser();
+        set_config('turnitin_account_id', 1234);
+        set_config('accountid', '1234', 'turnitintooltwo');
+        v1migration::togglemigrationstatus(1);
+
         $v1migration = new v1migration($course->id, $v1assignment);
         $v2assignmentid = $v1migration->migrate();
 
@@ -428,7 +438,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -471,6 +481,11 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         }
 
         // Migrate assignment.
+        $this->setAdminUser();
+        set_config('turnitin_account_id', 1234);
+        set_config('accountid', '1234', 'turnitintooltwo');
+        v1migration::togglemigrationstatus(1);
+
         $v1migration = new v1migration($course->id, $v1assignment);
         $v2assignmentid = $v1migration->migrate();
 
@@ -488,7 +503,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $v1assignment = new stdClass();
@@ -583,7 +598,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -650,7 +665,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -690,7 +705,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -732,7 +747,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -778,7 +793,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -879,7 +894,7 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         global $DB;
 
         if (!$this->v1installed()) {
-            return false;
+            $this->markTestSkipped('mod_turnitintool is not installed.');
         }
 
         $this->resetAfterTest();
@@ -938,6 +953,168 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         // Account IDs should be different.
         $enabled = v1migration::check_account_ids();
         $this->assertFalse($enabled);
+
+        // Unset/empty account IDs should also fail.
+        set_config('turnitin_account_id', '');
+        set_config('accountid', '', 'turnitintooltwo');
+        $this->assertFalse(v1migration::check_account_ids());
+    }
+
+    /**
+     * Test is_migration_enabled checks both enablemigrationtool setting and matching account IDs.
+     */
+    public function test_is_migration_enabled() {
+        global $DB;
+        $this->resetAfterTest();
+
+        // Disabled by default when unset.
+        $this->assertFalse(v1migration::is_migration_enabled());
+
+        set_config('turnitin_account_id', 1234);
+        set_config('accountid', '1234', 'turnitintooltwo');
+
+        // Disabled when enablemigrationtool is 0.
+        v1migration::togglemigrationstatus(0);
+        $this->assertFalse(v1migration::is_migration_enabled());
+
+        // Enabled for manual (1) and auto (2) when account IDs match.
+        v1migration::togglemigrationstatus(1);
+        $this->assertTrue(v1migration::is_migration_enabled());
+
+        v1migration::togglemigrationstatus(2);
+        $this->assertTrue(v1migration::is_migration_enabled());
+
+        // Disabled and automatically reset to 0 when account IDs mismatch.
+        set_config('turnitin_account_id', 5678);
+        $this->assertFalse(v1migration::is_migration_enabled());
+        $setting = $DB->get_record('config_plugins', array('plugin' => 'turnitintooltwo', 'name' => 'enablemigrationtool'));
+        $this->assertEquals(0, (int)$setting->value);
+    }
+
+    /**
+     * Build a v1migration instance backed by a real Moodle course module so security checks
+     * can be tested whether or not mod_turnitintool is installed.
+     *
+     * @param int|null $overridecourseid Optional courseid to pass to v1migration (defaults to the CM's course).
+     * @return array array($v1migration, $courseid)
+     */
+    private function create_security_test_migration($overridecourseid = null) {
+        global $DB;
+
+        if ($this->v1installed()) {
+            $course = $this->getDataGenerator()->create_course();
+            $courselink = new stdClass();
+            $courselink->courseid = $course->id;
+            $courselink->ownerid = 0;
+            $courselink->turnitin_ctl = "Test Course";
+            $courselink->turnitin_cid = 0;
+            $DB->insert_record('turnitintool_courses', $courselink);
+
+            $v1assignment = $this->make_test_assignment($course->id, 'turnitintool', 'Test ' . uniqid());
+            $targetcourseid = ($overridecourseid !== null) ? $overridecourseid : $course->id;
+
+            return array(new v1migration($targetcourseid, $v1assignment), $course->id);
+        }
+
+        $v2assignment = $this->make_test_tii_assignment();
+        $courseid = (int)$v2assignment->turnitintooltwo->course;
+        $cmid = $this->make_test_module($courseid, 'turnitintooltwo', $v2assignment->turnitintooltwo->id, true);
+        $cm = $DB->get_record('course_modules', array('id' => $cmid), '*', MUST_EXIST);
+
+        $v1assignment = new stdClass();
+        $v1assignment->id = 0;
+        $v1assignment->course = $courseid;
+        $v1assignment->name = 'Test V1 Assignment';
+
+        $targetcourseid = ($overridecourseid !== null) ? $overridecourseid : $courseid;
+        $v1migration = new v1migration($targetcourseid, $v1assignment);
+        $cmprop = new ReflectionProperty('v1migration', 'cm');
+        $cmprop->setValue($v1migration, $cm);
+
+        return array($v1migration, $courseid);
+    }
+
+    /**
+     * Test that a student without moodle/course:manageactivities cannot migrate an assignment,
+     * and an editingteacher can when mod_turnitintool is installed.
+     */
+    public function test_migrate_assignment_requires_manageactivities_capability() {
+        global $DB;
+
+        $this->resetAfterTest();
+
+        list($v1migration, $courseid) = $this->create_security_test_migration();
+
+        set_config('turnitin_account_id', 1234);
+        set_config('accountid', '1234', 'turnitintooltwo');
+        v1migration::togglemigrationstatus(1);
+
+        // Enrolled student lacks moodle/course:manageactivities and must be rejected.
+        $student = $this->getDataGenerator()->create_user();
+        $studentrole = $DB->get_record('role', array('shortname' => 'student'));
+        $this->getDataGenerator()->enrol_user($student->id, $courseid, $studentrole->id, 'manual');
+        $this->setUser($student);
+
+        try {
+            $v1migration->migrate();
+            $this->fail('Expected required_capability_exception for student user.');
+        } catch (required_capability_exception $e) {
+            $this->assertEquals('nopermissions', $e->errorcode);
+        }
+
+        if ($this->v1installed()) {
+            // Enrolled editingteacher has moodle/course:manageactivities and succeeds.
+            $teacher = $this->getDataGenerator()->create_user();
+            $teacherrole = $DB->get_record('role', array('shortname' => 'editingteacher'));
+            $this->getDataGenerator()->enrol_user($teacher->id, $courseid, $teacherrole->id, 'manual');
+            $this->setUser($teacher);
+
+            $v2assignmentid = $v1migration->migrate();
+            $this->assertGreaterThan(0, $v2assignmentid);
+        }
+    }
+
+    /**
+     * Test that migrate() enforces migration setting, account ID matching, and courseid matching.
+     */
+    public function test_migrate_assignment_enforces_setting_and_courseid() {
+        $this->resetAfterTest();
+        $this->setAdminUser();
+
+        $othercourse = $this->getDataGenerator()->create_course();
+        list($mismatchedmigration, $course1id) = $this->create_security_test_migration($othercourse->id);
+
+        set_config('turnitin_account_id', 1234);
+        set_config('accountid', '1234', 'turnitintooltwo');
+        v1migration::togglemigrationstatus(1);
+
+        // Mismatched courseid must fail.
+        try {
+            $mismatchedmigration->migrate();
+            $this->fail('Expected moodle_exception for mismatched courseid.');
+        } catch (moodle_exception $e) {
+            $this->assertEquals('invalidcourseid', $e->errorcode);
+        }
+
+        // Disabled migration setting must fail.
+        list($validmigration, $validcourseid) = $this->create_security_test_migration();
+        v1migration::togglemigrationstatus(0);
+        try {
+            $validmigration->migrate();
+            $this->fail('Expected moodle_exception when migration tool is disabled.');
+        } catch (moodle_exception $e) {
+            $this->assertEquals('migrationtoolerror', $e->errorcode);
+        }
+
+        // Mismatched account IDs must fail even if enablemigrationtool was set to 1.
+        v1migration::togglemigrationstatus(1);
+        set_config('turnitin_account_id', 5678);
+        try {
+            $validmigration->migrate();
+            $this->fail('Expected moodle_exception when account IDs mismatch.');
+        } catch (moodle_exception $e) {
+            $this->assertEquals('migrationtoolerror', $e->errorcode);
+        }
     }
 
     /**
@@ -952,3 +1129,5 @@ class mod_turnitintooltwo_v1migration_testcase extends test_lib {
         $this->assertStringContainsString(get_string('migrationtoolaccounterror', 'turnitintooltwo'), $form);
     }
 }
+
+class_alias('v1migration_test', 'mod_turnitintooltwo_v1migration_testcase');

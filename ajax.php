@@ -916,8 +916,22 @@ switch ($action) {
         $courseid = required_param('courseid', PARAM_INT);
         $turnitintoolid = required_param('turnitintoolid', PARAM_INT);
 
-        include_once("classes/v1migration/v1migration.php");
-        $turnitintool = $DB->get_record("turnitintool", array("id" => $turnitintoolid));
+        include_once(__DIR__ . "/classes/v1migration/v1migration.php");
+
+        $turnitintool = $DB->get_record("turnitintool", array("id" => $turnitintoolid), '*', MUST_EXIST);
+        $v1cm = get_coursemodule_from_instance("turnitintool", $turnitintoolid, 0, false, MUST_EXIST);
+
+        if ((int)$turnitintool->course !== $courseid || (int)$v1cm->course !== $courseid) {
+            throw new moodle_exception('invalidcourseid', 'error');
+        }
+
+        require_login($courseid, false, $v1cm);
+        $v1context = context_module::instance($v1cm->id);
+        require_capability('moodle/course:manageactivities', $v1context);
+
+        if (!v1migration::is_migration_enabled()) {
+            throw new moodle_exception('migrationtoolerror', 'turnitintooltwo');
+        }
 
         $v1migration = new v1migration($courseid, $turnitintool);
 
@@ -948,6 +962,7 @@ switch ($action) {
             echo json_encode($errorresponse);
             exit();
         }
+        break;
 
     case "check_migrated":
         if (!confirm_sesskey()) {

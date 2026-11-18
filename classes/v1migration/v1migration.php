@@ -18,6 +18,7 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 require_once($CFG->libdir . "/gradelib.php");
+require_once($CFG->dirroot . "/mod/turnitintooltwo/lib.php");
 
 define('MIGRATION_SUBMISSIONS_SITE_CUTOFF', 200);
 define('MIGRATION_MAX_SLEEP', 5);
@@ -36,8 +37,30 @@ class v1migration {
 	public function __construct($courseid, $v1assignment) {
 		$this->courseid = $courseid;
 		$this->v1assignment = $v1assignment;
-		$this->cm = get_coursemodule_from_instance('turnitintool', $this->v1assignment->id);
+		$this->cm = (!empty($this->v1assignment->id))
+			? get_coursemodule_from_instance('turnitintool', $this->v1assignment->id)
+			: false;
 	}
+
+    /**
+     * Check whether the migration tool is enabled and v1/v2 account IDs match.
+     *
+     * @return bool
+     */
+    public static function is_migration_enabled() {
+        global $DB;
+
+        $migrationsetting = $DB->get_record('config_plugins', array(
+            'plugin' => 'turnitintooltwo',
+            'name' => 'enablemigrationtool'
+        ));
+
+        if (empty($migrationsetting) || !in_array((int)$migrationsetting->value, array(1, 2), true)) {
+            return false;
+        }
+
+        return self::check_account_ids();
+    }
 
     /**
      * Save the status of the migration tool
@@ -117,6 +140,21 @@ class v1migration {
 	 */
 	public function migrate() {
 		global $DB;
+
+        if (empty($this->v1assignment) || empty($this->cm) || empty($this->courseid)) {
+            throw new moodle_exception('coursemodidincorrect', 'turnitintooltwo');
+        }
+
+        if ((int)$this->v1assignment->course !== (int)$this->courseid || (int)$this->cm->course !== (int)$this->courseid) {
+            throw new moodle_exception('invalidcourseid', 'error');
+        }
+
+        $context = context_module::instance($this->cm->id);
+        require_capability('moodle/course:manageactivities', $context);
+
+        if (!self::is_migration_enabled()) {
+            throw new moodle_exception('migrationtoolerror', 'turnitintooltwo');
+        }
 
         // Migrate course.
         $v1course = $DB->get_record('turnitintool_courses', array('courseid' => $this->courseid));
@@ -617,12 +655,13 @@ class v1migration {
     public static function check_account_ids() {
         global $CFG;
 
-        // Check that v1 and v2 Account Ids are the same.
-        $v1accountid = $CFG->turnitin_account_id;
+        // Check that v1 and v2 Account Ids are configured and the same.
+        $v1accountid = isset($CFG->turnitin_account_id) ? $CFG->turnitin_account_id : null;
         $v2config = turnitintooltwo_admin_config();
+        $v2accountid = isset($v2config->accountid) ? $v2config->accountid : null;
 
         // If they are different then disable the form and show user a warning.
-        $enabled = (int)(boolval($v1accountid == $v2config->accountid));
+        $enabled = (int)(!empty($v1accountid) && !empty($v2accountid) && ($v1accountid == $v2accountid));
 
         // Turn the Migration Tool off if account IDs are different.
         if (!$enabled) {
